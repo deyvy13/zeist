@@ -14,11 +14,11 @@ tags:
 <BlogHero
   eyebrow="Rota de aprendizado · Nível 0"
   title="Aprender a programar não é decorar código. É aprender a pensar."
-  highlight="Este guia é o caminho que recomendaríamos a alguém que começa hoje, sem experiência prévia, e que quer chegar a construir software real. Cada tema tem teoria curta, exemplo e exercício."
+  highlight="Este guia é o caminho que recomendaríamos a alguém que começa hoje, sem experiência prévia, e que quer chegar a construir software real. Cada módulo com teoria curta, exemplo e exercício."
 />
 
 <Callout type="info" title="Como usar este guia" locale="pt">
-Leia em ordem. Cada bloco leva de 30 minutos a 2 horas. Se um tema não ficou claro, não avance: programar é como construir uma torre — um tijolo mal colocado arruína tudo o que vier em cima.
+Os 11 módulos estão recolhidos. Abra-os um a um em ordem. Cada bloco leva de 30 minutos a 2 horas. Se algo não ficou claro, não avance: programar é como construir uma torre — um tijolo mal colocado arruína tudo o que vier em cima.
 </Callout>
 
 ## Antes de começar: o que é programar (e o que não é)
@@ -29,11 +29,9 @@ Este guia foca exatamente nisso. Usaremos exemplos em **Python e JavaScript** po
 
 <Roadmap />
 
-## 1. Lógica de programação: aprender a pensar
+<TopicCard step="1" title="1. Lógica de programação: aprender a pensar" time="~2 h">
 
-<TopicCard step="1" title="Decompor problemas em passos" time="~2 h">
-A lógica de programação é a habilidade de pegar um problema grande e quebrá-lo em passos pequenos, ordenados e sem ambiguidade. **Antes de tocar no teclado**, você precisa conseguir explicar para outra pessoa —em palavras— como resolveria o problema.
-</TopicCard>
+A **lógica de programação** é a habilidade de pegar um problema grande e quebrá-lo em passos pequenos, ordenados e sem ambiguidade. **Antes de tocar no teclado**, você precisa conseguir explicar para outra pessoa —em palavras— como resolveria o problema.
 
 **Exemplo clássico:** fazer um sanduíche. Parece trivial até você tentar dar instruções para alguém que nunca viu um:
 
@@ -48,11 +46,11 @@ Cada passo é uma instrução **atômica** (não dá para dividir mais) e **orde
 
 **Exercício:** descreva, passo a passo, como alguém pode saber se um número é par ou ímpar. Sem código. Apenas palavras.
 
-## 2. Pseudocódigo: a solução antes do código
-
-<TopicCard step="2" title="Escrever a lógica em português" time="~3 h">
-O pseudocódigo é um intermediário entre a linguagem humana e a linguagem de programação. Ele te obriga a estruturar sua solução **antes** de se preocupar com sintaxe. É a ferramenta mais útil —e a que quase ninguém ensina bem— para iniciantes.
 </TopicCard>
+
+<TopicCard step="2" title="2. Pseudocódigo: a solução antes do código" time="~3 h">
+
+O **pseudocódigo** é um intermediário entre a linguagem humana e a linguagem de programação. Ele te obriga a estruturar sua solução **antes** de se preocupar com sintaxe. É a ferramenta mais útil —e a que quase ninguém ensina bem— para iniciantes.
 
 Um exemplo. Problema: **dizer se uma pessoa é maior de idade.**
 
@@ -73,11 +71,11 @@ Notas: `INÍCIO/FIM`, `LER`, `MOSTRAR`, `SE/SENÃO/FIM SE` são palavras-chave d
 Quando você tiver 20 problemas resolvidos em pseudocódigo, traduzi-los para Python ou JavaScript vai ser questão de aprender vocabulário, não de aprender a pensar.
 </Callout>
 
-## 3. Variáveis e tipos de dados
-
-<TopicCard step="3" title="Guardar informação na memória" time="~2 h">
-Uma **variável** é um nome que você dá a um espaço de memória onde guarda um valor. O **tipo** diz que classe de valor é: número, texto, verdadeiro/falso etc.
 </TopicCard>
+
+<TopicCard step="3" title="3. Variáveis e tipos de dados" time="~2 h">
+
+Uma **variável** é um nome que você dá a um espaço de memória onde guarda um valor. O **tipo** diz que classe de valor é: número, texto, verdadeiro/falso etc.
 
 **Os tipos mais comuns:**
 
@@ -106,11 +104,11 @@ const ehEstudante = true;
 
 **Convenção:** use nomes descritivos. `x` não diz nada; `idade_usuario` diz tudo.
 
-## 4. Operadores
-
-<TopicCard step="4" title="Manipular e comparar valores" time="~1 h">
-Operadores são símbolos que fazem operações com valores. Se dividem em três famílias.
 </TopicCard>
+
+<TopicCard step="4" title="4. Operadores: manipular e comparar valores" time="~1 h">
+
+Operadores são símbolos que fazem operações com valores. Se dividem em três famílias.
 
 **Aritméticos** (matemática básica):
 
@@ -136,14 +134,14 @@ Operadores são símbolos que fazem operações com valores. Se dividem em três
 **Lógicos** (combinam booleanos):
 
 - `and` / `&&` — verdadeiro se **ambos** forem verdadeiros
-- `or` / `\|\|` — verdadeiro se **pelo menos um** for verdadeiro
+- `or` — verdadeiro se **pelo menos um** for verdadeiro
 - `not` / `!` — inverte o valor
 
-## 5. Condicionais: tomar decisões
-
-<TopicCard step="5" title="Que o programa decida o que fazer" time="~2 h">
-Condicionais são a primeira ferramenta de **controle de fluxo**: permitem que seu programa faça uma coisa ou outra dependendo dos dados. Sem condicionais, um programa é apenas uma lista linear de instruções.
 </TopicCard>
+
+<TopicCard step="5" title="5. Condicionais: tomar decisões" time="~2 h">
+
+Condicionais são a primeira ferramenta de **controle de fluxo**: permitem que seu programa faça uma coisa ou outra dependendo dos dados. Sem condicionais, um programa é apenas uma lista linear de instruções.
 
 Estrutura básica: `se` **condição** for verdadeira, **faça isto**; senão, **faça aquilo**.
 
@@ -183,11 +181,11 @@ else:
     print("Reprovado")
 ```
 
-## 6. Laços: repetir sem escrever a mais
-
-<TopicCard step="6" title="Executar código muitas vezes" time="~3 h">
-Um **laço** repete um bloco de código enquanto uma condição for verdadeira. É a diferença entre escrever "Olá" uma vez ou um milhão: com laços, o tamanho do código não muda.
 </TopicCard>
+
+<TopicCard step="6" title="6. Laços: repetir sem escrever a mais" time="~3 h">
+
+Um **laço** repete um bloco de código enquanto uma condição for verdadeira. É a diferença entre escrever "Olá" uma vez ou um milhão: com laços, o tamanho do código não muda.
 
 **Laço `for`** — quando você sabe quantas vezes quer repetir:
 
@@ -214,11 +212,11 @@ print(f"Acertou em {tentativas} tentativas")
 Cuidado com laços infinitos: se a condição do `while` **nunca** ficar falsa, seu programa trava. É o erro #1 de iniciantes.
 </Callout>
 
-## 7. Funções: reutilizar lógica
-
-<TopicCard step="7" title="Empacotar código para não repetir" time="~3 h">
-Uma **função** é um bloco de código com nome, que você pode executar quantas vezes quiser. Recebe **parâmetros** (dados de entrada) e opcionalmente devolve um **resultado**. São o coração do código organizado.
 </TopicCard>
+
+<TopicCard step="7" title="7. Funções: reutilizar lógica" time="~3 h">
+
+Uma **função** é um bloco de código com nome, que você pode executar quantas vezes quiser. Recebe **parâmetros** (dados de entrada) e opcionalmente devolve um **resultado**. São o coração do código organizado.
 
 Sem função (ruim):
 
@@ -245,11 +243,11 @@ total2 = calcular_total(250)
 
 **Princípio DRY** (*Don't Repeat Yourself*): se você escreve a mesma coisa duas vezes, extraia numa função. É uma das regras mais importantes que existem.
 
-## 8. Estruturas de dados: guardar muitos valores
-
-<TopicCard step="8" title="Coleções organizadas" time="~4 h">
-Até agora cada variável guarda um valor. As estruturas de dados deixam você guardar **muitos valores relacionados** sob um só nome.
 </TopicCard>
+
+<TopicCard step="8" title="8. Estruturas de dados: guardar muitos valores" time="~4 h">
+
+Até agora cada variável guarda um valor. As estruturas de dados deixam você guardar **muitos valores relacionados** sob um só nome.
 
 **Listas / Arrays** — coleção ordenada, você acessa por posição:
 
@@ -282,11 +280,11 @@ for u in usuarios:
     print(u["nome"])
 ```
 
-## 9. Programação orientada a objetos
-
-<TopicCard step="9" title="Modelar o mundo real em código" time="~5 h">
-A **POO** organiza o código em **classes** (moldes) e **objetos** (instâncias do molde). Uma classe agrupa dados (**atributos**) e comportamento (**métodos**) que andam juntos.
 </TopicCard>
+
+<TopicCard step="9" title="9. Programação orientada a objetos (POO)" time="~5 h">
+
+A **POO** organiza o código em **classes** (moldes) e **objetos** (instâncias do molde). Uma classe agrupa dados (**atributos**) e comportamento (**métodos**) que andam juntos.
 
 Exemplo: modelar um usuário.
 
@@ -305,11 +303,11 @@ print(ana.saudar())  # Olá, sou Ana
 
 Os quatro pilares clássicos: **encapsulamento** (agrupar dados e métodos), **herança** (uma classe herda de outra), **polimorfismo** (mesma chamada, comportamentos diferentes), **abstração** (esconder o detalhe). Não decore agora — se entende praticando.
 
-## 10. Algoritmos básicos e complexidade
-
-<TopicCard step="10" title="Quão eficiente é sua solução" time="~4 h">
-Um mesmo problema tem várias soluções possíveis. Um **algoritmo** é uma solução concreta, e alguns são mais rápidos que outros. Aprender a medir isso se chama **complexidade**.
 </TopicCard>
+
+<TopicCard step="10" title="10. Algoritmos básicos e complexidade" time="~4 h">
+
+Um mesmo problema tem várias soluções possíveis. Um **algoritmo** é uma solução concreta, e alguns são mais rápidos que outros. Aprender a medir isso se chama **complexidade**.
 
 Os três algoritmos que **todo mundo** deve conhecer:
 
@@ -321,11 +319,11 @@ Os três algoritmos que **todo mundo** deve conhecer:
 A **notação O(n)** (Big O) é a forma padrão de comparar algoritmos. `O(1)` é instantâneo, `O(log n)` é rapidíssimo, `O(n)` é linear, `O(n²)` é lento com listas grandes.
 </Callout>
 
-## 11. Seu primeiro projeto real
-
-<TopicCard step="11" title="Aplicar tudo o que aprendeu" time="~10-20 h">
-Livros não te transformam em programador. Projetos, sim. Escolha um pequeno mas **completo**, e termine-o. Terminar importa mais do que fazer perfeito.
 </TopicCard>
+
+<TopicCard step="11" title="11. Seu primeiro projeto real" time="~10-20 h">
+
+Livros não te transformam em programador. Projetos, sim. Escolha um pequeno mas **completo**, e termine-o. Terminar importa mais do que fazer perfeito.
 
 **Ideias de primeiro projeto** (escolha uma):
 
@@ -336,15 +334,26 @@ Livros não te transformam em programador. Projetos, sim. Escolha um pequeno mas
 
 Qualquer um deles usa **tudo o que veio antes**: variáveis, condicionais, laços, funções, estruturas de dados, e provavelmente classes se você estruturar bem.
 
+</TopicCard>
+
+<CTABlock
+  eyebrow="Prefere acompanhamento?"
+  title="Transforme esta rota em seu primeiro projeto real"
+  body="Oferecemos mentorias de Vibe Coding para iniciantes: da ideia à publicação, com IA como copiloto e uma pessoa real revisando cada passo. Cursos gratuitos e sessões 1-a-1 disponíveis."
+  primaryLabel="Ver cursos e mentorias"
+  primaryHref="/pt/servicios/cursos-y-mentorias"
+  secondaryLabel="Fale conosco"
+  secondaryHref="/pt/contacto"
+/>
+
 ## Recursos para continuar aprendendo
 
 - **Prática diária:** [Exercism](https://exercism.org) (exercícios com mentores de graça) ou [Codewars](https://www.codewars.com) (desafios por dificuldade).
 - **Documentação oficial:** [Python](https://docs.python.org/pt-br/3/tutorial/) e [MDN para JavaScript](https://developer.mozilla.org/pt-BR/docs/Learn/JavaScript).
 - **Cursos gratuitos sérios:** CS50 de Harvard (no YouTube), FreeCodeCamp.
-- **Na Zeist:** em breve publicaremos [mentorias de Vibe Coding](/pt/servicios/cursos-y-mentorias) para acompanhar você no seu primeiro projeto real, da ideia à publicação.
 
 <PostFaqs />
 
 ---
 
-**Este guia foi útil?** Compartilhe com alguém que queira começar. E se você procura acompanhamento real para seu primeiro projeto, na Zeist oferecemos [mentorias de Vibe Coding](/pt/servicios/cursos-y-mentorias) — da ideia à publicação, com IA como copiloto e uma pessoa real revisando cada passo.
+**Este guia foi útil?** Compartilhe com alguém que queira começar. E se você procura acompanhamento real, na Zeist oferecemos [mentorias de Vibe Coding](/pt/servicios/cursos-y-mentorias) para seu primeiro projeto — da ideia à publicação.

@@ -6,6 +6,8 @@ import { localizedPath } from "@/lib/site";
 import { buildMetadata, websiteJsonLd } from "@/lib/seo";
 import { getAllPosts } from "@/lib/blog";
 import { serviceIcons, IconArrow } from "@/components/icons";
+import { AuroraText } from "@/components/visual/aurora-text";
+import { HeroParallax } from "@/components/visual/hero-parallax";
 
 export async function generateMetadata({
   params,
@@ -75,9 +77,9 @@ export default async function HomePage({
                 {dict.hero.title}
               </h1>
               <p className="mt-5 max-w-xl text-lg text-[color:var(--color-muted)] sm:text-xl">
-                <span className="font-semibold text-[color:var(--color-mint-700)]">
+                <AuroraText className="font-semibold">
                   {dict.hero.highlight}
-                </span>{" "}
+                </AuroraText>{" "}
                 {dict.hero.subtitle}
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -99,53 +101,11 @@ export default async function HomePage({
               </ul>
             </div>
 
-            {/* Visual — the single claymorphism accent of the page */}
-            <div className="relative hidden lg:block">
-              <div
-                aria-hidden
-                className="absolute -right-10 -top-16 h-72 w-72 rounded-full opacity-70 blur-3xl"
-                style={{
-                  background:
-                    "radial-gradient(circle, rgba(0,255,206,0.5), transparent 70%)",
-                }}
-              />
-              <div className="clay relative p-7">
-                <div className="flex items-center gap-2">
-                  <span className="h-3 w-3 rounded-full bg-[color:var(--color-mint-500)]" />
-                  <span className="h-3 w-3 rounded-full bg-[color:var(--color-ink-200)]" />
-                  <span className="h-3 w-3 rounded-full bg-[color:var(--color-ink-200)]" />
-                  <span className="ml-auto font-[family-name:var(--font-space-grotesk)] text-sm font-bold">
-                    Zeist<span className="text-[color:var(--color-mint-500)]">.</span>
-                  </span>
-                </div>
-                <div className="mt-6 grid grid-cols-3 gap-3">
-                  {heroMetrics.map((m) => (
-                    <div
-                      key={m.v}
-                      className="rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/60 p-4"
-                    >
-                      <div className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold text-[color:var(--color-mint-600)]">
-                        {m.k}
-                      </div>
-                      <div className="mt-1 text-xs text-[color:var(--color-muted)]">
-                        {m.v}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 space-y-2.5">
-                  <div className="h-2.5 w-3/4 rounded-full bg-[color:var(--color-mint-500)]/25" />
-                  <div className="h-2.5 w-full rounded-full bg-[color:var(--color-ink-100)]" />
-                  <div className="h-2.5 w-5/6 rounded-full bg-[color:var(--color-ink-100)]" />
-                </div>
-                <div className="mt-6 flex items-center justify-between rounded-2xl bg-[color:var(--color-mint-500)] px-4 py-3">
-                  <span className="text-sm font-semibold text-[color:var(--color-ink-950)]">
-                    {lang === "pt" ? "Entregue" : "Entregado"}
-                  </span>
-                  <IconArrow className="h-4 w-4 text-[color:var(--color-ink-950)]" />
-                </div>
-              </div>
-            </div>
+            {/* Visual — clay accent with subtle scroll-driven parallax */}
+            <HeroParallax
+              metrics={heroMetrics}
+              deliveredLabel={lang === "pt" ? "Entregue" : "Entregado"}
+            />
           </div>
         </div>
       </section>

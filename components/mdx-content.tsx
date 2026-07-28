@@ -15,6 +15,11 @@ import { DotPattern } from "@/components/visual/dot-pattern";
 import { PostRoadmap, PostFaqs } from "@/components/visual/post-widgets";
 import { StepsProvider } from "@/components/visual/steps-provider";
 import { StepsProgress } from "@/components/visual/steps-progress";
+import { PostTOC } from "@/components/visual/post-toc";
+import { CTABlock } from "@/components/visual/cta-block";
+import { AnimatedFlow } from "@/components/visual/animated-flow";
+import { ComparisonTable } from "@/components/visual/comparison-table";
+import { AuroraText } from "@/components/visual/aurora-text";
 import type { Locale } from "@/lib/i18n";
 
 // Styled element map — full control over prose without a typography plugin.
@@ -60,7 +65,7 @@ const components: MDXComponents = {
   ),
   code: (props) => (
     <code
-      className="rounded-md bg-[color:var(--color-mint-500)]/12 px-1.5 py-0.5 font-mono text-[0.9em] text-[color:var(--color-mint-800)]"
+      className="rounded-md bg-[color:var(--color-code-bg)] px-1.5 py-0.5 font-mono text-[0.9em] text-[color:var(--color-code-fg)]"
       {...props}
     />
   ),
@@ -84,6 +89,10 @@ const components: MDXComponents = {
   AnimatedBeam,
   GridBeam,
   DotPattern,
+  CTABlock,
+  AnimatedFlow,
+  ComparisonTable,
+  AuroraText,
 };
 
 export function MdxContent({
@@ -126,7 +135,10 @@ export function MdxContent({
   if (slug) {
     return (
       <StepsProvider slug={slug}>
-        {body}
+        <div className="grid gap-10 xl:grid-cols-[220px_minmax(0,1fr)]">
+          <PostTOC locale={locale} />
+          <div>{body}</div>
+        </div>
         <StepsProgress locale={locale} />
       </StepsProvider>
     );

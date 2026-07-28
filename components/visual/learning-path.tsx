@@ -47,23 +47,25 @@ export function LearningPath({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="group relative rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/70 p-5 backdrop-blur-sm transition-colors hover:border-[color:var(--color-mint-500)]"
+              className="turbo-border rounded-2xl"
             >
-              <div className="flex items-center gap-3">
-                <span className="grid h-9 w-9 place-items-center rounded-xl bg-[color:var(--color-mint-500)]/15 font-[family-name:var(--font-space-grotesk)] text-sm font-bold text-[color:var(--color-mint-700)]">
-                  {String(s.n).padStart(2, "0")}
-                </span>
-                {s.tag && (
-                  <span className="text-[10px] font-semibold uppercase tracking-widest text-[color:var(--color-muted)]">
-                    {s.tag}
+              <div className="group relative h-full rounded-2xl bg-[color:var(--color-surface)] p-5 backdrop-blur-sm">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-9 w-9 place-items-center rounded-xl bg-[color:var(--color-mint-500)]/15 font-[family-name:var(--font-space-grotesk)] text-sm font-bold text-[color:var(--color-mint-700)]">
+                    {String(s.n).padStart(2, "0")}
                   </span>
-                )}
+                  {s.tag && (
+                    <span className="text-[10px] font-semibold uppercase tracking-widest text-[color:var(--color-muted)]">
+                      {s.tag}
+                    </span>
+                  )}
+                </div>
+                <h4 className="mt-3 text-lg font-semibold">{s.title}</h4>
+                <p className="mt-1.5 text-sm text-[color:var(--color-muted)]">
+                  {s.desc}
+                </p>
+                <AnimatedBeam className="mt-4 opacity-60 transition-opacity group-hover:opacity-100" />
               </div>
-              <h4 className="mt-3 text-lg font-semibold">{s.title}</h4>
-              <p className="mt-1.5 text-sm text-[color:var(--color-muted)]">
-                {s.desc}
-              </p>
-              <AnimatedBeam className="mt-4 opacity-60 transition-opacity group-hover:opacity-100" />
             </motion.li>
           ))}
         </ol>

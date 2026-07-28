@@ -17,13 +17,18 @@ import {
 //  - Progress is persisted to localStorage keyed by post slug so returning
 //    readers see where they left off.
 
+export type StepInfo = { id: string; label: string; step: string };
+
 type Ctx = {
-  register: (id: string) => void;
+  register: (info: StepInfo) => void;
   isOpen: (id: string) => boolean;
   toggle: (id: string) => void;
   opened: Set<string>;
+  steps: StepInfo[];
   total: number;
   openedCount: number;
+  activeId: string | null;
+  setActive: (id: string | null) => void;
 };
 
 const StepsContext = createContext<Ctx | null>(null);
@@ -37,8 +42,9 @@ export function StepsProvider({
   slug: string;
   children: ReactNode;
 }) {
-  const [ids, setIds] = useState<string[]>([]);
+  const [steps, setSteps] = useState<StepInfo[]>([]);
   const [opened, setOpened] = useState<Set<string>>(new Set());
+  const [activeId, setActiveId] = useState<string | null>(null);
   const storageKey = `${STORAGE_PREFIX}${slug}`;
 
   // Hydrate opened set from localStorage after mount (SSR-safe).
@@ -54,8 +60,11 @@ export function StepsProvider({
     }
   }, [storageKey]);
 
-  const register = useCallback((id: string) => {
-    setIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
+  const register = useCallback((info: StepInfo) => {
+    setSteps((prev) => {
+      if (prev.some((s) => s.id === info.id)) return prev;
+      return [...prev, info];
+    });
   }, []);
 
   const isOpen = useCallback((id: string) => opened.has(id), [opened]);
@@ -77,16 +86,21 @@ export function StepsProvider({
     [storageKey],
   );
 
+  const setActive = useCallback((id: string | null) => setActiveId(id), []);
+
   const value = useMemo<Ctx>(
     () => ({
       register,
       isOpen,
       toggle,
       opened,
-      total: ids.length,
+      steps,
+      total: steps.length,
       openedCount: opened.size,
+      activeId,
+      setActive,
     }),
-    [register, isOpen, toggle, opened, ids.length],
+    [register, isOpen, toggle, opened, steps, activeId, setActive],
   );
 
   return (

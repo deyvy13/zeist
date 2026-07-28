@@ -66,6 +66,11 @@
     0 26px 50px -24px rgba(0, 153, 124, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.9),
     inset 0 -14px 26px rgba(0, 255, 206, 0.12);
+
+  /* Semantic tokens that flip per theme for legibility */
+  --color-code-fg: var(--color-mint-800);
+  --color-code-bg: color-mix(in srgb, var(--color-mint-500) 12%, transparent);
+  --color-tag-fg: var(--color-mint-700);
 }
 
 /* -- Dark theme ------------------------------------------------------------- */
@@ -92,6 +97,10 @@
       inset 0 -14px 26px rgba(0, 255, 206, 0.08);
     --elev-1: 0 1px 2px rgba(0, 0, 0, 0.4);
     --elev-2: 0 16px 40px -20px rgba(0, 0, 0, 0.7);
+    /* Legible on dark: lift code/tag foreground to a bright mint */
+    --color-code-fg: #7cffe0;
+    --color-code-bg: rgba(0, 255, 206, 0.14);
+    --color-tag-fg: #6df0ce;
   }
 }
 
@@ -345,10 +354,44 @@
     padding: 0.25rem 0.7rem;
     font-size: 0.75rem;
     font-weight: 500;
-    color: var(--color-mint-700);
+    color: var(--color-tag-fg);
     border: 1px solid color-mix(in srgb, var(--color-mint-500) 30%, transparent);
     background: color-mix(in srgb, var(--color-mint-500) 8%, transparent);
   }
+}
+
+/* --- Turbo border (animated conic gradient, reusable) --------------------- */
+@property --turbo-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes turbo-spin {
+  to { --turbo-angle: 360deg; }
+}
+.turbo-border {
+  position: relative;
+  border-radius: inherit;
+  background: conic-gradient(from var(--turbo-angle, 0deg),
+    rgba(0, 255, 206, 0.9) 0deg,
+    rgba(0, 255, 206, 0.05) 90deg,
+    rgba(0, 255, 206, 0.05) 270deg,
+    rgba(0, 255, 206, 0.9) 360deg);
+  animation: turbo-spin 6s linear infinite;
+  padding: 1.5px;
+}
+.turbo-border > * {
+  border-radius: inherit;
+}
+/* Softer variant for large cards */
+.turbo-border-soft {
+  background: conic-gradient(from var(--turbo-angle, 0deg),
+    rgba(0, 255, 206, 0.65) 0deg,
+    rgba(0, 255, 206, 0.02) 120deg,
+    rgba(0, 255, 206, 0.02) 240deg,
+    rgba(0, 255, 206, 0.65) 360deg);
+  animation: turbo-spin 8s linear infinite;
+  padding: 1px;
 }
 
 /* Respect reduced motion. */

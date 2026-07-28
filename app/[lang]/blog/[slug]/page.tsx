@@ -7,6 +7,7 @@ import { buildMetadata } from "@/lib/seo";
 import { getAllPosts, getPost, getPostSlugs } from "@/lib/blog";
 import { MdxContent } from "@/components/mdx-content";
 import { ReadingProgress } from "@/components/visual/reading-progress";
+import { ShareLinkedIn } from "@/components/visual/share-linkedin";
 
 export function generateStaticParams() {
   return locales.flatMap((lang) =>
@@ -157,11 +158,17 @@ export default async function BlogPostPage({
               {meta.readingMinutes} {dict.blog.minRead}
             </span>
           </div>
+          <ShareLinkedIn url={canonical} title={meta.title} locale={lang} />
         </header>
 
         <hr className="my-10 border-[color:var(--color-border)]" />
+      </div>
 
+      <div className="mx-auto max-w-3xl xl:max-w-[1160px]">
         <MdxContent source={post.content} slug={slug} locale={lang} />
+      </div>
+
+      <div className="mx-auto max-w-3xl">
 
         {related.length > 0 && (
           <section className="mt-16">

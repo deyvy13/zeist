@@ -5,6 +5,7 @@ import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
 import { localizedPath } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
 import { serviceIcons, IconArrow } from "@/components/icons";
+import { MagneticCard } from "@/components/visual/magnetic-card";
 
 export async function generateMetadata({
   params,
@@ -45,23 +46,29 @@ export default async function ServicesPage({
         {dict.services.items.map((service) => {
           const Icon = serviceIcons[service.slug as keyof typeof serviceIcons];
           return (
-            <Link
+            <MagneticCard
               key={service.slug}
-              href={localizedPath(lang, `servicios/${service.slug}`)}
-              className="surface surface-hover rounded-3xl p-8"
+              className="surface surface-hover rounded-3xl"
+              intensity="subtle"
             >
-              <span className="grid h-14 w-14 place-items-center rounded-2xl border border-[color:var(--color-border)] text-[color:var(--color-mint-600)]">
-                {Icon && <Icon className="h-7 w-7" />}
-              </span>
-              <h2 className="mt-5 text-2xl">{service.title}</h2>
-              <p className="mt-3 text-[color:var(--color-muted)]">
-                {service.body}
-              </p>
-              <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--color-mint-700)]">
-                {dict.services.viewDetail}
-                <IconArrow className="h-4 w-4" />
-              </span>
-            </Link>
+              <Link
+                href={localizedPath(lang, `servicios/${service.slug}`)}
+                className="block h-full rounded-3xl p-8"
+                style={{ transform: "translateZ(0)" }}
+              >
+                <span className="grid h-14 w-14 place-items-center rounded-2xl border border-[color:var(--color-border)] text-[color:var(--color-mint-600)]">
+                  {Icon && <Icon className="h-7 w-7" />}
+                </span>
+                <h2 className="mt-5 text-2xl">{service.title}</h2>
+                <p className="mt-3 text-[color:var(--color-muted)]">
+                  {service.body}
+                </p>
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--color-mint-700)]">
+                  {dict.services.viewDetail}
+                  <IconArrow className="h-4 w-4" />
+                </span>
+              </Link>
+            </MagneticCard>
           );
         })}
       </div>

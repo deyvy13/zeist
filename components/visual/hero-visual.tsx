@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { DotPattern } from "./dot-pattern";
+import { AuroraText } from "./aurora-text";
 
 // Blog hero visual: a rich, animated banner-style block to open the post with
 // a strong hook. Meant to sit between the header (title/meta) and the article
@@ -41,9 +42,9 @@ export function BlogHero({
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="eyebrow eyebrow-plain relative z-10 text-[color:var(--color-mint-700)]"
+        className="eyebrow eyebrow-plain relative z-10"
       >
-        {eyebrow}
+        <AuroraText>{eyebrow}</AuroraText>
       </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: 16 }}

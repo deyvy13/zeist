@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useId, type ReactNode } from "react";
+import { useEffect, useId, useRef, type ReactNode } from "react";
 import { useStepsSafe } from "./steps-provider";
 
 // TopicCard is the collapsible unit inside a learning-path style article.
@@ -25,11 +25,28 @@ export function TopicCard({
   defaultOpen?: boolean;
 }) {
   const reactId = useId();
-  const id = `${step}-${reactId}`;
+  const id = `${step}-${reactId}`.replace(/[^a-zA-Z0-9_-]/g, "-");
   const ctx = useStepsSafe();
+  const rootRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    ctx?.register(id);
+    ctx?.register({ id, label: title, step: String(step) });
+  }, [ctx, id, title, step]);
+
+  // Track viewport visibility so the TOC can highlight the active card.
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el || !ctx) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) ctx.setActive(id);
+        }
+      },
+      { rootMargin: "-40% 0px -50% 0px", threshold: 0 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
   }, [ctx, id]);
 
   // If no provider (e.g. rendered outside a blog post), fall back to open.
@@ -38,86 +55,92 @@ export function TopicCard({
 
   return (
     <motion.div
+      id={id}
+      ref={rootRef}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`surface relative mt-6 overflow-hidden rounded-3xl transition-colors ${
-        open
-          ? "border-[color:var(--color-mint-500)]/60"
-          : "hover:border-[color:var(--color-mint-500)]/40"
-      }`}
+      className={`scroll-mt-24 mt-6 rounded-3xl ${open ? "turbo-border" : ""}`}
     >
       <div
-        aria-hidden
-        className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full opacity-40 transition-opacity"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(0,255,206,0.4), transparent 70%)",
-          opacity: open ? 0.55 : 0.25,
-        }}
-      />
-
-      <button
-        type="button"
-        onClick={() => ctx?.toggle(id)}
-        aria-expanded={open}
-        aria-controls={contentId}
-        className="relative flex w-full items-start gap-5 p-6 text-left md:p-8"
+        className={`surface relative overflow-hidden rounded-3xl transition-colors ${
+          open
+            ? "border-transparent"
+            : "hover:border-[color:var(--color-mint-500)]/40"
+        }`}
       >
-        <span
-          className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl font-[family-name:var(--font-space-grotesk)] text-lg font-bold transition-colors ${
-            open
-              ? "bg-[color:var(--color-mint-500)] text-[color:var(--color-ink-950)]"
-              : "bg-[color:var(--color-mint-500)]/12 text-[color:var(--color-mint-700)]"
-          }`}
-        >
-          {open ? (
-            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <path d="M5 12l5 5 9-11" />
-            </svg>
-          ) : (
-            typeof step === "number" ? String(step).padStart(2, "0") : step
-          )}
-        </span>
-
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-baseline gap-3">
-            <h3 className="!mt-0 text-xl md:text-2xl">{title}</h3>
-            {time && <span className="tag">{time}</span>}
-          </div>
-        </div>
-
-        <motion.span
-          animate={{ rotate: open ? 180 : 0 }}
-          transition={{ duration: 0.25 }}
-          className="ml-3 mt-1 text-[color:var(--color-mint-700)]"
+        <div
           aria-hidden
-        >
-          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M6 9l6 6 6-6" />
-          </svg>
-        </motion.span>
-      </button>
+          className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full transition-opacity"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(0,255,206,0.4), transparent 70%)",
+            opacity: open ? 0.55 : 0.25,
+          }}
+        />
 
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            id={contentId}
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="overflow-hidden"
+        <button
+          type="button"
+          onClick={() => ctx?.toggle(id)}
+          aria-expanded={open}
+          aria-controls={contentId}
+          className="relative flex w-full items-start gap-5 p-6 text-left md:p-8"
+        >
+          <span
+            className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl font-[family-name:var(--font-space-grotesk)] text-lg font-bold transition-colors ${
+              open
+                ? "bg-[color:var(--color-mint-500)] text-[color:var(--color-ink-950)]"
+                : "bg-[color:var(--color-mint-500)]/12 text-[color:var(--color-mint-700)]"
+            }`}
           >
-            <div className="relative px-6 pb-6 md:px-8 md:pb-8">
-              <div className="pl-[68px] text-[color:var(--color-foreground)]/90 md:pl-[68px]">
-                {children}
-              </div>
+            {open ? (
+              <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M5 12l5 5 9-11" />
+              </svg>
+            ) : (
+              typeof step === "number" ? String(step).padStart(2, "0") : step
+            )}
+          </span>
+
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-baseline gap-3">
+              <h3 className="!mt-0 text-xl md:text-2xl">{title}</h3>
+              {time && <span className="tag">{time}</span>}
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+
+          <motion.span
+            animate={{ rotate: open ? 180 : 0 }}
+            transition={{ duration: 0.25 }}
+            className="ml-3 mt-1 text-[color:var(--color-mint-700)]"
+            aria-hidden
+          >
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </motion.span>
+        </button>
+
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              id={contentId}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="overflow-hidden"
+            >
+              <div className="relative px-6 pb-6 md:px-8 md:pb-8">
+                <div className="border-t border-[color:var(--color-hairline)] pt-4 text-[color:var(--color-foreground)]/90">
+                  {children}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </motion.div>
   );
 }
