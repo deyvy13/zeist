@@ -1,26 +1,365 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================================
+   Zeist — Design System
+   Elegant, international, editorial. Claymorphism used as a rare ACCENT, not as
+   the style of every box. Signature: #00FFCE (mint) over an aurora gradient.
+   ========================================================================== */
+
+@theme {
+  /* -- Brand mint scale ---------------------------------------------------- */
+  --color-mint-50: #e6fffa;
+  --color-mint-100: #b3fff0;
+  --color-mint-200: #80ffe7;
+  --color-mint-300: #4dffdd;
+  --color-mint-400: #1affd4;
+  --color-mint-500: #00ffce; /* brand base */
+  --color-mint-600: #00cca5;
+  --color-mint-700: #00997c;
+  --color-mint-800: #006653;
+  --color-mint-900: #00332a;
+
+  /* -- Ink / neutral scale (cool, slightly teal-tinted) -------------------- */
+  --color-ink-50: #f4f8f7;
+  --color-ink-100: #e6edeb;
+  --color-ink-200: #cbd8d5;
+  --color-ink-300: #a3b8b3;
+  --color-ink-400: #6f8a84;
+  --color-ink-500: #4b625d;
+  --color-ink-600: #374a46;
+  --color-ink-700: #263531;
+  --color-ink-800: #17211f;
+  --color-ink-900: #0b1211;
+  --color-ink-950: #060b0a;
+
+  /* -- Semantic tokens (light theme defaults) ------------------------------ */
+  --color-background: #f3f8f6;
+  --color-surface: #ffffff;
+  --color-foreground: var(--color-ink-900);
+  --color-muted: var(--color-ink-500);
+  --color-border: rgba(6, 40, 34, 0.1);
+  --color-hairline: rgba(6, 40, 34, 0.08);
+  --color-accent: var(--color-mint-500);
+  --color-accent-foreground: var(--color-ink-950);
+  --color-ring: var(--color-mint-600);
+
+  /* Surfaces / bands */
+  --surface-1: rgba(255, 255, 255, 0.72);
+  --band-tint: linear-gradient(
+    180deg,
+    rgba(0, 255, 206, 0.08),
+    rgba(0, 255, 206, 0.02)
+  );
+  --band-ink: #0b1a17;
+
+  /* -- Typography ---------------------------------------------------------- */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-inter), sans-serif;
+
+  /* -- Elevation (soft, directional — NOT the heavy clay glow) ------------- */
+  --elev-1: 0 1px 2px rgba(6, 40, 34, 0.04), 0 1px 1px rgba(6, 40, 34, 0.03);
+  --elev-2: 0 12px 30px -18px rgba(6, 40, 34, 0.25);
+
+  /* Claymorphism — reserved for 1–2 hero accents only. Toned down from spec. */
+  --clay-bg: rgba(255, 255, 255, 0.88);
+  --clay-shadow:
+    0 26px 50px -24px rgba(0, 153, 124, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -14px 26px rgba(0, 255, 206, 0.12);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
+/* -- Dark theme ------------------------------------------------------------- */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --color-background: #05100e;
+    --color-surface: #0e1a17;
+    --color-foreground: #eaf5f2;
+    --color-muted: #8ba7a1;
+    --color-border: rgba(0, 255, 206, 0.14);
+    --color-hairline: rgba(0, 255, 206, 0.1);
+    --color-accent-foreground: #041210;
+    --surface-1: rgba(18, 30, 27, 0.6);
+    --band-tint: linear-gradient(
+      180deg,
+      rgba(0, 255, 206, 0.06),
+      rgba(0, 255, 206, 0.01)
+    );
+    --band-ink: #030b09;
+    --clay-bg: rgba(18, 30, 27, 0.7);
+    --clay-shadow:
+      0 26px 50px -24px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(0, 255, 206, 0.18),
+      inset 0 -14px 26px rgba(0, 255, 206, 0.08);
+    --elev-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --elev-2: 0 16px 40px -20px rgba(0, 0, 0, 0.7);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+:root[data-theme="dark"] {
+  --color-background: #05100e;
+  --color-surface: #0e1a17;
+  --color-foreground: #eaf5f2;
+  --color-muted: #8ba7a1;
+  --color-border: rgba(0, 255, 206, 0.14);
+  --color-hairline: rgba(0, 255, 206, 0.1);
+  --color-accent-foreground: #041210;
+  --surface-1: rgba(18, 30, 27, 0.6);
+  --band-tint: linear-gradient(
+    180deg,
+    rgba(0, 255, 206, 0.06),
+    rgba(0, 255, 206, 0.01)
+  );
+  --band-ink: #030b09;
+  --clay-bg: rgba(18, 30, 27, 0.7);
+  --clay-shadow:
+    0 26px 50px -24px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(0, 255, 206, 0.18),
+    inset 0 -14px 26px rgba(0, 255, 206, 0.08);
+  --elev-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --elev-2: 0 16px 40px -20px rgba(0, 0, 0, 0.7);
+}
+
+/* ============================================================================
+   Base — full-page aurora gradient background
+   ========================================================================== */
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    background-color: var(--color-background);
+    /* Aurora: visible but elegant mint gradient across the whole page. */
+    background-image:
+      radial-gradient(
+        70rem 45rem at 82% -8%,
+        rgba(0, 255, 206, 0.22),
+        transparent 58%
+      ),
+      radial-gradient(
+        60rem 55rem at -12% 8%,
+        rgba(0, 255, 206, 0.16),
+        transparent 52%
+      ),
+      radial-gradient(
+        55rem 55rem at 50% 118%,
+        rgba(0, 204, 165, 0.16),
+        transparent 55%
+      ),
+      linear-gradient(180deg, #f1faf8 0%, var(--color-background) 60%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-mint-500);
+    color: var(--color-ink-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+/* Dark aurora override */
+:root[data-theme="dark"] body {
+  background-image:
+    radial-gradient(70rem 45rem at 82% -8%, rgba(0, 255, 206, 0.12), transparent 58%),
+    radial-gradient(60rem 55rem at -12% 8%, rgba(0, 255, 206, 0.08), transparent 52%),
+    radial-gradient(55rem 55rem at 50% 118%, rgba(0, 204, 165, 0.09), transparent 55%),
+    linear-gradient(180deg, #071613 0%, var(--color-background) 60%);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body {
+    background-image:
+      radial-gradient(70rem 45rem at 82% -8%, rgba(0, 255, 206, 0.12), transparent 58%),
+      radial-gradient(60rem 55rem at -12% 8%, rgba(0, 255, 206, 0.08), transparent 52%),
+      radial-gradient(55rem 55rem at 50% 118%, rgba(0, 204, 165, 0.09), transparent 55%),
+      linear-gradient(180deg, #071613 0%, var(--color-background) 60%);
+  }
+}
+
+/* ============================================================================
+   Layout utilities — full-width sections & bands
+   ========================================================================== */
+@layer components {
+  .container-zeist {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  }
+
+  /* Full-width vertical section rhythm. */
+  .section {
+    padding-block: clamp(3.5rem, 8vw, 7rem);
+  }
+
+  /* Full-bleed background bands (edge to edge). */
+  .band-tint {
+    background: var(--band-tint);
+    border-block: 1px solid var(--color-hairline);
+  }
+  .band-ink {
+    background: var(--band-ink);
+    color: #eaf5f2;
+  }
+  .band-mint {
+    background:
+      radial-gradient(40rem 30rem at 20% 0%, rgba(255, 255, 255, 0.35), transparent 60%),
+      linear-gradient(135deg, var(--color-mint-500), var(--color-mint-600));
+    color: var(--color-ink-950);
+  }
+
+  /* Flat, editorial surface — the DEFAULT card. Hairline + whisper shadow. */
+  .surface {
+    background: var(--surface-1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--color-border);
+    border-radius: 18px;
+    box-shadow: var(--elev-1);
+  }
+  .surface-hover {
+    transition:
+      transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .surface-hover:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--color-mint-500) 45%, transparent);
+    box-shadow: var(--elev-2);
+  }
+
+  /* Hairline divider row (editorial list). */
+  .hairline {
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  /* Claymorphism — reserved accent (hero visual, key highlight). Sparingly. */
+  .clay {
+    background-color: var(--clay-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 24px;
+    box-shadow: var(--clay-shadow);
+  }
+
+  /* Buttons ---------------------------------------------------------------- */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.8rem 1.5rem;
+    font-weight: 600;
+    background-color: var(--color-mint-500);
+    color: var(--color-accent-foreground);
+    box-shadow: 0 10px 24px -12px rgba(0, 153, 124, 0.7);
+    transition:
+      transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.18s ease,
+      filter 0.18s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.03);
+    box-shadow: 0 16px 30px -14px rgba(0, 153, 124, 0.8);
+  }
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.8rem 1.5rem;
+    font-weight: 600;
+    color: var(--color-foreground);
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 55%, transparent);
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .btn-ghost:hover {
+    border-color: color-mix(in srgb, var(--color-mint-500) 55%, transparent);
+    background: color-mix(in srgb, var(--color-mint-500) 8%, transparent);
+  }
+
+  /* Eyebrow label — flat, no heavy chip shadow. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-mint-700);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.6rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+  .eyebrow-plain::before {
+    display: none;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-mint-700);
+    border: 1px solid color-mix(in srgb, var(--color-mint-500) 30%, transparent);
+    background: color-mix(in srgb, var(--color-mint-500) 8%, transparent);
+  }
+}
+
+/* Respect reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "services": "Serviços",
+    "blog": "Blog",
+    "tools": "Ferramentas",
+    "toolsSoon": "Em breve",
+    "about": "Sobre nós",
+    "contact": "Contato",
+    "cta": "Iniciar projeto"
+  },
+  "hero": {
+    "eyebrow": "Engenharia de software com IA",
+    "title": "Construímos software que impulsiona o seu negócio.",
+    "highlight": "Com IA. Mais rápido. Mais acessível.",
+    "subtitle": "Sites, apps móveis e sistemas para empresas. Metodologia ágil potencializada por inteligência artificial: reduzimos custos e prazos sem abrir mão da qualidade.",
+    "ctaPrimary": "Iniciar projeto",
+    "ctaSecondary": "Ver serviços",
+    "trust": [
+      "Web · Mobile · Sistemas",
+      "Nuvem e servidores",
+      "Entregas ágeis"
+    ]
+  },
+  "differentiators": {
+    "eyebrow": "Por que a Zeist",
+    "title": "Não somos mais uma gota no oceano.",
+    "subtitle": "O mercado cobra caro e esconde o conhecimento. Nós fazemos o contrário: preços acessíveis, processos transparentes e conteúdo aberto.",
+    "items": [
+      {
+        "title": "IA que reduz o preço",
+        "body": "Desenvolvemos com inteligência artificial e metodologia ágil. Isso reduz o custo real de um produto e o torna acessível para empreendedores e empresas."
+      },
+      {
+        "title": "Direto, sem rodeios",
+        "body": "Nada de jargão vazio nem promessas infladas. Dizemos o que você precisa, quanto custa e em quanto tempo. Claro e preciso."
+      },
+      {
+        "title": "Compartilhamos o que sabemos",
+        "body": "Blog, cursos e ferramentas gratuitas. Divulgamos nossa experiência para você crescer conosco, não à sua custa."
+      },
+      {
+        "title": "Escalamos com você",
+        "body": "De uma landing page a grandes sistemas com nuvem e servidores. Usamos IA, mas temos o processo para projetos sérios."
+      }
+    ]
+  },
+  "services": {
+    "eyebrow": "Serviços",
+    "title": "Tudo o que o seu produto digital precisa.",
+    "subtitle": "Uma única equipe, da ideia à publicação.",
+    "viewAll": "Ver todos os serviços",
+    "items": [
+      {
+        "slug": "paginas-web",
+        "title": "Sites",
+        "body": "Sites rápidos, otimizados para SEO e desenhados para converter. Do portfólio à loja online.",
+        "tags": ["SEO", "Next.js", "Alta performance"]
+      },
+      {
+        "slug": "apps-moviles",
+        "title": "Apps móveis",
+        "body": "Aplicativos iOS e Android com uma única base de código. Experiência nativa, prazos reduzidos.",
+        "tags": ["iOS", "Android", "Cross-platform"]
+      },
+      {
+        "slug": "sistemas-web",
+        "title": "Sistemas para empresas",
+        "body": "ERPs, painéis e plataformas sob medida. Automatizamos seus processos com nuvem e servidores escaláveis.",
+        "tags": ["ERP", "Dashboards", "Cloud"]
+      },
+      {
+        "slug": "ingenieria-civil",
+        "title": "Automação para engenharia civil",
+        "body": "Add-ins para Civil 3D e Revit, scripts de Dynamo. Automatizamos suas tarefas repetitivas de modelagem 3D.",
+        "tags": ["Civil 3D", "Revit", "Dynamo"]
+      }
+    ]
+  },
+  "process": {
+    "eyebrow": "Como trabalhamos",
+    "title": "Metodologia ágil, acelerada com IA.",
+    "subtitle": "Um processo claro que você acompanha passo a passo.",
+    "steps": [
+      {
+        "title": "Descoberta",
+        "body": "Entendemos o seu problema e definimos o escopo. Sem enrolação: objetivos, prazos e orçamento na mesa."
+      },
+      {
+        "title": "Design UX/UI",
+        "body": "Prototipamos a experiência com boas práticas modernas. Design que parece premium e funciona."
+      },
+      {
+        "title": "Desenvolvimento com IA",
+        "body": "Construímos em sprints curtos, apoiados em IA para acelerar sem perder o controle da qualidade."
+      },
+      {
+        "title": "Publicação e suporte",
+        "body": "Nuvem, servidores e CI/CD. Publicamos, medimos e mantemos com você."
+      }
+    ]
+  },
+  "blog": {
+    "eyebrow": "Blog",
+    "title": "Aprenda com a gente. De graça.",
+    "subtitle": "Desenvolvimento, IA, Vibe Coding e automação. Conteúdo prático que você realmente pode aplicar.",
+    "readMore": "Ler artigo",
+    "viewAll": "Ver todos os artigos",
+    "empty": "Em breve publicaremos os primeiros artigos.",
+    "backToBlog": "Voltar ao blog",
+    "minRead": "min de leitura",
+    "publishedOn": "Publicado em"
+  },
+  "tools": {
+    "eyebrow": "Ferramentas",
+    "title": "Desenhe como um profissional, mesmo sem ser designer.",
+    "subtitle": "Geradores de claymorphism, glassmorphism e neumorphism, prompts para IA e trilhas de processo UX/UI. Tudo de ponta a ponta, aqui mesmo.",
+    "badge": "Em construção",
+    "cta": "Quero testar"
+  },
+  "finalCta": {
+    "title": "Pronto para construir algo que se destaca?",
+    "subtitle": "Conte-nos a sua ideia. Respondemos com um plano claro, sem compromisso.",
+    "ctaPrimary": "Iniciar projeto",
+    "ctaSecondary": "Fale conosco"
+  },
+  "footer": {
+    "tagline": "Software e engenharia de sistemas com IA.",
+    "rights": "Todos os direitos reservados.",
+    "columns": {
+      "services": "Serviços",
+      "company": "Empresa",
+      "resources": "Recursos"
+    },
+    "links": {
+      "about": "Sobre nós",
+      "contact": "Contato",
+      "blog": "Blog",
+      "tools": "Ferramentas"
+    }
+  },
+  "meta": {
+    "homeTitle": "Zeist — Software e engenharia de sistemas com IA",
+    "homeDescription": "Criamos sites, apps móveis e sistemas para empresas usando IA e metodologia ágil. Mais rápido, mais acessível, sem rodeios.",
+    "titleTemplate": "%s — Zeist"
+  }
+}
