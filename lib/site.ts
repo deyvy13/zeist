@@ -18,12 +18,12 @@ export const site = {
   themeColor: "#00FFCE",
   // Localized one-liners used for <title> templates and OG defaults.
   slogan: {
-    es: "Software e ingeniería de sistemas con IA",
-    pt: "Software e engenharia de sistemas com IA",
+    es: "Tecnología e ingeniería con IA",
+    pt: "Tecnologia e engenharia com IA",
   },
   description: {
-    es: "Creamos páginas web, apps móviles y sistemas para empresas usando IA y metodología ágil. Más rápido, más accesible, sin rodeos.",
-    pt: "Criamos sites, apps móveis e sistemas para empresas usando IA e metodologia ágil. Mais rápido, mais acessível, sem rodeios.",
+    es: "Soluciones tecnológicas para cada industria: software, automatización, diseño e ingeniería. IA y metodología ágil para resultados más rápidos y accesibles.",
+    pt: "Soluções tecnológicas para cada indústria: software, automação, design e engenharia. IA e metodologia ágil para resultados mais rápidos e acessíveis.",
   },
 } as const;
 

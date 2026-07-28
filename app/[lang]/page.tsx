@@ -20,10 +20,11 @@ export async function generateMetadata({
     title: dict.meta.homeTitle,
     description: dict.meta.homeDescription,
     keywords: [
+      "soluciones tecnológicas",
       "desarrollo de software",
-      "páginas web",
-      "aplicaciones móviles",
-      "sistemas web",
+      "automatización ingeniería",
+      "diseño UX UI",
+      "arquitectura de datos",
       "desarrollo con IA",
       "Zeist",
     ],
@@ -48,12 +49,12 @@ export default async function HomePage({
       ? [
           { k: "−40%", v: "custo médio" },
           { k: "3×", v: "mais rápido" },
-          { k: "100%", v: "seu código" },
+          { k: "6", v: "áreas de atuação" },
         ]
       : [
           { k: "−40%", v: "costo promedio" },
           { k: "3×", v: "más rápido" },
-          { k: "100%", v: "tu código" },
+          { k: "6", v: "áreas de solución" },
         ];
 
   return (
@@ -139,7 +140,7 @@ export default async function HomePage({
                 </div>
                 <div className="mt-6 flex items-center justify-between rounded-2xl bg-[color:var(--color-mint-500)] px-4 py-3">
                   <span className="text-sm font-semibold text-[color:var(--color-ink-950)]">
-                    {lang === "pt" ? "Publicado" : "Desplegado"}
+                    {lang === "pt" ? "Entregue" : "Entregado"}
                   </span>
                   <IconArrow className="h-4 w-4 text-[color:var(--color-ink-950)]" />
                 </div>

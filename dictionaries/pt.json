@@ -1,6 +1,6 @@
 {
   "nav": {
-    "services": "Serviços",
+    "services": "Soluções",
     "blog": "Blog",
     "tools": "Ferramentas",
     "toolsSoon": "Em breve",
@@ -9,15 +9,15 @@
     "cta": "Iniciar projeto"
   },
   "hero": {
-    "eyebrow": "Engenharia de software com IA",
-    "title": "Construímos software que impulsiona o seu negócio.",
+    "eyebrow": "Tecnologia e engenharia com IA",
+    "title": "Soluções tecnológicas para cada indústria.",
     "highlight": "Com IA. Mais rápido. Mais acessível.",
-    "subtitle": "Sites, apps móveis e sistemas para empresas. Metodologia ágil potencializada por inteligência artificial: reduzimos custos e prazos sem abrir mão da qualidade.",
+    "subtitle": "Software, automação, design e engenharia. Metodologia ágil potencializada por inteligência artificial: reduzimos custos e prazos sem abrir mão da qualidade.",
     "ctaPrimary": "Iniciar projeto",
-    "ctaSecondary": "Ver serviços",
+    "ctaSecondary": "Ver soluções",
     "trust": [
-      "Web · Mobile · Sistemas",
-      "Nuvem e servidores",
+      "Software · Automação · Design",
+      "Engenharia e dados",
       "Entregas ágeis"
     ]
   },
@@ -28,7 +28,7 @@
     "items": [
       {
         "title": "IA que reduz o preço",
-        "body": "Desenvolvemos com inteligência artificial e metodologia ágil. Isso reduz o custo real de um produto e o torna acessível para empreendedores e empresas."
+        "body": "Trabalhamos com inteligência artificial e metodologia ágil. Isso reduz o custo real de cada projeto e o torna acessível para empreendedores e empresas."
       },
       {
         "title": "Direto, sem rodeios",
@@ -40,39 +40,52 @@
       },
       {
         "title": "Escalamos com você",
-        "body": "De uma landing page a grandes sistemas com nuvem e servidores. Usamos IA, mas temos o processo para projetos sérios."
+        "body": "De uma landing page a sistemas complexos com nuvem e servidores. De um script a uma automação completa de fluxos BIM. IA para acelerar, processo para projetos sérios."
       }
     ]
   },
   "services": {
-    "eyebrow": "Serviços",
-    "title": "Tudo o que o seu produto digital precisa.",
-    "subtitle": "Uma única equipe, da ideia à publicação.",
-    "viewAll": "Ver todos os serviços",
+    "eyebrow": "Soluções",
+    "title": "Tecnologia aplicada à sua indústria.",
+    "subtitle": "Cada setor tem seus desafios. Nós os resolvemos.",
+    "viewAll": "Ver todas as soluções",
+    "viewDetail": "Saber mais",
     "items": [
       {
-        "slug": "paginas-web",
-        "title": "Sites",
-        "body": "Sites rápidos, otimizados para SEO e desenhados para converter. Do portfólio à loja online.",
-        "tags": ["SEO", "Next.js", "Alta performance"]
+        "slug": "desarrollo-de-software",
+        "title": "Desenvolvimento de software",
+        "body": "Sites, apps móveis e sistemas para empresas. Do portfólio à plataforma empresarial, com uma única base de código onde possível.",
+        "tags": ["Web", "Mobile", "Sistemas", "Cloud"]
       },
       {
-        "slug": "apps-moviles",
-        "title": "Apps móveis",
-        "body": "Aplicativos iOS e Android com uma única base de código. Experiência nativa, prazos reduzidos.",
-        "tags": ["iOS", "Android", "Cross-platform"]
+        "slug": "automatizacion-ingenieria",
+        "title": "Automação para engenharia",
+        "body": "Add-ins para Civil 3D e Revit, scripts de Dynamo. Automatizamos suas tarefas repetitivas de modelagem e design em engenharia civil.",
+        "tags": ["Civil 3D", "Revit", "Dynamo", "BIM"]
       },
       {
-        "slug": "sistemas-web",
-        "title": "Sistemas para empresas",
-        "body": "ERPs, painéis e plataformas sob medida. Automatizamos seus processos com nuvem e servidores escaláveis.",
-        "tags": ["ERP", "Dashboards", "Cloud"]
+        "slug": "diseno-ux-ui",
+        "title": "Design UX/UI",
+        "body": "Interfaces que parecem premium e funcionam. Prototipagem, design systems e experiências centradas no usuário.",
+        "tags": ["Figma", "Prototipagem", "Design Systems"]
       },
       {
-        "slug": "ingenieria-civil",
-        "title": "Automação para engenharia civil",
-        "body": "Add-ins para Civil 3D e Revit, scripts de Dynamo. Automatizamos suas tarefas repetitivas de modelagem 3D.",
-        "tags": ["Civil 3D", "Revit", "Dynamo"]
+        "slug": "arquitectura-de-software",
+        "title": "Arquitetura de software",
+        "body": "Design de sistemas escaláveis, migrações de stack e decisões técnicas que duram. Nuvem, servidores e CI/CD.",
+        "tags": ["Cloud", "CI/CD", "Microsserviços"]
+      },
+      {
+        "slug": "arquitectura-de-datos",
+        "title": "Arquitetura de dados",
+        "body": "Modelagem de dados, pipelines ETL e dashboards. Transformamos seus dados em decisões acionáveis.",
+        "tags": ["SQL", "ETL", "Dashboards", "BI"]
+      },
+      {
+        "slug": "cursos-y-mentorias",
+        "title": "Cursos e mentorias",
+        "body": "Formação prática em desenvolvimento, IA e Vibe Coding. Da ideia à publicação, com acompanhamento real.",
+        "tags": ["Vibe Coding", "IA", "Grátis"]
       }
     ]
   },
@@ -86,16 +99,16 @@
         "body": "Entendemos o seu problema e definimos o escopo. Sem enrolação: objetivos, prazos e orçamento na mesa."
       },
       {
-        "title": "Design UX/UI",
-        "body": "Prototipamos a experiência com boas práticas modernas. Design que parece premium e funciona."
+        "title": "Design e planejamento",
+        "body": "Prototipamos a solução com boas práticas modernas. Design que parece premium e funciona."
       },
       {
-        "title": "Desenvolvimento com IA",
+        "title": "Execução com IA",
         "body": "Construímos em sprints curtos, apoiados em IA para acelerar sem perder o controle da qualidade."
       },
       {
-        "title": "Publicação e suporte",
-        "body": "Nuvem, servidores e CI/CD. Publicamos, medimos e mantemos com você."
+        "title": "Entrega e suporte",
+        "body": "Publicamos, medimos e mantemos com você. Iteração contínua até que o resultado seja impecável."
       }
     ]
   },
@@ -112,22 +125,22 @@
   },
   "tools": {
     "eyebrow": "Ferramentas",
-    "title": "Desenhe como um profissional, mesmo sem ser designer.",
-    "subtitle": "Geradores de claymorphism, glassmorphism e neumorphism, prompts para IA e trilhas de processo UX/UI. Tudo de ponta a ponta, aqui mesmo.",
+    "title": "Ferramentas para cada setor. De graça.",
+    "subtitle": "Geradores, prompts para IA, trilhas de processo e automações. Tudo organizado por indústria, de ponta a ponta.",
     "badge": "Em construção",
     "cta": "Quero testar"
   },
   "finalCta": {
-    "title": "Pronto para construir algo que se destaca?",
+    "title": "Pronto para resolver seu próximo desafio?",
     "subtitle": "Conte-nos a sua ideia. Respondemos com um plano claro, sem compromisso.",
     "ctaPrimary": "Iniciar projeto",
     "ctaSecondary": "Fale conosco"
   },
   "footer": {
-    "tagline": "Software e engenharia de sistemas com IA.",
+    "tagline": "Tecnologia e engenharia com IA.",
     "rights": "Todos os direitos reservados.",
     "columns": {
-      "services": "Serviços",
+      "services": "Soluções",
       "company": "Empresa",
       "resources": "Recursos"
     },
@@ -139,8 +152,8 @@
     }
   },
   "meta": {
-    "homeTitle": "Zeist — Software e engenharia de sistemas com IA",
-    "homeDescription": "Criamos sites, apps móveis e sistemas para empresas usando IA e metodologia ágil. Mais rápido, mais acessível, sem rodeios.",
+    "homeTitle": "Zeist — Tecnologia e engenharia com IA",
+    "homeDescription": "Soluções tecnológicas para cada indústria: software, automação, design e engenharia. IA e metodologia ágil para resultados mais rápidos e acessíveis.",
     "titleTemplate": "%s — Zeist"
   }
 }

@@ -4,10 +4,12 @@ import { locales, hreflangByLocale, type Locale } from "@/lib/i18n";
 import { getPostSlugs } from "@/lib/blog";
 
 const SERVICE_SLUGS = [
-  "paginas-web",
-  "apps-moviles",
-  "sistemas-web",
-  "ingenieria-civil",
+  "desarrollo-de-software",
+  "automatizacion-ingenieria",
+  "diseno-ux-ui",
+  "arquitectura-de-software",
+  "arquitectura-de-datos",
+  "cursos-y-mentorias",
 ];
 
 const STATIC_PATHS = [

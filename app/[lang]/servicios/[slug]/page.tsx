@@ -8,7 +8,14 @@ import { serviceIcons, IconArrow } from "@/components/icons";
 
 export function generateStaticParams() {
   // Slugs are shared across locales; params combine lang x slug.
-  const slugs = ["paginas-web", "apps-moviles", "sistemas-web", "ingenieria-civil"];
+  const slugs = [
+    "desarrollo-de-software",
+    "automatizacion-ingenieria",
+    "diseno-ux-ui",
+    "arquitectura-de-software",
+    "arquitectura-de-datos",
+    "cursos-y-mentorias",
+  ];
   return locales.flatMap((lang) => slugs.map((slug) => ({ lang, slug })));
 }
 

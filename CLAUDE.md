@@ -10,7 +10,7 @@
 
 ## 1. Qué es Zeist
 
-Zeist es una **marca** de ingeniería de software (no un nombre descriptivo).
+Zeist es una **marca** de tecnología e ingeniería (no un nombre descriptivo).
 Igual que Nike o Adidas, el nombre no explica el producto: construye marca.
 La web es el activo central para atraer clientes calificados vía **SEO orgánico**.
 
@@ -19,11 +19,17 @@ empresas, desarrolladores, ingenieros y diseñadores para resolver sus problemas
 Modelo de confianza y engagement a largo plazo (referencia mental del usuario:
 el camino de Yape — invertir en fidelizar y ganar confianza antes que en cobrar caro).
 
-**Servicios que vende:**
-1. Creación de páginas web.
-2. Creación de apps móviles.
-3. Sistemas web para empresas (ERPs, paneles, plataformas; nube + servidores).
-4. Automatización para ingeniería civil: add-ins Civil 3D / Revit, scripts Dynamo.
+**Posicionamiento:** Zeist NO se presenta como "empresa de software". Se presenta
+como marca de **soluciones tecnológicas por rubro/industria**. El desarrollo de
+software (webs, apps, sistemas) es **un rubro más** al mismo nivel que los demás.
+
+**Rubros (áreas de solución):**
+1. Desarrollo de software (webs + apps + sistemas, agrupados).
+2. Automatización para ingeniería (Civil 3D, Revit, Dynamo).
+3. Diseño UX/UI.
+4. Arquitectura de software.
+5. Arquitectura de datos.
+6. Cursos y mentorías (Vibe Coding, IA, formación práctica).
 
 **Ofertas de divulgación (fidelización):** blog gratuito, cursos/webinars/bootcamps
 (inicialmente gratis), mentorías de "Vibe Coding" (de la idea al despliegue).
@@ -33,9 +39,9 @@ el camino de Yape — invertir en fidelizar y ganar confianza antes que en cobra
 - **Diferenciador central:** el mercado cobra caro y esconde el conocimiento;
   Zeist hace lo contrario. Precios accesibles gracias a desarrollo **con IA** +
   metodología ágil, y **divulgación abierta** de conocimiento.
-- **Mensaje clave:** desarrollar con IA baja el costo real del producto y lo hace
-  accesible desde emprendedores pequeños hasta empresas grandes (también hacemos
-  proyectos grandes: nube, servidores, arquitectura).
+- **Mensaje clave:** trabajar con IA baja el costo real de cada proyecto y lo
+  hace accesible desde emprendedores pequeños hasta empresas grandes. La web
+  comunica por rubros/beneficios, no "vendemos webs/apps/sistemas".
 - **Tono:** corto y preciso, **nada de rodeos**. Directo, profesional, elegante,
   internacional. Sin tecnicismos vacíos ni promesas infladas. "No ser una gota
   más de agua en el mar."
@@ -73,7 +79,7 @@ app/
     layout.tsx                # ROOT layout: html/body, fonts, header, footer, metadata base, JSON-LD Org
     page.tsx                  # Landing (hero, diferenciadores, servicios, proceso, blog, tools, CTA)
     servicios/page.tsx        # Índice de servicios
-    servicios/[slug]/page.tsx # Detalle de servicio (generateStaticParams por los 4 slugs)
+    servicios/[slug]/page.tsx # Detalle de rubro (generateStaticParams por los 6 slugs)
     blog/page.tsx             # Índice del blog
     blog/[slug]/page.tsx      # Artículo (renderiza MDX, JSON-LD BlogPosting)
     herramientas/page.tsx     # "Coming soon" con roadmap de herramientas
@@ -155,8 +161,13 @@ por página, p.ej. el visual del hero), NO el estilo de cada caja.
 
 ## 9. Roadmap (por fases)
 
-- **Fase 1 (MVP, HECHA):** Landing + Servicios (+detalle) + Blog (MDX) +
+- **Fase 1 (MVP, HECHA):** Landing + Soluciones por rubro (+detalle) + Blog (MDX) +
   Herramientas (coming soon) + Contacto. i18n es/pt. SEO completo. Claymorfismo.
+  **Reestructuración jul-2026:** la web ya NO se presenta como "empresa de software".
+  Los 4 servicios anteriores (webs, apps, sistemas, ingeniería civil) se reorganizaron
+  en **6 rubros** al mismo nivel: Desarrollo de software (agrupa webs+apps+sistemas),
+  Automatización para ingeniería, Diseño UX/UI, Arquitectura de software,
+  Arquitectura de datos, Cursos y mentorías.
 - **Fase 2 — Hub de Herramientas por RUBROS** (diferenciador clave). La página
   `/herramientas` NO vende productos: organiza todo por **rubros/categorías**, cada
   uno con un gancho de beneficio ("Automatiza tus tareas de ingeniería civil") y,
@@ -167,8 +178,6 @@ por página, p.ej. el visual del hero), NO el estilo de cada caja.
     Automatización en ingeniería (C3D/Revit/Dynamo) · Cursos gratuitos · Mentorías y
     comunidad. Próximo paso: definir cada herramienta/ruta al 100% e ir liberándolas
     (generadores clay/glass/neumorfismo, prompts para Google Stitch, etc.).
-  - **Enfoque general que quiere el usuario:** comunicar por rubros/beneficios, no
-    "vendemos webs/apps/sistemas". Extender este marco a otras secciones si se pide.
 - **Fase 3:** cursos / webinars / bootcamps (gratis al inicio), mentorías Vibe Coding.
 - **Fase 4:** área de contenido para ingenieros civiles (automatización BIM/CAD).
 - **Backend de contacto:** hoy el formulario usa `mailto:`. Migrar a un endpoint

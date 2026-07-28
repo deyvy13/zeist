@@ -41,7 +41,7 @@ export default async function ServicesPage({
         </p>
       </div>
 
-      <div className="mt-14 grid gap-6 md:grid-cols-2">
+      <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {dict.services.items.map((service) => {
           const Icon = serviceIcons[service.slug as keyof typeof serviceIcons];
           return (
@@ -58,7 +58,7 @@ export default async function ServicesPage({
                 {service.body}
               </p>
               <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--color-mint-700)]">
-                {dict.services.viewAll}
+                {dict.services.viewDetail}
                 <IconArrow className="h-4 w-4" />
               </span>
             </Link>

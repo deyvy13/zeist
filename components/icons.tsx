@@ -120,11 +120,21 @@ export function IconRoute(p: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function IconCode(p: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base} {...p}>
+      <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
+    </svg>
+  );
+}
+
 export const serviceIcons = {
-  "paginas-web": IconWeb,
-  "apps-moviles": IconMobile,
-  "sistemas-web": IconSystem,
-  "ingenieria-civil": IconCube,
+  "desarrollo-de-software": IconCode,
+  "automatizacion-ingenieria": IconCube,
+  "diseno-ux-ui": IconPalette,
+  "arquitectura-de-software": IconLayers,
+  "arquitectura-de-datos": IconDatabase,
+  "cursos-y-mentorias": IconGraduation,
 } as const;
 
 export const rubroIcons = {
