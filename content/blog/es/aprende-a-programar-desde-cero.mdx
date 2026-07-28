@@ -1,0 +1,350 @@
+---
+title: "Aprende a programar desde cero: la ruta completa para 2026"
+description: "Ruta paso a paso para aprender a programar desde cero, sin experiencia previa. De la lógica y el pseudocódigo hasta tu primer proyecto real, con ejemplos y ejercicios."
+date: "2026-07-28T10:00:00.000Z"
+author: "Zeist"
+tags:
+  - Programación
+  - Principiantes
+  - Lógica
+  - Vibe Coding
+  - Ruta de aprendizaje
+---
+
+<BlogHero
+  eyebrow="Ruta de aprendizaje · Nivel 0"
+  title="Aprender a programar no es memorizar código. Es aprender a pensar."
+  highlight="Esta guía es la ruta que le recomendaríamos a alguien que empieza hoy, sin experiencia previa, y que quiere llegar a construir software real. Cada tema con teoría corta, ejemplo y ejercicio."
+/>
+
+<Callout type="info" title="Cómo usar esta guía">
+Léela en orden. Cada bloque tarda entre 30 minutos y 2 horas. Si un tema no te queda claro, no avances: la programación es como construir una torre — un ladrillo mal puesto arruina todo lo que va encima.
+</Callout>
+
+## Antes de empezar: qué es programar (y qué no)
+
+Programar **no** es memorizar la sintaxis de un lenguaje. Programar es **describir la solución a un problema en pasos que una computadora puede seguir**. El lenguaje (Python, JavaScript, Rust, C…) es sólo el idioma en el que escribes esa solución. Cambiar de lenguaje después es fácil; lo difícil —y lo importante— es aprender a pensar como programador.
+
+Esta guía se enfoca justo en eso. Usaremos ejemplos en **Python y JavaScript** por ser los dos lenguajes más accesibles hoy, pero los conceptos son universales.
+
+<Roadmap />
+
+## 1. Lógica de programación: aprender a pensar
+
+<TopicCard step={1} title="Descomponer problemas en pasos" time="~2 h">
+La lógica de programación es la habilidad de tomar un problema grande y romperlo en pasos pequeños, ordenados y sin ambigüedad. **Antes de tocar el teclado**, tienes que poder explicarle a otra persona —en palabras— cómo resolverías el problema.
+</TopicCard>
+
+**Ejemplo clásico:** hacer un sándwich. Parece trivial hasta que intentas darle instrucciones a alguien que nunca ha visto uno:
+
+1. Toma dos rebanadas de pan.
+2. Coloca una en un plato.
+3. Aplica mantequilla sobre esa rebanada.
+4. Coloca jamón encima.
+5. Coloca queso encima del jamón.
+6. Cubre con la segunda rebanada.
+
+Cada paso es una instrucción **atómica** (no se puede dividir más) y **ordenada** (si cambias el orden, el resultado cambia). Así piensa un programador.
+
+**Ejercicio:** describe, paso a paso, cómo alguien puede saber si un número es par o impar. No uses código. Sólo palabras.
+
+## 2. Pseudocódigo: la solución antes del código
+
+<TopicCard step={2} title="Escribir la lógica en español" time="~3 h">
+El pseudocódigo es un intermediario entre el lenguaje humano y el lenguaje de programación. Te obliga a estructurar tu solución **antes** de preocuparte por la sintaxis. Es la herramienta más útil —y la que casi nadie enseña bien— para principiantes.
+</TopicCard>
+
+Un ejemplo. Problema: **decir si una persona es mayor de edad.**
+
+```text
+INICIO
+  LEER edad
+  SI edad ES MAYOR O IGUAL A 18 ENTONCES
+    MOSTRAR "Es mayor de edad"
+  SINO
+    MOSTRAR "Es menor de edad"
+  FIN SI
+FIN
+```
+
+Notas: `INICIO/FIN`, `LEER`, `MOSTRAR`, `SI/SINO/FIN SI` son palabras clave del pseudocódigo. No hay una norma universal —cada libro varía— pero la esencia siempre es la misma: **describir el algoritmo con claridad**.
+
+<Callout type="tip">
+Cuando lleves 20 problemas resueltos en pseudocódigo, traducirlos a Python o JavaScript será cuestión de aprender vocabulario, no de aprender a pensar.
+</Callout>
+
+## 3. Variables y tipos de datos
+
+<TopicCard step={3} title="Guardar información en la memoria" time="~2 h">
+Una **variable** es un nombre que le pones a un espacio de memoria donde guardas un valor. El **tipo** te dice qué clase de valor es: número, texto, verdadero/falso, etc.
+</TopicCard>
+
+**Los tipos más comunes:**
+
+- **Número entero** (`int`): `10`, `-5`, `2026`
+- **Número decimal** (`float`): `3.14`, `-0.5`
+- **Texto** (`string`): `"Hola"`, `'programación'`
+- **Booleano** (`bool`): `true` o `false`
+
+En Python:
+
+```python
+edad = 25
+nombre = "Ana"
+altura = 1.72
+es_estudiante = True
+```
+
+En JavaScript:
+
+```javascript
+const edad = 25;
+const nombre = "Ana";
+const altura = 1.72;
+const esEstudiante = true;
+```
+
+**Convención:** usa nombres descriptivos. `x` no dice nada; `edad_usuario` dice todo.
+
+## 4. Operadores
+
+<TopicCard step={4} title="Manipular y comparar valores" time="~1 h">
+Los operadores son símbolos que hacen operaciones con valores. Se dividen en tres familias.
+</TopicCard>
+
+**Aritméticos** (matemática básica):
+
+| Operador | Uso | Resultado |
+|----------|-----|-----------|
+| `+` | `5 + 3` | `8` |
+| `-` | `5 - 3` | `2` |
+| `*` | `5 * 3` | `15` |
+| `/` | `10 / 4` | `2.5` |
+| `%` | `10 % 3` | `1` (resto) |
+
+**De comparación** (devuelven `true` o `false`):
+
+| Operador | Significado |
+|----------|-------------|
+| `==` | igual a |
+| `!=` | distinto de |
+| `>` | mayor que |
+| `<` | menor que |
+| `>=` | mayor o igual |
+| `<=` | menor o igual |
+
+**Lógicos** (combinan booleanos):
+
+- `and` / `&&` — verdadero si **ambos** son verdaderos
+- `or` / `\|\|` — verdadero si **al menos uno** es verdadero
+- `not` / `!` — invierte el valor
+
+## 5. Condicionales: tomar decisiones
+
+<TopicCard step={5} title="Que el programa decida qué hacer" time="~2 h">
+Los condicionales son la primera herramienta de **control de flujo**: le permiten a tu programa hacer una cosa u otra según los datos. Sin condicionales, un programa es sólo una lista lineal de instrucciones.
+</TopicCard>
+
+Estructura básica: `si` **condición** es verdadera, **haz esto**; si no, **haz aquello**.
+
+Python:
+
+```python
+edad = 20
+
+if edad >= 18:
+    print("Puedes votar")
+else:
+    print("Todavía no puedes votar")
+```
+
+JavaScript:
+
+```javascript
+const edad = 20;
+
+if (edad >= 18) {
+  console.log("Puedes votar");
+} else {
+  console.log("Todavía no puedes votar");
+}
+```
+
+Para más de dos casos, se encadena con `elif` (Python) o `else if` (JS):
+
+```python
+nota = 85
+
+if nota >= 90:
+    print("Excelente")
+elif nota >= 70:
+    print("Aprobado")
+else:
+    print("Reprobado")
+```
+
+## 6. Bucles: repetir sin escribir de más
+
+<TopicCard step={6} title="Ejecutar código muchas veces" time="~3 h">
+Un **bucle** repite un bloque de código mientras se cumpla una condición. Es la diferencia entre escribir "Hola" una vez o un millón: con bucles, la longitud del código no cambia.
+</TopicCard>
+
+**Bucle `for`** — cuando sabes cuántas veces quieres repetir:
+
+```python
+for i in range(5):
+    print(f"Iteración {i}")
+# Imprime 0, 1, 2, 3, 4
+```
+
+**Bucle `while`** — cuando no sabes cuántas veces, pero sí cuándo detenerte:
+
+```python
+intentos = 0
+password = ""
+
+while password != "abrete":
+    password = input("Contraseña: ")
+    intentos += 1
+
+print(f"Acertaste en {intentos} intentos")
+```
+
+<Callout type="warn">
+Cuidado con los bucles infinitos: si la condición del `while` **nunca** se vuelve falsa, tu programa se congela. Es el error #1 de principiantes.
+</Callout>
+
+## 7. Funciones: reutilizar lógica
+
+<TopicCard step={7} title="Empaquetar código para no repetirlo" time="~3 h">
+Una **función** es un bloque de código con nombre, que puedes ejecutar cuantas veces quieras. Recibe **parámetros** (datos de entrada) y opcionalmente devuelve un **resultado**. Son el corazón del código organizado.
+</TopicCard>
+
+Sin función (mal):
+
+```python
+precio1 = 100
+iva1 = precio1 * 0.18
+total1 = precio1 + iva1
+
+precio2 = 250
+iva2 = precio2 * 0.18
+total2 = precio2 + iva2
+```
+
+Con función (bien):
+
+```python
+def calcular_total(precio):
+    iva = precio * 0.18
+    return precio + iva
+
+total1 = calcular_total(100)
+total2 = calcular_total(250)
+```
+
+**Principio DRY** (*Don't Repeat Yourself*): si escribes lo mismo dos veces, extráelo en una función. Es una de las reglas más importantes que existe.
+
+## 8. Estructuras de datos: guardar muchos valores
+
+<TopicCard step={8} title="Colecciones organizadas" time="~4 h">
+Hasta ahora cada variable guarda un valor. Las estructuras de datos te dejan guardar **muchos valores relacionados** bajo un solo nombre.
+</TopicCard>
+
+**Listas / Arrays** — colección ordenada, accedes por posición:
+
+```python
+frutas = ["manzana", "pera", "uva"]
+print(frutas[0])  # manzana
+frutas.append("mango")
+```
+
+**Diccionarios / Objetos** — colección con claves, accedes por nombre:
+
+```python
+usuario = {
+    "nombre": "Ana",
+    "edad": 25,
+    "activo": True
+}
+print(usuario["nombre"])  # Ana
+```
+
+Combinar ambas es lo normal en el mundo real:
+
+```python
+usuarios = [
+    {"nombre": "Ana", "edad": 25},
+    {"nombre": "Luis", "edad": 30},
+]
+
+for u in usuarios:
+    print(u["nombre"])
+```
+
+## 9. Programación orientada a objetos
+
+<TopicCard step={9} title="Modelar el mundo real en código" time="~5 h">
+La **POO** organiza el código en **clases** (moldes) y **objetos** (instancias del molde). Una clase agrupa datos (**atributos**) y comportamiento (**métodos**) que van juntos.
+</TopicCard>
+
+Ejemplo: modelar un usuario.
+
+```python
+class Usuario:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    def saludar(self):
+        return f"Hola, soy {self.nombre}"
+
+ana = Usuario("Ana", 25)
+print(ana.saludar())  # Hola, soy Ana
+```
+
+Los cuatro pilares clásicos: **encapsulamiento** (agrupar datos y métodos), **herencia** (una clase hereda de otra), **polimorfismo** (una misma llamada, distintos comportamientos), **abstracción** (esconder el detalle). No los memorices ahora — se entienden practicando.
+
+## 10. Algoritmos básicos y complejidad
+
+<TopicCard step={10} title="Cómo de eficiente es tu solución" time="~4 h">
+Un mismo problema tiene muchas soluciones posibles. Un **algoritmo** es una solución concreta, y algunos son más rápidos que otros. Aprender a medir esto se llama **complejidad**.
+</TopicCard>
+
+Los tres algoritmos que **todo el mundo** debe conocer:
+
+1. **Búsqueda lineal** — recorres una lista de principio a fin. Complejidad **O(n)**.
+2. **Búsqueda binaria** — divides la lista a la mitad en cada paso (requiere que esté ordenada). Complejidad **O(log n)**, muchísimo más rápida.
+3. **Ordenamiento** — de menor a mayor. Los clásicos: *bubble sort* (lento pero pedagógico) y *merge sort* / *quick sort* (los que se usan en producción).
+
+<Callout type="info">
+La **notación O(n)** (Big O) es la forma estándar de comparar algoritmos. `O(1)` es instantáneo, `O(log n)` es rapidísimo, `O(n)` es lineal, `O(n²)` es lento con listas grandes.
+</Callout>
+
+## 11. Tu primer proyecto real
+
+<TopicCard step={11} title="Aplicar todo lo aprendido" time="~10-20 h">
+Los libros no te vuelven programador. Los proyectos sí. Elige uno pequeño pero **completo**, y termínalo. Terminarlo importa más que hacerlo perfecto.
+</TopicCard>
+
+**Ideas de primer proyecto** (elige uno):
+
+- **Lista de tareas por consola** — añadir, listar, marcar como completadas, borrar. Guarda en un archivo `.json`.
+- **Calculadora de gastos personales** — registrar gastos, sumar por categoría, mostrar promedio del mes.
+- **Juego de adivinar el número** — el programa piensa un número, tú intentas adivinarlo, te dice si es mayor o menor.
+- **Conversor de monedas** — pide una cantidad y dos monedas, muestra la conversión (fija las tasas o llama a una API).
+
+Cualquiera de esos usa **todo lo anterior**: variables, condicionales, bucles, funciones, estructuras de datos, y probablemente clases si lo estructuras bien.
+
+## Recursos para seguir aprendiendo
+
+- **Práctica diaria:** [Exercism](https://exercism.org) (ejercicios con mentores gratis) o [Codewars](https://www.codewars.com) (retos por dificultad).
+- **Documentación oficial:** [Python](https://docs.python.org/es/3/tutorial/) y [MDN para JavaScript](https://developer.mozilla.org/es/docs/Learn/JavaScript).
+- **Cursos gratis serios:** CS50 de Harvard (en YouTube), FreeCodeCamp.
+- **En Zeist:** próximamente publicaremos [mentorías de Vibe Coding](/es/servicios/cursos-y-mentorias) para acompañarte en tu primer proyecto real, desde la idea hasta el despliegue.
+
+<PostFaqs />
+
+---
+
+**¿Te sirvió esta guía?** Compártela con alguien que quiera empezar. Y si buscas acompañamiento real para tu primer proyecto, en Zeist ofrecemos [mentorías de Vibe Coding](/es/servicios/cursos-y-mentorias) — de la idea al despliegue, con IA como copiloto y una persona real revisando cada paso.

@@ -6,6 +6,7 @@ import { localizedPath, absoluteUrl, site } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
 import { getAllPosts, getPost, getPostSlugs } from "@/lib/blog";
 import { MdxContent } from "@/components/mdx-content";
+import { ReadingProgress } from "@/components/visual/reading-progress";
 
 export function generateStaticParams() {
   return locales.flatMap((lang) =>
@@ -54,25 +55,72 @@ export default async function BlogPostPage({
     .filter((p) => p.slug !== slug)
     .slice(0, 2);
 
-  const jsonLd = {
+  const wordCount = post.content.trim().split(/\s+/).length;
+  const canonical = absoluteUrl(`${lang}/blog/${slug}`);
+  const ogImage = meta.cover ?? absoluteUrl(`${lang}/blog/${slug}/opengraph-image`);
+
+  const postJsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: meta.title,
     description: meta.description,
     datePublished: meta.date,
     dateModified: meta.date,
-    author: { "@type": "Organization", name: meta.author },
-    publisher: { "@type": "Organization", name: site.name },
+    author: {
+      "@type": "Organization",
+      name: meta.author,
+      url: absoluteUrl(lang),
+    },
+    publisher: {
+      "@type": "Organization",
+      name: site.name,
+      url: absoluteUrl(lang),
+    },
+    image: ogImage,
     inLanguage: lang,
-    mainEntityOfPage: absoluteUrl(`${lang}/blog/${slug}`),
+    mainEntityOfPage: canonical,
+    url: canonical,
     keywords: meta.tags.join(", "),
+    articleSection: meta.tags[0] ?? "Blog",
+    wordCount,
+    timeRequired: `PT${meta.readingMinutes}M`,
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Zeist",
+        item: absoluteUrl(lang),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: dict.nav.blog,
+        item: absoluteUrl(`${lang}/blog`),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: meta.title,
+        item: canonical,
+      },
+    ],
   };
 
   return (
     <article className="container-zeist py-16">
+      <ReadingProgress />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(postJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       <div className="mx-auto max-w-3xl">
@@ -113,7 +161,7 @@ export default async function BlogPostPage({
 
         <hr className="my-10 border-[color:var(--color-border)]" />
 
-        <MdxContent source={post.content} />
+        <MdxContent source={post.content} slug={slug} locale={lang} />
 
         {related.length > 0 && (
           <section className="mt-16">

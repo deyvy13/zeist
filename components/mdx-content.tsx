@@ -4,6 +4,16 @@ import type { MDXComponents } from "mdx/types";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { TopicCard } from "@/components/visual/topic-card";
+import { Callout } from "@/components/visual/callout";
+import { LearningPath } from "@/components/visual/learning-path";
+import { BlogHero } from "@/components/visual/hero-visual";
+import { Faqs } from "@/components/visual/faq";
+import { AnimatedBeam } from "@/components/visual/animated-beam";
+import { GridBeam } from "@/components/visual/grid-beam";
+import { DotPattern } from "@/components/visual/dot-pattern";
+import { PostRoadmap, PostFaqs } from "@/components/visual/post-widgets";
+import type { Locale } from "@/lib/i18n";
 
 // Styled element map — full control over prose without a typography plugin.
 const components: MDXComponents = {
@@ -63,14 +73,41 @@ const components: MDXComponents = {
     // eslint-disable-next-line @next/next/no-img-element
     <img alt={alt} className="mt-6 rounded-2xl" {...props} />
   ),
+  // Custom visual components exposed to MDX authors.
+  TopicCard,
+  Callout,
+  LearningPath,
+  BlogHero,
+  Faqs,
+  AnimatedBeam,
+  GridBeam,
+  DotPattern,
 };
 
-export function MdxContent({ source }: { source: string }) {
+export function MdxContent({
+  source,
+  slug,
+  locale,
+}: {
+  source: string;
+  slug?: string;
+  locale?: Locale;
+}) {
+  // Slug/locale-bound wrappers so MDX authors can write <Roadmap /> and <PostFaqs />
+  // without repeating the identifiers. Data lives in lib/blog-data.ts.
+  const boundComponents: MDXComponents = {
+    ...components,
+    Roadmap: () =>
+      slug && locale ? <PostRoadmap slug={slug} locale={locale} /> : null,
+    PostFaqs: () =>
+      slug && locale ? <PostFaqs slug={slug} locale={locale} /> : null,
+  };
+
   return (
     <div className="max-w-none">
       <MDXRemote
         source={source}
-        components={components}
+        components={boundComponents}
         options={{
           mdxOptions: {
             remarkPlugins: [remarkGfm],
