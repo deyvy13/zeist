@@ -1,6 +1,6 @@
 import { getPostData } from "@/lib/blog-data";
 import type { Locale } from "@/lib/i18n";
-import { LearningPath } from "./learning-path";
+import { RoadmapView } from "./roadmap-view";
 import { Faqs } from "./faq";
 
 // Slug-driven wrappers around the generic visual components. MDX files pass
@@ -11,7 +11,14 @@ import { Faqs } from "./faq";
 export function PostRoadmap({ slug, locale }: { slug: string; locale: Locale }) {
   const d = getPostData(slug, locale)?.roadmap;
   if (!d) return null;
-  return <LearningPath steps={d.steps} title={d.title} intro={d.intro} />;
+  return (
+    <RoadmapView
+      steps={d.steps}
+      title={d.title}
+      intro={d.intro}
+      locale={locale as "es" | "pt"}
+    />
+  );
 }
 
 export function PostFaqs({ slug, locale }: { slug: string; locale: Locale }) {

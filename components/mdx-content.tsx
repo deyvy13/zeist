@@ -13,6 +13,8 @@ import { AnimatedBeam } from "@/components/visual/animated-beam";
 import { GridBeam } from "@/components/visual/grid-beam";
 import { DotPattern } from "@/components/visual/dot-pattern";
 import { PostRoadmap, PostFaqs } from "@/components/visual/post-widgets";
+import { StepsProvider } from "@/components/visual/steps-provider";
+import { StepsProgress } from "@/components/visual/steps-progress";
 import type { Locale } from "@/lib/i18n";
 
 // Styled element map — full control over prose without a typography plugin.
@@ -103,7 +105,7 @@ export function MdxContent({
       slug && locale ? <PostFaqs slug={slug} locale={locale} /> : null,
   };
 
-  return (
+  const body = (
     <div className="max-w-none">
       <MDXRemote
         source={source}
@@ -120,4 +122,14 @@ export function MdxContent({
       />
     </div>
   );
+
+  if (slug) {
+    return (
+      <StepsProvider slug={slug}>
+        {body}
+        <StepsProgress locale={locale} />
+      </StepsProvider>
+    );
+  }
+  return body;
 }
