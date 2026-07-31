@@ -19,6 +19,316 @@ type PostData = {
 };
 
 const data: Record<string, Record<Locale, PostData>> = {
+  "crear-plugin-civil-3d-con-claude-code-sin-programar": {
+    es: {
+      roadmap: {
+        title: "De ingeniero civil a autor de tu propio plugin, en 10 pasos",
+        intro:
+          "Panorama end-to-end con Claude Code: desde entender los términos hasta entregarle un instalador al usuario final. Arquitectura simple, escalable, y explicada sin jerga.",
+        steps: [
+          { n: 0, title: "Contexto — 10 términos que necesitas entender", desc: "Glosario simple antes de arrancar (API, SDK, DLL, etc.)", tag: "Base" },
+          { n: 1, title: "Qué es un plugin de Civil 3D", desc: "Qué puedes automatizar y qué no", tag: "Contexto" },
+          { n: 2, title: "Requisitos previos (30 min)", desc: "Programas gratuitos que necesitas instalar", tag: "Setup" },
+          { n: 3, title: "Crear el proyecto con Claude Code", desc: "Paso a paso real, el mensaje inicial que funciona", tag: "Inicio" },
+          { n: 4, title: "La arquitectura recomendada", desc: "3 capas simples que hacen tu plugin escalable", tag: "Diseño" },
+          { n: 5, title: "Cómo hablarle a Claude Code", desc: "Mensajes claros, restricciones y verificación paso a paso", tag: "Prompt" },
+          { n: 6, title: "Tu primer comando funcional", desc: "'Hola Civil 3D' — lista todas las alineaciones del dibujo", tag: "Primer plugin" },
+          { n: 7, title: "Añadir un botón en la barra superior", desc: "Del comando por teclado a un botón visible con icono", tag: "UI" },
+          { n: 8, title: "Empaquetar como bundle", desc: "El formato oficial de Autodesk para plugins listos para instalar", tag: "Build" },
+          { n: 9, title: "Distribuir al usuario final", desc: "Instalador, versiones, actualizaciones", tag: "Entrega" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre plugins de Civil 3D con IA",
+        items: [
+          {
+            q: "¿Realmente puedo crear un plugin de Civil 3D sin saber programar?",
+            a: "Sí, con matices. Puedes construir plugins simples y útiles (exportar datos, renombrar objetos, generar reportes, automatizar tareas repetitivas) siguiendo esta guía + Claude Code + una tarde. Lo que NO puedes es diseñar arquitectura de un sistema complejo, ni distribuir a 500 usuarios con actualizaciones automáticas, sin ayuda. Para lo primero, IA + fundamentos mínimos alcanzan. Para lo segundo, hace falta un dev."
+          },
+          {
+            q: "¿Qué es Claude Code y en qué se diferencia de Claude for Chrome?",
+            a: "Claude Code es una herramienta de CLI (línea de comandos) diseñada para programar. Vive en tu terminal, tiene acceso a tus archivos, ejecuta comandos, y puede iterar sobre un proyecto entero. Claude for Chrome es la extensión de navegador. Para crear un plugin de Civil 3D, Claude Code es superior porque puede leer y modificar tu código directamente, no sólo generar sugerencias."
+          },
+          {
+            q: "¿Qué versión de Visual Studio necesito?",
+            a: "Visual Studio Community 2022 (gratuita) es suficiente. Al instalarlo, activa la carga 'Desarrollo de escritorio con .NET'. Necesitas .NET Framework 4.8 (Civil 3D 2024/2025) o .NET 8 (versiones más nuevas). Compruébalo en la documentación oficial del SDK de tu versión de Civil 3D."
+          },
+          {
+            q: "¿Puedo desarrollar plugins de Civil 3D en Mac o Linux?",
+            a: "Puedes escribir el código en cualquier sistema (Claude Code funciona en Mac/Linux/Windows). Pero para compilar y probar, necesitas Windows con Civil 3D instalado — la API es Windows-only. Muchos devs usan una máquina virtual Windows para compilar."
+          },
+          {
+            q: "¿Es la arquitectura Command-Service-Repository demasiado para un plugin pequeño?",
+            a: "No, y aquí está el truco: la arquitectura toma 15 minutos extra al inicio, y te ahorra semanas cuando el plugin crece. Empezar simple con estructura buena es siempre mejor que empezar caótico y refactorizar después. Claude Code respeta la arquitectura si se la explicas en el prompt inicial."
+          },
+          {
+            q: "¿Cómo distribuyo el plugin a mis compañeros de trabajo?",
+            a: "Tres opciones, de más simple a más pro: (1) Copiar el archivo .dll a la carpeta de Civil 3D y registrarlo manualmente — funciona para 1-3 usuarios. (2) Empaquetar como .bundle (formato oficial de Autodesk) — arrastrar y soltar en Civil 3D. (3) Instalador .msi con Inno Setup o WiX — para distribución masiva y actualizaciones automáticas. Empieza con .bundle."
+          },
+          {
+            q: "¿Se romperá mi plugin cuando actualicen Civil 3D?",
+            a: "A veces sí. Autodesk cambia partes de la API entre versiones (raramente cosas grandes, pero pasa). La solución: (1) mantén tu código bien separado en capas (por eso la arquitectura importa), (2) compila una versión de tu plugin por cada versión de Civil 3D soportada, (3) suscríbete al canal de release notes de Autodesk. Con IA, adaptar código a una nueva API toma horas, no días."
+          }
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "De engenheiro civil a autor do seu próprio plugin, em 10 passos",
+        intro:
+          "Panorama end-to-end com Claude Code: desde entender os termos até entregar um instalador ao usuário final. Arquitetura simples, escalável e explicada sem jargão.",
+        steps: [
+          { n: 0, title: "Contexto — 10 termos que você precisa entender", desc: "Glossário simples antes de começar (API, SDK, DLL, etc.)", tag: "Base" },
+          { n: 1, title: "O que é um plugin de Civil 3D", desc: "O que você pode automatizar e o que não", tag: "Contexto" },
+          { n: 2, title: "Requisitos prévios (30 min)", desc: "Programas gratuitos que você precisa instalar", tag: "Setup" },
+          { n: 3, title: "Criar o projeto com Claude Code", desc: "Passo a passo real, a mensagem inicial que funciona", tag: "Início" },
+          { n: 4, title: "A arquitetura recomendada", desc: "3 camadas simples que tornam seu plugin escalável", tag: "Design" },
+          { n: 5, title: "Como falar com o Claude Code", desc: "Mensagens claras, restrições e verificação passo a passo", tag: "Prompt" },
+          { n: 6, title: "Seu primeiro comando funcional", desc: "'Olá Civil 3D' — lista todos os alinhamentos do desenho", tag: "Primeiro plugin" },
+          { n: 7, title: "Adicionar um botão na barra superior", desc: "Do comando por teclado a um botão visível com ícone", tag: "UI" },
+          { n: 8, title: "Empacotar como bundle", desc: "O formato oficial da Autodesk para plugins prontos para instalar", tag: "Build" },
+          { n: 9, title: "Distribuir ao usuário final", desc: "Instalador, versões, atualizações", tag: "Entrega" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre plugins de Civil 3D com IA",
+        items: [
+          {
+            q: "Posso mesmo criar um plugin de Civil 3D sem saber programar?",
+            a: "Sim, com nuances. Você pode construir plugins simples e úteis (exportar dados, renomear objetos, gerar relatórios, automatizar tarefas repetitivas) seguindo este guia + Claude Code + uma tarde. O que NÃO pode é desenhar arquitetura de um sistema complexo, nem distribuir para 500 usuários com atualizações automáticas, sem ajuda. Para o primeiro, IA + fundamentos mínimos bastam. Para o segundo, precisa de um dev."
+          },
+          {
+            q: "O que é Claude Code e como difere do Claude for Chrome?",
+            a: "Claude Code é uma ferramenta de CLI (linha de comando) desenhada para programar. Vive no seu terminal, tem acesso aos seus arquivos, executa comandos, e pode iterar sobre um projeto inteiro. Claude for Chrome é a extensão do navegador. Para criar um plugin de Civil 3D, Claude Code é superior porque pode ler e modificar seu código diretamente, não só gerar sugestões."
+          },
+          {
+            q: "Qual versão de Visual Studio preciso?",
+            a: "Visual Studio Community 2022 (gratuito) é suficiente. Ao instalar, ative a carga 'Desenvolvimento desktop com .NET'. Você precisa de .NET Framework 4.8 (Civil 3D 2024/2025) ou .NET 8 (versões mais novas). Verifique na documentação oficial do SDK da sua versão de Civil 3D."
+          },
+          {
+            q: "Posso desenvolver plugins de Civil 3D em Mac ou Linux?",
+            a: "Você pode escrever o código em qualquer sistema (Claude Code funciona em Mac/Linux/Windows). Mas para compilar e testar, precisa de Windows com Civil 3D instalado — a API é Windows-only. Muitos devs usam uma máquina virtual Windows para compilar."
+          },
+          {
+            q: "A arquitetura Command-Service-Repository é demais para um plugin pequeno?",
+            a: "Não, e aqui está o truque: a arquitetura leva 15 minutos extra no início, e te economiza semanas quando o plugin cresce. Começar simples com estrutura boa é sempre melhor do que começar caótico e refatorar depois. Claude Code respeita a arquitetura se você explicar no prompt inicial."
+          },
+          {
+            q: "Como distribuo o plugin aos meus colegas de trabalho?",
+            a: "Três opções, do mais simples ao mais pro: (1) Copiar o arquivo .dll para a pasta do Civil 3D e registrá-lo manualmente — funciona para 1-3 usuários. (2) Empacotar como .bundle (formato oficial da Autodesk) — arrastar e soltar no Civil 3D. (3) Instalador .msi com Inno Setup ou WiX — para distribuição em massa e atualizações automáticas. Comece com .bundle."
+          },
+          {
+            q: "Meu plugin vai quebrar quando atualizarem o Civil 3D?",
+            a: "Às vezes sim. A Autodesk muda partes da API entre versões (raramente coisas grandes, mas acontece). A solução: (1) mantenha seu código bem separado em camadas (por isso a arquitetura importa), (2) compile uma versão do seu plugin por versão de Civil 3D suportada, (3) inscreva-se no canal de release notes da Autodesk. Com IA, adaptar código para uma nova API leva horas, não dias."
+          }
+        ],
+      },
+    },
+  },
+  "ramas-ingenieria-sistemas-especializaciones": {
+    es: {
+      roadmap: {
+        title: "Las 8 grandes ramas donde puedes especializarte",
+        intro:
+          "De las áreas más comerciales (donde hay mucho trabajo y mucha competencia) a los nichos rentables donde pocos entran. Cada una con pros, contras y perfil ideal.",
+        steps: [
+          { n: 1, title: "Desarrollo de software", desc: "Frontend, backend, fullstack, mobile — el corazón de la industria", tag: "Comercial" },
+          { n: 2, title: "Data e Inteligencia Artificial", desc: "Data science, ML engineer, MLOps, ingeniero de datos", tag: "En auge" },
+          { n: 3, title: "Cloud y DevOps", desc: "SRE, DevOps, cloud architect, platform engineer", tag: "Comercial" },
+          { n: 4, title: "Ciberseguridad", desc: "Pentester, blue team, red team, GRC, forense digital", tag: "Alto valor" },
+          { n: 5, title: "Product, UX y diseño", desc: "Product manager, product designer, UX researcher", tag: "Híbrido" },
+          { n: 6, title: "Automatización de industrias", desc: "BIM/CAD ingeniería civil, industria 4.0, robótica, salud", tag: "Nicho rentable" },
+          { n: 7, title: "Emergentes y de nicho", desc: "Blockchain, AR/VR, IoT, edge, quantum, sistemas embebidos", tag: "Alto riesgo/premio" },
+          { n: 8, title: "Cómo elegir tu rama", desc: "Framework simple de 4 preguntas para decidir sin arrepentirte", tag: "Decisión" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre ramas de sistemas",
+        items: [
+          {
+            q: "¿Qué especialización de Ingeniería de Sistemas paga más?",
+            a: "Los rangos más altos suelen estar en: (1) ciberseguridad senior (especialmente cloud security y red team), (2) MLOps / AI Engineer con experiencia real en producción, (3) Cloud Architect en empresas grandes, (4) nichos verticales como quant developer o BIM automation para grandes constructoras. En general, cuanto más específico y demandado + menos oferta, mejor pagado."
+          },
+          {
+            q: "¿Puedo cambiar de rama después de años trabajando?",
+            a: "Sí, y es común. La mayoría de fundamentos son transferibles (lógica, resolución de problemas, comunicación técnica). Cambiar suele tomar 6-12 meses de reconversión con proyectos personales, cursos y un salto de puesto. La IA acelera muchísimo esa transición — puedes ser productivo en una tecnología nueva en semanas."
+          },
+          {
+            q: "¿Necesito un máster o certificación para especializarme?",
+            a: "Depende de la rama. Para dev/DevOps/cloud casi nunca — el portfolio y la experiencia mandan. Para ciberseguridad y cloud arquitecto las certificaciones (OSCP, AWS Solutions Architect) sí abren puertas. Para data/IA en investigación, un máster ayuda; para roles aplicados, no. En automatización industrial, el dominio del sector (ing. civil, salud, industria) pesa más que cualquier título extra."
+          },
+          {
+            q: "¿La IA va a reemplazar mi especialización?",
+            a: "Va a transformar todas, no reemplazar. Los perfiles junior de tareas mecánicas (crear CRUDs, tests básicos) están más expuestos. Los perfiles que integran IA como copiloto multiplican su productividad. Las ramas más 'seguras' de disrupción a corto plazo: ciberseguridad, cloud architecture, automatización específica de industria, product management. Ver también nuestra guía de [Vibe Coding](/es/blog/guia-vibe-coding-para-empezar)."
+          },
+          {
+            q: "¿Cuál es mejor para trabajar remoto?",
+            a: "Desarrollo de software, DevOps y data son las más 100% remoto-friendly (mercado global). Ciberseguridad depende del cliente (algunas empresas exigen on-site por regulación). Automatización industrial suele requerir presencia física al inicio pero mucho remoto después. Product y UX son cada vez más remotas también."
+          },
+          {
+            q: "Si soy ingeniero civil, ¿tiene sentido pivotar a sistemas?",
+            a: "No pivotes — combina. La automatización BIM/CAD (Dynamo, Revit API, C#) es un nicho enorme y poco competido donde un ingeniero civil que sabe programar vale mucho más que un dev que aprende BIM. Lee [Dynamo vs C# en Civil 3D y Revit](/es/blog/dynamo-vs-csharp-civil3d-revit) y [Programación para ingenieros civiles](/es/blog/programacion-para-ingenieros-civiles)."
+          },
+          {
+            q: "¿Cómo sé qué rama es para mí?",
+            a: "Cuatro preguntas: (1) ¿te motiva más lo visual o lo abstracto? (2) ¿te gusta trabajar solo profundo o coordinar gente? (3) ¿toleras alto estrés puntual (ciber, SRE) o prefieres ritmo estable? (4) ¿te apasiona alguna industria específica (salud, construcción, finanzas)? Combinando esas respuestas con tu contexto local (qué se paga bien en tu ciudad), la rama surge. El módulo 8 del artículo tiene el framework completo."
+          }
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Os 8 grandes ramos onde você pode se especializar",
+        intro:
+          "Das áreas mais comerciais (muito trabalho e muita competição) aos nichos rentáveis onde poucos entram. Cada um com prós, contras e perfil ideal.",
+        steps: [
+          { n: 1, title: "Desenvolvimento de software", desc: "Frontend, backend, fullstack, mobile — o coração da indústria", tag: "Comercial" },
+          { n: 2, title: "Dados e Inteligência Artificial", desc: "Data science, ML engineer, MLOps, engenheiro de dados", tag: "Em alta" },
+          { n: 3, title: "Cloud e DevOps", desc: "SRE, DevOps, cloud architect, platform engineer", tag: "Comercial" },
+          { n: 4, title: "Cibersegurança", desc: "Pentester, blue team, red team, GRC, forense digital", tag: "Alto valor" },
+          { n: 5, title: "Product, UX e design", desc: "Product manager, product designer, UX researcher", tag: "Híbrido" },
+          { n: 6, title: "Automação de indústrias", desc: "BIM/CAD engenharia civil, indústria 4.0, robótica, saúde", tag: "Nicho rentável" },
+          { n: 7, title: "Emergentes e de nicho", desc: "Blockchain, AR/VR, IoT, edge, quantum, sistemas embarcados", tag: "Alto risco/prêmio" },
+          { n: 8, title: "Como escolher seu ramo", desc: "Framework simples de 4 perguntas para decidir sem se arrepender", tag: "Decisão" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre ramos de sistemas",
+        items: [
+          {
+            q: "Qual especialização de Engenharia de Sistemas paga mais?",
+            a: "Os patamares mais altos costumam estar em: (1) cibersegurança sênior (especialmente cloud security e red team), (2) MLOps / AI Engineer com experiência real em produção, (3) Cloud Architect em empresas grandes, (4) nichos verticais como quant developer ou automação BIM para grandes construtoras. Em geral, quanto mais específico e demandado + menos oferta, melhor pago."
+          },
+          {
+            q: "Posso mudar de ramo depois de anos trabalhando?",
+            a: "Sim, e é comum. A maioria dos fundamentos é transferível (lógica, resolução de problemas, comunicação técnica). Mudar costuma levar 6-12 meses de reconversão com projetos pessoais, cursos e um salto de posição. A IA acelera muito essa transição — você pode ser produtivo em uma tecnologia nova em semanas."
+          },
+          {
+            q: "Preciso de mestrado ou certificação para me especializar?",
+            a: "Depende do ramo. Para dev/DevOps/cloud quase nunca — portfólio e experiência mandam. Para cibersegurança e cloud architect as certificações (OSCP, AWS Solutions Architect) abrem portas. Para dados/IA em pesquisa, mestrado ajuda; para papéis aplicados, não. Em automação industrial, o domínio do setor (eng. civil, saúde, indústria) pesa mais que qualquer título extra."
+          },
+          {
+            q: "A IA vai substituir minha especialização?",
+            a: "Vai transformar todas, não substituir. Perfis júnior de tarefas mecânicas (criar CRUDs, testes básicos) estão mais expostos. Perfis que integram IA como copiloto multiplicam sua produtividade. Ramos mais 'seguros' de disrupção a curto prazo: cibersegurança, cloud architecture, automação específica de indústria, product management. Veja também nosso guia de [Vibe Coding](/pt/blog/guia-vibe-coding-para-empezar)."
+          },
+          {
+            q: "Qual é melhor para trabalho remoto?",
+            a: "Desenvolvimento de software, DevOps e dados são os mais 100% remote-friendly (mercado global). Cibersegurança depende do cliente (algumas empresas exigem on-site por regulação). Automação industrial costuma exigir presença física no início mas muito remoto depois. Product e UX são cada vez mais remotos também."
+          },
+          {
+            q: "Se sou engenheiro civil, faz sentido pivotar para sistemas?",
+            a: "Não pivote — combine. A automação BIM/CAD (Dynamo, Revit API, C#) é um nicho enorme e pouco competido onde um engenheiro civil que sabe programar vale muito mais que um dev que aprende BIM. Leia [Dynamo vs C# no Civil 3D e Revit](/pt/blog/dynamo-vs-csharp-civil3d-revit) e [Programação para engenheiros civis](/pt/blog/programacion-para-ingenieros-civiles)."
+          },
+          {
+            q: "Como sei qual ramo é para mim?",
+            a: "Quatro perguntas: (1) te motiva mais o visual ou o abstrato? (2) gosta de trabalhar sozinho a fundo ou coordenar pessoas? (3) tolera alto estresse pontual (ciber, SRE) ou prefere ritmo estável? (4) te apaixona alguma indústria específica (saúde, construção, finanças)? Combinando essas respostas com seu contexto local (o que paga bem na sua cidade), o ramo surge. O módulo 8 do artigo tem o framework completo."
+          }
+        ],
+      },
+    },
+  },
+  "testear-web-con-claude-for-chrome": {
+    es: {
+      roadmap: {
+        title: "De QA manual a QA automatizado con IA en 8 pasos",
+        intro:
+          "Todo lo que necesitas para usar Claude for Chrome como tester profesional: seguridad, prompt, cómo evitar borrar datos y cómo exportar los bugs en markdown.",
+        steps: [
+          { n: 1, title: "Qué es Claude for Chrome", desc: "Extensión oficial de Anthropic que puede navegar por ti", tag: "Contexto" },
+          { n: 2, title: "¿Es peligroso? La verdad honesta", desc: "Qué comparte, qué no, y en qué casos NO usarlo", tag: "Seguridad" },
+          { n: 3, title: "Instalar y configurar (10 min)", desc: "Setup mínimo + permisos que sí/no dar", tag: "Setup" },
+          { n: 4, title: "El prompt ideal para QA Tester", desc: "Estructura probada que ahorra iteraciones", tag: "Prompt" },
+          { n: 5, title: "Cómo probar por módulos (metodología)", desc: "Divide y vencerás: no le pidas 'testea todo'", tag: "Método" },
+          { n: 6, title: "Controlar qué puede borrar o modificar", desc: "Reglas explícitas para no destruir datos reales", tag: "Crítico" },
+          { n: 7, title: "Formato de salida: markdown descargable", desc: "Cómo pedirle el reporte y por qué exportarlo siempre", tag: "Reporte" },
+          { n: 8, title: "Cómo accionar los bugs encontrados", desc: "Priorizar, crear tickets, mejoras UX/UI", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre Claude for Chrome",
+        items: [
+          {
+            q: "¿Es seguro instalar Claude for Chrome?",
+            a: "La extensión oficial de Anthropic (no confundir con clones no oficiales) es segura como paquete, pero **puede ver y hacer todo lo que tú harías en el navegador**. Instálala sólo desde la Chrome Web Store con el publisher verificado como Anthropic, revisa los permisos que pide, y úsala primero en entornos de prueba o navegación general — no en tu banca online ni con datos sensibles hasta que entiendas su alcance."
+          },
+          {
+            q: "¿Claude guarda mis conversaciones en mi cuenta cuando lo uso como extensión?",
+            a: "No en el historial general de tu cuenta claude.ai. Las conversaciones de la extensión viven en el contexto local del sidebar. Por eso **el patrón profesional es pedirle siempre que exporte el resultado a markdown** y descargarlo — si cierras la pestaña o el navegador, se pierde. Trata cada sesión como efímera."
+          },
+          {
+            q: "¿Puedo usar Claude for Chrome gratis?",
+            a: "Requiere una cuenta de claude.ai. El plan gratis tiene límites de uso. Para sesiones largas de QA (que consumen bastante contexto) conviene un plan Pro. Alternativa: la Managed Agents / SDK si automatizas testing en pipeline en vez de manualmente."
+          },
+          {
+            q: "¿Qué datos comparto con Claude al usar la extensión?",
+            a: "Todo lo que Claude 've' en las pestañas donde le das permiso: contenido de la página, formularios visibles, capturas de pantalla que él genera para razonar. **No** las cookies ni contraseñas guardadas por el navegador (a menos que estén visibles en pantalla). Nunca pruebes con datos personales reales — usa datos falsos."
+          },
+          {
+            q: "¿Cómo evito que Claude modifique o borre cosas importantes?",
+            a: "Tres reglas: (1) usa una base de datos de prueba con datos falsos, no producción; (2) en el prompt escribe explícitamente 'NO borres ningún registro' o 'sólo lee, no modifiques'; (3) revisa cada acción antes de darle 'confirmar' — la extensión pide confirmación en acciones destructivas si está bien configurada."
+          },
+          {
+            q: "¿Cuánto tiempo se ahorra usando Claude para QA vs manual?",
+            a: "Para regresión funcional de flujos ya conocidos: 60-80% menos tiempo. Para exploratory testing (encontrar bugs raros): 30-50%. Para tests visuales/UX: complementa pero no reemplaza el ojo humano. El mayor ahorro está en **reportes** — Claude documenta cada bug en formato consistente sin que se te olvide ningún dato."
+          },
+          {
+            q: "¿Puede Claude reemplazar a un QA tester humano?",
+            a: "No, y no debería. Reemplaza el 60-70% del trabajo repetitivo (regresión, chequeo de formularios, validación de estados). Lo que NO reemplaza: criterio sobre prioridad de bugs, comunicación con producto, entender contexto de negocio, exploratory testing profundo. Piensa en Claude como el junior más rápido del equipo, no como el senior."
+          }
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "De QA manual a QA automatizado com IA em 8 passos",
+        intro:
+          "Tudo o que você precisa para usar Claude for Chrome como tester profissional: segurança, prompt, como evitar apagar dados e como exportar os bugs em markdown.",
+        steps: [
+          { n: 1, title: "O que é Claude for Chrome", desc: "Extensão oficial da Anthropic que pode navegar por você", tag: "Contexto" },
+          { n: 2, title: "É perigoso? A verdade honesta", desc: "O que compartilha, o que não, e em quais casos NÃO usar", tag: "Segurança" },
+          { n: 3, title: "Instalar e configurar (10 min)", desc: "Setup mínimo + permissões para dar ou não", tag: "Setup" },
+          { n: 4, title: "O prompt ideal para QA Tester", desc: "Estrutura testada que economiza iterações", tag: "Prompt" },
+          { n: 5, title: "Como testar por módulos (metodologia)", desc: "Dividir para vencer: não peça 'teste tudo'", tag: "Método" },
+          { n: 6, title: "Controlar o que pode apagar ou modificar", desc: "Regras explícitas para não destruir dados reais", tag: "Crítico" },
+          { n: 7, title: "Formato de saída: markdown baixável", desc: "Como pedir o relatório e por que exportar sempre", tag: "Relatório" },
+          { n: 8, title: "Como acionar os bugs encontrados", desc: "Priorizar, criar tickets, melhorias UX/UI", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre Claude for Chrome",
+        items: [
+          {
+            q: "É seguro instalar o Claude for Chrome?",
+            a: "A extensão oficial da Anthropic (não confunda com clones não oficiais) é segura como pacote, mas **pode ver e fazer tudo que você faria no navegador**. Instale apenas da Chrome Web Store com o publisher verificado como Anthropic, revise as permissões que pede, e use primeiro em ambientes de teste ou navegação geral — não no seu banco online nem com dados sensíveis até entender o alcance."
+          },
+          {
+            q: "O Claude guarda minhas conversas na conta quando uso como extensão?",
+            a: "Não no histórico geral da sua conta claude.ai. As conversas da extensão vivem no contexto local do sidebar. Por isso **o padrão profissional é sempre pedir para exportar o resultado em markdown** e baixar — se você fecha a aba ou o navegador, se perde. Trate cada sessão como efêmera."
+          },
+          {
+            q: "Posso usar Claude for Chrome de graça?",
+            a: "Requer uma conta claude.ai. O plano grátis tem limites de uso. Para sessões longas de QA (que consomem bastante contexto) vale um plano Pro. Alternativa: Managed Agents / SDK se você automatiza testes em pipeline em vez de manualmente."
+          },
+          {
+            q: "Que dados compartilho com o Claude ao usar a extensão?",
+            a: "Tudo o que o Claude 'vê' nas abas onde você dá permissão: conteúdo da página, formulários visíveis, capturas de tela que ele gera para raciocinar. **Não** os cookies nem senhas salvas pelo navegador (a menos que estejam visíveis na tela). Nunca teste com dados pessoais reais — use dados falsos."
+          },
+          {
+            q: "Como evito que o Claude modifique ou apague coisas importantes?",
+            a: "Três regras: (1) use um banco de dados de teste com dados falsos, não produção; (2) no prompt escreva explicitamente 'NÃO apague nenhum registro' ou 'apenas leia, não modifique'; (3) revise cada ação antes de confirmar — a extensão pede confirmação em ações destrutivas se estiver bem configurada."
+          },
+          {
+            q: "Quanto tempo se economiza usando Claude para QA vs manual?",
+            a: "Para regressão funcional de fluxos já conhecidos: 60-80% menos tempo. Para exploratory testing (achar bugs raros): 30-50%. Para testes visuais/UX: complementa mas não substitui o olho humano. A maior economia está nos **relatórios** — o Claude documenta cada bug em formato consistente sem esquecer nenhum dado."
+          },
+          {
+            q: "O Claude pode substituir um QA tester humano?",
+            a: "Não, e não deveria. Substitui 60-70% do trabalho repetitivo (regressão, checagem de formulários, validação de estados). O que NÃO substitui: critério sobre prioridade de bugs, comunicação com produto, entender contexto de negócio, exploratory testing profundo. Pense no Claude como o júnior mais rápido do time, não como o sênior."
+          }
+        ],
+      },
+    },
+  },
   "deja-de-usar-excel-y-perder-horas": {
     es: {
       roadmap: {

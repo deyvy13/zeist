@@ -1,0 +1,559 @@
+---
+title: "Cómo crear un plugin para Civil 3D con Claude Code sin ser programador: guía end-to-end 2026"
+description: "Guía paso a paso para desarrollar un plugin de Civil 3D con Claude Code sin experiencia previa. Arquitectura recomendada, prompts que funcionan, y cómo compilar y distribuir al usuario final."
+date: "2026-07-31T18:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Claude Code
+  - Plugin development
+  - C#
+  - .NET
+  - Automatización BIM
+  - Vibe Coding
+  - Sin programar
+---
+
+<BlogHero
+  eyebrow="Vibe Coding para BIM · Claude Code + Civil 3D"
+  title="Construir tu primer plugin de Civil 3D solía tomar semanas. Con Claude Code y esta arquitectura, un fin de semana."
+  highlight="No es magia. Es método. Esta guía te lleva desde 'nunca abrí Visual Studio' hasta tener un .bundle listo para instalar en la máquina de tu jefe — con arquitectura escalable desde el minuto uno."
+/>
+
+<Callout type="info" title="Para quién es esto">
+Ingenieros civiles, arquitectos y técnicos BIM que **usan Civil 3D todos los días y sienten que pierden horas en tareas repetitivas**. No necesitas haber programado antes, pero sí tener ganas de aprender los conceptos mínimos que la IA no puede saltar por ti.
+</Callout>
+
+## Antes que nada: por qué un plugin y no sólo un script Dynamo
+
+Dynamo es genial para prototipos y uso personal. Pero cuando quieres **distribuir la automatización a tus compañeros, tener tu propio botón en la barra superior de Civil 3D, y que funcione sin abrir el editor visual**, necesitas un **plugin C# nativo**. Si aún dudas entre Dynamo y C#, lee primero [Dynamo vs C# en Civil 3D y Revit](/es/blog/dynamo-vs-csharp-civil3d-revit).
+
+**Un plugin C# te da:**
+
+- Un botón visible con icono en la barra superior de Civil 3D (la banda de pestañas donde están "Home", "Insert", etc.).
+- Rendimiento nativo — procesa miles de objetos en segundos.
+- Instalador para distribuir a todo el equipo.
+- Actualizaciones controladas.
+- Código versionable en Git, mantenible en el tiempo.
+
+**Y con Claude Code:** ya no necesitas dominar C# ni la API de Civil 3D para hacerlo. Necesitas **método**.
+
+<AnimatedFlow
+  title="El camino que verás en esta guía"
+  nodes="Setup|Proyecto con Claude Code|Arquitectura|Primer comando|.bundle distribuible"
+  subs="30 min|10 min|Base sólida|1 h|Instalable"
+/>
+
+<Roadmap />
+
+<TopicCard step="0" title="0. Contexto — 10 términos que necesitas entender" time="~6 min">
+
+Antes de arrancar, aquí tienes las palabras que verás en el resto del artículo, en lenguaje humano. Léelas ahora y no tendrás que googlear después.
+
+**1. Plugin (o "extensión")** — un archivo pequeño que le añade botones y funciones nuevas a un programa que ya usas. Como una extensión de Chrome, pero para Civil 3D.
+
+**2. API** — la lista oficial de cosas que un programa te permite hacerle desde fuera. Piensa en el menú de un restaurante: la API de Civil 3D es "el menú" de lo que puedes pedirle programando. Si no está en el menú (la API), no puedes pedirlo.
+
+**3. SDK** — el "kit de herramientas para desarrolladores". Un paquete oficial que descargas y que trae los archivos necesarios para que tu código pueda hablar con Civil 3D.
+
+**4. DLL** — el archivo final que produce tu plugin. Es como un `.exe` pero que otro programa (Civil 3D) carga adentro. Cuando digamos "compila el DLL" queremos decir "genera el archivo final".
+
+**5. Bundle** — una carpeta con estructura especial que Civil 3D reconoce automáticamente al arrancar. Es la forma "profesional" de entregar tu plugin — una sola carpeta que se copia y listo.
+
+**6. Compilar** — el paso de convertir tu código (texto) en un archivo instalable (`.dll`). Como imprimir un documento: el Word (código) se convierte en PDF (archivo final).
+
+**7. Visual Studio** — el editor donde escribes el código. Es una aplicación gratuita de Microsoft. No te asustes por lo pesada que se ve al abrirla — usarás sólo el 5% de sus funciones.
+
+**8. Framework .NET** — la "versión" del sistema Windows sobre la que corre tu plugin. Civil 3D exige una versión específica (por ejemplo 4.8 o 8) — sólo tienes que hacerla coincidir una vez y ya.
+
+**9. Git** — el sistema que guarda historial de tu código. Cada vez que algo funcione, haces un "commit" (checkpoint) y puedes volver a él siempre. Es tu **backup infinito** — el mejor amigo del que empieza.
+
+**10. Claude Code** — la herramienta de Anthropic que escribe código por ti desde tu terminal. Le hablas en español, entiende tu proyecto, y te propone qué escribir. Tú confirmas y aplica los cambios.
+
+<Callout type="tip">
+No memorices esto ahora. Cuando aparezcan estas palabras en los siguientes módulos, sube a este glosario si dudas. En 2-3 sesiones ya no lo necesitarás.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="1" title="1. Qué es un plugin de Civil 3D (y qué NO es)" time="~4 min">
+
+Un **plugin de Civil 3D** es un archivo `.dll` compilado en .NET que Civil 3D carga al arrancar. Le añade **comandos, botones, ventanas y paneles** que no venían de fábrica.
+
+**Lo que puedes hacer:**
+
+- Recorrer todos los objetos del dibujo (alineaciones, superficies, perfiles, corredores, etc.).
+- Leer y modificar sus propiedades.
+- Crear objetos nuevos programáticamente.
+- Exportar datos a Excel, CSV, JSON.
+- Automatizar secuencias de comandos.
+- Añadir tu propia ventana con formularios.
+- Escuchar eventos (cuando el usuario crea/modifica/borra algo).
+
+**Lo que NO puedes hacer:**
+
+- Cambiar el comportamiento interno de comandos oficiales.
+- Acceder a partes de la API que Autodesk no expone.
+- Ejecutar fuera del proceso de Civil 3D.
+- Correr en Mac o Linux (la API es Windows only).
+
+**Ejemplos de plugins útiles reales:**
+
+- Exportador de cubicaciones con formato corporativo.
+- Renombrador masivo de alineaciones siguiendo estándar.
+- Generador automático de perfiles longitudinales cada X metros.
+- Chequeador de estándares del dibujo (nomenclatura, capas permitidas).
+- Reporte de puntos topográficos clasificados a CSV.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Requisitos previos — setup en 30 minutos" time="~5 min">
+
+**Lo que necesitas instalado antes de escribir la primera línea:**
+
+1. **Windows 10/11** con **Civil 3D** instalado (la versión que uses en el trabajo).
+2. **Visual Studio Community 2022** (gratis) — [visualstudio.microsoft.com](https://visualstudio.microsoft.com). Al instalar, marca la carga **"Desarrollo de escritorio con .NET"**.
+3. **SDK de Civil 3D** — descárgalo desde el portal de desarrolladores de Autodesk. Busca `"Civil 3D <tu versión> SDK"`. Al instalarlo se registran las DLLs que necesitas referenciar.
+4. **Cuenta claude.ai** (plan Pro recomendado para sesiones largas de código).
+5. **Claude Code** — instala vía terminal con `npm install -g @anthropic-ai/claude-code` (necesitas Node.js instalado).
+6. **Git** — [git-scm.com](https://git-scm.com), o **GitHub Desktop** si prefieres interfaz visual.
+
+**Verificar que todo esté bien:**
+
+```bash
+# En una terminal:
+dotnet --version    # debe mostrar 6.0 o superior
+claude --version    # debe mostrar la versión de Claude Code
+git --version       # cualquier versión moderna
+```
+
+<Callout type="tip">
+Crea una carpeta `C:\Dev\CivilPlugins\` para todos tus proyectos futuros. Mantén todo organizado en un solo lugar. Un proyecto por subcarpeta.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Crear el proyecto con Claude Code (paso a paso real)" time="~7 min">
+
+**Paso 1 — Abrir la terminal en tu carpeta de proyectos:**
+
+```bash
+cd C:\Dev\CivilPlugins
+mkdir MiPrimerPluginC3D
+cd MiPrimerPluginC3D
+```
+
+**Paso 2 — Lanzar Claude Code:**
+
+```bash
+claude
+```
+
+Se abre la sesión interactiva. Ahora le vas a dar el prompt inicial. **Este prompt es la piedra angular de todo lo que sigue:**
+
+```markdown
+Actúa como arquitecto senior de plugins .NET para Autodesk Civil 3D.
+
+Contexto:
+- Voy a crear mi PRIMER plugin de Civil 3D.
+- Uso Civil 3D 2025 (.NET Framework 4.8).
+- Estoy en Windows con Visual Studio 2022 instalado.
+- SDK de Civil 3D instalado en C:\Program Files\Autodesk\Civil 3D 2025\
+- El plugin se llamará "ZeistTools" y su namespace raíz será "ZeistTools".
+
+Objetivo:
+Crea la estructura inicial del proyecto siguiendo la arquitectura
+Command → Service → Repository que te voy a describir en el siguiente
+mensaje. NO generes código funcional todavía — sólo:
+
+1. El archivo .csproj con las referencias necesarias a AcCoreMgd,
+   AcDbMgd, AcMgd (AutoCAD) y AeccDbMgd (Civil 3D).
+2. Un README.md con la descripción del proyecto.
+3. Un .gitignore adecuado para proyectos .NET Framework + Visual Studio.
+4. La estructura de carpetas vacía:
+   - Commands/
+   - Services/
+   - Repositories/
+   - Models/
+   - UI/
+   - Resources/
+
+Antes de crear nada, muéstrame el plan y pídeme confirmación.
+```
+
+**Paso 3 — Claude Code muestra su plan.** Léelo. Si algo no cuadra, pídele que ajuste. Cuando confirmes, crea los archivos.
+
+**Paso 4 — Verificar:**
+
+```bash
+ls    # deberías ver .csproj, README.md, .gitignore, y las carpetas
+```
+
+**Paso 5 — Primer commit:**
+
+```bash
+git init
+git add .
+git commit -m "Initial project structure"
+```
+
+<Callout type="tip">
+Haz commit **cada vez que algo funcione**. Es tu backup infinito. Si Claude Code rompe algo, vuelves al último commit con `git checkout .`.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. La arquitectura recomendada — simple hoy, escalable mañana" time="~10 min">
+
+Este es el módulo más importante del artículo. **Una arquitectura correcta desde el inicio te ahorra semanas de dolor futuro.**
+
+**La arquitectura recomendada: Command → Service → Repository**
+
+<AnimatedFlow
+  title="Las 3 capas del plugin"
+  nodes="Command|Service|Repository"
+  subs="Punto de entrada|Lógica de negocio|Acceso a la API de Civil 3D"
+/>
+
+**Traducción a carpetas y responsabilidades:**
+
+```
+ZeistTools/
+├── Commands/          → punto de entrada (lo que Civil 3D ejecuta)
+│   └── ExportAlignmentsCommand.cs
+├── Services/          → lógica de negocio (tus reglas)
+│   └── AlignmentExportService.cs
+├── Repositories/      → habla con la API de Civil 3D
+│   └── AlignmentRepository.cs
+├── Models/            → objetos de datos puros
+│   └── AlignmentInfo.cs
+├── UI/                → ventanas, formularios (opcional)
+│   └── ExportOptionsWindow.xaml
+├── Resources/         → iconos, imágenes, textos
+│   └── icons/
+└── ZeistTools.csproj
+```
+
+**Regla de oro por capa:**
+
+- **Command**: sólo orquesta. Recibe el evento de Civil 3D, delega al Service, muestra el resultado al usuario. **No toca la API directamente.**
+- **Service**: contiene TU lógica ("las alineaciones menores de 100m no cuentan", "el CSV tiene esta cabecera"). No sabe nada de Civil 3D — trabaja con `Models`.
+- **Repository**: es el único que conoce la API de Civil 3D. Traduce entre objetos de Civil 3D y tus `Models`.
+
+**Ventajas concretas de esta separación:**
+
+1. **Testeable.** Puedes probar el Service sin abrir Civil 3D — sólo simulas datos en Models.
+2. **Actualizable.** Cuando Autodesk cambie la API en la próxima versión (y siempre pasa), sólo tocas el Repository. Service y Command intactos.
+3. **Reutilizable.** El mismo Service puede tener un Command para Civil 3D y otro para AutoCAD Map con distintos Repositories.
+4. **Escalable.** Añadir un nuevo comando es: 1 nuevo Command + reutilizar Services existentes.
+5. **Debuggeable.** Cuando algo falla, sabes exactamente en qué capa buscar.
+
+**Antipatrón que verás en tutoriales viejos:**
+
+Un archivo gigante `Class1.cs` con `[CommandMethod]` que hace TODO: llama a la API, calcula, formatea, muestra ventana. **Nunca hagas esto.** Es rápido al principio y una pesadilla a los 3 meses.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Cómo hablarle a Claude Code (prompts que funcionan)" time="~8 min">
+
+Claude Code funciona 10x mejor con prompts estructurados. Estos son los patrones que uso.
+
+**Patrón 1 — Añadir una feature nueva:**
+
+```markdown
+Añade un nuevo comando "ExportAlignmentsToCsv" siguiendo la arquitectura
+del proyecto. Requisitos:
+
+- Command en Commands/ExportAlignmentsToCsvCommand.cs
+  - Registra con [CommandMethod("ZEIST_EXPORT_ALIGN_CSV")]
+  - Muestra al usuario cuántas alineaciones se exportaron y dónde
+- Service en Services/AlignmentExportService.cs
+  - Método ExportToCsv(IEnumerable<AlignmentInfo>, string path)
+  - Cabecera CSV: Name, StartStation, EndStation, Length, Layer
+  - Ignora alineaciones cuyo Length sea menor a 100
+- Repository en Repositories/AlignmentRepository.cs
+  - Método GetAllAlignments() : IEnumerable<AlignmentInfo>
+  - Debe leer del documento activo de Civil 3D
+- Model en Models/AlignmentInfo.cs con las 5 propiedades
+
+Reglas:
+- NO modifiques archivos fuera de esas 4 rutas.
+- NO añadas dependencias NuGet nuevas.
+- Sigue el estilo de código de los archivos existentes.
+- Al final, hazme una lista de los archivos creados/modificados
+  y explícame en 2 líneas qué hace cada uno.
+```
+
+**Patrón 2 — Debuggear un error:**
+
+```markdown
+Al compilar sale este error:
+
+[pega el error EXACTO con línea]
+
+Diagnóstico paso a paso:
+1. Explícame qué significa el error.
+2. Identifica en qué capa está.
+3. Propón la corrección más simple posible (no refactorices otras cosas).
+4. Antes de aplicarla, muéstramela para que confirme.
+```
+
+**Patrón 3 — Pedir explicación:**
+
+```markdown
+Explícame en lenguaje humano qué hace este bloque de código:
+
+[pega el código]
+
+En particular:
+- ¿Qué es "Transaction" y por qué se usa?
+- ¿Qué pasa si no hago .Commit()?
+- ¿Este código funciona con múltiples documentos abiertos?
+```
+
+**Reglas importantes al usar Claude Code:**
+
+- **Contexto explícito siempre.** Versión de Civil 3D, framework .NET, arquitectura. No hagas que adivine.
+- **Pequeños pasos.** Un comando por sesión. No le pidas "haz 10 comandos".
+- **Verificar antes de confirmar.** Antes de que aplique cambios, léelos.
+- **Commit frecuente.** Después de cada cambio que funcione.
+- **No pierdas la sesión importante** — Claude Code guarda la historia en el proyecto, pero exporta a markdown los aprendizajes importantes.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Tu primer comando funcional — 'Hola Civil 3D'" time="~10 min">
+
+El clásico "Hello World" adaptado a Civil 3D: **lista todas las alineaciones del dibujo activo en la consola de comandos**.
+
+**Prompt para Claude Code:**
+
+```markdown
+Crea el primer comando funcional del plugin siguiendo la arquitectura
+que ya establecimos. El comando:
+
+- Se llama "ZEIST_LIST_ALIGN".
+- Al ejecutarlo, muestra en la ventana de comandos de Civil 3D
+  la lista de todas las alineaciones del dibujo activo, con su nombre
+  y su longitud.
+- Si no hay alineaciones, muestra "No hay alineaciones en el dibujo".
+- Manejo de errores: si algo falla, muestra un mensaje útil en lugar
+  de un stack trace crudo.
+
+Sigue arquitectura Command → Service → Repository:
+- ListAlignmentsCommand delega en AlignmentQueryService.
+- AlignmentQueryService devuelve List<AlignmentInfo> desde AlignmentRepository.
+- AlignmentRepository es el único que toca la API de Civil 3D.
+
+Cuando termines, dame las instrucciones para:
+1. Compilar (Debug config).
+2. Cargarlo en Civil 3D con NETLOAD.
+3. Ejecutar el comando y ver el resultado.
+```
+
+**Qué esperar:** Claude Code creará ~4-5 archivos. Los revisas. Compilas con **Ctrl+Shift+B** en Visual Studio o `dotnet build` en terminal.
+
+**Cargar en Civil 3D:**
+
+1. Abre Civil 3D.
+2. Ejecuta el comando `NETLOAD`.
+3. Selecciona el archivo `bin\Debug\ZeistTools.dll`.
+4. Ejecuta `ZEIST_LIST_ALIGN`.
+5. Si tu dibujo tiene alineaciones, verás la lista. Si no, dibuja una alineación primero.
+
+<Callout type="warn">
+Si Civil 3D te dice "no se pudo cargar", el 90% de las veces es porque compilaste para un framework distinto al que espera Civil 3D (.NET 4.8 vs .NET 8). Verifica el `TargetFramework` en el `.csproj`.
+</Callout>
+
+**Al llegar aquí ya eres oficialmente un desarrollador de plugins de Civil 3D.** Todo lo demás es agregar más comandos siguiendo el mismo patrón.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Añadir un botón en la barra superior de Civil 3D" time="~8 min">
+
+Un comando que se escribe por teclado funciona, pero **un botón visible con icono en la barra superior** es lo que hace que tus compañeros lo usen sin tener que recordar el nombre del comando.
+
+Nos referimos a la banda superior de Civil 3D donde ya están las pestañas "Home", "Insert", "Annotate", etc. Vamos a añadir ahí una pestaña propia llamada "Zeist" con nuestros botones.
+
+**Mensaje para Claude Code:**
+
+```markdown
+Añade un botón en la barra superior de Civil 3D que ejecute el
+comando ZEIST_LIST_ALIGN. Requisitos:
+
+- Se registra automáticamente al cargar el plugin (usa la interfaz
+  IExtensionApplication.Initialize — Claude Code sabrá qué es).
+- Crea una nueva pestaña "Zeist" en la barra superior si no existe.
+- Dentro, un panel "Alineaciones" con el botón "Listar alineaciones".
+- El botón usa un icono en formato PNG de 32x32 píxeles que
+  colocaré en Resources/icons/list-align.png (no tienes que crear
+  el icono, sólo referéncialo — si no existe, deja el código
+  preparado con un TODO para agregarlo después).
+- El texto del botón en español por defecto.
+
+Escríbeme también:
+- Dónde debo colocar el archivo del icono.
+- Qué línea de configuración hace falta para que el icono se
+  copie junto al plugin al compilar.
+
+Sigue la arquitectura: la lógica del botón vive en UI/RibbonBuilder.cs
+(el nombre "Ribbon" es como llama Autodesk internamente a esta barra),
+que sólo delega en el Command existente.
+```
+
+**Después:**
+
+1. Descarga o dibuja un icono simple de 32×32 píxeles en formato PNG. Puedes usar [Icons8](https://icons8.com/) (biblioteca de iconos gratis) o crear uno en Figma.
+2. Colócalo en `Resources/icons/list-align.png`.
+3. Compila (el archivo `.dll` final).
+4. Vuelve a cargar en Civil 3D (ejecuta `NETLOAD` y elige el nuevo `.dll`).
+5. Deberías ver la nueva pestaña "Zeist" en la barra superior, con tu botón dentro.
+
+<Callout type="tip">
+Nota técnica que verás nombrada así en la documentación oficial: Autodesk llama "ribbon" a la barra superior. Si buscas en Google "custom ribbon civil 3d" encontrarás la misma cosa que aquí llamamos "barra superior con pestañas". Ya lo sabes.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="8" title="8. Compilar y empaquetar como .bundle" time="~7 min">
+
+Tu `.dll` funciona con `NETLOAD` manual. Pero para distribuir **profesionalmente**, Autodesk tiene un formato oficial: **el bundle**. Es una carpeta con estructura específica que Civil 3D carga automáticamente al arrancar.
+
+**Estructura de un bundle:**
+
+```
+ZeistTools.bundle/
+├── PackageContents.xml
+└── Contents/
+    ├── Windows/
+    │   └── ZeistTools.dll (tu plugin compilado en Release)
+    └── Resources/
+        └── icons/
+            └── list-align.png
+```
+
+**Prompt para Claude Code:**
+
+```markdown
+Crea la estructura de bundle y el archivo PackageContents.xml para
+distribuir el plugin como ZeistTools.bundle.
+
+Requisitos:
+- Compatible con Civil 3D 2024 y 2025.
+- Publisher: "Zeist" (así se muestra en el gestor de add-ins).
+- Versión: 1.0.0.
+- Descripción bilingüe (ES/EN): "Herramientas Zeist para Civil 3D".
+- Autoload al iniciar Civil 3D.
+- Debe cargar ZeistTools.dll desde Contents/Windows.
+
+Además, añade un script build.ps1 (PowerShell) que:
+1. Compile el proyecto en Release.
+2. Copie el .dll y los recursos a la estructura de bundle.
+3. Genere el .bundle listo para distribuir.
+
+Explícame el contenido del PackageContents.xml línea a línea.
+```
+
+**Después:**
+
+1. Ejecuta `./build.ps1` desde la terminal (o `build.sh` si estás en WSL).
+2. El script te deja `ZeistTools.bundle/` listo.
+3. Cópialo a: `%APPDATA%\Autodesk\ApplicationPlugins\` (usuario) o `%PROGRAMDATA%\Autodesk\ApplicationPlugins\` (todo el sistema).
+4. Reinicia Civil 3D. Se carga automáticamente.
+
+<Callout type="success">
+En este punto tienes un plugin **distribuible por email**. Zippea la carpeta `.bundle`, envíasela a tu colega, que la descomprima en la ruta de arriba, y reinicie Civil 3D. Listo.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="9" title="9. Distribuir al usuario final (instalador y actualizaciones)" time="~8 min">
+
+**Nivel 1 — Distribución manual (equipos pequeños, 1-5 usuarios):**
+
+- Zippea el `.bundle` y envíalo por email/Drive.
+- Manual de instalación de 3 líneas:
+  1. Descomprime en `%APPDATA%\Autodesk\ApplicationPlugins\`
+  2. Reinicia Civil 3D
+  3. Aparece la pestaña "Zeist" en la barra superior de Civil 3D
+
+**Nivel 2 — Instalador con Inno Setup (equipos medianos, 10-50 usuarios):**
+
+Inno Setup es una herramienta gratuita para crear instaladores `.exe`.
+
+```markdown
+Crea un script Inno Setup (installer.iss) que:
+- Instale el bundle en la ruta estándar de Autodesk.
+- Cree un icono en el menú inicio para "Zeist Tools".
+- Incluya un desinstalador.
+- Pida elevación de privilegios para instalar system-wide.
+- Muestre licencia y descripción antes de instalar.
+```
+
+Compilas, y obtienes `ZeistToolsSetup.exe` — un instalador que cualquier persona puede ejecutar.
+
+**Nivel 3 — Distribución con actualizaciones automáticas (empresa, >50 usuarios):**
+
+Aquí se pone serio: necesitas un servidor que sirva las nuevas versiones, y que tu plugin consulte al arrancar si hay una versión nueva. Opciones:
+
+- **Squirrel.Windows** — framework .NET para auto-updates estilo Chrome/Slack.
+- **WiX Toolset** — instaladores empresariales `.msi` con soporte de actualizaciones.
+- **Distribución interna vía SCCM o Autodesk Vault** — si tu empresa ya lo tiene.
+
+**Nivel 4 — Publicar en Autodesk App Store:**
+
+Si quieres monetizar o distribuir a clientes externos, Autodesk App Store es el marketplace oficial. Requiere:
+
+- Registro como publisher.
+- Pasar el proceso de revisión (código, documentación, screenshots).
+- Firma digital del `.dll`.
+
+Empieza por Nivel 1, gradúa según crezca la demanda.
+
+<Callout type="info">
+**Versionado:** desde el día 1, sigue [semver](https://semver.org) en tu `PackageContents.xml`. 1.0.0 → 1.0.1 (bug fix) → 1.1.0 (nueva feature) → 2.0.0 (breaking change). Tu yo del futuro te lo agradecerá.
+</Callout>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="¿Te bloqueaste en algún paso?"
+  title="Te acompañamos en tu primer plugin real de principio a fin"
+  body="Ofrecemos mentorías 1-a-1 para ingenieros que están construyendo su primer plugin de Civil 3D o Revit. Revisamos tu arquitectura, tu prompt con Claude Code, tu build, y te dejamos con un playbook para los siguientes plugins. Primera llamada de 20 minutos gratis."
+  primaryLabel="Reservar mentoría"
+  primaryHref="/es/servicios/cursos-y-mentorias"
+  secondaryLabel="Ver automatización BIM"
+  secondaryHref="/es/servicios/automatizacion-ingenieria"
+/>
+
+## Comparativa: aprender solo vs con Claude Code vs mentoría
+
+<ComparisonTable
+  criterionLabel="Criterio"
+  leftLabel="Aprender solo (2020)"
+  rightLabel="Con Claude Code (2026)"
+  rows="Tiempo hasta el primer plugin funcional | 2-6 semanas | *Un fin de semana || Necesidad de saber C# a fondo | Alta | *Media (aprendes sobre la marcha) || Necesidad de leer 200 páginas de docs de API | Sí | *No (Claude las conoce) || Debug de errores raros | Horas en foros | *Minutos con la IA || Arquitectura correcta desde inicio | Difícil sin experiencia | *La IA la propone y respeta || Costo económico | Cero + tu tiempo | *Claude Pro + tu tiempo || Distribución al usuario final | Ensayo y error | *Guía paso a paso"
+/>
+
+## Recursos y siguientes pasos
+
+- Si nunca has programado, complementa con [Aprende a programar desde cero](/es/blog/aprende-a-programar-desde-cero) para los fundamentos.
+- Si dudas entre esta ruta y quedarte en Dynamo, lee [Dynamo vs C# en Civil 3D y Revit](/es/blog/dynamo-vs-csharp-civil3d-revit).
+- Para más contexto sobre desarrollo con IA en BIM, ver [Dynamo y plugins C# con IA (Claude)](/es/blog/dynamo-csharp-con-ia-claude).
+- Para el marco general de buenas prácticas, [Programación para ingenieros civiles](/es/blog/programacion-para-ingenieros-civiles).
+- **Documentación oficial:** [Civil 3D .NET API Reference](https://help.autodesk.com/view/CIV3D/2025/ENU/) y [Autodesk Developer Network](https://www.autodesk.com/developer-network/).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Plugins BIM con IA"
+  title="Cursos, mentorías o proyecto llave en mano"
+  body="Diseñamos contigo la ruta: cursos gratuitos si empiezas, mentorías 1-a-1 para tu primer plugin real, o desarrollo llave en mano si prefieres delegar. Trabajamos con ingenieros y arquitectos que quieren automatizar en serio."
+  primaryLabel="Iniciar proyecto"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver cursos y mentorías"
+  secondaryHref="/es/servicios/cursos-y-mentorias"
+/>
+
+---
+
+**¿Te sirvió?** Compártelo con ese ingeniero civil que "siempre quiso automatizar" pero cree que necesita saber C#. Hoy ya no. Y si buscas ayuda para tu primer plugin real, [escríbenos](/es/contacto) — la primera llamada es gratis.
