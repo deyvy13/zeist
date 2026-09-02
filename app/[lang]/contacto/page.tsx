@@ -21,28 +21,28 @@ const copy: Record<
   }
 > = {
   es: {
-    title: "Hablemos de tu proyecto",
+    title: "Cuéntanos qué te está robando horas",
     subtitle:
-      "Cuéntanos qué necesitas. Te respondemos con un plan claro y un presupuesto sin rodeos.",
+      "Describe la tarea repetitiva que más pesa en tu equipo. Te decimos si conviene automatizarla, con qué herramienta y cuánto tiempo recuperas. Sin compromiso.",
     labels: {
       name: "Nombre",
       email: "Correo",
-      message: "¿Qué quieres construir?",
+      message: "¿Qué proceso quieres automatizar?",
       send: "Enviar mensaje",
-      subject: "Nuevo proyecto",
+      subject: "Diagnóstico de automatización BIM",
     },
     orEmail: "O escríbenos directamente a",
   },
   pt: {
-    title: "Vamos falar do seu projeto",
+    title: "Conte-nos o que está roubando suas horas",
     subtitle:
-      "Conte-nos o que você precisa. Respondemos com um plano claro e um orçamento sem rodeios.",
+      "Descreva a tarefa repetitiva que mais pesa na sua equipe. Dizemos se vale automatizar, com qual ferramenta e quanto tempo você recupera. Sem compromisso.",
     labels: {
       name: "Nome",
       email: "E-mail",
-      message: "O que você quer construir?",
+      message: "Que processo você quer automatizar?",
       send: "Enviar mensagem",
-      subject: "Novo projeto",
+      subject: "Diagnóstico de automação BIM",
     },
     orEmail: "Ou escreva diretamente para",
   },

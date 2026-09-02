@@ -1,121 +1,108 @@
 {
   "nav": {
-    "services": "Soluciones",
+    "services": "Servicios",
     "blog": "Blog",
     "tools": "Herramientas",
     "toolsSoon": "Pronto",
-    "about": "Nosotros",
     "contact": "Contacto",
-    "cta": "Iniciar proyecto"
+    "cta": "Diagnóstico gratis"
   },
   "hero": {
-    "eyebrow": "Tecnología e ingeniería con IA",
-    "title": "Soluciones tecnológicas para cada industria.",
-    "highlight": "Con IA. Más rápido. Más accesible.",
-    "subtitle": "Software, automatización, diseño e ingeniería. Metodología ágil potenciada por inteligencia artificial: reducimos costos y tiempos sin sacrificar calidad.",
-    "ctaPrimary": "Iniciar proyecto",
-    "ctaSecondary": "Ver soluciones",
+    "eyebrow": "Automatización BIM · Civil 3D · Revit · Dynamo",
+    "title": "Tu equipo pierde semanas al año en tareas que un add-in resuelve en segundos.",
+    "highlight": "Nosotros los construimos.",
+    "subtitle": "Add-ins en C# para Civil 3D y Revit, scripts Dynamo y formación para equipos BIM. Hecho por ingenieros civiles que programan — entendemos tu flujo porque lo vivimos.",
+    "ctaPrimary": "Diagnóstico gratis",
+    "ctaSecondary": "Ver servicios",
     "trust": [
-      "Software · Automatización · Diseño",
-      "Ingeniería y datos",
-      "Entregas ágiles"
+      "Civil 3D · Revit · Dynamo",
+      "Add-ins en C# / .NET",
+      "Formación para equipos"
     ]
   },
   "differentiators": {
     "eyebrow": "Por qué Zeist",
     "title": "No somos una gota más en el mar.",
-    "subtitle": "El mercado cobra caro y esconde el conocimiento. Nosotros hacemos lo contrario: precios accesibles, procesos transparentes y contenido abierto.",
+    "subtitle": "El ecosistema BIM en español está lleno de cursos y de contenido sobre Revit. Nosotros hacemos otra cosa: desarrollamos las herramientas, trabajamos infraestructura, y publicamos todo lo que aprendemos.",
     "items": [
       {
-        "title": "IA que baja el precio",
-        "body": "Trabajamos con inteligencia artificial y metodología ágil. Eso reduce el costo real de cada proyecto y lo pone al alcance de emprendedores y empresas."
+        "title": "Ingenieros civiles, no una agencia de software",
+        "body": "No hay que explicarnos qué es un corredor, un ensamble o una superficie de proyecto. Venimos del sector, así que el diagnóstico empieza donde otros todavía están entendiendo el problema."
       },
       {
-        "title": "Directo, sin rodeos",
-        "body": "Nada de tecnicismos vacíos ni promesas infladas. Te decimos qué necesitas, qué cuesta y en cuánto tiempo. Claro y preciso."
+        "title": "C# y add-ins, no sólo Dynamo",
+        "body": "La mayoría se queda en programación visual. Nosotros llevamos la automatización hasta el add-in instalable: un botón en la barra superior que usa todo el equipo, sin abrir un editor de grafos."
       },
       {
-        "title": "Compartimos lo que sabemos",
-        "body": "Blog, cursos y herramientas gratuitas. Divulgamos nuestra experiencia para que crezcas con nosotros, no a costa tuya."
+        "title": "Civil 3D de verdad",
+        "body": "Casi todo el ecosistema habla de Revit. Nosotros trabajamos infraestructura a diario: corredores, superficies, perfiles longitudinales, cubicaciones y puntos topográficos."
       },
       {
-        "title": "Escalamos contigo",
-        "body": "Desde una landing hasta sistemas complejos con nube y servidores. Desde un script hasta una automatización completa de flujos BIM. IA para acelerar, proceso para proyectos serios."
+        "title": "Publicamos lo que sabemos",
+        "body": "Guías completas y gratuitas de Revit API, Civil 3D API y Dynamo en español. Si tu equipo termina manteniendo la herramienta por su cuenta, mejor para todos."
       }
     ]
   },
   "services": {
-    "eyebrow": "Soluciones",
-    "title": "Tecnología aplicada a tu industria.",
-    "subtitle": "Cada rubro tiene sus desafíos. Nosotros los resolvemos.",
-    "viewAll": "Ver todas las soluciones",
+    "eyebrow": "Servicios",
+    "title": "Automatizamos el trabajo repetitivo de tu equipo BIM.",
+    "subtitle": "Del script que valida una idea al add-in que instala toda la oficina.",
+    "viewAll": "Ver todos los servicios",
     "viewDetail": "Saber más",
     "items": [
       {
-        "slug": "desarrollo-de-software",
-        "title": "Desarrollo de software",
-        "body": "Páginas web, apps móviles y sistemas para empresas. Del portafolio a la plataforma empresarial, con una sola base de código donde sea posible.",
-        "tags": ["Web", "Móvil", "Sistemas", "Cloud"]
+        "slug": "add-ins-revit-civil-3d",
+        "title": "Add-ins a medida para Revit y Civil 3D",
+        "body": "Desarrollo de plugins en C# / .NET con la API oficial de Autodesk. Botón propio en la barra superior, instalador para toda la oficina y soporte de versiones.",
+        "tags": ["C# / .NET", "Revit API", "Civil 3D API", "Instalador"]
       },
       {
-        "slug": "automatizacion-ingenieria",
-        "title": "Automatización para ingeniería",
-        "body": "Add-ins para Civil 3D y Revit, scripts de Dynamo. Automatizamos tus tareas repetitivas de modelado y diseño en ingeniería civil.",
-        "tags": ["Civil 3D", "Revit", "Dynamo", "BIM"]
+        "slug": "automatizacion-dynamo",
+        "title": "Automatización con Dynamo",
+        "body": "Scripts y rutinas para tareas de modelado, geometría paramétrica y procesamiento masivo. Rápido de validar, ideal cuando la automatización todavía está cambiando.",
+        "tags": ["Dynamo", "Python", "Geometría paramétrica"]
       },
       {
-        "slug": "diseno-ux-ui",
-        "title": "Diseño UX/UI",
-        "body": "Interfaces que se ven premium y funcionan. Prototipado, sistemas de diseño y experiencias centradas en el usuario.",
-        "tags": ["Figma", "Prototipado", "Design Systems"]
+        "slug": "auditoria-procesos-bim",
+        "title": "Auditoría de procesos BIM",
+        "body": "Medimos dónde se van las horas de tu equipo y te entregamos un plan priorizado: qué automatizar primero, con qué herramienta y cuánto tiempo recuperas.",
+        "tags": ["Diagnóstico", "Priorización", "Plan de acción"]
       },
       {
-        "slug": "arquitectura-de-software",
-        "title": "Arquitectura de software",
-        "body": "Diseño de sistemas escalables, migraciones de stack y decisiones técnicas que duran. Nube, servidores y CI/CD.",
-        "tags": ["Cloud", "CI/CD", "Microservicios"]
-      },
-      {
-        "slug": "arquitectura-de-datos",
-        "title": "Arquitectura de datos",
-        "body": "Modelado de datos, pipelines ETL y dashboards. Convertimos tus datos en decisiones accionables.",
-        "tags": ["SQL", "ETL", "Dashboards", "BI"]
-      },
-      {
-        "slug": "cursos-y-mentorias",
-        "title": "Cursos y mentorías",
-        "body": "Formación práctica en desarrollo, IA y Vibe Coding. De la idea al despliegue, con acompañamiento real.",
-        "tags": ["Vibe Coding", "IA", "Gratis"]
+        "slug": "cursos-mentorias-bim",
+        "title": "Cursos y mentorías para equipos BIM",
+        "body": "Formación práctica en Revit API, Civil 3D API y Dynamo. Para equipos que prefieren desarrollar y mantener sus propias herramientas internamente.",
+        "tags": ["Revit API", "Civil 3D API", "Mentoría 1-a-1"]
       }
     ]
   },
   "process": {
     "eyebrow": "Cómo trabajamos",
-    "title": "Metodología ágil, acelerada con IA.",
-    "subtitle": "Un proceso claro que puedes seguir paso a paso.",
+    "title": "Del diagnóstico al add-in instalado.",
+    "subtitle": "Un proceso que evita el error más común: escribir código antes de saber si vale la pena.",
     "steps": [
       {
-        "title": "Descubrimiento",
-        "body": "Entendemos tu problema y definimos el alcance. Sin humo: objetivos, tiempos y presupuesto sobre la mesa."
+        "title": "Diagnóstico de flujo",
+        "body": "Vemos tu proceso real y medimos dónde se van las horas. Salimos con una lista priorizada por ratio de ahorro y complejidad."
       },
       {
-        "title": "Diseño y planificación",
-        "body": "Prototipamos la solución con buenas prácticas modernas. Diseño que se ve premium y funciona."
+        "title": "Prototipo en Dynamo",
+        "body": "Validamos la lógica rápido y barato. Si el equipo confirma que resuelve el problema, seguimos. Si no, te ahorraste semanas de desarrollo."
       },
       {
-        "title": "Ejecución con IA",
-        "body": "Construimos en sprints cortos, apoyados en IA para acelerar sin perder control de la calidad."
+        "title": "Add-in en C#",
+        "body": "Lo llevamos a producción cuando el volumen de uso lo justifica: arquitectura en capas, manejo de errores y rendimiento sobre modelos reales."
       },
       {
-        "title": "Entrega y soporte",
-        "body": "Desplegamos, medimos y mantenemos contigo. Iteración continua hasta que el resultado sea impecable."
+        "title": "Instalación y formación",
+        "body": "Instalador para toda la oficina, capacitación del equipo y soporte cuando Autodesk publique la siguiente versión."
       }
     ]
   },
   "blog": {
     "eyebrow": "Blog",
-    "title": "Aprende con nosotros. Gratis.",
-    "subtitle": "Desarrollo, IA, Vibe Coding y automatización. Contenido práctico que sí puedes aplicar.",
+    "title": "Guías de automatización BIM en español.",
+    "subtitle": "Revit API, Civil 3D API, Dynamo y C#. Contenido técnico completo y gratuito, del tipo que casi no existe en español.",
     "readMore": "Leer artículo",
     "viewAll": "Ver todos los artículos",
     "empty": "Pronto publicaremos los primeros artículos.",
@@ -125,35 +112,34 @@
   },
   "tools": {
     "eyebrow": "Herramientas",
-    "title": "Herramientas para cada rubro. Gratis.",
-    "subtitle": "Generadores, prompts para IA, rutas de proceso y automatizaciones. Todo organizado por industria, de punta a punta.",
+    "title": "Scripts, plantillas y calculadoras para tu día a día.",
+    "subtitle": "Grafos de Dynamo listos para usar, plantillas de add-ins en C#, calculadoras de ingeniería y prompts de IA para BIM. Gratis.",
     "badge": "En construcción",
-    "cta": "Quiero probarlas"
+    "cta": "Ver herramientas"
   },
   "finalCta": {
-    "title": "¿Listo para resolver tu próximo desafío?",
-    "subtitle": "Cuéntanos tu idea. Te respondemos con un plan claro, sin compromiso.",
-    "ctaPrimary": "Iniciar proyecto",
+    "title": "¿Qué tarea le está robando horas a tu equipo?",
+    "subtitle": "Cuéntanos tu proceso. Te decimos si vale la pena automatizarlo, con qué herramienta y cuánto tiempo recuperas. Sin compromiso.",
+    "ctaPrimary": "Diagnóstico gratis",
     "ctaSecondary": "Escríbenos"
   },
   "footer": {
-    "tagline": "Tecnología e ingeniería con IA.",
+    "tagline": "Add-ins y automatización BIM para Civil 3D y Revit.",
     "rights": "Todos los derechos reservados.",
     "columns": {
-      "services": "Soluciones",
+      "services": "Servicios",
       "company": "Empresa",
       "resources": "Recursos"
     },
     "links": {
-      "about": "Nosotros",
       "contact": "Contacto",
       "blog": "Blog",
       "tools": "Herramientas"
     }
   },
   "meta": {
-    "homeTitle": "Zeist — Tecnología e ingeniería con IA",
-    "homeDescription": "Soluciones tecnológicas para cada industria: software, automatización, diseño e ingeniería. IA y metodología ágil para resultados más rápidos y accesibles.",
+    "homeTitle": "Zeist — Add-ins y automatización BIM para Civil 3D y Revit",
+    "homeDescription": "Desarrollamos add-ins en C# para Civil 3D y Revit, y scripts Dynamo que eliminan tareas repetitivas. Ingenieros civiles que programan.",
     "titleTemplate": "%s — Zeist"
   }
 }

@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Zeist — Software e ingeniería de sistemas con IA";
+export const alt = "Zeist — Add-ins y automatización BIM para Civil 3D y Revit";
 
 export default function OgImage() {
   return new ImageResponse(
@@ -54,17 +54,17 @@ export default function OgImage() {
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <div
             style={{
-              fontSize: 68,
+              fontSize: 62,
               fontWeight: 800,
               lineHeight: 1.05,
               letterSpacing: -2,
-              maxWidth: 900,
+              maxWidth: 960,
             }}
           >
-            Software que impulsa tu negocio.
+            Add-ins y automatización BIM para Civil 3D y Revit.
           </div>
-          <div style={{ fontSize: 34, color: "#00FFCE", fontWeight: 700 }}>
-            Con IA. Más rápido. Más accesible.
+          <div style={{ fontSize: 32, color: "#00FFCE", fontWeight: 700 }}>
+            Ingenieros civiles que programan.
           </div>
         </div>
       </div>

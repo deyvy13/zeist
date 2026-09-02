@@ -1,0 +1,433 @@
+---
+title: "Desenvolvimento de add-ins para Revit e Civil 3D: o guia completo em português (2026)"
+description: "Guia de referência para desenvolver plugins de Revit e Civil 3D em C#: o que são, requisitos, arquitetura recomendada, ciclo de desenvolvimento, interface, distribuição e manutenção entre versões."
+date: "2026-08-04T11:00:00.000Z"
+author: "Zeist"
+tags:
+  - Add-in Revit
+  - Civil 3D
+  - C#
+  - .NET
+  - Revit API
+  - Automação BIM
+---
+
+<BlogHero
+  eyebrow="Guia completo · Add-ins C#"
+  title="Um add-in é a diferença entre uma automação que só você usa e uma que todo o escritório usa."
+  highlight="Este é o guia de referência sobre desenvolvimento de plugins para Revit e Civil 3D: o que são, o que você precisa, como estruturá-los para não virarem um monstro, e como chegar até o instalador."
+/>
+
+<Callout type="info" title="Como usar este guia" locale="pt">
+É o guia mãe do tema — longo de propósito. Os módulos estão recolhidos: abra conforme precisar. Se é sua primeira vez, leia em ordem. Se já tem um add-in funcionando e quer distribuir, pule para o **módulo 7**.
+</Callout>
+
+## Por que um add-in e não só um script
+
+O Dynamo resolve muita coisa. Mas tem um teto, e é sempre o mesmo: **a distribuição**.
+
+Um grafo de Dynamo é um arquivo que cada pessoa precisa abrir, executar e manter atualizado na própria máquina. Funciona para você, funciona para três colegas. A partir daí quebra: alguém usa uma versão velha, alguém modifica sem avisar, alguém não sabe abrir o Dynamo.
+
+Um **add-in** transforma essa automação num botão. Se instala uma vez, aparece na barra superior do Revit ou Civil 3D, e todo mundo usa exatamente a mesma versão. Além disso roda em velocidade nativa, então processa modelos grandes sem sufocar.
+
+<AnimatedFlow
+  title="O percurso completo"
+  nodes="Ideia|Projeto C#|Comando funcional|Botão próprio|Instalador"
+  subs="O problema|Estrutura|Lógica|Interface|Todo o escritório"
+/>
+
+<Roadmap />
+
+<TopicCard step="0" title="0. Contexto — o vocabulário mínimo" time="~6 min">
+
+As palavras que aparecem no guia todo, explicadas sem jargão.
+
+**Add-in (ou plugin)** — um arquivo pequeno que adiciona botões e funções novas a um programa que você já usa. Como uma extensão do Chrome, mas para Revit ou Civil 3D.
+
+**API** — a lista oficial de coisas que a Autodesk permite fazer com o programa pelo seu código. Pense no cardápio de um restaurante: só dá para pedir o que está no cardápio.
+
+**SDK** — o kit de ferramentas para desenvolvedores. Um pacote oficial que você baixa e que traz os arquivos necessários para seu código conversar com o Revit ou Civil 3D.
+
+**DLL** — o arquivo final que seu add-in produz. É como um `.exe`, mas que outro programa carrega dentro.
+
+**Compilar** — converter seu código (texto) no arquivo final instalável. Como passar um documento do Word para PDF.
+
+**Visual Studio** — o editor gratuito da Microsoft onde você escreve o código. Parece pesado ao abrir, mas você vai usar 5% das funções.
+
+**Framework .NET** — a versão do sistema sobre a qual roda seu add-in. Revit e Civil 3D exigem uma específica; você só precisa fazer combinar uma vez.
+
+**Bundle** — uma pasta com estrutura especial que a Autodesk reconhece ao iniciar. É a forma profissional de entregar um add-in: se copia e pronto.
+
+**Transaction** — no Revit, o bloco que agrupa as mudanças que você faz no modelo. Toda mudança vai dentro de uma, e é isso que permite desfazê-las.
+
+<Callout type="tip" locale="pt">
+Não precisa decorar. Volte aqui quando uma palavra te travar.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="1" title="1. O que um add-in pode fazer (e o que não)" time="~6 min">
+
+**O que você pode fazer:**
+
+- Percorrer todos os elementos do modelo e ler suas propriedades.
+- Criar, modificar e apagar elementos programaticamente.
+- Exportar dados para Excel, CSV, JSON ou banco de dados.
+- Gerar vistas, pranchas e folhas em série.
+- Adicionar suas próprias janelas com formulários e opções.
+- Escutar eventos (quando o usuário salva, cria ou apaga algo).
+- Integrar com sistemas externos: ERP, bancos de dados, serviços web.
+- Validar o modelo contra os padrões do seu escritório.
+
+**O que NÃO pode fazer:**
+
+- Mudar o comportamento interno dos comandos oficiais da Autodesk.
+- Acessar partes do programa que a API não expõe.
+- Executar o add-in fora do processo do Revit ou Civil 3D.
+- Rodar em Mac ou Linux — a API é só Windows.
+
+### Revit vs Civil 3D: o que muda
+
+As duas APIs têm dificuldade comparável, mas personalidades distintas.
+
+**Revit** trabalha com elementos bastante uniformes (paredes, janelas, famílias) e sua API é muito documentada, com comunidade grande. Você encontra resposta para quase qualquer dúvida, embora quase sempre em inglês.
+
+**Civil 3D** trabalha com objetos mais complexos (corredores, superfícies, alinhamentos, perfis) que têm muito mais partes móveis. A API é igualmente potente mas **muito menos documentada**, e a comunidade lusófona é quase inexistente. Aí está a dificuldade real — e também a oportunidade.
+
+Além disso, o Civil 3D se apoia na API do AutoCAD: você acaba usando as duas ao mesmo tempo, porque um desenho de Civil 3D também contém entidades puras do AutoCAD.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Requisitos e setup completo" time="~7 min">
+
+Tudo o que você precisa antes de escrever a primeira linha.
+
+**1. Windows com Revit ou Civil 3D instalado.**
+A versão que você usa no trabalho. Precisa do programa para testar, não só para desenvolver.
+
+**2. Visual Studio Community 2022** — gratuito, em [visualstudio.microsoft.com](https://visualstudio.microsoft.com).
+Ao instalar, marque a carga de trabalho **"Desenvolvimento desktop com .NET"**. É a única que você precisa.
+
+**3. O SDK do seu produto.**
+Baixe do portal de desenvolvedores da Autodesk buscando o SDK da sua versão. Traz as bibliotecas que seu projeto precisa referenciar e, muito útil, exemplos oficiais que você pode abrir e estudar.
+
+**4. Git** — [git-scm.com](https://git-scm.com) ou **GitHub Desktop** se prefere interface visual.
+Não é opcional. É sua rede de segurança desde o primeiro dia.
+
+**5. Opcional mas muito recomendável:**
+
+- **RevitLookup** (código aberto) — mostra ao vivo todas as propriedades do elemento que você seleciona. É a forma mais rápida de descobrir o que dá para ler.
+- **Uma IA como copiloto** — Claude ou ChatGPT. Encurta drasticamente a curva. O método está em [Vibe Coding para engenheiros](/pt/blog/guia-vibe-coding-para-empezar).
+
+### Verifique que está tudo certo
+
+```bash
+dotnet --version    # deve mostrar 6.0 ou superior
+git --version       # qualquer versao moderna
+```
+
+<Callout type="warn" locale="pt">
+O erro de setup mais comum: compilar contra um framework .NET diferente do que sua versão do programa espera. Se ao carregar o add-in ele disser que não consegue, verifique isso primeiro — é 90% dos casos.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. A arquitetura recomendada (o módulo que mais economiza)" time="~10 min">
+
+Esta é a parte que separa um add-in que cresce bem de um que fica insustentável em três meses.
+
+**A arquitetura: Command → Service → Repository.** Três camadas, cada uma com uma só responsabilidade.
+
+<AnimatedFlow
+  title="As 3 camadas"
+  nodes="Command|Service|Repository"
+  subs="Ponto de entrada|Suas regras de negócio|Conversa com a API"
+/>
+
+### O que cada camada faz
+
+**Command** — é o que o programa executa quando o usuário aperta o botão. Só orquestra: recebe o evento, chama o Service, mostra o resultado. **Não toca a API diretamente.**
+
+**Service** — contém a *sua* lógica: "vigas com menos de 3 m não contam", "o CSV leva esta cabeçalha", "o nome se forma assim". Não sabe nada de Revit nem de Civil 3D — trabalha com objetos de dados simples.
+
+**Repository** — é o único que conhece a API da Autodesk. Traduz entre os objetos do programa e seus objetos de dados.
+
+### Tradução para pastas
+
+```text
+MeuPlugin/
+  Commands/       -> pontos de entrada
+  Services/       -> suas regras de negocio
+  Repositories/   -> tudo que toca a API
+  Models/         -> objetos de dados puros
+  UI/             -> janelas e formularios
+  Resources/      -> icones e imagens
+```
+
+### As 5 vantagens concretas
+
+1. **Atualizável.** Quando a Autodesk mudar a API — e sempre muda — você só toca `Repositories/`. Sua lógica e interface ficam intactas.
+2. **Testável.** Você pode testar o Service sem abrir o programa, simulando dados.
+3. **Reutilizável.** O mesmo Service pode servir ao Revit e ao Civil 3D com Repositories diferentes.
+4. **Escalável.** Adicionar um comando novo é criar um Command e reutilizar os Services existentes.
+5. **Depurável.** Quando algo falha, você sabe em que camada procurar.
+
+### O antipadrão que você verá em tutoriais antigos
+
+Um único arquivo gigante com tudo dentro: chamadas à API, cálculos, formatação e janelas misturados. É rapidíssimo no primeiro dia e um pesadelo em três meses. **Não faça**, mesmo que o add-in pareça pequeno — todos começam pequenos.
+
+<Callout type="tip" locale="pt">
+Estruturar bem custa 15 minutos no início. Reestruturar depois custa dias. Se usar IA, diga explicitamente que siga esta arquitetura na primeira mensagem: ela respeita durante toda a sessão.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Anatomia de um add-in: os arquivos que o compõem" time="~7 min">
+
+Um add-in mínimo tem três peças.
+
+### 1. O arquivo de projeto (`.csproj`)
+
+Define que framework você usa e que bibliotecas da Autodesk referencia. É onde se configura se o projeto compila para Revit 2024 ou 2025.
+
+Detalhe importante: as referências às bibliotecas da Autodesk devem ser marcadas para **não serem copiadas** para a pasta de saída. Já estão no programa; duplicá-las causa conflitos.
+
+### 2. A classe do comando
+
+É a porta de entrada. No Revit, uma classe que implementa `IExternalCommand`; no Civil 3D, um método marcado com o atributo `CommandMethod`. É aqui que o programa entra quando o usuário executa sua ferramenta.
+
+Qualquer mudança no modelo tem que ir dentro de uma **transação**: se abre, se fazem as mudanças, se confirma. Se algo falhar no meio, tudo é descartado e o modelo fica como estava. É o que permite ao usuário desfazer.
+
+### 3. O arquivo de registro
+
+Diz ao programa que seu add-in existe.
+
+- No **Revit** é um arquivo `.addin` (formato XML) que se coloca numa pasta específica e aponta para seu DLL.
+- No **Civil 3D** você pode carregá-lo manualmente com o comando `NETLOAD` durante o desenvolvimento, ou registrá-lo com um bundle para que carregue sozinho.
+
+### Nomes de comando: uma convenção que você vai agradecer
+
+Prefixe todos seus comandos com as iniciais do seu escritório. Se sua empresa é Zeist, use `ZEIST_EXPORTAR_ALINHAMENTOS` em vez de `EXPORTAR`. Evita colisões com outros add-ins e faz o usuário encontrar suas ferramentas digitando o prefixo.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. O ciclo de desenvolvimento: escrever, compilar, carregar, testar" time="~8 min">
+
+O loop que você vai repetir centenas de vezes.
+
+**1. Escrever** — o código no Visual Studio.
+
+**2. Compilar** — `Ctrl+Shift+B` ou `dotnet build`. Gera o DLL. Se houver erros, aparecem aqui.
+
+**3. Carregar no programa:**
+- *Civil 3D*: comando `NETLOAD` e você seleciona o DLL.
+- *Revit*: você coloca o arquivo `.addin` na pasta de add-ins e reinicia.
+
+**4. Testar** — executa seu comando sobre um modelo de teste.
+
+**5. Verificar** — confere o resultado com seus próprios olhos, não só que não deu erro.
+
+### O detalhe que frustra todo mundo no começo
+
+Uma vez que o Revit ou Civil 3D carrega seu DLL, **ele o bloqueia**. Você não pode recompilar por cima sem fechar o programa. Isso transforma cada iteração em: fechar, compilar, abrir, carregar, testar. Insuportável.
+
+Existem duas soluções habituais:
+
+- **Add-in Manager** (vem no SDK do Revit) — permite recarregar sem fechar o programa.
+- **Depuração com "attach to process"** — você conecta o Visual Studio ao processo em execução e pode colocar pontos de parada para ver o que acontece linha a linha.
+
+Configurar qualquer uma das duas no começo te economiza horas.
+
+### Protocolo de testes mínimo
+
+Antes de dar por bom um comando, teste com:
+
+1. **Modelo vazio** — não deveria estourar, deveria avisar.
+2. **Um só elemento** — o caso mínimo.
+3. **Modelo grande de verdade** — a performance só aparece aqui.
+4. **Dados estranhos** — nomes com acentos, valores nulos, elementos sem o parâmetro que você espera.
+
+<Callout type="tip" locale="pt">
+Adicione aos seus comandos um **modo de simulação**: que liste o que *faria* sem fazer. É a forma mais segura de revisar antes de executar num projeto real, e dá muita confiança aos usuários.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Do comando ao botão: a interface" time="~7 min">
+
+Um comando que se digita pelo teclado funciona, mas ninguém lembra como se chama. Um botão visível na barra superior sim é usado.
+
+### Adicionar sua própria aba
+
+A barra superior do Revit e Civil 3D — aquela faixa onde estão "Home", "Insert", "Annotate" — pode ser estendida. Você pode criar uma aba com o nome do seu escritório e colocar ali suas ferramentas agrupadas em painéis.
+
+O registro é feito ao iniciar o programa, através de uma classe que executa durante o carregamento do add-in.
+
+<Callout type="info" locale="pt">
+Na documentação oficial da Autodesk você verá essa barra chamada de **ribbon**. É a mesma coisa que aqui chamamos de barra superior; se buscar em inglês, esse é o termo.
+</Callout>
+
+### Ícones
+
+Você precisa de dois tamanhos: 16×16 para botões pequenos e 32×32 para os grandes, em formato PNG com fundo transparente. Pode obtê-los em bibliotecas gratuitas como [Icons8](https://icons8.com/) ou desenhá-los no Figma.
+
+Os ícones precisam ser copiados junto ao DLL ao compilar — se configura no arquivo de projeto.
+
+### Quando faz falta uma janela própria
+
+Um botão que executa algo diretamente cobre a maioria dos casos. Você precisa de uma janela com formulários quando:
+
+- O usuário tem que escolher opções antes de executar.
+- É preciso mostrar uma prévia do que vai acontecer.
+- O processo é longo e convém uma barra de progresso.
+- Você quer salvar as preferências de cada usuário.
+
+Leve em conta que uma interface própria pode **dobrar o esforço** do add-in. Comece sem ela e adicione só quando o uso real pedir.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Distribuição: do DLL ao instalador" time="~8 min">
+
+Seu add-in funciona na sua máquina. Agora é levá-lo às demais. Quatro níveis, conforme quanta gente usa.
+
+### Nível 1 — Manual (1 a 3 usuários)
+
+Você copia o DLL para uma pasta e cada usuário carrega. Para Revit, além disso o arquivo `.addin` na pasta correspondente.
+
+Funciona, mas cada atualização obriga a repetir o processo pessoa por pessoa.
+
+### Nível 2 — Bundle (3 a 20 usuários) — o ponto doce
+
+O formato oficial da Autodesk. É uma pasta com uma estrutura específica que o programa detecta e carrega automaticamente ao iniciar.
+
+```text
+MeuPlugin.bundle/
+  PackageContents.xml
+  Contents/
+    Windows/
+      MeuPlugin.dll
+    Resources/
+      icons/
+```
+
+O arquivo `PackageContents.xml` declara que versões suporta, quem publica e o que carregar. O usuário só precisa copiar a pasta para o diretório de add-ins da Autodesk e reiniciar.
+
+**Para a maioria dos escritórios, o caminho termina aqui.** É suficiente e não exige infraestrutura.
+
+### Nível 3 — Instalador (20 a 100 usuários)
+
+Um `.exe` ou `.msi` que faz a instalação sozinho. Ferramentas habituais: **Inno Setup** (gratuito e simples) ou **WiX Toolset** (mais potente, mais complexo).
+
+Vantagens: instalação em um clique, desinstalador, e você pode pedir permissões de administrador para instalar para todos os usuários da máquina.
+
+### Nível 4 — Atualizações automáticas ou App Store
+
+Para mais de 100 usuários ou distribuição externa. Você precisa de um servidor que sirva as versões e que seu add-in consulte ao iniciar. Se vai vender a terceiros, a **Autodesk App Store** é o canal oficial, mas exige cadastro como publisher, revisão do código e assinatura digital.
+
+<Callout type="tip" locale="pt">
+Comece sempre pelo nível 2. É o de melhor relação esforço/benefício, e pouquíssimos escritórios precisam passar dali.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="8" title="8. Manutenção entre versões da Autodesk" time="~6 min">
+
+A Autodesk publica versão nova todo ano. Isto é o que realmente acontece.
+
+### O que quebra e o que não
+
+Na maioria das vezes **não quebra nada**: você recompila contra as bibliotecas novas e funciona. Mas às vezes muda uma assinatura de método, algo é marcado como obsoleto ou muda o framework .NET exigido.
+
+A mudança de framework é a mais disruptiva: obriga a recompilar e às vezes a ajustar dependências.
+
+### Como suportar várias versões ao mesmo tempo
+
+Três estratégias, da simples à sofisticada:
+
+1. **Um branch por versão.** Simples mas dobra a manutenção.
+2. **Um projeto com várias configurações de compilação.** Você compila para 2024, 2025 e 2026 do mesmo código, com condicionais onde diferirem.
+3. **Separar em duas camadas.** Toda a lógica numa biblioteca comum, e uma camada fina específica por versão. **É exatamente o que a arquitetura do módulo 3 te dá.**
+
+### Orce a manutenção
+
+Regra prática: **entre 15% e 25% do custo inicial por ano**. Cobre adaptação a versões novas, correção de erros que aparecem com o uso real, e pequenas melhorias que a equipe vai pedir assim que gostar da ferramenta.
+
+Se alguém te vende um add-in sem mencionar isso, não manteve muitos.
+
+</TopicCard>
+
+<TopicCard step="9" title="9. Desenvolver internamente ou encomendar" time="~6 min">
+
+Não há resposta universal. Depende de quatro fatores.
+
+### Desenvolva internamente se...
+
+- Você tem alguém com interesse real e **tempo protegido** para isso (não "quando puder").
+- As ferramentas são pequenas e muito específicas do seu critério.
+- Você quer construir capacidade interna a médio prazo.
+- Você pode assumir que a primeira versão demore mais que o previsto.
+
+Com IA como copiloto essa via é muito mais viável que há cinco anos. O caminho completo está em [criar um plugin de Civil 3D com Claude Code](/pt/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).
+
+### Encomende fora se...
+
+- A ferramenta é crítica e você não pode depender de uma só pessoa.
+- Precisa que esteja pronto em semanas, não meses.
+- Requer integrações com sistemas externos ou interface complexa.
+- Ninguém da equipe tem tempo real protegido para isso.
+
+**Condição inegociável:** que o contrato inclua **o código-fonte e a documentação**. Se o fornecedor fica com o código, você fica preso a ele para cada mudança e cada versão nova da Autodesk.
+
+### A via intermediária que costuma funcionar melhor
+
+Encomendar a primeira ferramenta **com formação incluída**: alguém da sua equipe participa do desenvolvimento e fica com o conhecimento. A segunda vocês já fazem sozinhos.
+
+Os fatores de orçamento estão em [quanto custa um add-in](/pt/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Está avaliando desenvolver um add-in?"
+  title="Diagnóstico gratuito: escopo, prazo e se convém fazer dentro ou fora"
+  body="Em 20 minutos revisamos o que você precisa, dizemos em que nível de complexidade cai, que prazo esperar e se convém desenvolver internamente ou encomendar. Sem compromisso — a resposta honesta às vezes é que você não precisa."
+  primaryLabel="Reservar diagnóstico"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver serviço de add-ins"
+  secondaryHref="/pt/servicios/add-ins-revit-civil-3d"
+/>
+
+## Comparativo: os 4 níveis de distribuição
+
+<ComparisonTable
+  criterionLabel="Critério"
+  leftLabel="Bundle"
+  rightLabel="Instalador"
+  rows="Esforço de preparação | *Baixo (um XML) | Médio (script de instalação) || Usuários recomendados | 3 a 20 | *20 a 100 || Instalação para o usuário | Copiar pasta e reiniciar | *Duplo clique || Desinstalação limpa | Apagar pasta | *Desinstalador próprio || Instalar para todos os usuários | Não | *Sim || Atualizar versão | Substituir pasta | *Executar o novo instalador || Custo de ferramentas | *Zero | Zero (Inno Setup) || Recomendado para começar | *Sim | Não"
+/>
+
+## Recursos e próximos passos
+
+- **Primeira vez com add-ins:** guia prático end-to-end em [criar um plugin de Civil 3D com Claude Code](/pt/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).
+- **Ainda em dúvida se precisa de C#:** compare em [Dynamo vs C# no Civil 3D e Revit](/pt/blog/dynamo-vs-csharp-civil3d-revit).
+- **Orçar:** os fatores em [quanto custa um add-in](/pt/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+- **Desenvolver com IA:** o método em [Dynamo e plugins C# com IA](/pt/blog/dynamo-csharp-con-ia-claude).
+- **Panorama do Civil 3D:** [automatizar Civil 3D, guia completo](/pt/blog/automatizar-civil-3d-guia-completa).
+- **Sem base de programação:** comece por [programar do zero para engenheiros civis](/pt/blog/aprende-a-programar-desde-cero).
+
+**Documentação oficial:** [Revit API Docs](https://www.revitapidocs.com), [Autodesk Developer Network](https://www.autodesk.com/developer-network/) e [Civil 3D Developer Documentation](https://help.autodesk.com/view/CIV3D/2025/ENU/).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Add-ins para Revit e Civil 3D"
+  title="Código seu, arquitetura sustentável, sem letras miúdas"
+  body="Desenvolvemos add-ins em C# com escopo fechado e prazos comprometidos. O código-fonte e a documentação são seus desde o primeiro dia, e a arquitetura é pensada para que sua equipe consiga manter. Somos engenheiros civis: entendemos seu critério porque já o aplicamos."
+  primaryLabel="Pedir orçamento"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver cursos e mentorias"
+  secondaryHref="/pt/servicios/cursos-mentorias-bim"
+/>
+
+---
+
+**Foi útil?** Compartilhe com quem está começando a desenvolver para Autodesk. Este guia é atualizado — se sentir falta de algo, [fale conosco](/pt/contacto).

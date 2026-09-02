@@ -129,12 +129,10 @@ export function IconCode(p: SVGProps<SVGSVGElement>) {
 }
 
 export const serviceIcons = {
-  "desarrollo-de-software": IconCode,
-  "automatizacion-ingenieria": IconCube,
-  "diseno-ux-ui": IconPalette,
-  "arquitectura-de-software": IconLayers,
-  "arquitectura-de-datos": IconDatabase,
-  "cursos-y-mentorias": IconGraduation,
+  "add-ins-revit-civil-3d": IconCube,
+  "automatizacion-dynamo": IconLayers,
+  "auditoria-procesos-bim": IconSpark,
+  "cursos-mentorias-bim": IconGraduation,
 } as const;
 
 export const rubroIcons = {

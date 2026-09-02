@@ -6,24 +6,25 @@ import type { Locale } from "@/lib/i18n";
 // -----------------------------------------------------------------------------
 
 export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://zeist.dev"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://zeist.vercel.app"
 ).replace(/\/$/, "");
 
 export const site = {
   name: "Zeist",
-  // Brand tagline is intentionally product-agnostic (brand-first, like Nike/Adidas).
+  // Brand-first name (like Nike/Adidas). The niche lives in the slogan, not the name.
   legalName: "Zeist",
   email: "hola@zeist.dev",
   twitter: "@zeist", // update when the handle exists
   themeColor: "#00FFCE",
   // Localized one-liners used for <title> templates and OG defaults.
+  // Keyword-led: "add-in" + "Civil 3D" + "Revit" are the target search terms.
   slogan: {
-    es: "Tecnología e ingeniería con IA",
-    pt: "Tecnologia e engenharia com IA",
+    es: "Add-ins y automatización BIM para Civil 3D y Revit",
+    pt: "Add-ins e automação BIM para Civil 3D e Revit",
   },
   description: {
-    es: "Soluciones tecnológicas para cada industria: software, automatización, diseño e ingeniería. IA y metodología ágil para resultados más rápidos y accesibles.",
-    pt: "Soluções tecnológicas para cada indústria: software, automação, design e engenharia. IA e metodologia ágil para resultados mais rápidos e acessíveis.",
+    es: "Desarrollamos add-ins en C# para Civil 3D y Revit, y scripts Dynamo que eliminan las tareas repetitivas de tu equipo BIM. Ingenieros civiles que programan.",
+    pt: "Desenvolvemos add-ins em C# para Civil 3D e Revit, e scripts Dynamo que eliminam as tarefas repetitivas da sua equipe BIM. Engenheiros civis que programam.",
   },
 } as const;
 

@@ -1,34 +1,184 @@
 ---
-title: "Vibe Coding: guía para empezar a construir con IA"
-description: "Qué es el Vibe Coding, cómo empezar de forma ordenada y cómo llevar tu idea desde el prompt hasta el despliegue en producción."
-date: "2026-07-24"
+title: "Vibe Coding para ingenieros: construye tus propias herramientas BIM sin ser programador"
+description: "Método paso a paso para que un ingeniero civil o arquitecto construya sus herramientas de Civil 3D y Revit describiendo lo que necesita en español, con IA como copiloto."
+date: "2026-07-24T10:00:00.000Z"
 author: "Zeist"
-tags: ["Vibe Coding", "IA", "Guía"]
-draft: false
+tags:
+  - Vibe Coding
+  - IA
+  - Civil 3D
+  - Revit
+  - Dynamo
+  - Sin programar
 ---
 
-El *Vibe Coding* es construir software describiendo lo que quieres en lenguaje natural y dejando que la IA genere el código. Suena mágico, pero sin método se vuelve caos. Esta es la ruta que recomendamos.
+<BlogHero
+  eyebrow="Vibe Coding para BIM · Método"
+  title="Describir en español lo que necesitas y que salga código que funciona. Con método, no es magia."
+  highlight="El Vibe Coding es construir software describiendo lo que quieres en lenguaje natural. Sin método se vuelve caos. Esta es la ruta ordenada, adaptada a quien automatiza Civil 3D y Revit."
+/>
 
-## 1. Define el problema antes del prompt
+<Callout type="info" title="Para quién es esto">
+Ingenieros civiles, arquitectos y técnicos BIM que quieren construir sus propias herramientas —un script de Dynamo, un add-in sencillo— sin haber estudiado programación. No necesitas saber C# de antemano, pero sí seguir un orden.
+</Callout>
 
-La IA amplifica lo que le das. Si tu idea es difusa, el resultado será difuso. Escribe en una frase qué hace tu producto y para quién.
+## Qué es el Vibe Coding (y qué no)
 
-## 2. Empieza por la estructura, no por el detalle
+El término se popularizó en 2025 para describir una forma de programar donde **describes la intención en lenguaje natural y la IA escribe el código**. Tú revisas, corriges el rumbo, y vuelves a pedir.
 
-Pide primero el esqueleto: páginas, navegación y modelo de datos. Recién después entra al detalle visual y la lógica.
+Para un ingeniero que automatiza BIM esto cambia la ecuación: la barrera ya no es dominar la API de Revit de memoria, sino **saber describir bien el problema y verificar el resultado**.
 
-## 3. Itera en pasos pequeños
+Lo que **no** es: dejar que la IA haga todo sin entender nada. Esa vía funciona para un prototipo de fin de semana y se derrumba en cuanto la herramienta tiene que usarla el equipo.
 
-Un cambio a la vez. Verifica cada resultado antes de pedir el siguiente. Así detectas errores temprano.
+<AnimatedFlow
+  title="El ciclo del Vibe Coding"
+  nodes="Describir el problema|Pedir por partes|Verificar en el modelo|Iterar"
+  subs="En español, con detalle|Nunca todo de golpe|Con datos reales|Un cambio por vez"
+/>
 
-## 4. Aprende a leer lo que genera
+<Roadmap />
 
-No necesitas ser experto, pero sí entender qué hace tu código. Es la diferencia entre depender de la IA y **usarla con criterio**.
+<TopicCard step="1" title="1. Define el problema antes de escribir el primer mensaje" time="~5 min">
 
-## 5. Despliega de verdad
+La IA amplifica lo que le das. Si tu idea es difusa, el resultado será difuso.
 
-Una idea sin desplegar no existe para el mundo. Aprende lo básico de hosting, dominios y variables de entorno. Es más simple de lo que parece.
+Antes de abrir Claude o ChatGPT, escribe en una hoja:
+
+- **Qué tarea concreta quieres eliminar.** No "automatizar el modelado", sino `"renombrar todas las alineaciones siguiendo el formato AL-<nivel>-<correlativo>"`.
+- **Cuál es la entrada.** ¿Qué selecciona el usuario? ¿Todo el dibujo? ¿Sólo lo seleccionado?
+- **Cuál es la salida esperada.** ¿Modifica el modelo? ¿Genera un archivo? ¿Muestra un reporte?
+- **Qué NO debe hacer.** El límite explícito. "No toca alineaciones que ya cumplan el formato".
+
+<Callout type="tip">
+Si no puedes explicárselo a un compañero en 3 frases, tampoco vas a poder explicárselo a la IA. Ese es el test.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Da contexto de tu entorno, siempre" time="~5 min">
+
+El error más común: pedir código sin decir en qué versión y con qué herramienta.
+
+Un mensaje de contexto que deberías reutilizar en cada sesión:
+
+```markdown
+Contexto de mi entorno:
+- Civil 3D 2025 (.NET Framework 4.8)
+- Windows 11, Visual Studio Community 2022
+- Objetivo: add-in en C# usando la API oficial
+- Nivel: nunca he programado en C#, explícame lo que hagas
+
+Cuando propongas código, dime también:
+- Qué hace cada bloque, en lenguaje simple
+- Qué necesito instalar o referenciar
+- Cómo lo pruebo
+```
+
+Sin esto, la IA asume una versión cualquiera y te da código que no compila. Con esto, acierta a la primera muchísimo más a menudo.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Empieza por la estructura, no por el detalle" time="~5 min">
+
+Pide primero el esqueleto: qué archivos, qué carpetas, qué hace cada parte. Recién después entra al detalle.
+
+**Orden que funciona:**
+
+1. **Estructura del proyecto** — carpetas y archivos vacíos, con la responsabilidad de cada uno.
+2. **El caso más simple** — que haga UNA cosa mínima y la haga bien.
+3. **Los casos reales** — ahora sí, tu lógica de negocio con sus excepciones.
+4. **Manejo de errores** — qué pasa si no encuentra nada, si el dato viene vacío.
+5. **Interfaz** — botón, ventana, opciones. Al final, no al principio.
+
+Este orden viene de la arquitectura en capas que explicamos en detalle en [crear un plugin de Civil 3D con Claude Code](/es/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Itera en pasos pequeños y verifica con datos reales" time="~6 min">
+
+Un cambio a la vez. Verifica cada resultado antes de pedir el siguiente.
+
+**El bucle correcto:**
+
+1. Pides una cosa pequeña.
+2. Lees lo que propone (aunque no entiendas cada línea, entiende la intención).
+3. Lo pruebas **en una copia** de un modelo pequeño.
+4. Si funciona: guardas el avance. Si no: le das el error **completo**, no un resumen.
+5. Siguiente cosa pequeña.
+
+<Callout type="warn">
+Nunca pruebes por primera vez sobre un modelo de producción. Duplica un archivo pequeño, prueba ahí, verifica el resultado con tus propios ojos. Sólo entonces úsalo de verdad.
+</Callout>
+
+**Cuando algo falla:** no pidas "arréglalo". Pega el mensaje de error exacto, di qué esperabas y qué pasó. La diferencia en calidad de respuesta es enorme.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Aprende a leer lo que genera (el punto que separa a los dos grupos)" time="~6 min">
+
+No necesitas escribir código de memoria. Sí necesitas **entender qué hace el que tienes delante**.
+
+El mínimo viable para no depender ciegamente de la IA:
+
+- **Variables y tipos** — qué guarda cada cosa.
+- **Condicionales y bucles** — cómo decide y cómo repite.
+- **Funciones** — cómo se organiza y reutiliza la lógica.
+- **En BIM concretamente:** qué es una *Transaction* (el bloque que agrupa cambios en el modelo y permite deshacerlos) y por qué todo cambio va dentro de una.
+
+Si te faltan esos fundamentos, la ruta más corta es nuestra guía de [programar desde cero para ingenieros civiles](/es/blog/aprende-a-programar-desde-cero). Son unas semanas, y multiplican lo que puedes hacer con IA.
+
+<Callout type="info">
+Paradoja útil: **con IA los fundamentos importan más, no menos**. Sin ellos no puedes juzgar si lo que te propone es sólido o frágil — y el que firma el resultado eres tú.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Del prototipo a la herramienta que usa el equipo" time="~6 min">
+
+Aquí es donde el Vibe Coding solo deja de alcanzar, y hay que sumar disciplina.
+
+**Lo que separa un experimento de una herramienta real:**
+
+- **Control de versiones.** Instala GitHub Desktop, crea un repositorio, haz un "commit" cada vez que algo funcione. Es tu backup infinito. 20 minutos de aprendizaje, valor permanente.
+- **Manejo de errores decente.** Que muestre "No se encontraron alineaciones en el dibujo" en vez de reventar con un texto rojo incomprensible.
+- **Probado con datos raros.** Modelo vacío, 10 000 elementos, nombres con tildes y emojis, datos incompletos.
+- **Documentación mínima.** Tres líneas: qué hace, cómo se instala, cuándo NO usarlo.
+- **Distribución.** Un archivo suelto sirve para ti. Para el equipo, empaquétalo como bundle.
+
+Si la herramienta va a ser crítica para la operación, llega el momento de decidir entre sostenerla tú o [encargarla](/es/servicios/add-ins-revit-civil-3d). Los factores están en [cuánto cuesta un add-in](/es/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="¿Quieres acompañamiento en tu primera herramienta?"
+  title="Mentorías 1-a-1 para ingenieros que automatizan"
+  body="Revisamos contigo el problema, la arquitectura, tus mensajes a la IA y el resultado. Sales con una herramienta funcionando y con criterio propio para las siguientes. Primera llamada de 20 minutos gratis."
+  primaryLabel="Reservar mentoría"
+  primaryHref="/es/servicios/cursos-mentorias-bim"
+  secondaryLabel="Escríbenos"
+  secondaryHref="/es/contacto"
+/>
+
+## Errores frecuentes al empezar
+
+| Error | Qué hacer en su lugar |
+|---|---|
+| Pedir la herramienta completa en un mensaje | Pedir el caso más simple primero, y crecer |
+| No decir versión ni entorno | Reutilizar un bloque de contexto en cada sesión |
+| Probar directo en un modelo real | Duplicar un modelo pequeño y probar ahí |
+| Decir "no funciona" | Pegar el error exacto y qué esperabas |
+| Aceptar código que no entiendes | Pedir que te lo explique antes de aplicarlo |
+| No guardar avances | Git con GitHub Desktop desde el día uno |
+
+## Siguientes pasos
+
+- Si te faltan fundamentos: [programar desde cero para ingenieros civiles](/es/blog/aprende-a-programar-desde-cero).
+- Si dudas entre Dynamo y C#: [Dynamo vs C# en Civil 3D y Revit](/es/blog/dynamo-vs-csharp-civil3d-revit).
+- Si quieres el camino completo hasta el instalador: [crear un plugin de Civil 3D con Claude Code](/es/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).
+- Panorama general de cómo la IA cambió el desarrollo BIM: [Dynamo y plugins C# con IA](/es/blog/dynamo-csharp-con-ia-claude).
+
+<PostFaqs />
 
 ---
 
-En Zeist ofrecemos mentorías para acompañarte en este camino, desde el primer prompt hasta tu app en producción. Si quieres orientación, [escríbenos](/es/contacto).
+**¿Te sirvió?** Compártelo con ese colega que dice "yo de programar, nada". Hoy la barrera es mucho más baja de lo que cree. Y si quieres acompañamiento real, [escríbenos](/es/contacto).

@@ -19,6 +19,402 @@ type PostData = {
 };
 
 const data: Record<string, Record<Locale, PostData>> = {
+  // ---- PILLAR · Cluster C2 (Civil 3D) ----------------------------------------
+  "automatizar-civil-3d-guia-completa": {
+    es: {
+      roadmap: {
+        title: "Los 8 bloques de la guía",
+        intro:
+          "De los términos básicos al plan para escalar de un script personal a una herramienta que usa toda la oficina.",
+        steps: [
+          { n: 0, title: "Contexto — los términos que necesitas", desc: "API, Dynamo, nodo, grafo, add-in, C#, AutoLISP", tag: "Base" },
+          { n: 1, title: "Qué se puede automatizar", desc: "Mapa completo por disciplina: topografía, superficies, corredores, planos", tag: "Panorama" },
+          { n: 2, title: "Las 4 vías", desc: "Dynamo, Python, C# y AutoLISP — cuál para qué caso", tag: "Herramientas" },
+          { n: 3, title: "Las 15 con mejor retorno", desc: "Ordenadas por ahorro dividido entre esfuerzo, con porcentajes", tag: "Aplicación" },
+          { n: 4, title: "Cómo priorizar", desc: "La matriz frecuencia × duración × estabilidad ÷ complejidad", tag: "Método" },
+          { n: 5, title: "Tu primera automatización", desc: "Caso completo paso a paso: exportar alineaciones a CSV", tag: "Práctica" },
+          { n: 6, title: "Los 7 errores que hacen fracasar", desc: "Patrones que se repiten en todas las oficinas", tag: "Riesgos" },
+          { n: 7, title: "De script personal a herramienta", desc: "Las 4 etapas y qué disciplina toca en cada una", tag: "Crecimiento" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre automatizar Civil 3D",
+        items: [
+          {
+            q: "¿Necesito saber programar para automatizar Civil 3D?",
+            a: "Para empezar con Dynamo, no. Es programación visual: arrastras nodos y los conectas. Un ingeniero puede construir grafos útiles en una semana. Sí necesitas fundamentos cuando pasas a Python dentro de Dynamo o a add-ins en C#. La ruta desde cero está en nuestra guía de programar para ingenieros civiles."
+          },
+          {
+            q: "¿Qué lenguaje conviene aprender primero?",
+            a: "Dynamo (visual) para validar que la automatización merece la pena, y Python para cuando los nodos se queden cortos. C# sólo cuando confirmes que la herramienta la va a usar toda la oficina. AutoLISP únicamente si necesitas tocar entidades puras de AutoCAD — no accede a corredores, superficies ni alineaciones."
+          },
+          {
+            q: "¿Por qué hay tan poco contenido de Civil 3D comparado con Revit?",
+            a: "Porque el ecosistema BIM gira en torno a la edificación y la infraestructura queda en segundo plano. No es que haya menos que automatizar — un proyecto de carretera tiene tanto trabajo repetitivo como un edificio. Para quien trabaja con Civil 3D esa escasez es una ventaja competitiva: menos gente domina ese conocimiento."
+          },
+          {
+            q: "¿Cuánto tiempo tardo en tener mi primera automatización funcionando?",
+            a: "Un grafo de Dynamo útil: una tarde si el problema está bien definido. Lo que más tarda no es construir el grafo, es escribir con claridad qué entra, qué sale y qué regla aplica. Si no puedes explicarlo en tres frases, todavía no está listo para automatizarse."
+          },
+          {
+            q: "¿Se rompen mis automatizaciones al actualizar Civil 3D?",
+            a: "Los grafos de Dynamo suelen sobrevivir bien entre versiones. Los add-ins en C# a veces requieren recompilar y ajustar si la API cambió. La forma de protegerse es tener el código separado en capas: así sólo tocas la parte que habla con la API y el resto queda intacto."
+          },
+          {
+            q: "¿Por dónde empiezo si nunca he automatizado nada?",
+            a: "Por la tarea que más te fastidia y que hagas al menos una vez por semana. Normalmente es exportar cubicaciones o renombrar objetos. Escribe el criterio en una hoja, constrúyelo en Dynamo, pruébalo en una copia de un dibujo pequeño, y mide cuánto tiempo te ahorró. Ese primer número es lo que te motiva a seguir."
+          },
+          {
+            q: "¿Vale la pena si soy el único de mi oficina que programa?",
+            a: "Sí, pero documenta y comparte desde el principio. El riesgo real no es técnico, es organizativo: si la automatización vive sólo en tu portátil y te vas, se va contigo. Carpeta compartida, nombre con versión y tres líneas explicando qué hace. Eso convierte tu trabajo en un activo de la oficina."
+          }
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Os 8 blocos do guia",
+        intro:
+          "Dos termos básicos ao plano para escalar de um script pessoal a uma ferramenta que todo o escritório usa.",
+        steps: [
+          { n: 0, title: "Contexto — os termos que você precisa", desc: "API, Dynamo, nó, grafo, add-in, C#, AutoLISP", tag: "Base" },
+          { n: 1, title: "O que dá para automatizar", desc: "Mapa completo por disciplina: topografia, superfícies, corredores, pranchas", tag: "Panorama" },
+          { n: 2, title: "As 4 vias", desc: "Dynamo, Python, C# e AutoLISP — qual para cada caso", tag: "Ferramentas" },
+          { n: 3, title: "As 15 com melhor retorno", desc: "Ordenadas por economia dividida pelo esforço, com porcentagens", tag: "Aplicação" },
+          { n: 4, title: "Como priorizar", desc: "A matriz frequência × duração × estabilidade ÷ complexidade", tag: "Método" },
+          { n: 5, title: "Sua primeira automação", desc: "Caso completo passo a passo: exportar alinhamentos para CSV", tag: "Prática" },
+          { n: 6, title: "Os 7 erros que fazem fracassar", desc: "Padrões que se repetem em todos os escritórios", tag: "Riscos" },
+          { n: 7, title: "De script pessoal a ferramenta", desc: "As 4 etapas e que disciplina cabe em cada uma", tag: "Crescimento" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre automatizar Civil 3D",
+        items: [
+          {
+            q: "Preciso saber programar para automatizar o Civil 3D?",
+            a: "Para começar com Dynamo, não. É programação visual: você arrasta nós e os conecta. Um engenheiro constrói grafos úteis em uma semana. Você precisa de fundamentos quando passa para Python dentro do Dynamo ou para add-ins em C#. A rota do zero está no nosso guia de programar para engenheiros civis."
+          },
+          {
+            q: "Que linguagem convém aprender primeiro?",
+            a: "Dynamo (visual) para validar se a automação vale a pena, e Python para quando os nós ficarem curtos. C# só quando confirmar que a ferramenta será usada por todo o escritório. AutoLISP apenas se precisar mexer em entidades puras do AutoCAD — não acessa corredores, superfícies nem alinhamentos."
+          },
+          {
+            q: "Por que existe tão pouco conteúdo de Civil 3D comparado ao Revit?",
+            a: "Porque o ecossistema BIM gira em torno da edificação e a infraestrutura fica em segundo plano. Não é que haja menos para automatizar — um projeto rodoviário tem tanto trabalho repetitivo quanto um edifício. Para quem trabalha com Civil 3D essa escassez é uma vantagem competitiva: menos gente domina esse conhecimento."
+          },
+          {
+            q: "Quanto tempo levo para ter minha primeira automação funcionando?",
+            a: "Um grafo de Dynamo útil: uma tarde se o problema está bem definido. O que mais demora não é construir o grafo, é escrever com clareza o que entra, o que sai e que regra se aplica. Se você não consegue explicar em três frases, ainda não está pronto para automatizar."
+          },
+          {
+            q: "Minhas automações quebram ao atualizar o Civil 3D?",
+            a: "Os grafos de Dynamo costumam sobreviver bem entre versões. Os add-ins em C# às vezes exigem recompilar e ajustar se a API mudou. A forma de se proteger é ter o código separado em camadas: assim você só toca a parte que conversa com a API e o resto fica intacto."
+          },
+          {
+            q: "Por onde começo se nunca automatizei nada?",
+            a: "Pela tarefa que mais te irrita e que você faz pelo menos uma vez por semana. Normalmente é exportar cubagens ou renomear objetos. Escreva o critério numa folha, construa no Dynamo, teste numa cópia de um desenho pequeno, e meça quanto tempo economizou. Esse primeiro número é o que te motiva a seguir."
+          },
+          {
+            q: "Vale a pena se sou o único do escritório que programa?",
+            a: "Sim, mas documente e compartilhe desde o começo. O risco real não é técnico, é organizacional: se a automação vive só no seu notebook e você sai, vai embora com você. Pasta compartilhada, nome com versão e três linhas explicando o que faz. Isso transforma seu trabalho num ativo do escritório."
+          }
+        ],
+      },
+    },
+  },
+  // ---- PILLAR · Cluster C1 (Add-ins C#) --------------------------------------
+  "desarrollo-add-ins-revit-civil-3d-guia-completa": {
+    es: {
+      roadmap: {
+        title: "Los 10 bloques de la guía",
+        intro:
+          "Del vocabulario mínimo hasta la decisión de desarrollar internamente o encargarlo, pasando por arquitectura, interfaz y distribución.",
+        steps: [
+          { n: 0, title: "Contexto — el vocabulario mínimo", desc: "Add-in, API, SDK, DLL, compilar, bundle, transacción", tag: "Base" },
+          { n: 1, title: "Qué puede hacer un add-in", desc: "Alcance real y qué cambia entre Revit y Civil 3D", tag: "Panorama" },
+          { n: 2, title: "Requisitos y setup", desc: "Visual Studio, SDK, Git y las herramientas que ahorran horas", tag: "Setup" },
+          { n: 3, title: "La arquitectura recomendada", desc: "Command → Service → Repository y sus 5 ventajas concretas", tag: "Diseño" },
+          { n: 4, title: "Anatomía de un add-in", desc: "Los 3 archivos que lo componen y por qué cada uno", tag: "Estructura" },
+          { n: 5, title: "El ciclo de desarrollo", desc: "Escribir, compilar, cargar, probar — y el bloqueo del DLL", tag: "Flujo" },
+          { n: 6, title: "Del comando al botón", desc: "Pestaña propia, iconos y cuándo hace falta una ventana", tag: "Interfaz" },
+          { n: 7, title: "Distribución", desc: "Los 4 niveles: manual, bundle, instalador y App Store", tag: "Entrega" },
+          { n: 8, title: "Mantenimiento entre versiones", desc: "Qué se rompe, cómo soportar varias versiones y cuánto presupuestar", tag: "Largo plazo" },
+          { n: 9, title: "Desarrollar o encargar", desc: "Los factores de decisión y la vía intermedia que funciona", tag: "Decisión" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre desarrollo de add-ins",
+        items: [
+          {
+            q: "¿Qué diferencia hay entre un add-in y un script de Dynamo?",
+            a: "El add-in es un archivo compilado que se instala y añade un botón permanente al programa; el grafo de Dynamo es un archivo que cada usuario abre y ejecuta. La diferencia práctica es la distribución: un add-in lo instalas una vez y toda la oficina usa la misma versión, mientras que un grafo hay que repartirlo y mantenerlo actualizado máquina por máquina."
+          },
+          {
+            q: "¿Es más difícil desarrollar para Civil 3D que para Revit?",
+            a: "Las dos APIs tienen dificultad comparable, pero Civil 3D trabaja con objetos más complejos (corredores, superficies, perfiles) y está mucho menos documentada. Además se apoya en la API de AutoCAD, así que acabas usando las dos. La dificultad real no es técnica, es la escasez de ejemplos — sobre todo en español."
+          },
+          {
+            q: "¿Por qué insistís tanto en la arquitectura en capas?",
+            a: "Porque Autodesk cambia la API entre versiones. Si tu código está separado en Command, Service y Repository, un cambio de API sólo afecta al Repository y el resto queda intacto. Estructurar bien cuesta 15 minutos al principio; reestructurar un add-in que creció desordenado cuesta días."
+          },
+          {
+            q: "¿Cómo distribuyo el add-in a mi equipo?",
+            a: "Para 1-3 personas, copiar el DLL manualmente. Para 3-20, empaquetarlo como bundle: una carpeta con estructura estándar que Autodesk carga sola. Para 20-100, un instalador con Inno Setup. Para más o para clientes externos, actualizaciones automáticas o la Autodesk App Store. Empieza por el bundle: cubre a la mayoría de oficinas."
+          },
+          {
+            q: "¿Puedo desarrollar en Mac o Linux?",
+            a: "Puedes escribir el código en cualquier sistema, pero para compilar y probar necesitas Windows con Revit o Civil 3D instalado, porque la API es Windows-only. Muchos desarrolladores usan una máquina virtual con Windows sólo para esa parte."
+          },
+          {
+            q: "¿Qué presupuesto de mantenimiento debo prever?",
+            a: "Entre un 15% y un 25% del coste inicial al año. Cubre adaptación a las versiones nuevas de Autodesk, corrección de errores que sólo aparecen con el uso real, y las mejoras que el equipo va a pedir en cuanto la herramienta les guste. Si un proveedor no menciona esto, no ha mantenido muchos add-ins."
+          },
+          {
+            q: "¿Me conviene desarrollarlo internamente o encargarlo?",
+            a: "Internamente si tienes a alguien con interés y tiempo protegido de verdad, y la herramienta es específica de vuestro criterio. Encargarlo si es crítica, si la necesitas en semanas o si requiere integraciones complejas. En cualquier caso, exige que el contrato incluya el código fuente: si no, quedas atado al proveedor para cada cambio."
+          }
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Os 10 blocos do guia",
+        intro:
+          "Do vocabulário mínimo até a decisão de desenvolver internamente ou encomendar, passando por arquitetura, interface e distribuição.",
+        steps: [
+          { n: 0, title: "Contexto — o vocabulário mínimo", desc: "Add-in, API, SDK, DLL, compilar, bundle, transação", tag: "Base" },
+          { n: 1, title: "O que um add-in pode fazer", desc: "Alcance real e o que muda entre Revit e Civil 3D", tag: "Panorama" },
+          { n: 2, title: "Requisitos e setup", desc: "Visual Studio, SDK, Git e as ferramentas que economizam horas", tag: "Setup" },
+          { n: 3, title: "A arquitetura recomendada", desc: "Command → Service → Repository e suas 5 vantagens concretas", tag: "Design" },
+          { n: 4, title: "Anatomia de um add-in", desc: "Os 3 arquivos que o compõem e por que cada um", tag: "Estrutura" },
+          { n: 5, title: "O ciclo de desenvolvimento", desc: "Escrever, compilar, carregar, testar — e o bloqueio do DLL", tag: "Fluxo" },
+          { n: 6, title: "Do comando ao botão", desc: "Aba própria, ícones e quando faz falta uma janela", tag: "Interface" },
+          { n: 7, title: "Distribuição", desc: "Os 4 níveis: manual, bundle, instalador e App Store", tag: "Entrega" },
+          { n: 8, title: "Manutenção entre versões", desc: "O que quebra, como suportar várias versões e quanto orçar", tag: "Longo prazo" },
+          { n: 9, title: "Desenvolver ou encomendar", desc: "Os fatores de decisão e a via intermediária que funciona", tag: "Decisão" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre desenvolvimento de add-ins",
+        items: [
+          {
+            q: "Qual a diferença entre um add-in e um script de Dynamo?",
+            a: "O add-in é um arquivo compilado que se instala e adiciona um botão permanente ao programa; o grafo de Dynamo é um arquivo que cada usuário abre e executa. A diferença prática é a distribuição: um add-in você instala uma vez e todo o escritório usa a mesma versão, enquanto um grafo precisa ser distribuído e mantido atualizado máquina por máquina."
+          },
+          {
+            q: "É mais difícil desenvolver para Civil 3D do que para Revit?",
+            a: "As duas APIs têm dificuldade comparável, mas o Civil 3D trabalha com objetos mais complexos (corredores, superfícies, perfis) e é muito menos documentado. Além disso se apoia na API do AutoCAD, então você acaba usando as duas. A dificuldade real não é técnica, é a escassez de exemplos — sobretudo em português."
+          },
+          {
+            q: "Por que vocês insistem tanto na arquitetura em camadas?",
+            a: "Porque a Autodesk muda a API entre versões. Se seu código está separado em Command, Service e Repository, uma mudança de API só afeta o Repository e o resto fica intacto. Estruturar bem custa 15 minutos no início; reestruturar um add-in que cresceu desorganizado custa dias."
+          },
+          {
+            q: "Como distribuo o add-in para minha equipe?",
+            a: "Para 1-3 pessoas, copiar o DLL manualmente. Para 3-20, empacotar como bundle: uma pasta com estrutura padrão que a Autodesk carrega sozinha. Para 20-100, um instalador com Inno Setup. Para mais ou para clientes externos, atualizações automáticas ou a Autodesk App Store. Comece pelo bundle: cobre a maioria dos escritórios."
+          },
+          {
+            q: "Posso desenvolver em Mac ou Linux?",
+            a: "Pode escrever o código em qualquer sistema, mas para compilar e testar precisa de Windows com Revit ou Civil 3D instalado, porque a API é só Windows. Muitos desenvolvedores usam uma máquina virtual com Windows só para essa parte."
+          },
+          {
+            q: "Que orçamento de manutenção devo prever?",
+            a: "Entre 15% e 25% do custo inicial por ano. Cobre adaptação às versões novas da Autodesk, correção de erros que só aparecem com o uso real, e as melhorias que a equipe vai pedir assim que gostar da ferramenta. Se um fornecedor não menciona isso, não manteve muitos add-ins."
+          },
+          {
+            q: "Convém desenvolver internamente ou encomendar?",
+            a: "Internamente se você tem alguém com interesse e tempo protegido de verdade, e a ferramenta é específica do seu critério. Encomendar se é crítica, se precisa em semanas ou se requer integrações complexas. Em qualquer caso, exija que o contrato inclua o código-fonte: senão você fica preso ao fornecedor para cada mudança."
+          }
+        ],
+      },
+    },
+  },
+  "guia-vibe-coding-para-empezar": {
+    es: {
+      roadmap: {
+        title: "El método en 6 pasos",
+        intro:
+          "La diferencia entre un prototipo que se derrumba y una herramienta que el equipo usa está en el orden. Este es el que funciona.",
+        steps: [
+          { n: 1, title: "Define el problema", desc: "Tarea concreta, entrada, salida y límites explícitos", tag: "Preparación" },
+          { n: 2, title: "Da contexto de tu entorno", desc: "Versión, herramientas y tu nivel — en cada sesión", tag: "Preparación" },
+          { n: 3, title: "Estructura antes que detalle", desc: "Esqueleto primero, lógica después, interfaz al final", tag: "Orden" },
+          { n: 4, title: "Itera en pasos pequeños", desc: "Un cambio, una prueba en modelo copia, un avance guardado", tag: "Ejecución" },
+          { n: 5, title: "Aprende a leer el código", desc: "Los fundamentos mínimos para no depender ciegamente", tag: "Criterio" },
+          { n: 6, title: "Del prototipo a herramienta real", desc: "Git, errores, pruebas, documentación y distribución", tag: "Producción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre Vibe Coding en BIM",
+        items: [
+          {
+            q: "¿Realmente puedo construir un add-in sin saber programar?",
+            a: "Puedes construir herramientas simples y útiles siguiendo un método: exportar datos, renombrar en masa, generar reportes. La IA escribe la primera versión y tú la ajustas. Lo que no puedes es diseñar la arquitectura de un sistema complejo ni sostenerlo para 100 usuarios sin fundamentos. Para lo primero basta con método; para lo segundo hace falta aprender de verdad o delegar."
+          },
+          {
+            q: "¿Qué IA funciona mejor para código de Revit o Civil 3D?",
+            a: "Para contextos largos y código complejo, Claude suele dar mejores resultados. ChatGPT va bien para preguntas cortas. La prueba real: hazle la misma pregunta a las dos con el mismo contexto y quédate con la que te dé código que compile a la primera con más frecuencia."
+          },
+          {
+            q: "¿Cuánto tiempo tardo en tener mi primera herramienta funcionando?",
+            a: "Un grafo de Dynamo útil: una tarde si el problema está bien definido. Un add-in simple en C#: un fin de semana siguiendo una guía paso a paso. Lo que más tarda no es escribir el código — es definir bien el problema y probarlo con datos reales."
+          },
+          {
+            q: "¿Necesito aprender los fundamentos si la IA escribe el código?",
+            a: "Sí, y paradójicamente más que antes. Sin fundamentos no puedes evaluar si lo que te propone es sólido o frágil, no puedes depurar cuando falla, y dependes de la IA para cada cambio. Con fundamentos de lógica, tipos y funciones, la IA te multiplica. Sin ellos, te frustra."
+          },
+          {
+            q: "¿Es seguro ejecutar código generado por IA sobre mis modelos?",
+            a: "Sobre una copia de un modelo pequeño, sí. Sobre un modelo de producción sin haberlo probado antes, no. La regla es simple: duplica, prueba, verifica con tus ojos el resultado, y sólo entonces úsalo en serio. Y ten backup."
+          },
+          {
+            q: "¿Cuándo dejo de hacerlo solo y pido ayuda?",
+            a: "Cuando la herramienta la usan varias personas y no puedes mantener el ritmo de peticiones, cuando llevas 3-4 intentos con un error que la IA no resuelve, o cuando necesitas distribuirla con instalador a toda la oficina. Ahí una mentoría o delegar el desarrollo sale más barato que seguir peleando."
+          }
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "O método em 6 passos",
+        intro:
+          "A diferença entre um protótipo que desmorona e uma ferramenta que a equipe usa está na ordem. Esta é a que funciona.",
+        steps: [
+          { n: 1, title: "Defina o problema", desc: "Tarefa concreta, entrada, saída e limites explícitos", tag: "Preparação" },
+          { n: 2, title: "Dê contexto do ambiente", desc: "Versão, ferramentas e seu nível — em cada sessão", tag: "Preparação" },
+          { n: 3, title: "Estrutura antes do detalhe", desc: "Esqueleto primeiro, lógica depois, interface no fim", tag: "Ordem" },
+          { n: 4, title: "Itere em passos pequenos", desc: "Uma mudança, um teste em modelo cópia, um avanço salvo", tag: "Execução" },
+          { n: 5, title: "Aprenda a ler o código", desc: "Os fundamentos mínimos para não depender cegamente", tag: "Critério" },
+          { n: 6, title: "Do protótipo a ferramenta real", desc: "Git, erros, testes, documentação e distribuição", tag: "Produção" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre Vibe Coding em BIM",
+        items: [
+          {
+            q: "Posso mesmo construir um add-in sem saber programar?",
+            a: "Você pode construir ferramentas simples e úteis seguindo um método: exportar dados, renomear em massa, gerar relatórios. A IA escreve a primeira versão e você ajusta. O que não pode é desenhar a arquitetura de um sistema complexo nem sustentá-lo para 100 usuários sem fundamentos. Para o primeiro basta método; para o segundo é preciso aprender de verdade ou delegar."
+          },
+          {
+            q: "Qual IA funciona melhor para código de Revit ou Civil 3D?",
+            a: "Para contextos longos e código complexo, Claude costuma dar melhores resultados. ChatGPT vai bem para perguntas curtas. O teste real: faça a mesma pergunta às duas com o mesmo contexto e fique com a que der código que compila de primeira com mais frequência."
+          },
+          {
+            q: "Quanto tempo levo para ter minha primeira ferramenta funcionando?",
+            a: "Um grafo de Dynamo útil: uma tarde se o problema está bem definido. Um add-in simples em C#: um fim de semana seguindo um guia passo a passo. O que mais demora não é escrever o código — é definir bem o problema e testar com dados reais."
+          },
+          {
+            q: "Preciso aprender os fundamentos se a IA escreve o código?",
+            a: "Sim, e paradoxalmente mais que antes. Sem fundamentos você não consegue avaliar se o que ele propõe é sólido ou frágil, não consegue depurar quando falha, e depende da IA para cada mudança. Com fundamentos de lógica, tipos e funções, a IA te multiplica. Sem eles, te frustra."
+          },
+          {
+            q: "É seguro executar código gerado por IA sobre meus modelos?",
+            a: "Sobre uma cópia de um modelo pequeno, sim. Sobre um modelo de produção sem ter testado antes, não. A regra é simples: duplique, teste, verifique com seus olhos o resultado, e só então use de verdade. E tenha backup."
+          },
+          {
+            q: "Quando paro de fazer sozinho e peço ajuda?",
+            a: "Quando a ferramenta é usada por várias pessoas e você não consegue manter o ritmo de pedidos, quando já tentou 3-4 vezes com um erro que a IA não resolve, ou quando precisa distribuí-la com instalador para todo o escritório. Aí uma mentoria ou delegar o desenvolvimento sai mais barato que continuar brigando."
+          }
+        ],
+      },
+    },
+  },
+  "cuanto-cuesta-un-add-in-revit-civil-3d": {
+    es: {
+      roadmap: {
+        title: "Todo lo que necesitas para presupuestar bien",
+        intro:
+          "Los 5 bloques que determinan si un add-in te sale a cuenta: niveles y plazos, qué encarece, costes ocultos, alternativas y cálculo de retorno.",
+        steps: [
+          { n: 1, title: "Los 3 niveles de add-in", desc: "De la herramienta simple al sistema integrado, con plazos reales", tag: "Alcance" },
+          { n: 2, title: "Qué encarece un add-in", desc: "Interfaz, integraciones, versiones y casos borde", tag: "Factores" },
+          { n: 3, title: "Los costes ocultos", desc: "Mantenimiento anual, soporte, evolución y formación", tag: "Realidad" },
+          { n: 4, title: "Comprar, desarrollar o aprender", desc: "Las 4 opciones en orden, y cuándo descartar cada una", tag: "Decisión" },
+          { n: 5, title: "Calcula tu retorno", desc: "La fórmula para saber si se amortiza antes de pedir presupuesto", tag: "ROI" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre precios de add-ins",
+        items: [
+          {
+            q: "¿Por qué nadie publica precios de add-ins de Revit o Civil 3D?",
+            a: "Porque no son productos de catálogo: cada uno resuelve un proceso distinto. Dos add-ins que suenan igual ('exportar cantidades') pueden diferir 10× en esfuerzo según las reglas de tu oficina, las versiones que soporten y si necesitan interfaz propia. Lo que sí se puede estimar con fiabilidad son los plazos por nivel de complejidad, y eso es lo que cubre este artículo."
+          },
+          {
+            q: "¿Cuánto tarda en desarrollarse un add-in?",
+            a: "Una herramienta de un solo propósito (exportar, renombrar, generar un reporte): 1-3 semanas. Una herramienta con interfaz propia y opciones configurables: 4-8 semanas. Un sistema que se integra con base de datos o ERP: 8-16 semanas o más. El 70% de lo que pide una oficina cae en el primer nivel."
+          },
+          {
+            q: "¿Es más caro para Civil 3D que para Revit?",
+            a: "No de forma significativa. Las dos APIs de Autodesk son comparables en dificultad. Lo que sí encarece es el número de versiones que hay que soportar y la complejidad de los objetos que manipulas — un corredor de Civil 3D tiene más partes móviles que una pared de Revit, pero eso es alcance, no plataforma."
+          },
+          {
+            q: "¿Qué pasa cuando sale una versión nueva de Autodesk?",
+            a: "A veces nada: el add-in sigue funcionando. A veces la API cambia y hay que adaptarlo y volver a probarlo. Por eso conviene presupuestar entre un 15% y un 25% del coste inicial al año para mantenimiento. Si el código está bien separado en capas, adaptarlo suele ser cuestión de horas, no de semanas."
+          },
+          {
+            q: "¿Me conviene más un grafo de Dynamo que un add-in?",
+            a: "Si la tarea la van a usar menos de 5-10 personas, no cambia mucho y el rendimiento no es crítico, Dynamo suele ser suficiente y cuesta una fracción. El add-in gana cuando lo va a usar toda la oficina, cuando necesitas una interfaz de verdad, o cuando procesas modelos grandes donde Dynamo se queda corto."
+          },
+          {
+            q: "¿El código fuente es mío?",
+            a: "Debería serlo, y conviene dejarlo por escrito en el contrato. Si el proveedor se queda el código, quedas atado a él para cualquier cambio futuro y para cada versión nueva de Autodesk. En Zeist el código fuente y la documentación son tuyos desde el primer día."
+          },
+          {
+            q: "¿Cómo sé si me va a salir a cuenta antes de pedir presupuesto?",
+            a: "Con esta fórmula: horas semanales dedicadas a la tarea × número de personas × coste por hora × porcentaje de tiempo que eliminarías × 48 semanas. Si el resultado anual supera con holgura el coste de un desarrollo de 2-4 semanas, tienes un caso claro. El módulo 5 del artículo lo desarrolla con un ejemplo real."
+          }
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Tudo o que você precisa para orçar bem",
+        intro:
+          "Os 5 blocos que determinam se um add-in compensa: níveis e prazos, o que encarece, custos ocultos, alternativas e cálculo de retorno.",
+        steps: [
+          { n: 1, title: "Os 3 níveis de add-in", desc: "Da ferramenta simples ao sistema integrado, com prazos reais", tag: "Escopo" },
+          { n: 2, title: "O que encarece um add-in", desc: "Interface, integrações, versões e casos limite", tag: "Fatores" },
+          { n: 3, title: "Os custos ocultos", desc: "Manutenção anual, suporte, evolução e formação", tag: "Realidade" },
+          { n: 4, title: "Comprar, desenvolver ou aprender", desc: "As 4 opções em ordem, e quando descartar cada uma", tag: "Decisão" },
+          { n: 5, title: "Calcule seu retorno", desc: "A fórmula para saber se se amortiza antes de pedir orçamento", tag: "ROI" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre preços de add-ins",
+        items: [
+          {
+            q: "Por que ninguém publica preços de add-ins de Revit ou Civil 3D?",
+            a: "Porque não são produtos de catálogo: cada um resolve um processo diferente. Dois add-ins que soam iguais ('exportar quantitativos') podem diferir 10× em esforço conforme as regras do seu escritório, as versões que suportam e se precisam de interface própria. O que dá para estimar com confiabilidade são os prazos por nível de complexidade, e é isso que este artigo cobre."
+          },
+          {
+            q: "Quanto tempo leva para desenvolver um add-in?",
+            a: "Uma ferramenta de propósito único (exportar, renomear, gerar um relatório): 1-3 semanas. Uma ferramenta com interface própria e opções configuráveis: 4-8 semanas. Um sistema que integra com banco de dados ou ERP: 8-16 semanas ou mais. 70% do que um escritório pede cai no primeiro nível."
+          },
+          {
+            q: "É mais caro para Civil 3D do que para Revit?",
+            a: "Não de forma significativa. As duas APIs da Autodesk são comparáveis em dificuldade. O que encarece é o número de versões que precisa suportar e a complexidade dos objetos que você manipula — um corredor de Civil 3D tem mais partes móveis que uma parede de Revit, mas isso é escopo, não plataforma."
+          },
+          {
+            q: "O que acontece quando sai uma versão nova da Autodesk?",
+            a: "Às vezes nada: o add-in continua funcionando. Às vezes a API muda e precisa adaptar e testar de novo. Por isso convém orçar entre 15% e 25% do custo inicial por ano para manutenção. Se o código está bem separado em camadas, adaptar costuma ser questão de horas, não de semanas."
+          },
+          {
+            q: "Compensa mais um grafo de Dynamo que um add-in?",
+            a: "Se a tarefa vai ser usada por menos de 5-10 pessoas, não muda muito e a performance não é crítica, Dynamo costuma bastar e custa uma fração. O add-in ganha quando todo o escritório vai usar, quando você precisa de uma interface de verdade, ou quando processa modelos grandes onde o Dynamo não dá conta."
+          },
+          {
+            q: "O código-fonte é meu?",
+            a: "Deveria ser, e convém deixar por escrito no contrato. Se o fornecedor fica com o código, você fica preso a ele para qualquer mudança futura e para cada versão nova da Autodesk. Na Zeist o código-fonte e a documentação são seus desde o primeiro dia."
+          },
+          {
+            q: "Como sei se vai compensar antes de pedir orçamento?",
+            a: "Com esta fórmula: horas semanais dedicadas à tarefa × número de pessoas × custo por hora × porcentagem de tempo que eliminaria × 48 semanas. Se o resultado anual supera com folga o custo de um desenvolvimento de 2-4 semanas, você tem um caso claro. O módulo 5 do artigo desenvolve com um exemplo real."
+          }
+        ],
+      },
+    },
+  },
   "crear-plugin-civil-3d-con-claude-code-sin-programar": {
     es: {
       roadmap: {
@@ -332,88 +728,88 @@ const data: Record<string, Record<Locale, PostData>> = {
   "deja-de-usar-excel-y-perder-horas": {
     es: {
       roadmap: {
-        title: "Las 6 razones por las que tu Excel te está costando dinero",
+        title: "Las 6 razones por las que tu Excel de metrados te está costando dinero",
         intro:
-          "Diagnóstico honesto para emprendedores y PYMEs que sienten que su operación 'se les va de las manos' con hojas de cálculo.",
+          "Diagnóstico honesto para oficinas de ingeniería donde los datos del modelo y los de la hoja dejaron de coincidir.",
         steps: [
-          { n: 1, title: "Los archivos que ya no encuentras", desc: "Versiones duplicadas, correos con adjuntos perdidos", tag: "Problema" },
-          { n: 2, title: "Los errores silenciosos", desc: "Fórmulas rotas, filas borradas por accidente, celdas mal sumadas", tag: "Problema" },
-          { n: 3, title: "El tiempo que no ves", desc: "Cuántas horas al mes pierdes copiando y pegando", tag: "Problema" },
-          { n: 4, title: "Trabajar en equipo se vuelve imposible", desc: "Nadie sabe cuál es 'la buena', dos personas editan a la vez", tag: "Problema" },
-          { n: 5, title: "Qué es un sistema (sin tecnicismos)", desc: "Web propia, datos en la nube, acceso desde cualquier lugar", tag: "Solución" },
-          { n: 6, title: "Cuándo saltar y cómo empezar", desc: "Señales claras + primer paso pequeño y barato con IA", tag: "Acción" },
+          { n: 1, title: "Los archivos que nadie sabe cuál es", desc: "12 versiones del mismo metrado, ninguna trazable al modelo", tag: "Problema" },
+          { n: 2, title: "Los errores que llegan a la obra", desc: "Fórmulas rotas, rangos incompletos, precios de revisiones viejas", tag: "Problema" },
+          { n: 3, title: "El tiempo que no ves", desc: "Horas de exportar, limpiar y consolidar tras cada cambio de trazado", tag: "Problema" },
+          { n: 4, title: "Trabajar en equipo sobre hojas", desc: "Sin trazabilidad al modelo ni control de quién cambió qué", tag: "Problema" },
+          { n: 5, title: "Conectar el dato al modelo", desc: "Un botón que genera la tabla leyendo del modelo, en tu formato", tag: "Solución" },
+          { n: 6, title: "Cuándo dar el salto y cómo", desc: "Señales claras + primer paso barato validando en Dynamo", tag: "Acción" },
         ],
       },
       faqs: {
         title: "Preguntas frecuentes",
         items: [
           {
-            q: "¿Cuándo debo dejar de usar Excel en mi negocio?",
-            a: "Cuando cumplas al menos dos: (1) dedicas más de 5 h/semana a mover datos entre archivos, (2) has tenido errores que cuestan dinero por fórmulas rotas o versiones desactualizadas, (3) tu equipo son más de 2-3 personas editando lo mismo, (4) necesitas ver información en tiempo real o desde el celular. Antes de eso, Excel es barato y suficiente."
+            q: "¿Cuándo debo dejar de llevar los metrados en Excel?",
+            a: "Cuando cumplas al menos dos: (1) dedicas más de 4 h/semana a exportar y consolidar datos del modelo, (2) has tenido un error de cantidad que llegó al presupuesto o a obra, (3) cada revisión del proyecto obliga a rehacer tablas a mano, (4) más de 3 personas tocan los mismos metrados. Antes de eso, Excel es suficiente y barato."
           },
           {
-            q: "¿Es muy caro tener un sistema a medida en vez de Excel?",
-            a: "Ya no. Con IA y metodología ágil, un MVP funcional (con lo esencial: registrar, listar, buscar, editar, respaldar en la nube) puede costar mucho menos que hace 5 años. La inversión típica se recupera en 3-9 meses solo con el tiempo ahorrado de tu equipo."
+            q: "¿Tengo que dejar de usar Excel del todo?",
+            a: "No, y ese es un malentendido común. Excel sigue siendo el formato de salida, el sitio donde revisas y donde entregas. Lo que cambia es que deja de ser donde el dato se construye a mano: la tabla la genera un add-in leyendo del modelo, y llega a tu Excel ya calculada y con tu formato corporativo."
           },
           {
-            q: "¿No es más simple pagar una herramienta como Notion o Airtable?",
-            a: "Sí, para empezar. Notion, Airtable, Google Sheets con AppSheet son un buen escalón intermedio si tu proceso es genérico. Pero si tu operación tiene reglas propias (facturación con impuestos específicos, control de producción, inventarios con lotes), un sistema a medida escala mejor y no te ata a suscripciones que crecen con cada usuario."
+            q: "¿No me sirve con las tablas nativas de Civil 3D o Revit?",
+            a: "Para casos estándar, sí — úsalas antes de automatizar nada. El problema aparece cuando tu criterio de medición tiene reglas propias (qué se excluye, cómo se agrupa, qué redondeo aplica la norma que usas) o cuando el formato de salida tiene que ser el de tu oficina. Ahí las tablas nativas se quedan cortas y empieza el trabajo manual."
           },
           {
-            q: "¿Perderé todos mis datos actuales de Excel?",
-            a: "No. Un sistema serio se diseña para importar tus Excel actuales en el primer día. Se limpia, se estructura, y queda como base de datos. Nunca empiezas de cero — tus años de información se preservan y quedan mucho mejor organizados."
+            q: "¿Qué pasa con los datos históricos de mis Excel actuales?",
+            a: "Se conservan. Automatizar la generación de tablas no borra nada: lo que cambia es de dónde sale el dato de aquí en adelante. Muchas oficinas usan los Excel históricos justamente para validar el add-in — se compara el resultado automático contra el manual durante un par de revisiones hasta confiar."
           },
           {
             q: "¿Cuánto tarda en estar listo?",
-            a: "Depende del alcance. Un MVP con las 5-8 funciones más críticas: 4-8 semanas típicamente. Sistemas más completos (facturación electrónica, integraciones, roles): 2-4 meses. Y sigue creciendo con el negocio — no es 'lo entregamos y adiós'."
+            a: "Un prototipo en Dynamo que valida el criterio: horas o pocos días. Un add-in de una sola tabla, instalable en toda la oficina: típicamente 1-3 semanas. Los factores completos están en nuestra guía de cuánto cuesta un add-in."
           },
           {
-            q: "¿Y si mañana quiero cambiar algo del sistema?",
-            a: "Ahí está la ventaja. Tu sistema es tuyo — el código es tu propiedad. Cualquier cambio es una tarea de programación, no un rediseño. Y con IA, esos cambios son mucho más rápidos y baratos que hace 5 años."
+            q: "¿Y si cambia mi criterio de medición?",
+            a: "Se ajusta en un solo sitio y todas las tablas futuras salen bien. Es justamente una de las ventajas frente al método manual, donde hoy tienes que acordarte de aplicar el cambio en cada hoja y en cada tramo — y basta que a una persona se le pase para que el dato quede inconsistente."
           }
         ],
       },
     },
     pt: {
       roadmap: {
-        title: "As 6 razões pelas quais seu Excel está te custando dinheiro",
+        title: "As 6 razões pelas quais seu Excel de quantitativos está te custando dinheiro",
         intro:
-          "Diagnóstico honesto para empreendedores e PMEs que sentem que sua operação 'está saindo do controle' com planilhas.",
+          "Diagnóstico honesto para escritórios de engenharia onde os dados do modelo e os da planilha deixaram de coincidir.",
         steps: [
-          { n: 1, title: "Os arquivos que você não acha mais", desc: "Versões duplicadas, e-mails com anexos perdidos", tag: "Problema" },
-          { n: 2, title: "Os erros silenciosos", desc: "Fórmulas quebradas, linhas apagadas sem querer, células mal somadas", tag: "Problema" },
-          { n: 3, title: "O tempo que você não vê", desc: "Quantas horas por mês você perde copiando e colando", tag: "Problema" },
-          { n: 4, title: "Trabalhar em equipe fica impossível", desc: "Ninguém sabe qual é 'a boa', duas pessoas editam ao mesmo tempo", tag: "Problema" },
-          { n: 5, title: "O que é um sistema (sem tecnicismos)", desc: "Web própria, dados na nuvem, acesso de qualquer lugar", tag: "Solução" },
-          { n: 6, title: "Quando dar o salto e como começar", desc: "Sinais claros + primeiro passo pequeno e barato com IA", tag: "Ação" },
+          { n: 1, title: "Os arquivos que ninguém sabe qual é", desc: "12 versões do mesmo quantitativo, nenhuma rastreável ao modelo", tag: "Problema" },
+          { n: 2, title: "Os erros que chegam à obra", desc: "Fórmulas quebradas, intervalos incompletos, preços de revisões velhas", tag: "Problema" },
+          { n: 3, title: "O tempo que você não vê", desc: "Horas de exportar, limpar e consolidar após cada mudança de traçado", tag: "Problema" },
+          { n: 4, title: "Trabalhar em equipe sobre planilhas", desc: "Sem rastreabilidade ao modelo nem controle de quem mudou o quê", tag: "Problema" },
+          { n: 5, title: "Conectar o dado ao modelo", desc: "Um botão que gera a tabela lendo do modelo, no seu formato", tag: "Solução" },
+          { n: 6, title: "Quando dar o salto e como", desc: "Sinais claros + primeiro passo barato validando em Dynamo", tag: "Ação" },
         ],
       },
       faqs: {
         title: "Perguntas frequentes",
         items: [
           {
-            q: "Quando devo parar de usar Excel no meu negócio?",
-            a: "Quando cumprir pelo menos dois: (1) dedica mais de 5 h/semana movendo dados entre arquivos, (2) já teve erros que custaram dinheiro por fórmulas quebradas ou versões desatualizadas, (3) sua equipe são mais de 2-3 pessoas editando o mesmo, (4) precisa ver informação em tempo real ou pelo celular. Antes disso, Excel é barato e suficiente."
+            q: "Quando devo parar de levar os quantitativos em Excel?",
+            a: "Quando cumprir pelo menos dois: (1) dedica mais de 4 h/semana a exportar e consolidar dados do modelo, (2) já teve um erro de quantidade que chegou ao orçamento ou à obra, (3) cada revisão do projeto obriga a refazer tabelas à mão, (4) mais de 3 pessoas mexem nos mesmos quantitativos. Antes disso, Excel é suficiente e barato."
           },
           {
-            q: "É muito caro ter um sistema sob medida em vez de Excel?",
-            a: "Já não. Com IA e metodologia ágil, um MVP funcional (com o essencial: registrar, listar, buscar, editar, backup na nuvem) pode custar muito menos do que há 5 anos. O investimento típico se paga em 3-9 meses só com o tempo economizado da equipe."
+            q: "Tenho que parar de usar Excel totalmente?",
+            a: "Não, e esse é um mal-entendido comum. O Excel segue sendo o formato de saída, o lugar onde você revisa e onde entrega. O que muda é que deixa de ser onde o dado se constrói à mão: a tabela é gerada por um add-in lendo do modelo, e chega ao seu Excel já calculada e com seu formato corporativo."
           },
           {
-            q: "Não é mais simples pagar uma ferramenta como Notion ou Airtable?",
-            a: "Sim, para começar. Notion, Airtable, Google Sheets com AppSheet são um bom degrau intermediário se seu processo é genérico. Mas se sua operação tem regras próprias (faturamento com impostos específicos, controle de produção, estoques com lotes), um sistema sob medida escala melhor e não te prende a assinaturas que crescem com cada usuário."
+            q: "As tabelas nativas do Civil 3D ou Revit não bastam?",
+            a: "Para casos padrão, sim — use antes de automatizar qualquer coisa. O problema aparece quando seu critério de medição tem regras próprias (o que se exclui, como se agrupa, que arredondamento a norma que você usa aplica) ou quando o formato de saída tem que ser o do seu escritório. Aí as tabelas nativas ficam curtas e começa o trabalho manual."
           },
           {
-            q: "Vou perder todos meus dados atuais do Excel?",
-            a: "Não. Um sistema sério é desenhado para importar seus Excel atuais no primeiro dia. Se limpa, se estrutura, e fica como banco de dados. Você nunca começa do zero — seus anos de informação são preservados e ficam muito melhor organizados."
+            q: "O que acontece com os dados históricos dos meus Excel atuais?",
+            a: "Se conservam. Automatizar a geração de tabelas não apaga nada: o que muda é de onde sai o dado daqui para frente. Muitos escritórios usam os Excel históricos justamente para validar o add-in — se compara o resultado automático contra o manual durante algumas revisões até confiar."
           },
           {
             q: "Quanto tempo demora para ficar pronto?",
-            a: "Depende do escopo. Um MVP com as 5-8 funções mais críticas: 4-8 semanas tipicamente. Sistemas mais completos (nota fiscal, integrações, papéis): 2-4 meses. E segue crescendo com o negócio — não é 'entregamos e tchau'."
+            a: "Um protótipo em Dynamo que valida o critério: horas ou poucos dias. Um add-in de uma só tabela, instalável em todo o escritório: tipicamente 1-3 semanas. Os fatores completos estão no nosso guia de quanto custa um add-in."
           },
           {
-            q: "E se amanhã eu quiser mudar algo no sistema?",
-            a: "Aí está a vantagem. Seu sistema é seu — o código é sua propriedade. Qualquer mudança é uma tarefa de programação, não um redesenho. E com IA, essas mudanças são muito mais rápidas e baratas do que há 5 anos."
+            q: "E se meu critério de medição mudar?",
+            a: "Se ajusta num lugar só e todas as tabelas futuras saem certas. É justamente uma das vantagens frente ao método manual, onde hoje você tem que lembrar de aplicar a mudança em cada planilha e em cada trecho — e basta uma pessoa esquecer para o dado ficar inconsistente."
           }
         ],
       },

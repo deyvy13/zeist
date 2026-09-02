@@ -9,12 +9,10 @@ import { serviceIcons, IconArrow } from "@/components/icons";
 export function generateStaticParams() {
   // Slugs are shared across locales; params combine lang x slug.
   const slugs = [
-    "desarrollo-de-software",
-    "automatizacion-ingenieria",
-    "diseno-ux-ui",
-    "arquitectura-de-software",
-    "arquitectura-de-datos",
-    "cursos-y-mentorias",
+    "add-ins-revit-civil-3d",
+    "automatizacion-dynamo",
+    "auditoria-procesos-bim",
+    "cursos-mentorias-bim",
   ];
   return locales.flatMap((lang) => slugs.map((slug) => ({ lang, slug })));
 }
@@ -55,15 +53,52 @@ export default async function ServiceDetailPage({
 
   const Icon = serviceIcons[slug as keyof typeof serviceIcons];
 
+  const pageUrl = absoluteUrl(`${locale}/servicios/${slug}`);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
     name: service.title,
     description: service.body,
-    provider: { "@type": "Organization", name: site.name },
-    areaServed: "Global",
-    url: absoluteUrl(`${locale}/servicios/${slug}`),
+    serviceType: service.tags.join(", "),
+    provider: {
+      "@type": "Organization",
+      name: site.name,
+      url: absoluteUrl(locale),
+      email: site.email,
+    },
+    areaServed: [
+      { "@type": "Place", name: "Latinoamérica" },
+      { "@type": "Place", name: "España" },
+      { "@type": "Place", name: "Brasil" },
+    ],
+    availableLanguage: ["es", "pt"],
+    url: pageUrl,
   };
+
+  // Training service is also a Course — eligible for Google's course rich result.
+  const courseJsonLd =
+    slug === "cursos-mentorias-bim"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "Course",
+          name: service.title,
+          description: service.body,
+          inLanguage: locale,
+          url: pageUrl,
+          provider: {
+            "@type": "Organization",
+            name: site.name,
+            url: absoluteUrl(locale),
+          },
+          about: service.tags,
+          hasCourseInstance: {
+            "@type": "CourseInstance",
+            courseMode: "online",
+            courseWorkload: "PT8H",
+          },
+        }
+      : null;
 
   return (
     <article className="container-zeist py-16">
@@ -71,6 +106,12 @@ export default async function ServiceDetailPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {courseJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+        />
+      )}
 
       <Link
         href={localizedPath(lang, "servicios")}

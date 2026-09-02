@@ -10,42 +10,61 @@
 
 ## 1. Qué es Zeist
 
-Zeist es una **marca** de tecnología e ingeniería (no un nombre descriptivo).
+Zeist es una **marca** de automatización BIM (no un nombre descriptivo).
 Igual que Nike o Adidas, el nombre no explica el producto: construye marca.
 La web es el activo central para atraer clientes calificados vía **SEO orgánico**.
 
-**Objetivo de negocio:** ser la web de referencia a la que acuden emprendedores,
-empresas, desarrolladores, ingenieros y diseñadores para resolver sus problemas.
-Modelo de confianza y engagement a largo plazo (referencia mental del usuario:
-el camino de Yape — invertir en fidelizar y ganar confianza antes que en cobrar caro).
+> ⚠️ **PIVOTE (sep-2026).** Zeist dejó de ser "soluciones tecnológicas para cada
+> industria" (6 rubros) y pasó a un **nicho único: automatización BIM para
+> Civil 3D y Revit**. Si vas a escribir copy o contenido, léelo entero antes.
 
-**Posicionamiento:** Zeist NO se presenta como "empresa de software". Se presenta
-como marca de **soluciones tecnológicas por rubro/industria**. El desarrollo de
-software (webs, apps, sistemas) es **un rubro más** al mismo nivel que los demás.
+**Nicho único:** desarrollo de **add-ins en C# para Civil 3D y Revit**, scripts
+Dynamo y formación para equipos BIM. Nada fuera de eso.
 
-**Rubros (áreas de solución):**
-1. Desarrollo de software (webs + apps + sistemas, agrupados).
-2. Automatización para ingeniería (Civil 3D, Revit, Dynamo).
-3. Diseño UX/UI.
-4. Arquitectura de software.
-5. Arquitectura de datos.
-6. Cursos y mentorías (Vibe Coding, IA, formación práctica).
+**Por qué este nicho (investigado, no supuesto):**
+- Mercado BIM: $10.3B (2026) → $27.1B (2034), CAGR 12.9%.
+- El fundador **es ingeniero civil** — barrera de dominio que un dev genérico
+  no cruza. Eso es el eje del copy.
+- Contenido técnico de C#/Civil 3D en español: casi inexistente.
 
-**Ofertas de divulgación (fidelización):** blog gratuito, cursos/webinars/bootcamps
-(inicialmente gratis), mentorías de "Vibe Coding" (de la idea al despliegue).
+**Servicios (4, todos dentro del nicho):**
+1. `add-ins-revit-civil-3d` — Add-ins a medida en C#/.NET (core, ticket alto).
+2. `automatizacion-dynamo` — Scripts y rutinas Dynamo (entrada accesible).
+3. `auditoria-procesos-bim` — Diagnóstico de dónde se pierden horas (oferta de entrada).
+4. `cursos-mentorias-bim` — Formación en Revit API, Civil 3D API y Dynamo.
+
+**Público:** ingenieros civiles, arquitectos, técnicos y coordinadores BIM,
+oficinas de ingeniería e infraestructura. **No** emprendedores genéricos ni PYMEs
+de otros sectores.
 
 ## 2. Posicionamiento y voz de marca
 
-- **Diferenciador central:** el mercado cobra caro y esconde el conocimiento;
-  Zeist hace lo contrario. Precios accesibles gracias a desarrollo **con IA** +
-  metodología ágil, y **divulgación abierta** de conocimiento.
-- **Mensaje clave:** trabajar con IA baja el costo real de cada proyecto y lo
-  hace accesible desde emprendedores pequeños hasta empresas grandes. La web
-  comunica por rubros/beneficios, no "vendemos webs/apps/sistemas".
-- **Tono:** corto y preciso, **nada de rodeos**. Directo, profesional, elegante,
-  internacional. Sin tecnicismos vacíos ni promesas infladas. "No ser una gota
-  más de agua en el mar."
+- **Diferenciador central:** autoridad técnica de sector. El argumento NO es
+  "somos más baratos" — es "somos ingenieros civiles que programan add-ins en C#,
+  entendemos tu flujo porque lo vivimos".
+- **Los 4 ejes del mensaje:**
+  1. Ingenieros civiles, no una agencia de software.
+  2. C# y add-ins, no sólo Dynamo (la competencia se queda en programación visual).
+  3. Civil 3D de verdad (el ecosistema habla casi sólo de Revit).
+  4. Publicamos lo que sabemos (el blog es el motor de captación).
+- **Tono:** corto y preciso, **nada de rodeos**. Directo, profesional, elegante.
+  Sin tecnicismos vacíos ni promesas infladas. "No ser una gota más en el mar."
 - **Regla de escritura:** claridad > cantidad. Frases cortas. Beneficio concreto.
+- **Lenguaje simple obligatorio:** el público son ingenieros, no programadores.
+  Cada post técnico abre con un `<Callout>` glosario que traduce los términos
+  (API = "el menú del restaurante", DLL, bundle, compilar…). **No usar "ribbon"** —
+  decir "barra superior de Civil 3D".
+
+### ❌ Mensajes prohibidos (se eliminaron en el pivote, no reintroducir)
+
+- "IA que baja el precio", "más accesible", "reducimos costos", "precios accesibles".
+  Posicionar por precio es una carrera al fondo y lo dice todo el mundo.
+- Cualquier servicio fuera de BIM: webs, apps, e-commerce, sistemas para PYMEs,
+  UX/UI genérico, arquitectura de datos, ciberseguridad.
+- Público que no sea del sector AEC.
+
+La IA sí se menciona — pero como **herramienta que acelera el desarrollo**
+(plazos), nunca como argumento de precio.
 
 ## 3. Público objetivo e idiomas
 
@@ -79,7 +98,7 @@ app/
     layout.tsx                # ROOT layout: html/body, fonts, header, footer, metadata base, JSON-LD Org
     page.tsx                  # Landing (hero, diferenciadores, servicios, proceso, blog, tools, CTA)
     servicios/page.tsx        # Índice de servicios
-    servicios/[slug]/page.tsx # Detalle de rubro (generateStaticParams por los 6 slugs)
+    servicios/[slug]/page.tsx # Detalle de servicio (generateStaticParams por los 4 slugs)
     blog/page.tsx             # Índice del blog
     blog/[slug]/page.tsx      # Artículo (renderiza MDX, JSON-LD BlogPosting)
     herramientas/page.tsx     # "Coming soon" con roadmap de herramientas
@@ -111,8 +130,7 @@ proxy.ts                      # redirección de locale por Accept-Language
 - **Sitemap** (`app/sitemap.ts`): todas las rutas × ambos locales, con `alternates.languages`.
 - **Jerarquía de encabezados:** UN solo `<h1>` por página (título principal),
   `<h2>` para secciones, `<h3>` para tarjetas/subsecciones. **No romper esto.**
-- **Pendiente antes de producción:** fijar `NEXT_PUBLIC_SITE_URL` al dominio real
-  (silencia el warning de `metadataBase` y corrige URLs absolutas/OG).
+- **Dominio:** `NEXT_PUBLIC_SITE_URL` apunta a `https://zeist.vercel.app` (fallback en `lib/site.ts` + `.env.local`). Cambiar en ambos sitios al migrar a dominio propio.
 
 ## 7. Sistema de diseño (editorial + claymorfismo como acento)
 
@@ -155,33 +173,62 @@ por página, p.ej. el visual del hero), NO el estilo de cada caja.
   `getAllTags`. Calcula tiempo de lectura. Ordena por fecha desc. Ignora `draft`.
 - Para publicar: crear el `.mdx` en `es/` y `pt/` (mismo slug para que hreflang
   enlace ambas versiones). `generateStaticParams` los recoge automáticamente.
-- Ideas de contenido (del brief): desarrollo con IA, Vibe Coding, despliegue,
-  automatización Civil 3D/Revit/Dynamo para ingenieros civiles, UX/UI para devs,
-  prompts para Google Stitch.
+- **`lib/blog-data.ts`** guarda el roadmap y las FAQs de cada post, por slug y
+  locale. Es necesario porque `next-mdx-remote/rsc` **no pasa bien arrays de
+  objetos como props JSX**. En el MDX se usan `<Roadmap />` y `<PostFaqs />` sin
+  props — se auto-vinculan por slug. Si creas un post con esos componentes,
+  añade también su entrada aquí o saldrán vacíos (falla en silencio).
+- ⚠️ **Gotcha de MDX:** `{llaves}` fuera de un bloque de código rompen el build
+  ("Could not parse expression with acorn"). Usa backticks + `<ángulos>`.
+
+### Arquitectura SEO: 4 topic clusters
+
+El blog no es una lista de posts sueltos — es una jerarquía pillar/satélite.
+Cada satélite enlaza a su pillar con anchor text de keyword, y el pillar enlaza
+a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
+
+| Cluster | Pillar | Satélites |
+|---|---|---|
+| **C1 · Add-ins C#** (el diferenciador) | `desarrollo-add-ins-revit-civil-3d-guia-completa` | `crear-plugin-civil-3d-con-claude-code-sin-programar`, `dynamo-vs-csharp-civil3d-revit`, `cuanto-cuesta-un-add-in-revit-civil-3d` |
+| **C2 · Civil 3D** (el hueco más grande) | `automatizar-civil-3d-guia-completa` | `deja-de-usar-excel-y-perder-horas` |
+| **C3 · IA + BIM** (sin competencia) | `dynamo-csharp-con-ia-claude` | `guia-vibe-coding-para-empezar`, `crear-plugin-...-claude-code` |
+| **C4 · Carrera** (captación de funnel) | `programacion-para-ingenieros-civiles` | `aprende-a-programar-desde-cero`, `ramas-ingenieria-sistemas-especializaciones` |
+
+Los pillars llevan prioridad 0.9 en `app/sitemap.ts` (constante `PILLAR_SLUGS`).
+
+### Competencia (investigada sep-2026)
+
+- **especialista3d.com** — el líder en español. Domina **Revit + Dynamo + Python**,
+  4000+ alumnos, blog denso. **No competir con ellos ahí.**
+- Editeca, Konstruedu, Ingeoexpert, EngineerGeek — venden cursos, poco blog.
+- 3dshouse, Adyantrix — desarrollo de add-ins como servicio, **sólo en inglés**.
+
+**Dónde gana Zeist:** C# / add-ins · Civil 3D (vs Revit) · servicio (vs curso) ·
+IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
 
 ## 9. Roadmap (por fases)
 
-- **Fase 1 (MVP, HECHA):** Landing + Soluciones por rubro (+detalle) + Blog (MDX) +
-  Herramientas (coming soon) + Contacto. i18n es/pt. SEO completo. Claymorfismo.
-  **Reestructuración jul-2026:** la web ya NO se presenta como "empresa de software".
-  Los 4 servicios anteriores (webs, apps, sistemas, ingeniería civil) se reorganizaron
-  en **6 rubros** al mismo nivel: Desarrollo de software (agrupa webs+apps+sistemas),
-  Automatización para ingeniería, Diseño UX/UI, Arquitectura de software,
-  Arquitectura de datos, Cursos y mentorías.
-- **Fase 2 — Hub de Herramientas por RUBROS** (diferenciador clave). La página
-  `/herramientas` NO vende productos: organiza todo por **rubros/categorías**, cada
-  uno con un gancho de beneficio ("Automatiza tus tareas de ingeniería civil") y,
-  dentro, **propuestas** de herramientas + **rutas end-to-end** como botones "Pronto".
-  - Datos y copy (ES/PT) en **`lib/tools-catalog.ts`** (`getRubros`, `toolsHubCopy`).
-    Iterar ahí: añadir/quitar rubros, herramientas y rutas. Íconos en `rubroIcons`.
-  - Rubros actuales: Diseño UX/UI · Arquitectura de datos · Arquitectura de software ·
-    Automatización en ingeniería (C3D/Revit/Dynamo) · Cursos gratuitos · Mentorías y
-    comunidad. Próximo paso: definir cada herramienta/ruta al 100% e ir liberándolas
-    (generadores clay/glass/neumorfismo, prompts para Google Stitch, etc.).
-- **Fase 3:** cursos / webinars / bootcamps (gratis al inicio), mentorías Vibe Coding.
-- **Fase 4:** área de contenido para ingenieros civiles (automatización BIM/CAD).
+- **Fase 1 (MVP, HECHA):** Landing + Servicios + Blog (MDX) + Herramientas +
+  Contacto. i18n es/pt. SEO completo.
+- **Fase 2 (HECHA, jul-2026):** reorganización de 4 servicios de software a 6 rubros.
+- **Fase 3 — PIVOTE A NICHO ÚNICO (HECHA, sep-2026):** de 6 rubros genéricos a
+  **automatización BIM** con 4 servicios. Se eliminó todo el mensaje de
+  "IA baja el precio". Blog reorganizado en 4 clusters SEO: 4 posts se quedaron,
+  5 se reenfocaron al público AEC, 1 se archivó (`testear-web-con-claude-for-chrome`),
+  y se creó `cuanto-cuesta-un-add-in-revit-civil-3d` (keyword de dinero).
+  Herramientas pasó de 6 rubros genéricos a 5 rubros BIM.
+- **Fase 4 — Contenido para dominar el nicho (SIGUIENTE):** escribir los 2 pillars
+  que faltan (C1 y C2) y los satélites de C2. Prioridad:
+  1. "Automatizar Civil 3D: guía completa" (pillar C2)
+  2. "Desarrollo de add-ins para Revit y Civil 3D: guía completa" (pillar C1)
+  3. "Automatizar metrados y cubicaciones en Civil 3D"
+  4. "Revit API en español: primeros pasos"
+  5. "10 scripts de Dynamo para Civil 3D"
+- **Fase 5:** liberar las herramientas de `/herramientas` (hoy todas "Pronto").
 - **Backend de contacto:** hoy el formulario usa `mailto:`. Migrar a un endpoint
   real (Resend / Route Handler) cuando se defina.
+- ⚠️ **Bloqueante antes de publicar:** fijar `NEXT_PUBLIC_SITE_URL` al dominio real.
+  Mientras no se haga, los canonical y las OG salen apuntando a `localhost:3000`.
 
 ## 10. Comandos
 

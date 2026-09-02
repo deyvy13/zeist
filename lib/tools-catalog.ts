@@ -2,10 +2,13 @@ import type { Locale } from "@/lib/i18n";
 import type { rubroIcons } from "@/components/icons";
 
 // -----------------------------------------------------------------------------
-// Tools & resources hub — organized by RUBRO (category), not by product.
-// Each rubro leads with a benefit ("Automatiza tus tareas de ing. civil") and
-// lists PROPOSED tools + end-to-end routes as buttons (planning phase).
-// Iterate freely: add/remove tools and routes here per locale.
+// Tools & resources hub — organized by RUBRO (category), all within the BIM
+// automation niche. Each rubro leads with a benefit and lists PROPOSED tools +
+// end-to-end routes as buttons (planning phase).
+//
+// SEO note: tool and route names are deliberately written the way people
+// actually search ("generador de perfiles longitudinales", "plantilla add-in
+// Civil 3D C#") so the hub doubles as a long-tail magnet.
 // -----------------------------------------------------------------------------
 
 export type Rubro = {
@@ -31,9 +34,9 @@ export type ToolsHubCopy = {
 export const toolsHubCopy: Record<Locale, ToolsHubCopy> = {
   es: {
     eyebrow: "Herramientas y recursos",
-    title: "Todo lo que necesitas, por rubros.",
+    title: "Todo para automatizar tu trabajo BIM, en un solo lugar.",
     subtitle:
-      "Herramientas fijas, rutas end-to-end y formación — organizadas por categoría. Elige tu rubro y avanza sin adivinar.",
+      "Scripts de Dynamo listos para usar, plantillas de add-ins en C#, calculadoras de ingeniería y prompts de IA. Gratis y en español.",
     toolsLabel: "Herramientas",
     routesLabel: "Rutas end-to-end",
     soon: "Pronto",
@@ -41,9 +44,9 @@ export const toolsHubCopy: Record<Locale, ToolsHubCopy> = {
   },
   pt: {
     eyebrow: "Ferramentas e recursos",
-    title: "Tudo o que você precisa, por áreas.",
+    title: "Tudo para automatizar seu trabalho BIM, num só lugar.",
     subtitle:
-      "Ferramentas fixas, trilhas end-to-end e formação — organizadas por categoria. Escolha a sua área e avance sem adivinhar.",
+      "Scripts de Dynamo prontos para usar, templates de add-ins em C#, calculadoras de engenharia e prompts de IA. Grátis e em português.",
     toolsLabel: "Ferramentas",
     routesLabel: "Trilhas end-to-end",
     soon: "Em breve",
@@ -54,232 +57,194 @@ export const toolsHubCopy: Record<Locale, ToolsHubCopy> = {
 const catalog: Record<Locale, Rubro[]> = {
   es: [
     {
-      slug: "diseno-ux-ui",
-      icon: "palette",
-      category: "Diseño UX/UI",
-      title: "Diseña como un profesional, sin ser diseñador.",
-      description:
-        "Generadores y recursos fijos para aplicar las mejores prácticas UX/UI sin adivinar. Copia el CSS y listo.",
-      tools: [
-        "Generador de Claymorfismo",
-        "Generador de Glassmorfismo",
-        "Generador de Neumorfismo",
-        "Generador de paletas",
-        "Generador de sombras",
-        "Generador de gradientes",
-        "Prompts para Google Stitch",
-      ],
-      routes: [
-        "De la idea al diseño final en Figma",
-        "De wireframe a UI con IA",
-      ],
-    },
-    {
-      slug: "arquitectura-de-datos",
-      icon: "database",
-      category: "Arquitectura de datos",
-      title: "Modela datos que escalan desde el día uno.",
-      description:
-        "Diseña tu base de datos bien desde el inicio. Del diagrama al SQL, sin deuda técnica.",
-      tools: [
-        "Diseñador de diagramas ER",
-        "Generador de SQL desde el modelo",
-        "Generador de datos de prueba",
-        "Validador de normalización",
-        "Prompts para modelar datos con IA",
-      ],
-      routes: [
-        "De requerimientos a base de datos productiva",
-        "De Excel a modelo relacional",
-      ],
-    },
-    {
-      slug: "arquitectura-de-software",
-      icon: "layers",
-      category: "Arquitectura de software",
-      title: "Arquitecturas sólidas, decisiones claras.",
-      description:
-        "Elige bien tu stack y tu estructura. Diagramas y plantillas listas para proyectos serios.",
-      tools: [
-        "Selector de stack tecnológico",
-        "Generador de diagramas C4",
-        "Plantillas de estructura de proyecto",
-        "Checklist de escalabilidad y seguridad",
-        "Prompts para diseñar arquitectura con IA",
-      ],
-      routes: [
-        "Del MVP a una arquitectura escalable",
-        "De monolito a microservicios",
-      ],
-    },
-    {
-      slug: "automatizacion-ingenieria",
+      slug: "scripts-dynamo",
       icon: "cube",
-      category: "Automatización en ingeniería",
-      title: "Automatiza tus tareas de ingeniería civil.",
+      category: "Scripts Dynamo",
+      title: "Deja de rehacer el mismo grafo en cada proyecto.",
       description:
-        "Deja de repetir tareas de modelado 3D. Scripts, add-ins y rutinas para Civil 3D, Revit y Dynamo.",
+        "Grafos de Dynamo listos para descargar y usar en Civil 3D y Revit. Documentados, con los nodos explicados y sin dependencias raras.",
       tools: [
-        "Biblioteca de scripts Dynamo",
-        "Generador de add-ins base (Revit / C3D)",
-        "Automatizador de tareas de modelado",
-        "Plantillas y familias",
-        "Prompts para generar rutinas con IA",
+        "Generador de perfiles longitudinales cada X metros",
+        "Renombrador masivo de alineaciones",
+        "Exportador de puntos topográficos a CSV",
+        "Colocador automático de señalización",
+        "Generador de taludes desde polilínea",
+        "Extractor de datos del modelo a Excel",
       ],
       routes: [
-        "Automatiza tu flujo BIM/CAD desde cero",
-        "De tarea manual a add-in en C#",
+        "De tarea manual a grafo Dynamo funcional",
+        "Cómo documentar y compartir tus grafos con el equipo",
       ],
     },
     {
-      slug: "cursos-gratuitos",
-      icon: "graduation",
-      category: "Cursos gratuitos",
-      title: "Aprende gratis, de cero al despliegue.",
+      slug: "plantillas-addins",
+      icon: "layers",
+      category: "Plantillas de add-ins",
+      title: "Empieza tu add-in con la estructura correcta.",
       description:
-        "Formación práctica y sin relleno. Empieza hoy y aplícalo mañana.",
+        "Plantillas base en C# para Civil 3D y Revit, con arquitectura en capas lista: Command, Service y Repository separados desde el primer commit.",
       tools: [
-        "Vibe Coding: de cero al deploy",
-        "Desarrollo con IA desde cero",
-        "SEO para desarrolladores",
-        "Automatización en ingeniería civil",
-        "Fundamentos de UX/UI",
+        "Plantilla add-in Civil 3D C# (.NET)",
+        "Plantilla add-in Revit C# (.NET)",
+        "Generador de PackageContents.xml",
+        "Script de build y empaquetado .bundle",
+        "Plantilla de botón en la barra superior",
+        "Checklist de compatibilidad entre versiones",
       ],
       routes: [
-        "Tu primer proyecto en producción",
-        "De junior a productivo con IA",
+        "Del primer comando al add-in instalable",
+        "Cómo distribuir tu add-in a toda la oficina",
       ],
     },
     {
-      slug: "mentorias-comunidad",
+      slug: "calculadoras-ingenieria",
+      icon: "database",
+      category: "Calculadoras de ingeniería",
+      title: "Cálculos rápidos sin abrir una hoja de cálculo.",
+      description:
+        "Calculadoras web para los cálculos que haces todos los días. Sin instalar nada, sin fórmulas que se rompen.",
+      tools: [
+        "Calculadora de volumen de movimiento de tierras",
+        "Calculadora de pendientes y peraltes",
+        "Conversor de coordenadas topográficas",
+        "Calculadora de curvas horizontales y verticales",
+        "Estimador de horas ahorradas por automatización",
+      ],
+      routes: ["De cálculo manual a herramienta reutilizable del equipo"],
+    },
+    {
+      slug: "prompts-bim",
       icon: "chat",
-      category: "Mentorías y comunidad",
-      title: "No estás solo: te guiamos en el camino.",
+      category: "Prompts de IA para BIM",
+      title: "Prompts probados para que la IA no invente.",
       description:
-        "Mentorías de Vibe Coding, webinars y bootcamps para acompañarte de la idea al despliegue.",
+        "Colección de prompts que funcionan con Claude y ChatGPT para generar código de Revit API, Civil 3D API y Dynamo sin alucinaciones.",
       tools: [
-        "Mentorías Vibe Coding 1:1",
-        "Webinars en vivo",
-        "Bootcamps gratuitos",
-        "Biblioteca de prompts",
-        "Comunidad Zeist",
+        "Prompts para generar comandos de Revit API",
+        "Prompts para Civil 3D API en C#",
+        "Prompts para nodos Python en Dynamo",
+        "Prompt para depurar errores de compilación",
+        "Prompt para portar un grafo Dynamo a C#",
       ],
-      routes: ["De tu idea a tu app desplegada, acompañado"],
+      routes: [
+        "De la idea al add-in usando IA como copiloto",
+        "Cómo dar contexto de la API para que la IA acierte",
+      ],
+    },
+    {
+      slug: "formacion-bim",
+      icon: "graduation",
+      category: "Cursos y mentorías",
+      title: "Aprende a construir tus propias herramientas.",
+      description:
+        "Formación práctica en Revit API, Civil 3D API y Dynamo. Para ingenieros y arquitectos que quieren dejar de depender de terceros.",
+      tools: [
+        "Curso: Revit API desde cero para ingenieros",
+        "Curso: Civil 3D API y automatización de infraestructura",
+        "Curso: Dynamo aplicado a proyectos reales",
+        "Webinars en vivo",
+        "Mentorías 1-a-1",
+      ],
+      routes: [
+        "De ingeniero civil a autor de tus propios add-ins",
+        "Cómo montar la capacidad de automatización dentro de tu oficina",
+      ],
     },
   ],
   pt: [
     {
-      slug: "diseno-ux-ui",
-      icon: "palette",
-      category: "Design UX/UI",
-      title: "Desenhe como um profissional, sem ser designer.",
-      description:
-        "Geradores e recursos fixos para aplicar as melhores práticas de UX/UI sem adivinhar. Copie o CSS e pronto.",
-      tools: [
-        "Gerador de Claymorphism",
-        "Gerador de Glassmorphism",
-        "Gerador de Neumorphism",
-        "Gerador de paletas",
-        "Gerador de sombras",
-        "Gerador de gradientes",
-        "Prompts para Google Stitch",
-      ],
-      routes: [
-        "Da ideia ao design final no Figma",
-        "De wireframe a UI com IA",
-      ],
-    },
-    {
-      slug: "arquitectura-de-datos",
-      icon: "database",
-      category: "Arquitetura de dados",
-      title: "Modele dados que escalam desde o dia um.",
-      description:
-        "Projete o seu banco de dados bem desde o início. Do diagrama ao SQL, sem dívida técnica.",
-      tools: [
-        "Editor de diagramas ER",
-        "Gerador de SQL a partir do modelo",
-        "Gerador de dados de teste",
-        "Validador de normalização",
-        "Prompts para modelar dados com IA",
-      ],
-      routes: [
-        "De requisitos a banco de dados em produção",
-        "De Excel a modelo relacional",
-      ],
-    },
-    {
-      slug: "arquitectura-de-software",
-      icon: "layers",
-      category: "Arquitetura de software",
-      title: "Arquiteturas sólidas, decisões claras.",
-      description:
-        "Escolha bem o seu stack e a sua estrutura. Diagramas e templates prontos para projetos sérios.",
-      tools: [
-        "Seletor de stack tecnológico",
-        "Gerador de diagramas C4",
-        "Templates de estrutura de projeto",
-        "Checklist de escalabilidade e segurança",
-        "Prompts para desenhar arquitetura com IA",
-      ],
-      routes: [
-        "Do MVP a uma arquitetura escalável",
-        "De monólito a microsserviços",
-      ],
-    },
-    {
-      slug: "automatizacion-ingenieria",
+      slug: "scripts-dynamo",
       icon: "cube",
-      category: "Automação em engenharia",
-      title: "Automatize suas tarefas de engenharia civil.",
+      category: "Scripts Dynamo",
+      title: "Pare de refazer o mesmo grafo em cada projeto.",
       description:
-        "Pare de repetir tarefas de modelagem 3D. Scripts, add-ins e rotinas para Civil 3D, Revit e Dynamo.",
+        "Grafos de Dynamo prontos para baixar e usar no Civil 3D e Revit. Documentados, com os nós explicados e sem dependências estranhas.",
       tools: [
-        "Biblioteca de scripts Dynamo",
-        "Gerador de add-ins base (Revit / C3D)",
-        "Automatizador de tarefas de modelagem",
-        "Templates e famílias",
-        "Prompts para gerar rotinas com IA",
+        "Gerador de perfis longitudinais a cada X metros",
+        "Renomeador em massa de alinhamentos",
+        "Exportador de pontos topográficos para CSV",
+        "Posicionador automático de sinalização",
+        "Gerador de taludes a partir de polilinha",
+        "Extrator de dados do modelo para Excel",
       ],
       routes: [
-        "Automatize seu fluxo BIM/CAD do zero",
-        "De tarefa manual a add-in em C#",
+        "De tarefa manual a grafo Dynamo funcional",
+        "Como documentar e compartilhar seus grafos com a equipe",
       ],
     },
     {
-      slug: "cursos-gratuitos",
-      icon: "graduation",
-      category: "Cursos gratuitos",
-      title: "Aprenda de graça, do zero à publicação.",
+      slug: "plantillas-addins",
+      icon: "layers",
+      category: "Templates de add-ins",
+      title: "Comece seu add-in com a estrutura certa.",
       description:
-        "Formação prática e sem enrolação. Comece hoje e aplique amanhã.",
+        "Templates base em C# para Civil 3D e Revit, com arquitetura em camadas pronta: Command, Service e Repository separados desde o primeiro commit.",
       tools: [
-        "Vibe Coding: do zero ao deploy",
-        "Desenvolvimento com IA do zero",
-        "SEO para desenvolvedores",
-        "Automação em engenharia civil",
-        "Fundamentos de UX/UI",
+        "Template add-in Civil 3D C# (.NET)",
+        "Template add-in Revit C# (.NET)",
+        "Gerador de PackageContents.xml",
+        "Script de build e empacotamento .bundle",
+        "Template de botão na barra superior",
+        "Checklist de compatibilidade entre versões",
       ],
       routes: [
-        "Seu primeiro projeto em produção",
-        "De júnior a produtivo com IA",
+        "Do primeiro comando ao add-in instalável",
+        "Como distribuir seu add-in para todo o escritório",
       ],
     },
     {
-      slug: "mentorias-comunidad",
+      slug: "calculadoras-ingenieria",
+      icon: "database",
+      category: "Calculadoras de engenharia",
+      title: "Cálculos rápidos sem abrir uma planilha.",
+      description:
+        "Calculadoras web para os cálculos que você faz todos os dias. Sem instalar nada, sem fórmulas que quebram.",
+      tools: [
+        "Calculadora de volume de movimento de terra",
+        "Calculadora de declividades e superelevação",
+        "Conversor de coordenadas topográficas",
+        "Calculadora de curvas horizontais e verticais",
+        "Estimador de horas economizadas por automação",
+      ],
+      routes: ["De cálculo manual a ferramenta reutilizável da equipe"],
+    },
+    {
+      slug: "prompts-bim",
       icon: "chat",
-      category: "Mentorias e comunidade",
-      title: "Você não está sozinho: guiamos o seu caminho.",
+      category: "Prompts de IA para BIM",
+      title: "Prompts testados para a IA não inventar.",
       description:
-        "Mentorias de Vibe Coding, webinars e bootcamps para acompanhar você da ideia à publicação.",
+        "Coleção de prompts que funcionam com Claude e ChatGPT para gerar código de Revit API, Civil 3D API e Dynamo sem alucinações.",
       tools: [
-        "Mentorias Vibe Coding 1:1",
-        "Webinars ao vivo",
-        "Bootcamps gratuitos",
-        "Biblioteca de prompts",
-        "Comunidade Zeist",
+        "Prompts para gerar comandos de Revit API",
+        "Prompts para Civil 3D API em C#",
+        "Prompts para nós Python no Dynamo",
+        "Prompt para depurar erros de compilação",
+        "Prompt para portar um grafo Dynamo para C#",
       ],
-      routes: ["Da sua ideia ao seu app publicado, acompanhado"],
+      routes: [
+        "Da ideia ao add-in usando IA como copiloto",
+        "Como dar contexto da API para a IA acertar",
+      ],
+    },
+    {
+      slug: "formacion-bim",
+      icon: "graduation",
+      category: "Cursos e mentorias",
+      title: "Aprenda a construir suas próprias ferramentas.",
+      description:
+        "Formação prática em Revit API, Civil 3D API e Dynamo. Para engenheiros e arquitetos que querem parar de depender de terceiros.",
+      tools: [
+        "Curso: Revit API do zero para engenheiros",
+        "Curso: Civil 3D API e automação de infraestrutura",
+        "Curso: Dynamo aplicado a projetos reais",
+        "Webinars ao vivo",
+        "Mentorias 1-a-1",
+      ],
+      routes: [
+        "De engenheiro civil a autor dos seus próprios add-ins",
+        "Como montar a capacidade de automação dentro do seu escritório",
+      ],
     },
   ],
 };

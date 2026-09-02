@@ -22,12 +22,13 @@ export async function generateMetadata({
     title: dict.meta.homeTitle,
     description: dict.meta.homeDescription,
     keywords: [
-      "soluciones tecnológicas",
-      "desarrollo de software",
-      "automatización ingeniería",
-      "diseño UX UI",
-      "arquitectura de datos",
-      "desarrollo con IA",
+      "add-in Revit",
+      "plugin Civil 3D",
+      "automatizar Civil 3D",
+      "Revit API español",
+      "Civil 3D API",
+      "scripts Dynamo",
+      "automatización BIM",
       "Zeist",
     ],
   });
@@ -49,14 +50,14 @@ export default async function HomePage({
   const heroMetrics =
     lang === "pt"
       ? [
-          { k: "−40%", v: "custo médio" },
-          { k: "3×", v: "mais rápido" },
-          { k: "6", v: "áreas de atuação" },
+          { k: "−70%", v: "tempo em tarefas repetitivas" },
+          { k: "4-8 sem", v: "da ideia ao add-in" },
+          { k: "100%", v: "seu código, sua propriedade" },
         ]
       : [
-          { k: "−40%", v: "costo promedio" },
-          { k: "3×", v: "más rápido" },
-          { k: "6", v: "áreas de solución" },
+          { k: "−70%", v: "tiempo en tareas repetitivas" },
+          { k: "4-8 sem", v: "de la idea al add-in" },
+          { k: "100%", v: "tu código, tu propiedad" },
         ];
 
   return (
