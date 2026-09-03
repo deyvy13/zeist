@@ -23,8 +23,8 @@ Dynamo y formación para equipos BIM. Nada fuera de eso.
 
 **Por qué este nicho (investigado, no supuesto):**
 - Mercado BIM: $10.3B (2026) → $27.1B (2034), CAGR 12.9%.
-- El fundador **es ingeniero civil** — barrera de dominio que un dev genérico
-  no cruza. Eso es el eje del copy.
+- El equipo combina **ingenieros civiles e ingenieros de sistemas** — barrera de
+  dominio que una agencia de software genérica no cruza. Es el eje del copy.
 - Contenido técnico de C#/Civil 3D en español: casi inexistente.
 
 **Servicios (4, todos dentro del nicho):**
@@ -40,10 +40,10 @@ de otros sectores.
 ## 2. Posicionamiento y voz de marca
 
 - **Diferenciador central:** autoridad técnica de sector. El argumento NO es
-  "somos más baratos" — es "somos ingenieros civiles que programan add-ins en C#,
+  "somos más baratos" — es "somos un equipo de ingenieros civiles e ingenieros de sistemas,
   entendemos tu flujo porque lo vivimos".
 - **Los 4 ejes del mensaje:**
-  1. Ingenieros civiles, no una agencia de software.
+  1. Equipo mixto: ingenieros civiles + ingenieros de sistemas (dominio + técnica).
   2. C# y add-ins, no sólo Dynamo (la competencia se queda en programación visual).
   3. Civil 3D de verdad (el ecosistema habla casi sólo de Revit).
   4. Publicamos lo que sabemos (el blog es el motor de captación).
@@ -193,6 +193,7 @@ a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
 | **C2 · Civil 3D** (el hueco más grande) | `automatizar-civil-3d-guia-completa` | `deja-de-usar-excel-y-perder-horas` |
 | **C3 · IA + BIM** (sin competencia) | `dynamo-csharp-con-ia-claude` | `guia-vibe-coding-para-empezar`, `crear-plugin-...-claude-code` |
 | **C4 · Carrera** (captación de funnel) | `programacion-para-ingenieros-civiles` | `aprende-a-programar-desde-cero`, `ramas-ingenieria-sistemas-especializaciones` |
+| **C5 · Corporativo** (dolor de dirección, ticket alto) | *pendiente* | `reprocesos-obra-costo-oculto`, `estandarizar-procesos-bim-empresa` |
 
 Los pillars llevan prioridad 0.9 en `app/sitemap.ts` (constante `PILLAR_SLUGS`).
 

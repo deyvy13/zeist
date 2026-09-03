@@ -11,7 +11,7 @@
     "eyebrow": "Automação BIM · Civil 3D · Revit · Dynamo",
     "title": "Sua equipe perde semanas por ano em tarefas que um add-in resolve em segundos.",
     "highlight": "Nós os construímos.",
-    "subtitle": "Add-ins em C# para Civil 3D e Revit, scripts Dynamo e formação para equipes BIM. Feito por engenheiros civis que programam — entendemos seu fluxo porque o vivemos.",
+    "subtitle": "Add-ins em C# para Civil 3D e Revit, scripts Dynamo e formação para equipes BIM. Uma equipe de engenheiros civis e engenheiros de sistemas: entendemos seu fluxo porque o vivemos, e sabemos construir a ferramenta que o resolve.",
     "ctaPrimary": "Diagnóstico grátis",
     "ctaSecondary": "Ver serviços",
     "trust": [
@@ -26,8 +26,8 @@
     "subtitle": "O ecossistema BIM em português está cheio de cursos e de conteúdo sobre Revit. Nós fazemos outra coisa: desenvolvemos as ferramentas, trabalhamos infraestrutura, e publicamos tudo o que aprendemos.",
     "items": [
       {
-        "title": "Engenheiros civis, não uma agência de software",
-        "body": "Não precisa nos explicar o que é um corredor, uma montagem ou uma superfície de projeto. Viemos do setor, então o diagnóstico começa onde outros ainda estão entendendo o problema."
+        "title": "Engenheiros civis + engenheiros de sistemas",
+        "body": "Não precisa nos explicar o que é um corredor, uma montagem ou uma superfície de projeto: há engenheiros civis na equipe. E há engenheiros de sistemas para que a ferramenta aguente produção. O diagnóstico começa onde outros ainda estão entendendo o problema."
       },
       {
         "title": "C# e add-ins, não só Dynamo",
@@ -113,7 +113,7 @@
   "tools": {
     "eyebrow": "Ferramentas",
     "title": "Scripts, templates e calculadoras para o seu dia a dia.",
-    "subtitle": "Grafos de Dynamo prontos para usar, templates de add-ins em C#, calculadoras de engenharia e prompts de IA para BIM. Grátis.",
+    "subtitle": "Grafos de Dynamo prontos para usar, templates de add-ins em C#, calculadoras de engenharia e templates de padrões BIM. Grátis.",
     "badge": "Em construção",
     "cta": "Ver ferramentas"
   },
@@ -139,7 +139,7 @@
   },
   "meta": {
     "homeTitle": "Zeist — Add-ins e automação BIM para Civil 3D e Revit",
-    "homeDescription": "Desenvolvemos add-ins em C# para Civil 3D e Revit, e scripts Dynamo que eliminam tarefas repetitivas. Engenheiros civis que programam.",
+    "homeDescription": "Desenvolvemos add-ins em C# para Civil 3D e Revit, e scripts Dynamo que eliminam tarefas repetitivas. Equipe de engenheiros civis e engenheiros de sistemas.",
     "titleTemplate": "%s — Zeist"
   }
 }

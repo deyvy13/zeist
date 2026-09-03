@@ -64,7 +64,7 @@ export default function OgImage() {
             Add-ins y automatización BIM para Civil 3D y Revit.
           </div>
           <div style={{ fontSize: 32, color: "#00FFCE", fontWeight: 700 }}>
-            Ingenieros civiles que programan.
+            Ingenieros civiles + ingenieros de sistemas.
           </div>
         </div>
       </div>

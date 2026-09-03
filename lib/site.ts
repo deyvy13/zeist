@@ -23,8 +23,8 @@ export const site = {
     pt: "Add-ins e automação BIM para Civil 3D e Revit",
   },
   description: {
-    es: "Desarrollamos add-ins en C# para Civil 3D y Revit, y scripts Dynamo que eliminan las tareas repetitivas de tu equipo BIM. Ingenieros civiles que programan.",
-    pt: "Desenvolvemos add-ins em C# para Civil 3D e Revit, e scripts Dynamo que eliminam as tarefas repetitivas da sua equipe BIM. Engenheiros civis que programam.",
+    es: "Desarrollamos add-ins en C# para Civil 3D y Revit, y scripts Dynamo que eliminan las tareas repetitivas de tu equipo BIM. Equipo de ingenieros civiles e ingenieros de sistemas.",
+    pt: "Desenvolvemos add-ins em C# para Civil 3D e Revit, e scripts Dynamo que eliminam as tarefas repetitivas da sua equipe BIM. Equipe de engenheiros civis e engenheiros de sistemas.",
   },
 } as const;
 

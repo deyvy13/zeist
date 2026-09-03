@@ -19,6 +19,204 @@ type PostData = {
 };
 
 const data: Record<string, Record<Locale, PostData>> = {
+  // ---- CORPORATIVO · dolor de dirección --------------------------------------
+  "reprocesos-obra-costo-oculto": {
+    es: {
+      roadmap: {
+        title: "Dónde se van el 12-18% del presupuesto",
+        intro:
+          "El reproceso no aparece en ninguna partida, pero se paga igual. Aquí está de dónde sale, cómo medirlo y cómo reducirlo desde el gabinete.",
+        steps: [
+          { n: 1, title: "El número que nadie mide", desc: "Entre 5% y 18% del presupuesto, según el estudio", tag: "Diagnóstico" },
+          { n: 2, title: "El 70% nace en el diseño", desc: "No es la obra la que falla: es la información que le llega", tag: "Causa raíz" },
+          { n: 3, title: "Los 6 orígenes concretos", desc: "Datos desactualizados, criterios distintos, versiones cruzadas", tag: "Causa raíz" },
+          { n: 4, title: "Cómo medirlo en tu empresa", desc: "Tres indicadores que puedes empezar a registrar mañana", tag: "Medición" },
+          { n: 5, title: "Qué se corrige desde el gabinete", desc: "Las intervenciones con mejor relación coste/impacto", tag: "Solución" },
+          { n: 6, title: "Por dónde empezar sin frenar la producción", desc: "Plan de 90 días para una empresa que ya está a tope", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre reprocesos y costos ocultos",
+        items: [
+          {
+            q: "¿Cuánto cuestan realmente los reprocesos en un proyecto de construcción?",
+            a: "Los estudios sitúan la pérdida entre el 5% y el 10% del costo total a nivel global. En Latinoamérica las cifras son más altas: en Colombia se ha medido hasta un 12,4% sólo en reprocesos, y entre 12% y 18% cuando se suman las ineficiencias operativas. En un proyecto de un millón, eso son entre 120 000 y 180 000 que no aparecen en ninguna partida del presupuesto."
+          },
+          {
+            q: "¿Por qué se dice que la mayoría de errores nace en el diseño?",
+            a: "Porque hasta un 70% de los errores que se detectan en obra tienen su origen en la fase de diseño: información incompleta, cambios tardíos que no se propagan, o datos que dejaron de coincidir con el modelo. Y cerca del 48% se relaciona con fallas de comunicación y coordinación entre disciplinas. El problema casi nunca es la ejecución — es la información que le llega."
+          },
+          {
+            q: "¿Cómo mido los reprocesos si nadie los registra?",
+            a: "Empieza por tres indicadores simples: (1) horas dedicadas a rehacer entregables ya emitidos, (2) número de revisiones por documento antes de aprobarse, (3) diferencias detectadas entre la cantidad presupuestada y la real. No necesitas un sistema — una hoja compartida durante un mes ya te da la magnitud."
+          },
+          {
+            q: "¿La automatización realmente reduce los reprocesos o sólo acelera el trabajo?",
+            a: "Reduce los reprocesos por una razón concreta: elimina el paso manual donde se introduce el error. Cuando la tabla de cantidades se genera leyendo el modelo, no puede quedar desactualizada respecto al modelo. Cuando la revisión de estándares la hace una herramienta, no depende de que alguien tenga un buen día. La velocidad es el efecto secundario; la consistencia es el efecto principal."
+          },
+          {
+            q: "¿Cuánto tarda en verse el retorno de este tipo de intervención?",
+            a: "Las automatizaciones de nivel básico (generar tablas, revisar estándares, exportar datos) se desarrollan en 1-3 semanas y el ahorro se nota desde la primera revisión de proyecto. El retorno completo suele verse en el primer ciclo de proyecto, porque el reproceso evitado es inmediato y medible."
+          },
+          {
+            q: "¿Esto aplica a una empresa que todavía no trabaja con BIM?",
+            a: "Parcialmente. Si la información está en CAD y hojas de cálculo, hay mucho que se puede conectar y automatizar sin implantar BIM completo. Pero la reducción más grande de reprocesos viene de tener una única fuente de verdad, y eso sí empuja hacia el modelo. Una auditoría de procesos te dice qué se puede ganar con lo que ya tienes."
+          },
+          {
+            q: "¿Por qué no lo resuelve el software que ya pagamos?",
+            a: "Porque el software cubre el 80% genérico. El 20% restante son las reglas de tu empresa: cómo mides tú, qué formato pide tu cliente, qué valida tu control de calidad. Eso ninguna herramienta de catálogo lo trae, y es justamente donde se concentra el trabajo manual que genera los errores."
+          }
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Onde vão 12-18% do orçamento",
+        intro:
+          "O retrabalho não aparece em nenhum item, mas é pago igual. Aqui está de onde vem, como medir e como reduzir desde o escritório.",
+        steps: [
+          { n: 1, title: "O número que ninguém mede", desc: "Entre 5% e 18% do orçamento, conforme o estudo", tag: "Diagnóstico" },
+          { n: 2, title: "70% nasce no projeto", desc: "Não é a obra que falha: é a informação que chega nela", tag: "Causa raiz" },
+          { n: 3, title: "As 6 origens concretas", desc: "Dados desatualizados, critérios diferentes, versões cruzadas", tag: "Causa raiz" },
+          { n: 4, title: "Como medir na sua empresa", desc: "Três indicadores que você pode registrar amanhã", tag: "Medição" },
+          { n: 5, title: "O que se corrige no escritório", desc: "As intervenções com melhor relação custo/impacto", tag: "Solução" },
+          { n: 6, title: "Por onde começar sem frear a produção", desc: "Plano de 90 dias para uma empresa já no limite", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre retrabalho e custos ocultos",
+        items: [
+          {
+            q: "Quanto custam realmente os retrabalhos num projeto de construção?",
+            a: "Os estudos situam a perda entre 5% e 10% do custo total globalmente. Na América Latina os números são maiores: na Colômbia mediu-se até 12,4% só em retrabalhos, e entre 12% e 18% somando ineficiências operacionais. Num projeto de um milhão, isso são entre 120 000 e 180 000 que não aparecem em nenhum item do orçamento."
+          },
+          {
+            q: "Por que se diz que a maioria dos erros nasce no projeto?",
+            a: "Porque até 70% dos erros detectados em obra têm origem na fase de projeto: informação incompleta, mudanças tardias que não se propagam, ou dados que deixaram de coincidir com o modelo. E cerca de 48% se relaciona a falhas de comunicação e coordenação entre disciplinas. O problema quase nunca é a execução — é a informação que chega nela."
+          },
+          {
+            q: "Como meço os retrabalhos se ninguém os registra?",
+            a: "Comece por três indicadores simples: (1) horas dedicadas a refazer entregas já emitidas, (2) número de revisões por documento antes de aprovar, (3) diferenças detectadas entre a quantidade orçada e a real. Você não precisa de um sistema — uma planilha compartilhada durante um mês já dá a magnitude."
+          },
+          {
+            q: "A automação realmente reduz retrabalhos ou só acelera o trabalho?",
+            a: "Reduz retrabalhos por uma razão concreta: elimina o passo manual onde o erro é introduzido. Quando a tabela de quantidades é gerada lendo o modelo, não pode ficar desatualizada em relação ao modelo. Quando a revisão de padrões é feita por uma ferramenta, não depende de alguém estar num bom dia. A velocidade é o efeito secundário; a consistência é o principal."
+          },
+          {
+            q: "Quanto tempo leva para ver o retorno desse tipo de intervenção?",
+            a: "As automações de nível básico (gerar tabelas, revisar padrões, exportar dados) se desenvolvem em 1-3 semanas e a economia aparece desde a primeira revisão de projeto. O retorno completo costuma se ver no primeiro ciclo de projeto, porque o retrabalho evitado é imediato e mensurável."
+          },
+          {
+            q: "Isso se aplica a uma empresa que ainda não trabalha com BIM?",
+            a: "Parcialmente. Se a informação está em CAD e planilhas, há muito que dá para conectar e automatizar sem implantar BIM completo. Mas a maior redução de retrabalho vem de ter uma única fonte de verdade, e isso empurra na direção do modelo. Uma auditoria de processos diz o que dá para ganhar com o que você já tem."
+          },
+          {
+            q: "Por que o software que já pagamos não resolve isso?",
+            a: "Porque o software cobre os 80% genéricos. Os 20% restantes são as regras da sua empresa: como você mede, que formato seu cliente pede, o que seu controle de qualidade valida. Isso nenhuma ferramenta de catálogo traz, e é justamente onde se concentra o trabalho manual que gera os erros."
+          }
+        ],
+      },
+    },
+  },
+  // ---- CORPORATIVO · estandarización -----------------------------------------
+  "estandarizar-procesos-bim-empresa": {
+    es: {
+      roadmap: {
+        title: "De criterios personales a estándar de empresa",
+        intro:
+          "Cómo lograr que el entregable salga igual lo haga quien lo haga, sin frenar la producción ni enfrentarse al equipo.",
+        steps: [
+          { n: 1, title: "La señal de que no tienes estándar", desc: "Cinco síntomas que aparecen antes de que sea un problema caro", tag: "Diagnóstico" },
+          { n: 2, title: "Por qué fracasan las implantaciones", desc: "El manual de 80 páginas que nadie lee, y qué hacer en su lugar", tag: "Realidad" },
+          { n: 3, title: "Qué estandarizar primero", desc: "Los 5 elementos con mayor impacto y menor resistencia", tag: "Prioridad" },
+          { n: 4, title: "Del documento a la herramienta", desc: "Por qué un estándar que no se verifica solo, no existe", tag: "Clave" },
+          { n: 5, title: "Cómo manejar la resistencia del equipo", desc: "Lo que funciona y lo que garantiza el rechazo", tag: "Personas" },
+          { n: 6, title: "Plan de implantación en 90 días", desc: "Semana a semana, con producción en marcha", tag: "Ejecución" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre estandarización BIM",
+        items: [
+          {
+            q: "¿Por dónde se empieza a estandarizar procesos BIM en una empresa?",
+            a: "Por la nomenclatura y la estructura de archivos — es lo que más impacto tiene y lo que menos resistencia genera, porque nadie tiene un apego emocional a cómo se llama un archivo. Después vienen las plantillas, el criterio de medición y el control de calidad previo a la entrega. Intentar estandarizarlo todo a la vez es la causa más común de fracaso."
+          },
+          {
+            q: "¿Cuál es el error más común al implantar estándares BIM?",
+            a: "Escribir un manual extenso y asumir que con difundirlo basta. Un estándar que depende de que cada persona lo recuerde y lo aplique manualmente se degrada en semanas. El estándar sólo se sostiene cuando está incorporado a las plantillas y verificado por una herramienta que avisa cuando algo no cumple."
+          },
+          {
+            q: "¿Cómo manejo la resistencia del equipo al cambio?",
+            a: "Tres cosas funcionan: (1) que el estándar les quite trabajo en vez de añadírselo — si la herramienta de verificación también corrige, lo adoptan solos; (2) involucrar a los más veteranos en definirlo, porque el rechazo suele venir de sentirse pasados por alto; (3) empezar por un proyecto piloto en vez de imponerlo a toda la empresa de golpe."
+          },
+          {
+            q: "¿Necesito un departamento BIM para tener estándares?",
+            a: "No. Necesitas que alguien tenga la responsabilidad asignada y tiempo protegido, aunque sea parcial. Muchas empresas medianas funcionan bien con un coordinador BIM a tiempo parcial más herramientas que automatizan la verificación. El departamento viene después, si el volumen lo justifica."
+          },
+          {
+            q: "¿Cuánto tarda en implantarse un estándar de verdad?",
+            a: "Definirlo: 2-4 semanas si hay decisión. Incorporarlo a plantillas y herramientas de verificación: 4-8 semanas. Que el equipo lo tenga interiorizado: un ciclo completo de proyecto. Lo que no funciona es el enfoque de 'lo publicamos y ya está' — sin verificación automática, el estándar se erosiona."
+          },
+          {
+            q: "¿Qué pasa con los proyectos que ya están en marcha?",
+            a: "No los migres. El estándar se aplica a proyectos nuevos, y los que están en curso terminan con las reglas con las que empezaron. Intentar reestandarizar un proyecto avanzado genera más reprocesos de los que evita. La única excepción son las plantillas de entrega, que sí se pueden unificar sin tocar el modelo."
+          },
+          {
+            q: "¿Cómo mido si la estandarización está funcionando?",
+            a: "Con tres indicadores: número de observaciones en la revisión previa a la entrega (debería bajar), tiempo de incorporación de una persona nueva al proyecto (debería bajar), y variabilidad entre entregables de distintos equipos (debería tender a cero). Si ninguno se mueve en un trimestre, el estándar está en el papel pero no en la práctica."
+          }
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "De critérios pessoais a padrão de empresa",
+        intro:
+          "Como conseguir que a entrega saia igual, quem quer que a faça, sem frear a produção nem brigar com a equipe.",
+        steps: [
+          { n: 1, title: "O sinal de que você não tem padrão", desc: "Cinco sintomas que aparecem antes de virar um problema caro", tag: "Diagnóstico" },
+          { n: 2, title: "Por que as implantações fracassam", desc: "O manual de 80 páginas que ninguém lê, e o que fazer no lugar", tag: "Realidade" },
+          { n: 3, title: "O que padronizar primeiro", desc: "Os 5 elementos de maior impacto e menor resistência", tag: "Prioridade" },
+          { n: 4, title: "Do documento à ferramenta", desc: "Por que um padrão que não se verifica sozinho não existe", tag: "Chave" },
+          { n: 5, title: "Como lidar com a resistência da equipe", desc: "O que funciona e o que garante a rejeição", tag: "Pessoas" },
+          { n: 6, title: "Plano de implantação em 90 dias", desc: "Semana a semana, com produção rodando", tag: "Execução" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre padronização BIM",
+        items: [
+          {
+            q: "Por onde se começa a padronizar processos BIM numa empresa?",
+            a: "Pela nomenclatura e pela estrutura de arquivos — é o que tem mais impacto e o que gera menos resistência, porque ninguém tem apego emocional a como um arquivo se chama. Depois vêm os templates, o critério de medição e o controle de qualidade antes da entrega. Tentar padronizar tudo ao mesmo tempo é a causa mais comum de fracasso."
+          },
+          {
+            q: "Qual é o erro mais comum ao implantar padrões BIM?",
+            a: "Escrever um manual extenso e supor que basta divulgá-lo. Um padrão que depende de cada pessoa lembrar e aplicar manualmente se degrada em semanas. O padrão só se sustenta quando está incorporado aos templates e verificado por uma ferramenta que avisa quando algo não cumpre."
+          },
+          {
+            q: "Como lido com a resistência da equipe à mudança?",
+            a: "Três coisas funcionam: (1) que o padrão tire trabalho em vez de adicionar — se a ferramenta de verificação também corrige, eles adotam sozinhos; (2) envolver os mais veteranos em defini-lo, porque a rejeição costuma vir de se sentirem ignorados; (3) começar por um projeto piloto em vez de impor a toda a empresa de uma vez."
+          },
+          {
+            q: "Preciso de um departamento BIM para ter padrões?",
+            a: "Não. Precisa que alguém tenha a responsabilidade atribuída e tempo protegido, mesmo que parcial. Muitas empresas médias funcionam bem com um coordenador BIM em tempo parcial mais ferramentas que automatizam a verificação. O departamento vem depois, se o volume justificar."
+          },
+          {
+            q: "Quanto tempo leva para implantar um padrão de verdade?",
+            a: "Defini-lo: 2-4 semanas se houver decisão. Incorporá-lo a templates e ferramentas de verificação: 4-8 semanas. Que a equipe o tenha internalizado: um ciclo completo de projeto. O que não funciona é a abordagem de 'publicamos e pronto' — sem verificação automática, o padrão se erode."
+          },
+          {
+            q: "O que acontece com os projetos que já estão em andamento?",
+            a: "Não os migre. O padrão se aplica a projetos novos, e os que estão em curso terminam com as regras com que começaram. Tentar repadronizar um projeto avançado gera mais retrabalho do que evita. A única exceção são os templates de entrega, que dá para unificar sem tocar o modelo."
+          },
+          {
+            q: "Como meço se a padronização está funcionando?",
+            a: "Com três indicadores: número de observações na revisão antes da entrega (deveria cair), tempo de integração de uma pessoa nova ao projeto (deveria cair), e variabilidade entre entregas de equipes diferentes (deveria tender a zero). Se nenhum se move num trimestre, o padrão está no papel mas não na prática."
+          }
+        ],
+      },
+    },
+  },
   // ---- PILLAR · Cluster C2 (Civil 3D) ----------------------------------------
   "automatizar-civil-3d-guia-completa": {
     es: {
@@ -524,100 +722,100 @@ const data: Record<string, Record<Locale, PostData>> = {
   "ramas-ingenieria-sistemas-especializaciones": {
     es: {
       roadmap: {
-        title: "Las 8 grandes ramas donde puedes especializarte",
+        title: "De ingeniero civil a ingeniero que automatiza, en 8 pasos",
         intro:
-          "De las áreas más comerciales (donde hay mucho trabajo y mucha competencia) a los nichos rentables donde pocos entran. Cada una con pros, contras y perfil ideal.",
+          "No se trata de dejar la ingeniería civil para volverte programador. Se trata de sumar una habilidad que multiplica lo que ya sabes hacer.",
         steps: [
-          { n: 1, title: "Desarrollo de software", desc: "Frontend, backend, fullstack, mobile — el corazón de la industria", tag: "Comercial" },
-          { n: 2, title: "Data e Inteligencia Artificial", desc: "Data science, ML engineer, MLOps, ingeniero de datos", tag: "En auge" },
-          { n: 3, title: "Cloud y DevOps", desc: "SRE, DevOps, cloud architect, platform engineer", tag: "Comercial" },
-          { n: 4, title: "Ciberseguridad", desc: "Pentester, blue team, red team, GRC, forense digital", tag: "Alto valor" },
-          { n: 5, title: "Product, UX y diseño", desc: "Product manager, product designer, UX researcher", tag: "Híbrido" },
-          { n: 6, title: "Automatización de industrias", desc: "BIM/CAD ingeniería civil, industria 4.0, robótica, salud", tag: "Nicho rentable" },
-          { n: 7, title: "Emergentes y de nicho", desc: "Blockchain, AR/VR, IoT, edge, quantum, sistemas embebidos", tag: "Alto riesgo/premio" },
-          { n: 8, title: "Cómo elegir tu rama", desc: "Framework simple de 4 preguntas para decidir sin arrepentirte", tag: "Decisión" },
+          { n: 1, title: "Por qué tu título es una ventaja, no un lastre", desc: "El dominio del sector vale más que saber programar", tag: "Punto de partida" },
+          { n: 2, title: "Qué puedes automatizar realmente", desc: "Las tareas de tu día a día que se resuelven solas", tag: "Aplicación" },
+          { n: 3, title: "Las 3 vías según cuánto quieras profundizar", desc: "Dynamo, hojas conectadas o add-ins a medida", tag: "Opciones" },
+          { n: 4, title: "Cuánto tiempo necesitas de verdad", desc: "Expectativas realistas por nivel, sin promesas infladas", tag: "Realidad" },
+          { n: 5, title: "Los beneficios concretos en tu carrera", desc: "Valor por hora, autonomía y qué puertas se abren", tag: "Retorno" },
+          { n: 6, title: "Tu primer mes: qué hacer cada semana", desc: "Plan concreto, no una lista de cursos", tag: "Plan" },
+          { n: 7, title: "Los errores que hacen abandonar", desc: "Por qué la mayoría se rinde y cómo evitarlo", tag: "Riesgos" },
+          { n: 8, title: "Hasta dónde llegar", desc: "Los 4 niveles y cuándo parar en cada uno", tag: "Horizonte" },
         ],
       },
       faqs: {
-        title: "Preguntas frecuentes sobre ramas de sistemas",
+        title: "Preguntas frecuentes",
         items: [
           {
-            q: "¿Qué especialización de Ingeniería de Sistemas paga más?",
-            a: "Los rangos más altos suelen estar en: (1) ciberseguridad senior (especialmente cloud security y red team), (2) MLOps / AI Engineer con experiencia real en producción, (3) Cloud Architect en empresas grandes, (4) nichos verticales como quant developer o BIM automation para grandes constructoras. En general, cuanto más específico y demandado + menos oferta, mejor pagado."
+            q: "¿Tengo que dejar la ingeniería civil para dedicarme a esto?",
+            a: "No, y sería un error. Tu valor está justo en la combinación: entiendes el problema de ingeniería Y sabes automatizarlo. Un desarrollador que aprende BIM tarda años en entender qué es un criterio de medición o por qué un corredor se recalcula. Si dejas la ingeniería, compites de igual a igual con miles de programadores y pierdes tu ventaja."
           },
           {
-            q: "¿Puedo cambiar de rama después de años trabajando?",
-            a: "Sí, y es común. La mayoría de fundamentos son transferibles (lógica, resolución de problemas, comunicación técnica). Cambiar suele tomar 6-12 meses de reconversión con proyectos personales, cursos y un salto de puesto. La IA acelera muchísimo esa transición — puedes ser productivo en una tecnología nueva en semanas."
+            q: "¿Necesito estudiar una segunda carrera o un máster?",
+            a: "No. Para automatizar tu propio trabajo con Dynamo, unas semanas de práctica aplicada bastan. Para desarrollar herramientas más serias, unos meses. Lo que marca la diferencia no es el título, es haber automatizado tres o cuatro tareas reales de tu trabajo y poder mostrarlas."
           },
           {
-            q: "¿Necesito un máster o certificación para especializarme?",
-            a: "Depende de la rama. Para dev/DevOps/cloud casi nunca — el portfolio y la experiencia mandan. Para ciberseguridad y cloud arquitecto las certificaciones (OSCP, AWS Solutions Architect) sí abren puertas. Para data/IA en investigación, un máster ayuda; para roles aplicados, no. En automatización industrial, el dominio del sector (ing. civil, salud, industria) pesa más que cualquier título extra."
+            q: "¿Cuánto tiempo al día necesito dedicarle?",
+            a: "Una hora al día durante tres meses te da un nivel funcional para automatizar tus tareas repetitivas. La clave es aplicarlo desde la primera semana a un problema real de tu trabajo, no estudiar teoría en abstracto. El aprendizaje que no se aplica se olvida."
           },
           {
-            q: "¿La IA va a reemplazar mi especialización?",
-            a: "Va a transformar todas, no reemplazar. Los perfiles junior de tareas mecánicas (crear CRUDs, tests básicos) están más expuestos. Los perfiles que integran IA como copiloto multiplican su productividad. Las ramas más 'seguras' de disrupción a corto plazo: ciberseguridad, cloud architecture, automatización específica de industria, product management. Ver también nuestra guía de [Vibe Coding](/es/blog/guia-vibe-coding-para-empezar)."
+            q: "¿Vale la pena si no quiero programar todos los días?",
+            a: "Sí. La mayoría de ingenieros que aprenden esto no se vuelven programadores a tiempo completo: automatizan lo suyo, ganan horas cada semana y siguen haciendo ingeniería. Con dedicarle unas horas al mes al mantenimiento de tus herramientas es suficiente."
           },
           {
-            q: "¿Cuál es mejor para trabajar remoto?",
-            a: "Desarrollo de software, DevOps y data son las más 100% remoto-friendly (mercado global). Ciberseguridad depende del cliente (algunas empresas exigen on-site por regulación). Automatización industrial suele requerir presencia física al inicio pero mucho remoto después. Product y UX son cada vez más remotas también."
+            q: "¿Qué gano concretamente en mi carrera?",
+            a: "Tres cosas medibles: recuperas horas que hoy pierdes en tareas mecánicas, te vuelves la persona que resuelve lo que nadie más puede en tu oficina, y accedes a roles de coordinación BIM o gestión de la información que pagan por encima del proyectista tradicional. Además, es una habilidad que no se puede subcontratar fácil."
           },
           {
-            q: "Si soy ingeniero civil, ¿tiene sentido pivotar a sistemas?",
-            a: "No pivotes — combina. La automatización BIM/CAD (Dynamo, Revit API, C#) es un nicho enorme y poco competido donde un ingeniero civil que sabe programar vale mucho más que un dev que aprende BIM. Lee [Dynamo vs C# en Civil 3D y Revit](/es/blog/dynamo-vs-csharp-civil3d-revit) y [Programación para ingenieros civiles](/es/blog/programacion-para-ingenieros-civiles)."
+            q: "¿Y si la inteligencia artificial acaba haciendo esto solo?",
+            a: "Está pasando lo contrario: la IA hace más accesible construir herramientas, así que el cuello de botella se mueve a quién sabe QUÉ construir. Y eso lo sabe quien conoce el proceso de ingeniería, no quien sabe programar. Tu dominio del sector se vuelve más valioso, no menos."
           },
           {
-            q: "¿Cómo sé qué rama es para mí?",
-            a: "Cuatro preguntas: (1) ¿te motiva más lo visual o lo abstracto? (2) ¿te gusta trabajar solo profundo o coordinar gente? (3) ¿toleras alto estrés puntual (ciber, SRE) o prefieres ritmo estable? (4) ¿te apasiona alguna industria específica (salud, construcción, finanzas)? Combinando esas respuestas con tu contexto local (qué se paga bien en tu ciudad), la rama surge. El módulo 8 del artículo tiene el framework completo."
+            q: "Soy de una oficina pequeña, ¿esto es para empresas grandes?",
+            a: "Al contrario: en una oficina pequeña el impacto es proporcionalmente mayor porque cada hora cuenta más y no hay un departamento de sistemas que lo haga por ti. Muchas de las automatizaciones con mejor retorno se resuelven en horas y no requieren infraestructura de ningún tipo."
           }
         ],
       },
     },
     pt: {
       roadmap: {
-        title: "Os 8 grandes ramos onde você pode se especializar",
+        title: "De engenheiro civil a engenheiro que automatiza, em 8 passos",
         intro:
-          "Das áreas mais comerciais (muito trabalho e muita competição) aos nichos rentáveis onde poucos entram. Cada um com prós, contras e perfil ideal.",
+          "Não se trata de largar a engenharia civil para virar programador. Trata-se de somar uma habilidade que multiplica o que você já sabe fazer.",
         steps: [
-          { n: 1, title: "Desenvolvimento de software", desc: "Frontend, backend, fullstack, mobile — o coração da indústria", tag: "Comercial" },
-          { n: 2, title: "Dados e Inteligência Artificial", desc: "Data science, ML engineer, MLOps, engenheiro de dados", tag: "Em alta" },
-          { n: 3, title: "Cloud e DevOps", desc: "SRE, DevOps, cloud architect, platform engineer", tag: "Comercial" },
-          { n: 4, title: "Cibersegurança", desc: "Pentester, blue team, red team, GRC, forense digital", tag: "Alto valor" },
-          { n: 5, title: "Product, UX e design", desc: "Product manager, product designer, UX researcher", tag: "Híbrido" },
-          { n: 6, title: "Automação de indústrias", desc: "BIM/CAD engenharia civil, indústria 4.0, robótica, saúde", tag: "Nicho rentável" },
-          { n: 7, title: "Emergentes e de nicho", desc: "Blockchain, AR/VR, IoT, edge, quantum, sistemas embarcados", tag: "Alto risco/prêmio" },
-          { n: 8, title: "Como escolher seu ramo", desc: "Framework simples de 4 perguntas para decidir sem se arrepender", tag: "Decisão" },
+          { n: 1, title: "Por que seu diploma é uma vantagem, não um peso", desc: "O domínio do setor vale mais que saber programar", tag: "Ponto de partida" },
+          { n: 2, title: "O que você pode automatizar de verdade", desc: "As tarefas do seu dia a dia que se resolvem sozinhas", tag: "Aplicação" },
+          { n: 3, title: "As 3 vias conforme quanto quiser aprofundar", desc: "Dynamo, planilhas conectadas ou add-ins sob medida", tag: "Opções" },
+          { n: 4, title: "Quanto tempo você precisa de verdade", desc: "Expectativas realistas por nível, sem promessas infladas", tag: "Realidade" },
+          { n: 5, title: "Os benefícios concretos na sua carreira", desc: "Valor por hora, autonomia e que portas se abrem", tag: "Retorno" },
+          { n: 6, title: "Seu primeiro mês: o que fazer cada semana", desc: "Plano concreto, não uma lista de cursos", tag: "Plano" },
+          { n: 7, title: "Os erros que fazem desistir", desc: "Por que a maioria desiste e como evitar", tag: "Riscos" },
+          { n: 8, title: "Até onde chegar", desc: "Os 4 níveis e quando parar em cada um", tag: "Horizonte" },
         ],
       },
       faqs: {
-        title: "Perguntas frequentes sobre ramos de sistemas",
+        title: "Perguntas frequentes",
         items: [
           {
-            q: "Qual especialização de Engenharia de Sistemas paga mais?",
-            a: "Os patamares mais altos costumam estar em: (1) cibersegurança sênior (especialmente cloud security e red team), (2) MLOps / AI Engineer com experiência real em produção, (3) Cloud Architect em empresas grandes, (4) nichos verticais como quant developer ou automação BIM para grandes construtoras. Em geral, quanto mais específico e demandado + menos oferta, melhor pago."
+            q: "Tenho que largar a engenharia civil para me dedicar a isso?",
+            a: "Não, e seria um erro. Seu valor está justamente na combinação: você entende o problema de engenharia E sabe automatizá-lo. Um desenvolvedor que aprende BIM leva anos para entender o que é um critério de medição ou por que um corredor se recalcula. Se largar a engenharia, compete de igual para igual com milhares de programadores e perde sua vantagem."
           },
           {
-            q: "Posso mudar de ramo depois de anos trabalhando?",
-            a: "Sim, e é comum. A maioria dos fundamentos é transferível (lógica, resolução de problemas, comunicação técnica). Mudar costuma levar 6-12 meses de reconversão com projetos pessoais, cursos e um salto de posição. A IA acelera muito essa transição — você pode ser produtivo em uma tecnologia nova em semanas."
+            q: "Preciso estudar uma segunda faculdade ou mestrado?",
+            a: "Não. Para automatizar seu próprio trabalho com Dynamo, algumas semanas de prática aplicada bastam. Para desenvolver ferramentas mais sérias, alguns meses. O que faz diferença não é o diploma, é ter automatizado três ou quatro tarefas reais do seu trabalho e poder mostrá-las."
           },
           {
-            q: "Preciso de mestrado ou certificação para me especializar?",
-            a: "Depende do ramo. Para dev/DevOps/cloud quase nunca — portfólio e experiência mandam. Para cibersegurança e cloud architect as certificações (OSCP, AWS Solutions Architect) abrem portas. Para dados/IA em pesquisa, mestrado ajuda; para papéis aplicados, não. Em automação industrial, o domínio do setor (eng. civil, saúde, indústria) pesa mais que qualquer título extra."
+            q: "Quanto tempo por dia preciso dedicar?",
+            a: "Uma hora por dia durante três meses te dá um nível funcional para automatizar suas tarefas repetitivas. A chave é aplicar desde a primeira semana a um problema real do seu trabalho, não estudar teoria no abstrato. O aprendizado que não se aplica se esquece."
           },
           {
-            q: "A IA vai substituir minha especialização?",
-            a: "Vai transformar todas, não substituir. Perfis júnior de tarefas mecânicas (criar CRUDs, testes básicos) estão mais expostos. Perfis que integram IA como copiloto multiplicam sua produtividade. Ramos mais 'seguros' de disrupção a curto prazo: cibersegurança, cloud architecture, automação específica de indústria, product management. Veja também nosso guia de [Vibe Coding](/pt/blog/guia-vibe-coding-para-empezar)."
+            q: "Vale a pena se eu não quiser programar todos os dias?",
+            a: "Sim. A maioria dos engenheiros que aprendem isso não vira programador em tempo integral: automatizam o seu, ganham horas toda semana e seguem fazendo engenharia. Dedicar algumas horas por mês à manutenção das suas ferramentas é suficiente."
           },
           {
-            q: "Qual é melhor para trabalho remoto?",
-            a: "Desenvolvimento de software, DevOps e dados são os mais 100% remote-friendly (mercado global). Cibersegurança depende do cliente (algumas empresas exigem on-site por regulação). Automação industrial costuma exigir presença física no início mas muito remoto depois. Product e UX são cada vez mais remotos também."
+            q: "O que ganho concretamente na minha carreira?",
+            a: "Três coisas mensuráveis: recupera horas que hoje perde em tarefas mecânicas, vira a pessoa que resolve o que ninguém mais consegue no seu escritório, e acessa cargos de coordenação BIM ou gestão da informação que pagam acima do projetista tradicional. Além disso, é uma habilidade difícil de terceirizar."
           },
           {
-            q: "Se sou engenheiro civil, faz sentido pivotar para sistemas?",
-            a: "Não pivote — combine. A automação BIM/CAD (Dynamo, Revit API, C#) é um nicho enorme e pouco competido onde um engenheiro civil que sabe programar vale muito mais que um dev que aprende BIM. Leia [Dynamo vs C# no Civil 3D e Revit](/pt/blog/dynamo-vs-csharp-civil3d-revit) e [Programação para engenheiros civis](/pt/blog/programacion-para-ingenieros-civiles)."
+            q: "E se a inteligência artificial acabar fazendo isso sozinha?",
+            a: "Está acontecendo o contrário: a IA torna mais acessível construir ferramentas, então o gargalo se move para quem sabe O QUE construir. E isso sabe quem conhece o processo de engenharia, não quem sabe programar. Seu domínio do setor fica mais valioso, não menos."
           },
           {
-            q: "Como sei qual ramo é para mim?",
-            a: "Quatro perguntas: (1) te motiva mais o visual ou o abstrato? (2) gosta de trabalhar sozinho a fundo ou coordenar pessoas? (3) tolera alto estresse pontual (ciber, SRE) ou prefere ritmo estável? (4) te apaixona alguma indústria específica (saúde, construção, finanças)? Combinando essas respostas com seu contexto local (o que paga bem na sua cidade), o ramo surge. O módulo 8 do artigo tem o framework completo."
+            q: "Sou de um escritório pequeno, isso é para empresas grandes?",
+            a: "Ao contrário: num escritório pequeno o impacto é proporcionalmente maior porque cada hora conta mais e não existe um departamento de TI que faça por você. Muitas das automações com melhor retorno se resolvem em horas e não exigem infraestrutura nenhuma."
           }
         ],
       },
