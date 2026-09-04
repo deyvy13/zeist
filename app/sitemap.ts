@@ -26,6 +26,7 @@ const PILLAR_SLUGS = new Set([
   "desarrollo-add-ins-revit-civil-3d-guia-completa", // C1 · Add-ins C#
   "dynamo-csharp-con-ia-claude",                     // C3 · IA + BIM
   "programacion-para-ingenieros-civiles",            // C4 · Carrera
+  "plan-bim-peru-obligatorio-guia-empresas",         // C5 · Perú / corporativo
 ]);
 
 function priorityFor(path: string): number {
@@ -42,22 +43,30 @@ function localePath(locale: Locale, path: string) {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Union of blog slugs across locales (posts may not exist in every language).
-  const blogPaths = new Set<string>();
+  // path -> locales where that path actually exists.
+  // Static routes are always translated; blog posts are not (locale-specific
+  // content such as Peru regulation ships only in `es`), so listing a /pt/ URL
+  // for them would publish a 404 and a broken hreflang pair.
+  const pathLocales = new Map<string, Locale[]>();
+
+  for (const path of STATIC_PATHS) pathLocales.set(path, [...locales]);
+
   for (const l of locales) {
     // getAllPosts filters out drafts — archived posts must not reach the sitemap.
-    for (const post of getAllPosts(l)) blogPaths.add(`blog/${post.slug}`);
+    for (const post of getAllPosts(l)) {
+      const path = `blog/${post.slug}`;
+      pathLocales.set(path, [...(pathLocales.get(path) ?? []), l]);
+    }
   }
 
-  const allPaths = [...STATIC_PATHS, ...blogPaths];
   const now = new Date();
-
   const entries: MetadataRoute.Sitemap = [];
-  for (const path of allPaths) {
-    for (const locale of locales) {
-      const languages: Record<string, string> = {};
-      for (const l of locales) languages[hreflangByLocale[l]] = localePath(l, path);
 
+  for (const [path, available] of pathLocales) {
+    const languages: Record<string, string> = {};
+    for (const l of available) languages[hreflangByLocale[l]] = localePath(l, path);
+
+    for (const locale of available) {
       entries.push({
         url: localePath(locale, path),
         lastModified: now,

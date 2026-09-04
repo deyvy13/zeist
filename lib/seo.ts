@@ -25,6 +25,13 @@ type BuildMetadataArgs = {
   /** Set true on pages that should not be indexed (e.g. thank-you, drafts). */
   noindex?: boolean;
   keywords?: string[];
+  /**
+   * Locales where this exact page exists. Defaults to every locale (correct for
+   * static routes, which are always translated). Blog posts pass the real list:
+   * locale-specific content (e.g. Peru regulation) only exists in `es`, and
+   * emitting an hreflang to a `pt` URL that 404s is an SEO error.
+   */
+  availableLocales?: readonly Locale[];
 };
 
 function localePath(locale: Locale, path = ""): string {
@@ -40,17 +47,23 @@ export function buildMetadata({
   ogImage,
   noindex,
   keywords,
+  availableLocales = locales,
 }: BuildMetadataArgs): Metadata {
   const canonical = absoluteUrl(localePath(locale, path).slice(1));
 
-  // Reciprocal hreflang map for all locales + x-default.
+  // Reciprocal hreflang map, restricted to locales where the page really
+  // exists. A single-locale page gets no alternates at all — only x-default,
+  // pointing at itself.
   const languages: Record<string, string> = {};
-  for (const l of locales) {
+  for (const l of availableLocales) {
     languages[hreflangByLocale[l]] = absoluteUrl(localePath(l, path).slice(1));
   }
-  languages["x-default"] = absoluteUrl(
-    localePath(defaultLocale, path).slice(1),
-  );
+  // x-default falls back to the default locale when translated, otherwise to
+  // whichever locale actually has the page.
+  const defaultFor = availableLocales.includes(defaultLocale)
+    ? defaultLocale
+    : (availableLocales[0] ?? locale);
+  languages["x-default"] = absoluteUrl(localePath(defaultFor, path).slice(1));
 
   const ogLocale = locale === "pt" ? "pt_BR" : "es_ES";
 
@@ -104,6 +117,24 @@ export function organizationJsonLd(locale: Locale) {
     description: site.description[locale],
     sameAs: [] as string[],
     slogan: site.slogan[locale],
+    // Local signal: the team is based in Trujillo (La Libertad, Peru) and works
+    // remotely across LATAM. No postal address is declared because there is no
+    // public office — `areaServed` is the honest way to signal geography.
+    areaServed: [
+      { "@type": "Country", name: "Perú" },
+      { "@type": "AdministrativeArea", name: "La Libertad" },
+      { "@type": "City", name: "Trujillo" },
+      { "@type": "Place", name: "Latinoamérica" },
+    ],
+    knowsLanguage: ["es", "pt"],
+    knowsAbout: [
+      "Automatización BIM",
+      "Autodesk Civil 3D",
+      "Autodesk Revit",
+      "Dynamo",
+      "Desarrollo de add-ins en C#",
+      "Plan BIM Perú",
+    ],
   };
 }
 

@@ -24,6 +24,15 @@ export async function generateMetadata({
   const locale: Locale = isLocale(lang) ? lang : "es";
   const post = getPost(locale, slug);
   if (!post) return {};
+
+  // Not every post is translated: locale-specific content (Peru regulation,
+  // local market) only exists in `es`. Emit hreflang only for locales that
+  // actually publish this slug, so we never point at a 404.
+  const availableLocales = locales.filter((l) => {
+    const p = getPost(l, slug);
+    return Boolean(p) && !p!.meta.draft;
+  });
+
   return buildMetadata({
     locale,
     path: `blog/${slug}`,
@@ -31,6 +40,7 @@ export async function generateMetadata({
     description: post.meta.description,
     keywords: post.meta.tags,
     ogImage: post.meta.cover,
+    availableLocales,
   });
 }
 

@@ -193,7 +193,15 @@ a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
 | **C2 · Civil 3D** (el hueco más grande) | `automatizar-civil-3d-guia-completa` | `deja-de-usar-excel-y-perder-horas` |
 | **C3 · IA + BIM** (sin competencia) | `dynamo-csharp-con-ia-claude` | `guia-vibe-coding-para-empezar`, `crear-plugin-...-claude-code` |
 | **C4 · Carrera** (captación de funnel) | `programacion-para-ingenieros-civiles` | `aprende-a-programar-desde-cero`, `ramas-ingenieria-sistemas-especializaciones` |
-| **C5 · Corporativo** (dolor de dirección, ticket alto) | *pendiente* | `reprocesos-obra-costo-oculto`, `estandarizar-procesos-bim-empresa` |
+| **C5 · Perú / Corporativo** (dolor de dirección, ticket alto, SEO local) | `plan-bim-peru-obligatorio-guia-empresas` | `expediente-tecnico-observaciones-reducir`, `automatizacion-bim-trujillo-la-libertad`, `reprocesos-obra-costo-oculto`, `estandarizar-procesos-bim-empresa` |
+
+> **C5 es sólo `es`.** La normativa (Plan BIM Perú, DS 289-2019-EF) y el mercado local no se
+> traducen a `pt`. `buildMetadata` acepta `availableLocales` y `app/sitemap.ts` calcula la
+> disponibilidad real por slug, así que un post ES-only emite `hreflang="es"` + `x-default`
+> y nada más. **Si creas un post en un solo idioma, no hace falta tocar nada** — ya funciona.
+> Datos de respaldo del cluster: obligatoriedad desde agosto 2026 en los 3 niveles de gobierno;
+> RD 0007-2025-EF (14 tipologías críticas); cartera 2026 de La Libertad: GORE ~S/180M (19
+> proyectos, Obras por Impuestos), MPT ~S/80.4M (28 obras), privada ~S/65M.
 
 Los pillars llevan prioridad 0.9 en `app/sitemap.ts` (constante `PILLAR_SLUGS`).
 

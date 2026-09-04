@@ -19,6 +19,156 @@ type PostData = {
 };
 
 const data: Record<string, Record<Locale, PostData>> = {
+  // ---- PERÚ · contenido geolocalizado (sólo ES) ------------------------------
+  // Estos posts existen únicamente en español: la normativa y el mercado son
+  // específicos de Perú. buildMetadata y el sitemap ya emiten hreflang sólo
+  // para los locales donde el post existe.
+  "plan-bim-peru-obligatorio-guia-empresas": {
+    es: {
+      roadmap: {
+        title: "Lo que el Plan BIM Perú exige, en 7 bloques",
+        intro:
+          "La obligatoriedad arrancó en agosto de 2026. Esto es lo que cambia para consultoras, constructoras y entidades, y qué hacer si aún no estás listo.",
+        steps: [
+          { n: 1, title: "Qué es el Plan BIM Perú", desc: "Marco normativo: DS 237-2019-EF, DS 289-2019-EF y RD 0007-2025-EF", tag: "Normativa" },
+          { n: 2, title: "Desde cuándo es obligatorio", desc: "El hito de agosto 2026 y los tres niveles de gobierno", tag: "Plazos" },
+          { n: 3, title: "A quién le aplica exactamente", desc: "Entidades, tipologías críticas y quién queda dentro del alcance", tag: "Alcance" },
+          { n: 4, title: "Qué te van a exigir en la práctica", desc: "Entregables, plan de ejecución BIM y requisitos de información", tag: "Requisitos" },
+          { n: 5, title: "Dónde fallan las consultoras", desc: "Los 5 puntos donde se acumulan observaciones", tag: "Riesgos" },
+          { n: 6, title: "Qué se automatiza para cumplir", desc: "Del control de calidad del modelo a los entregables estandarizados", tag: "Solución" },
+          { n: 7, title: "Plan de 90 días si vas tarde", desc: "Ruta realista con proyectos en ejecución", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre el Plan BIM Perú",
+        items: [
+          {
+            q: "¿Desde cuándo es obligatorio el BIM en el Perú?",
+            a: "El calendario del Plan BIM Perú marca agosto de 2026 como el fin de la fase de adopción progresiva y el inicio de la obligatoriedad en los tres niveles de gobierno (nacional, regional y local) para proyectos específicos. Antes de eso, la Resolución Directoral N° 0007-2025-EF ya había iniciado la obligatoriedad para 14 tipologías críticas, entre ellas infraestructura de salud, educación y riego."
+          },
+          {
+            q: "¿Cuál es la norma que respalda el Plan BIM Perú?",
+            a: "Son tres piezas. El Decreto Supremo N° 237-2019-EF aprobó el Plan Nacional de Competitividad y Productividad, cuya Medida de Política 1.2 establece la adopción progresiva de BIM en el sector público. El Decreto Supremo N° 289-2019-EF aprueba las disposiciones para incorporar BIM en la inversión pública. Y la Resolución Directoral N° 0007-2025-EF inicia la obligatoriedad para las tipologías críticas."
+          },
+          {
+            q: "¿Le aplica a mi empresa si sólo hago proyectos privados?",
+            a: "El Plan BIM Perú obliga a las entidades y empresas públicas sujetas al Sistema Nacional de Programación Multianual y Gestión de Inversiones. Si trabajas exclusivamente en privado, no te obliga directamente. Pero si aspiras a contratar con el Estado —o a ser subcontratista de quien lo hace— vas a tener que cumplir los mismos requisitos de información."
+          },
+          {
+            q: "¿Qué pasa si presento un expediente sin cumplir los requisitos BIM?",
+            a: "Lo esperable son observaciones que retrasan la aprobación, y en el peor caso quedar fuera de la convocatoria. El problema real no suele ser el modelo en sí, sino la consistencia: que las cantidades del expediente no coincidan con el modelo entregado, o que la información no siga la estructura pedida. Eso se detecta en revisión y devuelve el expediente."
+          },
+          {
+            q: "¿Necesito comprar software nuevo para cumplir?",
+            a: "Normalmente no. Si tu equipo ya trabaja con Civil 3D o Revit, tienes la base. Lo que suele faltar no es licencia sino proceso: un estándar de nomenclatura escrito, plantillas con ese estándar incorporado, y una forma de verificar el modelo antes de entregarlo. Eso es organización y herramientas internas, no compra de software."
+          },
+          {
+            q: "¿Cuánto tarda una consultora en estar preparada?",
+            a: "Depende del punto de partida. Si ya modelas en Civil 3D o Revit y sólo falta estandarizar y controlar la calidad del entregable, entre 2 y 4 meses con un piloto. Si el equipo todavía trabaja en CAD 2D, cuenta entre 6 y 12 meses porque hay un cambio de método, no sólo de herramienta."
+          },
+          {
+            q: "¿Por dónde empiezo si voy tarde?",
+            a: "Por el control de calidad del entregable, no por el modelado perfecto. Lo que más observaciones genera es la inconsistencia entre modelo, metrados y planos. Una herramienta que verifique nomenclatura, capas y coherencia antes de entregar reduce el riesgo inmediato mientras el equipo sube de nivel en lo demás."
+          }
+        ],
+      },
+    },
+    pt: { },
+  },
+  "expediente-tecnico-observaciones-reducir": {
+    es: {
+      roadmap: {
+        title: "Por qué te observan el expediente, y cómo evitarlo",
+        intro:
+          "Las observaciones al expediente técnico son la principal fuente de retraso en obra pública peruana. Casi todas nacen de inconsistencias que se detectan en gabinete.",
+        steps: [
+          { n: 1, title: "Qué cuesta realmente una observación", desc: "El costo en plazo, en horas y en relación con la entidad", tag: "Diagnóstico" },
+          { n: 2, title: "Las 7 observaciones más frecuentes", desc: "Las que se repiten proyecto tras proyecto en revisión", tag: "Patrón" },
+          { n: 3, title: "La causa común: el dato en dos sitios", desc: "Modelo, metrado y planos que dejaron de coincidir", tag: "Causa raíz" },
+          { n: 4, title: "Autocontrol antes de entregar", desc: "La revisión que la entidad va a hacer, hecha por ti primero", tag: "Solución" },
+          { n: 5, title: "Qué se automatiza del control", desc: "Verificación de nomenclatura, coherencia y cantidades", tag: "Herramientas" },
+          { n: 6, title: "Cómo montarlo sin frenar la producción", desc: "Plan por fases con proyectos en curso", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre observaciones al expediente técnico",
+        items: [
+          {
+            q: "¿Cuáles son las observaciones más frecuentes a un expediente técnico?",
+            a: "Se repiten pocas y siempre las mismas: metrados que no coinciden con los planos, partidas sin sustento de cálculo, planos desactualizados respecto a la última revisión, especificaciones técnicas que no corresponden a las partidas, presupuesto con precios desactualizados, incompatibilidad entre especialidades, y documentación incompleta. La mayoría son de consistencia, no de criterio técnico."
+          },
+          {
+            q: "¿Por qué se generan si el equipo es competente?",
+            a: "Porque el problema casi nunca es de competencia técnica, sino de sincronización. El proyecto cambia, se actualiza el modelo, pero no se regeneran los metrados ni se actualizan todos los planos. Cada documento que quedó atrás es una observación esperando. Con equipos buenos y plazos ajustados pasa igual."
+          },
+          {
+            q: "¿Cuánto retrasa una ronda de observaciones?",
+            a: "Depende de la entidad, pero entre el tiempo de revisión, el levantamiento y la nueva revisión, cada ronda suele costar semanas. Y no es sólo plazo: son horas del equipo que ya estaba asignado a otro proyecto, y desgaste en la relación con la entidad."
+          },
+          {
+            q: "¿Se pueden evitar del todo?",
+            a: "Del todo no — siempre habrá observaciones de criterio, y algunas son legítimas discusiones técnicas. Lo que sí se puede eliminar casi por completo es la familia de observaciones por inconsistencia: metrados que no cuadran, planos desfasados, nomenclatura fuera de estándar. Esas son mecánicas y se detectan automáticamente antes de entregar."
+          },
+          {
+            q: "¿Qué es el autocontrol de calidad del expediente?",
+            a: "Hacer tú, antes de entregar, la misma revisión que va a hacer la entidad. En la práctica es una lista de verificación que se ejecuta sobre el modelo y los documentos: coherencia entre metrado y modelo, nomenclatura conforme al estándar, planos generados desde la revisión vigente, partidas con sustento. Si esa revisión es un botón y no una tarea manual, se hace siempre."
+          },
+          {
+            q: "¿Esto sirve para expedientes que no son BIM?",
+            a: "Parcialmente. Si el proyecto está en CAD 2D y hojas de cálculo, se puede automatizar la verificación de nomenclatura, capas y algunos cruces de datos. Pero la verificación de coherencia entre modelo y metrado sólo es posible cuando el metrado sale del modelo. Ahí es donde BIM cambia la ecuación."
+          }
+        ],
+      },
+    },
+    pt: { },
+  },
+  "automatizacion-bim-trujillo-la-libertad": {
+    es: {
+      roadmap: {
+        title: "El contexto de La Libertad, en 6 bloques",
+        intro:
+          "Qué se está construyendo en Trujillo y la región, qué exige ahora el Plan BIM, y qué significa para las consultoras y constructoras locales.",
+        steps: [
+          { n: 1, title: "Qué se está invirtiendo en La Libertad", desc: "Cartera 2026 del GORE, la MPT y Obras por Impuestos", tag: "Mercado" },
+          { n: 2, title: "Qué cambió con el Plan BIM", desc: "La obligatoriedad de agosto 2026 aplicada al nivel regional y local", tag: "Normativa" },
+          { n: 3, title: "El perfil de la oficina liberteña", desc: "Equipos pequeños, plazos cortos, mucha obra vial y de saneamiento", tag: "Realidad" },
+          { n: 4, title: "Las 6 automatizaciones de mayor retorno aquí", desc: "Priorizadas por el tipo de obra que se hace en la región", tag: "Aplicación" },
+          { n: 5, title: "Cómo competir con oficinas de Lima", desc: "Dónde está la ventaja real de una consultora regional", tag: "Estrategia" },
+          { n: 6, title: "Por dónde empezar este mes", desc: "Primer paso concreto sin parar los proyectos en curso", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes",
+        items: [
+          {
+            q: "¿Hay empresas de automatización BIM en Trujillo?",
+            a: "Muy pocas. El grueso de la oferta de desarrollo BIM en el Perú está concentrada en Lima, y la que existe suele enfocarse en Revit para edificación. Para infraestructura con Civil 3D —que es la mayor parte de la obra pública en La Libertad— la oferta local es prácticamente inexistente. Nosotros trabajamos desde Trujillo y de forma remota para el resto del país."
+          },
+          {
+            q: "¿Qué se está construyendo en La Libertad este año?",
+            a: "La cartera 2026 es significativa: el Gobierno Regional anunció 19 proyectos en Trujillo por alrededor de S/ 180 millones mediante Obras por Impuestos, la Municipalidad Provincial de Trujillo programó 28 obras viales y urbanas por más de S/ 80 millones, y hay inversión privada adicional vía Obras por Impuestos. Casi todo es obra vial, urbana y de servicios: exactamente el tipo de proyecto donde Civil 3D pesa más que Revit."
+          },
+          {
+            q: "¿El Plan BIM aplica a los proyectos del gobierno regional y municipal?",
+            a: "Sí. El hito de agosto de 2026 marca la obligatoriedad en los tres niveles de gobierno: nacional, regional y local, para proyectos específicos. Eso alcanza directamente a la cartera del Gobierno Regional de La Libertad y de la Municipalidad Provincial de Trujillo, y por lo tanto a las consultoras que elaboran sus expedientes."
+          },
+          {
+            q: "¿Una consultora pequeña de provincia puede competir en esto?",
+            a: "Sí, y con ventaja en un punto concreto: conocimiento del territorio y de la entidad. Lo que suele faltar no es capacidad técnica sino método —estandarización y control de calidad del entregable— y eso se resuelve en meses, no en años. Una oficina de 8 personas con procesos ordenados entrega más consistente que una de 40 sin ellos."
+          },
+          {
+            q: "¿Trabajan sólo con empresas de Trujillo?",
+            a: "No. Estamos en Trujillo, lo que ayuda para reuniones presenciales y para entender el contexto de las entidades de la región, pero trabajamos de forma remota con oficinas de todo el Perú y de Latinoamérica. El desarrollo de add-ins y la formación funcionan igual de bien a distancia."
+          },
+          {
+            q: "¿Por dónde empieza una oficina que nunca automatizó nada?",
+            a: "Por la tarea que más veces se rehace en cada revisión de proyecto. En la obra vial y urbana que predomina en la región, casi siempre son los metrados y las cubicaciones de movimiento de tierras. Se prototipa en Dynamo en días, se valida contra el método manual, y recién si se usa mucho se lleva a una herramienta instalable."
+          }
+        ],
+      },
+    },
+    pt: { },
+  },
   // ---- CORPORATIVO · dolor de dirección --------------------------------------
   "reprocesos-obra-costo-oculto": {
     es: {
