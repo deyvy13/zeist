@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
-import { site } from "@/lib/site";
+import { site, whatsappUrl } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
 import { ContactForm } from "@/components/contact-form";
 
@@ -26,12 +26,12 @@ const copy: Record<
       "Describe la tarea repetitiva que más pesa en tu equipo. Te decimos si conviene automatizarla, con qué herramienta y cuánto tiempo recuperas. Sin compromiso.",
     labels: {
       name: "Nombre",
-      email: "Correo",
+      email: "Correo (opcional)",
       message: "¿Qué proceso quieres automatizar?",
       send: "Enviar mensaje",
       subject: "Diagnóstico de automatización BIM",
     },
-    orEmail: "O escríbenos directamente a",
+    orEmail: "O escríbenos directamente por WhatsApp",
   },
   pt: {
     title: "Conte-nos o que está roubando suas horas",
@@ -39,12 +39,12 @@ const copy: Record<
       "Descreva a tarefa repetitiva que mais pesa na sua equipe. Dizemos se vale automatizar, com qual ferramenta e quanto tempo você recupera. Sem compromisso.",
     labels: {
       name: "Nome",
-      email: "E-mail",
+      email: "E-mail (opcional)",
       message: "Que processo você quer automatizar?",
       send: "Enviar mensagem",
       subject: "Diagnóstico de automação BIM",
     },
-    orEmail: "Ou escreva diretamente para",
+    orEmail: "Ou fale direto pelo WhatsApp",
   },
 };
 
@@ -71,7 +71,7 @@ export default async function ContactPage({
 }) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  await getDictionary(lang); // ensures locale is valid/loaded
+  const dict = await getDictionary(lang);
   const c = copy[lang];
 
   return (
@@ -88,15 +88,21 @@ export default async function ContactPage({
           <ContactForm labels={c.labels} />
         </div>
 
-        <p className="mt-6 text-center text-sm text-[color:var(--color-muted)]">
-          {c.orEmail}{" "}
+        <div className="mt-8 flex flex-col items-center gap-3">
+          <p className="text-sm text-[color:var(--color-muted)]">{c.orEmail}</p>
           <a
-            href={`mailto:${site.email}`}
-            className="font-medium text-[color:var(--color-mint-700)] hover:underline"
+            href={whatsappUrl(dict.whatsapp.prefill)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={dict.whatsapp.aria}
+            className="inline-flex items-center gap-2.5 rounded-full bg-[linear-gradient(120deg,#2ee06a,#12a150)] px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_-10px_rgba(18,161,80,0.9)] transition-transform hover:scale-[1.03] active:scale-95"
           >
-            {site.email}
+            <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="currentColor">
+              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.24 8.24 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.21-8.24 8.21z" />
+            </svg>
+            {site.whatsapp.display}
           </a>
-        </p>
+        </div>
       </div>
     </section>
   );

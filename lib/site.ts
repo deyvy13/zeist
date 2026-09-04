@@ -13,7 +13,16 @@ export const site = {
   name: "Zeist",
   // Brand-first name (like Nike/Adidas). The niche lives in the slogan, not the name.
   legalName: "Zeist",
+  // Contact. The email is intentionally NOT rendered anywhere right now —
+  // WhatsApp is the single published channel. The address stays here so
+  // restoring it later is one flag flip, not an archaeology exercise.
   email: "hola@zeist.dev",
+  showEmail: false,
+  whatsapp: {
+    /** Digits only, country code first. This is the format wa.me requires. */
+    number: "51994764550",
+    display: "+51 994 764 550",
+  },
   twitter: "@zeist", // update when the handle exists
   themeColor: "#00FFCE",
   // Localized one-liners used for <title> templates and OG defaults.
@@ -36,4 +45,14 @@ export function localizedPath(locale: Locale, path = ""): string {
 export function absoluteUrl(path = ""): string {
   const clean = path.replace(/^\/+/, "");
   return clean ? `${siteUrl}/${clean}` : siteUrl;
+}
+
+/**
+ * WhatsApp deep link. `message` is prefilled in the chat box — always pass one:
+ * a conversation that starts with context converts far better than an empty
+ * "Hola". wa.me works on both mobile app and WhatsApp Web.
+ */
+export function whatsappUrl(message?: string): string {
+  const base = `https://wa.me/${site.whatsapp.number}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }

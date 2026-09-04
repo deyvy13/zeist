@@ -3,10 +3,11 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
-import { site, siteUrl } from "@/lib/site";
+import { site, siteUrl, whatsappUrl } from "@/lib/site";
 import { organizationJsonLd } from "@/lib/seo";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { WhatsAppCta } from "@/components/whatsapp-cta";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -76,6 +77,10 @@ export default async function LangLayout({
         <SiteHeader lang={lang} dict={dict} />
         <main className="flex-1">{children}</main>
         <SiteFooter lang={lang} dict={dict} />
+        <WhatsAppCta
+          href={whatsappUrl(dict.whatsapp.prefill)}
+          strings={dict.whatsapp}
+        />
       </body>
     </html>
   );

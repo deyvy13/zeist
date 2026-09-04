@@ -65,7 +65,7 @@ export default async function ServiceDetailPage({
       "@type": "Organization",
       name: site.name,
       url: absoluteUrl(locale),
-      email: site.email,
+      telephone: `+${site.whatsapp.number}`,
     },
     areaServed: [
       { "@type": "Place", name: "Latinoamérica" },

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
-import { localizedPath } from "@/lib/site";
+import { localizedPath, whatsappUrl } from "@/lib/site";
 import { buildMetadata, websiteJsonLd } from "@/lib/seo";
 import { getAllPosts } from "@/lib/blog";
 import { serviceIcons, IconArrow } from "@/components/icons";
@@ -362,7 +362,12 @@ export default async function HomePage({
                 {dict.finalCta.ctaPrimary}
                 <IconArrow className="h-4 w-4" />
               </Link>
-              <a href="mailto:hola@zeist.dev" className="btn-ghost">
+              <a
+                href={whatsappUrl(dict.whatsapp.prefill)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+              >
                 {dict.finalCta.ctaSecondary}
               </a>
             </div>

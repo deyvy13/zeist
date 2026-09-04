@@ -54,25 +54,42 @@
         "slug": "add-ins-revit-civil-3d",
         "title": "Add-ins a medida para Revit y Civil 3D",
         "body": "Desarrollo de plugins en C# / .NET con la API oficial de Autodesk. Botón propio en la barra superior, instalador para toda la oficina y soporte de versiones.",
-        "tags": ["C# / .NET", "Revit API", "Civil 3D API", "Instalador"]
+        "tags": [
+          "C# / .NET",
+          "Revit API",
+          "Civil 3D API",
+          "Instalador"
+        ]
       },
       {
         "slug": "automatizacion-dynamo",
         "title": "Automatización con Dynamo",
         "body": "Scripts y rutinas para tareas de modelado, geometría paramétrica y procesamiento masivo. Rápido de validar, ideal cuando la automatización todavía está cambiando.",
-        "tags": ["Dynamo", "Python", "Geometría paramétrica"]
+        "tags": [
+          "Dynamo",
+          "Python",
+          "Geometría paramétrica"
+        ]
       },
       {
         "slug": "auditoria-procesos-bim",
         "title": "Auditoría de procesos BIM",
         "body": "Medimos dónde se van las horas de tu equipo y te entregamos un plan priorizado: qué automatizar primero, con qué herramienta y cuánto tiempo recuperas.",
-        "tags": ["Diagnóstico", "Priorización", "Plan de acción"]
+        "tags": [
+          "Diagnóstico",
+          "Priorización",
+          "Plan de acción"
+        ]
       },
       {
         "slug": "cursos-mentorias-bim",
         "title": "Cursos y mentorías para equipos BIM",
         "body": "Formación práctica en Revit API, Civil 3D API y Dynamo. Para equipos que prefieren desarrollar y mantener sus propias herramientas internamente.",
-        "tags": ["Revit API", "Civil 3D API", "Mentoría 1-a-1"]
+        "tags": [
+          "Revit API",
+          "Civil 3D API",
+          "Mentoría 1-a-1"
+        ]
       }
     ]
   },
@@ -121,7 +138,7 @@
     "title": "¿Qué tarea le está robando horas a tu equipo?",
     "subtitle": "Cuéntanos tu proceso. Te decimos si vale la pena automatizarlo, con qué herramienta y cuánto tiempo recuperas. Sin compromiso.",
     "ctaPrimary": "Diagnóstico gratis",
-    "ctaSecondary": "Escríbenos"
+    "ctaSecondary": "Escríbenos por WhatsApp"
   },
   "footer": {
     "tagline": "Add-ins y automatización BIM para Civil 3D y Revit.",
@@ -136,6 +153,19 @@
       "blog": "Blog",
       "tools": "Herramientas"
     }
+  },
+  "whatsapp": {
+    "aria": "Escríbenos por WhatsApp",
+    "hoverLabel": "Escríbenos por WhatsApp",
+    "bubbleTitle": "¿Tienes una tarea que se repite?",
+    "bubbleBody": "Cuéntanosla en 2 líneas. Te responde un ingeniero, no un bot.",
+    "mobileCta": "Habla con un ingeniero",
+    "mobileSub": "Respuesta hoy · Sin compromiso",
+    "prefill": "Hola Zeist. Trabajo con Civil 3D / Revit y hay una tarea que repetimos todo el tiempo. ¿Podemos ver si conviene automatizarla?",
+    "dismiss": "Cerrar",
+    "contactLead": "¿Prefieres escribirnos directo?",
+    "contactCta": "Abrir WhatsApp",
+    "footerLabel": "WhatsApp"
   },
   "meta": {
     "homeTitle": "Zeist — Add-ins y automatización BIM para Civil 3D y Revit",

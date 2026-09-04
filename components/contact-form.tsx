@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { site } from "@/lib/site";
+import { whatsappUrl } from "@/lib/site";
 
 type Labels = {
   name: string;
@@ -16,13 +16,14 @@ export function ContactForm({ labels }: { labels: Labels }) {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
+  // The form no longer sends mail: it opens WhatsApp with the message already
+  // composed. Same effort for the visitor, but the conversation starts in the
+  // channel we actually answer, and with context instead of a bare "Hola".
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const body = `${message}\n\n— ${name} (${email})`;
-    const href = `mailto:${site.email}?subject=${encodeURIComponent(
-      `${labels.subject} — ${name}`,
-    )}&body=${encodeURIComponent(body)}`;
-    window.location.href = href;
+    const lines = [`*${labels.subject}*`, "", message, "", `-- ${name}`];
+    if (email.trim()) lines.push(email.trim());
+    window.open(whatsappUrl(lines.join("\n")), "_blank", "noopener,noreferrer");
   }
 
   const field =
@@ -46,7 +47,6 @@ export function ContactForm({ labels }: { labels: Labels }) {
             {labels.email}
           </span>
           <input
-            required
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

@@ -394,6 +394,72 @@
   padding: 1px;
 }
 
+/* ---------------------------------------------------------------------------
+   WhatsApp CTA (components/whatsapp-cta.tsx)
+   Continuous motion lives here, not in JS, so the reduced-motion block below
+   neutralizes all of it and it never competes with scroll for the main thread.
+--------------------------------------------------------------------------- */
+
+/* Expanding sonar rings behind the desktop button. */
+@keyframes wa-sonar {
+  0% { transform: scale(1); opacity: 0.5; }
+  70% { opacity: 0; }
+  100% { transform: scale(2.05); opacity: 0; }
+}
+.wa-sonar {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: rgba(46, 224, 106, 0.35);
+  animation: wa-sonar 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+.wa-sonar-delay {
+  animation-delay: 1.3s;
+}
+
+/* Slow breathing lift, so the button is alive without being a distraction. */
+@keyframes wa-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.wa-float {
+  animation: wa-float 4.5s ease-in-out infinite;
+}
+
+/* Rotating conic ring — same --turbo-angle trick as .turbo-border, in mint,
+   so the button carries the brand instead of looking like a bolted-on widget. */
+.wa-ring {
+  padding: 2px;
+  background: conic-gradient(from var(--turbo-angle, 0deg),
+    rgba(0, 255, 206, 0.95) 0deg,
+    rgba(0, 255, 206, 0.05) 110deg,
+    rgba(0, 255, 206, 0.05) 250deg,
+    rgba(0, 255, 206, 0.95) 360deg);
+  animation: turbo-spin 5s linear infinite, wa-float 4.5s ease-in-out infinite;
+}
+
+/* Light sweep across the mobile bar. */
+@keyframes wa-shimmer {
+  0% { transform: translateX(-130%) skewX(-18deg); }
+  55%, 100% { transform: translateX(320%) skewX(-18deg); }
+}
+.wa-shimmer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+  animation: wa-shimmer 3.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* The mobile bar is fixed; reserve its height so it never covers the footer. */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom));
+  }
+}
+
 /* Respect reduced motion. */
 @media (prefers-reduced-motion: reduce) {
   html {

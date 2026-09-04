@@ -113,7 +113,18 @@ export function organizationJsonLd(locale: Locale) {
     "@type": "Organization",
     name: site.name,
     url: siteUrl,
-    email: site.email,
+    // The email is hidden from the site for now (site.showEmail), so it is not
+    // published here either — WhatsApp is the declared contact channel.
+    telephone: `+${site.whatsapp.number}`,
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        telephone: `+${site.whatsapp.number}`,
+        availableLanguage: ["es", "pt"],
+        areaServed: ["PE", "LATAM"],
+      },
+    ],
     description: site.description[locale],
     sameAs: [] as string[],
     slogan: site.slogan[locale],

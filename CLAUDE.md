@@ -102,7 +102,7 @@ app/
     blog/page.tsx             # Índice del blog
     blog/[slug]/page.tsx      # Artículo (renderiza MDX, JSON-LD BlogPosting)
     herramientas/page.tsx     # "Coming soon" con roadmap de herramientas
-    contacto/page.tsx         # Formulario (mailto, sin backend aún)
+    contacto/page.tsx         # Formulario (abre WhatsApp, sin backend aún)
   globals.css                 # SISTEMA DE DISEÑO completo (tokens + claymorfismo)
   sitemap.ts / robots.ts / manifest.ts / opengraph-image.tsx   # SEO (raíz)
 components/                   # site-header, site-footer, logo, locale-switcher,
@@ -160,6 +160,14 @@ por página, p.ej. el visual del hero), NO el estilo de cada caja.
   para el proceso, blog con post destacado + lista, banda mint full-width para tools.
 - **Header:** barra full-width con hairline (aparece al hacer scroll), NO píldora
   flotante. **Footer:** banda `.band-ink` full-width edge-to-edge, NO tarjeta.
+- **CTA de WhatsApp** (`components/whatsapp-cta.tsx`, montado en el layout raíz):
+  desktop = botón circular fijo abajo-derecha con anillo cónico `--turbo-angle`
+  (el mismo de `.turbo-border`) + ondas sonar + burbuja de atención una vez por
+  sesión; móvil = barra inferior a todo el ancho con copy de venta. Las
+  animaciones continuas viven en `globals.css` (`.wa-sonar`, `.wa-float`,
+  `.wa-ring`, `.wa-shimmer`) para que el bloque global de
+  `prefers-reduced-motion` las apague solo. `body` lleva `padding-bottom` en
+  `<768px` para que la barra no tape el footer.
 - **Temas:** claro (default) y oscuro (teal-black + glow mint). Toggle en
   `theme-toggle.tsx` (`localStorage` `zeist-theme`, atributo `data-theme` en `<html>`).
   Respeta `prefers-color-scheme` y `prefers-reduced-motion`.
@@ -234,8 +242,14 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   4. "Revit API en español: primeros pasos"
   5. "10 scripts de Dynamo para Civil 3D"
 - **Fase 5:** liberar las herramientas de `/herramientas` (hoy todas "Pronto").
-- **Backend de contacto:** hoy el formulario usa `mailto:`. Migrar a un endpoint
-  real (Resend / Route Handler) cuando se defina.
+- **Contacto — WhatsApp es el único canal publicado.** Número en
+  `site.whatsapp` (`lib/site.ts`); enlaces siempre vía `whatsappUrl(mensaje)`,
+  nunca hardcodeados. **El correo está oculto a propósito** (`site.showEmail:
+  false`): no se renderiza en ninguna parte ni se publica en el JSON-LD, que
+  declara `telephone` + `contactPoint`. El formulario de contacto compone el
+  mensaje y abre WhatsApp; el campo de correo es opcional. Si algún día vuelve
+  el correo, es un solo flag. Migrar a un endpoint real (Resend / Route Handler)
+  sigue pendiente.
 - ⚠️ **Bloqueante antes de publicar:** fijar `NEXT_PUBLIC_SITE_URL` al dominio real.
   Mientras no se haga, los canonical y las OG salen apuntando a `localhost:3000`.
 

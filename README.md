@@ -208,6 +208,24 @@ Viven en `components/visual/`. **Todos client components** (`"use client"`) exce
 | Componente | Uso |
 |------------|-----|
 | `ShareLinkedIn` | Botón LinkedIn share-offsite (el OG image + title/description de la página son el preview automáticamente) + botón "Copiar enlace" con feedback |
+| `WhatsAppCta` | CTA persistente de contacto, montado una vez en el layout raíz. Dos formas según viewport (ver abajo) |
+
+#### `WhatsAppCta` — el CTA persistente
+
+Único canal de contacto publicado. El correo está oculto (`site.showEmail: false`).
+
+- **Desktop (`md+`):** botón circular fijo abajo-derecha. Verde WhatsApp (reconocimiento
+  inmediato = clics) envuelto en el anillo cónico mint `--turbo-angle` (misma técnica que
+  `.turbo-border`), para que sea Zeist y no un widget pegado. Ondas sonar + flotación lenta.
+  Etiqueta que se despliega en hover **sin mover el círculo** (cero layout shift).
+  Burbuja de atención a los 7 s, **una sola vez por sesión** (`sessionStorage`, en `try/catch`).
+- **Móvil (`<md`):** barra inferior a todo el ancho, al alcance del pulgar, con barrido de luz.
+  El copy hace la persuasión: promesa específica ("Habla con un ingeniero") + reversión de
+  riesgo ("Respuesta hoy · Sin compromiso"). Un icono solo no vende.
+- **Reglas:** las animaciones continuas son CSS en `globals.css` (`.wa-sonar`, `.wa-float`,
+  `.wa-ring`, `.wa-shimmer`) — el bloque global de `prefers-reduced-motion` las apaga solo y
+  nunca compiten con el scroll. `body` lleva `padding-bottom` en `<768px` para no tapar el footer.
+  Enlaces siempre por `whatsappUrl(mensaje)` de `lib/site.ts`, con mensaje precargado.
 
 ### Iconos
 
