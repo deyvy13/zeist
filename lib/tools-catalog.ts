@@ -52,6 +52,16 @@ export const toolsHubCopy: Record<Locale, ToolsHubCopy> = {
     soon: "Em breve",
     note: "Propostas em construção. Vamos definindo e liberando cada uma.",
   },
+  en: {
+    eyebrow: "Tools & resources",
+    title: "Everything to automate your BIM work, in one place.",
+    subtitle:
+      "Ready-to-use Dynamo scripts, C# add-in templates, engineering calculators, and standard templates. Free.",
+    toolsLabel: "Tools",
+    routesLabel: "End-to-end routes",
+    soon: "Coming soon",
+    note: "Proposals under construction. We're defining and releasing each one.",
+  },
 };
 
 const catalog: Record<Locale, Rubro[]> = {
@@ -244,6 +254,102 @@ const catalog: Record<Locale, Rubro[]> = {
       routes: [
         "De engenheiro civil a autor dos seus próprios add-ins",
         "Como montar a capacidade de automação dentro do seu escritório",
+      ],
+    },
+  ],
+  en: [
+    {
+      slug: "scripts-dynamo",
+      icon: "cube",
+      category: "Dynamo scripts",
+      title: "Stop rebuilding the same graph on every project.",
+      description:
+        "Ready-to-download Dynamo graphs for Civil 3D and Revit. Documented, with every node explained and no odd dependencies.",
+      tools: [
+        "Longitudinal profile generator every X meters",
+        "Bulk alignment renamer",
+        "Survey point exporter to CSV",
+        "Automatic signage placement",
+        "Slope generator from polyline",
+        "Model data extractor to Excel",
+      ],
+      routes: [
+        "From manual task to a working Dynamo graph",
+        "How to document and share your graphs with the team",
+      ],
+    },
+    {
+      slug: "plantillas-addins",
+      icon: "layers",
+      category: "Add-in templates",
+      title: "Start your add-in with the right structure.",
+      description:
+        "Base C# templates for Civil 3D and Revit, with a ready-made layered architecture: Command, Service, and Repository separated from the first commit.",
+      tools: [
+        "Civil 3D C# add-in template (.NET)",
+        "Revit C# add-in template (.NET)",
+        "PackageContents.xml generator",
+        ".bundle build and packaging script",
+        "Toolbar button template",
+        "Cross-version compatibility checklist",
+      ],
+      routes: [
+        "From your first command to an installable add-in",
+        "How to roll your add-in out to the whole office",
+      ],
+    },
+    {
+      slug: "calculadoras-ingenieria",
+      icon: "database",
+      category: "Engineering calculators",
+      title: "Fast calculations without opening a spreadsheet.",
+      description:
+        "Web calculators for the calculations you run every day. Nothing to install, no formulas that break.",
+      tools: [
+        "Earthwork volume calculator",
+        "Grade and superelevation calculator",
+        "Survey coordinate converter",
+        "Horizontal and vertical curve calculator",
+        "Hours-saved-by-automation estimator",
+      ],
+      routes: ["From manual calculation to a reusable team tool"],
+    },
+    {
+      slug: "estandares-bim",
+      icon: "chat",
+      category: "Standards & quality control",
+      title: "Every project comes out the same, no matter who built it.",
+      description:
+        "Standard templates, checklists, and protocols so deliverable quality doesn't depend on who modeled it.",
+      tools: [
+        "Naming standard template",
+        "Pre-delivery checklist",
+        "Discipline responsibility matrix",
+        "BIM execution plan template",
+        "Model audit checklist",
+      ],
+      routes: [
+        "From tribal knowledge to a written standard",
+        "How to roll out quality control without slowing production down",
+      ],
+    },
+    {
+      slug: "formacion-bim",
+      icon: "graduation",
+      category: "Courses & mentorship",
+      title: "Learn to build your own tools.",
+      description:
+        "Hands-on training in the Revit API, the Civil 3D API, and Dynamo -- for engineers and architects who want to stop depending on third parties.",
+      tools: [
+        "Course: Revit API from scratch for engineers",
+        "Course: Civil 3D API and infrastructure automation",
+        "Course: Dynamo applied to real projects",
+        "Live webinars",
+        "1-on-1 mentorship",
+      ],
+      routes: [
+        "From civil engineer to author of your own add-ins",
+        "How to build automation capacity inside your office",
       ],
     },
   ],

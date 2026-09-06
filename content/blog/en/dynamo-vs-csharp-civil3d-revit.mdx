@@ -1,0 +1,234 @@
+---
+title: "Dynamo vs C# in Civil 3D and Revit: when to use each + automations that save hours"
+description: "A practical guide to choosing between Dynamo and C# when automating Civil 3D or Revit. Real differences, when each one is worth it, and automation ideas that save up to 70% of daily time."
+date: "2026-07-28T14:00:00.000Z"
+author: "Zeist"
+tags:
+  - Dynamo
+  - C#
+  - Civil 3D
+  - Revit
+  - BIM automation
+  - Civil engineering
+---
+
+<BlogHero
+  eyebrow="Automation for engineering · BIM & CAD"
+  title="Dynamo or C#? The decision that can save your team hours every day."
+  highlight="Both are valid. Both automate. But choosing wrong means losing weeks building what the other tool would have solved in hours. This is the honest guide to deciding."
+/>
+
+<Callout type="info" title="Before you read">
+If your team loses more than an hour a day on repetitive tasks (renaming, exporting, generating reports, checking clashes, updating tables), this article has guaranteed ROI. The 6 modules are collapsed: open them in order.
+</Callout>
+
+## Why automate Civil 3D or Revit (even though "the software already does a lot")
+
+Every BIM/CAD software gives you powerful tools out of the box. But **every office has its own way of working**: naming standards, output formats, specific quantity criteria, internal checks, custom tables. That's the part you end up doing by hand. **And by hand, every single day, it gets expensive.**
+
+BIM automation targets that 20% of tasks that soaks up 80% of the team's time. Two paths:
+
+- **Dynamo:** visual programming inside Revit or Civil 3D itself.
+- **C# / VB.NET:** compiled add-ins (plugins) that integrate into the software.
+
+Both are official. Both are valid. Which one makes sense depends on the case — and that's what we're covering.
+
+<Callout type="info" title="The 3 terms you'll see throughout this article">
+- **Plugin (or "add-in")** — a small file that adds new buttons and functions to Civil 3D or Revit. Like a browser extension, but for BIM software.
+- **API** — the official list of things Autodesk lets your code do to Civil 3D or Revit. Think of it as "the menu" — you can only order what's on it.
+- **C#** — the official programming language for building Autodesk plugins. Pronounced "C sharp." Sounds intimidating, but with AI as a copilot, it's no longer the barrier it used to be.
+</Callout>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. What is Dynamo?" time="~5 min">
+
+**Dynamo** is a **visual programming** environment built into Revit (and available as the `Dynamo for Civil 3D` package). Instead of writing code, you drag **nodes** (little boxes that each do a task) and connect them with **wires** that carry data.
+
+**Simple example.** Renaming every line of type "Steel beam" to "VM-XX-###" based on its level:
+
+- An `All Elements of Category` node grabs all the beams.
+- An `Element.Name` node extracts their name.
+- A `String.Concat` node builds the new name.
+- An `Element.SetParameterValueByName` node applies it.
+
+**Real advantages:**
+- Very low learning curve — an engineer can be productive within a week.
+- Instant iteration: change a node and see the effect without recompiling.
+- Ideal for parametric geometry (facades, slopes, meshes).
+- Saves as a shareable `.dyn` file you can send by email.
+
+**Limitations:**
+- Large graphs become unreadable ("spaghetti").
+- Slower execution than native code (barely matters for small cases).
+- Distributing to 50 users requires each one to open the `.dyn` file (or use Dynamo Player).
+- No graphical interface of its own — the user sees the graph or simple inputs.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. What does coding in C# for Civil 3D or Revit mean?" time="~5 min">
+
+A **C# add-in** is a compiled plugin (`.dll`) that installs into Revit or Civil 3D and adds **buttons, commands, windows, and panels** to the software. It uses Autodesk's **official API**: a library of thousands of classes that give access to *everything* in the model (elements, families, parameters, views, sheets).
+
+**Simple example.** A button on the toolbar labeled "Export quantities" that:
+
+- Loops through every beam in the model.
+- Extracts length, section, material.
+- Generates an `.xlsx` file with the corporate format.
+- Installs once, available for the whole team.
+
+**Real advantages:**
+- **Native performance** — processes thousands of elements in seconds.
+- Distributable as an `.msi` installer for the whole company.
+- Professional graphical interface (WinForms, WPF, custom toolbar buttons).
+- Maintainable code with version control (Git).
+- Can be digitally signed to install without warnings.
+
+**Limitations:**
+- Steeper learning curve — 2-3 months to become productive.
+- Requires Visual Studio and a compile cycle.
+- Every Revit/Civil 3D version can break the API — it needs upkeep.
+- Live debugging requires setting up "attach to process."
+
+</TopicCard>
+
+<TopicCard step="3" title="3. When should you use Dynamo?" time="~5 min">
+
+Use **Dynamo** when:
+
+- **You're exploring or prototyping.** You don't yet know if the automation is worth it; you want to test it fast.
+- **You're working with complex parametric geometry.** Facades, slopes with expressions, structural meshes, pipes following alignments.
+- **Only one person or a small team will use the script.** No need to distribute to 100 users.
+- **You need to iterate in hours, not days.** Last-minute client changes that require regenerating geometry.
+- **The inputs are visual model data** (select these lines, transform these surfaces). Dynamo shines here.
+- **You don't want to invest in learning a language.** A civil engineer or architect can pick it up on their own.
+
+**Ideal Dynamo cases:**
+
+- Generating parametric facades with height and undulation variables.
+- Placing railings following existing stairs.
+- Modeling slopes in Civil 3D from a polyline plus rules.
+- Pulling data from the model into Excel for a one-off analysis.
+- Automating repetitive drawings (profiles every X meters, typical sections).
+
+<Callout type="tip">
+Rule of thumb: if the task will be done **fewer than 20 times a month** or **by fewer than 5 people**, Dynamo is probably the best option. The investment doesn't justify a C# add-in.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. When should you use C#?" time="~5 min">
+
+Use **C#** when:
+
+- **The automation will be used every day** by the whole team (10, 50, 500 people).
+- **You need speed.** Processing 20,000 elements on a large model. Dynamo chokes; C# handles it in seconds.
+- **You need your own interface** — a side panel, a window with forms, a configuration wizard. Dynamo can't do that.
+- **You'll integrate with external systems** — SQL databases, REST APIs, ERP systems, in-house tools.
+- **The logic is complex** — dozens of cases, cross-validations, business rules. In Dynamo it becomes unmanageable.
+- **You need long-term maintainability** — code in Git, tests, pull requests, code review.
+- **You'll distribute it as a product** — to external clients, with an installer, licensing, updates.
+
+**Ideal C# cases:**
+
+- Quantity-export add-in with corporate formatting and validation.
+- Standards checker (naming, allowed families, required parameters).
+- "Model health" panel — errors, warnings, uncategorized elements.
+- Mass generation of sheets and drawings with automatic naming.
+- Syncing model parameters with a SQL database / ERP.
+- Analysis tools: evacuation routes, preliminary thermal calculations.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Key differences — an honest comparison" time="~3 min">
+
+<ComparisonTable
+  criterionLabel="Criterion"
+  leftLabel="Dynamo"
+  rightLabel="C# / .NET"
+  rows="Learning curve | *Days to weeks | 2-3 months || Development speed | *Very high for simple cases | Slower at first || Performance on large models | Medium-low | *Native (very fast) || User interface | Graph or basic inputs | *Professional UI (WPF, WinForms) || Distribution | .dyn to each user | *Centralized .msi installer || Maintenance | Difficult in large scripts | *High (with Git, tests) || Debugging | Visual, but limited | *Professional (breakpoints, watch) || External integration (APIs, DBs) | Awkward, via Python nodes | *Native and powerful || Entry cost | *Zero | Visual Studio + time || Best for | Prototypes, geometry, individual use | Team product, high scale"
+/>
+
+**Quick translation:** Dynamo is your bicycle — fast, agile, perfect around the block. C# is your truck — slow to get moving, but it hauls tons.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Automations with real savings (examples + % of time)" time="~10 min">
+
+Concrete examples with savings estimates based on real projects. The percentages are relative to the weekly time invested in that specific task.
+
+### For Revit (architecture + structure)
+
+- **Renaming families, views, and sheets to a corporate standard** — Before: 3-5 h/week per person. With a C# add-in: 5 minutes. **Savings ~95%.**
+- **BIM standards check** (naming, categories, missing parameters) — Before: manual review, 2 h/project. With an add-in: 30 seconds, automatic report. **Savings ~99%.**
+- **Mass sheet generation** (one per level, with view + table + title block) — Before: 4-8 h/project. With an add-in: 2 minutes. **Savings ~98%.**
+- **Exporting quantities by family to a corporate Excel format** — Before: 2 h/week. With an add-in: 10 seconds. **Savings ~99%.**
+- **Placing parametric railings following stairs** (Dynamo) — Before: 1 h/project. With Dynamo: 5 minutes. **Savings ~92%.**
+- **Clash detection between disciplines + report** — Before: 3 h/coordination. With an add-in: 15 minutes including review. **Savings ~92%.**
+
+### For Civil 3D
+
+- **Generating longitudinal profiles every X meters** — Before: 3 h/segment. With Dynamo: 15 minutes. **Savings ~92%.**
+- **Automatic earthwork volume + table** — Before: 2 h. With a C# add-in: 30 seconds. **Savings ~99%.**
+- **Parametric slope modeling from a polyline + rules** — Before: 4 h. With Dynamo: 30 minutes. **Savings ~87%.**
+- **Exporting topographic points to CSV with classification** — Before: 1 h. With an add-in: 10 seconds. **Savings ~99%.**
+- **Applying surface codes in bulk to a corridor** — Before: 2-4 h. With Dynamo: 10 minutes. **Savings ~95%.**
+
+### The combined impact
+
+A typical 10-person office spends **~40-60 hours/week** on repetitive tasks like the ones above. Automating 5-6 of them saves ~25-35 hours/week across the team — equivalent to **half an additional professional without a new hire**. Over a year, that easily pays for the add-in development.
+
+<Callout type="success">
+Start with the task that **bothers you the most**. It's usually the one that repeats the most. Automating what you hate has a double benefit: you gain time and you lower the team's fatigue.
+</Callout>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Is your team losing hours to repetitive tasks?"
+  title="We build the automations. You gain hours every week."
+  body="At Zeist we develop custom C# add-ins and Dynamo scripts for Civil 3D and Revit. We start with a free 20-minute call: we tell you which tasks are worth automating first, with which tool, and what savings to expect. No fluff."
+  primaryLabel="Book a free call"
+  primaryHref="/en/contacto"
+  secondaryLabel="See the full service"
+  secondaryHref="/en/servicios/add-ins-revit-civil-3d"
+/>
+
+## How to get started without making mistakes
+
+> 📘 **Pillar guide:** this article is part of [automating Civil 3D: the complete guide](/en/blog/automatizar-civil-3d-guia-completa), where you'll find the full picture of the topic.
+
+A realistic plan for a team just starting out:
+
+1. **List your 10 most repetitive tasks.** Note how much time they consume per week.
+2. **Prioritize the 3 with the best savings-to-complexity ratio.** The obvious ones, not the ambitious ones.
+3. **Prototype the first one in Dynamo.** Validate that the logic works. Fast, cheap.
+4. **If it gets heavy use:** port it to C#. Distribute it to the whole team. Measure the real savings.
+5. **Repeat monthly.** The ROI compounds.
+
+It's also worth documenting each automation: what it does, who maintains it, what breaks if the software version changes. Without that, the team loses the knowledge the moment that person leaves.
+
+## What if I want to learn it myself?
+
+Solid, free resources:
+
+- **Dynamo:** [primer.dynamobim.org](https://primer.dynamobim.org) — the official manual, comprehensive, in English.
+- **Revit API:** [Autodesk Revit API Docs](https://www.revitapidocs.com), and the book *Autodesk Revit 2024 API Developer's Guide*.
+- **Civil 3D API:** SDK downloadable from Autodesk's developer portal (search "Civil 3D SDK").
+- **C# basics:** Microsoft's official tutorial or [freeCodeCamp](https://www.freecodecamp.org). If you've never coded before, start with our [route to learning to code from scratch](/en/blog/aprende-a-programar-desde-cero).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · BIM automation"
+  title="Courses, mentoring, or a custom project — you choose"
+  body="We offer three ways to work together: free courses and webinars for your team, 1-on-1 mentoring for in-house developers, or full add-in development if you'd rather delegate it. Tell us your case and we'll propose the most efficient route."
+  primaryLabel="Start a project"
+  primaryHref="/en/contacto"
+  secondaryLabel="See courses and mentoring"
+  secondaryHref="/en/servicios/cursos-mentorias-bim"
+/>
+
+---
+
+**Found this article useful?** Share it with whoever's wrestling with repetitive tasks in Revit or Civil 3D. And if you want to dig into a specific case, [contact us](/en/contacto) — we love talking about this.

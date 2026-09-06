@@ -1,0 +1,175 @@
+{
+  "nav": {
+    "services": "Services",
+    "blog": "Blog",
+    "tools": "Tools",
+    "toolsSoon": "Coming soon",
+    "contact": "Contact",
+    "cta": "Free diagnosis"
+  },
+  "hero": {
+    "eyebrow": "BIM Automation · Civil 3D · Revit · Dynamo",
+    "title": "Your team loses weeks a year on tasks an add-in solves in seconds.",
+    "highlight": "We build them.",
+    "subtitle": "C# add-ins for Civil 3D and Revit, Dynamo scripts, and training for BIM teams. A team of civil engineers and software engineers: we understand your workflow because we've lived it, and we know how to build the tool that fixes it.",
+    "ctaPrimary": "Free diagnosis",
+    "ctaSecondary": "View services",
+    "trust": [
+      "Civil 3D · Revit · Dynamo",
+      "C# / .NET add-ins",
+      "Training for teams"
+    ]
+  },
+  "differentiators": {
+    "eyebrow": "Why Zeist",
+    "title": "We're not one more drop in the ocean.",
+    "subtitle": "The English-speaking BIM ecosystem is full of Revit tutorials and generic automation agencies. We do something else: we build the tools, we work infrastructure, and we publish everything we learn.",
+    "items": [
+      {
+        "title": "Civil engineers + software engineers",
+        "body": "You won't need to explain what a corridor, an assembly, or a site surface is: there are civil engineers on the team. And there are software engineers so the tool holds up in production. The diagnosis starts where others are still figuring out the problem."
+      },
+      {
+        "title": "C# add-ins, not just Dynamo",
+        "body": "Most stop at visual scripting. We take automation all the way to an installable add-in: a button on the toolbar the whole team uses, with no graph editor to open."
+      },
+      {
+        "title": "Real Civil 3D expertise",
+        "body": "Almost the entire ecosystem talks about Revit. We work infrastructure daily: corridors, surfaces, profiles, earthwork quantities, and survey points."
+      },
+      {
+        "title": "We publish what we know",
+        "body": "Complete, free guides to the Revit API, the Civil 3D API, and Dynamo. If your team ends up maintaining the tool on its own, that's a win for everyone."
+      }
+    ]
+  },
+  "services": {
+    "eyebrow": "Services",
+    "title": "We automate the repetitive work your BIM team does by hand.",
+    "subtitle": "From the script that validates an idea to the add-in the whole office installs.",
+    "viewAll": "View all services",
+    "viewDetail": "Learn more",
+    "items": [
+      {
+        "slug": "add-ins-revit-civil-3d",
+        "title": "Custom add-ins for Revit and Civil 3D",
+        "body": "Plugin development in C# / .NET on Autodesk's official API. A dedicated toolbar button, an installer for the whole office, and version support.",
+        "tags": [
+          "C# / .NET",
+          "Revit API",
+          "Civil 3D API",
+          "Installer"
+        ]
+      },
+      {
+        "slug": "automatizacion-dynamo",
+        "title": "Dynamo automation",
+        "body": "Scripts and routines for modeling tasks, parametric geometry, and bulk processing. Fast to validate — ideal while the automation is still evolving.",
+        "tags": [
+          "Dynamo",
+          "Python",
+          "Parametric geometry"
+        ]
+      },
+      {
+        "slug": "auditoria-procesos-bim",
+        "title": "BIM process audit",
+        "body": "We measure where your team's hours actually go and hand you a prioritized plan: what to automate first, with which tool, and how much time you get back.",
+        "tags": [
+          "Diagnosis",
+          "Prioritization",
+          "Action plan"
+        ]
+      },
+      {
+        "slug": "cursos-mentorias-bim",
+        "title": "Courses and mentorship for BIM teams",
+        "body": "Hands-on training in the Revit API, the Civil 3D API, and Dynamo — for teams that would rather build and maintain their own tools in-house.",
+        "tags": [
+          "Revit API",
+          "Civil 3D API",
+          "1-on-1 mentorship"
+        ]
+      }
+    ]
+  },
+  "process": {
+    "eyebrow": "How we work",
+    "title": "From diagnosis to an installed add-in.",
+    "subtitle": "A process built to avoid the most common mistake: writing code before knowing if it's worth it.",
+    "steps": [
+      {
+        "title": "Workflow diagnosis",
+        "body": "We look at your real process and measure where the hours go. You get a list prioritized by time saved versus effort."
+      },
+      {
+        "title": "Dynamo prototype",
+        "body": "We validate the logic fast and cheap. If the team confirms it solves the problem, we move forward. If not, you just saved weeks of development."
+      },
+      {
+        "title": "C# add-in",
+        "body": "We take it to production once usage justifies it: layered architecture, error handling, and performance on real models."
+      },
+      {
+        "title": "Rollout and training",
+        "body": "An installer for the whole office, team training, and support when Autodesk ships the next version."
+      }
+    ]
+  },
+  "blog": {
+    "eyebrow": "Blog",
+    "title": "BIM automation guides for engineering teams.",
+    "subtitle": "Revit API, Civil 3D API, Dynamo, and C#. Complete, free technical content — the kind that's still rare outside a handful of niche communities.",
+    "readMore": "Read article",
+    "viewAll": "View all articles",
+    "empty": "We'll publish the first articles soon.",
+    "backToBlog": "Back to blog",
+    "minRead": "min read",
+    "publishedOn": "Published on"
+  },
+  "tools": {
+    "eyebrow": "Tools",
+    "title": "Scripts, templates, and calculators for your daily work.",
+    "subtitle": "Ready-to-use Dynamo graphs, C# add-in templates, engineering calculators, and BIM standard templates. Free.",
+    "badge": "In progress",
+    "cta": "View tools"
+  },
+  "finalCta": {
+    "title": "What task is stealing hours from your team?",
+    "subtitle": "Tell us about your process. We'll tell you if it's worth automating, with which tool, and how much time you'll get back. No commitment.",
+    "ctaPrimary": "Free diagnosis",
+    "ctaSecondary": "Message us on WhatsApp"
+  },
+  "footer": {
+    "tagline": "BIM add-ins and automation for Civil 3D and Revit.",
+    "rights": "All rights reserved.",
+    "columns": {
+      "services": "Services",
+      "company": "Company",
+      "resources": "Resources"
+    },
+    "links": {
+      "contact": "Contact",
+      "blog": "Blog",
+      "tools": "Tools"
+    }
+  },
+  "whatsapp": {
+    "aria": "Message us on WhatsApp",
+    "hoverLabel": "Message us on WhatsApp",
+    "bubbleTitle": "Got a task that repeats itself?",
+    "bubbleBody": "Tell us in two lines. An engineer replies — not a bot.",
+    "mobileCta": "Talk to an engineer",
+    "mobileSub": "Reply today · No commitment",
+    "prefill": "Hi Zeist. We work with Civil 3D / Revit and there's a task we repeat all the time. Can we see if it's worth automating?",
+    "dismiss": "Close",
+    "contactLead": "Prefer to reach out directly?",
+    "contactCta": "Open WhatsApp",
+    "footerLabel": "WhatsApp"
+  },
+  "meta": {
+    "homeTitle": "Zeist — BIM Add-ins and Automation for Civil 3D and Revit",
+    "homeDescription": "We build C# add-ins for Civil 3D and Revit, and Dynamo scripts that eliminate repetitive tasks. A team of civil engineers and software engineers.",
+    "titleTemplate": "%s — Zeist"
+  }
+}

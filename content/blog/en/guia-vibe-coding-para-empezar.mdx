@@ -1,0 +1,184 @@
+---
+title: "Vibe Coding for engineers: build your own BIM tools without being a programmer"
+description: "A step-by-step method for a civil engineer or architect to build their own Civil 3D and Revit tools by describing what they need in plain English, with AI as a copilot."
+date: "2026-07-24T10:00:00.000Z"
+author: "Zeist"
+tags:
+  - Vibe Coding
+  - AI
+  - Civil 3D
+  - Revit
+  - Dynamo
+  - No coding required
+---
+
+<BlogHero
+  eyebrow="Vibe Coding for BIM · Method"
+  title="Describe what you need in plain language and get code that works. With a method, it's not magic."
+  highlight="Vibe Coding is building software by describing what you want in natural language. Without a method, it turns into chaos. This is the orderly route, adapted for people automating Civil 3D and Revit."
+/>
+
+<Callout type="info" title="Who this is for">
+Civil engineers, architects, and BIM technicians who want to build their own tools — a Dynamo script, a simple add-in — without a programming background. You don't need to know C# beforehand, but you do need to follow an order.
+</Callout>
+
+## What Vibe Coding is (and what it isn't)
+
+The term became popular in 2025 to describe a way of coding where **you describe your intent in natural language and the AI writes the code**. You review it, correct course, and ask again.
+
+For an engineer automating BIM work, this changes the equation: the barrier is no longer mastering the Revit API by heart — it's **knowing how to describe the problem clearly and verify the result**.
+
+What it is **not**: letting the AI do everything without understanding any of it. That approach works for a weekend prototype and collapses the moment the tool has to be used by the team.
+
+<AnimatedFlow
+  title="The Vibe Coding loop"
+  nodes="Describe the problem|Ask in small pieces|Verify on the model|Iterate"
+  subs="In plain language, with detail|Never all at once|With real data|One change at a time"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Define the problem before you write the first message" time="~5 min">
+
+The AI amplifies whatever you give it. If your idea is fuzzy, the result will be fuzzy too.
+
+Before opening Claude or ChatGPT, write on a sheet of paper:
+
+- **What specific task you want to eliminate.** Not "automate the modeling," but `"rename all alignments following the format AL-<level>-<sequence>"`.
+- **What the input is.** What does the user select? The whole drawing? Only what's selected?
+- **What the expected output is.** Does it modify the model? Generate a file? Show a report?
+- **What it should NOT do.** The explicit boundary. "Don't touch alignments that already match the format."
+
+<Callout type="tip">
+If you can't explain it to a colleague in 3 sentences, you won't be able to explain it to the AI either. That's the test.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Always give context about your environment" time="~5 min">
+
+The most common mistake: asking for code without saying which version and which tool you're using.
+
+A context message you should reuse in every session:
+
+```markdown
+Context for my environment:
+- Civil 3D 2025 (.NET Framework 4.8)
+- Windows 11, Visual Studio Community 2022
+- Goal: C# add-in using the official API
+- Level: I have never coded in C#, explain what you do
+
+When you propose code, also tell me:
+- What each block does, in plain language
+- What I need to install or reference
+- How I test it
+```
+
+Without this, the AI assumes some random version and gives you code that won't compile. With it, it gets things right on the first try far more often.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Start with structure, not detail" time="~5 min">
+
+Ask for the skeleton first: what files, what folders, what each part does. Only then move into detail.
+
+**An order that works:**
+
+1. **Project structure** — folders and empty files, with the responsibility of each one.
+2. **The simplest case** — that does ONE minimal thing, and does it well.
+3. **The real cases** — now your actual business logic, with its exceptions.
+4. **Error handling** — what happens if nothing is found, if the data comes back empty.
+5. **Interface** — button, window, options. Last, not first.
+
+This order comes from the layered architecture we cover in detail in [building a Civil 3D plugin with Claude Code](/en/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Iterate in small steps and verify with real data" time="~6 min">
+
+One change at a time. Verify each result before asking for the next.
+
+**The right loop:**
+
+1. You ask for one small thing.
+2. You read what it proposes (even if you don't understand every line, understand the intent).
+3. You test it **on a copy** of a small model.
+4. If it works: save the progress. If not: give it the **complete** error, not a summary.
+5. Next small thing.
+
+<Callout type="warn">
+Never test something for the first time on a production model. Duplicate a small file, test there, verify the result with your own eyes. Only then use it for real.
+</Callout>
+
+**When something fails:** don't ask it to "fix it." Paste the exact error message, say what you expected and what happened instead. The difference in response quality is enormous.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Learn to read what it generates (the line that separates the two groups)" time="~6 min">
+
+You don't need to write code from memory. You do need to **understand what the code in front of you does**.
+
+The minimum viable knowledge so you don't depend blindly on the AI:
+
+- **Variables and types** — what each thing stores.
+- **Conditionals and loops** — how it decides and how it repeats.
+- **Functions** — how logic gets organized and reused.
+- **Specifically in BIM:** what a *Transaction* is (the block that groups changes to the model and lets you undo them) and why every change goes inside one.
+
+If you're missing those fundamentals, the shortest path is our guide on [learning to code from scratch for civil engineers](/en/blog/aprende-a-programar-desde-cero). It takes a few weeks, and it multiplies what you can do with AI.
+
+<Callout type="info">
+Useful paradox: **with AI, fundamentals matter more, not less**. Without them you can't judge whether what it's proposing is solid or fragile — and you're the one who signs off on the result.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. From prototype to a tool the team actually uses" time="~6 min">
+
+This is where Vibe Coding alone stops being enough, and you need to add discipline.
+
+**What separates an experiment from a real tool:**
+
+- **Version control.** Install GitHub Desktop, create a repository, make a "commit" every time something works. It's your infinite backup. 20 minutes to learn, permanent value.
+- **Decent error handling.** Show "No alignments found in the drawing" instead of crashing with unreadable red text.
+- **Tested with odd data.** Empty model, 10,000 elements, names with accents and emojis, incomplete data.
+- **Minimal documentation.** Three lines: what it does, how to install it, when NOT to use it.
+- **Distribution.** A loose file works for you. For the team, package it as a bundle.
+
+If the tool is going to be critical to the operation, it's time to decide between maintaining it yourself or [commissioning it](/en/servicios/add-ins-revit-civil-3d). The factors that matter are in [how much a Revit/Civil 3D add-in costs](/en/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Want guidance on your first tool?"
+  title="1-on-1 mentoring for engineers who automate"
+  body="We review the problem, the architecture, your prompts to the AI, and the result with you. You come out with a working tool and your own judgment for the next ones. First 20-minute call free."
+  primaryLabel="Book mentoring"
+  primaryHref="/en/servicios/cursos-mentorias-bim"
+  secondaryLabel="Contact us"
+  secondaryHref="/en/contacto"
+/>
+
+## Common mistakes when starting out
+
+| Mistake | Do this instead |
+|---|---|
+| Asking for the complete tool in one message | Ask for the simplest case first, then grow it |
+| Not stating version or environment | Reuse a context block in every session |
+| Testing directly on a real model | Duplicate a small model and test there |
+| Saying "it doesn't work" | Paste the exact error and what you expected |
+| Accepting code you don't understand | Ask for an explanation before applying it |
+| Not saving progress | Git with GitHub Desktop from day one |
+
+## Next steps
+
+- If you're missing fundamentals: [learning to code from scratch for civil engineers](/en/blog/aprende-a-programar-desde-cero).
+- If you're torn between Dynamo and C#: [Dynamo vs C# in Civil 3D and Revit](/en/blog/dynamo-vs-csharp-civil3d-revit).
+- If you want the full path to a real installer: [building a Civil 3D plugin with Claude Code](/en/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).
+- General overview of how AI changed BIM development: [Dynamo and C# plugins with AI](/en/blog/dynamo-csharp-con-ia-claude).
+
+<PostFaqs />
+
+---
+
+**Found this useful?** Share it with that colleague who says "I can't code, period." Today the barrier is much lower than they think. And if you want real guidance, [contact us](/en/contacto).

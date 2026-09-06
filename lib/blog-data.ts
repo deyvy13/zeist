@@ -18,7 +18,9 @@ type PostData = {
   faqs?: { title?: string; items: FaqItem[] };
 };
 
-const data: Record<string, Record<Locale, PostData>> = {
+// Partial: not every post is translated to every locale (Peru posts are
+// es-only by design; en/pt entries land incrementally as posts get translated).
+const data: Record<string, Partial<Record<Locale, PostData>>> = {
   // ---- PERÚ · contenido geolocalizado (sólo ES) ------------------------------
   // Estos posts existen únicamente en español: la normativa y el mercado son
   // específicos de Perú. buildMetadata y el sitemap ya emiten hreflang sólo
@@ -267,6 +269,54 @@ const data: Record<string, Record<Locale, PostData>> = {
         ],
       },
     },
+    en: {
+      roadmap: {
+        title: "Where 12-18% of the budget goes",
+        intro:
+          "Rework doesn't show up in any line item, but it gets paid for anyway. Here's where it comes from, how to measure it, and how to cut it from the office.",
+        steps: [
+          { n: 1, title: "The number nobody measures", desc: "Between 5% and 18% of the budget, depending on the study", tag: "Diagnosis" },
+          { n: 2, title: "70% starts in design", desc: "It's not the site that fails: it's the information reaching it", tag: "Root cause" },
+          { n: 3, title: "The 6 concrete origins", desc: "Stale data, mismatched criteria, crossed versions", tag: "Root cause" },
+          { n: 4, title: "How to measure it in your company", desc: "Three metrics you can start logging tomorrow", tag: "Measurement" },
+          { n: 5, title: "What gets fixed from the office", desc: "The interventions with the best cost-to-impact ratio", tag: "Solution" },
+          { n: 6, title: "Where to start without stopping production", desc: "A 90-day plan for a company already stretched thin", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about rework and hidden costs",
+        items: [
+          {
+            q: "How much does rework really cost on a construction project?",
+            a: "Studies place the loss between 5% and 10% of total cost globally. In Latin America the figures run higher: in Colombia, measurements have found up to 12.4% in rework alone, and between 12% and 18% once operational inefficiencies are added. On a million-dollar project, that's between 120,000 and 180,000 that never shows up in any budget line item."
+          },
+          {
+            q: "Why is it said that most errors originate in design?",
+            a: "Because up to 70% of the errors caught on site trace back to the design phase: incomplete information, late changes that never propagate, or data that stopped matching the model. And about 48% relates to communication and coordination failures between disciplines. The problem is almost never execution — it's the information that reaches it."
+          },
+          {
+            q: "How do I measure rework if nobody logs it?",
+            a: "Start with three simple metrics: (1) hours spent redoing already-issued deliverables, (2) number of revisions per document before approval, (3) gaps found between budgeted and actual quantities. You don't need a system — a shared sheet for one month already gives you the scale of it."
+          },
+          {
+            q: "Does automation actually reduce rework, or does it just speed up the work?",
+            a: "It reduces rework for a specific reason: it eliminates the manual step where the error gets introduced. When the quantity table generates by reading the model, it can't fall out of sync with the model. When standards checking is done by a tool, it doesn't depend on someone having a good day. Speed is the side effect; consistency is the main effect."
+          },
+          {
+            q: "How long does it take to see the return on this kind of intervention?",
+            a: "Basic-level automations (generating tables, checking standards, exporting data) get built in 1-3 weeks, and the savings show up from the very first project review. The full return is usually visible within the first project cycle, because the rework avoided is immediate and measurable."
+          },
+          {
+            q: "Does this apply to a company that doesn't work with BIM yet?",
+            a: "Partially. If the information lives in CAD and spreadsheets, there's a lot you can connect and automate without a full BIM rollout. But the biggest reduction in rework comes from having a single source of truth, and that does push toward the model. A process audit tells you what you can gain with what you already have."
+          },
+          {
+            q: "Why doesn't the software we already pay for solve this?",
+            a: "Because the software covers the generic 80%. The remaining 20% is your company's own rules: how you measure, what format your client wants, what your quality control checks. No off-the-shelf tool ships with that, and it's exactly where the manual work that causes errors piles up."
+          }
+        ],
+      },
+    },
   },
   // ---- CORPORATIVO · estandarización -----------------------------------------
   "estandarizar-procesos-bim-empresa": {
@@ -362,6 +412,54 @@ const data: Record<string, Record<Locale, PostData>> = {
           {
             q: "Como meço se a padronização está funcionando?",
             a: "Com três indicadores: número de observações na revisão antes da entrega (deveria cair), tempo de integração de uma pessoa nova ao projeto (deveria cair), e variabilidade entre entregas de equipes diferentes (deveria tender a zero). Se nenhum se move num trimestre, o padrão está no papel mas não na prática."
+          }
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "From personal judgment to a company standard",
+        intro:
+          "How to get the deliverable to come out the same no matter who made it, without slowing production down or clashing with the team.",
+        steps: [
+          { n: 1, title: "The sign that you don't have a standard", desc: "Five symptoms that show up before it becomes an expensive problem", tag: "Diagnosis" },
+          { n: 2, title: "Why rollouts fail", desc: "The 80-page manual nobody reads, and what to do instead", tag: "Reality" },
+          { n: 3, title: "What to standardize first", desc: "The 5 elements with the most impact and the least resistance", tag: "Priority" },
+          { n: 4, title: "From document to tool", desc: "Why a standard that doesn't verify itself doesn't really exist", tag: "Key" },
+          { n: 5, title: "How to handle team resistance", desc: "What works and what guarantees rejection", tag: "People" },
+          { n: 6, title: "A 90-day rollout plan", desc: "Week by week, with production running", tag: "Execution" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about BIM standardization",
+        items: [
+          {
+            q: "Where do you start when standardizing BIM processes at a company?",
+            a: "With naming and file structure — it has the most impact and generates the least resistance, because nobody has an emotional attachment to how a file is named. Templates, measurement criteria, and pre-delivery quality control come next. Trying to standardize everything at once is the most common cause of failure."
+          },
+          {
+            q: "What's the most common mistake when rolling out BIM standards?",
+            a: "Writing a lengthy manual and assuming distributing it is enough. A standard that depends on each person remembering and manually applying it degrades within weeks. A standard only holds up when it's built into templates and verified by a tool that flags what doesn't comply."
+          },
+          {
+            q: "How do I handle the team's resistance to change?",
+            a: "Three things work: (1) have the standard remove work instead of adding it — if the verification tool also fixes issues, people adopt it on their own; (2) involve the most senior people in defining it, since pushback usually comes from feeling left out of the decision; (3) start with a pilot project instead of imposing it on the whole company at once."
+          },
+          {
+            q: "Do I need a BIM department to have standards?",
+            a: "No. You need someone with clear responsibility and protected time, even if it's part-time. Many mid-sized firms do fine with a part-time BIM coordinator plus tools that automate verification. The department comes later, if volume justifies it."
+          },
+          {
+            q: "How long does it take to roll out a real standard?",
+            a: "Defining it: 2-4 weeks if there's a decision. Building it into templates and verification tools: 4-8 weeks. Getting the team to internalize it: one full project cycle. What doesn't work is the 'publish it and we're done' approach — without automatic verification, the standard erodes."
+          },
+          {
+            q: "What happens with projects already underway?",
+            a: "Don't migrate them. The standard applies to new projects; ones already in progress finish with the rules they started with. Trying to re-standardize an advanced project creates more rework than it prevents. The one exception is delivery templates, which can be unified without touching the model."
+          },
+          {
+            q: "How do I measure whether standardization is working?",
+            a: "With three metrics: number of findings in the pre-delivery review (should drop), time to onboard a new person to the project (should drop), and variability between deliverables from different teams (should trend to zero). If none of them move within a quarter, the standard exists on paper but not in practice."
           }
         ],
       },
@@ -465,6 +563,56 @@ const data: Record<string, Record<Locale, PostData>> = {
           {
             q: "Vale a pena se sou o único do escritório que programa?",
             a: "Sim, mas documente e compartilhe desde o começo. O risco real não é técnico, é organizacional: se a automação vive só no seu notebook e você sai, vai embora com você. Pasta compartilhada, nome com versão e três linhas explicando o que faz. Isso transforma seu trabalho num ativo do escritório."
+          }
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "The 8 building blocks of this guide",
+        intro:
+          "From the basic terms to the plan for scaling from a personal script to a tool the whole office uses.",
+        steps: [
+          { n: 0, title: "Context — the terms you need", desc: "API, Dynamo, node, graph, add-in, C#, AutoLISP", tag: "Basics" },
+          { n: 1, title: "What you can automate", desc: "Full map by discipline: survey, surfaces, corridors, sheets", tag: "Overview" },
+          { n: 2, title: "The 4 paths", desc: "Dynamo, Python, C#, and AutoLISP — which one for which case", tag: "Tools" },
+          { n: 3, title: "The 15 with the best ROI", desc: "Ranked by savings divided by effort, with percentages", tag: "Application" },
+          { n: 4, title: "How to prioritize", desc: "The frequency × duration × stability ÷ complexity matrix", tag: "Method" },
+          { n: 5, title: "Your first automation", desc: "A complete step-by-step case: exporting alignments to CSV", tag: "Practice" },
+          { n: 6, title: "The 7 mistakes that cause failure", desc: "Patterns that repeat across every office", tag: "Risks" },
+          { n: 7, title: "From personal script to tool", desc: "The 4 stages and what discipline each one calls for", tag: "Growth" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about automating Civil 3D",
+        items: [
+          {
+            q: "Do I need to know how to code to automate Civil 3D?",
+            a: "To get started with Dynamo, no. It's visual programming: you drag nodes and connect them. An engineer can build useful graphs in a week. You do need fundamentals once you move into Python inside Dynamo or C# add-ins. The path from zero is in our guide on programming for civil engineers."
+          },
+          {
+            q: "Which language is worth learning first?",
+            a: "Dynamo (visual) to validate whether the automation is worth it, and Python for when the nodes fall short. C# only once you've confirmed the whole office will use the tool. AutoLISP only if you need to touch plain AutoCAD entities — it can't access corridors, surfaces, or alignments."
+          },
+          {
+            q: "Why is there so little Civil 3D content compared to Revit?",
+            a: "Because the BIM ecosystem revolves around buildings, and infrastructure gets left in the background. It's not that there's less to automate — a road project has as much repetitive work as a building. For anyone working with Civil 3D, that gap is a competitive advantage: fewer people have mastered that knowledge."
+          },
+          {
+            q: "How long does it take to get my first automation working?",
+            a: "A useful Dynamo graph: an afternoon if the problem is well defined. What takes the longest isn't building the graph — it's clearly writing down what goes in, what comes out, and what rule applies. If you can't explain it in three sentences, it isn't ready to be automated yet."
+          },
+          {
+            q: "Do my automations break when Civil 3D updates?",
+            a: "Dynamo graphs tend to survive version updates well. C# add-ins sometimes need recompiling and adjusting if the API changed. The way to protect yourself is to keep the code separated into layers: that way you only touch the part that talks to the API, and the rest stays intact."
+          },
+          {
+            q: "Where do I start if I've never automated anything?",
+            a: "With the task that annoys you the most and that you do at least once a week. Usually that's exporting quantities or renaming objects. Write the rule down on paper, build it in Dynamo, test it on a copy of a small drawing, and measure how much time it saved you. That first number is what keeps you motivated to continue."
+          },
+          {
+            q: "Is it worth it if I'm the only one in my office who codes?",
+            a: "Yes, but document and share it from the start. The real risk isn't technical, it's organizational: if the automation only lives on your laptop and you leave, it leaves with you. A shared folder, a versioned name, and three lines explaining what it does. That turns your work into an asset for the office."
           }
         ],
       },
@@ -576,6 +724,58 @@ const data: Record<string, Record<Locale, PostData>> = {
         ],
       },
     },
+    en: {
+      roadmap: {
+        title: "The 10 building blocks of this guide",
+        intro:
+          "From the minimum vocabulary to the decision to build in-house or outsource, covering architecture, interface, and distribution along the way.",
+        steps: [
+          { n: 0, title: "Context — the minimum vocabulary", desc: "Add-in, API, SDK, DLL, compile, bundle, transaction", tag: "Basics" },
+          { n: 1, title: "What an add-in can do", desc: "Real scope and what changes between Revit and Civil 3D", tag: "Overview" },
+          { n: 2, title: "Requirements and setup", desc: "Visual Studio, SDK, Git, and the tools that save hours", tag: "Setup" },
+          { n: 3, title: "The recommended architecture", desc: "Command → Service → Repository and its 5 concrete advantages", tag: "Design" },
+          { n: 4, title: "Anatomy of an add-in", desc: "The 3 files that make it up and why each one matters", tag: "Structure" },
+          { n: 5, title: "The development cycle", desc: "Write, compile, load, test — and the DLL lock issue", tag: "Workflow" },
+          { n: 6, title: "From command to button", desc: "Your own tab, icons, and when you need a dedicated window", tag: "Interface" },
+          { n: 7, title: "Distribution", desc: "The 4 levels: manual, bundle, installer, and App Store", tag: "Delivery" },
+          { n: 8, title: "Maintenance across versions", desc: "What breaks, how to support multiple versions, and how much to budget", tag: "Long term" },
+          { n: 9, title: "Build in-house or outsource", desc: "The decision factors and the middle path that works", tag: "Decision" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about add-in development",
+        items: [
+          {
+            q: "What's the difference between an add-in and a Dynamo script?",
+            a: "The add-in is a compiled file that installs and adds a permanent button to the program; the Dynamo graph is a file each user opens and runs. The practical difference is distribution: you install an add-in once and the whole office uses the same version, while a graph has to be handed out and kept up to date machine by machine."
+          },
+          {
+            q: "Is it harder to develop for Civil 3D than for Revit?",
+            a: "Both APIs are comparably difficult, but Civil 3D works with more complex objects (corridors, surfaces, profiles) and is far less documented. It also leans on the AutoCAD API, so you end up using both. The real difficulty isn't technical — it's the scarcity of examples, especially in English-adjacent niche content."
+          },
+          {
+            q: "Why do you insist so much on the layered architecture?",
+            a: "Because Autodesk changes the API between versions. If your code is separated into Command, Service, and Repository, an API change only affects the Repository and everything else stays intact. Structuring it well costs 15 minutes up front; restructuring an add-in that grew messy costs days."
+          },
+          {
+            q: "How do I distribute the add-in to my team?",
+            a: "For 1-3 people, copy the DLL manually. For 3-20, package it as a bundle: a folder with a standard structure that Autodesk loads on its own. For 20-100, an installer built with Inno Setup. For more, or for external clients, automatic updates or the Autodesk App Store. Start with the bundle: it covers most offices."
+          },
+          {
+            q: "Can I develop on Mac or Linux?",
+            a: "You can write the code on any system, but to compile and test you need Windows with Revit or Civil 3D installed, because the API is Windows-only. Many developers use a Windows virtual machine just for that part."
+          },
+          {
+            q: "What maintenance budget should I plan for?",
+            a: "Between 15% and 25% of the initial cost per year. This covers adapting to new Autodesk versions, fixing bugs that only surface with real usage, and the improvements the team will request once they like the tool. If a vendor doesn't mention this, they haven't maintained many add-ins."
+          },
+          {
+            q: "Should I build it in-house or outsource it?",
+            a: "In-house if you have someone with genuine interest and real protected time, and the tool is specific to your own criteria. Outsource it if it's critical, if you need it in weeks, or if it requires complex integrations. Either way, require the contract to include the source code: otherwise you're locked to the vendor for every future change."
+          }
+        ],
+      },
+    },
   },
   "guia-vibe-coding-para-empezar": {
     es: {
@@ -662,6 +862,50 @@ const data: Record<string, Record<Locale, PostData>> = {
           {
             q: "Quando paro de fazer sozinho e peço ajuda?",
             a: "Quando a ferramenta é usada por várias pessoas e você não consegue manter o ritmo de pedidos, quando já tentou 3-4 vezes com um erro que a IA não resolve, ou quando precisa distribuí-la com instalador para todo o escritório. Aí uma mentoria ou delegar o desenvolvimento sai mais barato que continuar brigando."
+          }
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "The method in 6 steps",
+        intro:
+          "The difference between a prototype that collapses and a tool the team actually uses is the order. This is the order that works.",
+        steps: [
+          { n: 1, title: "Define the problem", desc: "Concrete task, input, output, and explicit boundaries", tag: "Preparation" },
+          { n: 2, title: "Give context about your environment", desc: "Version, tools, and your level — in every session", tag: "Preparation" },
+          { n: 3, title: "Structure before detail", desc: "Skeleton first, logic next, interface last", tag: "Order" },
+          { n: 4, title: "Iterate in small steps", desc: "One change, one test on a copy model, one saved milestone", tag: "Execution" },
+          { n: 5, title: "Learn to read the code", desc: "The minimum fundamentals so you don't depend blindly", tag: "Judgment" },
+          { n: 6, title: "From prototype to real tool", desc: "Git, error handling, testing, docs, and distribution", tag: "Production" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Vibe Coding in BIM",
+        items: [
+          {
+            q: "Can I really build an add-in without knowing how to code?",
+            a: "You can build simple, useful tools by following a method: exporting data, bulk renaming, generating reports. The AI writes the first version and you adjust it. What you can't do is design the architecture of a complex system or maintain it for 100 users without fundamentals. The first just needs a method; the second needs real learning or delegation."
+          },
+          {
+            q: "Which AI works best for Revit or Civil 3D code?",
+            a: "For long context and complex code, Claude tends to give better results. ChatGPT is good for short questions. The real test: ask both the same question with the same context and stick with whichever gives you code that compiles on the first try more often."
+          },
+          {
+            q: "How long until I have my first tool working?",
+            a: "A useful Dynamo graph: an afternoon if the problem is well defined. A simple C# add-in: a weekend following a step-by-step guide. What takes longest isn't writing the code — it's defining the problem well and testing it with real data."
+          },
+          {
+            q: "Do I need to learn the fundamentals if the AI writes the code?",
+            a: "Yes, and paradoxically more than before. Without fundamentals you can't judge whether what it proposes is solid or fragile, you can't debug when it fails, and you depend on the AI for every change. With fundamentals in logic, types, and functions, the AI multiplies you. Without them, it frustrates you."
+          },
+          {
+            q: "Is it safe to run AI-generated code on my models?",
+            a: "On a copy of a small model, yes. On a production model without testing it first, no. The rule is simple: duplicate, test, verify the result with your own eyes, and only then use it for real. And keep a backup."
+          },
+          {
+            q: "When do I stop doing it alone and ask for help?",
+            a: "When several people use the tool and you can't keep up with requests, when you've had 3-4 attempts at an error the AI can't resolve, or when you need to distribute it with an installer across the whole office. At that point, mentoring or delegating the development ends up cheaper than continuing to fight it."
           }
         ],
       },
@@ -758,6 +1002,53 @@ const data: Record<string, Record<Locale, PostData>> = {
           {
             q: "Como sei se vai compensar antes de pedir orçamento?",
             a: "Com esta fórmula: horas semanais dedicadas à tarefa × número de pessoas × custo por hora × porcentagem de tempo que eliminaria × 48 semanas. Se o resultado anual supera com folga o custo de um desenvolvimento de 2-4 semanas, você tem um caso claro. O módulo 5 do artigo desenvolve com um exemplo real."
+          }
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Everything you need to budget correctly",
+        intro:
+          "The 5 blocks that determine whether an add-in pays off: levels and timelines, what drives up cost, hidden costs, alternatives, and calculating return.",
+        steps: [
+          { n: 1, title: "The 3 add-in levels", desc: "From the simple tool to the integrated system, with real timelines", tag: "Scope" },
+          { n: 2, title: "What drives up an add-in's cost", desc: "Interface, integrations, versions, and edge cases", tag: "Factors" },
+          { n: 3, title: "The hidden costs", desc: "Annual maintenance, support, evolution, and training", tag: "Reality" },
+          { n: 4, title: "Buy, build, or learn", desc: "The 4 options in order, and when to rule out each one", tag: "Decision" },
+          { n: 5, title: "Calculate your return", desc: "The formula to know if it pays off before asking for a quote", tag: "ROI" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about add-in pricing",
+        items: [
+          {
+            q: "Why does nobody publish prices for Revit or Civil 3D add-ins?",
+            a: "Because they aren't catalog products: each one solves a different process. Two add-ins that sound the same ('export quantities') can differ 10x in effort depending on your office's rules, the versions they support, and whether they need their own interface. What can be reliably estimated is the timeline by complexity level, and that's what this article covers."
+          },
+          {
+            q: "How long does it take to develop an add-in?",
+            a: "A single-purpose tool (export, rename, generate a report): 1-3 weeks. A tool with its own interface and configurable options: 4-8 weeks. A system that integrates with a database or ERP: 8-16 weeks or more. 70% of what an office asks for falls into the first level."
+          },
+          {
+            q: "Is it more expensive for Civil 3D than for Revit?",
+            a: "Not significantly. Autodesk's two APIs are comparable in difficulty. What does raise the cost is the number of versions you need to support and the complexity of the objects you're working with — a Civil 3D corridor has more moving parts than a Revit wall, but that's scope, not platform."
+          },
+          {
+            q: "What happens when a new Autodesk version comes out?",
+            a: "Sometimes nothing: the add-in keeps working. Sometimes the API changes and it needs to be adapted and retested. That's why it's worth budgeting 15% to 25% of the initial cost per year for maintenance. If the code is well separated into layers, adapting it is usually a matter of hours, not weeks."
+          },
+          {
+            q: "Is a Dynamo graph a better fit than an add-in for me?",
+            a: "If fewer than 5-10 people will use the task, it doesn't change much, and performance isn't critical, Dynamo is usually enough and costs a fraction. The add-in wins when the whole office will use it, when you need a real interface, or when you're processing large models where Dynamo falls short."
+          },
+          {
+            q: "Is the source code mine?",
+            a: "It should be, and it's worth putting in writing in the contract. If the vendor keeps the code, you're locked to them for any future change and for every new Autodesk version. At Zeist, the source code and documentation are yours from day one."
+          },
+          {
+            q: "How do I know if it'll pay off before asking for a quote?",
+            a: "With this formula: weekly hours spent on the task × number of people × cost per hour × percentage of time you'd eliminate × 48 weeks. If the annual result comfortably exceeds the cost of a 2-4 week build, you have a clear case. Module 5 of the article walks through it with a real example."
           }
         ],
       },
@@ -868,6 +1159,58 @@ const data: Record<string, Record<Locale, PostData>> = {
         ],
       },
     },
+    en: {
+      roadmap: {
+        title: "From civil engineer to plugin author, in 10 steps",
+        intro:
+          "An end-to-end overview with Claude Code: from understanding the terms to handing the end user an installer. Simple, scalable architecture, explained without jargon.",
+        steps: [
+          { n: 0, title: "Context — 10 terms you need to know", desc: "A plain-language glossary before you start (API, SDK, DLL, etc.)", tag: "Basics" },
+          { n: 1, title: "What a Civil 3D plugin is", desc: "What you can automate and what you can't", tag: "Context" },
+          { n: 2, title: "Prerequisites (30 min)", desc: "Free programs you need to install", tag: "Setup" },
+          { n: 3, title: "Creating the project with Claude Code", desc: "A real step-by-step, the initial prompt that works", tag: "Start" },
+          { n: 4, title: "The recommended architecture", desc: "3 simple layers that make your plugin scalable", tag: "Design" },
+          { n: 5, title: "How to talk to Claude Code", desc: "Clear messages, constraints, and step-by-step verification", tag: "Prompt" },
+          { n: 6, title: "Your first working command", desc: "'Hello Civil 3D' — lists every alignment in the drawing", tag: "First plugin" },
+          { n: 7, title: "Adding a button to the toolbar", desc: "From a keyboard command to a visible button with an icon", tag: "UI" },
+          { n: 8, title: "Packaging as a bundle", desc: "Autodesk's official format for install-ready plugins", tag: "Build" },
+          { n: 9, title: "Distributing to end users", desc: "Installer, versions, updates", tag: "Delivery" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Civil 3D plugins with AI",
+        items: [
+          {
+            q: "Can I really build a Civil 3D plugin without knowing how to code?",
+            a: "Yes, with caveats. You can build simple, useful plugins (exporting data, renaming objects, generating reports, automating repetitive tasks) by following this guide + Claude Code + an afternoon. What you CAN'T do is design the architecture for a complex system, or distribute it to 500 users with automatic updates, without help. For the first case, AI + minimal fundamentals are enough. For the second, you need a developer."
+          },
+          {
+            q: "What is Claude Code and how is it different from Claude for Chrome?",
+            a: "Claude Code is a CLI (command-line) tool designed for programming. It lives in your terminal, has access to your files, runs commands, and can iterate over an entire project. Claude for Chrome is the browser extension. For building a Civil 3D plugin, Claude Code is the better choice because it can read and modify your code directly, not just generate suggestions."
+          },
+          {
+            q: "Which version of Visual Studio do I need?",
+            a: "Visual Studio Community 2022 (free) is enough. During installation, enable the '.NET desktop development' workload. You need .NET Framework 4.8 (Civil 3D 2024/2025) or .NET 8 (newer versions). Check the official SDK documentation for your Civil 3D version."
+          },
+          {
+            q: "Can I develop Civil 3D plugins on Mac or Linux?",
+            a: "You can write the code on any system (Claude Code works on Mac/Linux/Windows). But to compile and test it, you need Windows with Civil 3D installed — the API is Windows-only. Many developers use a Windows virtual machine to compile."
+          },
+          {
+            q: "Is the Command-Service-Repository architecture overkill for a small plugin?",
+            a: "No, and here's the trick: the architecture costs 15 extra minutes upfront, and saves you weeks once the plugin grows. Starting simple with a good structure always beats starting chaotic and refactoring later. Claude Code respects the architecture if you explain it in your initial prompt."
+          },
+          {
+            q: "How do I distribute the plugin to my coworkers?",
+            a: "Three options, from simplest to most professional: (1) Copy the .dll file into the Civil 3D folder and register it manually — works for 1-3 users. (2) Package it as a .bundle (Autodesk's official format) — drag and drop into Civil 3D. (3) An .msi installer with Inno Setup or WiX — for mass distribution and automatic updates. Start with .bundle."
+          },
+          {
+            q: "Will my plugin break when Civil 3D gets updated?",
+            a: "Sometimes, yes. Autodesk changes parts of the API between versions (rarely major things, but it happens). The fix: (1) keep your code cleanly separated into layers (this is why the architecture matters), (2) compile one version of your plugin per supported Civil 3D version, (3) subscribe to Autodesk's release notes channel. With AI, adapting code to a new API takes hours, not days."
+          }
+        ],
+      },
+    },
   },
   "ramas-ingenieria-sistemas-especializaciones": {
     es: {
@@ -966,6 +1309,56 @@ const data: Record<string, Record<Locale, PostData>> = {
           {
             q: "Sou de um escritório pequeno, isso é para empresas grandes?",
             a: "Ao contrário: num escritório pequeno o impacto é proporcionalmente maior porque cada hora conta mais e não existe um departamento de TI que faça por você. Muitas das automações com melhor retorno se resolvem em horas e não exigem infraestrutura nenhuma."
+          }
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "From civil engineer to engineer who automates, in 8 steps",
+        intro:
+          "This isn't about leaving civil engineering to become a programmer. It's about adding a skill that multiplies what you already know how to do.",
+        steps: [
+          { n: 1, title: "Why your degree is an advantage, not a burden", desc: "Domain expertise is worth more than knowing how to code", tag: "Starting point" },
+          { n: 2, title: "What you can actually automate", desc: "The everyday tasks that can solve themselves", tag: "Application" },
+          { n: 3, title: "The 3 paths, depending on how deep you want to go", desc: "Dynamo, connected spreadsheets, or custom add-ins", tag: "Options" },
+          { n: 4, title: "How much time you really need", desc: "Realistic expectations by level, no inflated promises", tag: "Reality" },
+          { n: 5, title: "The concrete benefits to your career", desc: "Value per hour, autonomy, and what doors open", tag: "Return" },
+          { n: 6, title: "Your first month: what to do each week", desc: "A concrete plan, not a list of courses", tag: "Plan" },
+          { n: 7, title: "The mistakes that make people quit", desc: "Why most people give up, and how to avoid it", tag: "Risks" },
+          { n: 8, title: "How far to go", desc: "The 4 levels and when to stop at each one", tag: "Horizon" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions",
+        items: [
+          {
+            q: "Do I have to leave civil engineering to do this?",
+            a: "No, and it would be a mistake. Your value lies exactly in the combination: you understand the engineering problem AND you know how to automate it. A developer learning BIM takes years to understand what a measurement criterion is or why a corridor recalculates. If you leave engineering, you compete head-to-head with thousands of programmers and lose your edge."
+          },
+          {
+            q: "Do I need a second degree or a master's?",
+            a: "No. To automate your own work with Dynamo, a few weeks of applied practice are enough. To build more serious tools, a few months. What makes the difference isn't the degree — it's having automated three or four real tasks from your job and being able to show them."
+          },
+          {
+            q: "How much time per day do I need to dedicate?",
+            a: "One hour a day for three months gets you to a functional level for automating your repetitive tasks. The key is applying it from week one to a real problem at work, not studying theory in the abstract. Learning that isn't applied gets forgotten."
+          },
+          {
+            q: "Is it worth it if I don't want to program every day?",
+            a: "Yes. Most engineers who learn this don't become full-time programmers: they automate their own work, gain hours back every week, and keep doing engineering. Spending a few hours a month maintaining your tools is enough."
+          },
+          {
+            q: "What do I actually gain in my career?",
+            a: "Three measurable things: you recover hours you currently lose to mechanical tasks, you become the person who solves what nobody else in your office can, and you gain access to BIM coordination or information management roles that pay above the traditional designer track. On top of that, it's a skill that's hard to outsource."
+          },
+          {
+            q: "What if AI ends up doing this on its own?",
+            a: "The opposite is happening: AI makes it more accessible to build tools, so the bottleneck shifts to who knows WHAT to build. And that's knowledge held by whoever understands the engineering process, not whoever can code. Your domain expertise becomes more valuable, not less."
+          },
+          {
+            q: "I'm from a small office — is this only for big companies?",
+            a: "The opposite: in a small office the impact is proportionally bigger, because every hour counts for more and there's no IT department to do it for you. Many of the automations with the best return get solved in hours and require no infrastructure at all."
           }
         ],
       },
@@ -1072,6 +1465,56 @@ const data: Record<string, Record<Locale, PostData>> = {
         ],
       },
     },
+    en: {
+      roadmap: {
+        title: "From manual QA to AI-powered QA in 8 steps",
+        intro:
+          "Everything you need to use Claude for Chrome as a professional tester: safety, the prompt, how to avoid deleting data, and how to export bugs to markdown.",
+        steps: [
+          { n: 1, title: "What Claude for Chrome is", desc: "Anthropic's official extension that can browse for you", tag: "Context" },
+          { n: 2, title: "Is it dangerous? The honest truth", desc: "What it shares, what it doesn't, and when NOT to use it", tag: "Safety" },
+          { n: 3, title: "Install and configure (10 min)", desc: "Minimal setup + which permissions to grant or not", tag: "Setup" },
+          { n: 4, title: "The ideal QA tester prompt", desc: "A proven structure that saves iterations", tag: "Prompt" },
+          { n: 5, title: "How to test module by module", desc: "Divide and conquer: never ask it to 'test everything'", tag: "Method" },
+          { n: 6, title: "Controlling what it can delete or modify", desc: "Explicit rules to avoid destroying real data", tag: "Critical" },
+          { n: 7, title: "Output format: downloadable markdown", desc: "How to ask for the report and why to always export it", tag: "Report" },
+          { n: 8, title: "How to act on the bugs found", desc: "Prioritize, create tickets, UX/UI improvements", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Claude for Chrome",
+        items: [
+          {
+            q: "Is it safe to install Claude for Chrome?",
+            a: "The official Anthropic extension (don't confuse it with unofficial clones) is safe as a piece of software, but **it can see and do everything you'd do in the browser**. Only install it from the Chrome Web Store with the publisher verified as Anthropic, review the permissions it requests, and use it first in test environments or general browsing — not on your online banking or with sensitive data until you understand its scope."
+          },
+          {
+            q: "Does Claude save my conversations to my account when I use it as an extension?",
+            a: "Not in your general claude.ai account history. The extension's conversations live in the sidebar's local context. That's why **the professional pattern is to always ask it to export the result to markdown** and download it — if you close the tab or browser, it's gone. Treat every session as ephemeral."
+          },
+          {
+            q: "Can I use Claude for Chrome for free?",
+            a: "It requires a claude.ai account. The free plan has usage limits. For long QA sessions (which consume a lot of context), a Pro plan helps. Alternative: Managed Agents / the SDK if you're automating testing in a pipeline instead of manually."
+          },
+          {
+            q: "What data do I share with Claude when using the extension?",
+            a: "Everything Claude 'sees' on tabs where you've granted permission: page content, visible forms, screenshots it generates to reason about. **Not** cookies or passwords saved by the browser (unless they're visible on screen). Never test with real personal data — use fake data."
+          },
+          {
+            q: "How do I stop Claude from modifying or deleting important things?",
+            a: "Three rules: (1) use a test database with fake data, not production; (2) explicitly write in the prompt 'do NOT delete any records' or 'read only, don't modify'; (3) review every action before hitting 'confirm' — the extension asks for confirmation on destructive actions if it's configured properly."
+          },
+          {
+            q: "How much time do you save using Claude for QA vs. manual testing?",
+            a: "For functional regression of already-known flows: 60-80% less time. For exploratory testing (finding rare bugs): 30-50%. For visual/UX tests: it complements but doesn't replace the human eye. The biggest savings are in **reports** — Claude documents every bug in a consistent format without ever forgetting a detail."
+          },
+          {
+            q: "Can Claude replace a human QA tester?",
+            a: "No, and it shouldn't. It replaces 60-70% of the repetitive work (regression, form checks, state validation). What it doesn't replace: judgment about bug priority, communication with product, understanding business context, deep exploratory testing. Think of Claude as the fastest junior on the team, not the senior."
+          }
+        ],
+      },
+    },
   },
   "deja-de-usar-excel-y-perder-horas": {
     es: {
@@ -1158,6 +1601,50 @@ const data: Record<string, Record<Locale, PostData>> = {
           {
             q: "E se meu critério de medição mudar?",
             a: "Se ajusta num lugar só e todas as tabelas futuras saem certas. É justamente uma das vantagens frente ao método manual, onde hoje você tem que lembrar de aplicar a mudança em cada planilha e em cada trecho — e basta uma pessoa esquecer para o dado ficar inconsistente."
+          }
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "The 6 reasons your takeoff spreadsheet is costing you money",
+        intro:
+          "An honest diagnosis for engineering firms where the model's data and the spreadsheet's data have stopped matching.",
+        steps: [
+          { n: 1, title: "The files nobody can tell apart", desc: "12 versions of the same takeoff, none traceable to the model", tag: "Problem" },
+          { n: 2, title: "The errors that reach the job site", desc: "Broken formulas, incomplete ranges, prices from old revisions", tag: "Problem" },
+          { n: 3, title: "The time you don't see", desc: "Hours of exporting, cleaning, and consolidating after every alignment change", tag: "Problem" },
+          { n: 4, title: "Working as a team on spreadsheets", desc: "No traceability to the model, no control over who changed what", tag: "Problem" },
+          { n: 5, title: "Connecting the data to the model", desc: "A button that generates the table by reading the model, in your format", tag: "Solution" },
+          { n: 6, title: "When to make the jump and how", desc: "Clear signs plus a cheap first step validated in Dynamo", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions",
+        items: [
+          {
+            q: "When should I stop tracking takeoffs in Excel?",
+            a: "When you meet at least two of these: (1) you spend more than 4 h/week exporting and consolidating data from the model, (2) you've had a quantity error reach the budget or the job site, (3) every project revision forces you to redo tables by hand, (4) more than 3 people touch the same takeoffs. Before that, Excel is enough and cheap."
+          },
+          {
+            q: "Do I have to stop using Excel entirely?",
+            a: "No, and that's a common misunderstanding. Excel remains the output format, the place where you review and where you deliver. What changes is that it stops being where the data gets built by hand: an add-in generates the table by reading the model, and it lands in your Excel already calculated and in your corporate format."
+          },
+          {
+            q: "Aren't Civil 3D or Revit's native tables enough?",
+            a: "For standard cases, yes — use them before automating anything. The problem shows up when your measurement criteria have their own rules (what gets excluded, how things are grouped, what rounding your standard applies) or when the output format has to match your office's own. That's where native tables fall short and manual work begins."
+          },
+          {
+            q: "What happens to the historical data in my current Excel files?",
+            a: "It's preserved. Automating table generation doesn't erase anything: what changes is where the data comes from going forward. Many firms actually use their historical Excel files to validate the add-in — comparing the automatic result against the manual one for a couple of revisions until they trust it."
+          },
+          {
+            q: "How long does it take to be ready?",
+            a: "A Dynamo prototype that validates the criteria: hours or a few days. A single-table add-in, installable across the whole office: typically 1-3 weeks. The full factors are in our guide on how much an add-in costs."
+          },
+          {
+            q: "What if my measurement criteria change?",
+            a: "You adjust it in one place and every future table comes out right. That's exactly one of the advantages over the manual method, where today you have to remember to apply the change to every sheet and every segment — and it only takes one person forgetting for the data to become inconsistent."
           }
         ],
       },
@@ -1250,6 +1737,51 @@ const data: Record<string, Record<Locale, PostData>> = {
           {
             q: "Vale a pena aprender programação 'de verdade' se tenho IA?",
             a: "Sim, ao menos os fundamentos. Sem eles você não vai entender o que a IA está propondo, não vai conseguir debugar, e vai depender da IA para tudo. Com fundamentos de lógica, POO e arquitetura, a IA te torna 10x mais produtivo. Sem eles, te frustra."
+          }
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Programming plugins without being a programmer — the honest guide",
+        intro:
+          "AI as a copilot: what you can build today without knowing code, what you can't, and how to avoid the classic mistakes that waste time.",
+        steps: [
+          { n: 1, title: "What changes with AI in 2026", desc: "From 'I can't code' to 'I built my first plugin in a weekend'", tag: "Context" },
+          { n: 2, title: "Minimum setup to get started", desc: "Claude/ChatGPT + Visual Studio + Dynamo — 30 minutes", tag: "Tools" },
+          { n: 3, title: "How to ask AI for what you need", desc: "Prompts that work vs prompts that go in circles", tag: "Technique" },
+          { n: 4, title: "The errors AI won't solve for you", desc: "API context, versioning, distribution, security", tag: "Reality" },
+          { n: 5, title: "The 10x workflow: prototype in Dynamo, port to C# with AI", desc: "The pattern mixed teams use today", tag: "Method" },
+          { n: 6, title: "Minimum good practices for non-programmers", desc: "Naming, backups, simple version control, manual tests", tag: "Discipline" },
+          { n: 7, title: "When to ask a professional for help", desc: "Clear signs + what to expect from mentorship", tag: "Limit" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions",
+        items: [
+          {
+            q: "Can I really build a Revit plugin without knowing how to code?",
+            a: "You can build simple, useful plugins: exporting quantities, renaming families, generating reports. The AI writes the first version, you adjust it. What you CAN'T do is design the architecture of a large system, or distribute to 100 users without help. That takes someone who knows how."
+          },
+          {
+            q: "How much faster is developing with Claude vs without AI?",
+            a: "For prototypes and small scripts: 5-10x faster. For production add-ins with UI, tests, distribution: 2-3x. AI speeds up writing code, not analyzing the problem or the architecture. That's still on the human."
+          },
+          {
+            q: "What's better to start with, ChatGPT or Claude?",
+            a: "For complex code and long contexts (Revit API documentation, for example), Claude tends to respond better. ChatGPT is fast for short questions. Try both with the same question and stick with whichever gives you code that compiles correctly on the first try more often."
+          },
+          {
+            q: "Can AI read Autodesk's API documentation?",
+            a: "Yes, with caveats. The models have a lot of baseline knowledge about the Revit/Civil 3D API, but they get tripped up on newer methods or version-specific details. The fix: paste the official documentation snippet into the prompt yourself when the AI seems unsure or starts hallucinating."
+          },
+          {
+            q: "How do I stop AI from generating code that doesn't work?",
+            a: "1) Give it context (which version, which element category), 2) ask it to explain step by step before writing code, 3) test on a small model first, 4) when something fails, don't just ask it to 'fix it' without giving the full error message. And keep a backup of your model."
+          },
+          {
+            q: "Is it worth learning 'real' programming if I have AI?",
+            a: "Yes, at least the fundamentals. Without them you won't understand what it's proposing, you won't be able to debug, and you'll depend on AI for everything. With fundamentals in logic, OOP, and architecture, AI makes you 10x more productive. Without them, it just frustrates you."
           }
         ],
       },
@@ -1348,6 +1880,52 @@ const data: Record<string, Record<Locale, PostData>> = {
         ],
       },
     },
+    en: {
+      roadmap: {
+        title: "From civil engineer to engineer who automates",
+        intro:
+          "An end-to-end overview: what to automate first, what to watch out for so you don't end up with a pile of chaotic scripts, and how to scale without becoming a career programmer.",
+        steps: [
+          { n: 1, title: "Why coding changes your career", desc: "Fewer repetitive hours, better data-driven decisions, higher value per hour", tag: "Motivation" },
+          { n: 2, title: "Automation ideas worth pursuing", desc: "10 concrete cases + time saved + complexity", tag: "Application" },
+          { n: 3, title: "Simple architecture (nothing scary)", desc: "How to organize your scripts into folders and layers", tag: "Design" },
+          { n: 4, title: "Clean code for engineers", desc: "Clear names, short functions, comments where they earn their keep", tag: "Quality" },
+          { n: 5, title: "Reusable components", desc: "Write it once, use it across five projects", tag: "Efficiency" },
+          { n: 6, title: "Version control without the drama", desc: "Git in 20 minutes with GitHub Desktop", tag: "Discipline" },
+          { n: 7, title: "Minimal manual testing", desc: "How to validate without becoming a professional QA", tag: "Robustness" },
+          { n: 8, title: "How to scale without drowning", desc: "From personal script to team tool", tag: "Growth" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions",
+        items: [
+          {
+            q: "Which language should a civil engineer learn?",
+            a: "It depends on the goal. To automate Civil 3D/Revit without pain: Python (Dynamo, IronPython) first. If you're building production add-ins, C#. For data analysis and reporting: Python with Pandas. To automate CAD without BIM: AutoLISP is still relevant. Start with Python: it covers 80% of cases."
+          },
+          {
+            q: "How much time per week should I dedicate to learning?",
+            a: "5-10 hours a week for 3 months gives you a functional level to automate your daily tasks. The key is applying what you learn to a real case from your own work starting in week two. Learning for its own sake doesn't work; learning by solving a real problem does."
+          },
+          {
+            q: "Do I really need 'software architecture' if I just write scripts?",
+            a: "You need the bare minimum: organize into folders, separate what does UI from what does calculation, have functions that each do one thing. You don't need microservices or enterprise patterns. The rule is: once your 'script' starts being called a 'project,' it's time to invest 20% of your time in structure."
+          },
+          {
+            q: "How do I start if I've never opened Visual Studio or Python?",
+            a: "Install Python from python.org, download VS Code (a free, lightweight editor), and follow the first official tutorial: 2 hours. After that: pick the task from your week that annoys you most and automate it step by step, with AI as a copilot. Learning by doing is 10x more effective than learning by reading."
+          },
+          {
+            q: "Is it worth learning to code if Autodesk keeps adding new features every year?",
+            a: "Yes. Autodesk covers 80% of generic cases. The 20% specific to your office, your project type, your standards — that's what you'll always have to automate yourself. And that 20% is where 60% of the team's time gets lost. The payoff is huge and permanent."
+          },
+          {
+            q: "When should I stop coding it myself and hire or mentor someone?",
+            a: "When (1) your team depends on your scripts to operate and you can't keep up with the pace of requests, (2) you need to distribute with an installer to more than 10 people, (3) you start hitting bugs you can't debug in an hour, (4) development is already taking more time than your actual engineering work. That's when a mentorship or delegating to a developer makes sense."
+          }
+        ],
+      },
+    },
   },
   "dynamo-vs-csharp-civil3d-revit": {
     es: {
@@ -1434,6 +2012,50 @@ const data: Record<string, Record<Locale, PostData>> = {
           {
             q: "Preciso de licença especial para desenvolver add-ins?",
             a: "Não. A API do Revit e Civil 3D é gratuita (SDK baixável no site da Autodesk). Só precisa do Visual Studio Community (gratuito) e da licença do software Autodesk que já usa. Você pode distribuir seus add-ins internamente sem custo adicional."
+          }
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "The 6 topics this article covers",
+        intro:
+          "Everything you need to decide between Dynamo and C# for Civil 3D or Revit, with concrete automation ideas and time savings.",
+        steps: [
+          { n: 1, title: "What is Dynamo?", desc: "Visual programming without writing code", tag: "Concept" },
+          { n: 2, title: "What does coding in C# mean?", desc: "Native add-ins using the Autodesk API", tag: "Concept" },
+          { n: 3, title: "When to use Dynamo?", desc: "Prototypes, parametric geometry, visual workflows", tag: "Decision" },
+          { n: 4, title: "When to use C#?", desc: "Production add-ins, high performance, own UI", tag: "Decision" },
+          { n: 5, title: "Key differences", desc: "Comparison table: learning, speed, maintenance", tag: "Comparison" },
+          { n: 6, title: "Automations with real savings", desc: "Examples by area and % of time saved", tag: "Application" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions",
+        items: [
+          {
+            q: "Do I need to know how to code to use Dynamo?",
+            a: "Not for the basics. Dynamo is visual programming: you drag nodes and connect them. But for advanced cases — complex loops, integrations, heavy conditional logic — knowing Python or DesignScript helps a lot. It's the natural entry point into BIM automation."
+          },
+          {
+            q: "Is it worth learning C# if I already know Dynamo well?",
+            a: "Yes, if you work on automations that will be used many times a day, by many users, or if you need your own graphical interface. C# gives you performance, distribution as an installable .dll add-in, and full control. Dynamo is fast for exploring; C# is solid for production."
+          },
+          {
+            q: "Which one is faster to learn?",
+            a: "Dynamo, no question. In a week you can build useful graphs. C# requires learning the language, object orientation, the Revit or Civil 3D API, and the compile cycle. Count on 2-3 months to become productive."
+          },
+          {
+            q: "Can I mix Dynamo and C#?",
+            a: "Yes, and that's what mature teams do. You can run Dynamo scripts from C# add-ins (Dynamo Player, DynamoAutomation), or call C# code from Python nodes inside Dynamo. Many companies prototype in Dynamo and then port whatever stabilizes to C#."
+          },
+          {
+            q: "What real savings can I expect day to day?",
+            a: "It depends on your tasks. For typical repetitive tasks (renaming families, exporting sheets, generating quantity takeoffs, checking clashes, updating tables), it's common to save between 30% and 70% of weekly time. A well-designed C# add-in can automate tasks that used to take hours and reduce them to seconds."
+          },
+          {
+            q: "Do I need a special license to develop add-ins?",
+            a: "No. The Revit and Civil 3D API is free (SDK downloadable from Autodesk). You only need Visual Studio Community (free) and the license for the Autodesk software you already use. You can distribute your add-ins internally at no additional cost."
           }
         ],
       },
@@ -1526,6 +2148,51 @@ const data: Record<string, Record<Locale, PostData>> = {
           {
             q: "O que faço depois de terminar essa rota?",
             a: "Escolha uma especialização de acordo com o que te atrai: desenvolvimento web (front e back), apps móveis, automação, dados ou IA. Cada caminho tem sua própria rota, mas todos partem desses fundamentos.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "The complete path, at a glance",
+        intro:
+          "Eleven blocks ordered from least to most complex. By the end, you won't just know how to code — you'll understand how to think through any problem.",
+        steps: [
+          { n: 1, title: "Programming logic", desc: "Learning to break problems down into steps", tag: "Foundation" },
+          { n: 2, title: "Pseudocode", desc: "Writing the solution in plain English before coding it", tag: "Foundation" },
+          { n: 3, title: "Variables and types", desc: "Storing and classifying information", tag: "Syntax" },
+          { n: 4, title: "Operators", desc: "Arithmetic, comparison, and logical", tag: "Syntax" },
+          { n: 5, title: "Conditionals", desc: "Making decisions with if / else", tag: "Control" },
+          { n: 6, title: "Loops", desc: "Repeating tasks with for and while", tag: "Control" },
+          { n: 7, title: "Functions", desc: "Reusing logic and organizing code", tag: "Structure" },
+          { n: 8, title: "Data structures", desc: "Arrays, objects, lists, and dictionaries", tag: "Data" },
+          { n: 9, title: "OOP", desc: "Object-oriented programming, classes", tag: "Design" },
+          { n: 10, title: "Basic algorithms", desc: "Search, sorting, complexity", tag: "Thinking" },
+          { n: 11, title: "First project", desc: "Applying it all to something real and useful", tag: "Practice" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions",
+        items: [
+          {
+            q: "Which language should I start programming with?",
+            a: "Python or JavaScript. Python is cleaner for learning logic; JavaScript lets you see results in the browser from minute one. Either is a good choice; the concepts are the same.",
+          },
+          {
+            q: "How long does it take to learn to code from scratch?",
+            a: "To write useful programs comfortably: 3 to 6 months studying 1-2 hours a day. To reach a professional level: 1-2 years with real projects. Consistency matters more than hours per day.",
+          },
+          {
+            q: "Do I need to be good at math to program?",
+            a: "Not for most of the work: web, apps, business systems. Logic and structured thinking matter far more than advanced math. Math only becomes critical if you go into machine learning, 3D graphics, or cryptography.",
+          },
+          {
+            q: "Should I learn using AI like ChatGPT or Claude?",
+            a: "Yes, but as an assistant, not a crutch. Use it to understand what a piece of code does or to debug, not to solve the exercises for you. If you let AI think for you, you won't learn to think.",
+          },
+          {
+            q: "What should I do after finishing this path?",
+            a: "Pick a specialization based on what draws you: web development (front and back), mobile apps, automation, data, or AI. Each path has its own route, but they all start from these fundamentals.",
           },
         ],
       },

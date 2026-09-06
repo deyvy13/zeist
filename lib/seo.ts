@@ -65,7 +65,12 @@ export function buildMetadata({
     : (availableLocales[0] ?? locale);
   languages["x-default"] = absoluteUrl(localePath(defaultFor, path).slice(1));
 
-  const ogLocale = locale === "pt" ? "pt_BR" : "es_ES";
+  const ogLocaleByLocale: Record<Locale, string> = {
+    es: "es_ES",
+    pt: "pt_BR",
+    en: "en_US",
+  };
+  const ogLocale = ogLocaleByLocale[locale];
 
   return {
     title,
@@ -121,23 +126,25 @@ export function organizationJsonLd(locale: Locale) {
         "@type": "ContactPoint",
         contactType: "sales",
         telephone: `+${site.whatsapp.number}`,
-        availableLanguage: ["es", "pt"],
-        areaServed: ["PE", "LATAM"],
+        availableLanguage: ["es", "pt", "en"],
+        areaServed: ["PE", "LATAM", "US", "ES"],
       },
     ],
     description: site.description[locale],
     sameAs: [] as string[],
     slogan: site.slogan[locale],
     // Local signal: the team is based in Trujillo (La Libertad, Peru) and works
-    // remotely across LATAM. No postal address is declared because there is no
-    // public office — `areaServed` is the honest way to signal geography.
+    // remotely across LATAM and, since the English site launched, globally.
+    // No postal address is declared because there is no public office —
+    // `areaServed` is the honest way to signal geography.
     areaServed: [
       { "@type": "Country", name: "Perú" },
       { "@type": "AdministrativeArea", name: "La Libertad" },
       { "@type": "City", name: "Trujillo" },
       { "@type": "Place", name: "Latinoamérica" },
+      { "@type": "Place", name: "Global" },
     ],
-    knowsLanguage: ["es", "pt"],
+    knowsLanguage: ["es", "pt", "en"],
     knowsAbout: [
       "Automatización BIM",
       "Autodesk Civil 3D",

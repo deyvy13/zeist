@@ -8,11 +8,12 @@ import { useStepsSafe } from "./steps-provider";
 // view (via IntersectionObserver in TopicCard), and scrolls-to on click.
 // Hidden on small screens where the floating pill already tells progress.
 
-export function PostTOC({ locale = "es" }: { locale?: "es" | "pt" }) {
+export function PostTOC({ locale = "es" }: { locale?: "es" | "pt" | "en" }) {
   const ctx = useStepsSafe();
   if (!ctx || ctx.steps.length === 0) return null;
 
-  const label = locale === "pt" ? "Nesta guia" : "En esta guía";
+  const label =
+    locale === "pt" ? "Nesta guia" : locale === "en" ? "In this guide" : "En esta guía";
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);

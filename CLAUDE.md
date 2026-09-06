@@ -68,11 +68,19 @@ La IA sí se menciona — pero como **herramienta que acelera el desarrollo**
 
 ## 3. Público objetivo e idiomas
 
-- **Idiomas (ambos first-class para SEO):** Español (`es`, por defecto) y
-  Portugués (`pt`). Los dos deben indexar y rankear al 100%, con jerarquía
-  correcta de H1/H2/H3 en cada idioma.
-- **Mercado:** global hispanohablante + lusófono (LATAM + Europa). Tono
-  internacional; sin geotargeting a un solo país.
+- **Idiomas (los tres first-class para SEO, sep-2026):** Español (`es`, por
+  defecto), Portugués (`pt`) e Inglés (`en`). Los tres deben indexar y rankear
+  al 100%, con jerarquía correcta de H1/H2/H3 en cada idioma.
+- **Mercado:** global hispanohablante + lusófono (LATAM + Europa) + mercado
+  angloparlante (US/UK/global) para el diferenciador de add-ins en C#, donde
+  la competencia en inglés (3dshouse, Adyantrix) sólo ofrece servicio, sin
+  blog técnico propio. Tono internacional; sin geotargeting a un solo país.
+- **El cluster C5 (Perú/Trujillo) es Español-only por diseño.** La normativa
+  peruana (Plan BIM Perú, DS 289-2019-EF) y las cifras de Trujillo/La Libertad
+  no tienen audiencia en `pt` ni en `en`. `buildMetadata` acepta
+  `availableLocales` y `app/sitemap.ts` calcula la disponibilidad real por
+  slug — un post en un solo idioma emite hreflang sólo para ese idioma +
+  `x-default`, sin declarar alternates que den 404. Ver sección 8.
 
 ## 4. Stack técnico (decidido)
 
@@ -94,7 +102,7 @@ La IA sí se menciona — pero como **herramienta que acelera el desarrollo**
 
 ```
 app/
-  [lang]/                     # segmento de locale (es | pt)
+  [lang]/                     # segmento de locale (es | pt | en)
     layout.tsx                # ROOT layout: html/body, fonts, header, footer, metadata base, JSON-LD Org
     page.tsx                  # Landing (hero, diferenciadores, servicios, proceso, blog, tools, CTA)
     servicios/page.tsx        # Índice de servicios
@@ -112,7 +120,7 @@ lib/
   site.ts                     # marca, siteUrl, absoluteUrl, localizedPath
   seo.ts                      # buildMetadata() (hreflang, canonical, OG) + JSON-LD helpers
   blog.ts                     # lectura de MDX + frontmatter
-dictionaries/es.json, pt.json # strings de UI por idioma (misma forma)
+dictionaries/es.json, pt.json, en.json # strings de UI por idioma (misma forma)
 content/blog/<locale>/<slug>.mdx  # artículos del blog
 proxy.ts                      # redirección de locale por Accept-Language
 ```
@@ -124,7 +132,9 @@ proxy.ts                      # redirección de locale por Accept-Language
   Genera: `canonical`, `alternates.languages` (hreflang recíproco es/pt + `x-default`),
   Open Graph y Twitter cards, y `robots` (`max-image-preview:large`).
 - **`metadataBase`** se fija en `app/[lang]/layout.tsx` desde `siteUrl`.
-- **hreflang:** códigos genéricos `es` y `pt` (cubren LATAM + Iberia). `x-default` → `es`.
+- **hreflang:** códigos genéricos `es`, `pt` y `en` (cubren LATAM + Iberia +
+  mercado angloparlante global). `x-default` → `es`. Un post ES-only (cluster
+  Perú) emite sólo su propio hreflang + `x-default`, nunca alternates rotos.
 - **JSON-LD:** Organization + WebSite (layout/landing), Service (detalle de servicio),
   BlogPosting (artículos).
 - **Sitemap** (`app/sitemap.ts`): todas las rutas × ambos locales, con `alternates.languages`.
@@ -179,13 +189,17 @@ por página, p.ej. el visual del hero), NO el estilo de cada caja.
   `title, description, date (ISO), author, tags[], draft?, cover?`.
 - `lib/blog.ts`: `getAllPosts(locale)`, `getPost(locale, slug)`, `getPostSlugs`,
   `getAllTags`. Calcula tiempo de lectura. Ordena por fecha desc. Ignora `draft`.
-- Para publicar: crear el `.mdx` en `es/` y `pt/` (mismo slug para que hreflang
-  enlace ambas versiones). `generateStaticParams` los recoge automáticamente.
+- Para publicar: crear el `.mdx` en `es/`, `pt/` y `en/` (mismo slug para que
+  hreflang enlace las tres versiones). `generateStaticParams` los recoge
+  automáticamente. Excepción: el cluster C5 (Perú) es ES-only a propósito —
+  ver sección 3.
 - **`lib/blog-data.ts`** guarda el roadmap y las FAQs de cada post, por slug y
-  locale. Es necesario porque `next-mdx-remote/rsc` **no pasa bien arrays de
-  objetos como props JSX**. En el MDX se usan `<Roadmap />` y `<PostFaqs />` sin
-  props — se auto-vinculan por slug. Si creas un post con esos componentes,
-  añade también su entrada aquí o saldrán vacíos (falla en silencio).
+  locale (tipo `Partial<Record<Locale, PostData>>`: no todos los slugs tienen
+  las tres claves). Es necesario porque `next-mdx-remote/rsc` **no pasa bien
+  arrays de objetos como props JSX**. En el MDX se usan `<Roadmap />` y
+  `<PostFaqs />` sin props — se auto-vinculan por slug. Si creas un post con
+  esos componentes, añade también su entrada aquí o saldrán vacíos (falla en
+  silencio).
 - ⚠️ **Gotcha de MDX:** `{llaves}` fuera de un bloque de código rompen el build
   ("Could not parse expression with acorn"). Usa backticks + `<ángulos>`.
 
@@ -267,9 +281,10 @@ npm run lint    # ESLint
 - Rutas SIEMPRE con prefijo de locale. Usa `localizedPath(lang, "ruta")` de `lib/site.ts`.
 - Nuevas páginas: `export async function generateMetadata` con `buildMetadata`.
   Un solo `<h1>`. Añade la ruta a `app/sitemap.ts` (`STATIC_PATHS`).
-- Strings de UI → diccionarios (`es.json` y `pt.json`, **misma forma**), nunca
-  hardcodeados en JSX (excepción tolerada: páginas con copy propio como contacto/herramientas
-  que usan mapas `Record<Locale, ...>` locales).
+- Strings de UI → diccionarios (`es.json`, `pt.json`, `en.json`, **misma
+  forma**), nunca hardcodeados en JSX (excepción tolerada: páginas con copy
+  propio como contacto/herramientas que usan mapas `Record<Locale, ...>`
+  locales — con las tres claves).
 - Componentes cliente solo cuando hay interacción (`"use client"`); todo lo demás
   es Server Component (mejor SEO y bundle).
 - `params` es `Promise` → `const { lang } = await params`.

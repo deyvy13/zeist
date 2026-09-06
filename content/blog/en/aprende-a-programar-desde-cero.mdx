@@ -1,0 +1,362 @@
+---
+title: "Learn to Code From Scratch for Civil Engineers: The Complete Path to Automating Your Work"
+description: "A step-by-step path for a civil engineer to learn to code from scratch, no prior experience needed. From logic to your first Civil 3D script, with examples from the field."
+date: "2026-07-28T10:00:00.000Z"
+author: "Zeist"
+tags:
+  - Programming
+  - Civil engineering
+  - Beginners
+  - Python
+  - Dynamo
+  - Learning path
+---
+
+<BlogHero
+  eyebrow="Learning path · Level 0"
+  title="Learning to code isn't memorizing syntax. It's learning to think the way you already think when you calculate."
+  highlight="This is the path we'd recommend to a civil engineer starting today with no prior experience who wants to automate their own Civil 3D or Revit tasks. Each module has short theory, an example, and an exercise."
+/>
+
+<Callout type="info" title="How to use this guide">
+The 11 modules are collapsed. Open them one by one, in order. Each one takes between 30 minutes and 2 hours. If something isn't clear, don't move on: programming is like structural calculation — one bad assumption ruins everything built on top of it.
+</Callout>
+
+## Before you start: what programming is (and isn't)
+
+Programming is **not** memorizing a language's syntax. Programming is **describing the solution to a problem in steps a computer can follow**. The language (Python, C#, JavaScript…) is just the tongue you write that solution in. Switching languages later is easy; the hard part — and the important one — is learning to think like a programmer.
+
+**The good news for you:** you already do this. When you break a volume calculation down into steps, when you define the measurement criteria for a work item, when you set the conditions for a slope based on soil type — that's exactly the same kind of reasoning. What you're missing isn't the logic. It's the vocabulary.
+
+This guide uses examples in **Python** (Dynamo's language, and the most approachable one to start with), with everyday engineering scenarios instead of online-store examples. The concepts are universal, and they'll serve you just as well when you move on to C# for add-ins.
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Programming logic: learning to think" time="~2 h">
+
+**Programming logic** is the skill of taking a big problem and breaking it down into small, ordered, unambiguous steps. **Before you touch the keyboard**, you need to be able to explain to another person — in words — how you'd solve the problem.
+
+**Classic example:** making a sandwich. It seems trivial until you try giving instructions to someone who has never seen one:
+
+1. Take two slices of bread.
+2. Place one on a plate.
+3. Spread butter on that slice.
+4. Add ham on top.
+5. Add cheese on top of the ham.
+6. Cover with the second slice.
+
+Each step is **atomic** (it can't be broken down further) and **ordered** (change the order and the result changes). That's how a programmer thinks.
+
+**Exercise:** describe, step by step, how someone can tell whether a number is even or odd. No code. Just words.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Pseudocode: the solution before the code" time="~3 h">
+
+**Pseudocode** is a middle ground between human language and programming language. It forces you to structure your solution **before** worrying about syntax. It's the most useful tool for beginners — and the one almost nobody teaches well.
+
+An example. Problem: **say whether a person is of legal age.**
+
+```text
+START
+  READ age
+  IF age IS GREATER THAN OR EQUAL TO 18 THEN
+    SHOW "Of legal age"
+  ELSE
+    SHOW "Not of legal age"
+  END IF
+END
+```
+
+Note: `START/END`, `READ`, `SHOW`, `IF/ELSE/END IF` are pseudocode keywords. There's no universal standard — every book varies — but the essence is always the same: **describe the algorithm clearly**.
+
+<Callout type="tip">
+Once you've solved 20 problems in pseudocode, translating them to Python or JavaScript becomes a matter of learning vocabulary, not learning to think.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Variables and data types" time="~2 h">
+
+A **variable** is a name you give to a spot in memory where you store a value. The **type** tells you what kind of value it is: number, text, true/false, and so on.
+
+**The most common types:**
+
+- **Integer** (`int`): `10`, `-5`, `2026`
+- **Decimal number** (`float`): `3.14`, `-0.5`
+- **Text** (`string`): `"Hello"`, `'programming'`
+- **Boolean** (`bool`): `true` or `false`
+
+In Python:
+
+```python
+age = 25
+name = "Anna"
+height = 1.72
+is_student = True
+```
+
+In JavaScript:
+
+```javascript
+const age = 25;
+const name = "Anna";
+const height = 1.72;
+const isStudent = true;
+```
+
+**Convention:** use descriptive names. `x` says nothing; `user_age` says everything.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Operators: manipulating and comparing values" time="~1 h">
+
+Operators are symbols that perform operations on values. They fall into three families.
+
+**Arithmetic** (basic math):
+
+| Operator | Use | Result |
+|----------|-----|-----------|
+| `+` | `5 + 3` | `8` |
+| `-` | `5 - 3` | `2` |
+| `*` | `5 * 3` | `15` |
+| `/` | `10 / 4` | `2.5` |
+| `%` | `10 % 3` | `1` (remainder) |
+
+**Comparison** (return `true` or `false`):
+
+| Operator | Meaning |
+|----------|-------------|
+| `==` | equal to |
+| `!=` | not equal to |
+| `>` | greater than |
+| `<` | less than |
+| `>=` | greater than or equal to |
+| `<=` | less than or equal to |
+
+**Logical** (combine booleans):
+
+- `and` / `&&` — true if **both** are true
+- `or` — true if **at least one** is true
+- `not` / `!` — flips the value
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Conditionals: making decisions" time="~2 h">
+
+Conditionals are the first **flow control** tool: they let your program do one thing or another depending on the data. Without conditionals, a program is just a linear list of instructions.
+
+Basic structure: `if` **condition** is true, **do this**; otherwise, **do that**.
+
+Python:
+
+```python
+age = 20
+
+if age >= 18:
+    print("You can vote")
+else:
+    print("You can't vote yet")
+```
+
+JavaScript:
+
+```javascript
+const age = 20;
+
+if (age >= 18) {
+  console.log("You can vote");
+} else {
+  console.log("You can't vote yet");
+}
+```
+
+For more than two cases, chain with `elif` (Python) or `else if` (JS):
+
+```python
+grade = 85
+
+if grade >= 90:
+    print("Excellent")
+elif grade >= 70:
+    print("Passed")
+else:
+    print("Failed")
+```
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Loops: repeating without writing more code" time="~3 h">
+
+A **loop** repeats a block of code while a condition holds. It's the difference between printing "Hello" once or a million times: with loops, the length of the code doesn't change.
+
+**`for` loop** — when you know how many times you want to repeat something:
+
+```python
+for i in range(5):
+    print(f"Iteration {i}")
+# Prints 0, 1, 2, 3, 4
+```
+
+**`while` loop** — when you don't know how many times, but you know when to stop:
+
+```python
+attempts = 0
+password = ""
+
+while password != "opensesame":
+    password = input("Password: ")
+    attempts += 1
+
+print(f"You got it in {attempts} attempts")
+```
+
+<Callout type="warn">
+Watch out for infinite loops: if the `while` condition **never** becomes false, your program freezes. It's beginner mistake #1.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Functions: reusing logic" time="~3 h">
+
+A **function** is a named block of code you can run as many times as you want. It takes **parameters** (input data) and optionally returns a **result**. Functions are the heart of organized code.
+
+Without a function (bad):
+
+```python
+price1 = 100
+tax1 = price1 * 0.18
+total1 = price1 + tax1
+
+price2 = 250
+tax2 = price2 * 0.18
+total2 = price2 + tax2
+```
+
+With a function (good):
+
+```python
+def calculate_total(price):
+    tax = price * 0.18
+    return price + tax
+
+total1 = calculate_total(100)
+total2 = calculate_total(250)
+```
+
+**The DRY principle** (*Don't Repeat Yourself*): if you write the same thing twice, extract it into a function. It's one of the most important rules in programming.
+
+</TopicCard>
+
+<TopicCard step="8" title="8. Data structures: storing many values" time="~4 h">
+
+So far each variable stores one value. Data structures let you store **many related values** under a single name.
+
+**Lists / Arrays** — an ordered collection, accessed by position:
+
+```python
+fruits = ["apple", "pear", "grape"]
+print(fruits[0])  # apple
+fruits.append("mango")
+```
+
+**Dictionaries / Objects** — a collection with keys, accessed by name:
+
+```python
+user = {
+    "name": "Anna",
+    "age": 25,
+    "active": True
+}
+print(user["name"])  # Anna
+```
+
+Combining both is the normal case in the real world:
+
+```python
+users = [
+    {"name": "Anna", "age": 25},
+    {"name": "Louis", "age": 30},
+]
+
+for u in users:
+    print(u["name"])
+```
+
+</TopicCard>
+
+<TopicCard step="9" title="9. Object-oriented programming (OOP)" time="~5 h">
+
+**OOP** organizes code into **classes** (blueprints) and **objects** (instances of the blueprint). A class groups together data (**attributes**) and behavior (**methods**) that belong together.
+
+Example: modeling a user.
+
+```python
+class User:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def greet(self):
+        return f"Hi, I'm {self.name}"
+
+anna = User("Anna", 25)
+print(anna.greet())  # Hi, I'm Anna
+```
+
+The four classic pillars: **encapsulation** (grouping data and methods), **inheritance** (one class inherits from another), **polymorphism** (the same call, different behaviors), **abstraction** (hiding the detail). Don't memorize these now — they click once you practice.
+
+</TopicCard>
+
+<TopicCard step="10" title="10. Basic algorithms and complexity" time="~4 h">
+
+The same problem has many possible solutions. An **algorithm** is one concrete solution, and some are faster than others. Learning to measure this is called **complexity**.
+
+The three algorithms **everyone** should know:
+
+1. **Linear search** — you scan a list from start to end. Complexity **O(n)**.
+2. **Binary search** — you split the list in half at each step (requires it to be sorted). Complexity **O(log n)**, dramatically faster.
+3. **Sorting** — from smallest to largest. The classics: *bubble sort* (slow but educational) and *merge sort* / *quick sort* (the ones used in production).
+
+<Callout type="info">
+**Big O notation** is the standard way to compare algorithms. `O(1)` is instant, `O(log n)` is very fast, `O(n)` is linear, `O(n²)` is slow with large lists.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="11" title="11. Your first real project" time="~10-20 h">
+
+Books don't make you a programmer. Projects do. Pick one that's small but **complete**, and finish it. Finishing matters more than making it perfect.
+
+**First-project ideas** (pick one):
+
+- **A console to-do list** — add, list, mark as done, delete. Save to a `.json` file.
+- **A personal expense tracker** — log expenses, sum by category, show the monthly average.
+- **A number-guessing game** — the program thinks of a number, you try to guess it, it tells you whether it's higher or lower.
+- **A currency converter** — takes an amount and two currencies, shows the conversion (use fixed rates or call an API).
+
+Any of these uses **everything covered above**: variables, conditionals, loops, functions, data structures, and probably classes if you structure it well.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Prefer hands-on guidance?"
+  title="Turn this path into your first real project"
+  body="We offer Vibe Coding mentoring for beginners: from idea to deployment, with AI as your copilot and a real person reviewing every step. Free courses and 1-on-1 sessions available."
+  primaryLabel="See courses and mentoring"
+  primaryHref="/en/servicios/cursos-mentorias-bim"
+  secondaryLabel="Contact us"
+  secondaryHref="/en/contacto"
+/>
+
+## Resources to keep learning
+
+- **Daily practice:** [Exercism](https://exercism.org) (exercises with free mentors) or [Codewars](https://www.codewars.com) (challenges by difficulty).
+- **Official documentation:** [Python](https://docs.python.org/3/tutorial/) and [MDN for JavaScript](https://developer.mozilla.org/en-US/docs/Learn/JavaScript).
+- **Solid free courses:** Harvard's CS50 (on YouTube), FreeCodeCamp.
+
+<PostFaqs />
+
+---
+
+**Found this guide useful?** Share it with someone who wants to get started. And if you're looking for real guidance, Zeist offers [Vibe Coding mentoring](/en/servicios/cursos-mentorias-bim) for your first project — from idea to deployment.

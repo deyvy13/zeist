@@ -1,0 +1,223 @@
+---
+title: "How much does a Revit or Civil 3D add-in cost? 2026 pricing and timeline guide"
+description: "What determines the price of a Revit or Civil 3D add-in, realistic timelines by tool type, hidden maintenance costs, and how to calculate whether it pays off."
+date: "2026-07-20T10:00:00.000Z"
+author: "Zeist"
+tags:
+  - Revit add-in
+  - Civil 3D
+  - Budget
+  - BIM automation
+  - C#
+---
+
+<BlogHero
+  eyebrow="BIM automation · Budget"
+  title="Nobody publishes add-in prices. So let's talk about timelines, factors, and return instead."
+  highlight="An add-in doesn't have a catalog price because it isn't a product — it's custom development. But it does have predictable factors. This guide gives you the ones that matter, so you can budget without going in blind."
+/>
+
+<Callout type="info" title="The 4 terms you'll see">
+- **Add-in (or plugin)** — a file that adds new buttons and functions to Revit or Civil 3D. Like a browser extension, but for your BIM software.
+- **API** — the official list of things Autodesk lets your code do to the program. Think of it as a restaurant menu: you can only order what's on it.
+- **Dynamo** — visual programming inside Revit/Civil 3D. You drag nodes instead of writing code.
+- **C#** — the official language for developing Autodesk add-ins. Pronounced "C sharp."
+</Callout>
+
+## The question that's framed wrong
+
+"How much does an add-in cost?" is like asking "how much does a house cost?" It depends on whether we're talking about a shed or an office building.
+
+An add-in that exports a table to Excel and one that syncs the model with the company's ERP **aren't in the same league**, even though both are technically "an add-in."
+
+The useful question is a different one: **how much time is that task costing your team by hand, and how quickly does automating it pay for itself?** That's what we're covering here.
+
+<AnimatedFlow
+  title="The three factors that move the price"
+  nodes="Scope|Interface|Integrations"
+  subs="What it does|How it's used|What it talks to"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. The 3 add-in levels (and their real timelines)" time="~6 min">
+
+In practice, almost every request falls into one of these three levels.
+
+### Level 1 — Single-purpose tool
+**Typical timeline: 1-3 weeks.**
+
+Does one thing and does it well. No interface of its own beyond a button and maybe a simple dialog box.
+
+Examples:
+- Exporting a quantity table to Excel with your office's format.
+- Bulk-renaming according to a naming standard.
+- Exporting topographic points to CSV with classification.
+
+### Level 2 — Tool with interface and options
+**Typical timeline: 4-8 weeks.**
+
+Has its own window with configurable options, validates data, saves user preferences, and handles edge cases.
+
+Examples:
+- Longitudinal profile generator with adjustable parameters.
+- BIM standards checker with a configurable report.
+- Mass sheet generator with selectable templates.
+
+### Level 3 — Integrated system
+**Typical timeline: 8-16 weeks or more.**
+
+Talks to external systems: corporate database, ERP, company authentication, cloud services.
+
+Examples:
+- Syncing model parameters with the ERP.
+- Model health dashboard with historical data in a database.
+- Approval workflow integrated with the document management system.
+
+<Callout type="tip">
+70% of what an engineering firm asks for is **Level 1**. And that's where the best return is: short timeline, low risk, immediate savings. Start there even if your ambition is Level 3.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. What drives up the cost of an add-in (and what doesn't)" time="~6 min">
+
+What **does** move the price significantly:
+
+- **Its own graphical interface.** A button that runs something is cheap. A window with forms, validation, preview, and saved preferences can double the effort.
+- **External integrations.** Every system it has to talk to (SQL, ERP, REST API, Active Directory) adds complexity and surface area for failure.
+- **Number of supported versions.** Supporting Civil 3D 2024, 2025, and 2026 is not the same as supporting just one. Each version may need its own adjustments and testing.
+- **Data volume.** An add-in that works fine on a 500-element model can choke on 200,000. Optimizing for large models is real work.
+- **Distribution.** Copying a file to 3 people is free. A digitally signed installer with automatic updates for 200 users is a project in itself.
+- **Edge cases in your operation.** "Except when the alignment is type X, then it's calculated differently" — every exception means more code and more testing.
+
+What **shouldn't** cost as much as people claim:
+
+- **The business logic itself.** If you have it clear and documented, it's the fastest part.
+- **The language.** C# vs VB.NET is irrelevant to the price.
+- **Being Civil 3D instead of Revit.** The two APIs are comparable in difficulty.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. The hidden costs almost nobody mentions" time="~5 min">
+
+Budgeting only for the initial build is the classic mistake. What comes after:
+
+**Maintenance for Autodesk versions.**
+Autodesk releases a new version every year. Sometimes your add-in keeps working untouched; sometimes the API changes and it needs updating. Budget for an annual review.
+
+**User support.**
+Someone has to answer "the button isn't showing up" and "it gave me an error with this file." With 5 users you can absorb it; with 50, it's a role.
+
+**Evolution.**
+As soon as the tool works, the team will ask for more. That's a sign of success, but it needs to be planned into the annual budget.
+
+**Documentation and training.**
+An add-in nobody knows how to use saves nothing. Count the time to train the team.
+
+<Callout type="warn">
+Rule of thumb: budget **15% to 25% of the initial cost per year** for maintenance, support, and small improvements. If a vendor doesn't mention this, they haven't built many add-ins.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Buy, build, or learn: how to decide" time="~7 min">
+
+Before commissioning anything, check these three options in order.
+
+### Option A — Does it already exist?
+The Autodesk App Store has hundreds of add-ins, many free. Tools like pyRevit or DiRoots's add-ins cover a lot of common cases. **Look before paying to build it.**
+
+Rule it out if: your process has its own rules that no generic tool respects.
+
+### Option B — Can Dynamo solve it?
+If few people will use the task and it doesn't change much, a Dynamo graph may be enough. Cost: hours, not weeks.
+
+Rule it out if: more than 5-10 people will use it, or performance matters, or you need a real interface. We cover this in detail in [Dynamo vs C# in Civil 3D and Revit](/en/blog/dynamo-vs-csharp-civil3d-revit).
+
+### Option C — Do you build it in-house?
+If you have someone on the team eager to learn, it's far more feasible today than 5 years ago thanks to AI as a copilot. Our guide on [building a Civil 3D plugin with Claude Code](/en/blog/crear-plugin-civil-3d-con-claude-code-sin-programar) covers the full path.
+
+Rule it out if: nobody has real time to maintain it, or it's critical to the operation and you can't depend on a single person.
+
+### Option D — Outsource it
+When the previous three don't apply. Advantage: speed, and the architecture knowledge is already there. Disadvantage: external dependency, unless the contract includes the source code and documentation (ours does — **the code is yours**).
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Calculate your return before asking for a quote" time="~6 min">
+
+The math you should do **before** talking to anyone:
+
+```text
+1. How many hours/week does the team spend on that task?      → H
+2. How many people do it?                                     → P
+3. Fully loaded cost per hour for those people?                → C
+4. What % of the time would automation eliminate?              → A (0-1)
+
+Annual savings = H × P × C × A × 48 weeks
+```
+
+**Real example from a mid-sized firm:**
+
+- Renaming and organizing families/views to a standard: **3 h/week**
+- Done by **4 people**
+- Loaded cost: **$20/h**
+- Automation eliminates **95%** of that time
+
+```text
+Annual savings = 3 × 4 × 20 × 0.95 × 48 = $10,944/year
+```
+
+If the Level 1 add-in that solves this takes 2-3 weeks to build, **it pays for itself comfortably in the first year** — and the savings repeat every year after.
+
+<Callout type="success">
+Run this calculation for your 5 most repetitive tasks. You'll find that 2 or 3 have an obvious return, and the rest aren't worth it yet. That alone is a roadmap.
+</Callout>
+
+**What this calculation doesn't capture but also counts:** fewer human errors, faster deliveries to the client, and people who stop burning out on mechanical work.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Want the number for your case?"
+  title="Free diagnostic: what to automate first and what return to expect"
+  body="In a free 20-minute call, we review your repetitive tasks, estimate the savings for each one, and tell you which ones are worth automating and with what tool. No commitment — even if you decide to build it in-house, it's useful."
+  primaryLabel="Book a diagnostic"
+  primaryHref="/en/contacto"
+  secondaryLabel="See our add-in service"
+  secondaryHref="/en/servicios/add-ins-revit-civil-3d"
+/>
+
+## Quick comparison: Dynamo vs a custom add-in
+
+<ComparisonTable
+  criterionLabel="Criterion"
+  leftLabel="Dynamo graph"
+  rightLabel="C# add-in"
+  rows="Development timeline | *Hours or days | 1-16 weeks || Initial cost | *Low | Medium-high || Users who can use it comfortably | 1-5 | *The whole office || Performance on large models | Limited | *Native || Own interface | No | *Yes || Distribution with installer | No | *Yes || Ease of maintenance by the team | *High if they know Dynamo | Requires technical profile || Best for | *Validating and exploring | Production and scale"
+/>
+
+## Related resources
+
+> 📘 **Pillar guide:** if you're going to build it, start with [developing add-ins for Revit and Civil 3D: the complete guide](/en/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+
+- [Dynamo vs C# in Civil 3D and Revit](/en/blog/dynamo-vs-csharp-civil3d-revit) — when each one is worth it, with savings examples.
+- [Building a Civil 3D plugin with Claude Code](/en/blog/crear-plugin-civil-3d-con-claude-code-sin-programar) — if you want to build it in-house.
+- [Dynamo and C# plugins with AI](/en/blog/dynamo-csharp-con-ia-claude) — how AI changed development timelines.
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Add-ins for Revit and Civil 3D"
+  title="Clear pricing, your code, no fine print"
+  body="We develop C# add-ins for Civil 3D and Revit with a fixed scope and committed timelines. The source code and documentation are yours from day one. Tell us what you need and we'll give you a real number."
+  primaryLabel="Request a quote"
+  primaryHref="/en/contacto"
+  secondaryLabel="See all services"
+  secondaryHref="/en/servicios"
+/>
+
+---
+
+**Found this useful?** Share it with whoever's evaluating automation at your firm. And if you want the number for your specific case, [contact us](/en/contacto) — the diagnostic is free.

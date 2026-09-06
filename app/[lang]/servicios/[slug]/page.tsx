@@ -71,8 +71,9 @@ export default async function ServiceDetailPage({
       { "@type": "Place", name: "Latinoamérica" },
       { "@type": "Place", name: "España" },
       { "@type": "Place", name: "Brasil" },
+      { "@type": "Place", name: "Global" },
     ],
-    availableLanguage: ["es", "pt"],
+    availableLanguage: ["es", "pt", "en"],
     url: pageUrl,
   };
 

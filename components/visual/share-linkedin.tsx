@@ -17,7 +17,7 @@ export function ShareLinkedIn({
 }: {
   url: string;
   title?: string;
-  locale?: "es" | "pt";
+  locale?: "es" | "pt" | "en";
 }) {
   const [copied, setCopied] = useState(false);
   const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
@@ -25,6 +25,7 @@ export function ShareLinkedIn({
   const labels = {
     es: { share: "Compartir en LinkedIn", copy: "Copiar enlace", copied: "¡Copiado!" },
     pt: { share: "Compartilhar no LinkedIn", copy: "Copiar link", copied: "Copiado!" },
+    en: { share: "Share on LinkedIn", copy: "Copy link", copied: "Copied!" },
   }[locale];
 
   const copy = async () => {

@@ -1,0 +1,232 @@
+---
+title: "Dynamo and C# plugins for Civil 3D and Revit with AI: how to build them 10x faster with Claude"
+description: "How AI (Claude, ChatGPT) is transforming C# plugin and Dynamo script development. A complete overview for engineers and architects who want to automate without being programmers."
+date: "2026-07-29T11:00:00.000Z"
+author: "Zeist"
+tags:
+  - Dynamo
+  - C#
+  - Claude
+  - AI
+  - Civil 3D
+  - Revit
+  - Vibe Coding
+  - BIM Automation
+---
+
+<BlogHero
+  eyebrow="Vibe Coding for engineering · AI + BIM"
+  title="Plugins used to take 2 years to build. Now, a good weekend."
+  highlight="AI doesn't replace the programmer. It removes the barrier to entry. This is the honest guide for engineers and architects who want to automate Civil 3D or Revit without ever having programmed before."
+/>
+
+<Callout type="info" title="Who this is for">
+Engineers, architects, and BIM technicians who **feel like their daily work is repetitive and assume "programming is impossible."** If you've never opened Visual Studio, this article is for you.
+</Callout>
+
+## The real shift AI brought in 2026
+
+Five years ago, building a C# plugin for Revit meant: learning C#, learning the Revit API (thousands of classes), setting up Visual Studio, understanding object orientation, and a lot of trial and error. Total: months before your first working button.
+
+**Today:** with Claude (or ChatGPT), a motivated engineer can have their first working plugin in **a single weekend**. Not because they're smarter — because the AI writes the first version of the code, explains what each line does, and helps debug it when it breaks.
+
+But be careful: **AI is not magic**. Some things it solves, and some it doesn't. This article separates one from the other.
+
+<AnimatedFlow
+  title="The workflow that changed the game"
+  nodes="Your idea|Clear prompt|Working code|Installed plugin"
+  subs="15 minutes|20 minutes|Iterate with AI|One weekend"
+/>
+
+<Callout type="info" title="4 words you'll see and what they mean (no jargon)">
+- **Plugin (or add-in)** — a file that adds new buttons and functions to Revit or Civil 3D. Like a browser extension, but for BIM software.
+- **API** — the official list of things Autodesk lets you ask Revit or Civil 3D to do from your code. Think of it as a restaurant "menu" — you can only order what's on it.
+- **Prompt** — the message you write to the AI. The clearer it is, with more context, the better the response.
+- **Compile** — turning your code (text) into an installable file that Revit or Civil 3D can load.
+</Callout>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. What changes with AI in 2026 (and what doesn't)" time="~5 min">
+
+**What DOES change:**
+
+- **Writing the first draft** of code is 10x faster. You describe what you need in plain language, and it gives you working C#.
+- **Learning the API** gets easier: ask it to "explain `FilteredElementCollector`" and you get clear examples.
+- **Debugging** — paste the error message and it translates it into a plan of action.
+- **Exploring alternatives** — "can this be done with less code?" — you get 3 options.
+
+**What does NOT change:**
+
+- **You still need to understand what you're asking for.** If you don't know what a `Transaction` is in Revit, the AI will hand you code that compiles but doesn't work.
+- **You need to test it on a real model.** The AI doesn't have your model open.
+- **You need to decide the architecture** of a large project. The AI builds the pieces, you design the puzzle.
+- **You need to take responsibility** — if the code deletes the wrong element, it's your name on it, not Claude's.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Minimum setup to get started (30 minutes)" time="~4 min">
+
+What you need installed before writing your first line:
+
+1. **Visual Studio Community 2022** (free, [visualstudio.microsoft.com](https://visualstudio.microsoft.com)). During install, choose the ".NET desktop development" workload.
+2. **Revit / Civil 3D** — whichever you already use.
+3. **Revit / Civil 3D SDK** — Google "Revit SDK 2024 download" or find Autodesk's official installer.
+4. **Claude or ChatGPT** (Pro version recommended for long conversations, but the free tier works too).
+5. **A project template:** there are free official Autodesk templates. They save hours.
+
+**For Dynamo**, setup is even simpler: just install Dynamo (it ships with Revit and with Civil 3D as a package). Nothing to compile.
+
+<Callout type="tip">
+Install **Revit Lookup** (open source). It's a tool that shows you, live, which properties the element you selected has. Perfect for feeding the AI real data from your model.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. How to ask AI for what you need (prompts that actually work)" time="~6 min">
+
+The difference between a good prompt and a bad one is hours of work. Golden rule: **the AI doesn't guess your context.**
+
+**Bad prompt:**
+> "Make me a plugin to rename stuff."
+
+**Good prompt:**
+> "I need a C# command for Revit 2024 that:
+> - Takes all views of type Section and Elevation.
+> - Renames them using the format: `<ShortType>-<Level>-<Number>`, where Number is sequential per level.
+> - Skips any view that already matches the format.
+> - Uses a single `Transaction`.
+> Give me the full `IExternalCommand` code with error handling."
+
+The second one has context (version, exact category, format, edge cases, expected pattern). The code the AI returns compiles and works on the first try far more often.
+
+**Structure of an effective prompt:**
+
+1. **What software and version** (Revit 2024, Civil 3D 2024).
+2. **What it should do**, in detail.
+3. **What elements it touches** (categories, exact types).
+4. **Edge cases** — what happens if nothing is found, if the name already exists, etc.
+5. **Output format** — full code, with imports, with transactions.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. The errors AI will NOT solve for you" time="~5 min">
+
+The honest list:
+
+- **Outdated API.** Models sometimes use methods that no longer exist or changed between versions. Fix: paste the link or snippet from the official docs into the chat when in doubt.
+- **Business logic bugs.** If your rule is "beams shorter than 3 m don't count" and you never said so, the AI won't guess it.
+- **Performance on huge models.** The AI's code works fine on your 500-element test model. In production with 200,000 elements, it can freeze. That takes optimization.
+- **Distribution** — `.msi` installer, digital signature, updates. AI can get you started, but it needs human judgment.
+- **Security** — if the plugin deletes elements, does it have "undo"? Does it ask for confirmation? That's UX design, not pure code.
+
+<Callout type="warn">
+Hard rule: **never run an AI-generated plugin for the first time on an important model**. Duplicate a small model, test there, verify the result. Only then use it in production.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. The 10x workflow: prototype in Dynamo, port to C# with AI" time="~6 min">
+
+The pattern mixed teams use today:
+
+<AnimatedFlow
+  title="The mixed pattern"
+  nodes="Idea|Dynamo (prototype)|Validate with team|C# with AI (port)|Distribute"
+  subs="In a meeting|Days|A week|Days|MSI"
+/>
+
+**Step by step:**
+
+1. **Idea:** "I want to automate renaming families."
+2. **Prototype in Dynamo:** fast, visual. In 1-2 days you have something working. Show it to the team and check if it's what they need.
+3. **If no one is going to use it:** you just saved a week of C#. Save the `.dyn`, move to the next problem.
+4. **If a lot of people will use it:** ask Claude to port the Dynamo graph to a C# add-in. Paste in the graph logic (or explain it in words) and it hands you the base code. You polish it.
+5. **Package it** as an `.msi` plugin with an installer. Distribute it to the team.
+6. **Keep** the original `.dyn` as an "executable spec": if you need to change the logic tomorrow, iterate in Dynamo first, then regenerate the C# with AI.
+
+That workflow reduces "development risk" — you don't sink 3 weeks into something nobody ends up using.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Minimum good practices for non-programmers" time="~6 min">
+
+You don't need to be a software engineer. You need 5 habits:
+
+**a) Clear names.** `RenameViewsButton` is better than `Button1`. The AI respects what you tell it; if you say "use clear names," it does.
+
+**b) One file per command.** Don't cram 8 commands into one giant file. One per file (`RenameViewsCommand.cs`, `ExportQuantitiesCommand.cs`). Makes it easier to see what does what.
+
+**c) Backup with Git — no drama.** Install **GitHub Desktop** (visual interface, zero terminal). Create a private repo. Every time something works: "Commit → Push." If you break something tomorrow, roll back with one button. **Cost: 20 minutes to learn. Value: infinite.**
+
+**d) Short comments where they matter.** Don't comment the obvious. Do comment odd business rules: `// Steel beams under 3m don't count per internal standard`. Future you will thank you.
+
+**e) Test on a small model first.** Before running against a real model, duplicate it and test. Always.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. When to ask a professional for help (and what to expect)" time="~4 min">
+
+Signs it's time for expert help:
+
+- 10+ people use your plugin and **you can't keep up** with bugs and requests.
+- You start hitting errors that **AI can't solve** after 3-4 iterations.
+- You need **integration with external systems** (a corporate database, ERP, enterprise authentication).
+- You need **professional distribution** with a signed installer.
+- Your scripts are starting to feel **impossible to maintain**.
+
+**What to expect from serious mentorship:**
+
+- Review of your current code and a refactor into something maintainable.
+- Being taught **patterns** so future plugins are simpler.
+- Professional setup: Git + CI + tests.
+- A growth roadmap — so you don't depend on the mentor forever.
+
+Good mentorship is an investment that **makes you autonomous**, not dependent.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Already have plugins built with AI?"
+  title="We help them grow without breaking"
+  body="We offer 1-on-1 mentorships for engineers who are already automating with AI and want to take the next step: maintainable code, professional distribution, Git, testing. We also build full plugins if you'd rather delegate. First 20-minute call free."
+  primaryLabel="Book a mentorship"
+  primaryHref="/en/servicios/cursos-mentorias-bim"
+  secondaryLabel="See BIM automation"
+  secondaryHref="/en/servicios/add-ins-revit-civil-3d"
+/>
+
+## Comparison: without AI vs with AI
+
+<ComparisonTable
+  criterionLabel="Stage"
+  leftLabel="Without AI (2020)"
+  rightLabel="With AI (2026)"
+  rows="Learning the Revit API | 3-6 months of study | *Days if you ask well || First working plugin | *3-6 weeks | One weekend || Debugging a new error | 2-4 hours googling | *10-30 minutes with AI || Porting from Dynamo to C# | *Weeks | Days || Barrier for non-programmers | Very high | *Low || Need for fundamentals | Medium | *High (ironically)"
+/>
+
+Ironic note: **with AI, fundamentals matter MORE**, not less. Without them, you can't tell whether the AI is proposing something good or garbage.
+
+## Resources and next steps
+
+> 📘 **Pillar guides:** [automating Civil 3D](/en/blog/automatizar-civil-3d-guia-completa) and [add-in development](/en/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+
+- If you've never programmed, start with our [path to learn programming from scratch](/en/blog/aprende-a-programar-desde-cero) — it gives you the base to actually make use of AI.
+- If you're torn between Dynamo and C#, read [Dynamo vs C# in Civil 3D and Revit](/en/blog/dynamo-vs-csharp-civil3d-revit).
+- Documentation: [Revit API Docs](https://www.revitapidocs.com), [Dynamo Primer](https://primer.dynamobim.org).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Vibe Coding for engineering"
+  title="Learn to build your own plugins with AI"
+  body="We offer 1-on-1 Vibe Coding mentorships for engineers and architects: from idea to installed plugin, with Claude/ChatGPT as copilot and a real mentor reviewing every step. Free courses also available."
+  primaryLabel="See courses and mentorships"
+  primaryHref="/en/servicios/cursos-mentorias-bim"
+  secondaryLabel="Contact us"
+  secondaryHref="/en/contacto"
+/>
+
+---
+
+**Found this useful?** Share it with that engineer who wants to automate but thinks "it's not for me." Today, it is — they just need to start.

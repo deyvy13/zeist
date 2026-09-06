@@ -6,7 +6,7 @@ import { useStepsSafe } from "./steps-provider";
 // Floating "X / N" progress pill. Renders only when there are registered
 // steps in the current article. Shows a mini ring and pops on increment.
 
-export function StepsProgress({ locale = "es" }: { locale?: "es" | "pt" }) {
+export function StepsProgress({ locale = "es" }: { locale?: "es" | "pt" | "en" }) {
   const ctx = useStepsSafe();
   if (!ctx || ctx.total === 0) return null;
 
@@ -24,6 +24,11 @@ export function StepsProgress({ locale = "es" }: { locale?: "es" | "pt" }) {
       progress: "Progresso",
       complete: "Completo!",
       of: "de",
+    },
+    en: {
+      progress: "Progress",
+      complete: "Complete!",
+      of: "of",
     },
   }[locale];
 

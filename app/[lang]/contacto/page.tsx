@@ -46,6 +46,19 @@ const copy: Record<
     },
     orEmail: "Ou fale direto pelo WhatsApp",
   },
+  en: {
+    title: "Tell us what's stealing your hours",
+    subtitle:
+      "Describe the repetitive task that weighs most on your team. We'll tell you if it's worth automating, with which tool, and how much time you'll get back. No commitment.",
+    labels: {
+      name: "Name",
+      email: "Email (optional)",
+      message: "What process do you want to automate?",
+      send: "Send message",
+      subject: "BIM automation diagnosis",
+    },
+    orEmail: "Or message us directly on WhatsApp",
+  },
 };
 
 export async function generateMetadata({
