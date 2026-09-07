@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { localizedPath, site, whatsappUrl } from "@/lib/site";
@@ -49,11 +50,14 @@ export function SiteFooter({ lang, dict }: { lang: Locale; dict: Dictionary }) {
       <div className="container-zeist relative py-16">
         <div className="grid gap-12 md:grid-cols-[1.6fr_repeat(3,1fr)]">
           <div>
-            <Link
-              href={localizedPath(lang)}
-              className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold tracking-tight text-white"
-            >
-              Zeist<span className="text-[color:var(--color-mint-500)]">.</span>
+            <Link href={localizedPath(lang)} aria-label="Zeist" className="block">
+              <Image
+                src="/logo-horizontal.png"
+                alt="Zeist"
+                width={1532}
+                height={313}
+                className="h-9 w-auto"
+              />
             </Link>
             <p className="mt-4 max-w-xs text-sm text-white/60">
               {dict.footer.tagline}
