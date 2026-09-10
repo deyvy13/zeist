@@ -30,21 +30,22 @@ export function ComparisonTable({
     .filter((cols) => cols.length >= 3);
 
   return (
-    <div className="relative my-8 overflow-hidden rounded-3xl border border-[color:var(--color-mint-500)]/30 bg-[color:var(--color-ink-950)]">
+    <div className="relative my-8 overflow-hidden rounded-2xl border border-[color:var(--color-mint-500)]/30 bg-[color:var(--color-ink-950)] sm:rounded-3xl">
       {/* Animated grid-beam background */}
       <GridBeamBg />
 
+      {/* Scrolls inside itself: the page body must never scroll sideways. */}
       <div className="relative overflow-x-auto">
-        <table className="w-full min-w-[560px] border-collapse text-left text-sm text-white">
+        <table className="w-full min-w-[34rem] border-collapse text-left text-[0.8125rem] text-white sm:text-sm">
           <thead>
             <tr className="border-b border-white/10">
-              <th className="px-4 py-4 text-xs font-semibold uppercase tracking-widest text-white/50 md:px-6">
+              <th className="px-3 py-3.5 text-[0.65rem] font-semibold uppercase tracking-widest text-white/50 sm:text-xs md:px-6">
                 {criterionLabel ?? "Criterio"}
               </th>
-              <th className="px-4 py-4 text-xs font-semibold uppercase tracking-widest text-[color:var(--color-mint-400)] md:px-6">
+              <th className="px-3 py-3.5 text-[0.65rem] font-semibold uppercase tracking-widest text-[color:var(--color-mint-400)] sm:text-xs md:px-6">
                 {leftLabel}
               </th>
-              <th className="px-4 py-4 text-xs font-semibold uppercase tracking-widest text-[color:var(--color-mint-400)] md:px-6">
+              <th className="px-3 py-3.5 text-[0.65rem] font-semibold uppercase tracking-widest text-[color:var(--color-mint-400)] sm:text-xs md:px-6">
                 {rightLabel}
               </th>
             </tr>
@@ -59,7 +60,7 @@ export function ComparisonTable({
                 transition={{ duration: 0.3, delay: i * 0.05 }}
                 className="border-b border-white/5 last:border-none"
               >
-                <td className="px-4 py-3.5 font-medium text-white/85 md:px-6">
+                <td className="px-3 py-3 font-medium text-white/85 md:px-6">
                   {criterion}
                 </td>
                 <Cell value={left} />
@@ -77,7 +78,7 @@ function Cell({ value }: { value: string }) {
   const winner = value.startsWith("*");
   const text = winner ? value.slice(1).trim() : value;
   return (
-    <td className="px-4 py-3.5 text-white/75 md:px-6">
+    <td className="px-3 py-3 text-white/75 md:px-6">
       {winner ? (
         <span className="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-mint-500)]/15 px-2.5 py-1 font-semibold text-[color:var(--color-mint-300)]">
           <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>

@@ -21,6 +21,113 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- C2 · Civil 3D — satélite de metrados (ES por ahora) -------------------
+  "automatizar-metrados-cubicaciones-civil-3d": {
+    es: {
+      roadmap: {
+        title: "De metrado manual a cantidad generada, en 6 bloques",
+        intro:
+          "Civil 3D ya conoce los volúmenes. Esto es cómo sacarlos con tus partidas y tu formato, sin que se desincronicen en cada revisión de trazo.",
+        steps: [
+          { n: 1, title: "Qué se puede automatizar", desc: "Y qué es criterio del ingeniero y debe quedarse así", tag: "Alcance" },
+          { n: 2, title: "Prepara el modelo primero", desc: "Nomenclatura, superficies completas y códigos de sección tipo", tag: "Requisitos" },
+          { n: 3, title: "Empieza por Dynamo", desc: "Validar las reglas barato antes de invertir en desarrollo", tag: "Método" },
+          { n: 4, title: "Las 5 de mayor retorno", desc: "Volúmenes por tramo, áreas por capa, cuadro de secciones", tag: "Prioridad" },
+          { n: 5, title: "El error que mata la confianza", desc: "Fallar en silencio con la superficie equivocada", tag: "Riesgos" },
+          { n: 6, title: "Plan de 30 días", desc: "Primera automatización sin parar los proyectos en curso", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre automatizar metrados en Civil 3D",
+        items: [
+          {
+            q: "¿Se pueden sacar los metrados directamente del modelo de Civil 3D?",
+            a: "Sí. Civil 3D ya calcula volúmenes de corte y relleno entre superficies o a lo largo del corredor, y conoce las áreas por tipo de material a partir de las secciones tipo. Lo que normalmente falta no es el cálculo, sino el paso siguiente: convertir ese reporte en la planilla de partidas de tu empresa, con tus códigos y tu formato. Eso es exactamente lo que se automatiza.",
+          },
+          {
+            q: "¿Cuánto tiempo se ahorra realmente?",
+            a: "Depende del tamaño del proyecto, pero el patrón se repite: lo que toma entre 2 y 5 horas por tarea pasa a segundos. El ahorro grande no está en la primera vez, sino en las revisiones: cada cambio de trazo obliga a rehacer todo el metrado a mano, y con la automatización sólo hay que volver a ejecutar.",
+          },
+          {
+            q: "¿Necesito saber programar para esto?",
+            a: "Para prototipar en Dynamo, no: es armar rutinas conectando bloques, sin escribir código. Para llevarlo a un add-in instalable sí hace falta desarrollo en C#, pero eso es el paso final y sólo se justifica cuando la rutina se usa en cada entrega y la abren varias personas del equipo.",
+          },
+          {
+            q: "¿Por qué mi automatización da un número distinto al cálculo manual?",
+            a: "Casi siempre porque las reglas no estaban acordadas. Antes de culpar a la herramienta, haz esta prueba: pídele a dos personas del equipo que metren el mismo tramo por separado. Si sus resultados tampoco coinciden, el problema es que faltan definiciones (qué entra en cada partida, qué factor se aplica, cómo se agrupan los tramos), no el software.",
+          },
+          {
+            q: "¿Qué pasa si cambio de versión de Civil 3D?",
+            a: "Las rutinas de Dynamo suelen sobrevivir con ajustes menores. Los add-ins compilados hay que recompilarlos contra las librerías de la nueva versión. Por eso conviene que el desarrollo aísle el acceso al modelo en una sola capa: así el cambio de versión toca un punto y no todo el código.",
+          },
+          {
+            q: "¿Cuál es la primera automatización que conviene construir?",
+            a: "La tarea que más veces se rehace en cada revisión de proyecto, que en obra vial y urbana casi siempre son los volúmenes de movimiento de tierras agrupados por tramo. Cronometra cuánto tarda hoy y cuántas veces al mes se repite: ese número es el que justifica la inversión.",
+          },
+          {
+            q: "¿Sirve si mi oficina todavía trabaja en CAD 2D?",
+            a: "Parcialmente. Se puede automatizar la verificación de nomenclatura, capas y algunos cruces de datos. Pero la generación de cantidades desde el modelo requiere que exista un modelo: si el metrado se calcula aparte, la trazabilidad no existe y no hay nada que automatizar en ese sentido.",
+          },
+        ],
+      },
+    },
+  },
+  // ---- C1 · Add-ins C# — satélite Revit API (ES por ahora) -------------------
+  "revit-api-espanol-primeros-pasos": {
+    es: {
+      roadmap: {
+        title: "Tu ruta de entrada a la API de Revit, en 7 bloques",
+        intro:
+          "Qué es la API en lenguaje llano, qué necesitas, cómo se estructura un add-in y cuál es la primera automatización que de verdad conviene construir.",
+        steps: [
+          { n: 1, title: "Qué es la API, sin jerga", desc: "Revit es una base de datos y la API es la otra forma de editarla", tag: "Concepto" },
+          { n: 2, title: "Qué necesitas para empezar", desc: "Visual Studio Community, las librerías de Revit, y nada más", tag: "Requisitos" },
+          { n: 3, title: "Cómo está armado un add-in", desc: "Comando, archivo .addin y DLL — y la estructura que aguanta", tag: "Arquitectura" },
+          { n: 4, title: "La transacción", desc: "La regla que no se negocia al modificar el modelo", tag: "Fundamentos" },
+          { n: 5, title: "Tu primera automatización", desc: "Elegir bien: que sólo lea y resuelva un dolor real", tag: "Práctica" },
+          { n: 6, title: "Los 5 tropiezos del primer mes", desc: "Add-in que no carga, lentitud, errores de transacción", tag: "Errores" },
+          { n: 7, title: "¿Aprenderlo o encargarlo?", desc: "Una decisión de negocio, con el cálculo que casi nadie hace", tag: "Decisión" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre la Revit API",
+        items: [
+          {
+            q: "¿Qué es la API de Revit?",
+            a: "Revit guarda tu proyecto como una base de datos: cada muro, puerta, vista y parámetro es un registro. Cuando editas algo con el ratón, Revit actualiza ese registro. La API es la otra forma de editar esa base de datos: por instrucciones en vez de por clics. Eso permite hacer en segundos lo que a mano serían cientos de acciones repetidas, siempre igual y sin saltarse elementos.",
+          },
+          {
+            q: "¿Necesito pagar algo para desarrollar add-ins de Revit?",
+            a: "No. Visual Studio Community es gratuito para uso individual y empresas pequeñas, y las librerías de Revit (RevitAPI.dll y RevitAPIUI.dll) ya están en tu computadora dentro de la carpeta de instalación de Revit. No hace falta un SDK de pago ni una licencia adicional de Autodesk.",
+          },
+          {
+            q: "¿Tengo que saber C# antes de empezar?",
+            a: "No hace falta estudiar C# durante meses antes de tocar Revit. Lo que funciona mejor es aprender sobre un caso real de tu oficina: eliges una tarea concreta que hoy haces a mano y vas aprendiendo lo necesario para resolverla. Las herramientas de IA aceleran mucho esa curva, aunque no reemplazan entender lo que hace tu código.",
+          },
+          {
+            q: "¿Por qué mi add-in no aparece en Revit?",
+            a: "Casi siempre es el archivo .addin, no el código. Revisa tres cosas en este orden: que el archivo esté en la carpeta correcta de add-ins, que la ruta a la DLL escrita dentro coincida exactamente con dónde está el archivo, y que hayas reiniciado Revit. Ese trío resuelve la gran mayoría de los casos.",
+          },
+          {
+            q: "¿Qué es una transacción y por qué me da error?",
+            a: "Todo cambio al modelo debe ir dentro de una transacción — es lo que hace posible deshacer con Ctrl+Z, agrupando cambios en una unidad que se aplica entera o no se aplica. Si intentas modificar algo fuera de una, Revit lanza un error. El fallo más caro de principiante es abrir una transacción dentro de un bucle: si procesas 3.000 elementos creas 3.000 transacciones y el proceso tarda minutos en vez de segundos. Una sola transacción debe envolver todo el lote.",
+          },
+          {
+            q: "¿Mi add-in seguirá funcionando cuando actualice Revit?",
+            a: "No automáticamente. Un add-in compilado contra las librerías de una versión no carga en otra: hay que recompilarlo apuntando a las nuevas. Por eso conviene estructurar el código separando el acceso al modelo en su propia capa — así el cambio de versión toca un solo punto en vez de todo el proyecto.",
+          },
+          {
+            q: "¿Cuál es la mejor primera automatización para aprender?",
+            a: "Una que sólo lea el modelo, sin modificarlo: cero riesgo mientras aprendes. Las mejores candidatas son auditar nomenclatura (listar las vistas o familias que no cumplen el estándar), exportar un listado de elementos a Excel, o detectar parámetros vacíos antes de una entrega. Todas resuelven un dolor real, se verifican a simple vista y se terminan en pocas horas. Crear un muro por código, el ejemplo típico de los tutoriales, no cumple ninguno de esos criterios.",
+          },
+          {
+            q: "¿Conviene aprender la API o encargar el desarrollo?",
+            a: "Aprenderlo tiene sentido si hay muchas tareas distintas que automatizar, alguien del equipo tiene tiempo realmente asignado, y las reglas cambian seguido. Encargarlo tiene sentido si es una herramienta concreta, la necesitas funcionando este trimestre y va a usarla toda la oficina. En la práctica lo que mejor funciona es mixto: encargar la primera herramienta seria con el equipo participando del proceso.",
+          },
+        ],
+      },
+    },
+  },
   // ---- PERÚ · contenido geolocalizado (sólo ES) ------------------------------
   // Estos posts existen únicamente en español: la normativa y el mercado son
   // específicos de Perú. buildMetadata y el sitemap ya emiten hreflang sólo

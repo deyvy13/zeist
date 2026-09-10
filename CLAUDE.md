@@ -211,8 +211,8 @@ a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
 
 | Cluster | Pillar | Satélites |
 |---|---|---|
-| **C1 · Add-ins C#** (el diferenciador) | `desarrollo-add-ins-revit-civil-3d-guia-completa` | `crear-plugin-civil-3d-con-claude-code-sin-programar`, `dynamo-vs-csharp-civil3d-revit`, `cuanto-cuesta-un-add-in-revit-civil-3d` |
-| **C2 · Civil 3D** (el hueco más grande) | `automatizar-civil-3d-guia-completa` | `deja-de-usar-excel-y-perder-horas` |
+| **C1 · Add-ins C#** (el diferenciador) | `desarrollo-add-ins-revit-civil-3d-guia-completa` | `crear-plugin-civil-3d-con-claude-code-sin-programar`, `dynamo-vs-csharp-civil3d-revit`, `cuanto-cuesta-un-add-in-revit-civil-3d`, `revit-api-espanol-primeros-pasos` |
+| **C2 · Civil 3D** (el hueco más grande) | `automatizar-civil-3d-guia-completa` | `deja-de-usar-excel-y-perder-horas`, `automatizar-metrados-cubicaciones-civil-3d` |
 | **C3 · IA + BIM** (sin competencia) | `dynamo-csharp-con-ia-claude` | `guia-vibe-coding-para-empezar`, `crear-plugin-...-claude-code` |
 | **C4 · Carrera** (captación de funnel) | `programacion-para-ingenieros-civiles` | `aprende-a-programar-desde-cero`, `ramas-ingenieria-sistemas-especializaciones` |
 | **C5 · Perú / Corporativo** (dolor de dirección, ticket alto, SEO local) | `plan-bim-peru-obligatorio-guia-empresas` | `expediente-tecnico-observaciones-reducir`, `automatizacion-bim-trujillo-la-libertad`, `reprocesos-obra-costo-oculto`, `estandarizar-procesos-bim-empresa` |
@@ -252,9 +252,9 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   que faltan (C1 y C2) y los satélites de C2. Prioridad:
   1. "Automatizar Civil 3D: guía completa" (pillar C2)
   2. "Desarrollo de add-ins para Revit y Civil 3D: guía completa" (pillar C1)
-  3. "Automatizar metrados y cubicaciones en Civil 3D"
-  4. "Revit API en español: primeros pasos"
-  5. "10 scripts de Dynamo para Civil 3D"
+  3. ~~"Automatizar metrados y cubicaciones en Civil 3D"~~ (HECHO, sep-2026)
+  4. ~~"Revit API en español: primeros pasos"~~ (HECHO, sep-2026)
+  5. "10 scripts de Dynamo para Civil 3D" — siguiente
 - **Fase 5:** liberar las herramientas de `/herramientas` (hoy todas "Pronto").
 - **Contacto — WhatsApp es el único canal publicado.** Número en
   `site.whatsapp` (`lib/site.ts`); enlaces siempre vía `whatsappUrl(mensaje)`,

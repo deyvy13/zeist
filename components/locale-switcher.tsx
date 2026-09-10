@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { localeNames, locales, type Locale } from "@/lib/i18n";
+import { postLocales } from "@/lib/post-locales.generated";
 import { cn } from "@/lib/utils";
 
 // Swaps the leading locale segment of the current path, preserving the rest.
@@ -17,14 +18,25 @@ function swapLocale(pathname: string, next: Locale): string {
 export function LocaleSwitcher({ current }: { current: Locale }) {
   const pathname = usePathname() || `/${current}`;
 
+  // On a blog post, only offer locales that actually publish it. Not every
+  // post is translated (the Peru cluster is `es`-only), and blindly swapping
+  // the locale prefix would drop the reader on a 404. The lookup table is
+  // built at module load, so this stays a pure client-side check.
+  const slug = pathname.match(/^\/[^/]+\/blog\/([^/]+)\/?$/)?.[1];
+  const available = slug ? postLocales[slug] : undefined;
+
   return (
     <div className="flex items-center gap-1" role="group" aria-label="Idioma">
       {locales.map((l) => {
         const active = l === current;
+        // Missing translation: send them to that locale's blog index, which is
+        // a real page in their language, instead of a dead URL.
+        const missing = available ? !available.includes(l) : false;
+        const href = missing ? `/${l}/blog` : swapLocale(pathname, l);
         return (
           <Link
             key={l}
-            href={swapLocale(pathname, l)}
+            href={href}
             hrefLang={l}
             aria-current={active ? "true" : undefined}
             className={cn(

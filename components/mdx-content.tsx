@@ -30,6 +30,31 @@ const components: MDXComponents = {
   h3: (props) => (
     <h3 className="mt-8 scroll-mt-24 text-xl md:text-2xl" {...props} />
   ),
+  // Markdown tables (remarkGfm). Wrapped in their own scroll container so a
+  // wide table never forces the whole page to scroll sideways on a phone.
+  table: (props) => (
+    <div className="-mx-4 mt-6 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+      <table
+        className="w-full min-w-[30rem] border-collapse text-left text-sm"
+        {...props}
+      />
+    </div>
+  ),
+  thead: (props) => (
+    <thead className="border-b border-[color:var(--color-border)]" {...props} />
+  ),
+  th: (props) => (
+    <th
+      className="px-3 py-3 align-bottom text-xs font-semibold uppercase tracking-widest text-[color:var(--color-muted)] first:pl-0 last:pr-0"
+      {...props}
+    />
+  ),
+  td: (props) => (
+    <td
+      className="border-b border-[color:var(--color-hairline)] px-3 py-3 align-top leading-relaxed text-[color:var(--color-foreground)]/90 first:pl-0 last:pr-0"
+      {...props}
+    />
+  ),
   p: (props) => (
     <p className="mt-5 leading-relaxed text-[color:var(--color-foreground)]/90" {...props} />
   ),
@@ -65,13 +90,13 @@ const components: MDXComponents = {
   ),
   code: (props) => (
     <code
-      className="rounded-md bg-[color:var(--color-code-bg)] px-1.5 py-0.5 font-mono text-[0.9em] text-[color:var(--color-code-fg)]"
+      className="rounded-md bg-[color:var(--color-code-bg)] px-1.5 py-0.5 font-mono text-[0.9em] break-words text-[color:var(--color-code-fg)]"
       {...props}
     />
   ),
   pre: (props) => (
     <pre
-      className="mt-6 overflow-x-auto rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-ink-950)]/[0.03] p-5 text-sm"
+      className="mt-6 overflow-x-auto rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-ink-950)]/[0.03] p-4 text-[0.8125rem] sm:p-5 sm:text-sm"
       {...props}
     />
   ),
@@ -135,9 +160,11 @@ export function MdxContent({
   if (slug) {
     return (
       <StepsProvider slug={slug}>
+        {/* min-w-0 on the body column: without it a wide child (table, code
+            block) can stretch the grid track and push the page sideways. */}
         <div className="grid gap-10 xl:grid-cols-[220px_minmax(0,1fr)]">
           <PostTOC locale={locale} />
-          <div>{body}</div>
+          <div className="min-w-0">{body}</div>
         </div>
         <StepsProgress locale={locale} />
       </StepsProvider>

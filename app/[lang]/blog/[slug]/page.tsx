@@ -123,7 +123,7 @@ export default async function BlogPostPage({
   };
 
   return (
-    <article className="container-zeist py-16">
+    <article className="container-zeist py-10 sm:py-16">
       <ReadingProgress />
       <script
         type="application/ld+json"
@@ -153,11 +153,13 @@ export default async function BlogPostPage({
               </span>
             ))}
           </div>
-          <h1 className="mt-5 text-4xl md:text-5xl">{meta.title}</h1>
-          <p className="mt-4 text-lg text-[color:var(--color-muted)]">
+          <h1 className="mt-5 text-[1.75rem] leading-tight sm:text-4xl md:text-5xl">
+            {meta.title}
+          </h1>
+          <p className="mt-4 text-base text-[color:var(--color-muted)] sm:text-lg">
             {meta.description}
           </p>
-          <div className="mt-5 flex items-center gap-2 text-sm text-[color:var(--color-muted)]">
+          <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-[color:var(--color-muted)]">
             <span>{meta.author}</span>
             <span>·</span>
             <time dateTime={meta.date}>

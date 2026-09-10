@@ -85,17 +85,17 @@ export function TopicCard({
           onClick={() => ctx?.toggle(id)}
           aria-expanded={open}
           aria-controls={contentId}
-          className="relative flex w-full items-start gap-5 p-6 text-left md:p-8"
+          className="relative flex w-full items-start gap-3.5 p-5 text-left sm:gap-5 sm:p-6 md:p-8"
         >
           <span
-            className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl font-[family-name:var(--font-space-grotesk)] text-lg font-bold transition-colors ${
+            className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl font-[family-name:var(--font-space-grotesk)] text-base font-bold transition-colors sm:h-12 sm:w-12 sm:rounded-2xl sm:text-lg ${
               open
                 ? "bg-[color:var(--color-mint-500)] text-[color:var(--color-ink-950)]"
                 : "bg-[color:var(--color-mint-500)]/12 text-[color:var(--color-mint-700)]"
             }`}
           >
             {open ? (
-              <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <svg viewBox="0 0 24 24" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M5 12l5 5 9-11" />
               </svg>
             ) : (
@@ -104,8 +104,8 @@ export function TopicCard({
           </span>
 
           <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-baseline gap-3">
-              <h3 className="!mt-0 text-xl md:text-2xl">{title}</h3>
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
+              <h3 className="!mt-0 text-lg leading-snug sm:text-xl md:text-2xl">{title}</h3>
               {time && <span className="tag">{time}</span>}
             </div>
           </div>
@@ -113,7 +113,7 @@ export function TopicCard({
           <motion.span
             animate={{ rotate: open ? 180 : 0 }}
             transition={{ duration: 0.25 }}
-            className="ml-3 mt-1 text-[color:var(--color-mint-700)]"
+            className="ml-1 mt-1 shrink-0 text-[color:var(--color-mint-700)] sm:ml-3"
             aria-hidden
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -132,7 +132,7 @@ export function TopicCard({
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="overflow-hidden"
             >
-              <div className="relative px-6 pb-6 md:px-8 md:pb-8">
+              <div className="relative px-5 pb-5 sm:px-6 sm:pb-6 md:px-8 md:pb-8">
                 <div className="border-t border-[color:var(--color-hairline)] pt-4 text-[color:var(--color-foreground)]/90">
                   {children}
                 </div>

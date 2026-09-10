@@ -1,0 +1,268 @@
+---
+title: "Revit API en español: primeros pasos para automatizar Revit con C# (2026)"
+description: "Qué es la API de Revit explicada sin jerga, qué necesitas para empezar, cómo se estructura un add-in en C# y cuál es la primera automatización que conviene construir en una oficina."
+date: "2026-09-10T10:00:00.000Z"
+author: "Zeist"
+tags:
+  - Revit API
+  - C#
+  - Add-ins
+  - Revit
+  - Automatización BIM
+  - Programación
+---
+
+<BlogHero
+  eyebrow="Revit API · C# · Primeros pasos"
+  title="Revit puede hacer en segundos lo que tu equipo hace a mano cada semana. Sólo hay que pedírselo."
+  highlight="La API de Revit es la puerta para eso. Esta guía explica qué es en lenguaje llano, qué necesitas para empezar, y cuál es la primera automatización que de verdad conviene construir — no la que sale en los tutoriales."
+/>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **API** — La lista de cosas que Revit permite que un programa le pida. Como la carta de un restaurante: puedes pedir lo que está en la carta, no lo que se te ocurra.
+- **Add-in** — Un programa que se instala dentro de Revit y añade botones propios a la barra superior.
+- **C#** — El lenguaje de programación con el que se escriben los add-ins de Revit. Se pronuncia "si sharp".
+- **.NET** — La plataforma sobre la que corre C#. Viene con Windows; no hay que comprar nada.
+- **DLL** — El archivo que resulta de compilar tu código. Es lo que Revit carga al arrancar.
+- **Archivo .addin** — Un archivo de texto que le dice a Revit dónde está tu DLL y cómo cargarla.
+- **Transacción** — Todo cambio al modelo debe ir dentro de una. Es lo que permite deshacer con Ctrl+Z.
+- **Compilar** — Convertir el código que escribes en el archivo que Revit puede ejecutar.
+
+Si algún término te resulta opaco más adelante, vuelve aquí.
+</Callout>
+
+## Para quién es esto (y para quién no)
+
+**Es para ti si:** eres ingeniero, arquitecto o coordinador BIM, ya te defiendes bien en Revit, y hay tareas repetitivas que te consumen horas cada semana. No hace falta que sepas programar.
+
+**No es para ti si:** buscas un curso completo de C#. Esto es un mapa del terreno: qué es cada cosa, en qué orden aprenderla y qué construir primero. Para la ruta de aprendizaje completa está [programación para ingenieros civiles](/es/blog/programacion-para-ingenieros-civiles).
+
+<Callout type="warn" title="Antes de seguir: ¿de verdad necesitas la API?">
+Mucha gente llega a la API cuando lo que necesitaba era una **tabla de planificación**, un **parámetro compartido** o **Dynamo**. La API es la herramienta más potente y también la que más esfuerzo cuesta. Si tu problema se resuelve con lo que Revit ya trae, resuélvelo así. La API entra cuando ya agotaste eso.
+</Callout>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Qué es la API de Revit, sin jerga" time="~5 min">
+
+Revit guarda tu proyecto como una base de datos. Cada muro, cada puerta, cada vista y cada parámetro es un registro con propiedades.
+
+Cuando haces clic en un muro y cambias su altura, Revit está actualizando ese registro. La interfaz gráfica es sólo una forma cómoda de editar la base de datos.
+
+**La API es la otra forma de editarla: por instrucciones en vez de por clics.**
+
+Eso cambia dos cosas:
+
+- **Escala.** Lo que a mano son 400 clics, por instrucción es una orden que se ejecuta 400 veces.
+- **Repetibilidad.** La instrucción hace exactamente lo mismo cada vez. No se cansa ni se salta un elemento.
+
+### Lo que la API sí puede hacer
+
+- Leer cualquier propiedad de cualquier elemento del modelo.
+- Crear, modificar y borrar elementos.
+- Recorrer todos los elementos que cumplan un criterio y actuar sobre ellos.
+- Generar vistas, planos y tablas.
+- Exportar información a Excel, CSV o cualquier otro formato.
+- Añadir botones propios a la barra superior de Revit.
+
+### Lo que no
+
+- Hacer algo que Revit no permite hacer de ninguna manera. La API no expande lo que Revit sabe hacer; expone lo que ya sabe.
+- Arreglar un modelo mal construido. Automatizar sobre un modelo desordenado escala el desorden.
+
+<Callout type="info" title="Nota sobre la barra superior">
+En la documentación oficial de Autodesk verás esa barra llamada **ribbon**. Es lo mismo que aquí llamamos "la barra superior de Revit". Si buscas en inglés, ese es el término.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Qué necesitas para empezar (todo gratis)" time="~5 min">
+
+La lista es más corta de lo que la gente supone, y no cuesta dinero.
+
+**Revit instalado.** El que ya usas. Anota la versión exacta: un add-in compilado para Revit 2024 no carga en 2026 sin recompilar.
+
+**Visual Studio Community.** El editor donde escribes el código. Es gratuito para uso individual y pequeñas empresas. Al instalarlo, marca la carga de trabajo de **desarrollo de escritorio con .NET**.
+
+**Las librerías de Revit.** Son dos archivos que ya están en tu computadora, dentro de la carpeta de instalación de Revit: `RevitAPI.dll` y `RevitAPIUI.dll`. No se descargan, se referencian desde tu proyecto.
+
+**La documentación.** El *Revit API Docs* de la comunidad y el *Revit Developers Guide* de Autodesk. Están en inglés — es la principal barrera de entrada, y la razón por la que casi todo el contenido bueno de este tema está en ese idioma.
+
+<ComparisonTable
+  criterionLabel="Necesitas"
+  leftLabel="Realidad"
+  rightLabel="Mito frecuente"
+  rows="Licencia extra de Autodesk | *No, con tu Revit basta | Hay que pagar un SDK || Editor de código | *Visual Studio Community, gratis | Una licencia cara || Saber programar antes | *No, se aprende sobre el caso real | Hay que estudiar C# 6 meses primero || Computadora especial | *La misma que corre Revit | Un equipo de desarrollo || Inglés | Sí, para la documentación | Se puede sin nada de inglés"
+/>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Cómo está armado un add-in por dentro" time="~7 min">
+
+Un add-in de Revit tiene tres piezas. Entender qué hace cada una te ahorra mucha confusión.
+
+**1. El comando.** El código que se ejecuta cuando el usuario aprieta tu botón. Es el punto de entrada: Revit te entrega el documento abierto y tú haces lo tuyo.
+
+**2. El archivo `.addin`.** Un archivo de texto que le dice a Revit dónde está tu programa. Va en una carpeta específica del sistema y Revit lo lee al arrancar. Sin él, tu add-in no existe para Revit.
+
+**3. La DLL compilada.** El resultado de compilar tu código. Es lo que el archivo `.addin` apunta.
+
+### La estructura que evita el dolor a los 6 meses
+
+Casi todos los tutoriales meten todo el código dentro del comando. Funciona para un ejemplo y se vuelve inmanejable en cuanto crece. La estructura que sí aguanta separa tres responsabilidades:
+
+- **Comando** — recibe el clic, muestra mensajes al usuario, maneja errores. Nada de lógica de negocio.
+- **Servicio** — la lógica real: qué hay que calcular, con qué reglas. No sabe nada de ventanas ni de botones.
+- **Acceso al modelo** — leer y escribir en Revit. Aislado, para que cambiar de versión de Revit toque un solo sitio.
+
+<AnimatedFlow
+  title="Las capas de un add-in que aguanta"
+  nodes="Comando|Servicio|Acceso al modelo|Revit"
+  subs="El clic y los mensajes|Las reglas del negocio|Leer y escribir|La base de datos"
+/>
+
+<Callout type="success" title="Por qué esta separación importa de verdad">
+Cuando salga Revit 2027 y algo cambie en la API, sólo tocas la capa de acceso al modelo. Si mezclaste todo en el comando, vas a revisar el archivo entero buscando qué se rompió. Es la diferencia entre una tarde y una semana.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. La transacción: la regla que no se negocia" time="~5 min">
+
+Si vas a recordar una sola cosa técnica de esta guía, que sea esta.
+
+**Todo cambio al modelo tiene que ir dentro de una transacción.** Sin excepción. Revit lanza un error si intentas modificar algo fuera de una.
+
+No es burocracia. Es lo que hace posible el Ctrl+Z: la transacción agrupa un conjunto de cambios en una unidad. O se aplican todos, o no se aplica ninguno.
+
+El patrón es siempre el mismo:
+
+1. Abres la transacción, con un nombre descriptivo.
+2. Haces todos los cambios.
+3. La confirmas.
+
+Si algo falla en medio, la cancelas y el modelo queda **exactamente como estaba**. Nada a medias.
+
+<Callout type="warn" title="El error de principiante más caro">
+Abrir una transacción por cada elemento dentro de un bucle. Si procesas 3.000 elementos, creas 3.000 transacciones y el proceso tarda minutos en vez de segundos — además de llenar el historial de deshacer. **Una transacción envuelve todo el lote**, no cada iteración.
+</Callout>
+
+### El nombre de la transacción sí importa
+
+Ese nombre es lo que el usuario ve en el menú de deshacer. "Transacción1" no le dice nada a nadie. "Renombrar vistas por estándar" sí. Es un detalle de dos segundos que cambia la percepción de calidad de tu herramienta.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Tu primera automatización: elige bien" time="~7 min">
+
+Casi todos los tutoriales empiezan creando un muro. Es un mal primer proyecto: nadie necesita crear muros por código, y no resuelve ningún dolor real.
+
+**Los criterios de un buen primer proyecto:**
+
+- Que sea una tarea que **hoy haces a mano** y te molesta.
+- Que **sólo lea** el modelo, sin modificarlo. Cero riesgo mientras aprendes.
+- Que el resultado se pueda **verificar a simple vista**.
+- Que se pueda terminar en **pocas horas**.
+
+**Candidatos que cumplen los cuatro:**
+
+**Exportar un listado de elementos a Excel.** Recorres todos los elementos de una categoría, lees los parámetros que te interesan, y escribes un archivo. Útil desde el primer día y sin riesgo.
+
+**Auditar nomenclatura.** Recorres las vistas (o las familias, o los niveles) y listas las que no cumplen el estándar de la oficina. No cambia nada: sólo reporta. Es la herramienta que más rápido se gana la confianza del equipo.
+
+**Contar y clasificar.** Cuántos elementos hay de cada tipo, agrupados como los necesita tu presupuesto.
+
+**Detectar parámetros vacíos.** Lista los elementos a los que les falta información obligatoria antes de una entrega.
+
+<ComparisonTable
+  criterionLabel="Primer proyecto"
+  leftLabel="Auditar nomenclatura"
+  rightLabel="Crear un muro"
+  rows="Resuelve un dolor real | *Sí, todas las semanas | No || Riesgo sobre el modelo | *Ninguno, sólo lee | Modifica el modelo || Verificable a simple vista | *Sí, es una lista | Sí || Se termina en | *Unas horas | Unas horas || Lo va a usar el equipo | *Sí | No || Te enseña lo importante | *Recorrer y filtrar el modelo | Poco aplicable"
+/>
+
+<Callout type="success" title="El orden que funciona">
+Primero herramientas que **sólo leen**. Cuando ya te sientas cómodo recorriendo y filtrando el modelo, pasa a las que **escriben**. Ese salto es donde aparecen las transacciones y donde un error sí tiene consecuencias.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Los cinco tropiezos del primer mes" time="~6 min">
+
+Se repiten con una regularidad casi cómica. Saberlos de antemano ahorra días.
+
+**1. "Mi add-in no aparece en Revit."** Casi siempre es el archivo `.addin`: está en la carpeta equivocada, o la ruta a la DLL no coincide, o Revit no se reinició. Revisa esas tres antes que el código.
+
+**2. "Funcionaba y ahora no carga."** Actualizaste Revit. Un add-in compilado contra las librerías de una versión no carga en otra. Hay que recompilar apuntando a las nuevas.
+
+**3. "Me da error al modificar el modelo."** Falta la transacción, o está mal cerrada.
+
+**4. "Tarda muchísimo."** Casi siempre son transacciones dentro de un bucle, o recorrer todo el modelo varias veces en vez de una. Recorre una vez, guarda lo que necesitas, y trabaja sobre eso.
+
+**5. "Funciona en mi máquina pero no en la de mi compañero."** Rutas absolutas escritas a mano, o falta desplegar la DLL. Es el momento de armar un instalador de verdad en vez de copiar archivos a mano.
+
+<Callout type="info" title="Cómo acelerar mucho esta curva">
+Una herramienta de IA como Claude puede explicarte errores, escribir el andamiaje del proyecto y sugerir cómo estructurarlo. **No reemplaza entender lo que hace tu código** — pero convierte semanas de pelearse con la documentación en días. El método está en [Dynamo y plugins C# con IA](/es/blog/dynamo-csharp-con-ia-claude) y el recorrido completo en [crear un plugin sin ser programador](/es/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. ¿Aprenderlo o encargarlo?" time="~5 min">
+
+Es una decisión de negocio, no técnica, y conviene tomarla con los ojos abiertos.
+
+**Tiene sentido aprenderlo si:**
+
+- Hay muchas tareas distintas que automatizar, no una.
+- Alguien del equipo tiene interés genuino y tiempo asignado — no "en los ratos libres".
+- Las reglas cambian seguido y quieres poder ajustarlas sin depender de nadie.
+
+**Tiene sentido encargarlo si:**
+
+- Es una herramienta concreta y bien definida.
+- La necesitas funcionando este trimestre, no el próximo año.
+- Nadie del equipo tiene tiempo real disponible.
+- Va a usarla toda la oficina y tiene que ser robusta desde el día uno.
+
+**Lo que mejor funciona en la práctica es mixto:** encargar la primera herramienta seria y pedir que el equipo participe del proceso. Se resuelve el problema urgente y queda capacidad instalada para lo siguiente.
+
+<Callout type="warn" title="El cálculo que casi nadie hace">
+Antes de decidir, pon número a las horas que la tarea consume hoy, multiplicado por las veces al año que se repite. Ese número es el presupuesto que la herramienta tiene disponible. Suele ser bastante mayor de lo que la gente supone — el desglose está en [cuánto cuesta un add-in](/es/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+</Callout>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Add-ins para Revit"
+  title="¿Quieres empezar con la API de Revit o prefieres que lo construyamos?"
+  body="Hacemos las dos cosas: desarrollamos add-ins a medida en C# y damos mentorías para que tu equipo los mantenga por su cuenta. Somos ingenieros civiles e ingenieros de sistemas."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver cursos y mentorías"
+  secondaryHref="/es/servicios/cursos-mentorias-bim"
+/>
+
+## Recursos relacionados
+
+- **La guía madre:** [desarrollo de add-ins para Revit y Civil 3D, la guía completa](/es/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+- **Antes de la API, valida con Dynamo:** [Dynamo o C#, cuál conviene en cada caso](/es/blog/dynamo-vs-csharp-civil3d-revit).
+- **El recorrido end-to-end:** [crear un plugin sin ser programador](/es/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).
+- **Si vienes de cero:** [programación para ingenieros civiles](/es/blog/programacion-para-ingenieros-civiles).
+- **Para presupuestar:** [cuánto cuesta un add-in para Revit o Civil 3D](/es/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+- **El equivalente en infraestructura:** [automatizar Civil 3D, la guía completa](/es/blog/automatizar-civil-3d-guia-completa).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Entendemos el modelo porque lo hemos construido, y sabemos programar la herramienta que lo ordena. Desarrollamos add-ins en C# para Revit y Civil 3D para oficinas de todo el Perú y Latinoamérica."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**¿Te sirvió?** Compártelo con quien en tu oficina siempre dice "esto debería poder hacerse solo". Casi siempre tiene razón.
