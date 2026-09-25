@@ -20,6 +20,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
   "automatizar-metrados-cubicaciones-civil-3d": [
     "es"
   ],
+  "banco-de-ductos-civil-3d": [
+    "es",
+    "pt",
+    "en"
+  ],
   "crear-plugin-civil-3d-con-claude-code-sin-programar": [
     "es",
     "pt",
@@ -66,12 +71,22 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
   "plan-bim-peru-obligatorio-guia-empresas": [
     "es"
   ],
+  "plugin-civil-3d-dibujo-3d-automatizado": [
+    "es",
+    "pt",
+    "en"
+  ],
   "programacion-para-ingenieros-civiles": [
     "es",
     "pt",
     "en"
   ],
   "ramas-ingenieria-sistemas-especializaciones": [
+    "es",
+    "pt",
+    "en"
+  ],
+  "redes-tuberias-civil-3d-accesorios": [
     "es",
     "pt",
     "en"

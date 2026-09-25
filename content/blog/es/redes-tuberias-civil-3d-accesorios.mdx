@@ -1,0 +1,242 @@
+---
+title: "Redes de tuberías en Civil 3D: agua potable, alcantarillado y accesorios (codos, tees, yees) en 3D"
+seoTitle: "Redes de tuberías Civil 3D: codos, tees y yees en 3D"
+description: "Cómo modelar en 3D redes de agua potable y alcantarillado en Civil 3D, con codos, tees, yees, reducciones y válvulas, y cómo automatizar la colocación de accesorios y su metrado con un plugin."
+date: "2026-09-25T09:00:00.000Z"
+author: "Zeist"
+tags:
+  - Redes de tuberías
+  - Agua potable
+  - Alcantarillado
+  - Accesorios de tuberías
+  - Civil 3D
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Redes de agua potable y alcantarillado"
+  title="Dibujar la red en planta toma una tarde. Colocar cada codo, tee y yee en 3D toma una semana."
+  highlight="Y cada vez que cambia el trazo, esa semana vuelve a empezar. Esta guía explica cómo modela Civil 3D las redes de agua potable y alcantarillado, dónde se va realmente el tiempo, y qué parte se puede dejar a un plugin que coloca los accesorios solo."
+/>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Red por gravedad** — La que funciona por pendiente, sin presión: alcantarillado sanitario y pluvial. En Civil 3D se llama *red de tuberías*.
+- **Red a presión** — La que trabaja con presión: agua potable, líneas de conducción e impulsión. En Civil 3D se llama *red de tuberías a presión*.
+- **Accesorio** — Cada pieza que une o desvía tubos: codos, tees, cruces, yees, reducciones, tapones, válvulas, hidrantes.
+- **Codo** — Cambia la dirección del tubo. Se fabrican en ángulos fijos: 11.25°, 22.5°, 45° y 90°.
+- **Tee y yee** — Derivaciones. La tee sale a 90°; la yee sale en ángulo, típica en conexiones de desagüe.
+- **Buzón o cámara** — La estructura de inspección de una red por gravedad, donde llegan y salen tubos.
+- **Catálogo de piezas** — La biblioteca de tubos y accesorios reales, con diámetros y materiales, que Civil 3D usa para dibujar.
+- **Lista de piezas** — La selección de ese catálogo que usa un proyecto concreto.
+- **Plugin** — Un programa que se instala dentro de Civil 3D y agrega botones propios en la barra superior.
+
+Sin términos de programación. Está escrito para proyectistas de saneamiento, no para desarrolladores.
+</Callout>
+
+## El dibujo en planta no es el modelo
+
+Casi todas las oficinas diseñan la red de agua potable o alcantarillado igual: polilíneas en planta, una capa por diámetro, bloques 2D para los accesorios y un cuadro de metrados en una hoja aparte.
+
+Funciona para el plano. Pero no es un modelo. No sabe a qué profundidad va cada tubo, no sabe si un codo de 45° de verdad cabe en ese quiebre, y no sabe que dos redes se cruzan a la misma cota.
+
+Pasar eso a 3D en Civil 3D es posible —el programa tiene herramientas específicas— pero hacerlo a mano tiene un costo que casi nadie cuenta:
+
+- Crear la red tramo por tramo desde las polilíneas
+- Elegir **cada accesorio** según el ángulo y el diámetro del nudo
+- Ajustar profundidades para respetar el recubrimiento mínimo
+- Rotular tubos, accesorios y buzones
+- Contar los accesorios para el metrado
+- Y cuando el trazo cambia, **repetir todo**
+
+<AnimatedFlow
+  title="El flujo manual que se repite en cada revisión"
+  nodes="Polilíneas 2D|Red pieza por pieza|Accesorio por accesorio|Metrado a mano"
+  subs="Una capa por diámetro|Horas de clic|Ángulo, diámetro, material|Y otra vez si cambia el trazo"
+  warnCount="4"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Dos tipos de red: gravedad y presión" time="~5 min">
+
+Civil 3D no trata igual una red de alcantarillado que una de agua potable, porque no se comportan igual. Conviene entenderlo antes de automatizar nada, porque las reglas cambian por completo.
+
+**Red por gravedad (alcantarillado sanitario y pluvial).** Lo que manda es la **pendiente**. Los tubos van de buzón a buzón en línea recta, y la cota de cada tramo depende de la pendiente mínima y de la profundidad de los buzones. Los accesorios aparecen sobre todo en las conexiones: yees y codos para empalmar las conexiones domiciliarias.
+
+**Red a presión (agua potable, conducción, impulsión).** Lo que manda es el **recubrimiento**: el tubo sigue el terreno a una profundidad mínima. Aquí los accesorios son el centro del diseño: cada cambio de dirección es un codo, cada derivación es una tee, cada cambio de diámetro es una reducción, y encima van válvulas e hidrantes.
+
+<ComparisonTable
+  criterionLabel="Aspecto"
+  leftLabel="Red por gravedad"
+  rightLabel="Red a presión"
+  rows="Ejemplos | Alcantarillado sanitario y pluvial | Agua potable, conducción, impulsión || Qué controla la cota | Pendiente entre buzones | Recubrimiento sobre el terreno || Estructuras | Buzones, cámaras, sumideros | Cámaras de válvulas, hidrantes || Accesorios típicos | Yees y codos en conexiones | Codos, tees, cruces, reducciones, válvulas || Objeto en Civil 3D | Red de tuberías | Red de tuberías a presión || Dónde duele más a mano | Cotas y pendientes | Elegir cada accesorio"
+/>
+
+<Callout type="warn" title="El error de mezclar las dos">
+Intentar modelar agua potable como red por gravedad —tubos rectos entre estructuras— es el atajo más común y el más caro. Pierdes los accesorios reales, el metrado de piezas sale mal y el modelo no sirve para detectar interferencias con la profundidad correcta.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Los accesorios: qué son y cómo los dibuja Civil 3D" time="~6 min">
+
+Un accesorio no es un dibujo: es una pieza que se compra. Por eso el modelo tiene que usar las piezas que de verdad existen en el catálogo del fabricante, con sus diámetros y ángulos reales.
+
+**Los que aparecen en casi toda red:**
+
+- **Codos de 11.25°, 22.5°, 45° y 90°.** No existe el codo de 37°. Si el trazo quiebra en 37°, hay que decidir: combinar piezas, usar la deflexión que permite la junta del tubo, o ajustar el trazo.
+- **Tees.** Derivación a 90°. En agua potable, cada ramal que sale de la principal.
+- **Cruces.** Dos derivaciones opuestas en el mismo punto.
+- **Yees.** Derivación en ángulo, normalmente a 45°. Es la pieza típica de las conexiones de desagüe.
+- **Reducciones.** Cambio de diámetro en la misma línea.
+- **Tapones.** Cierre del extremo de una línea.
+- **Válvulas e hidrantes.** No cambian la geometría, pero se ubican sobre la red y se cuentan en el metrado.
+
+**De dónde salen en Civil 3D.** El programa trae **catálogos de piezas** con tubos y accesorios por material (PVC, hierro dúctil, HDPE, según el catálogo). De ese catálogo armas una **lista de piezas** para el proyecto: los diámetros y materiales que vas a usar. Si un diámetro no está en la lista de piezas, Civil 3D simplemente no puede dibujarlo.
+
+<Callout type="info" title="Bloques 2D o piezas 3D">
+Mucha gente busca *accesorios de tuberías en DWG*: bloques 2D para dibujar el plano. Sirven para el plano, pero no saben su diámetro, no se conectan con el tubo y no se cuentan solos. Una pieza de catálogo en Civil 3D sí: está conectada, tiene cota y aparece en las tablas. Esa diferencia es la que hace posible automatizar.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Dónde se va el tiempo en el flujo manual" time="~6 min">
+
+Si le preguntas a un proyectista de saneamiento qué le quita más horas, rara vez dice *dibujar*. Dice todo lo que viene después.
+
+**1. Elegir el accesorio correcto en cada nudo.** Una red de agua potable urbana puede tener cientos de nudos. En cada uno hay que mirar el ángulo, los diámetros que llegan y salen, y decidir la pieza: codo de 22.5°, tee reducida, cruz. Es trabajo mecánico, pero con cien decisiones por plano.
+
+**2. Respetar el recubrimiento en todo el recorrido.** Donde el terreno sube o baja, la tubería tiene que seguirlo sin quedar demasiado superficial ni demasiado profunda. A mano se revisa por tramos y siempre queda alguno sin revisar.
+
+**3. Rehacer cuando cambia el trazo.** Se mueve una calle, se reubica una válvula, cambia un diámetro. Cada cambio arrastra accesorios, cotas y rótulos.
+
+**4. Rotular.** Diámetro, material, longitud, pendiente en cada tramo; tipo en cada accesorio; cotas en cada buzón.
+
+**5. Contar las piezas.** El metrado de accesorios —cuántos codos de 45° de 110 mm, cuántas tees de 160 x 110— casi siempre se hace contando en el plano. Es la tabla con más errores de todo el expediente.
+
+<ComparisonTable
+  criterionLabel="Tarea"
+  leftLabel="Automatizada"
+  rightLabel="Manual"
+  rows="Crear la red desde las polilíneas | *Minutos | Uno o dos días || Elegir cada accesorio | *Por regla, en cada nudo | Nudo por nudo || Revisar recubrimiento | *Toda la red, siempre | Por muestreo || Rehacer tras cambio de trazo | *Volver a ejecutar | Repetir todo || Metrado de accesorios | *Tabla generada del modelo | Conteo sobre el plano || Riesgo de pieza que no existe | *Ninguno, sale del catálogo | Alto"
+/>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Qué hace un plugin para dibujar la red en 3D" time="~8 min">
+
+Aquí está el cambio de fondo. Las herramientas nativas de Civil 3D permiten crear una red desde una polilínea, pero la decisión de **qué pieza va en cada nudo** sigue siendo tuya. Un plugin hecho para tu oficina aplica tus reglas en todos los nudos a la vez.
+
+**Lo que hace, paso a paso:**
+
+1. **Lee tu plano 2D.** Toma las polilíneas de cada capa (una por diámetro y material, como ya trabajas) y las interpreta como tramos.
+2. **Crea la red en Civil 3D.** Red de tuberías a presión para agua potable, red de tuberías para alcantarillado, con las piezas de tu lista.
+3. **Elige el accesorio de cada nudo por regla.** Mide el ángulo del quiebre y lo lleva al codo comercial más cercano. Si llega un ramal, coloca tee o yee según el tipo de red. Si cambia el diámetro, coloca la reducción. Si no existe una pieza válida, **te avisa** en vez de inventar una.
+4. **Ajusta las cotas.** En agua potable, sigue el terreno con el recubrimiento mínimo. En alcantarillado, respeta pendientes mínimas y profundidades de buzón.
+5. **Rotula** con el estilo de tu empresa.
+6. **Genera el metrado de accesorios**: tabla por tipo, ángulo, diámetro y material, lista para el presupuesto.
+
+<AnimatedFlow
+  title="El mismo trabajo, con plugin"
+  nodes="Polilíneas por capa|Red 3D con piezas reales|Accesorios por regla|Tabla de accesorios"
+  subs="Tu plano de siempre|Del catálogo del proyecto|Codo, tee, yee, reducción|Lista para el presupuesto"
+/>
+
+<Callout type="success" title="Por qué esto es más que ahorrar clics">
+Cuando las piezas salen de una regla escrita, **todos los proyectos de la oficina se modelan igual**. El metrado de accesorios deja de depender de quién contó, y las observaciones por cantidades que no cuadran con el plano desaparecen.
+</Callout>
+
+<Callout type="info" title="Dynamo o plugin">
+Para probar las reglas conviene empezar en **Dynamo**, que arma rutinas conectando bloques sin escribir código. Cuando la rutina se usa en cada proyecto y la abren varias personas, se lleva a un **plugin**: un botón en la barra superior de Civil 3D. La comparación completa está en [Dynamo o C#: cuál conviene en cada caso](/es/blog/dynamo-vs-csharp-civil3d-revit).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Las reglas que tienes que definir antes" time="~6 min">
+
+El plugin aplica reglas; no las inventa. Estas son las que hay que escribir antes de automatizar, idealmente en una página que el equipo apruebe:
+
+**Material y catálogo por diámetro.** Qué material usa la oficina para cada rango de diámetros y de qué catálogo salen las piezas.
+
+**Recubrimiento mínimo y profundidad máxima.** Para agua potable, cuánto tiene que quedar enterrado el tubo en calzada y en vereda.
+
+**Ángulos permitidos.** Hasta qué deflexión se absorbe en la junta del tubo y desde cuándo se coloca codo. Qué hacer cuando el quiebre cae entre dos codos comerciales.
+
+**Tee o yee.** Cuándo una derivación se resuelve con tee y cuándo con yee. En alcantarillado, la yee es la regla en conexiones; en agua potable, la tee.
+
+**Pendientes y buzones.** Para alcantarillado: pendiente mínima por diámetro, distancia máxima entre buzones, caída mínima en el buzón.
+
+**Normativa.** La que aplique en tu país y la que exija la empresa de agua. En Perú, las normas OS.050 y OS.070 del Reglamento Nacional de Edificaciones cubren redes de agua y de desagüe.
+
+<Callout type="warn" title="Si las reglas no están escritas, el plugin no puede aplicarlas">
+Prueba rápida: pide a dos proyectistas que elijan los accesorios de la misma red por separado. Si no coinciden, primero hay que acordar el criterio. Automatizar un criterio que no existe solo produce errores más rápido.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Los problemas más buscados (y su causa real)" time="~6 min">
+
+Hay búsquedas que se repiten en todos los foros. Casi siempre tienen la misma causa, y casi nunca es un error del programa.
+
+**Civil 3D no dibuja las tuberías.** Lo más frecuente: la lista de piezas no tiene el diámetro o material que intentas usar, o la red se está creando en modo *solo estructuras*. Revisa la lista de piezas antes que nada.
+
+**La lista de piezas no sincroniza con el catálogo.** Suele pasar cuando el catálogo está en otra ruta (por ejemplo, en una carpeta de red) o cuando cada computadora apunta a un catálogo distinto. Hay que fijar la ruta con el comando para establecer el catálogo de la red y usar la misma en toda la oficina.
+
+**Los accesorios no se conectan al tubo.** Diámetro o tipo de junta incompatible entre pieza y tubo en el catálogo. Civil 3D no conecta piezas que en la realidad no encajan.
+
+**Las reglas mueven las cotas a lugares imposibles.** En redes por gravedad, reglas de recubrimiento y pendiente que chocan entre sí. La red cumple una y rompe la otra.
+
+<Callout type="success" title="Lo que tienen en común">
+Los cuatro problemas se evitan con **catálogo y lista de piezas centralizados** y reglas escritas. Es la misma base que necesita un plugin: por eso ordenar esto primero sirve aunque nunca llegues a automatizar.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Cómo empezar sin frenar los proyectos" time="~5 min">
+
+**Semana 1 · Centraliza catálogo y lista de piezas.** Una sola ruta para toda la oficina. Una lista de piezas por tipo de red, con los diámetros y materiales que de verdad usan.
+
+**Semana 2 · Escribe las reglas.** Una página: materiales, recubrimientos, ángulos, tee o yee, pendientes. Que la revisen dos proyectistas.
+
+**Semana 3 · Prueba con una red real.** Toma un proyecto terminado, genera la red con las reglas (en Dynamo o con un plugin piloto) y compara el metrado de accesorios contra el que ya entregaste. Las diferencias te dicen qué regla falta.
+
+**Semana 4 · Úsalo en un proyecto en curso.** Con revisión manual en paralelo. Mide cuántas horas tomó y cuántas tomaba antes.
+
+Si el ahorro es claro y la herramienta se usará en cada proyecto de saneamiento, ahí se justifica el plugin instalable para todo el equipo.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automatización Civil 3D"
+  title="¿Cuántos accesorios eliges a mano en cada red?"
+  body="Desarrollamos plugins para Civil 3D que convierten tu plano 2D en una red 3D con piezas reales, colocan codos, tees y yees por regla y generan el metrado de accesorios. Somos ingenieros civiles e ingenieros de sistemas."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **La guía del cluster:** [plugin para Civil 3D: dibujo 3D automatizado de redes](/es/blog/plugin-civil-3d-dibujo-3d-automatizado).
+- **La otra red enterrada:** [banco de ductos en Civil 3D, modelado 3D y automatización](/es/blog/banco-de-ductos-civil-3d).
+- **Del modelo al metrado:** [automatizar metrados y cubicaciones en Civil 3D](/es/blog/automatizar-metrados-cubicaciones-civil-3d).
+- **La guía madre:** [automatizar Civil 3D, la guía completa](/es/blog/automatizar-civil-3d-guia-completa).
+- **Qué herramienta usar:** [Dynamo o C#, cuál conviene en cada caso](/es/blog/dynamo-vs-csharp-civil3d-revit).
+- **Si vas a encargarlo:** [cuánto cuesta un add-in para Revit o Civil 3D](/es/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Hemos diseñado redes de agua potable y alcantarillado, y sabemos construir la herramienta que las modela sola. Trabajamos con oficinas de saneamiento de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**¿Te sirvió?** Compártelo con quien diseña las redes en tu oficina. Contar cuántos nudos tiene la última red que entregaron suele ser el argumento más convincente.

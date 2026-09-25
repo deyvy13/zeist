@@ -36,7 +36,7 @@ export async function generateMetadata({
   return buildMetadata({
     locale,
     path: `blog/${slug}`,
-    title: post.meta.title,
+    title: post.meta.seoTitle ?? post.meta.title,
     description: post.meta.description,
     keywords: post.meta.tags,
     ogImage: post.meta.cover,

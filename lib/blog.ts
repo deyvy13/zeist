@@ -15,6 +15,12 @@ export type PostMeta = {
   slug: string;
   locale: Locale;
   title: string;
+  /**
+   * Short title for the <title> tag and OG cards. Google truncates titles at
+   * ~60 characters, and the layout appends " — Zeist", so keep this to ~52.
+   * The full `title` remains the on-page <h1>. Falls back to `title`.
+   */
+  seoTitle?: string;
   description: string;
   date: string; // ISO
   tags: string[];
@@ -54,6 +60,7 @@ export function getPost(locale: Locale, slug: string): Post | null {
     slug,
     locale,
     title: String(data.title ?? slug),
+    seoTitle: data.seoTitle ? String(data.seoTitle) : undefined,
     description: String(data.description ?? ""),
     date: String(data.date ?? new Date().toISOString()),
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],

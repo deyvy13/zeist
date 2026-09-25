@@ -1,0 +1,206 @@
+---
+title: "Duct Banks in Civil 3D: How to Model Them in 3D and Automate Underground Electrical Design"
+seoTitle: "Duct Banks in Civil 3D: Automated 3D Modeling"
+description: "How to model an electrical or telecom duct bank in Civil 3D — conduits, concrete encasement, spacers, manholes and crossings with other utilities. The options that exist today and what a plugin can automate."
+date: "2026-09-25T10:00:00.000Z"
+author: "Zeist"
+tags:
+  - Duct bank
+  - Underground electrical
+  - Conduit
+  - Civil 3D
+  - 3D modeling
+  - BIM automation
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Electrical duct banks"
+  title="Civil 3D has no button for drawing a duct bank. That's why almost everyone still draws them in 2D."
+  highlight="And in 2D you can't see that the medium-voltage duct bank runs 4 inches from the sewer main. This guide covers the real ways to model a duct bank in 3D, which one fits which project, and what can be automated."
+/>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain language">
+- **Duct bank** — A group of buried conduits, arranged in rows and columns, that carry electrical or telecom cables. Usually encased in concrete.
+- **Conduit** — Each pipe in the bank (typically PVC or HDPE). The cables run inside.
+- **Encasement** — The block of concrete that surrounds and protects the conduits.
+- **Spacers** — Pieces that hold the conduits apart while the concrete is poured.
+- **Manhole or handhole** — The buried vault where the bank changes direction or where cables are pulled and spliced.
+- **Alignment and profile** — In Civil 3D, the route in plan and the elevation along that route.
+- **Corridor** — The Civil 3D object that repeats a typical section along an alignment. It's how roads are modeled.
+- **Plugin** — A program installed inside Civil 3D that adds its own buttons to the toolbar at the top.
+
+No programming jargon. This is written for electrical and civil designers.
+</Callout>
+
+## The duct bank is the network nobody models
+
+An urban project packs water, sanitary sewer, storm drainage, gas, telecom and power into the same street. Water and sewer networks have their own tools in Civil 3D. **Duct banks don't.**
+
+The result is predictable: water and sewer get modeled in 3D, but the electrical duct bank stays as a line in plan and a typical section on a detail sheet. Nobody knows its exact elevation at every point, and crossings with other utilities get sorted out in the field.
+
+That's where the expensive problem shows up: the duct bank trench hits a sewer main that wasn't where everyone assumed, or the bank won't fit under a water main without breaking minimum cover. Redesign in the field, with the crew waiting.
+
+<AnimatedFlow
+  title="What happens when the duct bank stays in 2D"
+  nodes="Line in plan|Typical detail section|Assumed elevation|Crossing found in the field"
+  subs="No real depth|Same everywhere|Nobody checked it|Redesign with the trench open"
+  warnCount="4"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. What you need to model in a duct bank" time="~5 min">
+
+A duct bank isn't one pipe: it's an assembly of several pieces, and each one matters for something different.
+
+**The conduit matrix.** Rows and columns: 2x2, 2x3, 3x4. Each conduit with its size and position. That defines how many circuits fit.
+
+**Conduit spacing.** Whatever the specification requires for heat dissipation and for the concrete to flow.
+
+**The concrete encasement.** With its cover above and beside the conduits. It sets the bank's real width and height — and therefore what it clashes with.
+
+**Depth.** Minimum cover from finished grade to the top of the encasement. It changes under roadway versus under sidewalk.
+
+**Manholes and handholes.** At every sharp change of direction, at splices, and at a maximum spacing so cables can be pulled.
+
+**The trench.** Excavation width and depth — what gets paid for and what gets scheduled in the field.
+
+<Callout type="info" title="Standardized configurations">
+Many utilities publish standard duct bank types: matrices, sizes and cover already defined by code. If you work with a utility that has them, **that catalog is exactly what a plugin needs**: you pick the type and the model comes out with the right dimensions.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. The three ways to model it in Civil 3D today" time="~8 min">
+
+Civil 3D has no dedicated duct bank object. In practice there are three routes, and each one is good for something different.
+
+**1. A corridor with a duct bank typical section.** You build the section (conduits plus encasement) as an assembly, usually with **Subassembly Composer**, Autodesk's tool for creating custom typical sections. The corridor repeats it along the alignment and profile. It's the most *native* route: the bank follows the layout, and you get sections plus excavation and concrete volumes.
+
+**2. A pipe network with parallel conduits.** Each conduit is a pipe in a network, offset from the centerline. You can use Civil 3D's pipe network interference check and label each conduit. But keeping 6 or 12 parallel pipes in sync when the layout changes is tedious, and the concrete encasement doesn't exist as an object.
+
+**3. 3D solids by sweep.** Sweep the duct bank section along a 3D polyline. It's quick, and it looks right in cross-discipline coordination. But it's a *dead* object: it doesn't update when the route changes and it can't be labeled.
+
+<ComparisonTable
+  criterionLabel="Criterion"
+  leftLabel="Corridor with typical section"
+  rightLabel="Swept 3D solids"
+  rows="Updates when the route changes | *Yes | No, you rebuild it || Excavation and concrete volumes | *Yes, from the corridor | Solid volume only || Cross sections | *Automatic | No || Upfront effort | High, you build the section | *Low || Coordination with other disciplines | *Good | *Good || Individually labeled conduits | Partial | No"
+/>
+
+<Callout type="success" title="The combination that works best">
+A corridor for design — because it updates and produces quantities — and export to solids or IFC for coordination with the other disciplines. The repetitive work is building the typical section for every configuration and keeping everything in sync. Exactly what gets automated.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Where the time goes when it's done by hand" time="~6 min">
+
+**One typical section per configuration.** A real project has several banks: 2x2 low voltage, 3x3 medium voltage, variants under roadway and under sidewalk. Each one is a typical section someone has to build and maintain.
+
+**Transitions.** Wherever the bank changes configuration, enters a manhole or crosses a road, the section changes. Every transition is a manual corridor edit.
+
+**The profile.** The bank has to keep minimum cover while going over or under every utility it crosses. Setting that profile by hand, crossing by crossing, is slow and easy to get wrong.
+
+**Manholes.** Placing them at every change of direction and meeting maximum spacing.
+
+**The takeoff.** Linear feet of conduit by size, cubic yards of concrete and excavation, number of spacers and manholes. Usually from a spreadsheet that isn't connected to the model.
+
+<ComparisonTable
+  criterionLabel="Task"
+  leftLabel="Automated"
+  rightLabel="Manual"
+  rows="Build the bank from its configuration | *Pick the type, done | Build the typical section || Transitions and manholes | *By rule along the route | One by one || Profile respecting crossings | *Computed against other utilities | Crossing by crossing || Conduit, concrete and excavation takeoff | *Table from the model | Separate spreadsheet || Redo after a route change | *Run it again | Start over"
+/>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. What a duct bank plugin does" time="~8 min">
+
+A custom plugin turns the duct bank into something you **choose and generate**, instead of draw.
+
+**What it does:**
+
+1. **Takes the route.** A polyline in plan or an existing alignment.
+2. **Takes the configuration.** The bank type: matrix, sizes, spacing, cover. Ideally from a table of your utility's standard types.
+3. **Computes the profile.** It follows the ground at minimum cover and, wherever it crosses another utility, drops or rises to keep the required separation. If no solution exists, it **flags the crossing** instead of forcing an elevation.
+4. **Builds the 3D model.** Individual conduits, concrete encasement and trench.
+5. **Places manholes** at changes of direction and wherever maximum spacing is exceeded.
+6. **Delivers the takeoff.** Conduit by size, concrete, excavation, backfill, spacers and manholes.
+
+<AnimatedFlow
+  title="From route to modeled duct bank"
+  nodes="Route in plan|Duct bank type|Profile vs crossings|3D model and takeoff"
+  subs="Polyline or alignment|Matrix, sizes, cover|Separations respected|Conduits, concrete, trench, manholes"
+/>
+
+<Callout type="info" title="Dynamo first, plugin later">
+To validate the rules, start in **Dynamo**: build the routine by connecting blocks, with no code, and test it on a real project. Once it's used on every project, move it to a **plugin** with its own button on the Civil 3D toolbar. We cover this in [Dynamo vs C#: which one fits each case](/en/blog/dynamo-vs-csharp-civil3d-revit).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Crossings with other utilities: the reason to model in 3D" time="~6 min">
+
+If there's one reason to take the duct bank to 3D, it's this.
+
+An electrical duct bank almost always crosses water, sanitary sewer and storm drainage. Every crossing has rules: minimum separation between power and water, which one goes on top, what protection is required. Those rules come from the applicable electrical and plumbing codes and from each utility's specifications.
+
+**In 2D**, those crossings are two lines touching in plan. You can't tell if there's a conflict.
+
+**In 3D**, with every utility modeled at its real elevation, each crossing can be checked:
+
+- Civil 3D includes an interference check for pipe networks.
+- To coordinate all utilities together — including a duct bank modeled as a corridor or solid — the usual route is **Navisworks** clash detection.
+- A plugin can check **minimum separations** between the duct bank and each utility directly, which is what actually matters and what clash detection doesn't measure.
+
+<Callout type="warn" title="A clash isn't the same as insufficient separation">
+Clash detection only fires when two objects touch. A duct bank running 2 inches from a sewer main doesn't clash, yet it still violates minimum separation. Checking **distances**, not just contacts, is what prevents review comments and field redesign.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. A plan to get started" time="~5 min">
+
+**Week 1 · Standardize your duct banks.** List the configurations your office or utility uses: matrix, sizes, spacing, cover, under roadway and under sidewalk. One table.
+
+**Week 2 · Write the crossing and manhole rules.** Minimum separations with each utility type, maximum manhole spacing, minimum conduit bend radius.
+
+**Week 3 · Model one real duct bank.** With a corridor and a typical section, or with a Dynamo routine. Compare the takeoff against the one you already delivered.
+
+**Week 4 · Check the crossings in 3D.** Combine the bank with the same project's water and sewer networks and check separations. Whatever you find there is the case for automating it.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Civil 3D automation"
+  title="Are your duct banks still in 2D?"
+  body="We build Civil 3D plugins that generate duct banks in 3D from their route and type, compute the profile against other utilities, and deliver the takeoff. We're a team of civil engineers and software engineers."
+  primaryLabel="Get a diagnosis"
+  primaryHref="/en/contacto"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/servicios/add-ins-revit-civil-3d"
+/>
+
+## Related resources
+
+- **The cluster guide:** [Civil 3D plugin for automated 3D drawing of utility networks](/en/blog/plugin-civil-3d-dibujo-3d-automatizado).
+- **The networks it crosses:** [Civil 3D pipe networks: water, sewer and fittings in 3D](/en/blog/redes-tuberias-civil-3d-accesorios).
+- **The parent guide:** [automating Civil 3D, the complete guide](/en/blog/automatizar-civil-3d-guia-completa).
+- **If you're outsourcing it:** [how much a Revit or Civil 3D add-in costs](/en/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · BIM automation"
+  title="A team of civil engineers and software engineers"
+  body="We understand the trench, the concrete and the crossing because we've solved them in the field. We build Civil 3D plugins for electrical, water and infrastructure engineering offices."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contacto"
+  secondaryLabel="See all services"
+  secondaryHref="/en/servicios"
+/>
+
+---
+
+**Found this useful?** Share it with whoever coordinates utilities in your office. The first crossing you catch in 3D usually pays for the whole exercise.

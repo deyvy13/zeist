@@ -27,6 +27,7 @@ const PILLAR_SLUGS = new Set([
   "dynamo-csharp-con-ia-claude",                     // C3 · IA + BIM
   "programacion-para-ingenieros-civiles",            // C4 · Carrera
   "plan-bim-peru-obligatorio-guia-empresas",         // C5 · Perú / corporativo
+  "plugin-civil-3d-dibujo-3d-automatizado",          // C6 · Redes y dibujo 3D
 ]);
 
 function priorityFor(path: string): number {

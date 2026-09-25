@@ -1,0 +1,207 @@
+---
+title: "Banco de ductos en Civil 3D: cómo modelarlo en 3D y automatizar el diseño de canalizaciones eléctricas"
+seoTitle: "Banco de ductos en Civil 3D: modelado 3D automático"
+description: "Cómo modelar un banco de ductos (bancoductos) eléctrico o de telecomunicaciones en Civil 3D: ductos, envolvente de concreto, registros y cruces con otras redes. Qué opciones existen y qué automatiza un plugin."
+date: "2026-09-25T10:00:00.000Z"
+author: "Zeist"
+tags:
+  - Banco de ductos
+  - Canalización eléctrica
+  - Media tensión
+  - Civil 3D
+  - Modelado 3D
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Banco de ductos eléctricos"
+  title="Civil 3D no trae un botón para dibujar un banco de ductos. Por eso casi todos lo siguen dibujando en 2D."
+  highlight="Y en 2D no se ve que el banco de media tensión pasa a 10 cm del colector de desagüe. Esta guía explica las formas reales de modelar un banco de ductos en 3D, cuál conviene según el proyecto, y qué se puede automatizar."
+/>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Banco de ductos (o bancoductos)** — Grupo de tubos enterrados, ordenados en filas y columnas, por donde pasan cables eléctricos o de telecomunicaciones. Normalmente van embebidos en concreto.
+- **Ducto** — Cada tubo del banco (PVC o PEAD, habitualmente). Los cables van por dentro.
+- **Envolvente** — El bloque de concreto que rodea y protege a los ductos.
+- **Espaciadores** — Piezas que mantienen la separación entre ductos mientras se vacía el concreto.
+- **Registro o cámara** — La caja enterrada donde el banco cambia de dirección o donde se tiran y empalman los cables.
+- **Alineación y perfil** — En Civil 3D, el recorrido en planta y la cota a lo largo de ese recorrido.
+- **Corredor** — El objeto de Civil 3D que repite una sección tipo a lo largo de una alineación. Es como se modelan las vías.
+- **Plugin** — Un programa que se instala dentro de Civil 3D y agrega botones propios en la barra superior.
+
+Sin términos de programación. Está escrito para proyectistas eléctricos y civiles.
+</Callout>
+
+## El banco de ductos es la red que nadie modela
+
+En un proyecto urbano conviven agua potable, alcantarillado, drenaje pluvial, gas, telecomunicaciones y electricidad. Las redes de agua y desagüe tienen herramientas propias en Civil 3D. **El banco de ductos no.**
+
+El resultado es predecible: el agua y el desagüe se modelan en 3D, pero el banco eléctrico se queda como una línea en planta y un corte tipo en un plano de detalle. Nadie sabe a qué cota exacta va en cada punto, y los cruces con las otras redes se resuelven en obra.
+
+Ahí es donde aparece el problema caro: la zanja del banco se encuentra con un colector que no estaba donde se suponía, o el banco no cabe bajo una tubería de agua sin romper la profundidad mínima. Rediseño en campo, con la cuadrilla esperando.
+
+<AnimatedFlow
+  title="Lo que pasa cuando el banco se queda en 2D"
+  nodes="Línea en planta|Corte tipo en detalle|Cota supuesta|Cruce descubierto en obra"
+  subs="Sin profundidad real|Igual en todo el recorrido|Nadie la verificó|Rediseño con la zanja abierta"
+  warnCount="4"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Qué hay que modelar en un banco de ductos" time="~5 min">
+
+Un banco de ductos no es un tubo: es un conjunto con varias piezas, y cada una importa para algo distinto.
+
+**La matriz de ductos.** Filas y columnas: 2x2, 2x3, 3x4. Cada ducto con su diámetro y su posición. Es lo que define cuántos circuitos caben.
+
+**La separación entre ductos.** La que exija la especificación para disipar calor y permitir el vaciado del concreto.
+
+**La envolvente de concreto.** Con su recubrimiento sobre y a los lados de los ductos. Define el ancho y alto real del banco y, por lo tanto, lo que choca con otras redes.
+
+**La profundidad.** Recubrimiento mínimo desde la superficie terminada hasta el tope de la envolvente. Cambia si el banco va bajo calzada o bajo vereda.
+
+**Los registros o cámaras.** En cada cambio de dirección fuerte, en los empalmes y cada cierta distancia máxima para poder tirar los cables.
+
+**La zanja.** Ancho y profundidad de excavación, que es lo que se cobra y lo que se programa en obra.
+
+<Callout type="info" title="Configuraciones normalizadas">
+Muchas empresas distribuidoras publican bancos de ductos tipificados: matrices, diámetros y recubrimientos ya definidos por código (en México, por ejemplo, los tipos normalizados de CFE). Si trabajas con una distribuidora que los tiene, **ese catálogo es exactamente lo que un plugin necesita**: eliges el tipo y el modelo sale con sus medidas.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Las tres formas de modelarlo en Civil 3D hoy" time="~8 min">
+
+Civil 3D no tiene un objeto dedicado a bancos de ductos. En la práctica se usan tres caminos, y cada uno sirve para algo distinto.
+
+**1. Corredor con una sección tipo del banco.** Se dibuja la sección (ductos más envolvente) como un ensamblaje, normalmente con **Subassembly Composer**, la herramienta de Autodesk para crear secciones tipo propias. El corredor la repite a lo largo de la alineación y el perfil. Es el camino más *nativo*: el banco sigue el trazo, se generan secciones y volúmenes de excavación y concreto.
+
+**2. Red de tuberías con ductos paralelos.** Cada ducto se modela como una tubería de una red, desplazada respecto al eje. Permite usar la comprobación de interferencias de redes de Civil 3D y rotular cada ducto. Pero mantener 6 o 12 tuberías paralelas sincronizadas cuando cambia el trazo es tedioso, y la envolvente de concreto no existe como objeto.
+
+**3. Sólidos 3D por barrido.** Se barre la sección del banco a lo largo de una polilínea 3D. Es rápido y el resultado se ve bien en coordinación con otras disciplinas. Pero es un objeto *muerto*: no se actualiza si cambia el trazo y no se rotula.
+
+<ComparisonTable
+  criterionLabel="Criterio"
+  leftLabel="Corredor con sección tipo"
+  rightLabel="Sólidos 3D por barrido"
+  rows="Se actualiza si cambia el trazo | *Sí | No, hay que rehacerlo || Volúmenes de excavación y concreto | *Sí, del corredor | Solo volumen del sólido || Secciones transversales | *Automáticas | No || Esfuerzo inicial | Alto, hay que crear la sección tipo | *Bajo || Coordinación con otras disciplinas | *Buena | *Buena || Ductos individuales rotulables | Parcial | No"
+/>
+
+<Callout type="success" title="La combinación que mejor funciona">
+Corredor para el diseño —porque se actualiza y da cantidades— y exportación a sólidos o a IFC para la coordinación con las demás disciplinas. El trabajo repetitivo está en armar la sección tipo para cada configuración y en mantener todo sincronizado. Justo lo que se automatiza.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Dónde se va el tiempo cuando se hace a mano" time="~6 min">
+
+**Una sección tipo por configuración.** Un proyecto real tiene varios bancos: 2x2 en baja tensión, 3x3 en media tensión, variantes bajo calzada y bajo vereda. Cada uno es una sección tipo que alguien tiene que construir y mantener.
+
+**Las transiciones.** Donde el banco cambia de configuración, entra a un registro o cruza una vía, la sección cambia. Cada transición es un ajuste manual del corredor.
+
+**El perfil.** El banco tiene que respetar su recubrimiento mínimo y, a la vez, pasar por encima o por debajo de cada red que cruza. Definir ese perfil a mano, cruce por cruce, es lento y fácil de equivocar.
+
+**Los registros.** Ubicarlos en cada cambio de dirección y cumplir la distancia máxima entre ellos.
+
+**El metrado.** Metros de ducto por diámetro, metros cúbicos de concreto y de excavación, número de espaciadores y registros. Suele salir de una hoja de cálculo que no está conectada al modelo.
+
+<ComparisonTable
+  criterionLabel="Tarea"
+  leftLabel="Automatizada"
+  rightLabel="Manual"
+  rows="Crear el banco desde la configuración | *Elegir el tipo y listo | Construir la sección tipo || Transiciones y registros | *Por regla en el recorrido | Uno por uno || Perfil respetando cruces | *Calculado contra las otras redes | Cruce por cruce || Metrado de ductos, concreto y excavación | *Tabla del modelo | Hoja aparte || Rehacer tras cambio de trazo | *Volver a ejecutar | Repetir todo"
+/>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Qué hace un plugin para bancos de ductos" time="~8 min">
+
+Un plugin a medida convierte el banco de ductos en algo que se **elige y se genera**, en vez de dibujarse.
+
+**Lo que hace:**
+
+1. **Toma el recorrido.** Una polilínea en planta o una alineación existente.
+2. **Toma la configuración.** El tipo de banco: matriz, diámetros, separaciones, recubrimientos. Idealmente de una tabla con los tipos normalizados de tu distribuidora.
+3. **Calcula el perfil.** Sigue el terreno con el recubrimiento mínimo y, donde cruza otra red, baja o sube para respetar la separación exigida. Si no hay solución posible, **marca el cruce** en vez de forzar una cota.
+4. **Genera el modelo 3D.** Ductos individuales, envolvente de concreto y zanja.
+5. **Coloca registros** en los cambios de dirección y cuando se supera la distancia máxima.
+6. **Entrega el metrado.** Ductos por diámetro, concreto, excavación, relleno, espaciadores y registros.
+
+<AnimatedFlow
+  title="Del recorrido al banco modelado"
+  nodes="Recorrido en planta|Tipo de banco|Perfil contra cruces|Modelo 3D y metrado"
+  subs="Polilínea o alineación|Matriz, diámetros, recubrimiento|Separaciones respetadas|Ductos, concreto, zanja, registros"
+/>
+
+<Callout type="info" title="Dynamo primero, plugin después">
+Para validar las reglas conviene empezar en **Dynamo**: armar la rutina conectando bloques, sin escribir código, y probarla sobre un proyecto real. Cuando se usa en cada proyecto, se lleva a un **plugin** con su botón en la barra superior de Civil 3D. Lo explicamos en [Dynamo o C#: cuál conviene en cada caso](/es/blog/dynamo-vs-csharp-civil3d-revit).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Cruces con otras redes: la razón para modelar en 3D" time="~6 min">
+
+Si hay una sola razón para llevar el banco de ductos a 3D, es esta.
+
+Un banco eléctrico casi siempre cruza agua potable, alcantarillado y drenaje. Y en cada cruce hay reglas: separación mínima entre la red eléctrica y la de agua, qué red va arriba, qué protección se exige. Esas reglas vienen de la normativa eléctrica y sanitaria aplicable y de las especificaciones de cada empresa de servicios.
+
+**En 2D**, esos cruces se ven como dos líneas que se tocan en planta. No se sabe si hay conflicto.
+
+**En 3D**, con todas las redes modeladas a su cota real, cada cruce se puede revisar:
+
+- Civil 3D incluye una comprobación de interferencias para redes de tuberías.
+- Para coordinar todas las redes juntas —incluido el banco modelado como corredor o sólido— lo habitual es llevar el modelo a **Navisworks** y correr la detección de conflictos.
+- Un plugin puede revisar directamente las **separaciones mínimas** entre el banco y cada red, que es lo que de verdad importa y lo que la detección de choques no mide.
+
+<Callout type="warn" title="Choque no es lo mismo que separación insuficiente">
+La detección de conflictos solo avisa cuando dos objetos se tocan. Pero un banco que pasa a 5 cm de un colector no choca, y aun así incumple la separación mínima. Revisar **distancias**, no solo contactos, es lo que evita la observación y el rediseño en obra.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Plan para empezar" time="~5 min">
+
+**Semana 1 · Tipifica tus bancos.** Lista las configuraciones que usa tu oficina o tu distribuidora: matriz, diámetros, separaciones, recubrimientos, bajo calzada y bajo vereda. Una tabla.
+
+**Semana 2 · Escribe las reglas de cruce y de registros.** Separaciones mínimas con cada tipo de red, distancia máxima entre registros, radio mínimo de curvatura de los ductos.
+
+**Semana 3 · Modela un banco real.** Con un corredor y una sección tipo, o con una rutina de Dynamo. Compara el metrado contra el que ya entregaste.
+
+**Semana 4 · Revisa los cruces en 3D.** Junta el banco con las redes de agua y desagüe del mismo proyecto y revisa separaciones. Lo que encuentres ahí es el argumento para automatizarlo.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automatización Civil 3D"
+  title="¿Tus bancos de ductos siguen en 2D?"
+  body="Desarrollamos plugins para Civil 3D que generan el banco de ductos en 3D desde su recorrido y su tipo, calculan el perfil contra las otras redes y entregan el metrado. Somos ingenieros civiles e ingenieros de sistemas."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **La guía del cluster:** [plugin para Civil 3D: dibujo 3D automatizado de redes](/es/blog/plugin-civil-3d-dibujo-3d-automatizado).
+- **Las redes que cruza:** [redes de tuberías en Civil 3D: agua potable, alcantarillado y accesorios](/es/blog/redes-tuberias-civil-3d-accesorios).
+- **Del modelo al metrado:** [automatizar metrados y cubicaciones en Civil 3D](/es/blog/automatizar-metrados-cubicaciones-civil-3d).
+- **La guía madre:** [automatizar Civil 3D, la guía completa](/es/blog/automatizar-civil-3d-guia-completa).
+- **Si vas a encargarlo:** [cuánto cuesta un add-in para Revit o Civil 3D](/es/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Entendemos la zanja, el concreto y el cruce porque los hemos resuelto en obra. Desarrollamos plugins para Civil 3D para oficinas de ingeniería eléctrica, sanitaria y de infraestructura."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**¿Te sirvió?** Compártelo con quien coordina las redes en tu oficina. El primer cruce que encuentres en 3D suele pagar el ejercicio completo.

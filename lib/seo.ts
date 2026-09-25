@@ -117,7 +117,8 @@ export function organizationJsonLd(locale: Locale) {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: site.name,
-    url: siteUrl,
+    url: `${siteUrl}/`,
+    logo: `${siteUrl}/icon-512.png`,
     // The email is hidden from the site for now (site.showEmail), so it is not
     // published here either — WhatsApp is the declared contact channel.
     telephone: `+${site.whatsapp.number}`,
@@ -160,8 +161,14 @@ export function websiteJsonLd(locale: Locale) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    // Google derives the "site name" shown above each result from WebSite
+    // data tied to the ROOT url, not a locale home. Pointing this at /es left
+    // the subdomain unnamed, so Google fell back to the parent domain
+    // (vercel.app → "Vercel"). Keep `url` on the root, identical in every locale.
     name: site.name,
-    url: absoluteUrl(localePath(locale).slice(1)),
+    alternateName: ["Zeist BIM", "Zeist — Automatización BIM"],
+    url: `${siteUrl}/`,
     inLanguage: hreflangByLocale[locale],
+    publisher: { "@type": "Organization", name: site.name, url: `${siteUrl}/` },
   };
 }

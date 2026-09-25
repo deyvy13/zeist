@@ -1,0 +1,241 @@
+---
+title: "Redes de tubulação no Civil 3D: água, esgoto e conexões (joelhos, tês, junções) em 3D"
+seoTitle: "Redes de tubulação no Civil 3D: conexões em 3D"
+description: "Como modelar em 3D redes de água e esgoto no Civil 3D, com joelhos, tês, junções, reduções e registros, e como automatizar a colocação das conexões e o levantamento de quantitativos com um plugin."
+date: "2026-09-25T09:00:00.000Z"
+author: "Zeist"
+tags:
+  - Redes de tubulação
+  - Rede de água
+  - Rede de esgoto
+  - Conexões hidráulicas
+  - Civil 3D
+  - Automação BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Redes de água e esgoto"
+  title="Desenhar a rede em planta leva uma tarde. Colocar cada joelho, tê e junção em 3D leva uma semana."
+  highlight="E cada vez que o traçado muda, essa semana recomeça. Este guia explica como o Civil 3D modela redes de água e esgoto, onde o tempo realmente se perde, e que parte dá para entregar a um plugin que coloca as conexões sozinho."
+/>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Rede por gravidade** — A que funciona por declividade, sem pressão: esgoto sanitário e drenagem pluvial. No Civil 3D é a *rede de tubulação*.
+- **Rede pressurizada** — A que trabalha sob pressão: distribuição de água, adutoras e recalques. No Civil 3D é a *rede de pressão*.
+- **Conexão** — Cada peça que une ou desvia tubos: joelhos, curvas, tês, cruzetas, junções, reduções, tampões, registros, hidrantes.
+- **Joelho ou curva** — Muda a direção do tubo. Fabricados em ângulos fixos: 11,25°, 22,5°, 45° e 90°.
+- **Tê e junção** — Derivações. O tê sai a 90°; a junção sai em ângulo, típica nas ligações de esgoto.
+- **Poço de visita (PV)** — A estrutura de inspeção da rede por gravidade, onde chegam e saem tubos.
+- **Catálogo de peças** — A biblioteca de tubos e conexões reais, com diâmetros e materiais, que o Civil 3D usa para desenhar.
+- **Lista de peças** — A seleção desse catálogo usada em um projeto específico.
+- **Plugin** — Um programa instalado dentro do Civil 3D que adiciona botões próprios na barra superior.
+
+Sem termos de programação. Escrito para projetistas de saneamento, não para desenvolvedores.
+</Callout>
+
+## O desenho em planta não é o modelo
+
+Quase todo escritório projeta redes de água e esgoto do mesmo jeito: polilinhas em planta, uma layer por diâmetro, blocos 2D para as conexões e uma planilha de quantitativos à parte.
+
+Funciona para a prancha. Mas não é um modelo. Não sabe a que profundidade vai cada tubo, não sabe se um joelho de 45° realmente cabe naquela deflexão, e não sabe que duas redes se cruzam na mesma cota.
+
+Levar isso para 3D no Civil 3D é possível — o programa tem ferramentas específicas — mas fazer à mão tem um custo que quase ninguém mede:
+
+- Criar a rede trecho por trecho a partir das polilinhas
+- Escolher **cada conexão** conforme o ângulo e o diâmetro do nó
+- Ajustar profundidades para respeitar o recobrimento mínimo
+- Rotular tubos, conexões e PVs
+- Contar as conexões para o quantitativo
+- E quando o traçado muda, **refazer tudo**
+
+<AnimatedFlow
+  title="O fluxo manual que se repete a cada revisão"
+  nodes="Polilinhas 2D|Rede peça por peça|Conexão por conexão|Quantitativo à mão"
+  subs="Uma layer por diâmetro|Horas de cliques|Ângulo, diâmetro, material|E de novo se o traçado muda"
+  warnCount="4"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Dois tipos de rede: gravidade e pressão" time="~5 min">
+
+O Civil 3D não trata uma rede de esgoto igual a uma de água, porque elas não se comportam igual. Vale entender isso antes de automatizar, porque as regras mudam completamente.
+
+**Rede por gravidade (esgoto sanitário e pluvial).** Quem manda é a **declividade**. Os tubos vão de PV a PV em linha reta, e a cota de cada trecho depende da declividade mínima e da profundidade dos PVs. As conexões aparecem sobretudo nas ligações: junções e curvas para conectar os ramais prediais.
+
+**Rede pressurizada (água, adutoras, recalques).** Quem manda é o **recobrimento**: o tubo acompanha o terreno a uma profundidade mínima. Aqui as conexões são o centro do projeto: cada mudança de direção é um joelho, cada derivação é um tê, cada mudança de diâmetro é uma redução, e ainda há registros e hidrantes.
+
+<ComparisonTable
+  criterionLabel="Aspecto"
+  leftLabel="Rede por gravidade"
+  rightLabel="Rede pressurizada"
+  rows="Exemplos | Esgoto sanitário e pluvial | Distribuição de água, adutoras, recalques || O que controla a cota | Declividade entre PVs | Recobrimento sobre o terreno || Estruturas | PVs, caixas, bocas de lobo | Caixas de registro, hidrantes || Conexões típicas | Junções e curvas nas ligações | Joelhos, tês, cruzetas, reduções, registros || Objeto no Civil 3D | Rede de tubulação | Rede de pressão || Onde mais dói à mão | Cotas e declividades | Escolher cada conexão"
+/>
+
+<Callout type="warn" title="O erro de misturar as duas">
+Modelar água como rede por gravidade — tubos retos entre estruturas — é o atalho mais comum e o mais caro. Você perde as conexões reais, o quantitativo de peças sai errado e o modelo não serve para detectar interferências na profundidade correta.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. As conexões: o que são e como o Civil 3D as desenha" time="~6 min">
+
+Uma conexão não é um desenho: é uma peça que se compra. Por isso o modelo precisa usar as peças que existem de verdade no catálogo do fabricante, com diâmetros e ângulos reais.
+
+**As que aparecem em quase toda rede:**
+
+- **Joelhos e curvas de 11,25°, 22,5°, 45° e 90°.** Não existe curva de 37°. Se o traçado deflete 37°, é preciso decidir: combinar peças, usar a deflexão que a junta do tubo permite, ou ajustar o traçado.
+- **Tês.** Derivação a 90°. Na rede de água, cada ramal que sai da principal.
+- **Cruzetas.** Duas derivações opostas no mesmo ponto.
+- **Junções.** Derivação em ângulo, normalmente a 45°. É a peça típica das ligações de esgoto.
+- **Reduções.** Mudança de diâmetro na mesma linha.
+- **Tampões.** Fechamento da ponta de uma linha.
+- **Registros e hidrantes.** Não mudam a geometria, mas ficam sobre a rede e entram no quantitativo.
+
+**De onde vêm no Civil 3D.** O programa traz **catálogos de peças** com tubos e conexões por material (PVC, ferro fundido, PEAD, conforme o catálogo). Desse catálogo você monta uma **lista de peças** para o projeto: os diâmetros e materiais que vai usar. Se um diâmetro não está na lista de peças, o Civil 3D simplesmente não consegue desenhá-lo.
+
+<Callout type="info" title="Blocos 2D ou peças 3D">
+Muita gente procura *conexões hidráulicas em DWG*: blocos 2D para desenhar a prancha. Servem para a prancha, mas não sabem o próprio diâmetro, não se conectam ao tubo e não se contam sozinhos. Uma peça de catálogo no Civil 3D sim: está conectada, tem cota e aparece nas tabelas. Essa diferença é o que torna a automação possível.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Onde o tempo se perde no fluxo manual" time="~6 min">
+
+Pergunte a um projetista de saneamento o que mais consome horas e ele raramente responde *desenhar*. Ele cita tudo o que vem depois.
+
+**1. Escolher a conexão certa em cada nó.** Uma rede urbana de água pode ter centenas de nós. Em cada um é preciso olhar o ângulo, os diâmetros que chegam e saem, e decidir a peça: curva de 22,5°, tê de redução, cruzeta. Trabalho mecânico, mas com cem decisões por prancha.
+
+**2. Respeitar o recobrimento em todo o percurso.** Onde o terreno sobe ou desce, a tubulação precisa acompanhar sem ficar rasa nem funda demais. À mão se confere por amostragem, e sempre sobra algum trecho sem conferir.
+
+**3. Refazer quando o traçado muda.** Uma rua se desloca, um registro muda de lugar, um diâmetro muda. Cada alteração arrasta conexões, cotas e rótulos.
+
+**4. Rotular.** Diâmetro, material, comprimento e declividade em cada trecho; tipo em cada conexão; cotas em cada PV.
+
+**5. Contar as peças.** O quantitativo de conexões — quantas curvas de 45° em DN 100, quantos tês de 150 x 100 — quase sempre sai contando na prancha. É a tabela com mais erros de todo o projeto.
+
+<ComparisonTable
+  criterionLabel="Tarefa"
+  leftLabel="Automatizada"
+  rightLabel="Manual"
+  rows="Criar a rede a partir das polilinhas | *Minutos | Um ou dois dias || Escolher cada conexão | *Por regra, em cada nó | Nó por nó || Conferir recobrimento | *Rede inteira, sempre | Por amostragem || Refazer após mudança de traçado | *Executar de novo | Refazer tudo || Quantitativo de conexões | *Tabela gerada do modelo | Contagem na prancha || Risco de peça que não existe | *Nenhum, vem do catálogo | Alto"
+/>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. O que um plugin faz para desenhar a rede em 3D" time="~8 min">
+
+Aqui está a mudança de fundo. As ferramentas nativas do Civil 3D permitem criar uma rede a partir de uma polilinha, mas a decisão de **qual peça vai em cada nó** continua sendo sua. Um plugin feito para o seu escritório aplica as suas regras em todos os nós de uma vez.
+
+**O que ele faz, passo a passo:**
+
+1. **Lê a sua prancha 2D.** Pega as polilinhas de cada layer (uma por diâmetro e material, como você já trabalha) e as interpreta como trechos.
+2. **Cria a rede no Civil 3D.** Rede de pressão para água, rede de tubulação para esgoto, com as peças da sua lista.
+3. **Escolhe a conexão de cada nó por regra.** Mede o ângulo da deflexão e o leva à curva comercial mais próxima. Se chega um ramal, coloca tê ou junção conforme o tipo de rede. Se muda o diâmetro, coloca a redução. Se não existe peça válida, **avisa** em vez de inventar.
+4. **Ajusta as cotas.** Na água, acompanha o terreno com recobrimento mínimo. No esgoto, respeita declividades mínimas e profundidades de PV.
+5. **Rotula** com o estilo da sua empresa.
+6. **Gera o quantitativo de conexões**: tabela por tipo, ângulo, diâmetro e material, pronta para o orçamento.
+
+<AnimatedFlow
+  title="O mesmo trabalho, com plugin"
+  nodes="Polilinhas por layer|Rede 3D com peças reais|Conexões por regra|Tabela de conexões"
+  subs="Sua prancha de sempre|Do catálogo do projeto|Curva, tê, junção, redução|Pronta para o orçamento"
+/>
+
+<Callout type="success" title="Por que isso é mais do que economizar cliques">
+Quando as peças saem de uma regra escrita, **todos os projetos do escritório são modelados igual**. O quantitativo de conexões deixa de depender de quem contou, e os apontamentos por quantidades que não batem com a prancha desaparecem.
+</Callout>
+
+<Callout type="info" title="Dynamo ou plugin">
+Para testar as regras, comece no **Dynamo**, que monta rotinas conectando blocos sem escrever código. Quando a rotina é usada em todo projeto e várias pessoas a abrem, leve-a para um **plugin**: um botão na barra superior do Civil 3D. A comparação completa está em [Dynamo ou C#: qual convém em cada caso](/pt/blog/dynamo-vs-csharp-civil3d-revit).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. As regras que você precisa definir antes" time="~6 min">
+
+O plugin aplica regras; não as inventa. Estas são as que precisam ser escritas antes de automatizar, de preferência em uma página aprovada pela equipe:
+
+**Material e catálogo por diâmetro.** Qual material o escritório usa em cada faixa de diâmetros e de qual catálogo saem as peças.
+
+**Recobrimento mínimo e profundidade máxima.** Para a rede de água, quanto o tubo precisa ficar enterrado sob a pista e sob o passeio.
+
+**Ângulos permitidos.** Até que deflexão a junta do tubo absorve e a partir de quando se coloca curva. O que fazer quando a deflexão cai entre duas curvas comerciais.
+
+**Tê ou junção.** Quando uma derivação se resolve com tê e quando com junção. No esgoto, a junção é a regra nas ligações; na água, o tê.
+
+**Declividades e PVs.** Para esgoto: declividade mínima por diâmetro, distância máxima entre PVs, degrau mínimo no PV.
+
+**Normas.** As normas técnicas aplicáveis e os padrões da concessionária de saneamento.
+
+<Callout type="warn" title="Se as regras não estão escritas, o plugin não pode aplicá-las">
+Teste rápido: peça a dois projetistas que escolham as conexões da mesma rede separadamente. Se não coincidirem, primeiro é preciso alinhar o critério. Automatizar um critério que não existe só produz erros mais rápido.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Os problemas mais buscados (e a causa real)" time="~6 min">
+
+Algumas buscas se repetem em todos os fóruns. Quase sempre têm a mesma causa, e quase nunca é erro do programa.
+
+**O Civil 3D não desenha os tubos.** O mais comum: a lista de peças não tem o diâmetro ou material que você está tentando usar, ou a rede está sendo criada em modo *só estruturas*. Confira a lista de peças antes de tudo.
+
+**A lista de peças não sincroniza com o catálogo.** Costuma acontecer quando o catálogo está em outro caminho (por exemplo, numa pasta de rede) ou quando cada computador aponta para um catálogo diferente. É preciso fixar o caminho com o comando de definir o catálogo da rede e usar o mesmo em todo o escritório.
+
+**As conexões não se ligam ao tubo.** Diâmetro ou tipo de junta incompatível entre peça e tubo no catálogo. O Civil 3D não conecta peças que na realidade não encaixam.
+
+**As regras jogam as cotas para lugares impossíveis.** Em redes por gravidade, regras de recobrimento e de declividade que brigam entre si. A rede cumpre uma e quebra a outra.
+
+<Callout type="success" title="O que eles têm em comum">
+Os quatro problemas se evitam com **catálogo e lista de peças centralizados** e regras escritas. É a mesma base de que um plugin precisa: por isso organizar isso primeiro vale a pena mesmo que você nunca chegue a automatizar.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Como começar sem travar os projetos" time="~5 min">
+
+**Semana 1 · Centralize catálogo e lista de peças.** Um único caminho para todo o escritório. Uma lista de peças por tipo de rede, com os diâmetros e materiais que vocês realmente usam.
+
+**Semana 2 · Escreva as regras.** Uma página: materiais, recobrimentos, ângulos, tê ou junção, declividades. Que dois projetistas revisem.
+
+**Semana 3 · Teste com uma rede real.** Pegue um projeto terminado, gere a rede com as regras (no Dynamo ou com um plugin piloto) e compare o quantitativo de conexões com o que você já entregou. As diferenças mostram qual regra falta.
+
+**Semana 4 · Use em um projeto em andamento.** Com conferência manual em paralelo. Meça quantas horas levou e quantas levava antes.
+
+Se a economia for clara e a ferramenta for usada em todo projeto de saneamento, aí se justifica o plugin instalável para toda a equipe.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automação Civil 3D"
+  title="Quantas conexões você escolhe à mão em cada rede?"
+  body="Desenvolvemos plugins para Civil 3D que transformam sua prancha 2D em uma rede 3D com peças reais, colocam curvas, tês e junções por regra e geram o quantitativo de conexões. Somos engenheiros civis e engenheiros de sistemas."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **O guia do cluster:** [plugin para Civil 3D: desenho 3D automatizado de redes](/pt/blog/plugin-civil-3d-dibujo-3d-automatizado).
+- **A outra rede enterrada:** [banco de dutos no Civil 3D, modelagem 3D e automação](/pt/blog/banco-de-ductos-civil-3d).
+- **O guia principal:** [automatizar o Civil 3D, o guia completo](/pt/blog/automatizar-civil-3d-guia-completa).
+- **Qual ferramenta usar:** [Dynamo ou C#, qual convém em cada caso](/pt/blog/dynamo-vs-csharp-civil3d-revit).
+- **Se for terceirizar:** [quanto custa um add-in para Revit ou Civil 3D](/pt/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Automação BIM"
+  title="Uma equipe de engenheiros civis e engenheiros de sistemas"
+  body="Já projetamos redes de água e esgoto, e sabemos construir a ferramenta que as modela sozinha. Trabalhamos com escritórios de saneamento do Brasil e da América Latina."
+  primaryLabel="Vamos falar do seu caso"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver todos os serviços"
+  secondaryHref="/pt/servicios"
+/>
+
+---
+
+**Foi útil?** Compartilhe com quem projeta as redes no seu escritório. Contar quantos nós tem a última rede entregue costuma ser o argumento mais convincente.

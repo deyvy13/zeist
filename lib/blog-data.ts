@@ -21,6 +21,424 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- C6 · Redes y dibujo 3D (hub: plugin-civil-3d-dibujo-3d-automatizado) ----
+  "redes-tuberias-civil-3d-accesorios": {
+    es: {
+      roadmap: {
+        title: "De la polilínea 2D a la red 3D con accesorios, en 7 bloques",
+        intro:
+          "Cómo modela Civil 3D las redes de agua potable y alcantarillado, dónde se va el tiempo y qué parte hace un plugin que coloca codos, tees y yees solo.",
+        steps: [
+          { n: 1, title: "Gravedad y presión", desc: "Alcantarillado y agua potable no se modelan igual", tag: "Concepto" },
+          { n: 2, title: "Los accesorios", desc: "Codos, tees, cruces, yees, reducciones, válvulas y de dónde salen", tag: "Piezas" },
+          { n: 3, title: "Dónde se va el tiempo", desc: "Elegir cada accesorio, recubrimiento, rótulos y metrado", tag: "Diagnóstico" },
+          { n: 4, title: "Qué hace un plugin", desc: "De polilíneas por capa a red 3D con accesorios por regla", tag: "Solución" },
+          { n: 5, title: "Las reglas previas", desc: "Material, recubrimiento, ángulos, tee o yee, pendientes", tag: "Requisitos" },
+          { n: 6, title: "Problemas más buscados", desc: "Tuberías que no se dibujan y listas de piezas que no sincronizan", tag: "Errores" },
+          { n: 7, title: "Cómo empezar", desc: "Plan de 4 semanas sin frenar los proyectos", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre redes de tuberías en Civil 3D",
+        items: [
+          {
+            q: "¿Cómo se crea una red de tuberías en Civil 3D?",
+            a: "Hay dos caminos. Dibujarla con las herramientas de creación de redes, tramo por tramo, o crearla desde un objeto existente, por ejemplo una polilínea de tu plano 2D. En ambos casos necesitas antes una lista de piezas con los diámetros y materiales del proyecto, y una superficie de terreno para que la red tome cota. Para alcantarillado se usa la red de tuberías (por gravedad) y para agua potable la red de tuberías a presión.",
+          },
+          {
+            q: "¿Qué diferencia hay entre red de tuberías y red a presión en Civil 3D?",
+            a: "La red de tuberías es para sistemas por gravedad, como alcantarillado sanitario y pluvial: tubos rectos entre buzones, controlados por pendiente. La red a presión es para agua potable, conducción e impulsión: el tubo sigue el terreno con un recubrimiento mínimo y lleva accesorios reales en cada nudo, como codos, tees, reducciones y válvulas. Modelar agua potable como red por gravedad hace que pierdas los accesorios y que el metrado de piezas salga mal.",
+          },
+          {
+            q: "¿Por qué Civil 3D no dibuja las tuberías?",
+            a: "La causa más frecuente es que la lista de piezas no tiene el diámetro o material que intentas usar, o que la red se está creando en un modo que solo coloca estructuras. Revisa primero la lista de piezas. Otras causas habituales son un catálogo que no está en la ruta configurada o una capa o estilo que no muestra el objeto.",
+          },
+          {
+            q: "¿Por qué la lista de piezas no sincroniza con el catálogo?",
+            a: "Suele pasar cuando el catálogo está en otra ruta, por ejemplo en una carpeta de red, o cuando cada computadora apunta a un catálogo distinto. La solución es fijar la ruta con el comando para establecer el catálogo de la red y usar la misma ruta en toda la oficina. Centralizar catálogo y listas de piezas evita este problema y es la base para cualquier automatización.",
+          },
+          {
+            q: "¿Civil 3D coloca los codos y tees automáticamente?",
+            a: "Las herramientas nativas pueden crear la red desde una polilínea, pero la decisión de qué accesorio va en cada nudo, según el ángulo y los diámetros, sigue siendo en buena parte manual. Un plugin a medida aplica tus reglas en todos los nudos a la vez: lleva cada quiebre al codo comercial más cercano, coloca tee o yee en las derivaciones y reducción donde cambia el diámetro, y avisa cuando no existe una pieza válida.",
+          },
+          {
+            q: "¿Cuándo se usa una yee y cuándo una tee?",
+            a: "La tee deriva a 90° y es la pieza habitual en redes de agua potable, en cada ramal que sale de la principal. La yee deriva en ángulo, normalmente a 45°, y es la regla en las conexiones de alcantarillado porque acompaña el sentido del flujo. Esa regla tiene que estar escrita en el estándar de la oficina para que un plugin la aplique siempre igual.",
+          },
+          {
+            q: "¿Se puede sacar el metrado de accesorios desde el modelo?",
+            a: "Sí, siempre que los accesorios sean piezas de catálogo y no bloques 2D. Cada pieza sabe su tipo, ángulo, diámetro y material, así que la tabla de accesorios se genera del modelo y se actualiza al cambiar el trazo. Es una de las automatizaciones con mayor retorno, porque el conteo manual de accesorios es de las tablas con más errores en un expediente.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Da polilinha 2D à rede 3D com conexões, em 7 blocos",
+        intro:
+          "Como o Civil 3D modela redes de água e esgoto, onde o tempo se perde e que parte faz um plugin que coloca curvas, tês e junções sozinho.",
+        steps: [
+          { n: 1, title: "Gravidade e pressão", desc: "Esgoto e água não se modelam do mesmo jeito", tag: "Conceito" },
+          { n: 2, title: "As conexões", desc: "Curvas, tês, cruzetas, junções, reduções, registros e de onde vêm", tag: "Peças" },
+          { n: 3, title: "Onde o tempo se perde", desc: "Escolher cada conexão, recobrimento, rótulos e quantitativo", tag: "Diagnóstico" },
+          { n: 4, title: "O que faz um plugin", desc: "De polilinhas por layer a rede 3D com conexões por regra", tag: "Solução" },
+          { n: 5, title: "As regras prévias", desc: "Material, recobrimento, ângulos, tê ou junção, declividades", tag: "Requisitos" },
+          { n: 6, title: "Problemas mais buscados", desc: "Tubos que não se desenham e listas de peças que não sincronizam", tag: "Erros" },
+          { n: 7, title: "Como começar", desc: "Plano de 4 semanas sem travar os projetos", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre redes de tubulação no Civil 3D",
+        items: [
+          {
+            q: "Como se cria uma rede de tubulação no Civil 3D?",
+            a: "Há dois caminhos. Desenhá-la com as ferramentas de criação de redes, trecho por trecho, ou criá-la a partir de um objeto existente, por exemplo uma polilinha da sua planta 2D. Em ambos os casos você precisa antes de uma lista de peças com os diâmetros e materiais do projeto, e de uma superfície de terreno para que a rede ganhe cota. Para esgoto usa-se a rede de tubulação (por gravidade) e para água a rede de pressão.",
+          },
+          {
+            q: "Qual a diferença entre rede de tubulação e rede de pressão no Civil 3D?",
+            a: "A rede de tubulação é para sistemas por gravidade, como esgoto e drenagem: tubos retos entre PVs, controlados pela declividade. A rede de pressão é para água, adutoras e recalques: o tubo acompanha o terreno com recobrimento mínimo e leva conexões reais em cada nó, como curvas, tês, reduções e registros. Modelar água como rede por gravidade faz perder as conexões e o quantitativo de peças sai errado.",
+          },
+          {
+            q: "Por que o Civil 3D não desenha os tubos?",
+            a: "A causa mais comum é que a lista de peças não tem o diâmetro ou material que você está tentando usar, ou que a rede está sendo criada num modo que só coloca estruturas. Confira primeiro a lista de peças. Outras causas frequentes são um catálogo fora do caminho configurado ou uma layer ou estilo que não exibe o objeto.",
+          },
+          {
+            q: "Por que a lista de peças não sincroniza com o catálogo?",
+            a: "Costuma acontecer quando o catálogo está em outro caminho, por exemplo numa pasta de rede, ou quando cada computador aponta para um catálogo diferente. A solução é fixar o caminho com o comando de definir o catálogo da rede e usar o mesmo caminho em todo o escritório. Centralizar catálogo e listas de peças evita o problema e é a base de qualquer automação.",
+          },
+          {
+            q: "O Civil 3D coloca curvas e tês automaticamente?",
+            a: "As ferramentas nativas podem criar a rede a partir de uma polilinha, mas a decisão de qual conexão vai em cada nó, conforme o ângulo e os diâmetros, continua em boa parte manual. Um plugin sob medida aplica as suas regras em todos os nós de uma vez: leva cada deflexão à curva comercial mais próxima, coloca tê ou junção nas derivações e redução onde muda o diâmetro, e avisa quando não existe peça válida.",
+          },
+          {
+            q: "Quando se usa junção e quando se usa tê?",
+            a: "O tê deriva a 90° e é a peça usual nas redes de água, em cada ramal que sai da principal. A junção deriva em ângulo, normalmente a 45°, e é a regra nas ligações de esgoto porque acompanha o sentido do escoamento. Essa regra precisa estar escrita no padrão do escritório para que um plugin a aplique sempre igual.",
+          },
+          {
+            q: "Dá para tirar o quantitativo de conexões do modelo?",
+            a: "Sim, desde que as conexões sejam peças de catálogo e não blocos 2D. Cada peça sabe seu tipo, ângulo, diâmetro e material, então a tabela de conexões é gerada do modelo e se atualiza quando o traçado muda. É uma das automações com maior retorno, porque a contagem manual de conexões está entre as tabelas com mais erros de um projeto.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "From 2D polyline to a 3D network with fittings, in 7 blocks",
+        intro:
+          "How Civil 3D models water and sewer networks, where the time goes, and which part a plugin can do by placing elbows, tees and wyes for you.",
+        steps: [
+          { n: 1, title: "Gravity and pressure", desc: "Sewer and water mains aren't modeled the same way", tag: "Concept" },
+          { n: 2, title: "Fittings", desc: "Elbows, tees, crosses, wyes, reducers, valves and where they come from", tag: "Parts" },
+          { n: 3, title: "Where the time goes", desc: "Picking every fitting, cover, labels and takeoff", tag: "Diagnosis" },
+          { n: 4, title: "What a plugin does", desc: "From polylines by layer to a 3D network with fittings by rule", tag: "Solution" },
+          { n: 5, title: "Rules to define first", desc: "Material, cover, angles, tee or wye, slopes", tag: "Requirements" },
+          { n: 6, title: "Most-searched problems", desc: "Pipes not drawing and parts lists not synchronizing", tag: "Errors" },
+          { n: 7, title: "How to start", desc: "A 4-week plan without slowing projects down", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Civil 3D pipe networks",
+        items: [
+          {
+            q: "How do you create a pipe network in Civil 3D?",
+            a: "There are two routes. Draw it with the network creation tools, run by run, or create it from an existing object, such as a polyline from your 2D drawing. Either way you first need a parts list with the project's sizes and materials, and an existing ground surface so the network picks up elevations. Sewers use a pipe network (gravity) and water uses a pressure network.",
+          },
+          {
+            q: "What's the difference between a pipe network and a pressure network in Civil 3D?",
+            a: "A pipe network is for gravity systems such as sanitary and storm sewer: straight pipes between manholes, controlled by slope. A pressure network is for water distribution, transmission and force mains: the pipe follows the ground at minimum cover and carries real fittings at every node, such as elbows, tees, reducers and valves. Modeling a water main as a gravity network loses the fittings and throws off the fitting takeoff.",
+          },
+          {
+            q: "Why is my Civil 3D pipe network not drawing pipes?",
+            a: "The most common cause is a parts list that doesn't include the size or material you're trying to use, or a network being created in a mode that only places structures. Check the parts list first. Other frequent causes are a catalog outside the configured path, or a layer or style that doesn't display the object.",
+          },
+          {
+            q: "Why is my parts list not synchronizing with the catalog?",
+            a: "It usually happens when the catalog lives on another path, such as a network folder, or when each computer points to a different catalog. The fix is to set the path with the command to set the network catalog and use the same path across the whole office. Centralizing the catalog and parts lists prevents this and is the foundation for any automation.",
+          },
+          {
+            q: "Does Civil 3D place elbows and tees automatically?",
+            a: "Native tools can create the network from a polyline, but deciding which fitting goes at each node, based on the angle and sizes, is still largely manual. A custom plugin applies your rules at every node at once: it snaps each bend to the nearest commercial elbow, places a tee or wye at branches and a reducer where the size changes, and flags any node where no valid part exists.",
+          },
+          {
+            q: "When do you use a wye instead of a tee?",
+            a: "A tee branches at 90° and is the usual piece on water mains, at every lateral leaving the main. A wye branches at an angle, usually 45°, and is the rule on sewer service connections because it follows the flow direction. That rule has to be written into the office standard so a plugin applies it the same way every time.",
+          },
+          {
+            q: "Can the fitting takeoff come straight from the model?",
+            a: "Yes, as long as the fittings are catalog parts and not 2D blocks. Each part knows its type, angle, size and material, so the fitting schedule is generated from the model and updates when the layout changes. It's one of the highest-return automations, because manual fitting counts are among the most error-prone tables in a bid set.",
+          },
+        ],
+      },
+    },
+  },
+  "banco-de-ductos-civil-3d": {
+    es: {
+      roadmap: {
+        title: "El banco de ductos en 3D, en 6 bloques",
+        intro:
+          "Qué hay que modelar, las tres formas reales de hacerlo en Civil 3D, qué automatiza un plugin y por qué los cruces con otras redes lo justifican.",
+        steps: [
+          { n: 1, title: "Qué hay que modelar", desc: "Matriz de ductos, envolvente, profundidad, registros y zanja", tag: "Concepto" },
+          { n: 2, title: "Las tres formas de hacerlo", desc: "Corredor, red de tuberías paralelas o sólidos 3D", tag: "Opciones" },
+          { n: 3, title: "Dónde se va el tiempo", desc: "Secciones tipo, transiciones, perfil y metrado", tag: "Diagnóstico" },
+          { n: 4, title: "Qué hace un plugin", desc: "Del recorrido y el tipo de banco al modelo 3D con metrado", tag: "Solución" },
+          { n: 5, title: "Cruces con otras redes", desc: "Choques y separaciones mínimas, que no son lo mismo", tag: "Interferencias" },
+          { n: 6, title: "Plan para empezar", desc: "Tipificar bancos, escribir reglas y probar en 3D", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre bancos de ductos en Civil 3D",
+        items: [
+          {
+            q: "¿Qué es un banco de ductos?",
+            a: "Es un conjunto de tubos enterrados, ordenados en filas y columnas, por donde pasan cables eléctricos o de telecomunicaciones. Normalmente los ductos van embebidos en una envolvente de concreto que los protege, con espaciadores que mantienen la separación durante el vaciado. Se usan en redes de media y baja tensión, alumbrado y telecomunicaciones.",
+          },
+          {
+            q: "¿Civil 3D tiene una herramienta para bancos de ductos?",
+            a: "Civil 3D no trae un objeto dedicado a bancos de ductos. En la práctica se modelan de tres formas: con un corredor que repite una sección tipo del banco, creada normalmente con Subassembly Composer; con una red de tuberías con ductos paralelos; o con sólidos 3D barridos a lo largo del recorrido. El corredor es el más completo porque se actualiza con el trazo y entrega volúmenes.",
+          },
+          {
+            q: "¿Cuál es la mejor forma de modelar un banco de ductos?",
+            a: "Para diseñar, un corredor con la sección tipo del banco: sigue la alineación y el perfil, se actualiza si cambia el trazo y da volúmenes de excavación y concreto. Para coordinar con otras disciplinas, conviene exportarlo a sólidos o IFC. El esfuerzo está en construir una sección tipo por cada configuración y mantener las transiciones, que es justo lo que un plugin automatiza.",
+          },
+          {
+            q: "¿Qué diferencia hay entre banco de ductos y zanja con tubos directamente enterrados?",
+            a: "En el banco de ductos los tubos van dentro de una envolvente de concreto, lo que da protección mecánica y mantiene la geometría. En la zanja con ductos directamente enterrados no hay concreto, es más económica pero menos protegida. La elección depende de la tensión, del tránsito sobre la zanja y de lo que exija la distribuidora.",
+          },
+          {
+            q: "¿Se puede automatizar el diseño de un banco de ductos en Civil 3D?",
+            a: "Sí. Un plugin toma el recorrido y el tipo de banco, calcula el perfil respetando el recubrimiento mínimo y las separaciones con otras redes, genera los ductos, la envolvente y la zanja, coloca registros en los cambios de dirección y entrega el metrado. Si la distribuidora tiene tipos de banco normalizados, esa tabla es la entrada ideal.",
+          },
+          {
+            q: "¿Cómo se detectan interferencias entre el banco de ductos y otras redes?",
+            a: "Con todas las redes modeladas en 3D a su cota real. Civil 3D incluye una comprobación de interferencias para redes de tuberías, y para coordinar todas las disciplinas lo habitual es Navisworks. Pero la detección de choques solo avisa cuando dos objetos se tocan: para verificar separaciones mínimas entre el banco y cada red hace falta medir distancias, algo que un plugin puede hacer directamente.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "O banco de dutos em 3D, em 6 blocos",
+        intro:
+          "O que precisa ser modelado, as três formas reais de fazer no Civil 3D, o que um plugin automatiza e por que os cruzamentos com outras redes justificam o esforço.",
+        steps: [
+          { n: 1, title: "O que modelar", desc: "Matriz de dutos, envelope, profundidade, caixas e vala", tag: "Conceito" },
+          { n: 2, title: "As três formas de fazer", desc: "Corredor, rede de tubos paralelos ou sólidos 3D", tag: "Opções" },
+          { n: 3, title: "Onde o tempo se perde", desc: "Seções tipo, transições, perfil e quantitativo", tag: "Diagnóstico" },
+          { n: 4, title: "O que faz um plugin", desc: "Do traçado e do tipo de banco ao modelo 3D com quantitativo", tag: "Solução" },
+          { n: 5, title: "Cruzamentos com outras redes", desc: "Colisões e afastamentos mínimos, que não são a mesma coisa", tag: "Interferências" },
+          { n: 6, title: "Plano para começar", desc: "Padronizar bancos, escrever regras e testar em 3D", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre banco de dutos no Civil 3D",
+        items: [
+          {
+            q: "O que é um banco de dutos?",
+            a: "É um conjunto de tubos enterrados, organizados em linhas e colunas, por onde passam cabos elétricos ou de telecomunicações. Normalmente os dutos ficam envolvidos num envelope de concreto que os protege, com espaçadores que mantêm a distância durante a concretagem. São usados em redes de média e baixa tensão, iluminação e telecom.",
+          },
+          {
+            q: "O Civil 3D tem ferramenta para banco de dutos?",
+            a: "O Civil 3D não tem um objeto dedicado a bancos de dutos. Na prática eles são modelados de três formas: com um corredor que repete uma seção tipo do banco, criada normalmente no Subassembly Composer; com uma rede de tubulação com dutos paralelos; ou com sólidos 3D varridos ao longo do traçado. O corredor é o mais completo porque se atualiza com o traçado e gera volumes.",
+          },
+          {
+            q: "Qual a melhor forma de modelar um banco de dutos?",
+            a: "Para projetar, um corredor com a seção tipo do banco: acompanha o alinhamento e o perfil, se atualiza se o traçado muda e gera volumes de escavação e concreto. Para coordenar com outras disciplinas, convém exportá-lo para sólidos ou IFC. O esforço está em construir uma seção tipo para cada configuração e manter as transições, justamente o que um plugin automatiza.",
+          },
+          {
+            q: "Banco de dutos em PEAD ou em PVC?",
+            a: "Os dois são usados. O PEAD corrugado é flexível, aceita curvas mais suaves e é comum em redes de energia e telecom; o PVC rígido é frequente em bancos envelopados em concreto. A escolha depende das especificações da concessionária e do tipo de instalação. No modelo, o que muda é o diâmetro externo e o raio mínimo de curvatura que o plugin precisa respeitar.",
+          },
+          {
+            q: "Dá para automatizar o projeto de um banco de dutos no Civil 3D?",
+            a: "Sim. Um plugin pega o traçado e o tipo de banco, calcula o perfil respeitando o recobrimento mínimo e os afastamentos das outras redes, gera os dutos, o envelope e a vala, posiciona caixas de passagem nas mudanças de direção e entrega o quantitativo, incluindo espaçadores. Se a concessionária tem tipos padronizados, essa tabela é a entrada ideal.",
+          },
+          {
+            q: "Como detectar interferências entre o banco de dutos e outras redes?",
+            a: "Com todas as redes modeladas em 3D na cota real. O Civil 3D inclui uma verificação de interferências para redes de tubulação, e para coordenar todas as disciplinas o usual é o Navisworks. Mas a detecção de colisões só avisa quando dois objetos se tocam: para conferir afastamentos mínimos entre o banco e cada rede é preciso medir distâncias, algo que um plugin faz diretamente.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "The duct bank in 3D, in 6 blocks",
+        intro:
+          "What needs modeling, the three real ways to do it in Civil 3D, what a plugin automates, and why crossings with other utilities justify the effort.",
+        steps: [
+          { n: 1, title: "What to model", desc: "Conduit matrix, encasement, depth, manholes and trench", tag: "Concept" },
+          { n: 2, title: "The three ways to do it", desc: "Corridor, parallel pipe network or 3D solids", tag: "Options" },
+          { n: 3, title: "Where the time goes", desc: "Typical sections, transitions, profile and takeoff", tag: "Diagnosis" },
+          { n: 4, title: "What a plugin does", desc: "From route and duct bank type to a 3D model with takeoff", tag: "Solution" },
+          { n: 5, title: "Crossings with other utilities", desc: "Clashes and minimum separations, which aren't the same", tag: "Clashes" },
+          { n: 6, title: "A plan to start", desc: "Standardize banks, write rules and test in 3D", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about duct banks in Civil 3D",
+        items: [
+          {
+            q: "What is a duct bank?",
+            a: "It's a group of buried conduits, arranged in rows and columns, that carry electrical or telecom cables. The conduits are usually encased in concrete for protection, with spacers holding them apart while the concrete is poured. Duct banks are used for medium and low voltage distribution, lighting and telecom.",
+          },
+          {
+            q: "Does Civil 3D have a duct bank tool?",
+            a: "Civil 3D has no dedicated duct bank object. In practice duct banks are modeled three ways: with a corridor that repeats a duct bank typical section, usually built in Subassembly Composer; with a pipe network of parallel conduits; or with 3D solids swept along the route. The corridor is the most complete option because it updates with the layout and produces volumes.",
+          },
+          {
+            q: "What's the best way to model a duct bank?",
+            a: "For design, a corridor with the duct bank typical section: it follows the alignment and profile, updates when the route changes, and delivers excavation and concrete volumes. For cross-discipline coordination, export it to solids or IFC. The effort goes into building a typical section for every configuration and maintaining transitions, which is exactly what a plugin automates.",
+          },
+          {
+            q: "Why do duct banks need spacers?",
+            a: "Spacers hold each conduit at its designed position and spacing while the concrete is placed, so the conduits don't float, shift or touch. Correct spacing matters for heat dissipation and for the concrete to fully surround each conduit. In a model-based takeoff, spacers are counted along the run at the interval the specification calls for.",
+          },
+          {
+            q: "Can duct bank design be automated in Civil 3D?",
+            a: "Yes. A plugin takes the route and the duct bank type, computes the profile while keeping minimum cover and separation from other utilities, generates the conduits, encasement and trench, places manholes at changes of direction, and delivers the takeoff including spacers. If your utility publishes standard duct bank types, that table is the ideal input.",
+          },
+          {
+            q: "How do you find clashes between a duct bank and other utilities?",
+            a: "With every utility modeled in 3D at its real elevation. Civil 3D includes an interference check for pipe networks, and Navisworks is the usual tool for coordinating all disciplines. But clash detection only fires when objects touch: checking minimum separation between the duct bank and each utility requires measuring distances, which a plugin can do directly.",
+          },
+        ],
+      },
+    },
+  },
+  "plugin-civil-3d-dibujo-3d-automatizado": {
+    es: {
+      roadmap: {
+        title: "Del plano 2D al modelo 3D automatizado, en 6 bloques",
+        intro:
+          "Qué puede dibujar en 3D un plugin para Civil 3D, cómo aprovechar tu plano 2D como fuente de datos y por qué las interferencias pagan el modelo.",
+        steps: [
+          { n: 1, title: "Qué se puede automatizar", desc: "Redes, accesorios, bancos de ductos y estructuras repetitivas", tag: "Alcance" },
+          { n: 2, title: "Tu plano 2D como datos", desc: "Capas, geometría, superficie y bloques como fuente del modelo", tag: "Método" },
+          { n: 3, title: "Plugin, Dynamo o nativo", desc: "Cuándo conviene cada camino", tag: "Herramientas" },
+          { n: 4, title: "Interferencias", desc: "Choques y separaciones mínimas antes de la obra", tag: "Retorno" },
+          { n: 5, title: "Qué pedir a un plugin", desc: "Lista para que la herramienta se use y no se abandone", tag: "Criterios" },
+          { n: 6, title: "Hoja de ruta", desc: "Del primer botón al modelo completo", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre plugins y dibujo 3D en Civil 3D",
+        items: [
+          {
+            q: "¿Qué es un plugin para Civil 3D?",
+            a: "Es un programa que se instala dentro de Civil 3D y agrega botones propios en la barra superior. Automatiza tareas que a mano toman horas, como convertir un plano 2D en redes 3D, colocar accesorios, generar bancos de ductos o producir metrados. Se desarrollan en C# sobre la API oficial de Autodesk y se instalan en toda la oficina.",
+          },
+          {
+            q: "¿Se puede convertir un plano 2D en un modelo 3D en Civil 3D?",
+            a: "Sí, y es donde más horas se ahorran. Si el plano sigue un estándar de capas, cada polilínea ya indica qué es, por ejemplo una tubería de 160 mm de PVC. Un plugin lee esas capas, toma la cota de la superficie de terreno y crea los objetos de Civil 3D correspondientes: redes, alineaciones, corredores y estructuras. Sin plugin se puede hacer con las herramientas nativas, pero paso a paso y elemento por elemento.",
+          },
+          {
+            q: "¿Cuáles son los mejores plugins para Civil 3D?",
+            a: "Depende de la tarea. En la tienda de aplicaciones de Autodesk hay plugins comerciales para necesidades concretas, y si uno resuelve tu caso tal cual, conviene usarlo. Cuando tus reglas, materiales o formato de metrado no son los que el plugin asume, la alternativa es un plugin a medida, que aplica exactamente el estándar de tu oficina.",
+          },
+          {
+            q: "¿Es mejor un plugin o Dynamo para automatizar Civil 3D?",
+            a: "Dynamo es ideal para probar una automatización: se arma en días y se corrige fácil. Un plugin es mejor para la producción diaria: es un botón que usa cualquiera del equipo, maneja errores y es rápido con modelos grandes. El orden que funciona es validar las reglas en Dynamo y llevar a plugin solo lo que se usa en cada proyecto.",
+          },
+          {
+            q: "¿Cómo se detectan interferencias entre redes en Civil 3D?",
+            a: "Primero, con todas las redes modeladas en 3D a su cota real. Civil 3D incluye una comprobación de interferencias para redes de tuberías, y para coordinar todas las disciplinas lo habitual es Navisworks. Además conviene revisar separaciones mínimas, porque dos redes que no se tocan pueden igual incumplir la distancia exigida, y eso la detección de choques no lo mide.",
+          },
+          {
+            q: "¿Qué no conviene automatizar con un plugin?",
+            a: "El diseño que requiere criterio: el trazado de una vía, la ubicación de una estructura importante o la solución de un cruce difícil. Automatizar criterio produce herramientas en las que nadie confía. Lo que se automatiza bien es la ejecución repetitiva de ese criterio: colocar piezas, ajustar cotas por regla, rotular y generar metrados.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Da planta 2D ao modelo 3D automatizado, em 6 blocos",
+        intro:
+          "O que um plugin para Civil 3D pode desenhar em 3D, como aproveitar sua planta 2D como fonte de dados e por que as interferências pagam o modelo.",
+        steps: [
+          { n: 1, title: "O que dá para automatizar", desc: "Redes, conexões, bancos de dutos e estruturas repetitivas", tag: "Escopo" },
+          { n: 2, title: "Sua planta 2D como dados", desc: "Layers, geometria, superfície e blocos como fonte do modelo", tag: "Método" },
+          { n: 3, title: "Plugin, Dynamo ou nativo", desc: "Quando convém cada caminho", tag: "Ferramentas" },
+          { n: 4, title: "Interferências", desc: "Colisões e afastamentos mínimos antes da obra", tag: "Retorno" },
+          { n: 5, title: "O que exigir de um plugin", desc: "Lista para que a ferramenta seja usada e não abandonada", tag: "Critérios" },
+          { n: 6, title: "Roteiro", desc: "Do primeiro botão ao modelo completo", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre plugins e desenho 3D no Civil 3D",
+        items: [
+          {
+            q: "O que é um plugin para Civil 3D?",
+            a: "É um programa instalado dentro do Civil 3D que adiciona botões próprios na barra superior. Automatiza tarefas que à mão levam horas, como transformar uma planta 2D em redes 3D, posicionar conexões, gerar bancos de dutos ou produzir quantitativos. É desenvolvido em C# sobre a API oficial da Autodesk e instalado em todo o escritório.",
+          },
+          {
+            q: "Dá para transformar uma planta 2D em modelo 3D no Civil 3D?",
+            a: "Sim, e é onde mais se economizam horas. Se a planta segue um padrão de layers, cada polilinha já indica o que é, por exemplo um tubo de PVC DN 150. Um plugin lê essas layers, pega a cota da superfície do terreno e cria os objetos correspondentes do Civil 3D: redes, alinhamentos, corredores e estruturas. Sem plugin dá para fazer com as ferramentas nativas, mas passo a passo e elemento por elemento.",
+          },
+          {
+            q: "Quais são os melhores plugins para Civil 3D?",
+            a: "Depende da tarefa. Na loja de aplicativos da Autodesk há plugins comerciais para necessidades específicas, e se um resolve o seu caso como está, vale usá-lo. Quando as suas regras, materiais ou formato de quantitativo não são os que o plugin assume, a alternativa é um plugin sob medida, que aplica exatamente o padrão do seu escritório.",
+          },
+          {
+            q: "É melhor um plugin ou o Dynamo para automatizar o Civil 3D?",
+            a: "O Dynamo é ideal para testar uma automação: monta-se em dias e corrige-se fácil. Um plugin é melhor para a produção diária: é um botão que qualquer pessoa da equipe usa, trata erros e é rápido com modelos grandes. A ordem que funciona é validar as regras no Dynamo e levar para plugin só o que é usado em todo projeto.",
+          },
+          {
+            q: "Como detectar interferências entre redes no Civil 3D?",
+            a: "Primeiro, com todas as redes modeladas em 3D na cota real. O Civil 3D inclui uma verificação de interferências para redes de tubulação, e para coordenar todas as disciplinas o usual é o Navisworks. Também convém conferir afastamentos mínimos, porque duas redes que não se tocam podem mesmo assim descumprir a distância exigida, e isso a detecção de colisões não mede.",
+          },
+          {
+            q: "O que não convém automatizar com um plugin?",
+            a: "O projeto que exige critério: o traçado de uma via, a localização de uma estrutura importante ou a solução de um cruzamento difícil. Automatizar critério produz ferramentas em que ninguém confia. O que se automatiza bem é a execução repetitiva desse critério: posicionar peças, ajustar cotas por regra, rotular e gerar quantitativos.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "From 2D sheet to an automated 3D model, in 6 blocks",
+        intro:
+          "What a Civil 3D plugin can draw in 3D, how to use your 2D drawing as a data source, and why clash detection pays for the model.",
+        steps: [
+          { n: 1, title: "What can be automated", desc: "Networks, fittings, duct banks and repetitive structures", tag: "Scope" },
+          { n: 2, title: "Your 2D sheet as data", desc: "Layers, geometry, surface and blocks as the model's source", tag: "Method" },
+          { n: 3, title: "Plugin, Dynamo or native", desc: "When each route fits", tag: "Tools" },
+          { n: 4, title: "Clashes", desc: "Clashes and minimum separations before construction", tag: "Return" },
+          { n: 5, title: "What to ask of a plugin", desc: "A checklist so the tool gets used, not abandoned", tag: "Criteria" },
+          { n: 6, title: "Roadmap", desc: "From the first button to the full model", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Civil 3D plugins and 3D drawing",
+        items: [
+          {
+            q: "What is a Civil 3D plugin?",
+            a: "It's a program installed inside Civil 3D that adds its own buttons to the toolbar at the top. It automates tasks that take hours by hand, such as turning a 2D drawing into 3D networks, placing fittings, generating duct banks or producing takeoffs. Plugins are built in C# on Autodesk's official API and installed across the office.",
+          },
+          {
+            q: "Can you convert a 2D drawing into a 3D model in Civil 3D?",
+            a: "Yes, and it's where the most hours are saved. If the drawing follows a layer standard, each polyline already says what it is, for example a 6-inch PVC water main. A plugin reads those layers, takes elevations from the existing ground surface and creates the matching Civil 3D objects: networks, alignments, corridors and structures. Without a plugin it's possible with native tools, but step by step and element by element.",
+          },
+          {
+            q: "What are the best Civil 3D plugins?",
+            a: "It depends on the task. The Autodesk App Store has commercial plugins for specific needs, and if one solves your case as-is, use it. When your rules, materials or takeoff format aren't the ones the plugin assumes, the alternative is a custom plugin that applies your office's standard exactly.",
+          },
+          {
+            q: "Is a plugin or Dynamo better for automating Civil 3D?",
+            a: "Dynamo is ideal for testing an automation: you can build it in days and fix it easily. A plugin is better for daily production: it's a button anyone on the team can use, it handles errors, and it stays fast on large models. The order that works is validating the rules in Dynamo and moving to a plugin only what gets used on every project.",
+          },
+          {
+            q: "How do you check clashes between utilities in Civil 3D?",
+            a: "First, by having every utility modeled in 3D at its real elevation. Civil 3D includes an interference check for pipe networks, and Navisworks is the usual tool for coordinating all disciplines. You should also check minimum separations, because two utilities that don't touch can still violate the required clearance, and clash detection doesn't measure that.",
+          },
+          {
+            q: "What shouldn't be automated with a plugin?",
+            a: "Design that takes judgment: a road alignment, where a major structure goes, or how to solve a difficult crossing. Automating judgment produces tools nobody trusts. What automates well is the repetitive execution of that judgment: placing parts, setting elevations by rule, labeling and generating takeoffs.",
+          },
+        ],
+      },
+    },
+  },
   // ---- C2 · Civil 3D — satélite de metrados (ES por ahora) -------------------
   "automatizar-metrados-cubicaciones-civil-3d": {
     es: {

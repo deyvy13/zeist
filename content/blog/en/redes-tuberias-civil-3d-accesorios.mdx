@@ -1,0 +1,241 @@
+---
+title: "Civil 3D Pipe Networks: Water, Sewer and Fittings (Elbows, Tees, Wyes) Modeled in 3D"
+seoTitle: "Civil 3D Pipe Networks: Elbows, Tees and Wyes in 3D"
+description: "How to model water and sewer networks in 3D in Civil 3D with elbows, tees, wyes, reducers and valves — pressure networks, parts lists, catalogs — and how a plugin can place fittings and count them automatically."
+date: "2026-09-25T09:00:00.000Z"
+author: "Zeist"
+tags:
+  - Pipe networks
+  - Pressure networks
+  - Water distribution
+  - Sewer design
+  - Pipe fittings
+  - Civil 3D
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Water and sewer networks"
+  title="Drawing the network in plan takes an afternoon. Placing every elbow, tee and wye in 3D takes a week."
+  highlight="And every time the layout changes, that week starts over. This guide explains how Civil 3D models water and sewer networks, where the time really goes, and which part you can hand to a plugin that places the fittings for you."
+/>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain language">
+- **Gravity network** — Flows by slope, with no pressure: sanitary sewer and storm drainage. In Civil 3D it's a *pipe network*.
+- **Pressure network** — Works under pressure: water distribution, transmission and force mains. In Civil 3D it's a *pressure network*.
+- **Fitting** — Any piece that joins or diverts pipes: elbows, tees, crosses, wyes, reducers, caps, valves, hydrants.
+- **Elbow** — Changes the pipe's direction. Manufactured at fixed angles: 11.25°, 22.5°, 45° and 90°.
+- **Tee and wye** — Branches. A tee leaves at 90°; a wye leaves at an angle and is typical on sewer service connections.
+- **Manhole or structure** — The inspection structure of a gravity network, where pipes come in and go out.
+- **Parts catalog** — The library of real pipes and fittings, with sizes and materials, that Civil 3D draws from.
+- **Parts list** — The selection from that catalog used by a specific project.
+- **Plugin** — A program installed inside Civil 3D that adds its own buttons to the toolbar at the top.
+
+No programming jargon. This is written for utility designers, not developers.
+</Callout>
+
+## The plan drawing is not the model
+
+Almost every office designs water and sewer networks the same way: polylines in plan, one layer per diameter, 2D blocks for fittings, and a quantity table in a separate spreadsheet.
+
+It works for the drawing. But it isn't a model. It doesn't know how deep each pipe runs, whether a 45° elbow actually fits that bend, or that two networks cross at the same elevation.
+
+Civil 3D can take all of that to 3D — it has dedicated tools for it — but doing it by hand has a cost almost nobody tracks:
+
+- Building the network segment by segment from the polylines
+- Picking **every fitting** based on the angle and diameter at each node
+- Adjusting depths to keep minimum cover
+- Labeling pipes, fittings and structures
+- Counting fittings for the quantity takeoff
+- And when the layout changes, **doing it all again**
+
+<AnimatedFlow
+  title="The manual workflow that repeats every revision"
+  nodes="2D polylines|Network piece by piece|Fitting by fitting|Manual takeoff"
+  subs="One layer per diameter|Hours of clicking|Angle, diameter, material|And again after every change"
+  warnCount="4"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Two kinds of network: gravity and pressure" time="~5 min">
+
+Civil 3D doesn't treat a sewer the same way as a water main, because they don't behave the same way. It's worth understanding before automating anything, because the rules are completely different.
+
+**Gravity networks (sanitary and storm sewer).** **Slope** rules. Pipes run straight from manhole to manhole, and each run's elevation depends on minimum slope and manhole depths. Fittings mostly appear at connections: wyes and bends to tie in service laterals.
+
+**Pressure networks (water distribution, transmission, force mains).** **Cover** rules: the pipe follows the ground at a minimum depth. Here fittings are the core of the design: every change of direction is an elbow, every branch is a tee, every size change is a reducer — plus valves and fire hydrants on top.
+
+<ComparisonTable
+  criterionLabel="Aspect"
+  leftLabel="Gravity network"
+  rightLabel="Pressure network"
+  rows="Examples | Sanitary and storm sewer | Water distribution, transmission, force mains || What controls elevation | Slope between manholes | Cover over the ground || Structures | Manholes, inlets, junction boxes | Valve vaults, hydrants || Typical fittings | Wyes and bends at connections | Elbows, tees, crosses, reducers, valves || Civil 3D object | Pipe network | Pressure network || Hardest part by hand | Inverts and slopes | Choosing every fitting"
+/>
+
+<Callout type="warn" title="The mistake of mixing them">
+Modeling a water main as a gravity network — straight pipes between structures — is the most common shortcut and the most expensive. You lose the real fittings, the fitting takeoff comes out wrong, and the model can't catch clashes at the right depth.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Fittings: what they are and how Civil 3D draws them" time="~6 min">
+
+A fitting isn't a drawing: it's something you buy. So the model has to use pieces that actually exist in the manufacturer's catalog, with real sizes and angles.
+
+**The ones in almost every network:**
+
+- **11.25°, 22.5°, 45° and 90° elbows.** There's no 37° elbow. If the layout bends at 37°, you have to decide: combine pieces, use the deflection the pipe joint allows, or adjust the alignment.
+- **Tees.** A 90° branch. In water networks, every lateral leaving the main.
+- **Crosses.** Two opposite branches at the same point.
+- **Wyes.** An angled branch, usually 45°. The standard piece on sewer service connections.
+- **Reducers.** A size change on the same line.
+- **Caps.** Closing the end of a line.
+- **Valves and fire hydrants.** They don't change the geometry, but they sit on the network and get counted in the takeoff.
+
+**Where Civil 3D gets them.** The program ships **parts catalogs** with pipes and fittings by material (PVC, ductile iron, HDPE, depending on the catalog). From that catalog you build a project **parts list**: the sizes and materials you'll actually use. If a size isn't in the parts list, Civil 3D simply can't draw it.
+
+<Callout type="info" title="2D blocks or 3D parts">
+Plenty of people search for *pipe fittings in DWG*: 2D blocks for the drawing. They're fine for sheets, but they don't know their diameter, don't connect to the pipe and don't count themselves. A catalog part in Civil 3D does: it's connected, has an elevation and shows up in tables. That difference is what makes automation possible.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Where the time goes in the manual workflow" time="~6 min">
+
+Ask a utility designer what eats the most hours and they rarely say *drawing*. They name everything that comes after.
+
+**1. Choosing the right fitting at every node.** An urban water network can have hundreds of nodes. At each one you check the angle and the sizes coming in and out, then pick the piece: 22.5° elbow, reducing tee, cross. It's mechanical work, but with a hundred decisions per sheet.
+
+**2. Keeping cover along the whole run.** Where the ground rises or drops, the pipe has to follow without ending up too shallow or too deep. By hand it's checked in spots, and some segment always slips through.
+
+**3. Redoing everything when the layout changes.** A street moves, a valve is relocated, a diameter changes. Every change drags fittings, elevations and labels with it.
+
+**4. Labeling.** Size, material, length and slope on every pipe; type on every fitting; inverts at every structure.
+
+**5. Counting parts.** The fitting takeoff — how many 45° elbows at 6 inches, how many 8x6 tees — is almost always counted off the drawing. It's the table with the most errors in the whole bid set.
+
+<ComparisonTable
+  criterionLabel="Task"
+  leftLabel="Automated"
+  rightLabel="Manual"
+  rows="Build the network from polylines | *Minutes | One or two days || Choose every fitting | *By rule, at every node | Node by node || Check cover | *Whole network, every time | Spot checks || Redo after a layout change | *Run it again | Start over || Fitting takeoff | *Table from the model | Counted off the sheet || Risk of a part that doesn't exist | *None, it comes from the catalog | High"
+/>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. What a plugin does to draw the network in 3D" time="~8 min">
+
+This is the real shift. Civil 3D's native tools can create a network from a polyline, but deciding **which piece goes at each node** is still on you. A plugin built for your office applies your rules at every node at once.
+
+**What it does, step by step:**
+
+1. **Reads your 2D drawing.** It takes the polylines on each layer (one per size and material, the way you already work) and treats them as runs.
+2. **Creates the network in Civil 3D.** A pressure network for water, a pipe network for sewer, using parts from your list.
+3. **Picks each node's fitting by rule.** It measures the bend and snaps it to the nearest commercial elbow. If a branch comes in, it places a tee or a wye depending on the network type. If the size changes, it places the reducer. If no valid piece exists, it **flags it** instead of inventing one.
+4. **Sets elevations.** For water, it follows the ground at minimum cover. For sewer, it respects minimum slopes and manhole depths.
+5. **Labels** everything with your company style.
+6. **Generates the fitting takeoff**: a table by type, angle, size and material, ready for the estimate.
+
+<AnimatedFlow
+  title="The same job, with a plugin"
+  nodes="Polylines by layer|3D network with real parts|Fittings by rule|Fitting schedule"
+  subs="Your usual drawing|From the project catalog|Elbow, tee, wye, reducer|Ready for the estimate"
+/>
+
+<Callout type="success" title="Why this is more than saving clicks">
+When parts come from a written rule, **every project in the office is modeled the same way**. The fitting takeoff stops depending on who counted, and review comments about quantities that don't match the drawings disappear.
+</Callout>
+
+<Callout type="info" title="Dynamo or plugin">
+To test the rules, start in **Dynamo**, which builds routines by connecting blocks with no code. When the routine is used on every project and several people open it, move it to a **plugin**: a button on the Civil 3D toolbar. The full comparison is in [Dynamo vs C#: which one fits each case](/en/blog/dynamo-vs-csharp-civil3d-revit).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. The rules you have to define first" time="~6 min">
+
+A plugin applies rules; it doesn't invent them. These are the ones to write down before automating — ideally on a single page the team signs off on:
+
+**Material and catalog by size.** Which material your office uses for each diameter range, and which catalog the parts come from.
+
+**Minimum cover and maximum depth.** For water mains, how deep the pipe must be under roadway and under sidewalk.
+
+**Allowed angles.** How much deflection the pipe joint absorbs, and from what point you place an elbow. What to do when the bend falls between two commercial elbows.
+
+**Tee or wye.** When a branch is a tee and when it's a wye. On sewers, wyes are the rule at connections; on water mains, tees.
+
+**Slopes and manholes.** For sewers: minimum slope per size, maximum manhole spacing, minimum drop across the manhole.
+
+**Standards.** Whatever code applies where you work, plus the water utility's own standards.
+
+<Callout type="warn" title="If the rules aren't written down, a plugin can't apply them">
+A quick test: ask two designers to pick the fittings for the same network separately. If they don't match, agree on the criteria first. Automating a criterion that doesn't exist just produces mistakes faster.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. The most-searched problems (and their real cause)" time="~6 min">
+
+Some searches show up in every forum. They almost always share a cause, and it's almost never a software bug.
+
+**Civil 3D pipe network not drawing pipes.** Most often, the parts list doesn't include the size or material you're trying to use, or the network is being created in a structures-only mode. Check the parts list first.
+
+**Parts list not synchronizing with the catalog.** Usually happens when the catalog lives on another path (a network folder, say) or when each computer points to a different catalog. Set the path with the command to set the network catalog, and use the same one across the office.
+
+**Fittings won't connect to the pipe.** Incompatible size or joint type between the fitting and the pipe in the catalog. Civil 3D won't connect parts that wouldn't fit in real life.
+
+**Rules push elevations somewhere impossible.** On gravity networks, cover and slope rules that fight each other. The network satisfies one and breaks the other.
+
+<Callout type="success" title="What they have in common">
+All four are avoided with a **centralized catalog and parts list** plus written rules. That's the same foundation a plugin needs — so sorting this out pays off even if you never automate.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. How to start without slowing projects down" time="~5 min">
+
+**Week 1 · Centralize the catalog and parts lists.** One path for the whole office. One parts list per network type, with the sizes and materials you actually use.
+
+**Week 2 · Write the rules.** One page: materials, cover, angles, tee or wye, slopes. Have two designers review it.
+
+**Week 3 · Test on a real network.** Take a finished project, generate the network with the rules (in Dynamo or with a pilot plugin) and compare the fitting takeoff against the one you already delivered. The differences tell you which rule is missing.
+
+**Week 4 · Use it on a live project.** With a manual check in parallel. Measure how many hours it took versus before.
+
+If the savings are clear and the tool will be used on every water and sewer project, that's when an installable plugin for the whole team pays off.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Civil 3D automation"
+  title="How many fittings do you pick by hand on every network?"
+  body="We build Civil 3D plugins that turn your 2D drawing into a 3D network with real parts, place elbows, tees and wyes by rule, and generate the fitting takeoff. We're a team of civil engineers and software engineers."
+  primaryLabel="Get a diagnosis"
+  primaryHref="/en/contacto"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/servicios/add-ins-revit-civil-3d"
+/>
+
+## Related resources
+
+- **The cluster guide:** [Civil 3D plugin for automated 3D drawing of utility networks](/en/blog/plugin-civil-3d-dibujo-3d-automatizado).
+- **The other buried network:** [duct banks in Civil 3D, 3D modeling and automation](/en/blog/banco-de-ductos-civil-3d).
+- **The parent guide:** [automating Civil 3D, the complete guide](/en/blog/automatizar-civil-3d-guia-completa).
+- **Which tool to use:** [Dynamo vs C#, which one fits each case](/en/blog/dynamo-vs-csharp-civil3d-revit).
+- **If you're outsourcing it:** [how much a Revit or Civil 3D add-in costs](/en/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · BIM automation"
+  title="A team of civil engineers and software engineers"
+  body="We've designed water and sewer networks, and we know how to build the tool that models them for you. We work with engineering offices across the Americas and beyond."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contacto"
+  secondaryLabel="See all services"
+  secondaryHref="/en/servicios"
+/>
+
+---
+
+**Found this useful?** Share it with whoever designs the networks in your office. Counting the nodes on the last network you delivered is usually the most convincing argument.
