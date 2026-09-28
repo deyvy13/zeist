@@ -25,6 +25,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "pt",
     "en"
   ],
+  "comparar-modelos-revit-civil-3d-detectar-cambios": [
+    "es",
+    "pt",
+    "en"
+  ],
   "crear-plugin-civil-3d-con-claude-code-sin-programar": [
     "es",
     "pt",
@@ -70,6 +75,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
   ],
   "plan-bim-peru-obligatorio-guia-empresas": [
     "es"
+  ],
+  "plugin-acero-revit-modelado-revision": [
+    "es",
+    "pt",
+    "en"
   ],
   "plugin-civil-3d-dibujo-3d-automatizado": [
     "es",

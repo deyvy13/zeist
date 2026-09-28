@@ -125,7 +125,21 @@
     "empty": "We'll publish the first articles soon.",
     "backToBlog": "Back to blog",
     "minRead": "min read",
-    "publishedOn": "Published on"
+    "publishedOn": "Published on",
+    "earlyCta": {
+      "eyebrow": "We build this for your company",
+      "title": "If your team does this by hand on every deliverable, we turn it into a button.",
+      "body": "We build custom plugins and add-ins for Revit and Civil 3D that remove repetitive work and the errors in your deliverables. We're civil engineers and software engineers: we understand your process before we write a line of code.",
+      "points": [
+        "Deliverables without transcription errors",
+        "Days of manual work cut to minutes",
+        "Your standards, your format, your code"
+      ],
+      "primary": "Tell us your process on WhatsApp",
+      "secondary": "See custom add-ins",
+      "note": "No-commitment diagnosis · Same-day reply · Engineering offices across the Americas and beyond"
+    },
+    "related": "Keep reading on this topic"
   },
   "tools": {
     "eyebrow": "Tools",
@@ -152,7 +166,8 @@
       "contact": "Contact",
       "blog": "Blog",
       "tools": "Tools"
-    }
+    },
+    "languages": "Zeist in other languages"
   },
   "whatsapp": {
     "aria": "Message us on WhatsApp",

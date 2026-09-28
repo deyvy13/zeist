@@ -1,0 +1,222 @@
+---
+title: "Comparar dos modelos de Revit y Civil 3D: cómo detectar automáticamente qué cambió entre versiones"
+seoTitle: "Comparar dos modelos Revit y Civil 3D: ver cambios"
+ctaTitle: "¿Cuántas horas pierde tu equipo buscando qué cambió en cada modelo que llega? Eso lo automatizamos."
+description: "Cómo comparar dos versiones de un modelo de Revit o Civil 3D y detectar elementos agregados, eliminados, movidos y modificados. Qué ofrecen las herramientas nativas, dónde se quedan cortas y cómo funciona un plugin de comparación."
+date: "2026-09-27T09:00:00.000Z"
+author: "Zeist"
+tags:
+  - Comparar modelos
+  - Control de cambios
+  - Revit
+  - Civil 3D
+  - Coordinación BIM
+  - Plugin
+---
+
+<BlogHero
+  eyebrow="Revit · Civil 3D · Control de cambios"
+  title="El modelo llegó de nuevo. Nadie dijo qué cambió. Y alguien tiene que encontrarlo antes de que llegue a obra."
+  highlight="Cuando los modelos viajan entre equipos —arquitectura, estructuras, instalaciones, topografía, contratistas— cada versión nueva trae cambios que nadie documenta. Encontrarlos a ojo cuesta días. No encontrarlos cuesta mucho más. Esta guía explica cómo se detectan automáticamente."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Para **comparar dos modelos de Revit o Civil 3D** se extrae de cada versión una huella de cada elemento —identificador único, categoría, parámetros y geometría— y se cruzan ambas listas. El resultado clasifica cada elemento en **agregado, eliminado, movido o modificado**, indicando qué parámetro cambió y su valor anterior y nuevo. Revit no trae una comparación completa de modelos dentro del programa, y la comparación de dibujos de AutoCAD en Civil 3D compara geometría, no la información de los objetos. Por eso las empresas que intercambian modelos a diario usan un **plugin de comparación** que genera el reporte de cambios en minutos.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Versión o revisión** — Cada entrega del modelo. La A que tenías y la B que te acaban de mandar.
+- **Identificador único** — El código interno que Revit y Civil 3D asignan a cada elemento y que no cambia aunque lo muevas. Es lo que permite reconocer "el mismo muro" en dos versiones.
+- **Parámetro** — Cada dato de un elemento: material, sección, nivel, diámetro, cota.
+- **Delta** — La lista de diferencias entre dos versiones.
+- **Modelo vinculado** — El modelo de otra disciplina que cargas dentro del tuyo como referencia.
+- **BCF** — Formato estándar para intercambiar observaciones de coordinación entre programas.
+- **Plugin** — Un programa que se instala dentro de Revit o Civil 3D y agrega botones propios en la barra superior.
+
+Sin términos de programación. Está escrito para coordinadores BIM, jefes de proyecto y oficinas técnicas.
+</Callout>
+
+## El costo que nadie presupuesta: encontrar el cambio
+
+En un proyecto mediano, los modelos se intercambian cada semana. Estructuras manda una versión a arquitectura; instalaciones a estructuras; topografía actualiza la superficie; el contratista devuelve el modelo con ajustes de obra.
+
+Casi nunca llega con una lista de cambios confiable. Llega con un correo: *"Va la versión actualizada."*
+
+Y entonces alguien —normalmente la persona mejor pagada del equipo— abre las dos versiones lado a lado y empieza a buscar. Vista por vista. Nivel por nivel. Con la sensación permanente de que algo se le está escapando.
+
+Lo que se escapa es lo caro:
+
+- **Una viga que cambió de sección** y el plano de encofrado quedó con la anterior.
+- **Un muro eliminado** que sigue contando en el metrado.
+- **Una tubería que bajó 30 cm** y ahora choca con una zapata.
+- **Un cambio de alcance** que nadie registró como adicional y que la empresa terminó pagando.
+
+<AnimatedFlow
+  title="Lo que pasa hoy cuando llega una versión nueva"
+  nodes="Llega el modelo B|Revisión a ojo|Cambios que se escapan|Error en planos o metrado"
+  subs="Sin lista de cambios|Días de la persona más cara|Siempre queda alguno|Se descubre tarde"
+  warnCount="4"
+/>
+
+<Callout type="warn" title="El problema no es la falta de cuidado">
+Nadie puede revisar a ojo miles de elementos con cientos de parámetros cada uno. No es un tema de disciplina del equipo: es una tarea que por su tamaño **solo se puede hacer bien de forma automática**.
+</Callout>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Qué significa realmente 'comparar dos modelos'" time="~5 min">
+
+Comparar modelos no es superponer dos vistas y buscar diferencias con la vista. Es responder, para **cada elemento**, cuatro preguntas:
+
+**¿Existe en las dos versiones?** Si solo está en la nueva, es un **agregado**. Si solo está en la anterior, es un **eliminado**.
+
+**¿Está en el mismo lugar?** Si cambió su ubicación, es un **movido**, y hay que saber cuánto y en qué dirección.
+
+**¿Tiene los mismos datos?** Si cambió un parámetro —sección, material, nivel, diámetro, cota— es un **modificado**, y hay que saber qué parámetro, su valor anterior y el nuevo.
+
+**¿Importa ese cambio?** Un elemento que se movió 0.1 mm por redondeo no es un cambio real. Un filtro de tolerancia separa el ruido de lo que afecta al proyecto.
+
+<ComparisonTable
+  criterionLabel="Tipo de cambio"
+  leftLabel="Qué lo delata"
+  rightLabel="Por qué importa"
+  rows="Agregado | Existe solo en la versión nueva | Nuevo metrado, nuevas interferencias || Eliminado | Existe solo en la versión anterior | Metrado inflado si nadie lo nota || Movido | Mismo elemento, otra ubicación | Choques, planos desactualizados || Modificado | Mismo elemento, otro parámetro | Sección, material o cota distintos || Sin cambio | Todo coincide dentro de la tolerancia | Se descarta de la revisión"
+/>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Lo que ofrecen Revit y Civil 3D de forma nativa" time="~7 min">
+
+Hay herramientas, y conviene conocerlas antes de desarrollar nada. Cada una resuelve una parte.
+
+**En Revit:**
+
+- **Copiar/Supervisar y Revisión de coordinación.** Revit puede vigilar ciertos elementos de un modelo vinculado —niveles, rejillas, pilares, muros, suelos— y avisar cuando cambian. Útil, pero solo para los elementos que se configuraron para supervisar, y no genera un reporte completo del modelo.
+- **Comparación de versiones en Autodesk Docs.** Si el proyecto vive en la nube de Autodesk, el visor puede comparar dos versiones publicadas y marcar lo agregado, eliminado y modificado. Funciona bien para revisar visualmente; depende de trabajar en esa plataforma.
+- **Navisworks.** Tiene una herramienta de comparación entre modelos y es el estándar para coordinación. Requiere exportar y trabajar fuera de Revit.
+
+**En Civil 3D:**
+
+- **Comparación de dibujos (DWG Compare).** Viene de AutoCAD y resalta las diferencias gráficas entre dos DWG. Compara **geometría**, no la información de los objetos de Civil 3D: no te dice que una alineación cambió entre las progresivas 1+200 y 1+450, ni que un tubo cambió de diámetro.
+- **Superficie de volumen.** Para superficies sí hay una solución nativa excelente: una superficie de diferencia entre la versión anterior y la nueva muestra dónde y cuánto cambió el terreno.
+
+<ComparisonTable
+  criterionLabel="Necesidad"
+  leftLabel="Plugin de comparación"
+  rightLabel="Herramientas nativas"
+  rows="Reporte de todo el modelo, no solo elementos supervisados | *Sí | Parcial || Parámetro cambiado con valor anterior y nuevo | *Sí | Limitado || Objetos de Civil 3D: alineaciones, perfiles, redes | *Sí, con sus datos | Solo geometría || Funciona dentro de Revit o Civil 3D | *Sí | Depende de la herramienta || Exporta a Excel y BCF | *Sí | Parcial || Reglas y tolerancias de tu empresa | *Sí | No"
+/>
+
+<Callout type="info" title="La regla práctica">
+Si trabajas en la nube de Autodesk y te basta una revisión visual, úsala. Cuando necesitas un **reporte auditable** —qué cambió, cuánto y en qué parámetro— para aprobar entregables, controlar adicionales o actualizar metrados, ahí entra el plugin.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Cómo funciona un plugin de comparación, paso a paso" time="~8 min">
+
+Esto es lo que ocurre dentro del botón. Vale la pena entenderlo porque explica por qué el resultado es confiable.
+
+**1. Toma una huella de la versión anterior.** Recorre el modelo y guarda, por cada elemento: su identificador único, su categoría y tipo, los parámetros que tu empresa definió como relevantes, y una firma de su geometría (ubicación, dimensiones, longitud o volumen).
+
+**2. Toma la misma huella de la versión nueva.** Con las mismas reglas, para que la comparación sea justa.
+
+**3. Empareja los elementos.** Primero por identificador único, que es lo más fiable. Cuando otro equipo reconstruyó parte del modelo y los identificadores cambiaron, empareja por tipo y ubicación, y lo marca como *emparejado por posición* para que alguien lo confirme.
+
+**4. Clasifica cada elemento.** Agregado, eliminado, movido o modificado. En los modificados, anota qué parámetro cambió, el valor anterior y el nuevo.
+
+**5. Filtra el ruido.** Aplica tolerancias —por ejemplo, ignorar desplazamientos menores a 1 mm— y descarta parámetros que cambian solos, como fechas de edición.
+
+**6. Entrega el resultado.** Una vista 3D coloreada dentro del programa (verde agregado, rojo eliminado, ámbar modificado), un reporte en Excel filtrable por disciplina y nivel, y observaciones en BCF para enviarlas al equipo responsable.
+
+<AnimatedFlow
+  title="Qué hace el botón"
+  nodes="Huella versión A|Huella versión B|Emparejar y clasificar|Vista, Excel y BCF"
+  subs="ID, parámetros, geometría|Mismas reglas|Agregado, eliminado, movido, modificado|En minutos"
+/>
+
+<Callout type="success" title="El detalle que hace la diferencia">
+Un buen plugin no solo dice *qué* cambió: dice **qué afecta**. Si una viga cambió de sección, lista los planos donde aparece y la partida del metrado que se mueve. Eso convierte una lista técnica en una decisión de gestión.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. En Civil 3D: comparar alineaciones, superficies y redes" time="~7 min">
+
+En infraestructura, los cambios importantes no son "un objeto más o menos": son cambios **dentro** de los objetos. Por eso la comparación de Civil 3D necesita entender cada tipo.
+
+**Alineaciones.** Detecta los tramos donde el trazo cambió y los reporta por progresiva: *"entre 1+200 y 1+450 cambió el radio de la curva C-7 de 150 m a 120 m"*.
+
+**Perfiles.** Pendientes, curvas verticales y cotas de rasante que cambiaron, también por progresiva.
+
+**Superficies.** La diferencia de elevación entre versiones, con el volumen de corte y relleno que se movió. Es lo que te dice si el cambio del terreno afecta tu movimiento de tierras.
+
+**Redes de tuberías.** Tubos agregados o eliminados, cambios de diámetro, material, pendiente y cota de fondo; estructuras que se movieron.
+
+**Corredores.** Regiones y secciones tipo que cambiaron, que es donde se esconden los cambios de metrado más grandes.
+
+<Callout type="warn" title="Por qué importa en obra pública">
+Cada cambio entre versiones mueve cantidades. Si nadie los documenta, el metrado de la última entrega no coincide con el modelo, y eso es exactamente lo que genera observaciones en la revisión del expediente. Un reporte de cambios por versión es también tu **sustento** cuando hay que justificar un adicional.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Dónde se paga solo: los tres usos que más ahorran" time="~6 min">
+
+**1. Recepción de entregables de terceros.** Cuando un consultor o subcontratista entrega una versión, el reporte de cambios es la primera revisión: en minutos sabes si cambió lo acordado, si cambió algo que no debía, y qué hay que volver a revisar. La revisión deja de depender de la memoria de alguien.
+
+**2. Control de adicionales y deductivos.** Los cambios de alcance aparecen como elementos agregados o modificados entre versiones. Con el reporte, cada adicional tiene su evidencia: qué cambió, cuándo y en qué versión. Sin él, muchos cambios se absorben sin cobrarse.
+
+**3. Actualización de planos y metrados.** Saber exactamente qué cambió permite revisar solo lo afectado, en lugar de volver a revisar todo el proyecto en cada versión.
+
+<ComparisonTable
+  criterionLabel="Tarea"
+  leftLabel="Con plugin"
+  rightLabel="A ojo"
+  rows="Detectar cambios entre dos versiones | *Minutos | Uno a tres días || Cambios que se escapan | *Ninguno dentro de las reglas | Siempre alguno || Evidencia para adicionales | *Reporte por versión | Correos y memoria || Revisión tras cada entrega | *Solo lo que cambió | Todo el modelo otra vez || Quién la hace | *Cualquiera del equipo | La persona más experimentada"
+/>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Cómo implementarlo en tu empresa" time="~5 min">
+
+**Paso 1 · Define qué es un cambio para ti.** Qué categorías y parámetros importan por disciplina, y qué tolerancias aplicar. Esta página es la que convierte el plugin en tu herramienta y no en una genérica.
+
+**Paso 2 · Asegura identificadores estables.** Pide a los equipos que trabajen sobre el mismo modelo en vez de reconstruirlo, y que no copien y peguen elementos entre archivos. Eso mantiene los identificadores y hace que la comparación sea exacta.
+
+**Paso 3 · Pruébalo con dos versiones reales.** Toma dos entregas de un proyecto cerrado donde ya sepas qué cambió. Si el reporte encuentra lo que tú encontraste —y algo más—, está listo.
+
+**Paso 4 · Hazlo parte del flujo de recepción.** Toda versión que entra pasa por la comparación antes de aceptarse. El reporte se archiva con el entregable.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Revit y Civil 3D"
+  title="Recibe cada modelo con su lista de cambios lista en minutos"
+  body="Desarrollamos plugins de comparación de modelos para Revit y Civil 3D con tus reglas: qué es un cambio, qué tolerancias aplicar y en qué formato reportarlo. Tu equipo deja de buscar diferencias y empieza a decidir sobre ellas."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Cómo se construye un plugin:** [desarrollo de add-ins para Revit y Civil 3D, la guía completa](/es/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+- **Interferencias entre redes:** [plugin para Civil 3D, dibujo 3D automatizado](/es/blog/plugin-civil-3d-dibujo-3d-automatizado).
+- **Revisión automática en estructuras:** [plugin para modelado y revisión de acero en Revit](/es/blog/plugin-acero-revit-modelado-revision).
+- **Para que todos entreguen igual:** [estandarizar procesos BIM en tu empresa](/es/blog/estandarizar-procesos-bim-empresa).
+- **Lo que cuesta no detectar a tiempo:** [reprocesos en obra, el costo oculto](/es/blog/reprocesos-obra-costo-oculto).
+- **Si vas a encargarlo:** [cuánto cuesta un add-in para Revit o Civil 3D](/es/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Hemos revisado modelos a ojo en la víspera de una entrega. Por eso construimos herramientas que lo hacen en minutos. Trabajamos con empresas de ingeniería y construcción de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>

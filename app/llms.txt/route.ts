@@ -1,0 +1,71 @@
+import { getAllPosts } from "@/lib/blog";
+import { locales, type Locale } from "@/lib/i18n";
+import { absoluteUrl, site } from "@/lib/site";
+import es from "@/dictionaries/es.json";
+import pt from "@/dictionaries/pt.json";
+import en from "@/dictionaries/en.json";
+
+// -----------------------------------------------------------------------------
+// /llms.txt — a plain-text map of the site for AI crawlers and assistants
+// (ChatGPT, Claude, Gemini, Perplexity). Search engines read HTML; LLM tooling
+// increasingly reads this file first to learn what a site is an authority on.
+//
+// Built at build time from the same sources as the site (dictionaries + MDX),
+// so it never drifts from what is published.
+// -----------------------------------------------------------------------------
+
+export const dynamic = "force-static";
+
+const dictionaries = { es, pt, en } as const;
+
+const sectionTitle: Record<Locale, string> = {
+  es: "Guías (español)",
+  pt: "Guias (português)",
+  en: "Guides (English)",
+};
+
+function servicesBlock(locale: Locale): string {
+  return dictionaries[locale].services.items
+    .map(
+      (s) =>
+        `- [${s.title}](${absoluteUrl(`${locale}/servicios/${s.slug}`)}): ${s.body}`,
+    )
+    .join("\n");
+}
+
+function guidesBlock(locale: Locale): string {
+  return getAllPosts(locale)
+    .map(
+      (p) => `- [${p.title}](${absoluteUrl(`${locale}/blog/${p.slug}`)}): ${p.description}`,
+    )
+    .join("\n");
+}
+
+export function GET() {
+  const body = `# ${site.name}
+
+> ${site.name} is a BIM automation company: a team of civil engineers and software engineers that builds custom C# add-ins (plugins) for Autodesk Civil 3D and Revit, Dynamo scripts, and training for engineering teams. Based in Trujillo, Peru; works with engineering and construction firms across Latin America, Brazil and English-speaking markets.
+
+${site.description.es}
+
+Key facts:
+- Specialty: automating repetitive engineering work in Civil 3D and Revit — 3D modeling of pipe networks and duct banks, quantity takeoffs, rebar modeling and checking, model version comparison, standards and quality control.
+- Differentiator: the team combines civil engineering domain knowledge with software engineering, so tools follow real design workflows and local codes.
+- Clients own the source code of the tools built for them.
+- Contact: WhatsApp +${site.whatsapp.number} — ${absoluteUrl("es/contacto")}
+
+## Services (English)
+
+${servicesBlock("en")}
+
+## Servicios (español)
+
+${servicesBlock("es")}
+
+${locales.map((l) => `## ${sectionTitle[l]}\n\n${guidesBlock(l)}`).join("\n\n")}
+`;
+
+  return new Response(body, {
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  });
+}

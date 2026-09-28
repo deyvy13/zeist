@@ -21,6 +21,275 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- C1 · Add-ins — satélites de control de calidad (comparación y acero) ----
+  "comparar-modelos-revit-civil-3d-detectar-cambios": {
+    es: {
+      roadmap: {
+        title: "Detectar qué cambió entre dos modelos, en 6 bloques",
+        intro:
+          "Qué significa comparar modelos, qué hacen las herramientas nativas, cómo funciona un plugin de comparación y dónde se paga solo.",
+        steps: [
+          { n: 1, title: "Qué es comparar modelos", desc: "Agregado, eliminado, movido y modificado, con tolerancias", tag: "Concepto" },
+          { n: 2, title: "Herramientas nativas", desc: "Copiar/Supervisar, Autodesk Docs, Navisworks, DWG Compare", tag: "Opciones" },
+          { n: 3, title: "Cómo funciona el plugin", desc: "Huella de cada versión, emparejar, clasificar y reportar", tag: "Solución" },
+          { n: 4, title: "Comparar en Civil 3D", desc: "Alineaciones, perfiles, superficies, redes y corredores", tag: "Infraestructura" },
+          { n: 5, title: "Dónde se paga solo", desc: "Recepción de entregables, adicionales y metrados", tag: "Retorno" },
+          { n: 6, title: "Cómo implementarlo", desc: "Reglas, identificadores estables y prueba con versiones reales", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre comparar modelos de Revit y Civil 3D",
+        items: [
+          {
+            q: "¿Cómo comparar dos modelos de Revit?",
+            a: "Revit no trae una comparación completa de dos modelos dentro del programa. Las opciones nativas son Copiar/Supervisar con Revisión de coordinación, que avisa de cambios solo en los elementos supervisados; la comparación de versiones del visor de Autodesk Docs, si el proyecto está en la nube de Autodesk; y la herramienta de comparación de Navisworks. Para un reporte completo y auditable dentro de Revit se usa un plugin que empareja los elementos por su identificador único y lista cada cambio con su valor anterior y nuevo.",
+          },
+          {
+            q: "¿Cómo saber qué cambió entre dos versiones de un modelo?",
+            a: "Hay que comparar elemento por elemento: si existe en ambas versiones, si está en el mismo lugar y si sus parámetros son iguales. Eso clasifica cada elemento en agregado, eliminado, movido o modificado. Hacerlo a ojo en modelos de miles de elementos es inviable; un plugin de comparación lo hace en minutos y genera una vista coloreada y un reporte en Excel.",
+          },
+          {
+            q: "¿Civil 3D puede comparar dos dibujos?",
+            a: "Sí, con la comparación de dibujos heredada de AutoCAD (DWG Compare), que resalta diferencias gráficas. Pero compara geometría, no la información de los objetos de Civil 3D: no reporta cambios de progresivas en una alineación ni de diámetro en una tubería. Para superficies, la solución nativa es una superficie de volumen entre la versión anterior y la nueva, que muestra la diferencia de elevación y el volumen.",
+          },
+          {
+            q: "¿Cómo comparar dos superficies en Civil 3D?",
+            a: "Creando una superficie de volumen (TIN de volumen) que tome la superficie anterior como base y la nueva como comparación. El resultado muestra dónde subió o bajó el terreno y calcula el volumen de corte y relleno entre ambas. Es la herramienta nativa más útil para detectar cambios de topografía entre versiones.",
+          },
+          {
+            q: "¿Qué pasa si el otro equipo reconstruyó el modelo y los identificadores cambiaron?",
+            a: "La comparación por identificador único deja de reconocer esos elementos como los mismos. Un buen plugin hace un segundo emparejamiento por tipo y ubicación y marca esos casos como emparejados por posición para que alguien los confirme. Para evitarlo, conviene acordar que los equipos trabajen sobre el mismo modelo en vez de reconstruirlo o copiar elementos entre archivos.",
+          },
+          {
+            q: "¿Para qué sirve comparar modelos en una empresa constructora?",
+            a: "Para tres cosas con impacto directo en costo: revisar en minutos los entregables de consultores y subcontratistas, tener evidencia de cada cambio de alcance para cobrar adicionales, y actualizar solo los planos y metrados afectados en lugar de revisar todo el proyecto en cada versión.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Detectar o que mudou entre dois modelos, em 6 blocos",
+        intro:
+          "O que significa comparar modelos, o que fazem as ferramentas nativas, como funciona um plugin de comparação e onde ele se paga sozinho.",
+        steps: [
+          { n: 1, title: "O que é comparar modelos", desc: "Adicionado, removido, deslocado e modificado, com tolerâncias", tag: "Conceito" },
+          { n: 2, title: "Ferramentas nativas", desc: "Copiar/Monitorar, Autodesk Docs, Navisworks, DWG Compare", tag: "Opções" },
+          { n: 3, title: "Como funciona o plugin", desc: "Impressão de cada versão, emparelhar, classificar e reportar", tag: "Solução" },
+          { n: 4, title: "Comparar no Civil 3D", desc: "Alinhamentos, perfis, superfícies, redes e corredores", tag: "Infraestrutura" },
+          { n: 5, title: "Onde se paga sozinho", desc: "Recebimento de entregas, aditivos e quantitativos", tag: "Retorno" },
+          { n: 6, title: "Como implantar", desc: "Regras, identificadores estáveis e teste com versões reais", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre comparar modelos de Revit e Civil 3D",
+        items: [
+          {
+            q: "Como comparar dois modelos de Revit?",
+            a: "O Revit não tem uma comparação completa de dois modelos dentro do programa. As opções nativas são Copiar/Monitorar com Revisão de coordenação, que avisa mudanças só nos elementos monitorados; a comparação de versões do visualizador do Autodesk Docs, se o projeto está na nuvem da Autodesk; e a ferramenta de comparação do Navisworks. Para um relatório completo e auditável dentro do Revit usa-se um plugin que emparelha os elementos pelo identificador único e lista cada mudança com o valor anterior e o novo.",
+          },
+          {
+            q: "Como saber o que mudou entre duas versões de um modelo?",
+            a: "É preciso comparar elemento por elemento: se existe nas duas versões, se está no mesmo lugar e se os parâmetros são iguais. Isso classifica cada elemento como adicionado, removido, deslocado ou modificado. Fazer isso no olho em modelos de milhares de elementos é inviável; um plugin de comparação faz em minutos e gera uma vista colorida e um relatório em Excel.",
+          },
+          {
+            q: "O Civil 3D consegue comparar dois desenhos?",
+            a: "Sim, com a comparação de desenhos herdada do AutoCAD (DWG Compare), que destaca diferenças gráficas. Mas compara geometria, não a informação dos objetos do Civil 3D: não reporta mudanças de estaqueamento num alinhamento nem de diâmetro numa tubulação. Para superfícies, a solução nativa é uma superfície de volume entre a versão anterior e a nova, que mostra a diferença de elevação e o volume.",
+          },
+          {
+            q: "Como comparar duas superfícies no Civil 3D?",
+            a: "Criando uma superfície de volume (TIN de volume) que use a superfície anterior como base e a nova como comparação. O resultado mostra onde o terreno subiu ou desceu e calcula o volume de corte e aterro entre as duas. É a ferramenta nativa mais útil para detectar mudanças de topografia entre versões.",
+          },
+          {
+            q: "E se a outra equipe reconstruiu o modelo e os identificadores mudaram?",
+            a: "A comparação por identificador único deixa de reconhecer esses elementos como os mesmos. Um bom plugin faz um segundo emparelhamento por tipo e posição e marca esses casos como emparelhados por posição para alguém confirmar. Para evitar isso, convém combinar que as equipes trabalhem sobre o mesmo modelo em vez de reconstruí-lo ou copiar elementos entre arquivos.",
+          },
+          {
+            q: "Para que serve comparar modelos numa construtora?",
+            a: "Para três coisas com impacto direto no custo: revisar em minutos as entregas de consultores e subempreiteiros, ter evidência de cada mudança de escopo para cobrar aditivos, e atualizar só as pranchas e quantitativos afetados em vez de revisar o projeto inteiro a cada versão.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Detect what changed between two models, in 6 blocks",
+        intro:
+          "What comparing models means, what native tools do, how a comparison plugin works, and where it pays for itself.",
+        steps: [
+          { n: 1, title: "What model comparison is", desc: "Added, deleted, moved and modified, with tolerances", tag: "Concept" },
+          { n: 2, title: "Native tools", desc: "Copy/Monitor, Autodesk Docs, Navisworks, DWG Compare", tag: "Options" },
+          { n: 3, title: "How the plugin works", desc: "Fingerprint each version, match, classify and report", tag: "Solution" },
+          { n: 4, title: "Comparing in Civil 3D", desc: "Alignments, profiles, surfaces, networks and corridors", tag: "Infrastructure" },
+          { n: 5, title: "Where it pays for itself", desc: "Deliverable intake, change orders and takeoffs", tag: "Return" },
+          { n: 6, title: "How to roll it out", desc: "Rules, stable IDs and a test on real versions", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about comparing Revit and Civil 3D models",
+        items: [
+          {
+            q: "How do you compare two Revit models?",
+            a: "Revit has no complete in-app comparison of two models. The native options are Copy/Monitor with Coordination Review, which flags changes only on monitored elements; version comparison in the Autodesk Docs viewer, if the project lives in Autodesk's cloud; and Navisworks' comparison tool. For a complete, auditable report inside Revit, teams use a plugin that matches elements by unique ID and lists every change with its old and new value.",
+          },
+          {
+            q: "How do you find what changed between two versions of a model?",
+            a: "You compare element by element: whether it exists in both versions, whether it's in the same place, and whether its parameters match. That classifies each element as added, deleted, moved or modified. Doing it by eye on models with thousands of elements isn't feasible; a comparison plugin does it in minutes and produces a color-coded view and an Excel report.",
+          },
+          {
+            q: "Can Civil 3D compare two drawings?",
+            a: "Yes, with DWG Compare inherited from AutoCAD, which highlights graphical differences. But it compares geometry, not Civil 3D object data: it won't report station changes on an alignment or a diameter change on a pipe. For surfaces, the native answer is a volume surface between the old and new version, which shows the elevation difference and the volume.",
+          },
+          {
+            q: "How do you compare two surfaces in Civil 3D?",
+            a: "Create a TIN volume surface using the old surface as the base and the new one as the comparison. The result shows where the ground rose or dropped and computes cut and fill volume between them. It's the most useful native tool for detecting topographic changes between versions.",
+          },
+          {
+            q: "What if the other team rebuilt the model and the IDs changed?",
+            a: "Matching by unique ID stops recognizing those elements as the same. A good plugin runs a second match by type and location and flags those cases as matched by position for someone to confirm. To avoid it, agree that teams work on the same model instead of rebuilding it or copying elements between files.",
+          },
+          {
+            q: "Why does a construction company need model comparison?",
+            a: "For three things with a direct cost impact: reviewing consultant and subcontractor deliverables in minutes, having evidence of every scope change to bill change orders, and updating only the affected drawings and takeoffs instead of re-checking the whole project on every version.",
+          },
+        ],
+      },
+    },
+  },
+  "plugin-acero-revit-modelado-revision": {
+    es: {
+      roadmap: {
+        title: "El acero en Revit, del diseño al metrado, en 6 bloques",
+        intro:
+          "Qué hace Revit con el acero de refuerzo, cómo un plugin lo modela y lo revisa contra la norma, y cómo se cuantifica sin errores.",
+        steps: [
+          { n: 1, title: "Qué hace Revit hoy", desc: "Armadura por elemento, recubrimientos y tablas, y lo que falta", tag: "Punto de partida" },
+          { n: 2, title: "Cómo modela el plugin", desc: "Del cuadro de armados a las barras colocadas por regla", tag: "Solución" },
+          { n: 3, title: "Revisión automática", desc: "Recubrimientos, espaciamientos, cuantías, traslapes y choques", tag: "Calidad" },
+          { n: 4, title: "Metrado de acero", desc: "Kilos por diámetro, elemento y nivel, y planilla de despiece", tag: "Metrado" },
+          { n: 5, title: "Qué gana la empresa", desc: "Plazo, calidad defendible, costo de obra y escala", tag: "Negocio" },
+          { n: 6, title: "Cómo implementarlo", desc: "Reglas de detallado, cuadro estándar, piloto y revisión", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre acero en Revit",
+        items: [
+          {
+            q: "¿Cómo se coloca el acero en Revit?",
+            a: "Revit tiene herramientas de armadura para colocar barras, estribos y mallas en vigas, columnas, zapatas, muros y losas, con recubrimientos configurables y formas de armadura estándar. Se hace elemento por elemento, lo que en un edificio completo toma semanas. Un plugin automatiza la colocación leyendo el cuadro de armados del diseño y la geometría de cada elemento.",
+          },
+          {
+            q: "¿Cómo cuantificar el acero en Revit?",
+            a: "Con tablas de planificación de armadura, que listan barras, longitudes y pesos, siempre que todo el acero esté modelado. Un plugin genera además el metrado en kilos por diámetro, por elemento y por nivel, la planilla de despiece con las formas de cada barra, y el desperdicio según las longitudes comerciales. Así el metrado sale del mismo modelo que los planos y siempre coincide.",
+          },
+          {
+            q: "¿Existe un plugin para colocar acero automáticamente en Revit?",
+            a: "Sí. Hay soluciones comerciales y también plugins a medida. Un plugin a medida tiene la ventaja de aplicar exactamente los criterios de detallado de tu oficina y leer el formato de cuadro de armados que ya usan, además de revisar el resultado contra la norma aplicable en tus proyectos.",
+          },
+          {
+            q: "¿Un plugin puede revisar el acero según la norma E.060 o ACI 318?",
+            a: "Puede revisar las reglas geométricas y de detallado: recubrimiento mínimo, espaciamiento libre mínimo y máximo, cuantía mínima y máxima, longitudes de anclaje y traslape, ganchos y choques entre barras. No calcula la estructura ni decide el armado: esa responsabilidad sigue siendo del ingeniero estructural.",
+          },
+          {
+            q: "¿Cómo detectar choques entre barras en los nudos?",
+            a: "Con todo el acero modelado, un plugin revisa la posición de cada barra en nudos y cruces y lista las que ocupan el mismo espacio o no respetan el espaciamiento libre mínimo. Detectarlo en el modelo evita descubrir en obra un nudo imposible de armar, que es de los errores más caros en estructuras de concreto.",
+          },
+          {
+            q: "¿Cuánto tiempo se ahorra automatizando el acero en Revit?",
+            a: "El patrón habitual es que armar todos los elementos de un nivel pasa de uno o dos días a minutos, y que repetirlo tras un cambio de sección deja de ser trabajo manual. El mayor ahorro, sin embargo, está en la revisión al 100% y en un metrado que no hay que rehacer, porque eliminan errores que en obra cuestan mucho más que las horas de modelado.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "A armadura no Revit, do projeto ao quantitativo, em 6 blocos",
+        intro:
+          "O que o Revit faz com a armadura, como um plugin a modela e a verifica contra a norma, e como se quantifica sem erros.",
+        steps: [
+          { n: 1, title: "O que o Revit faz hoje", desc: "Armadura por elemento, cobrimentos e tabelas, e o que falta", tag: "Ponto de partida" },
+          { n: 2, title: "Como o plugin modela", desc: "Do quadro de armaduras às barras colocadas por regra", tag: "Solução" },
+          { n: 3, title: "Verificação automática", desc: "Cobrimentos, espaçamentos, taxas, traspasses e colisões", tag: "Qualidade" },
+          { n: 4, title: "Quantitativo de aço", desc: "Quilos por bitola, elemento e pavimento, e tabela de aço", tag: "Quantitativo" },
+          { n: 5, title: "O que a empresa ganha", desc: "Prazo, qualidade defensável, custo de obra e escala", tag: "Negócio" },
+          { n: 6, title: "Como implantar", desc: "Regras de detalhamento, quadro padrão, piloto e verificação", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre armadura no Revit",
+        items: [
+          {
+            q: "Como colocar armadura no Revit?",
+            a: "O Revit tem ferramentas de armadura para colocar barras, estribos e telas em vigas, pilares, sapatas, paredes e lajes, com cobrimentos configuráveis e formas de armadura padrão. É feito elemento por elemento, o que num edifício completo leva semanas. Um plugin automatiza a colocação lendo o quadro de armaduras do projeto e a geometria de cada elemento.",
+          },
+          {
+            q: "Como fazer o quantitativo de aço no Revit?",
+            a: "Com tabelas de armadura, que listam barras, comprimentos e pesos, desde que toda a armadura esteja modelada. Um plugin gera também o quantitativo em quilos por bitola, por elemento e por pavimento, a tabela de aço com a forma de cada barra, e as perdas segundo os comprimentos comerciais. Assim o quantitativo sai do mesmo modelo que as pranchas e sempre bate.",
+          },
+          {
+            q: "Existe plugin para detalhamento de armadura automático no Revit?",
+            a: "Sim. Há soluções comerciais e também plugins sob medida. Um plugin sob medida tem a vantagem de aplicar exatamente os critérios de detalhamento do seu escritório e ler o formato de quadro de armaduras que vocês já usam, além de verificar o resultado contra a norma aplicável aos seus projetos.",
+          },
+          {
+            q: "Um plugin consegue verificar a armadura conforme a NBR 6118?",
+            a: "Consegue verificar as regras geométricas e de detalhamento: cobrimento mínimo, espaçamento livre mínimo e máximo, taxa mínima e máxima, comprimentos de ancoragem e traspasse, ganchos e colisões entre barras. Não calcula a estrutura nem decide a armadura: essa responsabilidade continua sendo do engenheiro estrutural.",
+          },
+          {
+            q: "Como detectar colisões entre barras nos nós?",
+            a: "Com toda a armadura modelada, um plugin confere a posição de cada barra em nós e cruzamentos e lista as que ocupam o mesmo espaço ou não respeitam o espaçamento livre mínimo. Detectar isso no modelo evita descobrir na obra um nó impossível de armar, um dos erros mais caros em estruturas de concreto.",
+          },
+          {
+            q: "Quanto tempo se economiza automatizando a armadura no Revit?",
+            a: "O padrão usual é que armar todos os elementos de um pavimento passa de um ou dois dias para minutos, e que refazer após uma mudança de seção deixa de ser trabalho manual. A maior economia, porém, está na verificação a 100% e num quantitativo que não precisa ser refeito, porque eliminam erros que na obra custam muito mais que as horas de modelagem.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Rebar in Revit, from design to takeoff, in 6 blocks",
+        intro:
+          "What Revit does with reinforcement, how a plugin models it and checks it against code, and how to quantify it without errors.",
+        steps: [
+          { n: 1, title: "What Revit does today", desc: "Rebar per element, cover and schedules, and what's missing", tag: "Starting point" },
+          { n: 2, title: "How the plugin models", desc: "From the reinforcement schedule to bars placed by rule", tag: "Solution" },
+          { n: 3, title: "Automated checking", desc: "Cover, spacing, ratios, laps and bar clashes", tag: "Quality" },
+          { n: 4, title: "Rebar takeoff", desc: "Weight by bar size, element and level, plus the bending schedule", tag: "Takeoff" },
+          { n: 5, title: "What the firm gains", desc: "Schedule, defensible quality, construction cost and scale", tag: "Business" },
+          { n: 6, title: "How to roll it out", desc: "Detailing rules, standard schedule, pilot and checking", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about rebar in Revit",
+        items: [
+          {
+            q: "How do you add rebar in Revit?",
+            a: "Revit's reinforcement tools place bars, stirrups and mesh in beams, columns, footings, walls and slabs, with configurable cover and standard rebar shapes. It's done element by element, which takes weeks on a full building. A plugin automates placement by reading the design's reinforcement schedule and each element's geometry.",
+          },
+          {
+            q: "How do you get a rebar takeoff from Revit?",
+            a: "With rebar schedules that list bars, lengths and weights, as long as all the reinforcement is modeled. A plugin also produces weight by bar size, element and level, a bar bending schedule with each bar's shape, and waste based on commercial bar lengths. The takeoff then comes from the same model as the drawings and always matches.",
+          },
+          {
+            q: "Is there a Revit plugin for automatic rebar placement?",
+            a: "Yes. There are commercial solutions and custom plugins. A custom plugin has the advantage of applying your office's exact detailing criteria and reading the reinforcement schedule format you already use, while checking the result against the code that applies to your projects.",
+          },
+          {
+            q: "Can a plugin check rebar against ACI 318?",
+            a: "It can check the geometric and detailing rules: minimum cover, minimum and maximum clear spacing, minimum and maximum reinforcement ratio, development and lap lengths, hooks and bar clashes. It doesn't analyze the structure or choose the reinforcement: that responsibility stays with the structural engineer.",
+          },
+          {
+            q: "How do you detect rebar clashes at joints?",
+            a: "With all the rebar modeled, a plugin checks each bar's position at joints and crossings and lists bars that occupy the same space or violate minimum clear spacing. Catching it in the model avoids discovering on site a joint that can't be built, one of the costliest errors in concrete structures.",
+          },
+          {
+            q: "How much time does automating rebar in Revit save?",
+            a: "The usual pattern is that reinforcing every element on a level drops from one or two days to minutes, and redoing it after a section change stops being manual work. The biggest saving, though, is 100% checking and a takeoff that doesn't need redoing, because they remove errors that cost far more on site than the modeling hours.",
+          },
+        ],
+      },
+    },
+  },
   // ---- C6 · Redes y dibujo 3D (hub: plugin-civil-3d-dibujo-3d-automatizado) ----
   "redes-tuberias-civil-3d-accesorios": {
     es: {

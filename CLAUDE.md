@@ -211,7 +211,7 @@ a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
 
 | Cluster | Pillar | Satélites |
 |---|---|---|
-| **C1 · Add-ins C#** (el diferenciador) | `desarrollo-add-ins-revit-civil-3d-guia-completa` | `crear-plugin-civil-3d-con-claude-code-sin-programar`, `dynamo-vs-csharp-civil3d-revit`, `cuanto-cuesta-un-add-in-revit-civil-3d`, `revit-api-espanol-primeros-pasos` |
+| **C1 · Add-ins C#** (el diferenciador) | `desarrollo-add-ins-revit-civil-3d-guia-completa` | `crear-plugin-civil-3d-con-claude-code-sin-programar`, `dynamo-vs-csharp-civil3d-revit`, `cuanto-cuesta-un-add-in-revit-civil-3d`, `revit-api-espanol-primeros-pasos`, `comparar-modelos-revit-civil-3d-detectar-cambios`, `plugin-acero-revit-modelado-revision` |
 | **C2 · Civil 3D** (el hueco más grande) | `automatizar-civil-3d-guia-completa` | `deja-de-usar-excel-y-perder-horas`, `automatizar-metrados-cubicaciones-civil-3d` |
 | **C3 · IA + BIM** (sin competencia) | `dynamo-csharp-con-ia-claude` | `guia-vibe-coding-para-empezar`, `crear-plugin-...-claude-code` |
 | **C4 · Carrera** (captación de funnel) | `programacion-para-ingenieros-civiles` | `aprende-a-programar-desde-cero`, `ramas-ingenieria-sistemas-especializaciones` |
@@ -228,7 +228,9 @@ a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
 
 > **C6 (sep-2026), keywords validadas con el autocompletado de Google:** "red de agua potable civil 3d", "alcantarillado sanitario civil 3d", "accesorios de tuberías" (codos, tees, yees), "banco de ductos" (más volumen que "bancoductos"; variantes CFE, media tensión, prefabricados), "plugin civil 3d"; en inglés "civil 3d pressure network parts list", "pipe network not drawing pipes", "duct bank concrete/spacers", "best civil 3d plugins". Los 3 posts existen en es/pt/en. Los hechos técnicos a no contradecir: Civil 3D **no** trae objeto de banco de ductos (se modela con corredor + Subassembly Composer, red de tuberías paralela o sólidos 3D); la detección de choques no mide separaciones mínimas.
 
-Los pillars llevan prioridad 0.9 en `app/sitemap.ts` (constante `PILLAR_SLUGS`).
+> **Conversión y respuestas de IA (sep-2026).** (1) Todo post muestra un CTA de servicio **bajo el título** (`components/post-early-cta.tsx`, copy en `blog.earlyCta` de los diccionarios); el frontmatter opcional `ctaTitle` lo adapta al dolor del post. (2) `seoTitle` (≤52 caracteres) para el `<title>`; `title` largo queda como `<h1>`. (3) Los posts nuevos abren con un `<Callout type="success" title="Respuesta rápida">`: 60-100 palabras que responden la búsqueda principal de forma citable — es lo que extraen Google y los asistentes de IA. (4) `/llms.txt` (`app/llms.txt/route.ts`) se genera del mismo contenido y `robots.ts` permite explícitamente a GPTBot, ClaudeBot, PerplexityBot, Google-Extended.
+
+**Fuente única de clusters: `lib/clusters.ts`.** Al crear un post, añádelo ahí: de ese mapa salen la prioridad 0.9 de los pillars en el sitemap y los "relacionados" del final de cada artículo (`getRelatedPosts`: pillar del cluster → satélites → etiquetas comunes → otros pillars). Antes los relacionados eran "los 2 posts más nuevos", lo que dejaba a los pillars sin enlaces.
 
 ### Competencia (investigada sep-2026)
 

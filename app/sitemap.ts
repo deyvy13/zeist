@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/site";
 import { locales, hreflangByLocale, type Locale } from "@/lib/i18n";
 import { getAllPosts } from "@/lib/blog";
+import { pillarSlugs } from "@/lib/clusters";
 
 const SERVICE_SLUGS = [
   "add-ins-revit-civil-3d",
@@ -19,16 +20,8 @@ const STATIC_PATHS = [
   ...SERVICE_SLUGS.map((s) => `servicios/${s}`),
 ];
 
-// Pillar posts anchor each SEO topic cluster — they get a higher priority than
-// their satellites so crawlers treat them as the canonical entry to the topic.
-const PILLAR_SLUGS = new Set([
-  "automatizar-civil-3d-guia-completa",              // C2 · Civil 3D
-  "desarrollo-add-ins-revit-civil-3d-guia-completa", // C1 · Add-ins C#
-  "dynamo-csharp-con-ia-claude",                     // C3 · IA + BIM
-  "programacion-para-ingenieros-civiles",            // C4 · Carrera
-  "plan-bim-peru-obligatorio-guia-empresas",         // C5 · Perú / corporativo
-  "plugin-civil-3d-dibujo-3d-automatizado",          // C6 · Redes y dibujo 3D
-]);
+// Pillars come from lib/clusters.ts (single source shared with related posts).
+const PILLAR_SLUGS = pillarSlugs;
 
 function priorityFor(path: string): number {
   if (path === "") return 1;

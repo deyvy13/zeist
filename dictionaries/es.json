@@ -125,7 +125,21 @@
     "empty": "Pronto publicaremos los primeros artículos.",
     "backToBlog": "Volver al blog",
     "minRead": "min de lectura",
-    "publishedOn": "Publicado el"
+    "publishedOn": "Publicado el",
+    "earlyCta": {
+      "eyebrow": "Lo desarrollamos para tu empresa",
+      "title": "Si tu equipo hace esto a mano en cada entrega, lo convertimos en un botón.",
+      "body": "Desarrollamos plugins y add-ins a medida para Revit y Civil 3D que eliminan el trabajo repetitivo y los errores de tus entregables. Somos ingenieros civiles e ingenieros de sistemas: entendemos tu proceso antes de escribir una línea de código.",
+      "points": [
+        "Entregables sin errores de transcripción",
+        "Días de trabajo manual convertidos en minutos",
+        "Con tus estándares, tu formato y tu código"
+      ],
+      "primary": "Cuéntanos tu proceso por WhatsApp",
+      "secondary": "Ver add-ins a medida",
+      "note": "Diagnóstico sin compromiso · Respondemos en el día · Oficinas de todo el Perú y Latinoamérica"
+    },
+    "related": "Sigue leyendo sobre este tema"
   },
   "tools": {
     "eyebrow": "Herramientas",
@@ -152,7 +166,8 @@
       "contact": "Contacto",
       "blog": "Blog",
       "tools": "Herramientas"
-    }
+    },
+    "languages": "Zeist en otros idiomas"
   },
   "whatsapp": {
     "aria": "Escríbenos por WhatsApp",

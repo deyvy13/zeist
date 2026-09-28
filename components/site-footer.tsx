@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Dictionary, Locale } from "@/lib/i18n";
+import { localeNames, locales, type Dictionary, type Locale } from "@/lib/i18n";
 import { localizedPath, site, whatsappUrl } from "@/lib/site";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 
@@ -103,9 +103,21 @@ export function SiteFooter({ lang, dict }: { lang: Locale; dict: Dictionary }) {
         </div>
 
         <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center">
-          <p className="text-xs text-white/50">
-            © {year} {site.name}. {dict.footer.rights}
-          </p>
+          <div className="flex flex-col gap-2">
+            <p className="text-xs text-white/50">
+              © {year} {site.name}. {dict.footer.rights}
+            </p>
+            {/* Plain crawlable links to every locale home, on every page: the
+                /en and /pt roots otherwise only get links from the switcher. */}
+            <nav aria-label={dict.footer.languages} className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-white/50">
+              <span>{dict.footer.languages}:</span>
+              {locales.map((l) => (
+                <Link key={l} href={localizedPath(l)} hrefLang={l} className="transition hover:text-white">
+                  {localeNames[l]}
+                </Link>
+              ))}
+            </nav>
+          </div>
           <LocaleSwitcher current={lang} />
         </div>
       </div>
