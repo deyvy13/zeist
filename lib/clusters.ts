@@ -36,12 +36,18 @@ export const clusters: Cluster[] = [
       "deja-de-usar-excel-y-perder-horas",
       "automatizar-metrados-cubicaciones-civil-3d",
       "produccion-planos-automatica-civil-3d-revit",
+      "dynamo-civil-3d-scripts",
+      "curvas-de-nivel-civil-3d-google-earth",
     ],
   },
   {
     id: "C3",
     pillar: "dynamo-csharp-con-ia-claude",
-    satellites: ["guia-vibe-coding-para-empezar", "crear-plugin-civil-3d-con-claude-code-sin-programar"],
+    satellites: [
+      "guia-vibe-coding-para-empezar",
+      "crear-plugin-civil-3d-con-claude-code-sin-programar",
+      "inteligencia-artificial-autocad-civil-3d",
+    ],
   },
   {
     id: "C4",

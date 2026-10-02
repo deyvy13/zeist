@@ -1,0 +1,208 @@
+---
+title: "Contours in Civil 3D: from Google Earth and satellite elevation models to your survey, step by step"
+seoTitle: "Civil 3D Contours from Google Earth or Survey"
+ctaTitle: "Does your team build surfaces and contours by hand on every project? We automate it in Civil 3D."
+description: "How to get contours in Civil 3D: why Google Earth won't export terrain, which elevation model to use and how to build the surface step by step."
+date: "2026-10-02T13:00:00.000Z"
+author: "Zeist"
+tags:
+  - Contour lines
+  - Civil 3D
+  - Surfaces
+  - Google Earth
+  - Surveying
+  - BIM automation
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Surfaces and contours"
+  title="Contours aren't drawn: they come from a surface. Everything depends on what you build it from."
+  highlight="From a satellite model for the preliminary design or from your survey for the final design, the Civil 3D workflow is the same: surface first, contours second. This guide covers each route, the accuracy to expect from each, and how to avoid the errors that keep coming up."
+/>
+
+<Callout type="success" title="Quick answer">
+Civil 3D generates contour lines from a **surface**. To build one without a survey, Google Earth won't work directly: it doesn't export terrain, and Civil 3D no longer imports it. You use an **open elevation model**: USGS 3DEP in the US (10 m resolution, 3 m in places) or SRTM elsewhere (about 30 m). Add it to the surface as a DEM file, or import it as a point grid, for example from our [contour map generator](/en/herramientas/generador-curvas-de-nivel). With a survey, build the surface from points and breaklines. Either way, the contour interval and labels are set in the surface style.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain words">
+- **Surface** — The terrain model in Civil 3D: a mesh of triangles connecting points with elevations.
+- **Digital elevation model (DEM)** — A file with terrain elevations on a regular grid, like a picture where every pixel is a height.
+- **3DEP and SRTM** — The USGS elevation program for the US, and NASA's global model at about 30 m.
+- **Index and intermediate contours** — Index contours are the highlighted ones, every few intermediate contours.
+- **Contour interval** — The elevation difference between two consecutive contours.
+- **Breakline** — A line the surface must respect: the edge of a road, the bottom of a ditch.
+- **Boundary** — The outer edge of the surface, so it doesn't invent terrain outside the surveyed area.
+- **PNEZD** — A text format for points: number, northing, easting, elevation and description.
+- **Surface style** — How the surface displays: contours, intervals, colors, triangles.
+
+No programming terms. Written for civil designers, surveyors and engineering students.
+</Callout>
+
+## The usual problem: you need contours before you have a survey
+
+It happens on almost every infrastructure project. Before the survey, someone has to decide where the road goes, where the pond fits or how steep the slope is. Approximate contours are enough for that, but you have to get them.
+
+The typical search is *contour lines from Google Earth*. That's where the frustration starts: Google Earth shows the terrain, but it won't hand it over.
+
+<AnimatedFlow
+  title="Two routes to contour lines in Civil 3D"
+  nodes="Elevation model or survey|Surface in Civil 3D|Style with contours|Labels and sheets"
+  subs="DEM, points or breaklines|The foundation|Interval and index contours|Ready for design"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Why Google Earth won't give you contours, and what to use instead" time="~5 min">
+
+**Google Earth Pro shows the elevation under the cursor, but it doesn't export contour lines or terrain.** There's no button to download the terrain of an area.
+
+Civil 3D once had a command to import a Google Earth surface, but current versions no longer include it. That's why so many tutorials end in paid software like Global Mapper, or in add-ins.
+
+**What works: an open digital elevation model.** Public terrain data you can download:
+
+- **USGS 3DEP (US):** 10 m resolution nationwide outside Alaska, 3 m in select areas, and 1 m lidar-derived DEMs across much of the country, from The National Map.
+- **SRTM (NASA):** nearly global at about 30 m, free from USGS EarthExplorer.
+- **Copernicus GLO-30 (EU Copernicus programme) and ALOS AW3D30 (JAXA):** other global 30 m options.
+
+<Callout type="success" title="The shortest route">
+If you only need contours for a preliminary design, use our [contour map generator](/en/herramientas/generador-curvas-de-nivel): pick the area on the map and download the contours as DXF, or a PNEZD point grid for Civil 3D, in UTM coordinates with elevations. Nothing to install.
+</Callout>
+
+**About accuracy.** It depends on the source: 3DEP data in the US is far better than SRTM, whose specified vertical accuracy is ±16 m. Use satellite-based contours for planning — site selection, feasibility, preliminary alignments — not for final design or earthwork quantities. That needs a survey.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. A surface from an elevation model (DEM), step by step" time="~6 min">
+
+If you downloaded an elevation file (a 3DEP or SRTM GeoTIFF, for example), Civil 3D turns it into a surface directly.
+
+1. **Set the drawing coordinate system.** In Drawing Settings, Units and Zone, pick the system for your project: a UTM zone (for example UTM84-10N in San Francisco) or your State Plane zone.
+2. **Create an empty TIN surface** in Prospector.
+3. **Add the elevation file.** In the surface definition, DEM Files, Add. Civil 3D accepts .dem (USGS), GeoTIFF (.tif), ESRI ASCII Grid (.asc or .txt) and ESRI binary grid (.adf).
+4. **Specify the file's coordinate system.** If the model is in latitude and longitude, assign that system: Civil 3D transforms it to the drawing system when it builds the surface. Skip this and the surface lands somewhere else on the planet.
+5. **Clip the area.** Elevation models come in large tiles. Add a boundary to keep only the project area: the surface gets lighter and faster to display.
+
+<Callout type="warn" title="Watch out for voids">
+Some models mark cells without data with a value like −32768. If you see impossible pits or spikes, exclude elevations below a reasonable value in the surface build options.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. A surface from a point grid (from the generator or any CSV)" time="~4 min">
+
+A regular point grid is the simplest way to bring an elevation model into Civil 3D, and it's what our generator delivers.
+
+1. **Import the points:** Insert tab, Points from File, PNEZD (comma delimited) format.
+2. **Create a point group** with them. If the file includes a description (EG, existing ground), you can filter by it.
+3. **Add the group to the surface:** in the surface definition, Point Groups, Add.
+4. **Set the style** with the contours you need (see step 5).
+
+**Why points beat the contour DXF:** with points, Civil 3D rebuilds the terrain and you control the interval, the style and the labels. The contour DXF is handy if you only need the linework or work in plain AutoCAD.
+
+<Callout type="info" title="Coordinates in latitude and longitude?">
+If your points come from Google Earth or a GPS in degrees, convert them to UTM first with the [UTM to lat long converter](/en/herramientas/conversor-de-coordenadas): it processes hundreds of points at once and outputs PNEZD.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. A surface from your topographic survey" time="~6 min">
+
+For design, the surface comes from the survey: total station, GNSS, drone or lidar. The order matters:
+
+1. **Import the points** with their field codes (EG, EP for edge of pavement, CL, and so on).
+2. **Build point groups by code.** That's how you decide which points belong in the ground surface and which don't, like structures or trees.
+3. **Add the breaklines.** Edges of pavement, ditches, walls, creek bottoms: the polylines or feature lines the terrain must respect. Without them, Civil 3D connects points across a wall or a channel and the contours lie.
+4. **Add the outer boundary.** It removes the long triangles that form at the edges, outside the surveyed area.
+5. **Check the triangles before the contours.** A point at elevation 0, a duplicate point or a mistyped code shows up immediately in the triangle view.
+
+<Callout type="warn" title="The costliest mistake: pretty contours on a bad triangulation">
+A style can smooth contours until they look perfect even when the surface is wrong. Always review the triangulation and suspicious points before smoothing or labeling.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Styles: interval, index contours, smoothing and labels" time="~5 min">
+
+Contours are one way of displaying the surface, and they're controlled in its **style**:
+
+- **Minor and major intervals.** For example, 1 ft and 5 ft on a site survey; 20 m and 100 m with a satellite model in hilly terrain.
+- **Rule of thumb:** aim for about 20 contours across the area. Divide the relief by 20 and round to a clean interval.
+- **Smoothing.** It improves the drawing, not the accuracy: it doesn't add information the survey doesn't have.
+- **Labels.** With multiple contour labels, you draw a line across the contours and Civil 3D labels each one it crosses.
+
+<ComparisonTable
+  criterionLabel="Source"
+  leftLabel="Elevation model (3DEP or SRTM)"
+  rightLabel="Topographic survey"
+  rows="Resolution or density | 3 to 30 m depending on source | *Per the survey, centimeters to a few meters || Vertical accuracy | Meters | *Centimeters || Cost | *Free | Field work || Time | *Minutes | Days || Sensible interval | 2 to 50 m | *0.5 to 2 ft || Use | Planning and feasibility | *Design, plans and quantities"
+/>
+
+<Callout type="info" title="Don't ask the data for detail it doesn't have">
+With a 30 m model, 1 m contours add no information: they trace the model's noise and come out jagged. The interval has to match the source.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. The most searched errors, and their real cause" time="~5 min">
+
+**Civil 3D doesn't show the contours.** Three frequent causes: the surface style has contours turned off (it shows only the border or the triangles); the surface is empty because the definition wasn't rebuilt; or the interval is so small relative to the relief that the contours merge into a solid blob.
+
+**The surface shows up somewhere else, or at sea.** The drawing coordinate system doesn't match the data: latitude and longitude points in a UTM or State Plane drawing, or the wrong zone or hemisphere.
+
+**Long triangles at the edges.** The outer boundary is missing, or the maximum triangle length should be limited in the build options.
+
+**Impossible spikes or pits.** Points at elevation 0, duplicate points with different elevations, or unexcluded voids in the elevation model.
+
+**Jagged contours.** The interval is too fine for the data resolution, or breaklines are missing along edges and channels.
+
+<Callout type="success" title="What they have in common">
+Almost no contour problem is a style problem: it's a surface problem. Check coordinates, points and breaklines first; the style second.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. When it repeats on every project: automate it" time="~4 min">
+
+If your office builds surfaces every week, the procedure never changes: import points with the same codes, create the same groups, add breaklines by code, apply company styles and label. That's exactly the kind of task worth automating.
+
+- **With Dynamo**, to validate the routine quickly. See [10 Dynamo scripts for Civil 3D](/en/blog/dynamo-civil-3d-scripts) that handle tasks like these.
+- **With a plugin**, once the whole office uses it: a button on the Civil 3D top toolbar that runs the full process with your rules.
+
+The guide to [automating Civil 3D](/en/blog/automatizar-civil-3d-guia-completa) maps everything you can automate, from points to sheets.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Civil 3D automation"
+  title="How many hours does your team spend building surfaces?"
+  body="We build Civil 3D plugins that import your surveys with your codes, build the surface with breaklines and company styles, and leave contours, profiles and volumes ready. We're civil engineers and software engineers."
+  primaryLabel="Request a diagnosis"
+  primaryHref="/en/contacto"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/servicios/add-ins-revit-civil-3d"
+/>
+
+## Related resources
+
+- **Free tool:** [contour map generator with DXF for Civil 3D](/en/herramientas/generador-curvas-de-nivel).
+- **Free tool:** [UTM to lat long converter](/en/herramientas/conversor-de-coordenadas).
+- **The cluster guide:** [automating Civil 3D, the complete guide](/en/blog/automatizar-civil-3d-guia-completa).
+- **Automate without coding:** [Dynamo for Civil 3D, 10 scripts](/en/blog/dynamo-civil-3d-scripts).
+- **Networks on the surface:** [pipe networks in Civil 3D with fittings](/en/blog/redes-tuberias-civil-3d-accesorios).
+- **From 2D to 3D:** [Civil 3D plugin for automated 3D drafting](/en/blog/plugin-civil-3d-dibujo-3d-automatizado).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Civil engineers who code"
+  title="A team of civil engineers and software engineers"
+  body="We've done surveying and infrastructure design, and we know how to build the tool that automates surface work. We work remotely with engineering firms in the US, Europe and Latin America."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contacto"
+  secondaryLabel="See all services"
+  secondaryHref="/en/servicios"
+/>
+
+---
+
+**Found this useful?** Share it with whoever builds surfaces in your office. And try the [contour map generator](/en/herramientas/generador-curvas-de-nivel) on your next project site.

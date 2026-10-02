@@ -165,7 +165,7 @@
   "tools": {
     "eyebrow": "Herramientas",
     "title": "Scripts, plantillas y calculadoras para tu día a día.",
-    "subtitle": "Ya puedes usar la calculadora de acero corrugado y la de Manning. Pronto: grafos de Dynamo, plantillas de add-ins en C# y plantillas de estándares BIM.",
+    "subtitle": "Ya disponibles: conversor de coordenadas UTM, área de terreno con memoria descriptiva, generador de curvas de nivel, acero corrugado y Manning. Pronto: grafos de Dynamo y plantillas de add-ins en C#.",
     "badge": "Gratis",
     "cta": "Ver herramientas"
   },

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:tools": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test scripts/test-tools.mjs",
+    "test:tools": "node --import ./scripts/register-ts-resolve.mjs --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test scripts/test-tools.mjs",
     "gen:post-locales": "node scripts/gen-post-locales.mjs",
     "prebuild": "node scripts/gen-post-locales.mjs",
     "predev": "node scripts/gen-post-locales.mjs"

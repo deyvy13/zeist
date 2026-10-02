@@ -13,6 +13,9 @@ import {
 } from "../lib/tools/manning.ts";
 import { formatNumber, parseDecimal, NUMBER_STYLES } from "../lib/tools/number.ts";
 import { buildXlsx } from "../lib/tools/xlsx.ts";
+import { analyzeParcel, boundaryGroups, formatAngle, formatBearing, letterName, polygonFromMeasures } from "../lib/tools/parcel.ts";
+import { DxfWriter, readDxfPolylines } from "../lib/tools/dxf.ts";
+import { assembleGrid, clipPolyline, contourLevels, isMajor, isolines, lonLatToPixel, metersPerPixel, pixelToLonLat, sampleGrid, simplify, suggestInterval, terrariumElevation } from "../lib/tools/contours.ts";
 import {
   convertRow,
   elevationFactor,
@@ -346,4 +349,191 @@ test("exports: Civil 3D PNEZD renumbers alphanumeric points; KML is WGS 84 lon,l
   assert.ok(kml.includes("<coordinates>-79.028700000,-8.111650000,0</coordinates>"));
   assert.ok(kml.includes("Puntos &amp; más"));
   assert.ok(toGeoCsv(pts).startsWith("BM-1,"));
+});
+
+// --- Parcel (land area) -----------------------------------------------------------
+// Reference values from an independent Python check: Heron on a fan
+// triangulation for the area and the law of cosines for the angles.
+
+const LOT = [
+  { name: "A", e: 717200, n: 9102850 },
+  { name: "B", e: 717235, n: 9102856 },
+  { name: "C", e: 717241, n: 9102820 },
+  { name: "D", e: 717214, n: 9102806 },
+  { name: "E", e: 717196, n: 9102822 },
+];
+
+test("parcel: area, perimeter, angles and azimuths of a UTM lot", () => {
+  const res = analyzeParcel(LOT);
+  assert.ok(res.ok);
+  const p = res.parcel;
+  near(p.area, 1624, 1e-9);
+  near(p.perimeter, 154.78841004745632, 1e-9);
+  assert.equal(p.clockwise, true);
+  [107.85768090555759, 89.73474365662402, 107.9452532297928, 110.95888522561141, 123.50343698241421].forEach((a, i) =>
+    near(p.angles[i], a, 1e-9, `angle ${i}`),
+  );
+  near(p.angles.reduce((s, a) => s + a, 0), 540, 1e-9);
+  [80.27242144859838, 170.53767779197437, 242.59242456218158, 311.6335393365702, 8.130102354155952].forEach((a, i) =>
+    near(p.sides[i].azimuth, a, 1e-9, `azimuth ${i}`),
+  );
+  // D-E faces 221.6° (south-west): it groups with the south side.
+  assert.deepEqual(p.sides.map((s) => s.faces), ["N", "E", "S", "S", "W"]);
+  const groups = boundaryGroups(p);
+  assert.deepEqual(groups.map((g) => [g.faces, g.sides]), [["N", [0]], ["E", [1]], ["S", [2, 3]], ["W", [4]]]);
+});
+
+test("parcel: orientation, closing vertex, degenerate and crossing rings", () => {
+  const square = [
+    { name: "A", e: 0, n: 0 },
+    { name: "B", e: 10, n: 0 },
+    { name: "C", e: 10, n: 10 },
+    { name: "D", e: 0, n: 10 },
+    { name: "A", e: 0, n: 0 },
+  ];
+  const ccw = analyzeParcel(square);
+  assert.ok(ccw.ok);
+  assert.equal(ccw.parcel.vertices.length, 4);
+  assert.equal(ccw.parcel.clockwise, false);
+  near(ccw.parcel.area, 100);
+  assert.deepEqual(ccw.parcel.sides.map((s) => s.faces), ["S", "E", "N", "W"]);
+  ccw.parcel.angles.forEach((a) => near(a, 90, 1e-12));
+  near(ccw.parcel.centroid.e, 5);
+  near(ccw.parcel.centroid.n, 5);
+  const cw = analyzeParcel([...square].slice(0, 4).reverse());
+  assert.ok(cw.ok);
+  assert.equal(cw.parcel.clockwise, true);
+  cw.parcel.angles.forEach((a) => near(a, 90, 1e-12));
+  assert.equal(analyzeParcel(square.slice(0, 2)).error, "few");
+  assert.equal(analyzeParcel([{ name: "A", e: 0, n: 0 }, { name: "B", e: 5, n: 5 }, { name: "C", e: 10, n: 10 }]).error, "zero-area");
+  const bowtie = analyzeParcel([{ name: "A", e: 0, n: 0 }, { name: "B", e: 10, n: 10 }, { name: "C", e: 10, n: 0 }, { name: "D", e: 0, n: 10 }]);
+  assert.equal(bowtie.error, "self-intersecting");
+  assert.deepEqual(bowtie.sides, [0, 2]);
+});
+
+test("parcel: polygons from measured sides and a diagonal", () => {
+  const tri = polygonFromMeasures({ kind: "triangle", ab: 4, bc: 3, ca: 5 });
+  assert.ok(tri.ok);
+  const t = analyzeParcel(tri.vertices);
+  near(t.parcel.area, 6, 1e-12);
+  near(t.parcel.angles[1], 90, 1e-9);
+  const quad = polygonFromMeasures({ kind: "quad", ab: 30, bc: 21.5, cd: 27.8, da: 19.6, ac: 37.4 });
+  assert.ok(quad.ok);
+  const q = analyzeParcel(quad.vertices);
+  near(q.parcel.area, 588.0220092696858, 1e-9);
+  near(q.parcel.angles[0], 81.52579308062147, 1e-9);
+  near(q.parcel.angles[1], 91.62182037424715, 1e-9);
+  near(quad.vertices[1].e, 30, 1e-9);
+  near(quad.vertices[1].n, 0, 1e-9);
+  assert.equal(polygonFromMeasures({ kind: "triangle", ab: 1, bc: 2, ca: 10 }).error, "triangle-abc");
+  assert.equal(polygonFromMeasures({ kind: "quad", ab: 30, bc: 21.5, cd: 5, da: 5, ac: 37.4 }).error, "triangle-acd");
+  assert.equal(polygonFromMeasures({ kind: "triangle", ab: 0, bc: 2, ca: 2 }).error, "invalid");
+});
+
+test("parcel: angle and bearing formatting, vertex names", () => {
+  assert.equal(formatAngle(89.73474365662402), `89°44'05"`);
+  assert.equal(formatAngle(59.99999), `60°00'00"`);
+  assert.equal(formatBearing(135), `S 45°00'00" E`);
+  assert.equal(formatBearing(315.5), `N 44°30'00" W`);
+  assert.equal(formatBearing(80.27242144859838, "%%d"), `N 80%%d16'21" E`);
+  assert.equal(formatBearing(225, "°", { n: "N", s: "S", e: "L", w: "O" }), `S 45°00'00" O`);
+  assert.deepEqual([0, 25, 26, 27, 701].map(letterName), ["A", "Z", "AA", "AB", "ZZ"]);
+});
+
+test("dxf: writer output reads back; reader skips meshes and keeps closure", () => {
+  const d = new DxfWriter().layer("PERIMETRO", 1);
+  d.polyline(LOT.map((v) => ({ x: v.e, y: v.n })), { layer: "PERIMETRO", closed: true });
+  d.polyline([{ x: 0, y: 0, z: 5 }, { x: 1, y: 1, z: 5 }], { threeD: true });
+  d.text({ x: 1, y: 1 }, 0.5, "VÉRTICE");
+  const text = new TextDecoder("windows-1252").decode(d.toBytes());
+  assert.ok(text.includes("AC1009") && text.includes("ANSI_1252") && text.includes("VÉRTICE"));
+  const polys = readDxfPolylines(text);
+  assert.equal(polys.length, 2);
+  assert.equal(polys[0].closed, true);
+  assert.equal(polys[0].layer, "PERIMETRO");
+  assert.deepEqual(polys[0].points[2], { x: 717241, y: 9102820 });
+  assert.throws(() => readDxfPolylines("AutoCAD Binary DXF\r\n\u001a\u0000"), (e) => e.reason === "binary");
+  assert.throws(() => readDxfPolylines("0\nSECTION\n2\nHEADER\n0\nENDSEC\n0\nEOF\n"), (e) => e.reason === "no-entities");
+});
+
+// --- Contours ---------------------------------------------------------------------
+
+const grid = (w, h, f) => {
+  const v = new Float32Array(w * h);
+  for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) v[j * w + i] = f(i, j);
+  return v;
+};
+
+test("contours: a cone gives one closed circle per level", () => {
+  const W = 41;
+  const cone = grid(W, W, (i, j) => Math.hypot(i - 20, j - 20));
+  const lines = isolines(cone, W, W, 10);
+  assert.equal(lines.length, 1);
+  assert.equal(lines[0].closed, true);
+  for (const p of lines[0].points) near(Math.hypot(p.x - 20, p.y - 20), 10, 0.05, "radius");
+  // Every crossing is shared by two cells: a closed ring has as many points as links.
+  assert.ok(lines[0].points.length > 40);
+});
+
+test("contours: a plane gives one open straight line border to border", () => {
+  const plane = grid(30, 20, (i) => i);
+  const lines = isolines(plane, 30, 20, 10.5);
+  assert.equal(lines.length, 1);
+  const l = lines[0];
+  assert.equal(l.closed, false);
+  assert.equal(l.points.length, 20);
+  for (const p of l.points) near(p.x, 10.5, 1e-6);
+  const ys = l.points.map((p) => p.y).sort((a, b) => a - b);
+  assert.deepEqual([ys[0], ys[ys.length - 1]], [0, 19]);
+});
+
+test("contours: saddles, NaN holes and levels", () => {
+  const saddle = isolines([1, 0, 0, 1], 2, 2, 0.5);
+  assert.equal(saddle.length, 2);
+  saddle.forEach((l) => assert.equal(l.points.length, 2));
+  const holed = grid(30, 20, (i, j) => (j >= 8 && j <= 11 ? NaN : i));
+  const parts = isolines(holed, 30, 20, 10.5);
+  assert.equal(parts.length, 2);
+  assert.ok(parts.every((p) => !p.closed));
+  assert.deepEqual(contourLevels(3.2, 47.9, 5), [5, 10, 15, 20, 25, 30, 35, 40, 45]);
+  assert.deepEqual(contourLevels(10, 20, 5), [15]);
+  assert.equal(suggestInterval(300), 20);
+  assert.equal(suggestInterval(12), 1);
+  assert.equal(isMajor(25, 5, 5), true);
+  assert.equal(isMajor(20, 5, 5), false);
+  assert.equal(isMajor(-50, 2, 5), true);
+});
+
+test("contours: simplification and clipping", () => {
+  const straight = Array.from({ length: 100 }, (_, i) => ({ x: i, y: 2 * i }));
+  assert.equal(simplify(straight, 0.01).length, 2);
+  const circle = Array.from({ length: 100 }, (_, k) => ({ x: 10 * Math.cos((2 * Math.PI * k) / 100), y: 10 * Math.sin((2 * Math.PI * k) / 100) }));
+  const ring = simplify(circle, 0.05, true);
+  assert.ok(ring.length >= 8 && ring.length < 100);
+  const rect = { minX: 0, minY: 0, maxX: 10, maxY: 10 };
+  const pieces = clipPolyline([{ x: -5, y: 5 }, { x: 15, y: 5 }], rect);
+  assert.equal(pieces.length, 1);
+  assert.deepEqual(pieces[0], [{ x: 0, y: 5 }, { x: 10, y: 5 }]);
+  const square = [{ x: 5, y: 5 }, { x: 15, y: 5 }, { x: 15, y: 8 }, { x: 5, y: 8 }];
+  const cut = clipPolyline(square, rect, true);
+  assert.equal(cut.length, 1);
+  assert.deepEqual(cut[0], [{ x: 10, y: 8 }, { x: 5, y: 8 }, { x: 5, y: 5 }, { x: 10, y: 5 }]);
+  assert.deepEqual(clipPolyline([{ x: 20, y: 20 }, { x: 30, y: 30 }], rect), []);
+});
+
+test("contours: tile math and Terrarium decoding", () => {
+  near(metersPerPixel(0, 0), 156543.03392804097, 1e-12);
+  const p = lonLatToPixel(-79.0287, -8.11165, 14);
+  const back = pixelToLonLat(p.x, p.y, 14);
+  near(back.lon, -79.0287, 1e-12);
+  near(back.lat, -8.11165, 1e-12);
+  assert.equal(terrariumElevation(128, 0, 0), 0);
+  assert.equal(terrariumElevation(0, 0, 0), -32768);
+  near(terrariumElevation(128, 34, 128), 34.5, 1e-12);
+  const tile = new Uint8ClampedArray(256 * 256 * 4);
+  for (let k = 0; k < 256 * 256; k++) { tile[k * 4] = 128; tile[k * 4 + 1] = k % 256 === 10 ? 50 : 0; }
+  const g = assembleGrid(new Map([["3/7", tile]]), 3 * 256 + 8, 7 * 256, 4, 2);
+  assert.deepEqual(Array.from(g), [0, 0, 50, 0, 0, 0, 50, 0]);
+  assert.ok(Number.isNaN(assembleGrid(new Map(), 0, 0, 1, 1)[0]));
+  near(sampleGrid([0, 10, 20, 30], 2, 2, 0.5, 0.5), 15, 1e-12);
 });

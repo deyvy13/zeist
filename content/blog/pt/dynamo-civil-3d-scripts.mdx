@@ -1,0 +1,241 @@
+---
+title: "Dynamo para Civil 3D: 10 scripts que automatizam o trabalho repetitivo, e quando passar para um plugin"
+seoTitle: "Dynamo para Civil 3D: 10 scripts para automatizar"
+ctaTitle: "Sua equipe repete as mesmas tarefas no Civil 3D em todo projeto? Nós as automatizamos com Dynamo ou com um plugin."
+description: "10 scripts de Dynamo para Civil 3D: locação a partir do Excel, nota de serviço, declividades de tubos, padrões de layers e mais. E quando vale um plugin."
+date: "2026-10-02T12:00:00.000Z"
+author: "Zeist"
+tags:
+  - Dynamo
+  - Civil 3D
+  - Dynamo Player
+  - Scripts
+  - Programação visual
+  - Automação BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Dynamo"
+  title="O Dynamo já vem com o Civil 3D. O que quase sempre falta é saber o que automatizar primeiro."
+  highlight="Dez scripts que resolvem tarefas reais de infraestrutura — locação, cotas, tubulações, padrões de desenho —, o que cada um precisa, como colocá-los nas mãos de toda a equipe com o Dynamo Player e quando vale transformá-los num plugin."
+/>
+
+<Callout type="success" title="Resposta rápida">
+O Dynamo vem incluído no Civil 3D desde a versão 2020 e se abre pela barra superior, aba Gerenciar (Manage), painel Programação visual (Visual Programming). Os scripts que mais rendem aplicam uma regra que se repete em todo projeto: colocar blocos ao longo de um alinhamento, criar pontos de locação a partir do Excel, exportar as cotas de um perfil, conferir declividades de tubos ou verificar os padrões de layers. Eles rodam com um clique pelo **Dynamo Player**, sem abrir o editor. Quando o escritório inteiro usa um script todos os dias, vale levá-lo para um plugin em C#.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Dynamo** — Um programa incluído no Civil 3D para automatizar tarefas ligando blocos na tela, sem escrever código.
+- **Script ou gráfico** — Um arquivo do Dynamo (.dyn) com a sequência de passos de uma tarefa. A Autodesk o chama de gráfico.
+- **Nó** — Cada bloco do script: lê um dado, calcula algo ou cria um objeto.
+- **Pacote** — Uma coleção de nós extras, feita pela comunidade, que se instala pelo Dynamo.
+- **Dynamo Player** — A janela que executa scripts com um clique, sem abrir o editor.
+- **Estaca** — A distância medida ao longo do eixo. No Civil 3D em inglês, station.
+- **Greide** — A linha de projeto do perfil longitudinal.
+- **Ponto COGO** — Um ponto do Civil 3D com número, coordenadas, cota e descrição.
+- **Plugin** — Um programa instalado dentro do Civil 3D que adiciona botões na barra superior.
+
+Sem termos de programação. Foi escrito para projetistas, coordenadores BIM e gestores de escritórios técnicos.
+</Callout>
+
+## O Dynamo já está instalado. A pergunta é o que fazer com ele
+
+Quase todo escritório com Civil 3D tem o Dynamo, e poucos o usam no dia a dia. Não é falta de interesse: os tutoriais ensinam a ligar nós, mas não qual tarefa do projeto vale automatizar primeiro.
+
+Este guia faz o caminho inverso. Parte de tarefas de infraestrutura que se repetem em todo projeto e mostra o script que as resolve, o que ele precisa e com qual versão funciona.
+
+<AnimatedFlow
+  title="Como um script de Dynamo entra na rotina do escritório"
+  nodes="Tarefa repetitiva|Script no Dynamo|Dynamo Player|Plugin em C#"
+  subs="Com uma regra clara|Monta-se e testa-se|Toda a equipe, com um clique|Quando se usa todo dia"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. O que o Dynamo traz para o Civil 3D, e qual versão você precisa" time="~5 min">
+
+**O Dynamo vem incluído desde o Civil 3D 2020.** Fica na barra superior, aba **Gerenciar** (Manage), painel **Programação visual** (Visual Programming). Ali mesmo está o **Dynamo Player**, incluído desde a atualização 2020.2.
+
+**Os nós nativos cresceram muito em 2025.** A atualização **2025.1** somou **1.120 nós novos** aos 226 que já existiam: corredores, alinhamentos e perfis, superfícies, redes de tubulação e de pressão, linhas características, lotes, pontos COGO, conjuntos de propriedades, layouts e viewports, entre outros. A 2025.2 acrescentou 62 nós de rótulos, e a 2026, bacias de contribuição e linhas características criadas a partir de uma lista de pontos.
+
+**A consequência prática:** um script feito com os nós novos não funciona em versões anteriores. Se o seu escritório mistura versões, decida para qual cada script é escrito.
+
+**Os pacotes que cobrem o resto:**
+
+- **Camber:** de código aberto, com centenas de nós para rótulos, atalhos de dados, referências externas, estilos, linhas de amostragem e redes de tubulação.
+- **Civil 3D Toolkit:** um inventário amplo de nós adicionais para o Civil 3D.
+- **The Civil Nodes:** mais de 850 nós para o Civil 3D 2025.1 em diante. Continua a biblioteca da Arkance Systems, que deixou de funcionar com o Civil 3D 2025.
+
+<Callout type="info" title="Qual versão o seu escritório usa?">
+Com o Civil 3D 2025.1 ou posterior, quase todos os scripts deste guia se montam com nós nativos. Com versões anteriores, vários precisam do Camber ou de outro pacote. Indicamos isso em cada caso.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Scripts 1 a 3: alinhamentos, blocos e locação" time="~6 min">
+
+**Script 1. Colocar blocos ao longo de um alinhamento.**
+
+- **O que faz:** coloca um bloco — poste, placa, marco de estaca, PV projetado — a cada certa distância e a um afastamento do eixo, girado conforme a direção do eixo e com a cota da superfície.
+- **O que economiza:** copiar, girar e ajustar à mão, e repetir tudo cada vez que o traçado muda.
+- **O que precisa:** nós nativos de alinhamentos, superfícies e blocos. Se o traçado muda, roda-se de novo e tudo se reposiciona.
+
+**Script 2. Pontos de locação a partir de uma tabela do Excel.**
+
+- **O que faz:** lê uma tabela com estaca, afastamento e descrição — por exemplo, os bordos de uma via a cada 20 m — e cria os pontos COGO com número, coordenadas e cota.
+- **O que economiza:** o cálculo manual de coordenadas e os erros de digitação na caderneta de locação.
+- **O que precisa:** os nós de Excel do Dynamo e os nós nativos de alinhamentos e pontos COGO. O resultado é um grupo de pontos pronto para a estação total.
+
+**Script 3. Renomear e numerar conforme o padrão.**
+
+- **O que faz:** renomeia alinhamentos, perfis, superfícies ou estruturas de uma rede com a convenção do escritório, por exemplo EIXO-01, EIXO-02 ou PV-001 no sentido do escoamento.
+- **O que economiza:** cliques soltos e nomes inconsistentes que depois quebram tabelas e atalhos de dados.
+- **O que precisa:** ler os objetos, ordená-los por estaca, posição ou sentido do escoamento, e atribuir o nome conforme a regra. Para estruturas de redes, nós nativos desde a 2025.1 ou o Camber antes.
+
+<Callout type="success" title="O padrão dos três">
+Uma regra clara — a cada 20 m, a 3,60 m do eixo, numerado no sentido do escoamento — e uma tarefa que se repete cada vez que o projeto muda. É aí que o Dynamo mais rende.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Scripts 4 a 6: do modelo para o Excel, sem copiar à mão" time="~6 min">
+
+**Script 4. Nota de serviço para o Excel.**
+
+- **O que faz:** percorre o alinhamento a cada 20 m, ou nas estacas que você indicar, e exporta para o Excel a estaca, a cota do terreno, a cota do greide e a altura de corte ou aterro.
+- **O que economiza:** a tabela montada à mão para o projeto, que precisa ser refeita cada vez que o greide muda.
+- **O que precisa:** nós nativos de perfis e os nós de Excel.
+
+**Script 5. Exportar pontos COGO por código ou por grupo.**
+
+- **O que faz:** exporta só os pontos de um código, como BV ou EIXO, ou de um grupo, na ordem, nas colunas e no formato que a equipe de campo ou o cliente pedem. Um arquivo por código, com um clique.
+- **O que economiza:** filtrar e reordenar no Excel antes de cada entrega. O Civil 3D já exporta pontos; o script acrescenta o que o comando não faz: o mesmo formato sempre, para todos os grupos de uma vez.
+- **O que precisa:** nós nativos de pontos COGO e grupos de pontos, e os nós de Excel ou de arquivos de texto.
+
+**Script 6. Linhas de amostragem nas estacas de uma tabela.**
+
+- **O que faz:** cria as linhas de amostragem (sample lines) para as seções transversais nas estacas exatas de uma lista — as do projeto, os pontos de controle, as mudanças de seção —, com a largura para cada lado que você indicar.
+- **O que economiza:** criar as seções uma a uma quando não seguem intervalos regulares.
+- **O que precisa:** com o Civil 3D 2025.1 ou posterior, nós nativos de linhas de amostragem; em versões anteriores, o Camber.
+
+<Callout type="info" title="Se o objetivo é o quantitativo">
+O cálculo de volumes tem as suas próprias armadilhas: superfícies de comparação, materiais e critérios de medição. O mapa completo está em [automatizar o Civil 3D, o guia completo](/pt/blog/automatizar-civil-3d-guia-completa).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Scripts 7 a 10: verificação e desenho" time="~6 min">
+
+**Script 7. Conferir declividades de tubos.**
+
+- **O que faz:** percorre a rede de esgoto, calcula a declividade de cada trecho e marca os que ficam abaixo do mínimo da sua norma ou acima do máximo, com um relatório no Excel.
+- **O que economiza:** conferir trecho por trecho antes de cada entrega, e as observações do revisor.
+- **O que precisa:** nós nativos de redes de tubulação desde a 2025.1, ou o Camber antes. O critério de declividade mínima vem da norma do seu país — no Brasil, a NBR 9649 — e é você quem o define no script.
+
+**Script 8. Verificar padrões de layers e estilos.**
+
+- **O que faz:** confere se cada objeto está na layer e com o estilo que o padrão do escritório ou do cliente exige, e entrega a lista do que não cumpre, ou corrige.
+- **O que economiza:** a revisão visual antes de cada entrega e as devoluções por formato.
+- **O que precisa:** nós nativos de objetos e layers, e uma tabela do Excel com o padrão, para mudá-lo sem mexer no script.
+
+**Script 9. Rótulos automáticos.**
+
+- **O que faz:** rotula estacas, cotas do terreno, declividades ou pontos com o estilo de rótulo correto, em todos os objetos de uma vez.
+- **O que economiza:** rotular um por um e esquecer algum.
+- **O que precisa:** com o Civil 3D 2025.2 ou posterior, nós nativos de rótulos; antes, o Camber.
+
+**Script 10. Levar polilinhas para a superfície.**
+
+- **O que faz:** converte as polilinhas 2D de uma planta — bordos de via, sarjetas, cercas — em polilinhas 3D ou linhas características com a cota da superfície, para usá-las como linhas de quebra ou no projeto.
+- **O que economiza:** o Civil 3D faz isso objeto por objeto com o seu comando; o script faz com todas as polilinhas de uma layer de uma vez, com o nome e o estilo que cabem a cada uma.
+- **O que precisa:** nós nativos de superfícies e linhas características. Desde a versão 2026, um nó cria a linha característica diretamente a partir de uma lista de pontos.
+
+<Callout type="success" title="Qual fazer primeiro?">
+O que a sua equipe repete mais vezes por semana. Meça quanto tempo leva hoje à mão: esse número decide se vale a pena automatizar, e qual vem depois.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. O Dynamo Player: o script nas mãos de toda a equipe" time="~4 min">
+
+O editor do Dynamo intimida quem não montou o script. O **Dynamo Player** resolve isso: mostra a lista de scripts de uma pasta e os executa com um clique, sem abrir o editor. Fica na barra superior, aba Gerenciar, painel Programação visual.
+
+- **Entradas à vista.** Os dados que mudam a cada uso — o alinhamento, a distância, o arquivo do Excel — são marcados como entradas no script, e o Player os mostra como um formulário simples.
+- **Indicar no desenho.** Desde a versão 2025.2, um nó permite escolher um ponto no desenho enquanto o script roda pelo Player.
+- **Uma pasta compartilhada.** Os scripts aprovados ficam numa pasta de rede, e toda a equipe usa a mesma versão.
+
+<Callout type="warn" title="O que o Player não resolve">
+Se o script falha, o usuário vê um erro pouco claro. Por isso os scripts para a equipe precisam de entradas validadas, nomes claros e alguém que os mantenha.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Boas práticas para o script durar" time="~5 min">
+
+- **Uma tarefa por script.** É mais fácil de testar, de explicar e de manter.
+- **Agrupe e nomeie os blocos** — entradas, cálculo, saída — e escreva notas. Quem abrir daqui a um ano precisa entender sem ligar para você.
+- **Nada de valores escondidos.** Distâncias, layers e estilos vão como entradas ou numa tabela do Excel com o padrão.
+- **Use os nós de Excel baseados em OpenXML.** Não precisam do Excel instalado e, desde o Dynamo 3.5, substituem os nós antigos.
+- **Anote a versão** do Civil 3D e dos pacotes com a qual funciona. Um pacote atualizado pode quebrar um script.
+- **Teste numa cópia** do desenho e confira um trecho antes de rodar no projeto inteiro.
+- **Guarde os scripts com controle de versões**, não na área de trabalho de quem os fez.
+
+<Callout type="info" title="Dynamo com IA">
+Assistentes como ChatGPT ou Claude ajudam a planejar a lógica de um script e a escrever nós em Python, mas às vezes inventam nós que não existem. Explicamos isso em [Dynamo e C# com IA](/pt/blog/dynamo-csharp-con-ia-claude).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Quando passar do script para um plugin" time="~4 min">
+
+O Dynamo é ideal para validar uma automação rápido. Os limites aparecem quando o uso cresce: fica lento com milhares de objetos, depende de pacotes de terceiros e da versão, qualquer um pode abri-lo e quebrá-lo, e não tem uma interface com validações próprias.
+
+<ComparisonTable
+  criterionLabel="Critério"
+  leftLabel="Script de Dynamo"
+  rightLabel="Plugin em C#"
+  rows="Tempo de desenvolvimento | *Dias | Semanas || Quem usa | Quem conhece o Dynamo ou o Player | *O escritório inteiro, com um botão || Com milhares de objetos | Lento | *Rápido || Dependências | Pacotes a instalar em cada máquina | *Instala-se com tudo o que precisa || Interface | Básica | *Janelas e validações próprias || Ideal para | *Testar uma ideia e tarefas de um projeto | Produção diária e padrões da empresa"
+/>
+
+**A regra prática: se o escritório inteiro usa um script toda semana, ele é candidato a plugin.** Explicamos em [Dynamo ou C#, qual convém em cada caso](/pt/blog/dynamo-vs-csharp-civil3d-revit), e o orçamento em [quanto custa um add-in para Revit ou Civil 3D](/pt/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<Callout type="success" title="Não é um ou outro">
+O caminho que funciona melhor: protótipo no Dynamo para validar a regra com a equipe, e plugin quando a regra já está testada. Assim não se paga desenvolvimento por algo que ninguém usa.
+</Callout>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automação com Dynamo"
+  title="Você tem uma tarefa que se repete em todo projeto?"
+  body="Montamos os scripts de Dynamo que a sua equipe precisa, prontos para o Dynamo Player e documentados, e os levamos para um plugin quando o uso justifica. Somos engenheiros civis e engenheiros de sistemas."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver automação com Dynamo"
+  secondaryHref="/pt/servicios/automatizacion-dynamo"
+/>
+
+## Recursos relacionados
+
+- **O guia do cluster:** [automatizar o Civil 3D, o guia completo](/pt/blog/automatizar-civil-3d-guia-completa).
+- **Que ferramenta usar:** [Dynamo ou C#, qual convém em cada caso](/pt/blog/dynamo-vs-csharp-civil3d-revit).
+- **O mesmo no Revit:** [as 12 tarefas do Revit que mais economizam tempo](/pt/blog/automatizar-tareas-revit-dynamo-plugins).
+- **Scripts com ajuda de IA:** [Dynamo e C# com IA](/pt/blog/dynamo-csharp-con-ia-claude).
+- **Superfícies e curvas:** [curvas de nível no Civil 3D, do Google Earth ao levantamento](/pt/blog/curvas-de-nivel-civil-3d-google-earth).
+- **IA no CAD:** [IA para AutoCAD e Civil 3D, o que existe em 2026](/pt/blog/inteligencia-artificial-autocad-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Peru"
+  title="Uma equipe de engenheiros civis e engenheiros de sistemas"
+  body="Já projetamos vias, redes e terraplenagem no Civil 3D, e sabemos construir a ferramenta que automatiza esse trabalho, no Dynamo ou em C#. Trabalhamos com escritórios do Brasil e de toda a América Latina."
+  primaryLabel="Vamos falar do seu caso"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver todos os serviços"
+  secondaryHref="/pt/servicios"
+/>
+
+---
+
+**Foi útil?** Compartilhe com quem no seu escritório repete a mesma tarefa em todo projeto. Versões e nós conferidos nas notas da Autodesk e do Dynamo, outubro de 2026.

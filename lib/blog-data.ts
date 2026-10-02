@@ -21,6 +21,442 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- Curvas de nivel, IA para CAD y Dynamo (oct-2026, búsquedas de Google Trends) ----
+  "curvas-de-nivel-civil-3d-google-earth": {
+    es: {
+      roadmap: {
+        title: "De Google Earth y el levantamiento a las curvas en Civil 3D, en 7 bloques",
+        intro:
+          "De dónde sacar el terreno cuando no hay topografía, cómo crear la superficie en cada caso, cómo configurar las curvas y cómo resolver los errores que más se buscan.",
+        steps: [
+          { n: 1, title: "Google Earth y las alternativas", desc: "Por qué no exporta el terreno y qué modelos abiertos usar", tag: "Datos" },
+          { n: 2, title: "Superficie desde un DEM", desc: "Sistema de coordenadas, archivo de elevación y recorte", tag: "Paso a paso" },
+          { n: 3, title: "Superficie desde una malla de puntos", desc: "Del generador o de cualquier CSV en formato PNEZD", tag: "Paso a paso" },
+          { n: 4, title: "Superficie desde el levantamiento", desc: "Grupos por código, líneas de quiebre y contorno", tag: "Diseño" },
+          { n: 5, title: "Estilos y etiquetas", desc: "Intervalo, curvas maestras, suavizado y rótulos", tag: "Presentación" },
+          { n: 6, title: "Errores más buscados", desc: "Curvas que no se ven, superficies en el mar, picos y zigzags", tag: "Errores" },
+          { n: 7, title: "Automatizarlo", desc: "Cuando se repite en cada proyecto: Dynamo o plugin", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre curvas de nivel en Civil 3D",
+        items: [
+          {
+            q: "¿Cómo saco curvas de nivel de Google Earth para Civil 3D?",
+            a: "Google Earth no exporta el terreno ni las curvas, y las versiones actuales de Civil 3D ya no importan su superficie. La alternativa es un modelo digital de elevación abierto, como el SRTM o el Copernicus GLO-30, ambos con una malla de unos 30 m. Puedes añadir el archivo a una superficie de Civil 3D como DEM, o usar nuestro generador gratuito de curvas de nivel, que entrega las curvas en DXF y una malla de puntos PNEZD en coordenadas UTM.",
+          },
+          {
+            q: "¿Cómo se crean curvas de nivel en Civil 3D?",
+            a: "Las curvas no se dibujan: salen de una superficie. Primero creas una superficie TIN y le añades datos: puntos, líneas de quiebre, un contorno o un archivo DEM. Después eliges un estilo de superficie que muestre las curvas, con el intervalo menor y mayor que necesites. Si cambian los datos, la superficie y sus curvas se actualizan.",
+          },
+          {
+            q: "¿Por qué Civil 3D no muestra las curvas de nivel?",
+            a: "Las tres causas más frecuentes son: el estilo de la superficie no tiene activadas las curvas y solo muestra el borde o los triángulos; la superficie está vacía porque su definición no se construyó o no tiene datos; o el intervalo es tan pequeño frente al desnivel que las curvas se juntan en una mancha. Revisa el estilo, la definición de la superficie y el intervalo, en ese orden.",
+          },
+          {
+            q: "¿Qué intervalo de curvas de nivel debo usar?",
+            a: "Una regla práctica es que entren unas 20 curvas en la zona: divide el desnivel entre 20 y redondea a 1, 2, 5, 10, 20 o 50 m. Además, el intervalo tiene que ser coherente con la fuente. Con un levantamiento son habituales 0.5 a 2 m; con un modelo satelital de 30 m, de 10 a 50 m. Curvas más finas que los datos solo dibujan ruido.",
+          },
+          {
+            q: "¿Qué precisión tienen las curvas de nivel del SRTM?",
+            a: "El SRTM tiene una malla de unos 30 m y una precisión vertical especificada de ±16 m. Sirve para anteproyectos, estudios de factibilidad, trazos preliminares y tesis, pero no para el diseño definitivo ni para metrar movimiento de tierras. Para eso hace falta un levantamiento topográfico, con estación total, GNSS, dron o LiDAR.",
+          },
+          {
+            q: "¿Cómo se etiquetan las curvas de nivel en Civil 3D?",
+            a: "Con las etiquetas de curva de nivel de la superficie. La opción múltiple es la más rápida: trazas una línea que cruza las curvas y Civil 3D rotula cada una en el punto de cruce. El estilo de etiqueta define si se rotulan solo las maestras o también las intermedias, y las etiquetas se actualizan si la superficie cambia.",
+          },
+          {
+            q: "¿Puedo usar las curvas del generador en AutoCAD sin Civil 3D?",
+            a: "Sí. El DXF del generador trae las curvas como polilíneas 3D con su cota, en capas separadas para maestras e intermedias, con rótulos en las maestras y el contorno de la zona. Se abre en AutoCAD o en cualquier programa CAD. Si trabajas en Civil 3D, conviene más importar la malla de puntos PNEZD y crear una superficie: así controlas el intervalo y el estilo.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Do Google Earth e do levantamento às curvas no Civil 3D, em 7 blocos",
+        intro:
+          "De onde tirar o terreno quando não há topografia, como criar a superfície em cada caso, como configurar as curvas e como resolver os erros mais buscados.",
+        steps: [
+          { n: 1, title: "Google Earth e as alternativas", desc: "Por que ele não exporta o terreno e que modelos abertos usar", tag: "Dados" },
+          { n: 2, title: "Superfície a partir de um DEM", desc: "Sistema de coordenadas, arquivo de elevação e recorte", tag: "Passo a passo" },
+          { n: 3, title: "Superfície a partir de uma malha de pontos", desc: "Do gerador ou de qualquer CSV no formato PNEZD", tag: "Passo a passo" },
+          { n: 4, title: "Superfície a partir do levantamento", desc: "Grupos por código, linhas de quebra e contorno", tag: "Projeto" },
+          { n: 5, title: "Estilos e rótulos", desc: "Equidistância, curvas mestras, suavização e rótulos", tag: "Apresentação" },
+          { n: 6, title: "Erros mais buscados", desc: "Curvas que não aparecem, superfícies no mar, picos e zigue-zagues", tag: "Erros" },
+          { n: 7, title: "Automatizar", desc: "Quando se repete em todo projeto: Dynamo ou plugin", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre curvas de nível no Civil 3D",
+        items: [
+          {
+            q: "Como tirar curvas de nível do Google Earth para o Civil 3D?",
+            a: "O Google Earth não exporta o terreno nem as curvas, e as versões atuais do Civil 3D não importam mais a superfície dele. A alternativa é um modelo digital de elevação aberto, como o SRTM ou o Copernicus GLO-30, ambos com malha de cerca de 30 m; no Brasil, o Topodata do INPE também é uma opção. Você pode adicionar o arquivo a uma superfície do Civil 3D como DEM ou usar o nosso gerador gratuito de curvas de nível, que entrega as curvas em DXF e uma malha de pontos PNEZD em coordenadas UTM.",
+          },
+          {
+            q: "Como criar curvas de nível no Civil 3D?",
+            a: "As curvas não se desenham: saem de uma superfície. Primeiro você cria uma superfície TIN e adiciona dados: pontos, linhas de quebra, um contorno ou um arquivo DEM. Depois escolhe um estilo de superfície que mostre as curvas, com a equidistância das intermediárias e das mestras que precisar. Se os dados mudam, a superfície e as curvas se atualizam.",
+          },
+          {
+            q: "Por que o Civil 3D não mostra as curvas de nível?",
+            a: "As três causas mais comuns são: o estilo da superfície não tem as curvas ativadas e mostra só o contorno ou os triângulos; a superfície está vazia porque a definição não foi construída ou não tem dados; ou a equidistância é tão pequena em relação ao desnível que as curvas viram uma mancha. Confira o estilo, a definição da superfície e a equidistância, nessa ordem.",
+          },
+          {
+            q: "Que equidistância de curvas de nível usar?",
+            a: "Uma regra prática é caberem umas 20 curvas na área: divida o desnível por 20 e arredonde para 1, 2, 5, 10, 20 ou 50 m. Além disso, a equidistância precisa ser coerente com a fonte. Com levantamento, são usuais 0,5 a 2 m; com um modelo de satélite de 30 m, de 10 a 50 m. Curvas mais finas que os dados só desenham ruído.",
+          },
+          {
+            q: "Qual a precisão das curvas de nível do SRTM?",
+            a: "O SRTM tem malha de cerca de 30 m e precisão vertical especificada de ±16 m. Serve para estudos preliminares, viabilidade, traçados iniciais e TCC, mas não para o projeto executivo nem para calcular terraplenagem. Para isso é preciso um levantamento topográfico, com estação total, GNSS, drone ou LiDAR.",
+          },
+          {
+            q: "Como rotular curvas de nível no Civil 3D?",
+            a: "Com os rótulos de curva de nível da superfície. A opção múltipla é a mais rápida: você traça uma linha que cruza as curvas e o Civil 3D rotula cada uma no ponto de cruzamento. O estilo do rótulo define se só as mestras são rotuladas ou também as intermediárias, e os rótulos se atualizam se a superfície muda.",
+          },
+          {
+            q: "Dá para usar as curvas do gerador no AutoCAD sem o Civil 3D?",
+            a: "Sim. O DXF do gerador traz as curvas como polilinhas 3D com a cota, em layers separadas para mestras e intermediárias, com rótulos nas mestras e o contorno da área. Abre no AutoCAD ou em qualquer programa CAD. Se você trabalha no Civil 3D, é melhor importar a malha de pontos PNEZD e criar uma superfície: assim você controla a equidistância e o estilo.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "From Google Earth or a survey to Civil 3D contours, in 7 blocks",
+        intro:
+          "Where to get terrain data when there's no survey, how to build the surface in each case, how to set up the contours and how to fix the most-searched errors.",
+        steps: [
+          { n: 1, title: "Google Earth and the alternatives", desc: "Why it won't export terrain, and which open models to use", tag: "Data" },
+          { n: 2, title: "Surface from a DEM", desc: "Coordinate system, elevation file and clipping", tag: "Step by step" },
+          { n: 3, title: "Surface from a point grid", desc: "From the generator or any PNEZD CSV", tag: "Step by step" },
+          { n: 4, title: "Surface from a survey", desc: "Point groups by code, breaklines and boundary", tag: "Design" },
+          { n: 5, title: "Styles and labels", desc: "Interval, index contours, smoothing and labels", tag: "Presentation" },
+          { n: 6, title: "Most-searched errors", desc: "Contours not showing, surfaces in the ocean, spikes and zigzags", tag: "Errors" },
+          { n: 7, title: "Automate it", desc: "When it repeats on every project: Dynamo or a plugin", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Civil 3D contours",
+        items: [
+          {
+            q: "How do I get contours from Google Earth into Civil 3D?",
+            a: "Google Earth doesn't export terrain or contours, and current Civil 3D releases no longer import its surface. The alternative is an open digital elevation model: in the US, USGS 3DEP offers 10 m data nationwide outside Alaska and 1 m lidar-derived models across much of the country; worldwide, SRTM and Copernicus GLO-30 cover about 30 m. You can add the file to a Civil 3D surface as a DEM, or use our free contour generator, which delivers contours as DXF and a PNEZD point grid in UTM coordinates.",
+          },
+          {
+            q: "How do you create contours in Civil 3D?",
+            a: "Contours aren't drawn: they come from a surface. First you create a TIN surface and add data to it: points, breaklines, a boundary or a DEM file. Then you pick a surface style that displays contours, with the minor and major intervals you need. When the data changes, the surface and its contours update.",
+          },
+          {
+            q: "Why are my contours not showing in Civil 3D?",
+            a: "The three most common causes: the surface style doesn't have contours turned on and only shows the border or triangles; the surface is empty because its definition wasn't built or has no data; or the interval is so small relative to the relief that the contours merge into a solid patch. Check the style, the surface definition and the interval, in that order.",
+          },
+          {
+            q: "What contour interval should I use?",
+            a: "A practical rule is to fit about 20 contours across the area: divide the relief by 20 and round to a clean interval. The interval also has to match the source. Site surveys commonly use 1 ft or 2 ft contours; with a 30 m satellite model, intervals of 10 to 50 m make sense. Contours finer than the data just trace noise.",
+          },
+          {
+            q: "How accurate are SRTM contours?",
+            a: "SRTM has a grid of about 30 m and a specified vertical accuracy of ±16 m. It works for site selection, feasibility and preliminary alignments, not for final design or earthwork quantities. In the US, 3DEP lidar data is far better, but final design still needs a topographic survey by total station, GNSS, drone or lidar.",
+          },
+          {
+            q: "How do you label contours in Civil 3D?",
+            a: "With the surface contour labels. The multiple option is the fastest: you draw a line across the contours and Civil 3D labels each one where the line crosses it. The label style controls whether only index contours are labeled or intermediate ones too, and the labels update when the surface changes.",
+          },
+          {
+            q: "Can I use the generator's contours in AutoCAD without Civil 3D?",
+            a: "Yes. The generator's DXF contains the contours as 3D polylines at their elevation, on separate layers for index and intermediate contours, with labels on the index contours and the area boundary. It opens in AutoCAD or any CAD program. If you work in Civil 3D, importing the PNEZD point grid and building a surface is better: you control the interval and the style.",
+          },
+        ],
+      },
+    },
+  },
+  "inteligencia-artificial-autocad-civil-3d": {
+    es: {
+      roadmap: {
+        title: "La IA para AutoCAD y Civil 3D, en 7 bloques",
+        intro:
+          "Qué IA trae el propio programa, qué hacen los asistentes y los agentes, qué no resuelven todavía y cómo empezar sin riesgos.",
+        steps: [
+          { n: 1, title: "La IA de AutoCAD", desc: "Smart Blocks, Markup Assist y el Autodesk Assistant de 2027", tag: "Programa" },
+          { n: 2, title: "Civil 3D y Revit", desc: "El asistente en infraestructura y el servidor MCP de Revit", tag: "Programa" },
+          { n: 3, title: "Asistentes generales", desc: "ChatGPT, Claude y Gemini escribiendo LISP, Dynamo y C#", tag: "Código" },
+          { n: 4, title: "Agentes con MCP", desc: "La IA que se conecta al programa y actúa", tag: "Agentes" },
+          { n: 5, title: "Lo que no resuelve", desc: "Planos completos, tu estándar, el cálculo y la repetibilidad", tag: "Límites" },
+          { n: 6, title: "Dónde rinde", desc: "Tareas repetitivas con reglas claras, mejor en un plugin", tag: "Solución" },
+          { n: 7, title: "Cómo empezar", desc: "Una tarea, un prototipo y una medición", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre IA para AutoCAD y Civil 3D",
+        items: [
+          {
+            q: "¿Existe una inteligencia artificial para AutoCAD?",
+            a: "Sí, en tres niveles. La del propio programa: desde AutoCAD 2023 hay funciones de Autodesk AI, como Markup Assist y Smart Blocks, y desde la versión 2027 el Autodesk Assistant, un chat que consulta el dibujo, selecciona objetos y lo revisa contra un archivo de normas. Los asistentes generales, como ChatGPT, Claude o Gemini, que escriben rutinas AutoLISP, scripts de Dynamo o plugins en C#. Y los agentes conectados al programa por MCP, que pueden actuar dentro del dibujo.",
+          },
+          {
+            q: "¿Qué hace el Autodesk Assistant de AutoCAD 2027?",
+            a: "Según la documentación de Autodesk, revisa el dibujo contra un archivo de normas de CAD, selecciona objetos a partir de una instrucción en lenguaje natural, consulta información del dibujo, como las capas o el uso de bloques, y guarda una biblioteca de instrucciones y el historial. La actualización 2027.1 añadió mejor conteo de objetos, análisis de la selección, información de unidades y recomendaciones. Civil 3D 2027 también lo incluye. Autodesk advierte que puede equivocarse y que conviene verificar sus respuestas.",
+          },
+          {
+            q: "¿ChatGPT puede dibujar en AutoCAD?",
+            a: "No directamente. ChatGPT, Claude o Gemini escriben el código —una rutina AutoLISP, un script de Dynamo o un plugin en C#— y tú lo ejecutas en AutoCAD o Civil 3D. Funcionan como un programador muy rápido, pero inventan funciones que no existen y no prueban lo que escriben, así que todo código se revisa y se prueba en una copia del dibujo. Con conectores MCP, algunos asistentes ya pueden actuar dentro del programa.",
+          },
+          {
+            q: "¿Qué es MCP y para qué sirve en AutoCAD o Revit?",
+            a: "MCP (Model Context Protocol) es un estándar abierto para conectar una IA a un programa, como un enchufe común. Con él, un asistente no solo responde: puede consultar el modelo y ejecutar acciones. Revit 2027 trae el Revit Public MCP Server en vista previa técnica, para consultar el modelo y editar parámetros en masa. Autodesk también ofrece un servidor MCP de solo lectura para consultar su documentación, y existen servidores de terceros y de la comunidad para AutoCAD y Civil 3D.",
+          },
+          {
+            q: "¿La IA puede hacer un plano completo en AutoCAD o Civil 3D?",
+            a: "Hoy no, de forma confiable. Puede generar geometría, consultar y revisar, pero no entrega un plano completo y correcto que pase una revisión: no conoce tu estándar si no se lo das, no garantiza el cálculo y la misma instrucción puede dar resultados distintos. Para la producción funciona mejor usar la IA para construir herramientas con reglas fijas, que dan siempre el mismo resultado.",
+          },
+          {
+            q: "¿Es seguro usar IA con los planos de la empresa?",
+            a: "Depende de la herramienta y de tu política. Antes de pegar planos o datos de clientes en un chat público, revisa la política de privacidad del servicio y la de tu empresa. Con agentes conectados al programa, prueba siempre en copias, verifica qué datos salen de tu computadora y prefiere las herramientas oficiales. Muchas veces basta con describir la tarea y probar el código en un dibujo de ejemplo.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "A IA para AutoCAD e Civil 3D, em 7 blocos",
+        intro:
+          "Que IA vem no próprio programa, o que fazem os assistentes e os agentes, o que ainda não resolvem e como começar sem riscos.",
+        steps: [
+          { n: 1, title: "A IA do AutoCAD", desc: "Smart Blocks, Markup Assist e o Autodesk Assistant de 2027", tag: "Programa" },
+          { n: 2, title: "Civil 3D e Revit", desc: "O assistente na infraestrutura e o servidor MCP do Revit", tag: "Programa" },
+          { n: 3, title: "Assistentes gerais", desc: "ChatGPT, Claude e Gemini escrevendo LISP, Dynamo e C#", tag: "Código" },
+          { n: 4, title: "Agentes com MCP", desc: "A IA que se conecta ao programa e age", tag: "Agentes" },
+          { n: 5, title: "O que não resolve", desc: "Pranchas completas, o seu padrão, o cálculo e a repetibilidade", tag: "Limites" },
+          { n: 6, title: "Onde rende", desc: "Tarefas repetitivas com regras claras, melhor num plugin", tag: "Solução" },
+          { n: 7, title: "Como começar", desc: "Uma tarefa, um protótipo e uma medição", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre IA para AutoCAD e Civil 3D",
+        items: [
+          {
+            q: "Existe inteligência artificial para AutoCAD?",
+            a: "Sim, em três níveis. A do próprio programa: desde o AutoCAD 2023 há funções de Autodesk AI, como Markup Assist e Smart Blocks, e desde a versão 2027 o Autodesk Assistant, um chat que consulta o desenho, seleciona objetos e o confere contra um arquivo de normas. Os assistentes gerais, como ChatGPT, Claude ou Gemini, que escrevem rotinas AutoLISP, scripts de Dynamo ou plugins em C#. E os agentes conectados ao programa por MCP, que podem agir dentro do desenho.",
+          },
+          {
+            q: "O que faz o Autodesk Assistant do AutoCAD 2027?",
+            a: "Segundo a documentação da Autodesk, ele confere o desenho contra um arquivo de normas de CAD, seleciona objetos a partir de uma instrução em linguagem natural, consulta informações do desenho, como as camadas ou o uso de blocos, e guarda uma biblioteca de instruções e o histórico. A atualização 2027.1 acrescentou contagem de objetos mais precisa, análise da seleção, informação de unidades e recomendações. O Civil 3D 2027 também o inclui. A Autodesk avisa que ele pode errar e que convém conferir as respostas.",
+          },
+          {
+            q: "O ChatGPT consegue desenhar no AutoCAD?",
+            a: "Não diretamente. ChatGPT, Claude ou Gemini escrevem o código — uma rotina AutoLISP, um script de Dynamo ou um plugin em C# — e você o executa no AutoCAD ou no Civil 3D. Funcionam como um programador muito rápido, mas inventam funções que não existem e não testam o que escrevem, então todo código deve ser revisado e testado numa cópia do desenho. Com conectores MCP, alguns assistentes já conseguem agir dentro do programa.",
+          },
+          {
+            q: "O que é MCP e para que serve no AutoCAD ou no Revit?",
+            a: "MCP (Model Context Protocol) é um padrão aberto para conectar uma IA a um programa, como uma tomada universal. Com ele, um assistente não só responde: pode consultar o modelo e executar ações. O Revit 2027 traz o Revit Public MCP Server em prévia técnica, para consultar o modelo e editar parâmetros em massa. A Autodesk também oferece um servidor MCP somente leitura para consultar a sua documentação, e existem servidores de terceiros e da comunidade para AutoCAD e Civil 3D.",
+          },
+          {
+            q: "A IA consegue fazer uma prancha completa no AutoCAD ou no Civil 3D?",
+            a: "Hoje não, de forma confiável. Ela pode gerar geometria, consultar e revisar, mas não entrega uma prancha completa e correta que passe numa revisão: não conhece o seu padrão se você não o fornecer, não garante o cálculo e a mesma instrução pode dar resultados diferentes. Na produção, funciona melhor usar a IA para construir ferramentas com regras fixas, que dão sempre o mesmo resultado.",
+          },
+          {
+            q: "É seguro usar IA com os desenhos da empresa?",
+            a: "Depende da ferramenta e da sua política. Antes de colar desenhos ou dados de clientes num chat público, revise a política de privacidade do serviço e a da sua empresa. Com agentes conectados ao programa, teste sempre em cópias, verifique quais dados saem do seu computador e prefira as ferramentas oficiais. Muitas vezes basta descrever a tarefa e testar o código num desenho de exemplo.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "AI for AutoCAD and Civil 3D, in 7 blocks",
+        intro:
+          "Which AI comes built into the software, what assistants and agents do, what they can't do yet and how to start without risk.",
+        steps: [
+          { n: 1, title: "AutoCAD's built-in AI", desc: "Smart Blocks, Markup Assist and the 2027 Autodesk Assistant", tag: "Built-in" },
+          { n: 2, title: "Civil 3D and Revit", desc: "The assistant in infrastructure and Revit's MCP server", tag: "Built-in" },
+          { n: 3, title: "General assistants", desc: "ChatGPT, Claude and Gemini writing LISP, Dynamo and C#", tag: "Code" },
+          { n: 4, title: "Agents through MCP", desc: "AI that connects to the software and acts", tag: "Agents" },
+          { n: 5, title: "What it can't do", desc: "Complete drawings, your standard, calculations and repeatability", tag: "Limits" },
+          { n: 6, title: "Where it pays off", desc: "Repetitive tasks with clear rules, best in a plugin", tag: "Solution" },
+          { n: 7, title: "How to start", desc: "One task, one prototype, one measurement", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about AI for AutoCAD and Civil 3D",
+        items: [
+          {
+            q: "Is there an AI for AutoCAD?",
+            a: "Yes, at three levels. Built into the software: since AutoCAD 2023 there are Autodesk AI features such as Markup Assist and Smart Blocks, and since the 2027 release Autodesk Assistant, a chat that queries the drawing, selects objects and checks it against a standards file. General assistants such as ChatGPT, Claude or Gemini, which write AutoLISP routines, Dynamo scripts or C# plugins. And agents connected to the software through MCP, which can act inside the drawing.",
+          },
+          {
+            q: "What does Autodesk Assistant do in AutoCAD 2027?",
+            a: "According to Autodesk's documentation, it checks the drawing against a CAD standards file, selects objects from a natural-language prompt, queries drawing information such as layers or block usage, and keeps a prompt library and chat history. The 2027.1 update added smarter object counting, selection-aware analysis, unit reporting and recommendations. Civil 3D 2027 includes it too. Autodesk warns that it can make mistakes and that you should double-check its responses.",
+          },
+          {
+            q: "Can ChatGPT draw in AutoCAD?",
+            a: "Not directly. ChatGPT, Claude or Gemini write the code — an AutoLISP routine, a Dynamo script or a C# plugin — and you run it in AutoCAD or Civil 3D. They work like a very fast programmer, but they invent functions that don't exist and don't test what they write, so every piece of code gets reviewed and tested on a copy of the drawing. Through MCP connectors, some assistants can already act inside the software.",
+          },
+          {
+            q: "What is MCP and what is it for in AutoCAD or Revit?",
+            a: "MCP (Model Context Protocol) is an open standard for connecting an AI to an application, like a universal plug. With it, an assistant doesn't just answer: it can query the model and take actions. Revit 2027 ships the Revit Public MCP Server as a tech preview, to query the model and edit parameters in bulk. Autodesk also offers a read-only MCP server for searching its documentation, and there are third-party and community servers for AutoCAD and Civil 3D.",
+          },
+          {
+            q: "Can AI produce a complete drawing in AutoCAD or Civil 3D?",
+            a: "Not reliably, today. It can generate geometry, query and review, but it doesn't deliver a complete, correct drawing that passes review: it doesn't know your standard unless you provide it, it doesn't guarantee calculations, and the same prompt can produce different results. For production, it works better to use AI to build tools with fixed rules, which return the same result every time.",
+          },
+          {
+            q: "Is it safe to use AI with company drawings?",
+            a: "It depends on the tool and on your policy. Before pasting drawings or client data into a public chatbot, review the service's privacy policy and your company's. With agents connected to the software, always test on copies, check what data leaves your computer and prefer official tools. Often it's enough to describe the task and test the code on a sample drawing.",
+          },
+        ],
+      },
+    },
+  },
+  "dynamo-civil-3d-scripts": {
+    es: {
+      roadmap: {
+        title: "Dynamo para Civil 3D, en 7 bloques",
+        intro:
+          "Qué trae cada versión, diez scripts para tareas reales de infraestructura, cómo compartirlos con todo el equipo y cuándo conviene pasar a un plugin.",
+        steps: [
+          { n: 1, title: "Qué trae Dynamo", desc: "Versiones, nodos nativos y paquetes", tag: "Base" },
+          { n: 2, title: "Scripts 1 a 3", desc: "Bloques por progresiva, replanteo desde Excel y numeración", tag: "Alineamientos" },
+          { n: 3, title: "Scripts 4 a 6", desc: "Sábana de cotas, exportar puntos y líneas de muestreo", tag: "Datos" },
+          { n: 4, title: "Scripts 7 a 10", desc: "Pendientes, normas de dibujo, etiquetas y polilíneas a la superficie", tag: "Revisión" },
+          { n: 5, title: "Reproductor de Dynamo", desc: "El script para todo el equipo, con un clic", tag: "Equipo" },
+          { n: 6, title: "Buenas prácticas", desc: "Que el script dure y no dependa de quien lo hizo", tag: "Método" },
+          { n: 7, title: "Cuándo pasar a un plugin", desc: "La señal: toda la oficina lo usa cada semana", tag: "Decisión" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre Dynamo para Civil 3D",
+        items: [
+          {
+            q: "¿Qué es Dynamo para Civil 3D?",
+            a: "Es una herramienta de programación visual incluida en Civil 3D desde la versión 2020. En lugar de escribir código, se unen bloques llamados nodos que leen datos del dibujo, calculan y crean o modifican objetos: alineamientos, puntos COGO, superficies, redes de tuberías y más. Sirve para automatizar tareas repetitivas con reglas claras, y los scripts se ejecutan con un clic desde el Reproductor de Dynamo.",
+          },
+          {
+            q: "¿Dónde está Dynamo en Civil 3D?",
+            a: "En la barra superior de Civil 3D, ficha Administrar, grupo Programación visual. Ahí están el botón que abre el editor de Dynamo y el Reproductor de Dynamo, que ejecuta scripts sin abrir el editor. Dynamo viene incluido desde Civil 3D 2020, y el Reproductor desde la actualización 2020.2.",
+          },
+          {
+            q: "¿Qué es el Reproductor de Dynamo (Dynamo Player)?",
+            a: "Es la ventana de Civil 3D que ejecuta scripts de Dynamo con un clic, sin abrir el editor. Muestra los scripts de una carpeta, su estado y las entradas que el autor marcó, como un alineamiento, una distancia o un archivo de Excel. Es la forma de que todo el equipo use los scripts sin saber Dynamo: quien arma el script lo deja en una carpeta compartida y los demás solo lo ejecutan.",
+          },
+          {
+            q: "¿Hace falta saber programar para usar Dynamo?",
+            a: "Para ejecutar un script desde el Reproductor de Dynamo, no. Para armarlo tampoco hace falta escribir código, pero sí entender la lógica: qué datos entran, qué regla se aplica y qué sale. Los nodos de Python y los paquetes amplían lo que se puede hacer. Cuando un script se vuelve complejo o lo usa toda la oficina, conviene pasarlo a un plugin en C#.",
+          },
+          {
+            q: "¿Qué paquetes de Dynamo conviene instalar para Civil 3D?",
+            a: "Depende de tu versión. Desde Civil 3D 2025.1, los nodos nativos cubren corredores, alineamientos, perfiles, superficies, redes de tuberías, líneas de muestreo y puntos COGO, así que muchos scripts no necesitan paquetes. Los más usados para completar son Camber, de código abierto, con nodos de etiquetas, accesos directos a datos, referencias externas y estilos; Civil 3D Toolkit; y The Civil Nodes, con más de 850 nodos para Civil 3D 2025.1 en adelante.",
+          },
+          {
+            q: "¿Un script de Dynamo funciona en cualquier versión de Civil 3D?",
+            a: "No siempre. Los scripts hechos con los nodos nuevos de la versión 2025.1 no funcionan en versiones anteriores, y los paquetes suelen publicar una versión para cada versión de Civil 3D. Por eso conviene anotar con qué versión de Civil 3D y de los paquetes se probó cada script, y que la oficina trabaje con una versión estándar.",
+          },
+          {
+            q: "¿Cuándo conviene pasar de Dynamo a un plugin en C#?",
+            a: "Cuando toda la oficina usa el script cada semana, cuando trabaja con miles de objetos y se vuelve lento, o cuando necesita una interfaz con validaciones y un instalador. Dynamo es ideal para validar una regla en días; un plugin en C# la lleva a producción con un botón en la barra superior, sin depender de paquetes ni de quien armó el script.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Dynamo para Civil 3D, em 7 blocos",
+        intro:
+          "O que traz cada versão, dez scripts para tarefas reais de infraestrutura, como compartilhá-los com toda a equipe e quando vale passar para um plugin.",
+        steps: [
+          { n: 1, title: "O que o Dynamo traz", desc: "Versões, nós nativos e pacotes", tag: "Base" },
+          { n: 2, title: "Scripts 1 a 3", desc: "Blocos por estaca, locação a partir do Excel e numeração", tag: "Alinhamentos" },
+          { n: 3, title: "Scripts 4 a 6", desc: "Nota de serviço, exportar pontos e linhas de amostragem", tag: "Dados" },
+          { n: 4, title: "Scripts 7 a 10", desc: "Declividades, padrões de desenho, rótulos e polilinhas na superfície", tag: "Verificação" },
+          { n: 5, title: "Dynamo Player", desc: "O script para toda a equipe, com um clique", tag: "Equipe" },
+          { n: 6, title: "Boas práticas", desc: "Que o script dure e não dependa de quem o fez", tag: "Método" },
+          { n: 7, title: "Quando passar para um plugin", desc: "O sinal: o escritório inteiro usa toda semana", tag: "Decisão" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre Dynamo para Civil 3D",
+        items: [
+          {
+            q: "O que é o Dynamo para Civil 3D?",
+            a: "É uma ferramenta de programação visual incluída no Civil 3D desde a versão 2020. Em vez de escrever código, você liga blocos chamados nós que leem dados do desenho, calculam e criam ou modificam objetos: alinhamentos, pontos COGO, superfícies, redes de tubulação e mais. Serve para automatizar tarefas repetitivas com regras claras, e os scripts rodam com um clique pelo Dynamo Player.",
+          },
+          {
+            q: "Onde fica o Dynamo no Civil 3D?",
+            a: "Na barra superior do Civil 3D, aba Gerenciar (Manage), painel Programação visual (Visual Programming). Ali estão o botão que abre o editor do Dynamo e o Dynamo Player, que executa scripts sem abrir o editor. O Dynamo vem incluído desde o Civil 3D 2020, e o Player desde a atualização 2020.2.",
+          },
+          {
+            q: "O que é o Dynamo Player?",
+            a: "É a janela do Civil 3D que executa scripts do Dynamo com um clique, sem abrir o editor. Mostra os scripts de uma pasta, o estado de cada um e as entradas que o autor marcou, como um alinhamento, uma distância ou um arquivo do Excel. É o jeito de toda a equipe usar os scripts sem saber Dynamo: quem monta o script o deixa numa pasta compartilhada e os demais só o executam.",
+          },
+          {
+            q: "Precisa saber programar para usar o Dynamo?",
+            a: "Para executar um script pelo Dynamo Player, não. Para montá-lo também não é preciso escrever código, mas é preciso entender a lógica: que dados entram, que regra se aplica e o que sai. Os nós em Python e os pacotes ampliam o que se pode fazer. Quando um script fica complexo ou o escritório inteiro o usa, vale passá-lo para um plugin em C#.",
+          },
+          {
+            q: "Que pacotes do Dynamo instalar para o Civil 3D?",
+            a: "Depende da sua versão. Desde o Civil 3D 2025.1, os nós nativos cobrem corredores, alinhamentos, perfis, superfícies, redes de tubulação, linhas de amostragem e pontos COGO, então muitos scripts não precisam de pacotes. Os mais usados para completar são o Camber, de código aberto, com nós de rótulos, atalhos de dados, referências externas e estilos; o Civil 3D Toolkit; e o The Civil Nodes, com mais de 850 nós para o Civil 3D 2025.1 em diante.",
+          },
+          {
+            q: "Um script do Dynamo funciona em qualquer versão do Civil 3D?",
+            a: "Nem sempre. Os scripts feitos com os nós novos da versão 2025.1 não funcionam em versões anteriores, e os pacotes costumam publicar uma versão para cada versão do Civil 3D. Por isso vale anotar com qual versão do Civil 3D e dos pacotes cada script foi testado, e que o escritório trabalhe com uma versão padrão.",
+          },
+          {
+            q: "Quando vale passar do Dynamo para um plugin em C#?",
+            a: "Quando o escritório inteiro usa o script toda semana, quando ele trabalha com milhares de objetos e fica lento, ou quando precisa de uma interface com validações e de um instalador. O Dynamo é ideal para validar uma regra em dias; um plugin em C# a leva para a produção com um botão na barra superior, sem depender de pacotes nem de quem montou o script.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Dynamo for Civil 3D, in 7 blocks",
+        intro:
+          "What each release includes, ten scripts for real infrastructure tasks, how to share them with the whole team and when it's time to move to a plugin.",
+        steps: [
+          { n: 1, title: "What Dynamo brings", desc: "Releases, out-of-the-box nodes and packages", tag: "Basics" },
+          { n: 2, title: "Scripts 1 to 3", desc: "Blocks by station, stakeout from Excel and numbering", tag: "Alignments" },
+          { n: 3, title: "Scripts 4 to 6", desc: "Cut and fill table, point export and sample lines", tag: "Data" },
+          { n: 4, title: "Scripts 7 to 10", desc: "Pipe slopes, drafting standards, labels and draped polylines", tag: "Checking" },
+          { n: 5, title: "Dynamo Player", desc: "The script for the whole team, one click", tag: "Team" },
+          { n: 6, title: "Good practices", desc: "Make the script last beyond whoever built it", tag: "Method" },
+          { n: 7, title: "When to move to a plugin", desc: "The signal: the whole office uses it every week", tag: "Decision" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Dynamo for Civil 3D",
+        items: [
+          {
+            q: "What is Dynamo for Civil 3D?",
+            a: "It's a visual programming tool included with Civil 3D since the 2020 release. Instead of writing code, you connect blocks called nodes that read data from the drawing, calculate, and create or modify objects: alignments, COGO points, surfaces, pipe networks and more. It automates repetitive tasks with clear rules, and scripts run with one click from Dynamo Player.",
+          },
+          {
+            q: "Where is Dynamo in Civil 3D?",
+            a: "On the Civil 3D top toolbar, Manage tab, Visual Programming panel. That's where you'll find the button that opens the Dynamo editor and Dynamo Player, which runs scripts without opening the editor. Dynamo has shipped with Civil 3D since 2020, and the Player since the 2020.2 update.",
+          },
+          {
+            q: "What is Dynamo Player?",
+            a: "It's the Civil 3D window that runs Dynamo scripts with one click, without opening the editor. It lists the scripts in a folder, their status and the inputs the author exposed, such as an alignment, an interval or an Excel file. It's how the whole team uses scripts without knowing Dynamo: whoever builds the script puts it in a shared folder and everyone else just runs it.",
+          },
+          {
+            q: "Do you need to know how to code to use Dynamo?",
+            a: "To run a script from Dynamo Player, no. Building one doesn't require writing code either, but you do need to understand the logic: what data goes in, which rule applies and what comes out. Python nodes and packages extend what you can do. When a script gets complex or the whole office uses it, it's worth turning it into a C# plugin.",
+          },
+          {
+            q: "Which Dynamo packages should I install for Civil 3D?",
+            a: "It depends on your release. Since Civil 3D 2025.1, out-of-the-box nodes cover corridors, alignments, profiles, surfaces, pipe networks, sample lines and COGO points, so many scripts need no packages. The most used add-ons are Camber, open source, with nodes for labels, data shortcuts, xrefs and styles; Civil 3D Toolkit; and The Civil Nodes, with more than 850 nodes for Civil 3D 2025.1 and later.",
+          },
+          {
+            q: "Does a Dynamo script work in any Civil 3D release?",
+            a: "Not always. Scripts built with the new nodes from the 2025.1 release don't run on earlier releases, and packages usually ship a separate build for each Civil 3D release. That's why you should record which Civil 3D and package versions each script was tested with, and have the office standardize on one release.",
+          },
+          {
+            q: "When should you move from Dynamo to a C# plugin?",
+            a: "When the whole office uses the script every week, when it handles thousands of objects and slows down, or when it needs an interface with validation and an installer. Dynamo is ideal for proving a rule in days; a C# plugin takes it to production with a button on the top toolbar, without depending on packages or on whoever built the script.",
+          },
+        ],
+      },
+    },
+  },
   // ---- Auditoría y automatización de tareas (oct-2026, keywords de Search Console) ----
   "auditoria-bim-checklist-empresa": {
     es: {

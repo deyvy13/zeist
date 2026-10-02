@@ -1,0 +1,213 @@
+---
+title: "IA para AutoCAD e Civil 3D em 2026: o que existe de verdade, o que funciona e o que ainda não"
+seoTitle: "IA para AutoCAD e Civil 3D: o que existe em 2026"
+ctaTitle: "Quer usar IA no seu escritório sem ficar só no chat? Construímos a ferramenta que a conecta ao seu jeito de trabalhar."
+description: "Que IA existe hoje para AutoCAD e Civil 3D: o Autodesk Assistant, ChatGPT ou Claude escrevendo LISP, Dynamo e C#, os agentes MCP e o que ainda não resolvem."
+date: "2026-10-02T14:00:00.000Z"
+author: "Zeist"
+tags:
+  - Inteligência artificial
+  - AutoCAD
+  - Civil 3D
+  - Autodesk Assistant
+  - MCP
+  - Automação BIM
+---
+
+<BlogHero
+  eyebrow="IA + BIM · AutoCAD e Civil 3D"
+  title="Todos prometem uma IA que desenha pranchas. O que existe hoje é mais modesto, e mais útil do que parece."
+  highlight="Há três tipos de IA que você já pode usar com AutoCAD e Civil 3D: a que vem no próprio programa, os assistentes que escrevem código e os agentes que agem dentro do desenho. Este guia explica o que cada uma faz, conferido na documentação da Autodesk, e onde ela realmente economiza horas."
+/>
+
+<Callout type="success" title="Resposta rápida">
+Sim, existe IA para AutoCAD e Civil 3D, em três níveis. Primeiro, a do próprio programa: desde a versão 2027, o **Autodesk Assistant** responde perguntas, consulta o desenho, seleciona objetos com instruções em linguagem natural e confere o desenho contra um arquivo de normas; antes vieram o Markup Assist e os Smart Blocks. Segundo, os assistentes gerais como ChatGPT, Claude ou Gemini, que escrevem rotinas AutoLISP, Dynamo ou C# que você testa e executa. Terceiro, os agentes conectados ao programa por MCP. Nenhuma dessas ferramentas produz uma prancha completa e correta a partir de uma frase.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **IA generativa** — A que produz texto, imagens ou código a partir de uma instrução escrita.
+- **Modelo de linguagem** — O motor por trás do ChatGPT, do Claude ou do Gemini: entende e escreve texto, inclusive código.
+- **Autodesk AI** — O nome com que a Autodesk agrupa as funções de IA dos seus programas.
+- **Assistente** — Um chat dentro do programa a quem você pede coisas em palavras.
+- **Agente** — Uma IA que não só responde: usa ferramentas e executa ações.
+- **MCP** — Um padrão aberto para conectar uma IA a um programa, como uma tomada universal.
+- **AutoLISP, Dynamo e C#** — Três formas de automatizar: rotinas de texto, blocos visuais e plugins.
+- **Plugin** — Um programa instalado dentro do AutoCAD ou do Civil 3D que adiciona botões na barra superior.
+
+Sem termos de programação. Foi escrito para gestores técnicos, projetistas e coordenadores BIM.
+</Callout>
+
+## A pergunta que chega a todos os escritórios
+
+*Existe alguma IA que faça as pranchas?* É a pergunta que mais ouvimos de gestores e engenheiros. A resposta curta é não, ainda não. A resposta útil é que já existe IA que economiza horas em tarefas concretas, se você souber onde olhar.
+
+O problema é que tudo se mistura: funções do próprio programa, chats gerais, complementos de terceiros e demonstrações que nunca chegam à produção. Separá-los é o primeiro passo para decidir.
+
+<AnimatedFlow
+  title="Os três níveis de IA para AutoCAD e Civil 3D"
+  nodes="IA do programa|Assistentes que escrevem código|Agentes conectados por MCP|Ferramenta sob medida"
+  subs="Autodesk Assistant e Smart Blocks|ChatGPT, Claude, Gemini|Agem dentro do desenho|Suas regras, repetíveis"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. A IA que já vem no AutoCAD" time="~6 min">
+
+A Autodesk vem somando funções de IA desde o AutoCAD 2023, sob o nome **Autodesk AI**. Nenhuma desenha uma prancha por você, mas várias tiram trabalho repetitivo:
+
+- **Markup Import e Markup Assist (desde 2023):** importam as anotações feitas sobre um PDF ou uma imagem e ajudam a incorporá-las ao desenho.
+- **Smart Blocks: Placement e Replacement (2024):** sugerem onde colocar um bloco conforme você o colocou antes, e que bloco usar para substituir outro.
+- **Smart Blocks: Search and Convert (2025):** encontra geometria repetida no desenho e a converte em blocos.
+- **Smart Blocks: Detect and Convert (2026):** reconhece objetos desenhados como linhas soltas e os converte em blocos. Muito útil para limpar desenhos antigos.
+
+**O AutoCAD 2027 (março de 2026) traz o Autodesk Assistant**, um chat com IA dentro do programa. Segundo a documentação da Autodesk, ele pode:
+
+- Conferir o desenho contra um arquivo de normas de CAD.
+- Selecionar objetos a partir de uma instrução em linguagem natural.
+- Consultar informações do desenho, como a lista de camadas ou o uso de blocos.
+- Guardar uma biblioteca de instruções e o histórico de conversas.
+
+A atualização **2027.1** acrescentou contagem de objetos mais precisa, análise da seleção, informação de unidades conforme o contexto e recomendações. O AutoCAD 2027 também traz o **Geometry Cleanup**, que revisa o desenho e corrige erros comuns de geometria.
+
+<Callout type="warn" title="O aviso da própria Autodesk">
+A documentação do assistente é clara: ele usa IA, pode errar e convém conferir as respostas. Use-o para encontrar e revisar, não para assinar.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Civil 3D e Revit: o assistente chega à infraestrutura" time="~4 min">
+
+**O Civil 3D 2027 inclui o Autodesk Assistant**, com chat e fluxos guiados por instruções. A versão 2027.1 trouxe o mesmo que no AutoCAD: contagem de objetos, análise da seleção, informação de unidades e recomendações.
+
+Por enquanto, o forte dele é **consultar, selecionar e analisar** o que já está no desenho. Projetar um corredor, uma rede de tubulação ou um greide continua sendo trabalho do projetista e das ferramentas de sempre.
+
+O **Revit 2027** vai além com o **Revit Public MCP Server**, em prévia técnica. Por meio do assistente, ele permite consultar o modelo (encontrar elementos, conferir parâmetros, contar), **editar parâmetros em massa** e capturar vistas. É a primeira vez que a Autodesk abre o seu software à IA com um padrão comum.
+
+<Callout type="info" title="O que isso significa para o seu escritório">
+Se a sua equipe trabalha nas versões 2027, já tem um assistente que economiza buscas e revisões. Se trabalha em versões anteriores, algo frequente em empresas de engenharia, essas funções não estão disponíveis.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Assistentes gerais: ChatGPT, Claude e Gemini como programadores" time="~6 min">
+
+O uso de IA que mais economiza horas hoje não está dentro do AutoCAD: está no chat. ChatGPT, Claude e Gemini **escrevem o código da automação**, e você o executa no programa.
+
+**O que fazem bem:**
+
+- **Rotinas AutoLISP** para o AutoCAD: renomear camadas, numerar blocos, exportar coordenadas.
+- **Lógica de scripts de Dynamo** e nós em Python para Civil 3D e Revit.
+- **Plugins em C#** sobre a API da Autodesk, incluindo a estrutura do projeto e o instalador.
+- **Explicar código antigo** que ninguém no escritório entende mais.
+
+**Onde falham:**
+
+- **Inventam funções da API** que não existem, sobretudo no Civil 3D, que tem menos exemplos públicos.
+- **Não conhecem os seus padrões:** nomenclatura, camadas, formatos de entrega.
+- **Não testam o que escrevem:** o código parece certo até rodar sobre um desenho real.
+
+Por isso funcionam como um desenvolvedor muito rápido que precisa de revisão em tudo. Em [Dynamo e C# com IA](/pt/blog/dynamo-csharp-con-ia-claude) explicamos como trabalhamos assim, e em [criar um plugin para Civil 3D com Claude Code](/pt/blog/crear-plugin-civil-3d-con-claude-code-sin-programar) mostramos o processo do início ao fim.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Agentes conectados por MCP: a IA que age no programa" time="~5 min">
+
+A mudança de 2026 é que a IA não só escreve código: ela pode **se conectar ao programa e agir**. O padrão que permite isso se chama **MCP** (Model Context Protocol): uma tomada comum entre os modelos de IA e o software.
+
+O que existe hoje, com a Autodesk:
+
+- **Revit Public MCP Server (prévia técnica no Revit 2027):** o servidor oficial da Autodesk para a IA consultar o modelo e editar parâmetros.
+- **Servidor MCP de ajuda de produtos da Autodesk:** permite que assistentes como Claude, ChatGPT ou Copilot consultem a documentação oficial. É somente leitura.
+- **Conector do Claude para o Fusion:** a Autodesk o oferece para trabalhar com IA no Fusion.
+- **Servidores MCP de terceiros e da comunidade** para AutoCAD e Civil 3D, que conectam assistentes como o Claude ao desenho.
+
+<Callout type="warn" title="Antes de conectar uma IA aos seus desenhos">
+Um agente age com as suas permissões sobre os seus arquivos. Teste sempre em cópias, verifique quais dados saem do seu computador e consulte a política da empresa antes de usar ferramentas não oficiais com desenhos de clientes.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. O que a IA ainda não resolve" time="~4 min">
+
+Separar a promessa da realidade economiza dinheiro. Hoje, nenhuma dessas ferramentas resolve de forma confiável:
+
+- **Uma prancha completa e correta a partir de uma frase.** Podem gerar geometria, mas não uma entrega que passe numa revisão.
+- **Aplicar o seu padrão sem que você o forneça.** Não sabem como o seu escritório nomeia as camadas nem que formato o cliente exige.
+- **Garantir o cálculo.** Uma declividade, uma taxa de armadura ou uma vazão propostas pela IA se conferem como as de um estagiário.
+- **Repetir exatamente o mesmo a cada vez.** A mesma instrução pode dar resultados diferentes, e uma entrega precisa de resultados idênticos.
+
+Esse último ponto é o mais importante para uma empresa: **a produção precisa de repetibilidade**. É aí que uma ferramenta com regras fixas ganha de um chat.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Onde a IA rende: tarefas repetitivas com regras claras" time="~5 min">
+
+A IA brilha onde a tarefa é repetitiva e as regras podem ser escritas: conferir padrões, renomear, extrair dados, posicionar elementos por regra, gerar relatórios. Há duas formas de aproveitar:
+
+<ComparisonTable
+  criterionLabel="Critério"
+  leftLabel="Plugin sob medida (feito com ajuda de IA)"
+  rightLabel="Pedir a cada vez a um chat"
+  rows="Mesmo resultado sempre | *Sim, aplica regras fixas | Nem sempre || Aplica o padrão do escritório | *Escrito na ferramenta | É preciso explicar a cada vez || Quem usa | *Qualquer pessoa, com um botão | Quem sabe pedir || Revisão | *Testado uma vez nos seus desenhos | A cada resposta || Tempo até usar | Semanas | *Imediato || Ideal para | Produção diária | Testes e consultas pontuais"
+/>
+
+**A abordagem que funciona melhor:** usar a IA para **construir** a ferramenta — mais rápido que antes — e deixar que a ferramenta seja usada na produção. A IA acelera o desenvolvimento; as regras quem define é o seu escritório.
+
+<Callout type="success" title="Um exemplo concreto">
+Conferir se cada prancha cumpre o padrão de camadas antes de cada entrega. Com um chat, alguém pergunta prancha por prancha. Com um plugin, um botão confere todas as pranchas do projeto com as mesmas regras e entrega um relatório. A IA ajudou a escrever esse plugin em dias, não em semanas.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Como começar sem riscos" time="~4 min">
+
+**1. Escolha uma única tarefa repetitiva** que todos detestam: a que se faz em cada entrega e tem regras claras.
+
+**2. Se você tem AutoCAD ou Civil 3D 2027,** teste o Autodesk Assistant com essa tarefa: conferir normas, selecionar ou consultar.
+
+**3. Faça um protótipo com um assistente geral.** Peça uma rotina AutoLISP ou um script de Dynamo e teste numa cópia do desenho.
+
+**4. Meça.** Quanto tempo levava antes e quanto leva agora, num projeto real.
+
+**5. Se for usado toda semana, leve para um plugin** com testes, instalador e suporte, para funcionar igual para todo o escritório.
+
+<Callout type="info" title="Sobre os dados dos seus clientes">
+Não cole desenhos nem informações confidenciais em chats públicos sem revisar a política de privacidade do serviço e a da sua empresa. Muitas vezes basta descrever a tarefa e testar o código num desenho de exemplo.
+</Callout>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · IA aplicada ao BIM"
+  title="A IA acelera. A ferramenta sob medida aplica as suas regras."
+  body="Desenvolvemos plugins para AutoCAD, Civil 3D e Revit que aplicam o padrão do seu escritório em cada projeto, e usamos IA para construí-los mais rápido. Somos engenheiros civis e engenheiros de sistemas: entendemos o seu fluxo antes de escrever uma linha de código."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **O guia do cluster:** [Dynamo e plugins C# com IA](/pt/blog/dynamo-csharp-con-ia-claude).
+- **Passo a passo:** [criar um plugin para Civil 3D com Claude Code sem programar](/pt/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).
+- **Para começar a programar com IA:** [vibe coding para engenheiros](/pt/blog/guia-vibe-coding-para-empezar).
+- **Que ferramenta usar:** [Dynamo ou C#, qual convém em cada caso](/pt/blog/dynamo-vs-csharp-civil3d-revit).
+- **Se você vai encomendar:** [quanto custa um add-in para Revit ou Civil 3D](/pt/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+- **O mapa completo:** [automatizar o Civil 3D, o guia completo](/pt/blog/automatizar-civil-3d-guia-completa).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Peru"
+  title="Uma equipe de engenheiros civis e engenheiros de sistemas"
+  body="Usamos IA todos os dias para desenvolver ferramentas para AutoCAD, Civil 3D e Revit, e sabemos onde ela ajuda e onde não. Trabalhamos com escritórios de engenharia do Brasil e de toda a América Latina."
+  primaryLabel="Vamos falar do seu caso"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver todos os serviços"
+  secondaryHref="/pt/servicios"
+/>
+
+---
+
+**Foi útil?** Compartilhe com quem no seu escritório pergunta se «existe uma IA que faça as pranchas». Dados conferidos na documentação da Autodesk em outubro de 2026; as funções mudam a cada versão.

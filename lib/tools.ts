@@ -6,7 +6,13 @@ import type { Locale } from "@/lib/i18n";
 // lib/tools-catalog.ts.) Client-safe: plain data, no fs.
 // -----------------------------------------------------------------------------
 
-export const TOOL_SLUGS = ["conversor-de-coordenadas", "calculadora-acero-corrugado", "calculadora-manning"] as const;
+export const TOOL_SLUGS = [
+  "conversor-de-coordenadas",
+  "calculadora-area-terreno",
+  "generador-curvas-de-nivel",
+  "calculadora-acero-corrugado",
+  "calculadora-manning",
+] as const;
 
 export type ToolSlug = (typeof TOOL_SLUGS)[number];
 
@@ -17,6 +23,8 @@ export type ToolSlug = (typeof TOOL_SLUGS)[number];
  */
 export const toolLocales: Record<ToolSlug, readonly Locale[]> = {
   "conversor-de-coordenadas": ["es", "pt", "en"],
+  "calculadora-area-terreno": ["es", "pt", "en"],
+  "generador-curvas-de-nivel": ["es", "pt", "en"],
   "calculadora-acero-corrugado": ["es"],
   "calculadora-manning": ["es", "pt", "en"],
 };
@@ -39,6 +47,40 @@ export const toolCards: Record<ToolSlug, Partial<Record<Locale, ToolCard>>> = {
       title: "UTM to lat long converter",
       body: "Convert one point or hundreds pasted from Excel, check them on a map and export to Civil 3D, Excel or Google Earth, with the scale factor per point.",
       tags: ["Surveying", "Batch", "Civil 3D"],
+    },
+  },
+  "calculadora-area-terreno": {
+    es: {
+      title: "Calculadora de área de terreno",
+      body: "Área y perímetro por coordenadas o por medidas, cuadro de datos técnicos, memoria descriptiva en Word y plano perimétrico en DXF.",
+      tags: ["Plano perimétrico", "Memoria descriptiva", "DXF"],
+    },
+    pt: {
+      title: "Calculadora de área de terreno",
+      body: "Área e perímetro por coordenadas ou medidas, quadro de coordenadas com azimutes, memorial descritivo em Word e planta em DXF.",
+      tags: ["Memorial descritivo", "Azimutes", "DXF"],
+    },
+    en: {
+      title: "Area from coordinates calculator",
+      body: "Lot area and perimeter from coordinates or measured sides, bearings and distances, a metes and bounds description in Word and a DXF plat.",
+      tags: ["Metes and bounds", "Lot area", "DXF"],
+    },
+  },
+  "generador-curvas-de-nivel": {
+    es: {
+      title: "Generador de curvas de nivel",
+      body: "Elige un área en el mapa y descarga sus curvas de nivel en DXF para AutoCAD y Civil 3D, con puntos para crear la superficie. Para anteproyectos.",
+      tags: ["Curvas de nivel", "Civil 3D", "DXF"],
+    },
+    pt: {
+      title: "Gerador de curvas de nível",
+      body: "Escolha uma área no mapa e baixe as curvas de nível em DXF para AutoCAD e Civil 3D, com pontos para criar a superfície. Para estudos preliminares.",
+      tags: ["Curvas de nível", "Civil 3D", "DXF"],
+    },
+    en: {
+      title: "Contour map generator",
+      body: "Pick an area on the map and download its contour lines as DXF for AutoCAD and Civil 3D, plus points to build the surface. For preliminary studies.",
+      tags: ["Contour lines", "Civil 3D", "DXF"],
     },
   },
   "calculadora-acero-corrugado": {

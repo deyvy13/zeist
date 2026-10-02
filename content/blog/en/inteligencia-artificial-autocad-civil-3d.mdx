@@ -1,0 +1,213 @@
+---
+title: "AI for AutoCAD and Civil 3D in 2026: what actually exists, what works and what doesn't yet"
+seoTitle: "AI for AutoCAD and Civil 3D: What Exists in 2026"
+ctaTitle: "Want to use AI in your firm beyond the chat window? We build the tool that connects it to how you work."
+description: "What AI exists today for AutoCAD and Civil 3D: Autodesk Assistant, ChatGPT or Claude writing LISP, Dynamo and C#, MCP agents, and what they still can't do."
+date: "2026-10-02T14:00:00.000Z"
+author: "Zeist"
+tags:
+  - Artificial intelligence
+  - AutoCAD
+  - Civil 3D
+  - Autodesk Assistant
+  - MCP
+  - BIM automation
+---
+
+<BlogHero
+  eyebrow="AI + BIM · AutoCAD and Civil 3D"
+  title="Everyone promises an AI that draws plans. What exists today is more modest, and more useful than it looks."
+  highlight="There are three kinds of AI you can already use with AutoCAD and Civil 3D: the one built into the software, assistants that write code, and agents that act inside the drawing. This guide explains what each one does, checked against Autodesk's documentation, and where it actually saves hours."
+/>
+
+<Callout type="success" title="Quick answer">
+Yes, there is AI for AutoCAD and Civil 3D, at three levels. First, the built-in kind: since the 2027 releases, **Autodesk Assistant** answers questions, queries the drawing, selects objects from natural-language prompts and checks the drawing against a CAD standards file; before that came Markup Assist and Smart Blocks. Second, general assistants such as ChatGPT, Claude or Gemini, which write AutoLISP, Dynamo or C# routines that you test and run. Third, agents connected to the software through MCP. None of them produces a complete, correct drawing set from a sentence.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain words">
+- **Generative AI** — AI that produces text, images or code from a written instruction.
+- **Language model** — The engine behind ChatGPT, Claude or Gemini: it reads and writes text, including code.
+- **Autodesk AI** — Autodesk's umbrella name for the AI features in its products.
+- **Assistant** — A chat inside the software you ask for things in words.
+- **Agent** — An AI that doesn't just answer: it uses tools and takes actions.
+- **MCP** — An open standard to connect an AI to an application, like a universal plug.
+- **AutoLISP, Dynamo and C#** — Three ways to automate: text routines, visual blocks and plugins.
+- **Plugin** — A program installed inside AutoCAD or Civil 3D that adds buttons to the top toolbar.
+
+No programming terms. Written for engineering managers, designers and BIM coordinators.
+</Callout>
+
+## The question every firm is asking
+
+*Is there an AI that does the drawings?* It's the question we hear most from managers and engineers. The short answer is no, not yet. The useful answer is that there's already AI that saves hours on specific tasks, if you know where to look.
+
+The problem is that everything gets mixed up: built-in features, general chatbots, third-party add-ins and demos that never reach production. Separating them is the first step to deciding.
+
+<AnimatedFlow
+  title="The three levels of AI for AutoCAD and Civil 3D"
+  nodes="Built-in AI|Assistants that write code|Agents connected through MCP|Custom tool"
+  subs="Autodesk Assistant and Smart Blocks|ChatGPT, Claude, Gemini|Act inside the drawing|Your rules, repeatable"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. The AI already built into AutoCAD" time="~6 min">
+
+Autodesk has been adding AI features since AutoCAD 2023, under the **Autodesk AI** name. None of them drafts a sheet for you, but several remove repetitive work:
+
+- **Markup Import and Markup Assist (since 2023):** bring markups made on a PDF or image into the drawing and help you incorporate them.
+- **Smart Blocks: Placement and Replacement (2024):** suggest where to place a block based on how you placed it before, and which block to swap in.
+- **Smart Blocks: Search and Convert (2025):** finds repeated geometry in the drawing and converts it to blocks.
+- **Smart Blocks: Detect and Convert (2026):** recognizes objects drawn as loose linework and converts them to blocks. Handy for cleaning up legacy drawings.
+
+**AutoCAD 2027 (March 2026) adds Autodesk Assistant**, an AI chat inside the software. According to Autodesk's documentation, it can:
+
+- Check the drawing against a CAD standards file.
+- Select objects from a natural-language prompt.
+- Query drawing information, such as the layer list or block usage.
+- Keep a prompt library and chat history.
+
+The **2027.1** update added smarter object counting, selection-aware analysis, context-aware unit reporting and personalized recommendations. AutoCAD 2027 also brings **Geometry Cleanup**, which scans drawings and fixes common geometry errors.
+
+<Callout type="warn" title="Autodesk's own warning">
+The assistant's documentation says it plainly: it's powered by AI, mistakes are possible, and you should double-check its responses. Use it to find and review, not to sign off.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Civil 3D and Revit: the assistant reaches infrastructure" time="~4 min">
+
+**Civil 3D 2027 includes Autodesk Assistant**, with chat and prompt-driven workflows. The 2027.1 update brought the same additions as AutoCAD: object counting, selection-aware analysis, unit reporting and recommendations.
+
+For now, its strength is **querying, selecting and analyzing** what's already in the drawing. Designing a corridor, a pipe network or a profile is still the designer's job, with the usual tools.
+
+**Revit 2027** goes further with the **Revit Public MCP Server**, in tech preview. Through the assistant, it can query the model (find elements, check parameters, count), **edit parameters in bulk** and capture view snapshots. It's the first time Autodesk has opened its software to AI through a common standard.
+
+<Callout type="info" title="What this means for your firm">
+If your team runs the 2027 releases, it already has an assistant that saves searching and checking. If it runs earlier versions, which is common at engineering firms, these features aren't available.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. General assistants: ChatGPT, Claude and Gemini as programmers" time="~6 min">
+
+The AI use that saves the most hours today isn't inside AutoCAD: it's in the chat window. ChatGPT, Claude and Gemini **write the automation code**, and you run it in the software.
+
+**What they do well:**
+
+- **AutoLISP routines** for AutoCAD: rename layers, number blocks, export coordinates.
+- **Dynamo script logic** and Python nodes for Civil 3D and Revit.
+- **C# plugins** on the Autodesk API, including the project structure and the installer.
+- **Explaining legacy code** nobody in the office understands anymore.
+
+**Where they fail:**
+
+- **They invent API methods** that don't exist, especially for Civil 3D, which has fewer public examples.
+- **They don't know your standards:** naming, layers, deliverable formats.
+- **They don't test what they write:** the code looks right until you run it on a real drawing.
+
+So they work like a very fast developer whose every line needs review. In [Dynamo and C# with AI](/en/blog/dynamo-csharp-con-ia-claude) we explain how we work this way, and in [building a Civil 3D plugin with Claude Code](/en/blog/crear-plugin-civil-3d-con-claude-code-sin-programar) we show the process end to end.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Agents connected through MCP: AI that acts in the software" time="~5 min">
+
+What changed in 2026 is that AI doesn't just write code anymore: it can **connect to the software and act**. The standard that makes this possible is **MCP** (Model Context Protocol), a common plug between AI models and applications.
+
+What exists today around Autodesk:
+
+- **Revit Public MCP Server (tech preview in Revit 2027):** Autodesk's official server for AI to query the model and edit parameters.
+- **Autodesk Product Help MCP Server:** lets assistants such as Claude, ChatGPT or Copilot search Autodesk's official documentation. It's read-only.
+- **Claude connector for Fusion:** offered by Autodesk for AI-assisted work in Fusion.
+- **Third-party and community MCP servers** for AutoCAD and Civil 3D, which connect assistants like Claude to the drawing.
+
+<Callout type="warn" title="Before you connect an AI to your drawings">
+An agent acts with your permissions on your files. Always test on copies, check what data leaves your computer, and review your company's policy before using unofficial tools with client drawings.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. What AI still can't do" time="~4 min">
+
+Separating the promise from reality saves money. Today, none of these tools reliably delivers:
+
+- **A complete, correct drawing from a sentence.** They can generate geometry, not a deliverable that passes review.
+- **Your standard without being given it.** They don't know how your office names layers or which format your client requires.
+- **Guaranteed calculations.** A slope, a rebar ratio or a flow proposed by AI gets checked like an intern's.
+- **The exact same result every time.** The same prompt can produce different outputs, and a deliverable needs identical results.
+
+That last point matters most to a business: **production needs repeatability**. That's where a tool with fixed rules beats a chat.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Where it pays off: repetitive tasks with clear rules" time="~5 min">
+
+AI shines where the task repeats and the rules can be written down: checking standards, renaming, extracting data, placing elements by rule, producing reports. There are two ways to use it:
+
+<ComparisonTable
+  criterionLabel="Criterion"
+  leftLabel="Custom plugin (built with AI help)"
+  rightLabel="Asking a chat every time"
+  rows="Same result every time | *Yes, fixed rules | Not always || Applies your office standard | *Built into the tool | Explain it every time || Who can use it | *Anyone, with a button | Whoever knows how to ask || Review | *Tested once on your drawings | Every answer || Time to first use | Weeks | *Immediate || Best for | Daily production | Experiments and one-off questions"
+/>
+
+**The approach that works best:** use AI to **build** the tool, faster than before, and let the tool do the production work. AI speeds up development; your office sets the rules.
+
+<Callout type="success" title="A concrete example">
+Checking every sheet against the layer standard before each submittal. With a chat, someone asks sheet by sheet. With a plugin, one button checks every sheet in the project with the same rules and produces a report. AI helped write that plugin in days, not weeks.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. How to start without risk" time="~4 min">
+
+**1. Pick one repetitive task** everyone hates: the one done on every submittal, with clear rules.
+
+**2. If you have AutoCAD or Civil 3D 2027,** try Autodesk Assistant on that task: checking standards, selecting or querying.
+
+**3. Prototype with a general assistant.** Ask for an AutoLISP routine or a Dynamo script, and test it on a copy of the drawing.
+
+**4. Measure.** How long it took before and how long it takes now, on a real project.
+
+**5. If it's used every week, turn it into a plugin** with tests, an installer and support, so it works the same for the whole office.
+
+<Callout type="info" title="About your clients' data">
+Don't paste drawings or confidential information into public chatbots without reviewing the service's privacy policy and your company's. Often it's enough to describe the task and test the code on a sample drawing.
+</Callout>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · AI applied to BIM"
+  title="AI speeds things up. A custom tool applies your rules."
+  body="We build plugins for AutoCAD, Civil 3D and Revit that apply your office standard on every project, and we use AI to build them faster. We're civil engineers and software engineers: we understand your workflow before writing a line of code."
+  primaryLabel="Request a diagnosis"
+  primaryHref="/en/contacto"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/servicios/add-ins-revit-civil-3d"
+/>
+
+## Related resources
+
+- **The cluster guide:** [Dynamo and C# plugins with AI](/en/blog/dynamo-csharp-con-ia-claude).
+- **Step by step:** [building a Civil 3D plugin with Claude Code, no coding background](/en/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).
+- **Start coding with AI:** [vibe coding for engineers](/en/blog/guia-vibe-coding-para-empezar).
+- **Which tool to use:** [Dynamo vs C#, when each one fits](/en/blog/dynamo-vs-csharp-civil3d-revit).
+- **If you're commissioning one:** [how much a Revit or Civil 3D add-in costs](/en/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+- **The full map:** [automating Civil 3D, the complete guide](/en/blog/automatizar-civil-3d-guia-completa).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Civil engineers who code"
+  title="A team of civil engineers and software engineers"
+  body="We use AI every day to build tools for AutoCAD, Civil 3D and Revit, and we know where it helps and where it doesn't. We work remotely with engineering firms in the US, Europe and Latin America."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contacto"
+  secondaryLabel="See all services"
+  secondaryHref="/en/servicios"
+/>
+
+---
+
+**Found this useful?** Share it with whoever in your office keeps asking if there's “an AI that does the drawings”. Facts checked against Autodesk's documentation as of October 2026; features change with every release.

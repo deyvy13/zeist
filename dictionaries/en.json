@@ -165,7 +165,7 @@
   "tools": {
     "eyebrow": "Tools",
     "title": "Scripts, templates, and calculators for your daily work.",
-    "subtitle": "Available now: the Manning's equation calculator for pipes and channels. Coming soon: Dynamo graphs, C# add-in templates and BIM standard templates.",
+    "subtitle": "Available now: UTM coordinate converter, land area calculator with legal description, contour map generator and Manning's equation calculator. Coming soon: Dynamo graphs and C# add-in templates.",
     "badge": "Free",
     "cta": "View tools"
   },

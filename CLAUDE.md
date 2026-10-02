@@ -110,7 +110,7 @@ app/
     blog/page.tsx             # Índice del blog
     blog/[slug]/page.tsx      # Artículo (renderiza MDX, JSON-LD BlogPosting)
     herramientas/page.tsx     # Hub: herramientas disponibles + propuestas "Pronto" por rubro
-    herramientas/<slug>/page.tsx # Una carpeta por herramienta (acero: solo es; Manning: es/pt/en)
+    herramientas/<slug>/page.tsx # Una carpeta por herramienta (acero: solo es; el resto: es/pt/en)
     contacto/page.tsx         # Formulario (abre WhatsApp, sin backend aún)
   globals.css                 # SISTEMA DE DISEÑO completo (tokens + claymorfismo)
   sitemap.ts / robots.ts / manifest.ts / opengraph-image.tsx   # SEO (raíz)
@@ -125,7 +125,8 @@ lib/
   services-content/<locale>.ts # copy largo de las 4 páginas de servicio, por idioma
   analytics.ts                # GA4 (env), trackEvent(), referencia de página en WhatsApp
   tools.ts                    # TOOL_SLUGS + toolLocales + tarjetas (fuente única de herramientas)
-  tools/                      # lógica pura y sin imports: steel, manning, xlsx, number
+  tools/                      # lógica pura, solo imports relativos (sin @/): steel, manning, coordinates,
+                              # parcel(+-text, -dxf), contours, contour-export, dxf, docx, xlsx, zip, number
   tools-content/              # copy de cada herramienta (ToolContent + labels de la calculadora)
 dictionaries/es.json, pt.json, en.json # strings de UI por idioma (misma forma)
 content/blog/<locale>/<slug>.mdx  # artículos del blog
@@ -205,6 +206,30 @@ acero", "calculadora manning tuberías/canales".
   y tensión tractiva. En tubo circular el caudal máximo es a y/D ≈ 0.938 (no a
   tubo lleno): el solver devuelve el tirante menor y avisa si el tubo entra en
   carga.
+- **Calculadora de área de terreno** (es/pt/en; búsquedas reales: "memoria
+  descriptiva" en Perú, "memorial descritivo" en Brasil, "metes and bounds" en
+  EE. UU.): por coordenadas (UTM, geográficas o locales; pies solo en `en`) o
+  por medidas de lados (triángulo, o cuadrilátero **con diagonal**: con 4 lados
+  solos el área no queda definida). Área por Gauss, ángulos internos, rumbos y
+  colindancias por lado, agrupadas por orientación N/E/S/O. Redacta la memoria
+  descriptiva (es), el memorial descritivo con la cláusula del SGB (pt) o la
+  legal description (en), y exporta Word, DXF con cuadro de datos técnicos y
+  Excel. Importa polilíneas cerradas desde DXF. Muestra el área de terreno
+  frente a la UTM con el factor combinado. Lógica en `lib/tools/parcel.ts`,
+  `parcel-text.ts` y `parcel-dxf.ts`. ⚠️ El formato de memoria varía por
+  municipio o notaría: es una base para revisar, no un documento firmable.
+- **Generador de curvas de nivel** (es/pt/en): cuadrado de 0.5 a 5 km elegido
+  en el mapa; descarga teselas Terrarium de AWS Terrain Tiles (CORS abierto;
+  SRTM ~30 m fuera de EE. UU.), arma la malla y traza las curvas con marching
+  squares (`lib/tools/contours.ts`). Exporta DXF con polilíneas 3D en UTM
+  (capas de maestras, intermedias, rótulos y límite), malla de puntos PNEZD y
+  KML (`lib/tools/contour-export.ts`). Siempre avisar que es para anteproyecto
+  (SRTM ±16 m), no para diseño. El post `curvas-de-nivel-civil-3d-google-earth`
+  es su guía.
+- **DXF y Word sin dependencias:** `lib/tools/dxf.ts` escribe DXF R12 (AC1009,
+  `$DWGCODEPAGE ANSI_1252`, estilo Arial; el grado como `%%d`, m² como `m2`)
+  y lee LWPOLYLINE/POLYLINE; `lib/tools/docx.ts` arma .docx mínimos. Ambos y el
+  .xlsx comparten el ZIP de `lib/tools/zip.ts`.
 - **Arquitectura:** registro en `lib/tools.ts` (lo leen el hub, sitemap,
   selector de idioma y `/llms.txt`); plantilla común `components/tools/tool-layout.tsx`
   (calculadora → respuesta citable → contenido → CTA → FAQ `<details>` →
@@ -215,7 +240,10 @@ acero", "calculadora manning tuberías/canales".
   resultados se renderizan en el servidor y un separador distinto entre Node
   y el navegador rompería la hidratación. `es` usa punto decimal (como las
   tablas peruanas), `pt` coma. Los inputs aceptan punto o coma.
-- **Tests:** `npm run test:tools` (Node ≥ 23.6, importa los `.ts` directamente).
+- **Tests:** `npm run test:tools` (Node ≥ 23.6, importa los `.ts` directamente;
+  `scripts/register-ts-resolve.mjs` resuelve los imports relativos sin
+  extensión). 33 tests: acero, Manning, números, xlsx, coordenadas, terreno,
+  DXF y curvas.
   Las referencias de coordenadas salen de PROJ (pyproj) y están incrustadas
   en el test; para regenerarlas hace falta un venv con pyproj.
   Los valores esperados se calcularon aparte en Python; los números del texto
@@ -323,11 +351,11 @@ a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
 
 | Cluster | Pillar | Satélites |
 |---|---|---|
-| **C1 · Add-ins C#** (el diferenciador) | `desarrollo-add-ins-revit-civil-3d-guia-completa` | `crear-plugin-civil-3d-con-claude-code-sin-programar`, `dynamo-vs-csharp-civil3d-revit`, `cuanto-cuesta-un-add-in-revit-civil-3d`, `revit-api-espanol-primeros-pasos`, `comparar-modelos-revit-civil-3d-detectar-cambios`, `plugin-acero-revit-modelado-revision` |
-| **C2 · Civil 3D** (el hueco más grande) | `automatizar-civil-3d-guia-completa` | `deja-de-usar-excel-y-perder-horas`, `automatizar-metrados-cubicaciones-civil-3d` |
-| **C3 · IA + BIM** (sin competencia) | `dynamo-csharp-con-ia-claude` | `guia-vibe-coding-para-empezar`, `crear-plugin-...-claude-code` |
+| **C1 · Add-ins C#** (el diferenciador) | `desarrollo-add-ins-revit-civil-3d-guia-completa` | `crear-plugin-civil-3d-con-claude-code-sin-programar`, `dynamo-vs-csharp-civil3d-revit`, `cuanto-cuesta-un-add-in-revit-civil-3d`, `revit-api-espanol-primeros-pasos`, `comparar-modelos-revit-civil-3d-detectar-cambios`, `plugin-acero-revit-modelado-revision`, `revit-lento-modelo-pesado-auditoria`, `exportar-tablas-revit-excel-editar-parametros`, `produccion-planos-automatica-civil-3d-revit`, `automatizar-tareas-revit-dynamo-plugins`, `auditoria-bim-checklist-empresa` |
+| **C2 · Civil 3D** (el hueco más grande) | `automatizar-civil-3d-guia-completa` | `deja-de-usar-excel-y-perder-horas`, `automatizar-metrados-cubicaciones-civil-3d`, `produccion-planos-automatica-civil-3d-revit`, `dynamo-civil-3d-scripts`, `curvas-de-nivel-civil-3d-google-earth` |
+| **C3 · IA + BIM** (sin competencia) | `dynamo-csharp-con-ia-claude` | `guia-vibe-coding-para-empezar`, `crear-plugin-...-claude-code`, `inteligencia-artificial-autocad-civil-3d` |
 | **C4 · Carrera** (captación de funnel) | `programacion-para-ingenieros-civiles` | `aprende-a-programar-desde-cero`, `ramas-ingenieria-sistemas-especializaciones` |
-| **C5 · Perú / Corporativo** (dolor de dirección, ticket alto, SEO local) | `plan-bim-peru-obligatorio-guia-empresas` | `expediente-tecnico-observaciones-reducir`, `automatizacion-bim-trujillo-la-libertad`, `reprocesos-obra-costo-oculto`, `estandarizar-procesos-bim-empresa` |
+| **C5 · Perú / Corporativo** (dolor de dirección, ticket alto, SEO local) | `plan-bim-peru-obligatorio-guia-empresas` | `expediente-tecnico-observaciones-reducir`, `automatizacion-bim-trujillo-la-libertad`, `reprocesos-obra-costo-oculto`, `estandarizar-procesos-bim-empresa`, `auditoria-bim-checklist-empresa` |
 | **C6 · Redes y dibujo 3D** (utilities: agua, desagüe, eléctrico) | `plugin-civil-3d-dibujo-3d-automatizado` | `redes-tuberias-civil-3d-accesorios`, `banco-de-ductos-civil-3d` |
 
 > **C5 es sólo `es`.** La normativa (Plan BIM Perú, DS 289-2019-EF) y el mercado local no se
@@ -339,6 +367,8 @@ a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
 > proyectos, Obras por Impuestos), MPT ~S/80.4M (28 obras), privada ~S/65M.
 
 > **C6 (sep-2026), keywords validadas con el autocompletado de Google:** "red de agua potable civil 3d", "alcantarillado sanitario civil 3d", "accesorios de tuberías" (codos, tees, yees), "banco de ductos" (más volumen que "bancoductos"; variantes CFE, media tensión, prefabricados), "plugin civil 3d"; en inglés "civil 3d pressure network parts list", "pipe network not drawing pipes", "duct bank concrete/spacers", "best civil 3d plugins". Los 3 posts existen en es/pt/en. Los hechos técnicos a no contradecir: Civil 3D **no** trae objeto de banco de ductos (se modela con corredor + Subassembly Composer, red de tuberías paralela o sólidos 3D); la detección de choques no mide separaciones mínimas.
+
+> **Posts de oct-2026 (elegidos con Google Trends; los tres en es/pt/en):** `curvas-de-nivel-civil-3d-google-earth` (C2; en el mundo hispano "curvas de nivel google earth" ≈ 2.5× "curvas de nivel civil 3d"), `inteligencia-artificial-autocad-civil-3d` (C3; "ia para autocad" ≈ 2×) y `dynamo-civil-3d-scripts` (C2). Hechos a no contradecir, verificados en la documentación de Autodesk y Dynamo (oct-2026): Google Earth no exporta el terreno; SRTM ±16 m vertical; el Autodesk Assistant llegó con AutoCAD y Civil 3D 2027 (la 2027.1 añadió conteo de objetos, análisis de la selección, unidades y recomendaciones); el Revit Public MCP Server está en vista previa técnica; Dynamo viene desde Civil 3D 2020 y el Reproductor desde la 2020.2; la 2025.1 sumó 1,120 nodos (no funcionan en versiones anteriores), la 2025.2 etiquetas y la 2026 cuencas y líneas características desde puntos; The Civil Nodes (850+ nodos, 2025.1+) sucede a la biblioteca de Arkance. Revisar en cada versión nueva de Autodesk.
 
 > **Conversión y respuestas de IA (sep-2026).** (1) Todo post muestra un CTA de servicio **bajo el título** (`components/post-early-cta.tsx`, copy en `blog.earlyCta` de los diccionarios); el frontmatter opcional `ctaTitle` lo adapta al dolor del post. (2) `seoTitle` (≤52 caracteres) para el `<title>`; `title` largo queda como `<h1>`. (3) Los posts nuevos abren con un `<Callout type="success" title="Respuesta rápida">`: 60-100 palabras que responden la búsqueda principal de forma citable — es lo que extraen Google y los asistentes de IA. (4) `/llms.txt` (`app/llms.txt/route.ts`) se genera del mismo contenido y `robots.ts` permite explícitamente a GPTBot, ClaudeBot, PerplexityBot, Google-Extended.
 
@@ -365,20 +395,23 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   5 se reenfocaron al público AEC, 1 se archivó (`testear-web-con-claude-for-chrome`),
   y se creó `cuanto-cuesta-un-add-in-revit-civil-3d` (keyword de dinero).
   Herramientas pasó de 6 rubros genéricos a 5 rubros BIM.
-- **Fase 4 — Contenido para dominar el nicho (SIGUIENTE):** escribir los 2 pillars
-  que faltan (C1 y C2) y los satélites de C2. Prioridad:
-  1. "Automatizar Civil 3D: guía completa" (pillar C2)
-  2. "Desarrollo de add-ins para Revit y Civil 3D: guía completa" (pillar C1)
+- **Fase 4 — Contenido para dominar el nicho (EN CURSO):** pillars y satélites
+  de C1 y C2. Hecho:
+  1. ~~"Automatizar Civil 3D: guía completa"~~ (pillar C2, HECHO)
+  2. ~~"Desarrollo de add-ins para Revit y Civil 3D: guía completa"~~ (pillar C1, HECHO)
   3. ~~"Automatizar metrados y cubicaciones en Civil 3D"~~ (HECHO, sep-2026)
   4. ~~"Revit API en español: primeros pasos"~~ (HECHO, sep-2026)
-  5. "10 scripts de Dynamo para Civil 3D" — siguiente
+  5. ~~"10 scripts de Dynamo para Civil 3D"~~ (HECHO, oct-2026: `dynamo-civil-3d-scripts`)
+  6. ~~"Curvas de nivel en Civil 3D y Google Earth"~~ (HECHO, oct-2026, C2)
+  7. ~~"IA para AutoCAD y Civil 3D"~~ (HECHO, oct-2026, C3)
 - **Conversión (HECHA, oct-2026):** medición GA4 + clics de WhatsApp, y las 4
   páginas de servicio convertidas en landings de venta (ver sección 6).
   Pendiente: **política de privacidad** (los términos de GA4 la exigen; el
   sitio aún no tiene) y dominio propio.
 - **Fase 5 (EN CURSO):** liberar las herramientas de `/herramientas`. Hechas
-  (oct-2026): conversor de coordenadas, calculadora de acero corrugado y
-  calculadora de Manning. El resto sigue "Pronto".
+  (oct-2026): conversor de coordenadas, calculadora de área de terreno
+  (memoria descriptiva), generador de curvas de nivel, calculadora de acero
+  corrugado y calculadora de Manning. El resto sigue "Pronto".
 - **Contacto — WhatsApp es el único canal publicado.** Número en
   `site.whatsapp` (`lib/site.ts`); enlaces siempre vía `whatsappUrl(mensaje)`,
   nunca hardcodeados. **El correo está oculto a propósito** (`site.showEmail:

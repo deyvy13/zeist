@@ -50,12 +50,22 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "pt",
     "en"
   ],
+  "curvas-de-nivel-civil-3d-google-earth": [
+    "es",
+    "pt",
+    "en"
+  ],
   "deja-de-usar-excel-y-perder-horas": [
     "es",
     "pt",
     "en"
   ],
   "desarrollo-add-ins-revit-civil-3d-guia-completa": [
+    "es",
+    "pt",
+    "en"
+  ],
+  "dynamo-civil-3d-scripts": [
     "es",
     "pt",
     "en"
@@ -84,6 +94,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "en"
   ],
   "guia-vibe-coding-para-empezar": [
+    "es",
+    "pt",
+    "en"
+  ],
+  "inteligencia-artificial-autocad-civil-3d": [
     "es",
     "pt",
     "en"

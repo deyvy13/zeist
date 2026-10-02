@@ -7,14 +7,15 @@ import "leaflet/dist/leaflet.css";
 // -----------------------------------------------------------------------------
 // Verification map for converted points (WGS 84). The point of it: a point in
 // the ocean means a wrong zone, hemisphere or swapped columns — caught before
-// the file reaches Civil 3D. Leaflet loads only on the client, on first use.
+// the file reaches Civil 3D. With `polygon`, the points are drawn as a lot
+// boundary with permanent vertex names. Leaflet loads only on the client.
 // -----------------------------------------------------------------------------
 
 export type MapPoint = { lat: number; lon: number; label: string };
 
 const MAX_MARKERS = 2000;
 
-export function PointsMap({ points, ariaLabel }: { points: MapPoint[]; ariaLabel: string }) {
+export function PointsMap({ points, ariaLabel, polygon = false }: { points: MapPoint[]; ariaLabel: string; polygon?: boolean }) {
   const container = useRef<HTMLDivElement>(null);
   const map = useRef<LeafletMap | null>(null);
   const layer = useRef<LayerGroup | null>(null);
@@ -23,7 +24,7 @@ export function PointsMap({ points, ariaLabel }: { points: MapPoint[]; ariaLabel
   const key = points
     .slice(0, MAX_MARKERS)
     .map((p) => `${p.lat.toFixed(7)},${p.lon.toFixed(7)},${p.label}`)
-    .join("|");
+    .join("|") + (polygon ? "|polygon" : "");
 
   useEffect(() => {
     let cancelled = false;
@@ -40,6 +41,14 @@ export function PointsMap({ points, ariaLabel }: { points: MapPoint[]; ariaLabel
       }
       layer.current!.clearLayers();
       const shown = points.slice(0, MAX_MARKERS);
+      if (polygon && shown.length >= 3) {
+        L.polygon(shown.map((p) => [p.lat, p.lon] as [number, number]), {
+          color: "#00b894",
+          weight: 2.5,
+          fillColor: "#00FFCE",
+          fillOpacity: 0.18,
+        }).addTo(layer.current!);
+      }
       for (const p of shown) {
         L.circleMarker([p.lat, p.lon], {
           radius: 6,
@@ -48,7 +57,7 @@ export function PointsMap({ points, ariaLabel }: { points: MapPoint[]; ariaLabel
           fillColor: "#00FFCE",
           fillOpacity: 0.9,
         })
-          .bindTooltip(p.label)
+          .bindTooltip(p.label, polygon ? { permanent: true, direction: "top", offset: [0, -6], className: "zeist-vertex-label" } : {})
           .addTo(layer.current!);
       }
       if (shown.length === 1) map.current.setView([shown[0].lat, shown[0].lon], 16);

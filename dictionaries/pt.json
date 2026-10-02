@@ -165,7 +165,7 @@
   "tools": {
     "eyebrow": "Ferramentas",
     "title": "Scripts, templates e calculadoras para o seu dia a dia.",
-    "subtitle": "Já disponível: a calculadora de Manning para tubulações e canais. Em breve: grafos de Dynamo, templates de add-ins em C# e templates de padrões BIM.",
+    "subtitle": "Já disponíveis: conversor de coordenadas UTM, área de terreno com memorial descritivo, gerador de curvas de nível e calculadora de Manning. Em breve: grafos de Dynamo e templates de add-ins em C#.",
     "badge": "Grátis",
     "cta": "Ver ferramentas"
   },

@@ -1,0 +1,209 @@
+---
+title: "Curvas de nível no Civil 3D: do Google Earth e dos modelos de satélite ao seu levantamento, passo a passo"
+seoTitle: "Curvas de nível no Civil 3D e Google Earth: guia"
+ctaTitle: "Sua equipe monta superfícies e curvas à mão em cada projeto? Automatizamos no Civil 3D."
+description: "Como obter curvas de nível no Civil 3D: por que o Google Earth não exporta o terreno, que modelo de elevação usar e como criar a superfície passo a passo."
+date: "2026-10-02T13:00:00.000Z"
+author: "Zeist"
+tags:
+  - Curvas de nível
+  - Civil 3D
+  - Superfícies
+  - Google Earth
+  - Topografia
+  - Automação BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Superfícies e curvas de nível"
+  title="Curvas de nível não se desenham: saem de uma superfície. Tudo depende de como você a constrói."
+  highlight="De um modelo de satélite para o estudo preliminar ou do seu levantamento para o projeto, o caminho no Civil 3D é o mesmo: superfície primeiro, curvas depois. Este guia explica cada rota, que precisão esperar de cada uma e como evitar os erros que mais se repetem."
+/>
+
+<Callout type="success" title="Resposta rápida">
+O Civil 3D gera as curvas de nível a partir de uma **superfície**. Para criá-la sem levantamento, o Google Earth não serve diretamente: não exporta o terreno e o Civil 3D já não o importa. Usa-se um **modelo de elevação aberto**, como o SRTM, com malha de cerca de 30 m. Ele é adicionado à superfície como arquivo DEM ou importado como malha de pontos, por exemplo do nosso [gerador de curvas de nível](/pt/herramientas/generador-curvas-de-nivel). Com levantamento, a superfície é criada a partir dos pontos e das linhas de quebra. Nos dois casos, a equidistância e os rótulos são definidos no estilo da superfície.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Superfície** — O modelo do terreno no Civil 3D: uma malha de triângulos que liga pontos com cota.
+- **Modelo digital de elevação (MDE ou DEM)** — Um arquivo com a cota do terreno numa grade regular, como uma foto em que cada pixel é uma altitude.
+- **SRTM** — O modelo de elevação global da NASA, gratuito, com malha de cerca de 30 m.
+- **Curva mestra e intermediária** — As mestras são as curvas destacadas, a cada certo número de intermediárias.
+- **Equidistância** — A diferença de cota entre duas curvas seguidas.
+- **Linha de quebra** — Uma linha que obriga a superfície a respeitar uma aresta: a borda de uma via, o fundo de um canal.
+- **Contorno ou limite** — A borda externa da superfície, para que ela não invente terreno fora da área medida.
+- **PNEZD** — Um formato de texto para pontos: número, norte, leste, cota e descrição.
+- **Estilo de superfície** — A configuração de como ela aparece: curvas, equidistâncias, cores, triângulos.
+
+Sem termos de programação. Foi escrito para projetistas, topógrafos e estudantes de engenharia civil.
+</Callout>
+
+## O problema de sempre: você precisa de curvas antes de ter a topografia
+
+Acontece em quase todo projeto de infraestrutura. Antes do levantamento é preciso decidir por onde passa a estrada, onde cabe o reservatório ou quão íngreme é a encosta. Para isso bastam curvas aproximadas, mas é preciso consegui-las.
+
+A busca típica é *curvas de nível do Google Earth*. E aí começa a frustração: o Google Earth mostra o relevo, mas não o entrega.
+
+<AnimatedFlow
+  title="Os dois caminhos até as curvas de nível no Civil 3D"
+  nodes="Modelo de elevação ou levantamento|Superfície no Civil 3D|Estilo com curvas|Rótulos e pranchas"
+  subs="DEM, pontos ou linhas de quebra|A base de tudo|Equidistância e mestras|Pronto para o projeto"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Por que o Google Earth não dá as curvas, e o que usar no lugar" time="~5 min">
+
+**O Google Earth Pro mostra a cota do ponto sob o cursor, mas não exporta curvas de nível nem o terreno.** Não existe um botão para baixar o relevo de uma área.
+
+O Civil 3D já teve um comando para importar a superfície do Google Earth, mas as versões atuais não o incluem. Por isso tantos tutoriais terminam em programas pagos, como o Global Mapper, ou em complementos.
+
+**O que funciona: um modelo digital de elevação aberto.** São os dados de relevo globais, publicados para download:
+
+- **SRTM (NASA):** cobre quase todo o mundo com malha de cerca de 30 m. É baixado grátis no portal EarthExplorer do USGS.
+- **Copernicus GLO-30 (programa europeu Copernicus):** global, também de 30 m e mais recente.
+- **ALOS AW3D30 (agência espacial japonesa):** outra alternativa global de 30 m.
+- **Fontes nacionais:** no Brasil, o Topodata do INPE oferece o SRTM refinado para estudos regionais.
+
+<Callout type="success" title="O caminho mais curto">
+Se você só precisa de curvas para um estudo preliminar, use o nosso [gerador de curvas de nível](/pt/herramientas/generador-curvas-de-nivel): escolha a área no mapa e baixe as curvas em DXF ou uma malha de pontos PNEZD para o Civil 3D, em coordenadas UTM e com a cota. Sem instalar nada.
+</Callout>
+
+**Sobre a precisão.** O SRTM tem precisão vertical especificada de ±16 m. Serve para planejar — estudos preliminares, viabilidade, traçados iniciais, TCC —, mas não para o projeto executivo nem para calcular terraplenagem. Para isso é preciso levantamento.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Superfície a partir de um modelo de elevação (DEM), passo a passo" time="~6 min">
+
+Se você baixou um arquivo de elevação (por exemplo, um GeoTIFF do SRTM), o Civil 3D o transforma em superfície diretamente.
+
+1. **Configure o sistema de coordenadas do desenho.** Nas configurações do desenho, aba de unidades e zona, escolha a categoria UTM com datum WGS 84 ou SIRGAS 2000 e o seu fuso. Para o Rio de Janeiro, o fuso 23 Sul.
+2. **Crie uma superfície TIN vazia** no Prospector.
+3. **Adicione o arquivo de elevação.** Na definição da superfície, Arquivos DEM, adicione o arquivo. O Civil 3D aceita .dem (USGS), GeoTIFF (.tif), ESRI ASCII Grid (.asc ou .txt) e ESRI binário (.adf).
+4. **Informe o sistema de coordenadas do arquivo.** Se o modelo vem em latitude e longitude, atribua esse sistema: o Civil 3D o transforma para o do desenho ao construir a superfície. Sem este passo, a superfície aparece em outro lugar do mundo.
+5. **Recorte a área.** Os modelos globais vêm em mosaicos grandes. Adicione um contorno à superfície para ficar só com a área do projeto: ela pesa menos e é desenhada mais rápido.
+
+<Callout type="warn" title="Cuidado com os vazios">
+Alguns modelos marcam as células sem dado com um valor como −32768. Se aparecerem poços ou picos impossíveis, exclua as cotas abaixo de um valor razoável nas opções de construção da superfície.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Superfície a partir de uma malha de pontos (do gerador ou de qualquer CSV)" time="~4 min">
+
+Uma malha regular de pontos é a forma mais simples de levar um modelo de elevação para o Civil 3D, e é o que o nosso gerador entrega.
+
+1. **Importe os pontos:** guia Inserir, Pontos de arquivo, formato PNEZD delimitado por vírgulas.
+2. **Crie um grupo de pontos** com eles. Se o arquivo traz a descrição TN (terreno natural), você pode filtrar por ela.
+3. **Adicione o grupo à superfície:** na definição da superfície, Grupos de pontos, Adicionar.
+4. **Defina o estilo** com as curvas de que precisa (veja o passo 5).
+
+**Vantagem em relação ao DXF de curvas:** com os pontos, o Civil 3D reconstrói o terreno e você controla a equidistância, o estilo e os rótulos. O DXF de curvas serve se você só precisa do desenho ou vai usá-lo no AutoCAD.
+
+<Callout type="info" title="As coordenadas estão em latitude e longitude?">
+Se você tem pontos do Google Earth ou de um GPS em graus, converta-os antes para UTM com o [conversor de coordenadas](/pt/herramientas/conversor-de-coordenadas): ele processa centenas de pontos de uma vez e os deixa no formato PNEZD.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Superfície a partir do seu levantamento topográfico" time="~6 min">
+
+Para o projeto, a superfície sai do levantamento: estação total, GNSS, drone ou LiDAR. A ordem importa:
+
+1. **Importe os pontos** com os códigos de campo (TN, BV para borda de via, EIXO etc.).
+2. **Monte grupos de pontos por código.** Assim você decide quais pontos entram na superfície do terreno e quais não, como os de estruturas ou árvores.
+3. **Adicione as linhas de quebra.** Bordas de via, sarjetas, muros, fundos de vale: as polilinhas ou linhas características que o terreno deve respeitar. Sem elas, o Civil 3D liga pontos através de um muro ou de um canal e as curvas mentem.
+4. **Adicione o contorno externo.** Evita os triângulos longos que se formam nas bordas, fora da área medida.
+5. **Revise os triângulos antes de olhar as curvas.** Um ponto com cota 0, um ponto duplicado ou um código mal digitado aparecem na hora na vista de triângulos.
+
+<Callout type="warn" title="O erro mais caro: curvas bonitas sobre um terreno mal triangulado">
+O estilo pode suavizar as curvas e deixá-las perfeitas mesmo que a superfície tenha erros. Revise sempre a triangulação e os pontos suspeitos antes de suavizar ou rotular.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Estilos: equidistância, mestras, suavização e rótulos" time="~5 min">
+
+As curvas de nível são uma forma de ver a superfície, e são controladas no **estilo**:
+
+- **Equidistância das intermediárias e das mestras.** Por exemplo, 1 m e 5 m num levantamento urbano; 20 m e 100 m com um modelo de satélite numa região montanhosa.
+- **Regra prática:** que caibam umas 20 curvas na área. Divida o desnível por 20 e arredonde para 1, 2, 5, 10, 20 ou 50 m.
+- **Suavização.** Melhora o desenho, mas não a precisão: não inventa informação que o levantamento não tem.
+- **Rótulos.** Com os rótulos de curva de nível múltiplos, você traça uma linha que cruza as curvas e o Civil 3D rotula cada uma.
+
+<ComparisonTable
+  criterionLabel="Fonte"
+  leftLabel="Modelo de satélite (SRTM)"
+  rightLabel="Levantamento topográfico"
+  rows="Malha ou densidade | Cerca de 30 m | *Conforme o levantamento, de centímetros a poucos metros || Precisão vertical | ±16 m especificada | *Centímetros || Custo | *Grátis | Trabalho de campo || Tempo | *Minutos | Dias || Equidistância razoável | 10 a 50 m | *0,5 a 2 m || Uso | Estudo preliminar e viabilidade | *Projeto, licitação e quantitativos"
+/>
+
+<Callout type="info" title="Não peça mais detalhe do que os dados têm">
+Com um modelo de 30 m, curvas de 1 em 1 m não acrescentam informação: desenham o ruído do modelo e aparecem em zigue-zague. A equidistância precisa ser coerente com a fonte.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Os erros mais buscados, e a causa real" time="~5 min">
+
+**O Civil 3D não mostra as curvas de nível.** Três causas frequentes: o estilo da superfície não tem as curvas ativadas (mostra só a borda ou os triângulos); a superfície está vazia porque a definição não foi construída; ou a equidistância é tão pequena diante do desnível que as curvas se juntam numa mancha.
+
+**A superfície aparece em outro lugar ou no mar.** O sistema de coordenadas do desenho não coincide com o dos dados: pontos em latitude e longitude num desenho em UTM, ou o fuso ou o hemisfério errados.
+
+**Aparecem triângulos longos nas bordas.** Falta o contorno externo, ou convém limitar o comprimento máximo dos triângulos nas opções de construção.
+
+**Há picos ou poços impossíveis.** Pontos com cota 0, pontos duplicados com cotas diferentes ou vazios do modelo de elevação não excluídos.
+
+**As curvas saem em zigue-zague.** A equidistância é fina demais para a resolução dos dados, ou faltam linhas de quebra em bordas e canais.
+
+<Callout type="success" title="O que eles têm em comum">
+Quase nenhum problema de curvas é do estilo: é da superfície. Primeiro confira coordenadas, pontos e linhas de quebra; depois, o estilo.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Quando se repete em todo projeto: automatize" time="~4 min">
+
+Se o seu escritório monta superfícies toda semana, o procedimento é sempre o mesmo: importar pontos com os mesmos códigos, criar os mesmos grupos, adicionar as linhas de quebra por código, aplicar os estilos da empresa e rotular. É exatamente o tipo de tarefa que se automatiza.
+
+- **Com Dynamo**, para validar a rotina rápido. Veja [10 scripts de Dynamo para Civil 3D](/pt/blog/dynamo-civil-3d-scripts) que resolvem tarefas desse tipo.
+- **Com um plugin**, quando todo o escritório usa: um botão na barra superior do Civil 3D que faz o processo completo com as suas regras.
+
+O guia para [automatizar o Civil 3D](/pt/blog/automatizar-civil-3d-guia-completa) mostra o mapa completo do que se pode automatizar, dos pontos às pranchas.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automação Civil 3D"
+  title="Quantas horas sua equipe passa montando superfícies?"
+  body="Desenvolvemos plugins para o Civil 3D que importam seus levantamentos com seus códigos, constroem a superfície com linhas de quebra e estilos da empresa e deixam curvas, perfis e volumes prontos. Somos engenheiros civis e engenheiros de sistemas."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Ferramenta gratuita:** [gerador de curvas de nível em DXF para o Civil 3D](/pt/herramientas/generador-curvas-de-nivel).
+- **Ferramenta gratuita:** [conversor de coordenadas UTM e geográficas](/pt/herramientas/conversor-de-coordenadas).
+- **O guia do cluster:** [automatizar o Civil 3D, o guia completo](/pt/blog/automatizar-civil-3d-guia-completa).
+- **Para automatizar sem programar:** [Dynamo para Civil 3D, 10 scripts](/pt/blog/dynamo-civil-3d-scripts).
+- **Redes sobre a superfície:** [redes de tubulação no Civil 3D com suas conexões](/pt/blog/redes-tuberias-civil-3d-accesorios).
+- **Do 2D ao 3D:** [plugin para Civil 3D: desenho 3D automatizado](/pt/blog/plugin-civil-3d-dibujo-3d-automatizado).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Peru"
+  title="Uma equipe de engenheiros civis e engenheiros de sistemas"
+  body="Já fizemos topografia e projeto de infraestrutura, e sabemos construir a ferramenta que automatiza o trabalho com superfícies. Trabalhamos com escritórios do Brasil e de toda a América Latina."
+  primaryLabel="Vamos falar do seu caso"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver todos os serviços"
+  secondaryHref="/pt/servicios"
+/>
+
+---
+
+**Foi útil?** Compartilhe com quem monta as superfícies no seu escritório. E teste o [gerador de curvas de nível](/pt/herramientas/generador-curvas-de-nivel) com a área do seu próximo projeto.
