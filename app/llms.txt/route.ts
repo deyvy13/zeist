@@ -2,6 +2,7 @@ import { getAllPosts } from "@/lib/blog";
 import { locales, type Locale } from "@/lib/i18n";
 import { absoluteUrl, site } from "@/lib/site";
 import { SERVICE_SLUGS, getServicePage } from "@/lib/services";
+import { TOOL_SLUGS, toolCards, toolLocales } from "@/lib/tools";
 
 // -----------------------------------------------------------------------------
 // /llms.txt — a plain-text map of the site for AI crawlers and assistants
@@ -27,6 +28,20 @@ function servicesBlock(locale: Locale): string {
     const page = getServicePage(slug, locale);
     return `- [${page.seoTitle}](${absoluteUrl(`${locale}/servicios/${slug}`)}): ${page.answer}`;
   }).join("\n");
+}
+
+// Free tools: one line per published locale, described by their card copy.
+function toolsBlock(): string {
+  return TOOL_SLUGS.flatMap((slug) =>
+    toolLocales[slug].map((locale) => {
+      const card = toolCards[slug][locale];
+      return card
+        ? `- [${card.title}](${absoluteUrl(`${locale}/herramientas/${slug}`)}) (${locale}): ${card.body}`
+        : "";
+    }),
+  )
+    .filter(Boolean)
+    .join("\n");
 }
 
 function guidesBlock(locale: Locale): string {
@@ -61,6 +76,10 @@ ${servicesBlock("es")}
 ## Serviços (português)
 
 ${servicesBlock("pt")}
+
+## Free tools
+
+${toolsBlock()}
 
 ${locales.map((l) => `## ${sectionTitle[l]}\n\n${guidesBlock(l)}`).join("\n\n")}
 `;

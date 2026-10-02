@@ -26,7 +26,7 @@ export function SiteHeader({ lang, dict }: { lang: Locale; dict: Dictionary }) {
     {
       label: dict.nav.tools,
       href: localizedPath(lang, "herramientas"),
-      badge: dict.nav.toolsSoon,
+      badge: dict.nav.toolsBadge,
     },
   ];
 

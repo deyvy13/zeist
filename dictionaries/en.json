@@ -3,7 +3,7 @@
     "services": "Services",
     "blog": "Blog",
     "tools": "Tools",
-    "toolsSoon": "Coming soon",
+    "toolsBadge": "Free",
     "contact": "Contact",
     "cta": "Free diagnosis"
   },
@@ -110,6 +110,10 @@
     "typicalTime": "Timeline",
     "freeDiagnosis": "Free initial diagnosis · No commitment · We reply the same day"
   },
+  "toolPage": {
+    "onThisPage": "On this page",
+    "allTools": "All tools"
+  },
   "process": {
     "eyebrow": "How we work",
     "title": "From diagnosis to an installed add-in.",
@@ -161,8 +165,8 @@
   "tools": {
     "eyebrow": "Tools",
     "title": "Scripts, templates, and calculators for your daily work.",
-    "subtitle": "Ready-to-use Dynamo graphs, C# add-in templates, engineering calculators, and BIM standard templates. Free.",
-    "badge": "In progress",
+    "subtitle": "Available now: the Manning's equation calculator for pipes and channels. Coming soon: Dynamo graphs, C# add-in templates and BIM standard templates.",
+    "badge": "Free",
     "cta": "View tools"
   },
   "finalCta": {

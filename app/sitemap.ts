@@ -4,6 +4,7 @@ import { locales, hreflangByLocale, type Locale } from "@/lib/i18n";
 import { getAllPosts } from "@/lib/blog";
 import { pillarSlugs } from "@/lib/clusters";
 import { SERVICE_SLUGS } from "@/lib/services";
+import { TOOL_SLUGS, toolLocales } from "@/lib/tools";
 
 const STATIC_PATHS = [
   "",
@@ -38,6 +39,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const pathLocales = new Map<string, Locale[]>();
 
   for (const path of STATIC_PATHS) pathLocales.set(path, [...locales]);
+  // Tools ship per locale too (the steel calculator is es-only).
+  for (const slug of TOOL_SLUGS) pathLocales.set(`herramientas/${slug}`, [...toolLocales[slug]]);
 
   for (const l of locales) {
     // getAllPosts filters out drafts — archived posts must not reach the sitemap.

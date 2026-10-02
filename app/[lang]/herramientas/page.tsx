@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
 import { buildMetadata } from "@/lib/seo";
+import { localizedPath } from "@/lib/site";
 import { getRubros, toolsHubCopy } from "@/lib/tools-catalog";
-import { rubroIcons, IconRoute } from "@/components/icons";
+import { toolsFor } from "@/lib/tools";
+import { rubroIcons, IconArrow, IconRoute } from "@/components/icons";
 
 export async function generateMetadata({
   params,
@@ -32,6 +35,7 @@ export default async function ToolsPage({
 
   const copy = toolsHubCopy[lang];
   const rubros = getRubros(lang);
+  const available = toolsFor(lang);
 
   return (
     <>
@@ -65,6 +69,42 @@ export default async function ToolsPage({
         </nav>
       </section>
 
+      {/* ======================= AVAILABLE TOOLS ===================== */}
+      {available.length > 0 && (
+        <section aria-labelledby="disponibles" className="container-zeist pt-12">
+          <span className="eyebrow">{copy.availableEyebrow}</span>
+          <h2 id="disponibles" className="mt-4 text-3xl sm:text-4xl">
+            {copy.availableTitle}
+          </h2>
+          <div className="mt-8 grid gap-5 md:grid-cols-2">
+            {available.map(({ slug, card }) => (
+              <Link
+                key={slug}
+                href={localizedPath(lang, `herramientas/${slug}`)}
+                className="surface surface-hover group flex flex-col rounded-3xl p-7"
+              >
+                <span className="self-start rounded-full bg-[color:var(--color-mint-500)] px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[color:var(--color-ink-950)]">
+                  {copy.free}
+                </span>
+                <h3 className="mt-4 text-2xl">{card.title}</h3>
+                <p className="mt-2 text-[color:var(--color-muted)]">{card.body}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {card.tags.map((tag) => (
+                    <span key={tag} className="tag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--color-mint-700)] transition-all group-hover:gap-3">
+                  {copy.open}
+                  <IconArrow className="h-4 w-4" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* ========================== RUBROS =========================== */}
       <section className="container-zeist pb-8">
         {rubros.map((rubro, idx) => {
@@ -97,6 +137,19 @@ export default async function ToolsPage({
                   {copy.toolsLabel}
                 </h3>
                 <div className="mt-4 flex flex-wrap gap-2.5">
+                  {rubro.slug === "calculadoras-ingenieria" &&
+                    available.map(({ slug, card }) => (
+                      <Link
+                        key={slug}
+                        href={localizedPath(lang, `herramientas/${slug}`)}
+                        className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-mint-500)] bg-[color:var(--color-mint-500)]/10 py-2 pl-4 pr-2.5 text-sm font-semibold transition hover:bg-[color:var(--color-mint-500)]/20"
+                      >
+                        {card.title}
+                        <span className="rounded-full bg-[color:var(--color-mint-500)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[color:var(--color-ink-950)]">
+                          {copy.free}
+                        </span>
+                      </Link>
+                    ))}
                   {rubro.tools.map((tool) => (
                     <span
                       key={tool}

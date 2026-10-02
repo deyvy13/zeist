@@ -3,7 +3,7 @@
     "services": "Servicios",
     "blog": "Blog",
     "tools": "Herramientas",
-    "toolsSoon": "Pronto",
+    "toolsBadge": "Gratis",
     "contact": "Contacto",
     "cta": "Diagnóstico gratis"
   },
@@ -110,6 +110,10 @@
     "typicalTime": "Plazo",
     "freeDiagnosis": "Diagnóstico inicial gratuito · Sin compromiso · Respondemos en el día"
   },
+  "toolPage": {
+    "onThisPage": "En esta página",
+    "allTools": "Todas las herramientas"
+  },
   "process": {
     "eyebrow": "Cómo trabajamos",
     "title": "Del diagnóstico al add-in instalado.",
@@ -161,8 +165,8 @@
   "tools": {
     "eyebrow": "Herramientas",
     "title": "Scripts, plantillas y calculadoras para tu día a día.",
-    "subtitle": "Grafos de Dynamo listos para usar, plantillas de add-ins en C#, calculadoras de ingeniería y plantillas de estándares BIM. Gratis.",
-    "badge": "En construcción",
+    "subtitle": "Ya puedes usar la calculadora de acero corrugado y la de Manning. Pronto: grafos de Dynamo, plantillas de add-ins en C# y plantillas de estándares BIM.",
+    "badge": "Gratis",
     "cta": "Ver herramientas"
   },
   "finalCta": {

@@ -3,7 +3,7 @@
     "services": "Serviços",
     "blog": "Blog",
     "tools": "Ferramentas",
-    "toolsSoon": "Em breve",
+    "toolsBadge": "Grátis",
     "contact": "Contato",
     "cta": "Diagnóstico grátis"
   },
@@ -110,6 +110,10 @@
     "typicalTime": "Prazo",
     "freeDiagnosis": "Diagnóstico inicial gratuito · Sem compromisso · Respondemos no mesmo dia"
   },
+  "toolPage": {
+    "onThisPage": "Nesta página",
+    "allTools": "Todas as ferramentas"
+  },
   "process": {
     "eyebrow": "Como trabalhamos",
     "title": "Do diagnóstico ao add-in instalado.",
@@ -161,8 +165,8 @@
   "tools": {
     "eyebrow": "Ferramentas",
     "title": "Scripts, templates e calculadoras para o seu dia a dia.",
-    "subtitle": "Grafos de Dynamo prontos para usar, templates de add-ins em C#, calculadoras de engenharia e templates de padrões BIM. Grátis.",
-    "badge": "Em construção",
+    "subtitle": "Já disponível: a calculadora de Manning para tubulações e canais. Em breve: grafos de Dynamo, templates de add-ins em C# e templates de padrões BIM.",
+    "badge": "Grátis",
     "cta": "Ver ferramentas"
   },
   "finalCta": {

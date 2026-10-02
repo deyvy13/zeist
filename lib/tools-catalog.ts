@@ -29,6 +29,10 @@ export type ToolsHubCopy = {
   routesLabel: string;
   soon: string;
   note: string;
+  availableEyebrow: string;
+  availableTitle: string;
+  free: string;
+  open: string;
 };
 
 export const toolsHubCopy: Record<Locale, ToolsHubCopy> = {
@@ -40,7 +44,11 @@ export const toolsHubCopy: Record<Locale, ToolsHubCopy> = {
     toolsLabel: "Herramientas",
     routesLabel: "Rutas end-to-end",
     soon: "Pronto",
-    note: "Propuestas en construcción. Vamos definiendo y liberando cada una.",
+    note: "Ya hay herramientas disponibles; el resto está en construcción y las vamos liberando una por una.",
+    availableEyebrow: "Disponibles ahora",
+    availableTitle: "Calculadoras gratuitas, listas para usar",
+    free: "Gratis",
+    open: "Abrir herramienta",
   },
   pt: {
     eyebrow: "Ferramentas e recursos",
@@ -50,7 +58,11 @@ export const toolsHubCopy: Record<Locale, ToolsHubCopy> = {
     toolsLabel: "Ferramentas",
     routesLabel: "Trilhas end-to-end",
     soon: "Em breve",
-    note: "Propostas em construção. Vamos definindo e liberando cada uma.",
+    note: "Já há ferramentas disponíveis; as demais estão em construção e vamos liberando uma a uma.",
+    availableEyebrow: "Disponíveis agora",
+    availableTitle: "Calculadoras gratuitas, prontas para usar",
+    free: "Grátis",
+    open: "Abrir ferramenta",
   },
   en: {
     eyebrow: "Tools & resources",
@@ -60,7 +72,11 @@ export const toolsHubCopy: Record<Locale, ToolsHubCopy> = {
     toolsLabel: "Tools",
     routesLabel: "End-to-end routes",
     soon: "Coming soon",
-    note: "Proposals under construction. We're defining and releasing each one.",
+    note: "Some tools are live; the rest are in progress and we release them one by one.",
+    availableEyebrow: "Available now",
+    availableTitle: "Free calculators, ready to use",
+    free: "Free",
+    open: "Open tool",
   },
 };
 

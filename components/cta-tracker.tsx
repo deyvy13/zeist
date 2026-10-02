@@ -13,7 +13,9 @@ import { trackEvent, withPageReference } from "@/lib/analytics";
 //
 // Runs in the capture phase, before the browser follows the link, so the
 // rewritten href is the one that opens. The original href is kept in
-// `data-wa-base` so repeated clicks never stack references.
+// `data-wa-base` so repeated clicks never stack references, and the rewritten
+// one in `data-wa-out`: if React has since swapped the href (a calculator
+// putting its latest result in the message), the new one becomes the base.
 
 const CONTACT_PATH = /^\/(es|pt|en)\/contacto\/?$/;
 
@@ -29,9 +31,12 @@ export function CtaTracker() {
       const params = { cta, page_path: window.location.pathname, locale };
 
       if (link.href.includes("wa.me/")) {
-        const base = link.dataset.waBase ?? link.href;
+        const untouched = link.dataset.waOut !== link.href;
+        const base = untouched ? link.href : (link.dataset.waBase ?? link.href);
+        const out = withPageReference(base, document.title, locale);
         link.dataset.waBase = base;
-        link.href = withPageReference(base, document.title, locale);
+        link.href = out;
+        link.dataset.waOut = link.href; // read back: the browser may normalize it
         trackEvent("whatsapp_click", params);
         return;
       }

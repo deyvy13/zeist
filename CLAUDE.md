@@ -109,7 +109,8 @@ app/
     servicios/[slug]/page.tsx # Landing de venta de cada servicio (plantilla; contenido en lib/services-content)
     blog/page.tsx             # Índice del blog
     blog/[slug]/page.tsx      # Artículo (renderiza MDX, JSON-LD BlogPosting)
-    herramientas/page.tsx     # "Coming soon" con roadmap de herramientas
+    herramientas/page.tsx     # Hub: herramientas disponibles + propuestas "Pronto" por rubro
+    herramientas/<slug>/page.tsx # Una carpeta por herramienta (acero: solo es; Manning: es/pt/en)
     contacto/page.tsx         # Formulario (abre WhatsApp, sin backend aún)
   globals.css                 # SISTEMA DE DISEÑO completo (tokens + claymorfismo)
   sitemap.ts / robots.ts / manifest.ts / opengraph-image.tsx   # SEO (raíz)
@@ -123,6 +124,9 @@ lib/
   services.ts                 # SERVICE_SLUGS (fuente única) + tipo ServicePage + getServicePage()
   services-content/<locale>.ts # copy largo de las 4 páginas de servicio, por idioma
   analytics.ts                # GA4 (env), trackEvent(), referencia de página en WhatsApp
+  tools.ts                    # TOOL_SLUGS + toolLocales + tarjetas (fuente única de herramientas)
+  tools/                      # lógica pura y sin imports: steel, manning, xlsx, number
+  tools-content/              # copy de cada herramienta (ToolContent + labels de la calculadora)
 dictionaries/es.json, pt.json, en.json # strings de UI por idioma (misma forma)
 content/blog/<locale>/<slug>.mdx  # artículos del blog
 proxy.ts                      # redirección de locale por Accept-Language
@@ -171,6 +175,43 @@ api") y convertir la visita en un WhatsApp. Antes tenían 21-28 palabras; ahora
 - **No inventar promesas comerciales** en el copy: plazos, "respondemos en el
   día" y "diagnóstico gratuito" son las que el sitio ya usa. Etiquetas de UI
   en `serviceDetail` de los diccionarios.
+
+### Herramientas gratuitas (/herramientas, oct-2026)
+
+Imán de tráfico SEO con puente a los servicios. Elegidas por demanda real
+(autocompletado de Google en Perú): "peso del acero corrugado", "metrado de
+acero", "calculadora manning tuberías/canales".
+
+- **Calculadora de acero corrugado** (`/es/...` solamente): peso por diámetro,
+  varillas de 9 m por longitud **y por plan de cortes** (primer ajuste
+  decreciente: muestra que el método por longitud se queda corto), export a
+  `.xlsx` real (`lib/tools/xlsx.ts`, sin dependencias). Tabla NTP 341.031 en
+  `lib/tools/steel.ts`. Solo `es` porque las barras y la varilla de 9 m son de
+  Perú; pt/en necesitarían sus propias tablas.
+- **Calculadora de Manning** (es/pt/en): tubo parcialmente lleno y canales
+  rectangular/trapezoidal/triangular, caudal o tirante normal, SI o US, Froude
+  y tensión tractiva. En tubo circular el caudal máximo es a y/D ≈ 0.938 (no a
+  tubo lleno): el solver devuelve el tirante menor y avisa si el tubo entra en
+  carga.
+- **Arquitectura:** registro en `lib/tools.ts` (lo leen el hub, sitemap,
+  selector de idioma y `/llms.txt`); plantilla común `components/tools/tool-layout.tsx`
+  (calculadora → respuesta citable → contenido → CTA → FAQ `<details>` →
+  guías; schema WebApplication + BreadcrumbList + FAQPage); contenido en
+  `lib/tools-content/`. Herramienta nueva = slug + `toolLocales` + tarjeta en
+  `lib/tools.ts`, carpeta en `app/[lang]/herramientas/<slug>/` y su contenido.
+- **Números:** formato manual (`lib/tools/number.ts`), no `Intl`: los
+  resultados se renderizan en el servidor y un separador distinto entre Node
+  y el navegador rompería la hidratación. `es` usa punto decimal (como las
+  tablas peruanas), `pt` coma. Los inputs aceptan punto o coma.
+- **Tests:** `npm run test:tools` (Node ≥ 23.6, importa los `.ts` directamente).
+  Los valores esperados se calcularon aparte en Python; los números del texto
+  de cada página coinciden con el ejemplo precargado de la calculadora:
+  cambiarlos juntos.
+- **CTA:** el botón de WhatsApp de la calculadora de acero lleva el resultado
+  en el mensaje (`data-cta="tool-steel"`); el tracker soporta `href`
+  dinámicos (`data-wa-out`). Export a Excel envía el evento `tool_export`.
+- ⚠️ Los valores de ingeniería (tabla de pesos, rangos de n, criterios OS.070 /
+  NBR 9649 / Ten States) deben revisarlos los ingenieros del equipo.
 
 ### Medición: GA4 + clics de WhatsApp (oct-2026)
 
@@ -316,7 +357,9 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   páginas de servicio convertidas en landings de venta (ver sección 6).
   Pendiente: **política de privacidad** (los términos de GA4 la exigen; el
   sitio aún no tiene) y dominio propio.
-- **Fase 5:** liberar las herramientas de `/herramientas` (hoy todas "Pronto").
+- **Fase 5 (EN CURSO):** liberar las herramientas de `/herramientas`. Hechas
+  (oct-2026): calculadora de acero corrugado y calculadora de Manning. El resto
+  sigue "Pronto".
 - **Contacto — WhatsApp es el único canal publicado.** Número en
   `site.whatsapp` (`lib/site.ts`); enlaces siempre vía `whatsappUrl(mensaje)`,
   nunca hardcodeados. **El correo está oculto a propósito** (`site.showEmail:
@@ -335,6 +378,7 @@ npm run dev     # desarrollo (Turbopack)
 npm run build   # build de producción (valida TS + genera estáticas)
 npm run start   # servir el build
 npm run lint    # ESLint
+npm run test:tools  # tests de las calculadoras (Node ≥ 23.6)
 ```
 
 ## 11. Convenciones
