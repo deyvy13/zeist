@@ -67,7 +67,8 @@ export default async function BlogPostPage({
 
   const wordCount = post.content.trim().split(/\s+/).length;
   const canonical = absoluteUrl(`${lang}/blog/${slug}`);
-  const ogImage = meta.cover ?? absoluteUrl(`${lang}/blog/${slug}/opengraph-image`);
+  // There is no per-post OG route; the site-wide image is the fallback.
+  const ogImage = meta.cover ?? absoluteUrl("opengraph-image");
 
   const postJsonLd = {
     "@context": "https://schema.org",

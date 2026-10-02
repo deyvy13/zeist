@@ -8,6 +8,8 @@ import { organizationJsonLd } from "@/lib/seo";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { WhatsAppCta } from "@/components/whatsapp-cta";
+import { Analytics } from "@/components/analytics";
+import { CtaTracker } from "@/components/cta-tracker";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -90,6 +92,8 @@ export default async function LangLayout({
           href={whatsappUrl(dict.whatsapp.prefill)}
           strings={dict.whatsapp}
         />
+        <CtaTracker />
+        <Analytics />
       </body>
     </html>
   );

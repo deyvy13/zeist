@@ -1,0 +1,201 @@
+---
+title: "Automated Plan Production in Civil 3D and Revit: Plan and Profile Sheets, Sections and Sheet Sets in Minutes"
+seoTitle: "Automated Plan Production in Civil 3D and Revit"
+ctaTitle: "Does building the sheet set take your team days on every submittal? We turn it into a button."
+description: "How to generate plan and profile sheets, cross-section sheets and full sheet sets automatically in Civil 3D and Revit: what native plan production tools do, where they fall short, and how a plugin builds, labels and exports the whole set."
+date: "2026-10-01T11:00:00.000Z"
+author: "Zeist"
+tags:
+  - Plan production
+  - Sheets
+  - Plan and profile
+  - Civil 3D
+  - Revit
+  - Plugin
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Revit · Plan production"
+  title="The design is done. What's left is three days building sheets."
+  highlight="Framing every sheet, adjusting viewports, filling the title block, numbering, checking they all match, exporting to PDF. And if the alignment changes the night before the deadline, again. This guide covers what Civil 3D and Revit automate natively, what they don't, and how a plugin generates the full sheet set."
+/>
+
+<Callout type="success" title="Quick answer">
+Civil 3D includes **plan production tools** that create view frames along an alignment and generate **plan and profile sheets** from a template; it can also create **cross-section** views and sheets. Revit creates sheets one at a time, with view templates helping keep a consistent look. What neither solves alone is the work around them: **filling the title block, numbering, placing consistent notes and labels, managing revisions, and exporting the full set** with the firm's naming convention. A **plan production plugin** automates that part and regenerates the whole set when the design changes.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain language">
+- **Sheet** — Each page of the drawing set that gets submitted or printed.
+- **Plan and profile** — The standard road and utility sheet: plan view on top, longitudinal profile of the same stretch below.
+- **View frame** — The rectangle that defines which stretch of the alignment goes on each sheet.
+- **Viewport** — The window on the sheet that shows a view of the model at a given scale.
+- **Title block** — The box with the sheet's data: project, number, title, scale, date, revision, signatures.
+- **View template** — The settings that define how a view looks: scale, visible layers, styles.
+- **Plugin** — A program installed inside Civil 3D or Revit that adds its own buttons to the toolbar at the top.
+
+No programming jargon. This is written for designers, coordinators and design managers.
+</Callout>
+
+## The part of the project nobody budgets for
+
+On a 5-mile road project, the drawing set can have 40 plan and profile sheets, as many cross-section sheets, plus details and structures. Every sheet goes through the same hands:
+
+- Frame the stretch and set the scale
+- Check that plan and profile cover the same stretch
+- Place match lines and references to neighboring sheets
+- Fill the title block: number, title, stations, date, revision
+- Fix labels that overlap
+- Export to PDF with the right file name
+
+None of these tasks is hard. Together they're **days of work per submittal**. And the night before a deadline, when the alignment changes, a good part has to be redone.
+
+<AnimatedFlow
+  title="What happens on every submittal"
+  nodes="Design finished|Sheet by sheet|Title blocks and labels by hand|Last-minute change"
+  subs="The engineering work|Frame and adjust|Forty times|Redo it all"
+  warnCount="4"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. What Civil 3D automates natively" time="~6 min">
+
+Civil 3D has solid plan production tools, and it's worth using them before thinking about building anything.
+
+**View frames.** It splits the alignment into stretches that fit on a sheet, based on the chosen template and scale, and places match lines between them.
+
+**Plan and profile sheets.** From the view frames, it creates sheets with a plan viewport and a profile viewport, using a drawing template with the title block.
+
+**Cross sections.** It creates multiple section views along the alignment and lays them out on sheets according to a template.
+
+**Sheet sets.** The Sheet Set Manager groups the sheets and lets you number and publish them together, with fields that fill the title block.
+
+<Callout type="info" title="Use them well before automating">
+Many offices don't take advantage of these tools because they never built a good template. A template with the firm's title block, scales and styles already solves much of the framing. That's step one, plugin or not.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Where the native tools fall short" time="~6 min">
+
+The native tools solve the geometry of the sheets. What's still manual is everything that turns them into **a submittable drawing set**:
+
+- **Title blocks with project data**: start and end stations of each stretch, titles in the client's naming, sheet codes per the agency's standard.
+- **Overlapping labels** on tight curves or crossings, moved by hand.
+- **Notes and references** specific to each stretch: structures, crossings, section changes.
+- **Revisions**: which sheets changed, with what description and on what date.
+- **Exporting** the full set with the file naming the client requires.
+- **Regenerating everything** when the alignment changes, without losing manual adjustments.
+
+<ComparisonTable
+  criterionLabel="Task"
+  leftLabel="Native tools"
+  rightLabel="Still manual"
+  rows="Split the alignment into stretches | *Yes | No || Create plan and profile sheets | *Yes | No || Create cross-section sheets | *Yes | No || Title block with stations and client codes | Partial | *Yes || Overlapping labels | No | *Yes || Revision control per sheet | Partial | *Yes || Export with the client's naming | Partial | *Yes"
+/>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. In Revit: sheets one at a time" time="~5 min">
+
+In Revit, each sheet is created by hand: pick the title block, drag in the views, align them, fill in the parameters. View templates help keep everything consistent, but building is still sheet by sheet.
+
+On a building with 120 sheets — floor plans per level, sections, elevations, details, schedules — that's a lot of time, plus a risk of inconsistency: views in different positions on each sheet, gaps in numbering, title blocks with stale data.
+
+**What takes the most time in Revit:**
+
+- Creating dozens of sheets with their number and name.
+- Placing each view **in the same position** on every sheet of the same type.
+- Duplicating views per level with the right template.
+- Filling and updating title block parameters.
+- Printing or exporting the full set with correct file names.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. How a plan production plugin works" time="~8 min">
+
+The idea: **the drawing set is described in a list, and the plugin builds it**.
+
+**Step 1 · The sheet list.** A table — in Excel or inside the program — with each sheet: number, title, type, which views it carries, stretch or level.
+
+**Step 2 · Generation.** The plugin creates the missing sheets, places views in fixed positions by sheet type, and applies the right view templates.
+
+**Step 3 · Title block.** It fills each sheet's data from the list and from the model: in Civil 3D, for example, the start and end stations of each stretch; in Revit, level, discipline and phase.
+
+**Step 4 · Labeling.** It applies label styles and flags overlaps that need human review.
+
+**Step 5 · Revisions.** It records which sheets changed since the last submittal and updates the revision table.
+
+**Step 6 · Export.** It exports the full set to PDF and DWG with the client's file naming, in a single step.
+
+<AnimatedFlow
+  title="From model to drawing set"
+  nodes="Sheet list|Sheets and views|Title block and labels|PDF and DWG ready"
+  subs="Number, title, type|Fixed positions by type|Data from the model|With the client's naming"
+/>
+
+<Callout type="success" title="When the design changes the night before">
+This is the real value. If the alignment changes, the plugin regenerates the frames, updates the stations in the title blocks, flags the modified sheets in the revision table and exports again. What used to be a sleepless night becomes a single run.
+</Callout>
+
+<ComparisonTable
+  criterionLabel="Task"
+  leftLabel="With a plugin"
+  rightLabel="Manual"
+  rows="Build 40 plan and profile sheets | *Minutes | Two or three days || Title blocks with correct stations | *Automatic from the model | Sheet by sheet || Views in the same position | *Always | Depends on who built it || Redo after an alignment change | *Run it again | Much of it again || Export with the client's naming | *One step | File by file"
+/>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. What the firm gains" time="~5 min">
+
+**Schedule.** Plan production stops being the bottleneck between finished design and submittal.
+
+**Consistency.** Every sheet follows the same standard, whoever builds it. Comments about formatting and title blocks disappear.
+
+**Room to change late.** A last-minute design change no longer threatens the deadline.
+
+**Engineering hours back to engineering.** The time spent framing and filling title blocks goes back to design — which is what the client pays for.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. How to roll it out" time="~5 min">
+
+**Step 1 · Templates.** One sheet template per type, with the firm's title block and styles. Without this, nothing automates well.
+
+**Step 2 · The standard sheet list.** Which sheet types each project type needs, with their numbering.
+
+**Step 3 · Pilot.** Generate the drawing set for a project you've already submitted and compare it with the one built by hand.
+
+**Step 4 · Use it on a real project.** With a review of the first full set. From the second one on, it's routine.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Civil 3D and Revit plugins"
+  title="The complete drawing set, generated from the model"
+  body="We build plan production plugins around your templates, your title block and your clients' naming: plan and profile sheets, sections, revisions and export in a single step."
+  primaryLabel="Get a diagnosis"
+  primaryHref="/en/contacto"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/servicios/add-ins-revit-civil-3d"
+/>
+
+## Related resources
+
+- **The Civil 3D parent guide:** [automating Civil 3D, the complete guide](/en/blog/automatizar-civil-3d-guia-completa).
+- **How a plugin gets built:** [Revit and Civil 3D add-in development, the complete guide](/en/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+- **Drawing utilities in 3D:** [Civil 3D plugin for automated 3D drawing](/en/blog/plugin-civil-3d-dibujo-3d-automatizado).
+- **If you're outsourcing it:** [how much a Revit or Civil 3D add-in costs](/en/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · BIM automation"
+  title="A team of civil engineers and software engineers"
+  body="We've built sheets the night before a deadline. That's why we build tools that generate them from the model. We work with engineering and construction companies across the Americas and beyond."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contacto"
+  secondaryLabel="See all services"
+  secondaryHref="/en/servicios"
+/>

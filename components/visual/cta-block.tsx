@@ -62,6 +62,7 @@ export function CTABlock({
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             href={primaryHref}
+            data-cta="post-cta-block"
             className="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-mint-500)] px-5 py-2.5 text-sm font-semibold text-[color:var(--color-ink-950)] transition hover:gap-3"
           >
             {primaryLabel}

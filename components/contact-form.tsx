@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { whatsappUrl } from "@/lib/site";
+import { trackEvent } from "@/lib/analytics";
 
 type Labels = {
   name: string;
@@ -23,6 +24,11 @@ export function ContactForm({ labels }: { labels: Labels }) {
     e.preventDefault();
     const lines = [`*${labels.subject}*`, "", message, "", `-- ${name}`];
     if (email.trim()) lines.push(email.trim());
+    trackEvent("whatsapp_click", {
+      cta: "contact-form",
+      page_path: window.location.pathname,
+      locale: document.documentElement.lang || "es",
+    });
     window.open(whatsappUrl(lines.join("\n")), "_blank", "noopener,noreferrer");
   }
 

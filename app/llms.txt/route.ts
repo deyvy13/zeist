@@ -1,22 +1,18 @@
 import { getAllPosts } from "@/lib/blog";
 import { locales, type Locale } from "@/lib/i18n";
 import { absoluteUrl, site } from "@/lib/site";
-import es from "@/dictionaries/es.json";
-import pt from "@/dictionaries/pt.json";
-import en from "@/dictionaries/en.json";
+import { SERVICE_SLUGS, getServicePage } from "@/lib/services";
 
 // -----------------------------------------------------------------------------
 // /llms.txt — a plain-text map of the site for AI crawlers and assistants
 // (ChatGPT, Claude, Gemini, Perplexity). Search engines read HTML; LLM tooling
 // increasingly reads this file first to learn what a site is an authority on.
 //
-// Built at build time from the same sources as the site (dictionaries + MDX),
+// Built at build time from the same sources as the site (service pages + MDX),
 // so it never drifts from what is published.
 // -----------------------------------------------------------------------------
 
 export const dynamic = "force-static";
-
-const dictionaries = { es, pt, en } as const;
 
 const sectionTitle: Record<Locale, string> = {
   es: "Guías (español)",
@@ -24,13 +20,13 @@ const sectionTitle: Record<Locale, string> = {
   en: "Guides (English)",
 };
 
+// Each service is described by its page's answer block — the same
+// self-contained definition the page shows, written to be quoted.
 function servicesBlock(locale: Locale): string {
-  return dictionaries[locale].services.items
-    .map(
-      (s) =>
-        `- [${s.title}](${absoluteUrl(`${locale}/servicios/${s.slug}`)}): ${s.body}`,
-    )
-    .join("\n");
+  return SERVICE_SLUGS.map((slug) => {
+    const page = getServicePage(slug, locale);
+    return `- [${page.seoTitle}](${absoluteUrl(`${locale}/servicios/${slug}`)}): ${page.answer}`;
+  }).join("\n");
 }
 
 function guidesBlock(locale: Locale): string {
@@ -61,6 +57,10 @@ ${servicesBlock("en")}
 ## Servicios (español)
 
 ${servicesBlock("es")}
+
+## Serviços (português)
+
+${servicesBlock("pt")}
 
 ${locales.map((l) => `## ${sectionTitle[l]}\n\n${guidesBlock(l)}`).join("\n\n")}
 `;

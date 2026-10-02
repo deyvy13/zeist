@@ -108,6 +108,7 @@ export default async function ContactPage({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={dict.whatsapp.aria}
+            data-cta="contact-page"
             className="inline-flex items-center gap-2.5 rounded-full bg-[linear-gradient(120deg,#2ee06a,#12a150)] px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_-10px_rgba(18,161,80,0.9)] transition-transform hover:scale-[1.03] active:scale-95"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="currentColor">

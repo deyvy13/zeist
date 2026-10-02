@@ -1,0 +1,179 @@
+---
+title: "Como automatizar tarefas no Revit: as 12 que mais economizam tempo (com Dynamo ou com um plugin)"
+seoTitle: "Como automatizar o Revit: as 12 tarefas que mais rendem"
+ctaTitle: "Sua equipe repete as mesmas tarefas no Revit em cada projeto? Nós as transformamos em botões."
+description: "As 12 tarefas repetitivas do Revit que mais economizam horas ao serem automatizadas: pranchas, nomenclatura, parâmetros a partir do Excel, exportação em lote, identificação, auditoria e mais. Quais resolver com Dynamo, quais com um plugin e como priorizar."
+date: "2026-10-02T10:00:00.000Z"
+author: "Zeist"
+tags:
+  - Automatizar Revit
+  - Automação de tarefas
+  - Dynamo
+  - Plugins para Revit
+  - Revit
+  - Automação BIM
+---
+
+<BlogHero
+  eyebrow="Revit · Automação"
+  title="Em cada projeto, sua equipe faz no Revit as mesmas vinte tarefas à mão. Doze delas não deveriam mais ser feitas à mão."
+  highlight="Renomear vistas, criar pranchas, preencher parâmetros, exportar PDF, identificar elementos, conferir padrões. Tarefas sem critério, com regras fixas, que consomem horas a cada entrega. Este guia as lista por economia, explica qual resolver com Dynamo e qual com um plugin, e como decidir por onde começar."
+/>
+
+<Callout type="success" title="Resposta rápida">
+As tarefas do Revit que mais vale a pena **automatizar** são as que se repetem em cada projeto com regras fixas: **criar pranchas e posicionar vistas, renomear vistas e pranchas segundo o padrão, preencher parâmetros a partir do Excel, exportar PDF e DWG em lote, numerar ambientes e portas, identificar elementos em lote, criar vistas por pavimento com modelos de vista, auditar a saúde do modelo e conferir o padrão antes de entregar**. Automatizam-se com o **Dynamo**, que monta rotinas conectando blocos sem escrever código, ou com um **plugin**, um botão instalado na barra superior do Revit. O Dynamo serve para testar rápido; o plugin compensa quando a tarefa é usada em todo projeto e executada por várias pessoas.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Dynamo** — A ferramenta da Autodesk para montar rotinas conectando blocos, sem escrever código. Vem com o Revit.
+- **Plugin (ou add-in)** — Um programa instalado dentro do Revit que adiciona botões próprios na barra superior. Qualquer pessoa da equipe usa.
+- **Prancha** — Cada folha do conjunto de entrega.
+- **Modelo de vista** — O conjunto de ajustes que define como uma vista aparece.
+- **Parâmetro** — Cada dado de um elemento: código, pavimento, material, fabricante.
+- **Exportar em lote** — Tirar muitas pranchas para PDF ou DWG numa única operação.
+
+Sem termos de programação. Escrito para coordenadores BIM, modeladores e gerentes de projeto.
+</Callout>
+
+## Como saber qual tarefa automatizar primeiro
+
+Antes da lista, a regra que ordena tudo. Uma tarefa vale a pena ser automatizada segundo três números:
+
+**Frequência** — quantas vezes é feita por projeto ou por semana.
+**Duração** — quanto demora cada vez.
+**Pessoas** — quantas pessoas a fazem.
+
+Multiplique e você tem as horas por ano que essa tarefa consome. Uma tarefa de 20 minutos feita por 6 pessoas três vezes por semana são **mais de 300 horas por ano**. É essa que vai primeiro, mesmo que não seja a mais vistosa.
+
+Há uma quarta condição: **que tenha regras claras**. Se duas pessoas a resolvem de forma diferente, primeiro é preciso alinhar o critério.
+
+<AnimatedFlow
+  title="Como priorizar"
+  nodes="Frequência|Duração|Pessoas|Horas por ano"
+  subs="Vezes por semana|Minutos cada vez|Quem faz|A que mais soma vai primeiro"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Produção de pranchas (as 3 de maior economia)" time="~6 min">
+
+**1. Criar pranchas e posicionar vistas.** Criar dezenas de pranchas com número, nome e carimbo, e posicionar as vistas na mesma posição em todas. Uma das tarefas mais longas antes de cada entrega. Detalhamos em [produção automática de pranchas](/pt/blog/produccion-planos-automatica-civil-3d-revit).
+
+**2. Renomear vistas e pranchas segundo o padrão.** Quando o cliente ou o órgão exige uma nomenclatura, renomear centenas de vistas à mão é lento e sempre deixa alguma escrita errada.
+
+**3. Exportar PDF e DWG em lote.** Exportar o conjunto completo com o nome de arquivo que o cliente pede. As versões recentes do Revit exportam várias pranchas para PDF, mas a nomenclatura do cliente, as combinações de formatos e a organização por pastas costumam continuar manuais.
+
+<Callout type="info" title="Dynamo ou plugin">
+As três podem ser prototipadas no Dynamo. Como são usadas em toda entrega e por várias pessoas, quase sempre acabam virando um plugin.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Dados e parâmetros" time="~6 min">
+
+**4. Preencher parâmetros a partir do Excel.** Códigos de orçamento, dados de fabricante, classificações: carregá-los numa planilha e devolvê-los ao modelo. Detalhamos em [exportar tabelas do Revit para o Excel e importá-las de volta](/pt/blog/exportar-tablas-revit-excel-editar-parametros).
+
+**5. Numerar ambientes e portas.** Numerar segundo o percurso ou por pavimento e setor, seguindo a regra do escritório. À mão, renumerar após uma mudança é tedioso e sujeito a duplicados.
+
+**6. Copiar valores entre parâmetros.** Passar dados de um parâmetro para outro, concatenar códigos ou calcular valores derivados em todos os elementos de uma categoria.
+
+<ComparisonTable
+  criterionLabel="Tarefa"
+  leftLabel="Automatizada"
+  rightLabel="Manual"
+  rows="Codificar 2.000 elementos a partir do Excel | *Uma tarde | Uma semana || Renumerar 300 ambientes após uma mudança | *Segundos | Horas || Copiar ou concatenar parâmetros | *Categoria inteira de uma vez | Elemento por elemento"
+/>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Vistas e documentação" time="~5 min">
+
+**7. Criar vistas por pavimento e disciplina.** Duplicar plantas, forros e vistas de disciplina para cada pavimento, com o modelo de vista correto e o nome do padrão.
+
+**8. Identificar elementos em lote.** Colocar identificadores em todas as portas, janelas, ambientes ou equipamentos de uma vista ou do projeto inteiro, em vez de um por um.
+
+**9. Posicionar elementos repetitivos por regra.** Luminárias, sprinklers, tomadas ou sinalização distribuídos segundo um espaçamento ou uma regra de projeto.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Controle de qualidade (as que evitam erros caros)" time="~6 min">
+
+**10. Auditar a saúde do modelo.** Medir advertências, CAD importado, famílias no local e tamanho toda semana, e avisar quando algo piora. Detalhamos em [Revit lento: como auditar o modelo](/pt/blog/revit-lento-modelo-pesado-auditoria).
+
+**11. Conferir o padrão antes de entregar.** Revisar nomenclatura, parâmetros obrigatórios vazios e vistas sem modelo antes de cada entrega, com um relatório do que não cumpre.
+
+**12. Comparar versões do modelo.** Detectar o que mudou entre a versão que você tinha e a que chegou. Detalhamos em [comparar dois modelos de Revit](/pt/blog/comparar-modelos-revit-civil-3d-detectar-cambios).
+
+<Callout type="success" title="Por que estas três rendem mais do que parece">
+Não economizam só horas: **evitam erros** que são descobertos tarde, num apontamento do órgão ou na obra. Um único apontamento evitado costuma valer mais que semanas de economia em tarefas de produção.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Dynamo, pyRevit ou plugin sob medida" time="~6 min">
+
+Há várias formas de automatizar o Revit, e todas têm seu lugar:
+
+**Dynamo.** Vem com o Revit e não exige programar. Ideal para testar uma automação e para tarefas pontuais. O limite é que depende de quem sabe abrir o grafo e fica lento com modelos grandes.
+
+**Ferramentas gratuitas da comunidade.** Existem barras de ferramentas gratuitas, como o pyRevit, com muitas utilidades prontas. Se uma já resolve o seu caso, use.
+
+**Plugin sob medida.** Um botão com as suas regras exatas, a sua nomenclatura e os seus formatos, com tratamento de erros e registro do que fez. Compensa quando a tarefa se repete em todo projeto, várias pessoas a executam e as ferramentas genéricas não aplicam o seu padrão.
+
+<ComparisonTable
+  criterionLabel="Critério"
+  leftLabel="Plugin sob medida"
+  rightLabel="Dynamo"
+  rows="Qualquer pessoa da equipe usa | *Sim, é um botão | Só quem sabe abrir || Aplica o seu padrão exato | *Sim | *Sim || Velocidade em modelos grandes | *Alta | Média a baixa || Tratamento de erros e registro | *Completo | Básico || Tempo até a primeira versão | Semanas | *Dias"
+/>
+
+<Callout type="info" title="A ordem que funciona">
+Teste a regra no Dynamo com um projeto real. Quando a tarefa é usada sempre, leve para plugin. A comparação completa está em [Dynamo ou C#: qual convém em cada caso](/pt/blog/dynamo-vs-csharp-civil3d-revit).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Plano para começar este mês" time="~5 min">
+
+**Semana 1 · Liste e meça.** Peça à equipe que anote durante uma semana cada tarefa repetitiva e quanto demorou. Calcule as horas por ano de cada uma.
+
+**Semana 2 · Escolha uma.** A que mais soma horas e tem regras claras. Escreva essas regras numa página.
+
+**Semana 3 · Protótipo.** Resolva no Dynamo sobre um projeto real e compare o resultado com o manual.
+
+**Semana 4 · Decida.** Se vai ser usada em todo projeto, leve para plugin. E passe para a próxima da lista.
+
+<Callout type="warn" title="O erro mais comum">
+Começar pela tarefa mais interessante em vez da que mais consome horas. A automação mais rentável quase nunca é a mais vistosa: costuma ser renomear, exportar ou preencher dados.
+</Callout>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Revit"
+  title="As tarefas repetitivas da sua equipe, transformadas em botões"
+  body="Medimos para onde vão as horas da sua equipe no Revit e desenvolvemos os plugins que as recuperam, com o seu padrão e a sua nomenclatura. Começamos pela tarefa que mais soma horas."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Antes de automatizar, meça:** [auditoria BIM, o que é e checklist completo](/pt/blog/auditoria-bim-checklist-empresa).
+- **Como se constrói um plugin:** [desenvolvimento de add-ins para Revit e Civil 3D, o guia completo](/pt/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+- **Se você é de infraestrutura:** [automatizar o Civil 3D, o guia completo](/pt/blog/automatizar-civil-3d-guia-completa).
+- **Se for terceirizar:** [quanto custa um add-in para Revit ou Civil 3D](/pt/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Automação BIM"
+  title="Uma equipe de engenheiros civis e engenheiros de sistemas"
+  body="Conhecemos as tarefas que se repetem no Revit porque já as fizemos centenas de vezes. Construímos as ferramentas que as eliminam para empresas de engenharia e construção do Brasil e da América Latina."
+  primaryLabel="Vamos falar do seu caso"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver todos os serviços"
+  secondaryHref="/pt/servicios"
+/>

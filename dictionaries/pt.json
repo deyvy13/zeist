@@ -93,6 +93,23 @@
       }
     ]
   },
+  "serviceDetail": {
+    "inShort": "Em poucas palavras",
+    "forWho": "Para quem é",
+    "whatWeBuild": "O que fazemos",
+    "howWeWork": "Como trabalhamos",
+    "whatYouGet": "O que você recebe",
+    "decision": "A decisão",
+    "guides": "Guias relacionados",
+    "guidesTitle": "Aprofunde antes de decidir",
+    "faq": "Perguntas frequentes",
+    "ctaWhatsapp": "Vamos conversar pelo WhatsApp",
+    "ctaProcess": "Ver como trabalhamos",
+    "readGuide": "Ler o guia",
+    "otherServices": "Outros serviços",
+    "typicalTime": "Prazo",
+    "freeDiagnosis": "Diagnóstico inicial gratuito · Sem compromisso · Respondemos no mesmo dia"
+  },
   "process": {
     "eyebrow": "Como trabalhamos",
     "title": "Do diagnóstico ao add-in instalado.",

@@ -9,6 +9,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "pt",
     "en"
   ],
+  "auditoria-bim-checklist-empresa": [
+    "es",
+    "pt",
+    "en"
+  ],
   "automatizacion-bim-trujillo-la-libertad": [
     "es"
   ],
@@ -19,6 +24,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
   ],
   "automatizar-metrados-cubicaciones-civil-3d": [
     "es"
+  ],
+  "automatizar-tareas-revit-dynamo-plugins": [
+    "es",
+    "pt",
+    "en"
   ],
   "banco-de-ductos-civil-3d": [
     "es",
@@ -68,6 +78,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
   "expediente-tecnico-observaciones-reducir": [
     "es"
   ],
+  "exportar-tablas-revit-excel-editar-parametros": [
+    "es",
+    "pt",
+    "en"
+  ],
   "guia-vibe-coding-para-empezar": [
     "es",
     "pt",
@@ -82,6 +97,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "en"
   ],
   "plugin-civil-3d-dibujo-3d-automatizado": [
+    "es",
+    "pt",
+    "en"
+  ],
+  "produccion-planos-automatica-civil-3d-revit": [
     "es",
     "pt",
     "en"
@@ -108,5 +128,10 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
   ],
   "revit-api-espanol-primeros-pasos": [
     "es"
+  ],
+  "revit-lento-modelo-pesado-auditoria": [
+    "es",
+    "pt",
+    "en"
   ]
 };

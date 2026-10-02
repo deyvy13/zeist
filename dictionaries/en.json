@@ -93,6 +93,23 @@
       }
     ]
   },
+  "serviceDetail": {
+    "inShort": "In short",
+    "forWho": "Who it's for",
+    "whatWeBuild": "What we do",
+    "howWeWork": "How we work",
+    "whatYouGet": "What you get",
+    "decision": "The decision",
+    "guides": "Related guides",
+    "guidesTitle": "Go deeper before you decide",
+    "faq": "Frequently asked questions",
+    "ctaWhatsapp": "Let's talk on WhatsApp",
+    "ctaProcess": "See how we work",
+    "readGuide": "Read the guide",
+    "otherServices": "Other services",
+    "typicalTime": "Timeline",
+    "freeDiagnosis": "Free initial diagnosis · No commitment · We reply the same day"
+  },
   "process": {
     "eyebrow": "How we work",
     "title": "From diagnosis to an installed add-in.",

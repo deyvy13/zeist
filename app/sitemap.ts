@@ -3,13 +3,7 @@ import { absoluteUrl } from "@/lib/site";
 import { locales, hreflangByLocale, type Locale } from "@/lib/i18n";
 import { getAllPosts } from "@/lib/blog";
 import { pillarSlugs } from "@/lib/clusters";
-
-const SERVICE_SLUGS = [
-  "add-ins-revit-civil-3d",
-  "automatizacion-dynamo",
-  "auditoria-procesos-bim",
-  "cursos-mentorias-bim",
-];
+import { SERVICE_SLUGS } from "@/lib/services";
 
 const STATIC_PATHS = [
   "",

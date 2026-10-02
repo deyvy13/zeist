@@ -21,6 +21,564 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- Auditoría y automatización de tareas (oct-2026, keywords de Search Console) ----
+  "auditoria-bim-checklist-empresa": {
+    es: {
+      roadmap: {
+        title: "La auditoría BIM, en 6 bloques",
+        intro: "Qué es, qué revisa en el modelo y en el proceso, qué debe entregar y cuándo la necesita tu empresa.",
+        steps: [
+          { n: 1, title: "Modelo y proceso", desc: "Dos auditorías distintas que responden preguntas distintas", tag: "Concepto" },
+          { n: 2, title: "Checklist del modelo", desc: "Nomenclatura, coordenadas, salud, información y coherencia", tag: "Checklist" },
+          { n: 3, title: "Checklist del proceso", desc: "Tiempos, reprocesos, estándares, personas y herramientas", tag: "Checklist" },
+          { n: 4, title: "Qué debe entregar", desc: "Diagnóstico con números y plan en tres frentes", tag: "Resultado" },
+          { n: 5, title: "Cuándo hacerla", desc: "Las señales de que tu empresa la necesita", tag: "Señales" },
+          { n: 6, title: "Cómo hacerla", desc: "Cuatro semanas sin frenar los proyectos", tag: "Plan" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre auditoría BIM",
+        items: [
+          { q: "¿Qué es una auditoría BIM?", a: "Es una revisión estructurada de cómo una empresa produce sus proyectos en BIM. Incluye la auditoría del modelo, que revisa la calidad técnica de los archivos, y la auditoría del proceso, que mide dónde se pierden horas y qué tareas se repiten. Termina en un informe con hallazgos priorizados y un plan de acción para corregir, estandarizar y automatizar." },
+          { q: "¿Qué se revisa en una auditoría de modelos BIM?", a: "Nomenclatura de archivos, vistas y planos; coordenadas compartidas, niveles y rejillas; salud técnica del modelo como advertencias, CAD importado y familias in situ; información obligatoria completa; y coherencia entre el modelo, los planos y los metrados." },
+          { q: "¿Cuál es la diferencia entre auditar el modelo y auditar el proceso?", a: "La auditoría del modelo responde si los archivos están bien hechos y se puede automatizar y repetir cada semana. La del proceso responde si el equipo trabaja de forma eficiente: mide tiempos, reprocesos y dependencia de personas, y requiere entrevistas y observación. La del proceso es la que indica qué automatizar." },
+          { q: "¿Qué debe incluir el informe de una auditoría BIM?", a: "Un diagnóstico con números, como horas por tarea y rondas de observación; hallazgos priorizados por impacto y esfuerzo; un plan de acción para corregir, estandarizar y automatizar con el ahorro estimado de cada automatización; y una línea base para medir el avance." },
+          { q: "¿Cuándo necesita una empresa una auditoría BIM?", a: "Cuando se repiten las observaciones en las entregas, los modelos están lentos, cada proyecto se entrega distinto según quién lo hizo, se acerca una licitación con requisitos BIM, el equipo hace horas extra en cada entrega o se quiere automatizar sin saber por dónde empezar." },
+          { q: "¿Cuánto dura una auditoría BIM?", a: "Una auditoría de modelos y procesos de alcance acotado, sobre dos o tres proyectos representativos, suele tomar unas cuatro semanas: alcance, revisión de modelos, análisis del proceso e informe. Después, la auditoría del modelo puede quedar automatizada y semanal." },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "A auditoria BIM, em 6 blocos",
+        intro: "O que é, o que verifica no modelo e no processo, o que deve entregar e quando sua empresa precisa dela.",
+        steps: [
+          { n: 1, title: "Modelo e processo", desc: "Duas auditorias diferentes que respondem perguntas diferentes", tag: "Conceito" },
+          { n: 2, title: "Checklist do modelo", desc: "Nomenclatura, coordenadas, saúde, informação e coerência", tag: "Checklist" },
+          { n: 3, title: "Checklist do processo", desc: "Tempos, retrabalho, padrões, pessoas e ferramentas", tag: "Checklist" },
+          { n: 4, title: "O que deve entregar", desc: "Diagnóstico com números e plano em três frentes", tag: "Resultado" },
+          { n: 5, title: "Quando fazer", desc: "Os sinais de que sua empresa precisa", tag: "Sinais" },
+          { n: 6, title: "Como fazer", desc: "Quatro semanas sem travar os projetos", tag: "Plano" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre auditoria BIM",
+        items: [
+          { q: "O que é uma auditoria BIM?", a: "É uma revisão estruturada de como uma empresa produz seus projetos em BIM. Inclui a auditoria do modelo, que verifica a qualidade técnica dos arquivos, e a auditoria do processo, que mede onde se perdem horas e quais tarefas se repetem. Termina num relatório com achados priorizados e um plano de ação para corrigir, padronizar e automatizar." },
+          { q: "O que se verifica numa auditoria de modelos BIM?", a: "Nomenclatura de arquivos, vistas e pranchas; coordenadas compartilhadas, níveis e eixos; saúde técnica do modelo, como advertências, CAD importado e famílias no local; informação obrigatória completa; e coerência entre o modelo, as pranchas e os quantitativos." },
+          { q: "Qual a diferença entre auditar o modelo e auditar o processo?", a: "A auditoria do modelo responde se os arquivos estão bem feitos e pode ser automatizada e repetida toda semana. A do processo responde se a equipe trabalha de forma eficiente: mede tempos, retrabalho e dependência de pessoas, e exige entrevistas e observação. É a do processo que indica o que automatizar." },
+          { q: "O que deve incluir o relatório de uma auditoria BIM?", a: "Um diagnóstico com números, como horas por tarefa e rodadas de apontamentos; achados priorizados por impacto e esforço; um plano de ação para corrigir, padronizar e automatizar com a economia estimada de cada automação; e uma linha de base para medir o avanço." },
+          { q: "Quando uma empresa precisa de uma auditoria BIM?", a: "Quando os apontamentos se repetem nas entregas, os modelos estão lentos, cada projeto é entregue diferente conforme quem fez, se aproxima uma licitação com requisitos BIM, a equipe faz hora extra em cada entrega ou se quer automatizar sem saber por onde começar." },
+          { q: "Quanto tempo leva uma auditoria BIM?", a: "Uma auditoria de modelos e processos de escopo delimitado, sobre dois ou três projetos representativos, costuma levar cerca de quatro semanas: escopo, revisão de modelos, análise do processo e relatório. Depois, a auditoria do modelo pode ficar automatizada e semanal." },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "The BIM audit, in 6 blocks",
+        intro: "What it is, what it checks in the model and the process, what it should deliver, and when your firm needs one.",
+        steps: [
+          { n: 1, title: "Model and process", desc: "Two different audits answering different questions", tag: "Concept" },
+          { n: 2, title: "Model checklist", desc: "Naming, coordinates, health, information and consistency", tag: "Checklist" },
+          { n: 3, title: "Process checklist", desc: "Time, rework, standards, people and tools", tag: "Checklist" },
+          { n: 4, title: "What it should deliver", desc: "A diagnosis with numbers and a three-front plan", tag: "Output" },
+          { n: 5, title: "When to do it", desc: "The signals your firm needs one", tag: "Signals" },
+          { n: 6, title: "How to do it", desc: "Four weeks without slowing projects", tag: "Plan" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about BIM audits",
+        items: [
+          { q: "What is a BIM audit?", a: "A structured review of how a firm produces its projects in BIM. It includes a model audit, which checks the technical quality of the files, and a process audit, which measures where hours are lost and which tasks repeat. It ends in a report with prioritized findings and an action plan to fix, standardize and automate." },
+          { q: "What does a BIM model audit check?", a: "File, view and sheet naming; shared coordinates, levels and grids; model health such as warnings, imported CAD and in-place families; complete required information; and consistency between the model, the drawings and the takeoffs." },
+          { q: "What's the difference between a model audit and a process audit?", a: "A model audit answers whether the files are well made, and it can be automated and repeated weekly. A process audit answers whether the team works efficiently: it measures time, rework and dependency on individuals, and requires interviews and observation. The process audit is the one that tells you what to automate." },
+          { q: "What should a BIM audit report include?", a: "A diagnosis with numbers, such as hours per task and review rounds; findings prioritized by impact and effort; an action plan to fix, standardize and automate, with the estimated savings of each automation; and a baseline to measure progress." },
+          { q: "When does a firm need a BIM audit?", a: "When review comments keep repeating, models are slow, every project is delivered differently depending on who did it, a bid with BIM requirements is coming, the team works overtime on every submittal, or you want to automate but don't know where to start." },
+          { q: "How long does a BIM audit take?", a: "A focused model and process audit on two or three representative projects usually takes about four weeks: scope, model review, process analysis and report. After that, the model audit can be automated and run weekly." },
+        ],
+      },
+    },
+  },
+  "automatizar-tareas-revit-dynamo-plugins": {
+    es: {
+      roadmap: {
+        title: "Las 12 tareas de Revit que conviene automatizar, en 6 bloques",
+        intro: "Cómo priorizar, qué tareas ahorran más horas y cuándo resolverlas con Dynamo o con un plugin.",
+        steps: [
+          { n: 1, title: "Producción de láminas", desc: "Crear láminas, renombrar y exportar por lotes", tag: "Mayor ahorro" },
+          { n: 2, title: "Datos y parámetros", desc: "Excel, numeración y copia de parámetros", tag: "Datos" },
+          { n: 3, title: "Vistas y documentación", desc: "Vistas por nivel, etiquetado y elementos repetitivos", tag: "Documentación" },
+          { n: 4, title: "Control de calidad", desc: "Auditoría, verificación del estándar y comparación", tag: "Calidad" },
+          { n: 5, title: "Dynamo, pyRevit o plugin", desc: "Qué herramienta conviene en cada caso", tag: "Herramientas" },
+          { n: 6, title: "Plan para este mes", desc: "Medir, elegir, prototipar y decidir", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre automatizar Revit",
+        items: [
+          { q: "¿Qué tareas de Revit se pueden automatizar?", a: "Las que se repiten con reglas fijas: crear láminas y colocar vistas, renombrar vistas y planos, exportar PDF y DWG por lotes, llenar parámetros desde Excel, numerar habitaciones y puertas, etiquetar en lote, crear vistas por nivel, colocar elementos repetitivos, auditar el modelo, verificar el estándar y comparar versiones." },
+          { q: "¿Cómo automatizar tareas en Revit sin programar?", a: "Con Dynamo, que viene con Revit y permite armar rutinas conectando bloques sin escribir código. También existen barras de herramientas gratuitas de la comunidad, como pyRevit. Cuando una rutina se usa en cada proyecto y por varias personas, conviene convertirla en un plugin." },
+          { q: "¿Qué tarea de Revit conviene automatizar primero?", a: "La que más horas suma al año: multiplica cuántas veces se hace por semana, cuánto tarda y cuántas personas la hacen. Además debe tener reglas claras. Casi siempre gana una tarea poco vistosa, como renombrar, exportar o llenar datos." },
+          { q: "¿Es mejor Dynamo o un plugin para automatizar Revit?", a: "Dynamo es mejor para probar una automatización: se arma en días y se corrige fácil. Un plugin es mejor para el uso diario: es un botón que usa cualquiera del equipo, maneja errores y es rápido con modelos grandes. Lo habitual es validar en Dynamo y llevar a plugin lo que se usa siempre." },
+          { q: "¿Cuánto tiempo se ahorra automatizando Revit?", a: "Depende de la tarea, pero el patrón es claro: codificar miles de elementos pasa de una semana a una tarde, renumerar cientos de habitaciones de horas a segundos, y armar el juego de láminas de días a minutos. Las automatizaciones de control de calidad además evitan errores que cuestan mucho más que las horas." },
+          { q: "¿Qué es pyRevit?", a: "Es una barra de herramientas gratuita y de código abierto para Revit, con muchas utilidades listas para tareas comunes. Si una de sus herramientas resuelve tu caso, conviene usarla. Cuando necesitas aplicar exactamente el estándar y los formatos de tu empresa, se recurre a un plugin a medida." },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "As 12 tarefas do Revit que vale automatizar, em 6 blocos",
+        intro: "Como priorizar, quais tarefas economizam mais horas e quando resolvê-las com Dynamo ou com um plugin.",
+        steps: [
+          { n: 1, title: "Produção de pranchas", desc: "Criar pranchas, renomear e exportar em lote", tag: "Maior economia" },
+          { n: 2, title: "Dados e parâmetros", desc: "Excel, numeração e cópia de parâmetros", tag: "Dados" },
+          { n: 3, title: "Vistas e documentação", desc: "Vistas por pavimento, identificação e elementos repetitivos", tag: "Documentação" },
+          { n: 4, title: "Controle de qualidade", desc: "Auditoria, conferência do padrão e comparação", tag: "Qualidade" },
+          { n: 5, title: "Dynamo, pyRevit ou plugin", desc: "Que ferramenta convém em cada caso", tag: "Ferramentas" },
+          { n: 6, title: "Plano para este mês", desc: "Medir, escolher, prototipar e decidir", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre automatizar o Revit",
+        items: [
+          { q: "Quais tarefas do Revit podem ser automatizadas?", a: "As que se repetem com regras fixas: criar pranchas e posicionar vistas, renomear vistas e pranchas, exportar PDF e DWG em lote, preencher parâmetros a partir do Excel, numerar ambientes e portas, identificar em lote, criar vistas por pavimento, posicionar elementos repetitivos, auditar o modelo, conferir o padrão e comparar versões." },
+          { q: "Como automatizar o Revit sem programar?", a: "Com o Dynamo, que vem com o Revit e permite montar rotinas conectando blocos sem escrever código. Também existem barras de ferramentas gratuitas da comunidade, como o pyRevit. Quando uma rotina é usada em todo projeto e por várias pessoas, convém transformá-la num plugin." },
+          { q: "Qual tarefa do Revit convém automatizar primeiro?", a: "A que mais soma horas por ano: multiplique quantas vezes é feita por semana, quanto demora e quantas pessoas a fazem. Além disso, precisa ter regras claras. Quase sempre ganha uma tarefa pouco vistosa, como renomear, exportar ou preencher dados." },
+          { q: "É melhor Dynamo ou plugin para automatizar o Revit?", a: "O Dynamo é melhor para testar uma automação: monta-se em dias e corrige-se fácil. Um plugin é melhor para o uso diário: é um botão que qualquer pessoa da equipe usa, trata erros e é rápido com modelos grandes. O usual é validar no Dynamo e levar para plugin o que é usado sempre." },
+          { q: "Quanto tempo se economiza automatizando o Revit?", a: "Depende da tarefa, mas o padrão é claro: codificar milhares de elementos passa de uma semana para uma tarde, renumerar centenas de ambientes de horas para segundos, e montar o conjunto de pranchas de dias para minutos. As automações de controle de qualidade ainda evitam erros que custam muito mais que as horas." },
+          { q: "O que é o pyRevit?", a: "É uma barra de ferramentas gratuita e de código aberto para o Revit, com muitas utilidades prontas para tarefas comuns. Se uma das suas ferramentas resolve o seu caso, vale usá-la. Quando é preciso aplicar exatamente o padrão e os formatos da sua empresa, recorre-se a um plugin sob medida." },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "The 12 Revit tasks worth automating, in 6 blocks",
+        intro: "How to prioritize, which tasks save the most hours, and when to solve them with Dynamo or a plugin.",
+        steps: [
+          { n: 1, title: "Sheet production", desc: "Create sheets, rename and batch export", tag: "Biggest savings" },
+          { n: 2, title: "Data and parameters", desc: "Excel, numbering and copying parameters", tag: "Data" },
+          { n: 3, title: "Views and documentation", desc: "Views per level, tagging and repetitive elements", tag: "Documentation" },
+          { n: 4, title: "Quality control", desc: "Audit, standard checks and version comparison", tag: "Quality" },
+          { n: 5, title: "Dynamo, pyRevit or plugin", desc: "Which tool fits each case", tag: "Tools" },
+          { n: 6, title: "A plan for this month", desc: "Measure, pick, prototype and decide", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Revit automation",
+        items: [
+          { q: "Which Revit tasks can be automated?", a: "Anything repeated with fixed rules: creating sheets and placing views, renaming views and sheets, batch-exporting PDF and DWG, filling parameters from Excel, numbering rooms and doors, batch tagging, creating views per level, placing repetitive elements, auditing the model, checking the standard and comparing versions." },
+          { q: "How do you automate Revit without programming?", a: "With Dynamo, which ships with Revit and lets you build routines by connecting blocks without writing code. There are also free community toolbars such as pyRevit. When a routine is used on every project by several people, it's worth turning it into a plugin." },
+          { q: "Which Revit task should you automate first?", a: "The one that adds up to the most hours per year: multiply how often it's done per week, how long it takes and how many people do it. It also needs clear rules. The winner is almost always an unglamorous task, like renaming, exporting or filling data." },
+          { q: "Is Dynamo or a plugin better for Revit automation?", a: "Dynamo is better for testing an automation: you can build it in days and fix it easily. A plugin is better for daily use: it's a button anyone can press, it handles errors and it stays fast on large models. The usual path is to prove it in Dynamo and move what's used constantly to a plugin." },
+          { q: "How much time does Revit automation save?", a: "It depends on the task, but the pattern is clear: coding thousands of elements drops from a week to an afternoon, renumbering hundreds of rooms from hours to seconds, and building the sheet set from days to minutes. Quality-control automations also prevent errors that cost far more than the hours." },
+          { q: "What is pyRevit?", a: "A free, open-source toolbar for Revit with many ready-made utilities for common tasks. If one of its tools solves your case, use it. When you need to apply your company's exact standard and formats, a custom plugin is the way to go." },
+        ],
+      },
+    },
+  },
+  // ---- C1/C2 · productividad de modelos y planos (oct-2026) -------------------
+  "revit-lento-modelo-pesado-auditoria": {
+    es: {
+      roadmap: {
+        title: "De un Revit lento a un modelo sano, en 6 bloques",
+        intro:
+          "Qué hace pesado un modelo de Revit, cómo diagnosticarlo, qué corregir primero y cómo mantenerlo sano con una auditoría automática.",
+        steps: [
+          { n: 1, title: "Las 7 causas", desc: "CAD importado, familias in situ, advertencias, grupos y más", tag: "Diagnóstico" },
+          { n: 2, title: "Diagnosticar hoy", desc: "Auditar, contar advertencias, buscar CAD importado", tag: "Método" },
+          { n: 3, title: "Qué corregir primero", desc: "El orden que da más impacto con menos riesgo", tag: "Acción" },
+          { n: 4, title: "Por qué la limpieza no dura", desc: "La limpieza es un evento; el deterioro, un proceso", tag: "Hábitos" },
+          { n: 5, title: "Auditoría automática", desc: "Puntaje de salud, historial y alertas semanales", tag: "Solución" },
+          { n: 6, title: "Implementarlo", desc: "Línea base, umbrales, limpieza y medición continua", tag: "Plan" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre Revit lento",
+        items: [
+          {
+            q: "¿Por qué Revit está tan lento?",
+            a: "Casi siempre por el contenido del modelo, no por la computadora. Las causas más frecuentes son archivos CAD importados en lugar de vinculados, familias in situ, cientos de advertencias sin resolver, grupos grandes o modificados, familias y vistas sin usar, y un archivo central que nunca se compacta. Corregir esas causas suele mejorar más que cambiar de equipo.",
+          },
+          {
+            q: "¿Por qué Revit tarda tanto en abrir un archivo?",
+            a: "Porque al abrir carga todo el contenido del modelo, incluidos los CAD importados, las familias sin usar y los modelos vinculados. Un archivo que creció con importaciones y contenido innecesario tarda cada vez más. Vincular el CAD en lugar de importarlo, limpiar elementos no utilizados y abrir solo los subproyectos que necesitas reduce el tiempo de apertura.",
+          },
+          {
+            q: "¿Cómo reducir el tamaño de un archivo de Revit?",
+            a: "En este orden: quitar o vincular los CAD importados, resolver las advertencias más repetidas, limpiar elementos no utilizados varias veces seguidas, convertir las familias in situ repetidas en familias cargables, borrar vistas de trabajo que no van a ningún plano y compactar el archivo central. Siempre sobre una copia primero.",
+          },
+          {
+            q: "¿Las advertencias de Revit afectan el rendimiento?",
+            a: "Sí. Cientos o miles de advertencias, como muros superpuestos o elementos duplicados, obligan a Revit a recalcular más y afectan la estabilidad del modelo. Normalmente dos o tres tipos de advertencia concentran la mayoría, así que resolver esos tipos primero reduce el número de forma drástica.",
+          },
+          {
+            q: "¿Es mejor importar o vincular un CAD en Revit?",
+            a: "Vincularlo, en casi todos los casos. Importar mete todas las líneas, capas y estilos del dibujo dentro del modelo y es la principal causa de modelos pesados. Vincular solo hace referencia al archivo externo. Si el CAD solo se necesita en una vista, conviene vincularlo únicamente en esa vista.",
+          },
+          {
+            q: "¿Cómo evitar que el modelo vuelva a ponerse lento?",
+            a: "Midiendo siempre en lugar de limpiar de vez en cuando. Un plugin de auditoría mide cada semana el tamaño, las advertencias, el CAD importado y las familias in situ, guarda el historial y avisa cuando algo empeora. Cuando el equipo ve los indicadores, los hábitos que degradan el modelo cambian solos.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "De um Revit lento a um modelo saudável, em 6 blocos",
+        intro:
+          "O que deixa um modelo de Revit pesado, como diagnosticar, o que corrigir primeiro e como mantê-lo saudável com uma auditoria automática.",
+        steps: [
+          { n: 1, title: "As 7 causas", desc: "CAD importado, famílias no local, advertências, grupos e mais", tag: "Diagnóstico" },
+          { n: 2, title: "Diagnosticar hoje", desc: "Auditar, contar advertências, procurar CAD importado", tag: "Método" },
+          { n: 3, title: "O que corrigir primeiro", desc: "A ordem que dá mais impacto com menos risco", tag: "Ação" },
+          { n: 4, title: "Por que a limpeza não dura", desc: "A limpeza é um evento; a degradação, um processo", tag: "Hábitos" },
+          { n: 5, title: "Auditoria automática", desc: "Nota de saúde, histórico e alertas semanais", tag: "Solução" },
+          { n: 6, title: "Implantar", desc: "Linha de base, limites, limpeza e medição contínua", tag: "Plano" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre Revit lento",
+        items: [
+          {
+            q: "Por que o Revit está tão lento?",
+            a: "Quase sempre por causa do conteúdo do modelo, não do computador. As causas mais frequentes são arquivos CAD importados em vez de vinculados, famílias no local, centenas de advertências sem resolver, grupos grandes ou modificados, famílias e vistas sem uso e um arquivo central nunca compactado. Corrigir essas causas costuma melhorar mais do que trocar de máquina.",
+          },
+          {
+            q: "Revit lento: o que fazer?",
+            a: "Primeiro diagnosticar: abrir uma cópia com a opção Auditar, contar as advertências por tipo, listar os CAD importados e as famílias no local. Depois corrigir nesta ordem: vincular ou remover o CAD importado, resolver as advertências mais repetidas, remover não utilizados e compactar o arquivo central.",
+          },
+          {
+            q: "Como reduzir o tamanho de um arquivo do Revit?",
+            a: "Nesta ordem: remover ou vincular os CAD importados, resolver as advertências mais repetidas, remover não utilizados várias vezes seguidas, converter famílias no local repetidas em famílias carregáveis, apagar vistas de trabalho que não vão para nenhuma prancha e compactar o arquivo central. Sempre numa cópia primeiro.",
+          },
+          {
+            q: "As advertências do Revit afetam o desempenho?",
+            a: "Sim. Centenas ou milhares de advertências, como paredes sobrepostas ou elementos duplicados, obrigam o Revit a recalcular mais e afetam a estabilidade do modelo. Normalmente dois ou três tipos concentram a maioria, então resolver esses tipos primeiro reduz o número de forma drástica.",
+          },
+          {
+            q: "É melhor importar ou vincular um CAD no Revit?",
+            a: "Vincular, em quase todos os casos. Importar coloca todas as linhas, layers e estilos do desenho dentro do modelo e é a principal causa de modelos pesados. Vincular só faz referência ao arquivo externo. Se o CAD só é necessário numa vista, convém vinculá-lo apenas nessa vista.",
+          },
+          {
+            q: "Como evitar que o modelo volte a ficar lento?",
+            a: "Medindo sempre em vez de limpar de vez em quando. Um plugin de auditoria mede toda semana o tamanho, as advertências, o CAD importado e as famílias no local, guarda o histórico e avisa quando algo piora. Quando a equipe vê os indicadores, os hábitos que degradam o modelo mudam sozinhos.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "From a slow Revit model to a healthy one, in 6 blocks",
+        intro:
+          "What makes a Revit model heavy, how to diagnose it, what to fix first, and how to keep it healthy with an automated audit.",
+        steps: [
+          { n: 1, title: "The 7 causes", desc: "Imported CAD, in-place families, warnings, groups and more", tag: "Diagnosis" },
+          { n: 2, title: "Diagnose it today", desc: "Audit, count warnings, find imported CAD", tag: "Method" },
+          { n: 3, title: "What to fix first", desc: "The order with the most impact and least risk", tag: "Action" },
+          { n: 4, title: "Why cleanup doesn't last", desc: "Cleanup is an event; decay is a process", tag: "Habits" },
+          { n: 5, title: "Automated audit", desc: "Health score, history and weekly alerts", tag: "Solution" },
+          { n: 6, title: "Roll it out", desc: "Baseline, thresholds, cleanup and continuous measurement", tag: "Plan" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about slow Revit models",
+        items: [
+          {
+            q: "What makes a Revit model slow?",
+            a: "Almost always the model's content, not the computer. The most common causes are imported CAD instead of linked, in-place families, hundreds of unresolved warnings, large or modified groups, unused families and views, and a central file that's never compacted. Fixing those causes usually helps more than new hardware.",
+          },
+          {
+            q: "Why is my Revit model slow to open?",
+            a: "Because opening loads everything in the model, including imported CAD, unused families and linked models. A file that grew through imports and unnecessary content takes longer every time. Linking CAD instead of importing it, purging unused content and opening only the worksets you need reduce opening time.",
+          },
+          {
+            q: "How do you reduce a Revit file size?",
+            a: "In this order: remove or link imported CAD, resolve the most frequent warnings, run Purge Unused several times in a row, convert repeated in-place families into loadable families, delete working views that aren't on any sheet, and compact the central file. Always on a copy first.",
+          },
+          {
+            q: "Do Revit warnings affect performance?",
+            a: "Yes. Hundreds or thousands of warnings, such as overlapping walls or duplicate elements, make Revit recompute more and hurt model stability. Usually two or three warning types account for most of them, so fixing those types first drops the count dramatically.",
+          },
+          {
+            q: "Should you import or link CAD in Revit?",
+            a: "Link it, in almost every case. Importing brings every line, layer and style of the drawing into the model and is the leading cause of heavy models. Linking only references the external file. If the CAD is only needed in one view, link it to that view only.",
+          },
+          {
+            q: "How do you keep a Revit model from getting slow again?",
+            a: "By measuring constantly instead of cleaning occasionally. An audit plugin measures size, warnings, imported CAD and in-place families every week, keeps the history and alerts you when something gets worse. Once the team sees the indicators, the habits that degrade the model change on their own.",
+          },
+        ],
+      },
+    },
+  },
+  "exportar-tablas-revit-excel-editar-parametros": {
+    es: {
+      roadmap: {
+        title: "Revit y Excel en ambos sentidos, en 6 bloques",
+        intro:
+          "Qué permite Revit, por qué el ida y vuelta es delicado, y cómo editar parámetros en masa en Excel sin dañar el modelo.",
+        steps: [
+          { n: 1, title: "Lo que permite Revit", desc: "Exporta tablas, pero no importa cambios de vuelta", tag: "Punto de partida" },
+          { n: 2, title: "Los riesgos del ida y vuelta", desc: "Filas sin elemento, solo lectura, tipo versus ejemplar", tag: "Riesgos" },
+          { n: 3, title: "Dynamo o plugin", desc: "Cuándo conviene cada camino", tag: "Herramientas" },
+          { n: 4, title: "Cómo funciona el plugin", desc: "Identificador único, validación previa y registro", tag: "Solución" },
+          { n: 5, title: "Usos que más ahorran", desc: "Codificación, datos de entrega, habitaciones y calidad", tag: "Retorno" },
+          { n: 6, title: "Implementarlo sin riesgos", desc: "Definir datos, probar en copia y estandarizar", tag: "Plan" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre Revit y Excel",
+        items: [
+          {
+            q: "¿Cómo exportar una tabla de Revit a Excel?",
+            a: "Revit exporta cualquier tabla de planificación a un archivo de texto delimitado desde el menú de exportación de informes. Ese archivo se abre directamente en Excel. Para exportar varias tablas a un solo libro con formato, o para poder volver a importar los cambios, se usa Dynamo o un plugin.",
+          },
+          {
+            q: "¿Se pueden importar datos de Excel a Revit?",
+            a: "No de forma nativa: Revit exporta tablas pero no trae una opción para importar los cambios de vuelta y actualizar parámetros. Se puede hacer con Dynamo, que tiene nodos para leer hojas de cálculo, o con un plugin de sincronización que empareja cada fila con su elemento y valida los datos antes de escribirlos.",
+          },
+          {
+            q: "¿Por qué al importar desde Excel los valores quedan en el elemento equivocado?",
+            a: "Porque las filas se emparejaron por posición y no por identificador. Si se ordena o filtra la hoja, la fila deja de corresponder al mismo elemento. La solución es incluir el identificador único de cada elemento en la hoja y emparejar siempre por ese identificador.",
+          },
+          {
+            q: "¿Qué parámetros de Revit no se pueden editar desde Excel?",
+            a: "Los de solo lectura, que Revit calcula: áreas, volúmenes, longitudes y otros valores derivados de la geometría. Un buen flujo los exporta bloqueados para que nadie intente editarlos. Además hay que cuidar los parámetros de tipo, porque cambiarlos afecta a todos los elementos de ese tipo.",
+          },
+          {
+            q: "¿Existe un plugin para conectar Revit con Excel?",
+            a: "Sí, hay soluciones comerciales y plugins a medida. Un plugin a medida tiene la ventaja de exportar exactamente los parámetros y formatos que usa tu oficina, aplicar tus validaciones y dejar registro de cada cambio, con un resumen previo antes de tocar el modelo.",
+          },
+          {
+            q: "¿Para qué sirve editar parámetros de Revit en Excel?",
+            a: "Para cargar en masa datos que en Revit se llenan uno por uno: códigos de partida para metrados, datos de fabricante y activos para la entrega al cliente, nombres y números de habitaciones, y clasificaciones. Lo que en el modelo toma una semana, en Excel toma una tarde.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Revit e Excel nos dois sentidos, em 6 blocos",
+        intro:
+          "O que o Revit permite, por que a ida e volta é delicada e como editar parâmetros em massa no Excel sem danificar o modelo.",
+        steps: [
+          { n: 1, title: "O que o Revit permite", desc: "Exporta tabelas, mas não importa alterações de volta", tag: "Ponto de partida" },
+          { n: 2, title: "Os riscos da ida e volta", desc: "Linhas sem elemento, somente leitura, tipo versus instância", tag: "Riscos" },
+          { n: 3, title: "Dynamo ou plugin", desc: "Quando convém cada caminho", tag: "Ferramentas" },
+          { n: 4, title: "Como funciona o plugin", desc: "Identificador único, validação prévia e registro", tag: "Solução" },
+          { n: 5, title: "Usos que mais economizam", desc: "Codificação, dados de entrega, ambientes e qualidade", tag: "Retorno" },
+          { n: 6, title: "Implantar sem riscos", desc: "Definir dados, testar em cópia e padronizar", tag: "Plano" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre Revit e Excel",
+        items: [
+          {
+            q: "Como exportar uma tabela do Revit para o Excel?",
+            a: "O Revit exporta qualquer tabela para um arquivo de texto delimitado pelo menu de exportação de relatórios. Esse arquivo abre direto no Excel. Para exportar várias tabelas num só arquivo formatado, ou para poder importar as alterações de volta, usa-se o Dynamo ou um plugin.",
+          },
+          {
+            q: "Dá para importar dados do Excel para o Revit?",
+            a: "Não de forma nativa: o Revit exporta tabelas, mas não tem uma opção para importar as alterações de volta e atualizar parâmetros. Dá para fazer com o Dynamo, que tem nós para ler planilhas, ou com um plugin de sincronização que emparelha cada linha com seu elemento e valida os dados antes de escrevê-los.",
+          },
+          {
+            q: "Por que ao importar do Excel os valores ficam no elemento errado?",
+            a: "Porque as linhas foram emparelhadas pela posição e não pelo identificador. Se a planilha for ordenada ou filtrada, a linha deixa de corresponder ao mesmo elemento. A solução é incluir o identificador único de cada elemento na planilha e emparelhar sempre por ele.",
+          },
+          {
+            q: "Quais parâmetros do Revit não podem ser editados pelo Excel?",
+            a: "Os somente leitura, que o Revit calcula: áreas, volumes, comprimentos e outros valores derivados da geometria. Um bom fluxo os exporta bloqueados para que ninguém tente editá-los. Além disso, é preciso cuidar dos parâmetros de tipo, porque mudá-los afeta todos os elementos daquele tipo.",
+          },
+          {
+            q: "Existe plugin para conectar o Revit com o Excel?",
+            a: "Sim, há soluções comerciais e plugins sob medida. Um plugin sob medida tem a vantagem de exportar exatamente os parâmetros e formatos do seu escritório, aplicar as suas validações e registrar cada alteração, com um resumo prévio antes de mexer no modelo.",
+          },
+          {
+            q: "Para que serve editar parâmetros do Revit no Excel?",
+            a: "Para carregar em massa dados que no Revit se preenchem um por um: códigos de orçamento para quantitativos, dados de fabricante e ativos para a entrega ao cliente, nomes e números de ambientes, e classificações. O que no modelo leva uma semana, no Excel leva uma tarde.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Revit and Excel both ways, in 6 blocks",
+        intro:
+          "What Revit allows, why the round trip is delicate, and how to bulk-edit parameters in Excel without damaging the model.",
+        steps: [
+          { n: 1, title: "What Revit allows", desc: "It exports schedules but doesn't import changes back", tag: "Starting point" },
+          { n: 2, title: "Round-trip risks", desc: "Rows without elements, read-only, type vs instance", tag: "Risks" },
+          { n: 3, title: "Dynamo or plugin", desc: "When each route fits", tag: "Tools" },
+          { n: 4, title: "How the plugin works", desc: "Unique ID, validation preview and change log", tag: "Solution" },
+          { n: 5, title: "Uses that save the most", desc: "Coding, handover data, rooms and data quality", tag: "Return" },
+          { n: 6, title: "Roll it out safely", desc: "Define the data, test on a copy, standardize", tag: "Plan" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Revit and Excel",
+        items: [
+          {
+            q: "How do you export a Revit schedule to Excel?",
+            a: "Revit exports any schedule to a delimited text file from the reports export menu, and Excel opens it directly. To export several schedules into one formatted workbook, or to import changes back, you use Dynamo or a plugin.",
+          },
+          {
+            q: "Can you import Excel data into Revit?",
+            a: "Not natively: Revit exports schedules but has no option to import changes back and update parameters. You can do it with Dynamo, which has nodes to read spreadsheets, or with a sync plugin that matches each row to its element and validates data before writing it.",
+          },
+          {
+            q: "Why do imported Excel values end up on the wrong element?",
+            a: "Because rows were matched by position instead of by ID. Once the sheet is sorted or filtered, a row no longer corresponds to the same element. The fix is to include each element's unique ID in the sheet and always match on it.",
+          },
+          {
+            q: "Which Revit parameters can't be edited from Excel?",
+            a: "Read-only parameters that Revit calculates: areas, volumes, lengths and other values derived from geometry. A good workflow exports them locked so nobody tries to edit them. Type parameters also need care, because changing one affects every element of that type.",
+          },
+          {
+            q: "Is there a Revit Excel plugin?",
+            a: "Yes, there are commercial solutions and custom plugins. A custom plugin has the advantage of exporting exactly the parameters and formats your office uses, applying your validations and logging every change, with a preview before anything touches the model.",
+          },
+          {
+            q: "Why edit Revit parameters in Excel?",
+            a: "To bulk-load data that Revit makes you enter one value at a time: cost codes for takeoffs, manufacturer and asset data for owner handover, room names and numbers, and classifications. What takes a week in the model takes an afternoon in Excel.",
+          },
+        ],
+      },
+    },
+  },
+  "produccion-planos-automatica-civil-3d-revit": {
+    es: {
+      roadmap: {
+        title: "Del modelo al juego de planos, en 6 bloques",
+        intro:
+          "Qué automatizan Civil 3D y Revit de forma nativa, dónde se quedan cortos y cómo un plugin genera, rotula y exporta el juego completo.",
+        steps: [
+          { n: 1, title: "Lo nativo en Civil 3D", desc: "Marcos de vista, planta y perfil, secciones y conjuntos", tag: "Punto de partida" },
+          { n: 2, title: "Dónde se queda corto", desc: "Cajetín, rótulos, revisiones y exportación", tag: "Límites" },
+          { n: 3, title: "Revit: lámina por lámina", desc: "Lo que más tiempo consume en edificios grandes", tag: "Diagnóstico" },
+          { n: 4, title: "Cómo funciona el plugin", desc: "De una lista de láminas al juego exportado", tag: "Solución" },
+          { n: 5, title: "Qué gana la empresa", desc: "Plazo, consistencia y capacidad de cambiar tarde", tag: "Retorno" },
+          { n: 6, title: "Implementarlo", desc: "Plantillas, lista estándar, piloto y uso real", tag: "Plan" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre producción de planos",
+        items: [
+          {
+            q: "¿Cómo crear planos de planta y perfil en Civil 3D?",
+            a: "Con las herramientas de producción de planos: primero se crean los marcos de vista a lo largo de la alineación, según una plantilla y una escala, y después se crean las láminas a partir de esos marcos. Cada lámina lleva una ventana de planta y otra de perfil del mismo tramo, con el cajetín de la plantilla.",
+          },
+          {
+            q: "¿Cómo crear láminas de secciones transversales en Civil 3D?",
+            a: "Se crean varias vistas de sección a lo largo de la alineación y se distribuyen en láminas según una plantilla con el área de impresión definida. Civil 3D acomoda las secciones en cada lámina. El trabajo que queda manual suele ser el cajetín, la numeración y la exportación del juego.",
+          },
+          {
+            q: "¿Se pueden generar láminas automáticamente en Revit?",
+            a: "No de forma nativa: en Revit cada lámina se crea a mano, aunque las plantillas de vista ayudan a mantener el estilo. Un plugin puede crear decenas de láminas desde una lista, colocar las vistas en la misma posición, llenar los parámetros del cajetín y exportar el juego completo.",
+          },
+          {
+            q: "¿Qué no automatizan las herramientas de producción de planos de Civil 3D?",
+            a: "Resuelven la geometría de las láminas, pero no el resto: cajetines con progresivas y códigos del cliente, rótulos que se superponen, notas por tramo, control de revisiones y exportación con la nomenclatura que pide el cliente. Esa es la parte que un plugin automatiza.",
+          },
+          {
+            q: "¿Qué pasa con las láminas si cambia el trazo antes de la entrega?",
+            a: "Con el flujo manual, buena parte del juego de planos se rehace. Con un plugin, se vuelve a ejecutar: regenera los marcos de vista, actualiza las progresivas de los cajetines, marca las láminas modificadas en la tabla de revisiones y exporta de nuevo.",
+          },
+          {
+            q: "¿Cuánto tiempo ahorra automatizar la producción de planos?",
+            a: "Armar 40 láminas de planta y perfil a mano suele tomar dos o tres días; con un plugin, minutos. El ahorro mayor aparece en cada cambio de diseño, porque el juego completo se regenera sin repetir el trabajo manual.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Do modelo ao conjunto de pranchas, em 6 blocos",
+        intro:
+          "O que o Civil 3D e o Revit automatizam nativamente, onde ficam curtos e como um plugin gera, rotula e exporta o conjunto completo.",
+        steps: [
+          { n: 1, title: "O nativo no Civil 3D", desc: "Quadros de vista, planta e perfil, seções e conjuntos", tag: "Ponto de partida" },
+          { n: 2, title: "Onde fica curto", desc: "Carimbo, rótulos, revisões e exportação", tag: "Limites" },
+          { n: 3, title: "Revit: prancha por prancha", desc: "O que mais consome tempo em edifícios grandes", tag: "Diagnóstico" },
+          { n: 4, title: "Como funciona o plugin", desc: "De uma lista de pranchas ao conjunto exportado", tag: "Solução" },
+          { n: 5, title: "O que a empresa ganha", desc: "Prazo, consistência e capacidade de mudar tarde", tag: "Retorno" },
+          { n: 6, title: "Implantar", desc: "Modelos, lista padrão, piloto e uso real", tag: "Plano" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre produção de pranchas",
+        items: [
+          {
+            q: "Como criar pranchas de planta e perfil no Civil 3D?",
+            a: "Com as ferramentas de produção de pranchas: primeiro criam-se os quadros de vista ao longo do alinhamento, segundo um modelo e uma escala, e depois criam-se as pranchas a partir desses quadros. Cada prancha leva uma viewport de planta e outra de perfil do mesmo trecho, com o carimbo do modelo.",
+          },
+          {
+            q: "Como criar pranchas de seções transversais no Civil 3D?",
+            a: "Criam-se várias vistas de seção ao longo do alinhamento e elas são distribuídas em pranchas segundo um modelo com a área de impressão definida. O Civil 3D organiza as seções em cada prancha. O que continua manual costuma ser o carimbo, a numeração e a exportação do conjunto.",
+          },
+          {
+            q: "Dá para gerar pranchas automaticamente no Revit?",
+            a: "Não nativamente: no Revit cada prancha é criada à mão, embora os modelos de vista ajudem a manter o estilo. Um plugin pode criar dezenas de pranchas a partir de uma lista, colocar as vistas na mesma posição, preencher os parâmetros do carimbo e exportar o conjunto completo.",
+          },
+          {
+            q: "O que as ferramentas de produção de pranchas do Civil 3D não automatizam?",
+            a: "Resolvem a geometria das pranchas, mas não o resto: carimbos com estacas e códigos do cliente, rótulos sobrepostos, notas por trecho, controle de revisões e exportação com a nomenclatura que o cliente exige. Essa é a parte que um plugin automatiza.",
+          },
+          {
+            q: "O que acontece com as pranchas se o traçado muda antes da entrega?",
+            a: "No fluxo manual, boa parte do conjunto é refeita. Com um plugin, basta executar de novo: ele regenera os quadros de vista, atualiza as estacas dos carimbos, marca as pranchas modificadas na tabela de revisões e exporta outra vez.",
+          },
+          {
+            q: "Quanto tempo economiza automatizar a produção de pranchas?",
+            a: "Montar 40 pranchas de planta e perfil à mão costuma levar dois ou três dias; com um plugin, minutos. A maior economia aparece a cada mudança de projeto, porque o conjunto completo é regenerado sem repetir o trabalho manual.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "From model to drawing set, in 6 blocks",
+        intro:
+          "What Civil 3D and Revit automate natively, where they fall short, and how a plugin builds, labels and exports the full set.",
+        steps: [
+          { n: 1, title: "Native in Civil 3D", desc: "View frames, plan and profile, sections and sheet sets", tag: "Starting point" },
+          { n: 2, title: "Where it falls short", desc: "Title block, labels, revisions and export", tag: "Limits" },
+          { n: 3, title: "Revit: sheet by sheet", desc: "What takes the most time on large buildings", tag: "Diagnosis" },
+          { n: 4, title: "How the plugin works", desc: "From a sheet list to the exported set", tag: "Solution" },
+          { n: 5, title: "What the firm gains", desc: "Schedule, consistency and room to change late", tag: "Return" },
+          { n: 6, title: "Roll it out", desc: "Templates, standard list, pilot and real use", tag: "Plan" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about plan production",
+        items: [
+          {
+            q: "How do you create plan and profile sheets in Civil 3D?",
+            a: "With the plan production tools: first create view frames along the alignment, based on a template and scale, then create sheets from those frames. Each sheet carries a plan viewport and a profile viewport for the same stretch, with the template's title block.",
+          },
+          {
+            q: "How do you create cross-section sheets in Civil 3D?",
+            a: "Create multiple section views along the alignment and lay them out on sheets using a template with a defined plot area. Civil 3D arranges the sections on each sheet. What usually remains manual is the title block, numbering and exporting the set.",
+          },
+          {
+            q: "Can Revit generate sheets automatically?",
+            a: "Not natively: in Revit each sheet is created by hand, though view templates help keep the look consistent. A plugin can create dozens of sheets from a list, place views in the same position, fill title block parameters and export the full set.",
+          },
+          {
+            q: "What don't Civil 3D plan production tools automate?",
+            a: "They handle sheet geometry but not the rest: title blocks with stations and client codes, overlapping labels, per-stretch notes, revision control, and exporting with the file naming the client requires. That's the part a plugin automates.",
+          },
+          {
+            q: "What happens to the sheets if the alignment changes before the deadline?",
+            a: "In a manual workflow, much of the set gets redone. With a plugin, you run it again: it regenerates the view frames, updates title block stations, flags modified sheets in the revision table and exports again.",
+          },
+          {
+            q: "How much time does automating plan production save?",
+            a: "Building 40 plan and profile sheets by hand usually takes two or three days; with a plugin, minutes. The biggest savings come with every design change, because the full set regenerates without repeating the manual work.",
+          },
+        ],
+      },
+    },
+  },
   // ---- C1 · Add-ins — satélites de control de calidad (comparación y acero) ----
   "comparar-modelos-revit-civil-3d-detectar-cambios": {
     es: {

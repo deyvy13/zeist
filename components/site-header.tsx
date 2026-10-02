@@ -71,6 +71,7 @@ export function SiteHeader({ lang, dict }: { lang: Locale; dict: Dictionary }) {
             <ThemeToggle />
             <Link
               href={localizedPath(lang, "contacto")}
+              data-cta="header"
               className="btn-primary hidden text-sm sm:inline-flex"
             >
               {dict.nav.cta}
@@ -116,6 +117,7 @@ export function SiteHeader({ lang, dict }: { lang: Locale; dict: Dictionary }) {
             ))}
             <Link
               href={localizedPath(lang, "contacto")}
+              data-cta="header"
               onClick={() => setOpen(false)}
               className="btn-primary mt-2 text-sm"
             >

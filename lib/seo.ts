@@ -72,6 +72,11 @@ export function buildMetadata({
   };
   const ogLocale = ogLocaleByLocale[locale];
 
+  // Every page needs a preview image for WhatsApp/LinkedIn link cards.
+  // app/opengraph-image.tsx sits above the [lang] root layout, so Next never
+  // attaches it on its own — it has to be referenced explicitly.
+  const image = ogImage ?? absoluteUrl("opengraph-image");
+
   return {
     title,
     description,
@@ -96,14 +101,14 @@ export function buildMetadata({
       description,
       url: canonical,
       locale: ogLocale,
-      images: ogImage ? [{ url: ogImage }] : undefined,
+      images: [{ url: image }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
       site: site.twitter,
-      images: ogImage ? [ogImage] : undefined,
+      images: [image],
     },
   };
 }

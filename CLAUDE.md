@@ -106,7 +106,7 @@ app/
     layout.tsx                # ROOT layout: html/body, fonts, header, footer, metadata base, JSON-LD Org
     page.tsx                  # Landing (hero, diferenciadores, servicios, proceso, blog, tools, CTA)
     servicios/page.tsx        # Índice de servicios
-    servicios/[slug]/page.tsx # Detalle de servicio (generateStaticParams por los 4 slugs)
+    servicios/[slug]/page.tsx # Landing de venta de cada servicio (plantilla; contenido en lib/services-content)
     blog/page.tsx             # Índice del blog
     blog/[slug]/page.tsx      # Artículo (renderiza MDX, JSON-LD BlogPosting)
     herramientas/page.tsx     # "Coming soon" con roadmap de herramientas
@@ -120,6 +120,9 @@ lib/
   site.ts                     # marca, siteUrl, absoluteUrl, localizedPath
   seo.ts                      # buildMetadata() (hreflang, canonical, OG) + JSON-LD helpers
   blog.ts                     # lectura de MDX + frontmatter
+  services.ts                 # SERVICE_SLUGS (fuente única) + tipo ServicePage + getServicePage()
+  services-content/<locale>.ts # copy largo de las 4 páginas de servicio, por idioma
+  analytics.ts                # GA4 (env), trackEvent(), referencia de página en WhatsApp
 dictionaries/es.json, pt.json, en.json # strings de UI por idioma (misma forma)
 content/blog/<locale>/<slug>.mdx  # artículos del blog
 proxy.ts                      # redirección de locale por Accept-Language
@@ -135,9 +138,58 @@ proxy.ts                      # redirección de locale por Accept-Language
 - **hreflang:** códigos genéricos `es`, `pt` y `en` (cubren LATAM + Iberia +
   mercado angloparlante global). `x-default` → `es`. Un post ES-only (cluster
   Perú) emite sólo su propio hreflang + `x-default`, nunca alternates rotos.
-- **JSON-LD:** Organization + WebSite (layout/landing), Service (detalle de servicio),
-  BlogPosting (artículos).
+- **Imagen OG:** `app/opengraph-image.tsx` queda por encima del root layout
+  (`app/[lang]/layout.tsx`), así que Next **no** la adjunta solo. `buildMetadata`
+  la referencia explícitamente (`absoluteUrl("opengraph-image")`) salvo que se
+  pase `ogImage`. Sin esto, los enlaces compartidos por WhatsApp/LinkedIn salen
+  sin imagen. No existen rutas OG por post.
+- **JSON-LD:** Organization + WebSite (layout/landing), Service + FAQPage +
+  BreadcrumbList (servicios; + Course en `cursos-mentorias-bim`), BlogPosting (artículos).
 - **Sitemap** (`app/sitemap.ts`): todas las rutas × ambos locales, con `alternates.languages`.
+
+### Páginas de servicio = landings de venta (oct-2026)
+
+Son las páginas que deben rankear por búsquedas de **compra** ("plugin para
+revit", "revit plugin development company", "consultoría BIM", "curso revit
+api") y convertir la visita en un WhatsApp. Antes tenían 21-28 palabras; ahora
+~1.200-1.650 por idioma.
+
+- **`SERVICE_SLUGS` vive sólo en `lib/services.ts`.** La página, el sitemap y
+  `/llms.txt` lo importan. Para añadir un servicio: slug ahí + entrada en los 3
+  `lib/services-content/<locale>.ts` + tarjeta en `services.items` de los 3
+  diccionarios + icono en `serviceIcons` (`components/icons.tsx`).
+- **Contenido** (`ServicePage`): `seoTitle` (≤52), `metaDescription` (≤160),
+  `answer` (definición citable de 60-100 palabras: es lo que extraen Google y
+  los asistentes de IA, y lo que publica `/llms.txt`), dolores, qué hacemos
+  (cada ítem con `guide` = slug de post), proceso con plazos, entregables,
+  comparativa (formato de `ComparisonTable`), guías y FAQs.
+- **Enlaces a guías:** sólo se pintan si el post existe en ese idioma (los
+  posts del cluster Perú son ES-only), con el título real del post.
+- **FAQs con `<details>` nativo**, no con el componente `Faq` animado: las
+  respuestas van en el HTML aunque estén cerradas (los crawlers de IA no
+  ejecutan JS). El FAQPage JSON-LD se arma en la página.
+- **No inventar promesas comerciales** en el copy: plazos, "respondemos en el
+  día" y "diagnóstico gratuito" son las que el sitio ya usa. Etiquetas de UI
+  en `serviceDetail` de los diccionarios.
+
+### Medición: GA4 + clics de WhatsApp (oct-2026)
+
+- **GA4 se activa sólo con `NEXT_PUBLIC_GA_ID`** (formato `G-XXXXXXXXXX`, se
+  configura en Vercel → Settings → Environment Variables y se redespliega). Sin
+  la variable no se carga ningún script (`components/analytics.tsx`).
+- **Consentimiento por región:** en EEE/Reino Unido/Suiza `analytics_storage`
+  arranca denegado (Consent Mode v2, sin cookies); en el resto, concedido.
+  `ad_storage` denegado en todas partes. Lista en `consentDeniedRegions`.
+- **Eventos:** `whatsapp_click` y `contact_click`, con `cta`, `page_path` y
+  `locale`. Los dispara `components/cta-tracker.tsx` (un único listener
+  delegado), no cada botón. **Todo enlace a WhatsApp o a /contacto lleva
+  `data-cta="<ubicación>"`** (p. ej. `service-hero`, `post-early-whatsapp`,
+  `mobile-bar`); sin él el clic se registra como `untagged`.
+- **Referencia de página en WhatsApp:** al hacer clic, el tracker añade al
+  mensaje "(Página: <título>)", así cada lead llega con la página de origen
+  aunque GA no esté configurado.
+- En GA4 hay que marcar `whatsapp_click` como **evento clave** para verlo como
+  conversión.
 - **Jerarquía de encabezados:** UN solo `<h1>` por página (título principal),
   `<h2>` para secciones, `<h3>` para tarjetas/subsecciones. **No romper esto.**
 - **Dominio:** `NEXT_PUBLIC_SITE_URL` apunta a `https://zeist.vercel.app` (fallback en `lib/site.ts` + `.env.local`). Cambiar en ambos sitios al migrar a dominio propio.
@@ -260,6 +312,10 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   3. ~~"Automatizar metrados y cubicaciones en Civil 3D"~~ (HECHO, sep-2026)
   4. ~~"Revit API en español: primeros pasos"~~ (HECHO, sep-2026)
   5. "10 scripts de Dynamo para Civil 3D" — siguiente
+- **Conversión (HECHA, oct-2026):** medición GA4 + clics de WhatsApp, y las 4
+  páginas de servicio convertidas en landings de venta (ver sección 6).
+  Pendiente: **política de privacidad** (los términos de GA4 la exigen; el
+  sitio aún no tiene) y dominio propio.
 - **Fase 5:** liberar las herramientas de `/herramientas` (hoy todas "Pronto").
 - **Contacto — WhatsApp es el único canal publicado.** Número en
   `site.whatsapp` (`lib/site.ts`); enlaces siempre vía `whatsappUrl(mensaje)`,

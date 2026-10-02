@@ -22,12 +22,21 @@ export const clusters: Cluster[] = [
       "revit-api-espanol-primeros-pasos",
       "comparar-modelos-revit-civil-3d-detectar-cambios",
       "plugin-acero-revit-modelado-revision",
+      "revit-lento-modelo-pesado-auditoria",
+      "exportar-tablas-revit-excel-editar-parametros",
+      "produccion-planos-automatica-civil-3d-revit",
+      "automatizar-tareas-revit-dynamo-plugins",
+      "auditoria-bim-checklist-empresa",
     ],
   },
   {
     id: "C2",
     pillar: "automatizar-civil-3d-guia-completa",
-    satellites: ["deja-de-usar-excel-y-perder-horas", "automatizar-metrados-cubicaciones-civil-3d"],
+    satellites: [
+      "deja-de-usar-excel-y-perder-horas",
+      "automatizar-metrados-cubicaciones-civil-3d",
+      "produccion-planos-automatica-civil-3d-revit",
+    ],
   },
   {
     id: "C3",
@@ -47,6 +56,7 @@ export const clusters: Cluster[] = [
       "automatizacion-bim-trujillo-la-libertad",
       "reprocesos-obra-costo-oculto",
       "estandarizar-procesos-bim-empresa",
+      "auditoria-bim-checklist-empresa",
     ],
   },
   {

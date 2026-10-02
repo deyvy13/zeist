@@ -47,18 +47,25 @@ export default async function HomePage({
   const [featured, ...rest] = posts;
   const jsonLd = websiteJsonLd(lang);
 
-  const heroMetrics =
-    lang === "pt"
-      ? [
-          { k: "−70%", v: "tempo em tarefas repetitivas" },
-          { k: "4-8 sem", v: "da ideia ao add-in" },
-          { k: "100%", v: "seu código, sua propriedade" },
-        ]
-      : [
-          { k: "−70%", v: "tiempo en tareas repetitivas" },
-          { k: "4-8 sem", v: "de la idea al add-in" },
-          { k: "100%", v: "tu código, tu propiedad" },
-        ];
+  const heroMetricsByLocale = {
+    es: [
+      { k: "−70%", v: "tiempo en tareas repetitivas" },
+      { k: "4-8 sem", v: "de la idea al add-in" },
+      { k: "100%", v: "tu código, tu propiedad" },
+    ],
+    pt: [
+      { k: "−70%", v: "tempo em tarefas repetitivas" },
+      { k: "4-8 sem", v: "da ideia ao add-in" },
+      { k: "100%", v: "seu código, sua propriedade" },
+    ],
+    en: [
+      { k: "−70%", v: "time on repetitive tasks" },
+      { k: "4-8 wks", v: "from idea to add-in" },
+      { k: "100%", v: "your code, your property" },
+    ],
+  };
+  const heroMetrics = heroMetricsByLocale[lang];
+  const deliveredLabel = { es: "Entregado", pt: "Entregue", en: "Delivered" }[lang];
 
   return (
     <>
@@ -84,7 +91,7 @@ export default async function HomePage({
                 {dict.hero.subtitle}
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <Link href={localizedPath(lang, "contacto")} className="btn-primary">
+                <Link href={localizedPath(lang, "contacto")} data-cta="home-hero" className="btn-primary">
                   {dict.hero.ctaPrimary}
                   <IconArrow className="h-4 w-4" />
                 </Link>
@@ -105,7 +112,7 @@ export default async function HomePage({
             {/* Visual — clay accent with subtle scroll-driven parallax */}
             <HeroParallax
               metrics={heroMetrics}
-              deliveredLabel={lang === "pt" ? "Entregue" : "Entregado"}
+              deliveredLabel={deliveredLabel}
             />
           </div>
         </div>
@@ -358,7 +365,7 @@ export default async function HomePage({
               {dict.finalCta.subtitle}
             </p>
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link href={localizedPath(lang, "contacto")} className="btn-primary">
+              <Link href={localizedPath(lang, "contacto")} data-cta="home-final" className="btn-primary">
                 {dict.finalCta.ctaPrimary}
                 <IconArrow className="h-4 w-4" />
               </Link>
@@ -366,6 +373,7 @@ export default async function HomePage({
                 href={whatsappUrl(dict.whatsapp.prefill)}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-cta="home-final-whatsapp"
                 className="btn-ghost"
               >
                 {dict.finalCta.ctaSecondary}

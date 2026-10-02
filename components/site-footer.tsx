@@ -67,6 +67,7 @@ export function SiteFooter({ lang, dict }: { lang: Locale; dict: Dictionary }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={dict.whatsapp.aria}
+              data-cta="footer"
               className="group mt-5 inline-flex items-center gap-2 text-sm font-medium text-[color:var(--color-mint-400)] transition hover:text-[color:var(--color-mint-300)]"
             >
               <svg

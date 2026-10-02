@@ -1,0 +1,218 @@
+---
+title: "BIM Audit: What It Is, What It Checks (Full Checklist) and When Your Firm Needs One"
+seoTitle: "BIM Audit: What It Is, Checklist and When to Do It"
+ctaTitle: "Want to know exactly where your BIM team loses hours and quality? A BIM audit tells you."
+description: "What a BIM audit is, the difference between auditing the model and auditing the process, the full checklist of what gets reviewed, what the report should deliver, and when an engineering or construction firm should do one."
+date: "2026-10-02T09:00:00.000Z"
+author: "Zeist"
+tags:
+  - BIM audit
+  - BIM model audit
+  - BIM quality control
+  - BIM processes
+  - Revit
+  - Civil 3D
+---
+
+<BlogHero
+  eyebrow="BIM audit · Quality and processes"
+  title="Your team works hard. The question is how much of that work gets repeated, redone or lost."
+  highlight="A BIM audit answers that with data: the state of your models, where the hours go, and what to fix or automate first. This guide explains what it is, what it checks, what you should receive at the end, and when it's worth doing."
+/>
+
+<Callout type="success" title="Quick answer">
+A **BIM audit** is a structured review of how a firm produces its projects in BIM. It has two parts: the **model audit**, which checks the technical quality of the files (naming, coordinates, warnings, information, consistency between model, drawings and takeoffs), and the **process audit**, which measures where hours are lost, which tasks repeat and which standards are missing. The result is a **report with prioritized findings and an action plan**: what to fix, what to standardize and what to automate first. It's worth doing before a major bid, when review comments keep repeating, or when models become slow and inconsistent.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain language">
+- **Model audit** — Reviewing the files: whether they're well built, well named and carry the right information.
+- **Process audit** — Reviewing how the team works: what tasks it does, how long they take, and what repeats.
+- **BIM standard** — The firm's written rules: naming, file structure, templates, information levels.
+- **BIM execution plan** — The document defining how a specific project will be delivered.
+- **Level of information** — What data each model element must carry at each project stage.
+- **Shared coordinates** — The system that makes every model in a project line up in the same place.
+- **Automation** — Turning a repetitive manual task into a button, with Dynamo or a plugin.
+
+No programming jargon. This is written for managers, design leads and BIM coordinators.
+</Callout>
+
+## Why almost no firm knows what its way of working costs
+
+Every firm knows what it bills for a project. Very few know how many of the hours behind it were **work that got repeated, redone or lost**.
+
+It isn't carelessness: those hours don't appear in any report. They hide in phrases like *"the model was slow"*, *"we had to redo the takeoff"*, *"the reviewer sent the drawings back"*, or *"the person who knew how was on another project"*.
+
+A BIM audit brings those hours into the open and turns them into decisions.
+
+<AnimatedFlow
+  title="What an audit does"
+  nodes="Review the models|Measure the process|Prioritized findings|Action plan"
+  subs="Technical quality|Where the hours go|By impact and effort|Fix, standardize, automate"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Model audit vs. process audit" time="~5 min">
+
+They're two different things, and it pays not to confuse them, because they answer different questions.
+
+**The model audit** answers: *are our files well made?* It checks technical quality: whether they meet the standard, whether information is complete, whether the model matches the drawings and the takeoff. Much of it can be **automated** and repeated every week.
+
+**The process audit** answers: *are we working as efficiently as we could?* It measures how long each task takes, which ones repeat on every project, where work gets redone and what depends on a single person. It needs conversations with the team and observation of real work.
+
+<ComparisonTable
+  criterionLabel="Aspect"
+  leftLabel="Model audit"
+  rightLabel="Process audit"
+  rows="Question it answers | Are the files well made? | Are we working efficiently? || What it reviews | Naming, information, consistency | Tasks, time, rework, roles || How it's done | File review, automatable | Interviews and observation || Ideal frequency | *Continuous, weekly | Once or twice a year || Output | A list of errors to fix | An improvement and automation plan"
+/>
+
+<Callout type="info" title="The one that creates the most value">
+The model audit finds errors. The process audit finds **the cause** of those errors and the lost hours. If you can only do one, start with the process: it tells you what to automate and where the return is.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Checklist: what the model audit reviews" time="~8 min">
+
+This is the list we use as a baseline. Adapt it to your standard and project types.
+
+**Structure and naming**
+- File names per the project's or agency's standard.
+- Naming of views, sheets, levels, layers and families.
+- Folder structure and links between models.
+
+**Location and coordinates**
+- Shared coordinates set up and consistent across disciplines.
+- Project georeferenced where required.
+- Levels and grids identical across every model.
+
+**Technical health**
+- Number and type of unresolved warnings.
+- Imported CAD instead of linked.
+- In-place families, unused content, file size. We cover this in [slow Revit model: how to audit it](/en/blog/revit-lento-modelo-pesado-auditoria).
+
+**Information**
+- Required parameters complete per the requested level of information.
+- Cost, classification or asset codes where required.
+- Empty or inconsistent parameters.
+
+**Consistency**
+- Drawings generated from the current model version.
+- Takeoffs matching the model.
+- Clashes between disciplines resolved or documented.
+
+<Callout type="warn" title="The item that prevents the most review comments">
+Consistency between model, drawings and takeoffs. It's what reviewers check most, and what breaks most when the project changes.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Checklist: what the process audit reviews" time="~7 min">
+
+**Time per task**
+- How long each stage takes: modeling, takeoffs, sheets, review, submittal.
+- Which tasks repeat on every project with the same rules.
+
+**Rework**
+- What gets redone in every design revision, and why.
+- How many review rounds each submittal had, and of what kind.
+
+**Standards**
+- Whether a written standard exists and whether it's built into templates.
+- Whether every project is delivered the same way or depends on who does it.
+
+**People and knowledge**
+- Which tasks depend on a single person.
+- What happens when that person is out.
+
+**Tools**
+- What's done by hand that the software already solves.
+- What's done by hand that could be automated with Dynamo or a plugin.
+
+<ComparisonTable
+  criterionLabel="Typical finding"
+  leftLabel="Signal in the audit"
+  rightLabel="Usual action"
+  rows="Takeoffs in a separate spreadsheet | Review rounds over quantities | Generate takeoffs from the model || Sheets built by hand | Days of work before each submittal | Automated plan production || Naming differs by person | Formatting comments | Standard in templates plus checks || Slow models | Minutes waiting to open and sync | Cleanup plus weekly audit || Knowledge in one person | Delays when they're out | Document and automate"
+/>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. What you should receive at the end" time="~5 min">
+
+An audit that ends in a PDF with fifty unordered findings is useless. Here's what it should deliver:
+
+**A diagnosis with numbers.** Hours per task, review rounds, model health. Without numbers, there's no investment decision.
+
+**Findings prioritized by impact and effort.** What to fix this week, this quarter, and later.
+
+**An action plan on three fronts:**
+- **Fix:** specific errors in current models.
+- **Standardize:** rules that still need writing or building into templates.
+- **Automate:** repetitive tasks that are candidates for Dynamo or a plugin, with the estimated savings for each.
+
+**A baseline to measure against.** Today's indicators, to compare three months from now.
+
+<Callout type="success" title="The question the audit has to answer">
+*"If we could only change three things this quarter, which would give us back the most hours?"* If the report doesn't answer that clearly, it isn't finished.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. When your firm needs a BIM audit" time="~5 min">
+
+These are the clearest signals. If you recognize two or more, it's time:
+
+- **Review comments keep repeating** on submittals, mostly about formatting or quantities.
+- **Models are slow** or get corrupted often.
+- **Every project is delivered differently**, depending on who did it.
+- **There's a major bid** or a new client with BIM requirements.
+- **New people joined** and take months to produce like the rest.
+- **The team works overtime** every submittal week.
+- **You want to automate** but don't know where to start.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. How to do it without slowing projects" time="~5 min">
+
+**Week 1 · Scope.** Pick two or three representative projects and the disciplines involved.
+
+**Week 2 · Model review.** Run the model checklist, with automated tools wherever possible.
+
+**Week 3 · Process.** Short interviews with the team and observation of a real submittal. Measure times.
+
+**Week 4 · Report and plan.** Prioritized findings, the three-front plan and a baseline.
+
+After that, the model audit becomes **automated and weekly**, and the process audit is repeated once or twice a year to measure progress.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · BIM process audit"
+  title="Know in four weeks where your team loses hours and what to automate first"
+  body="We run BIM model and process audits for engineering and construction firms: a diagnosis with numbers, prioritized findings, and an action plan with the estimated savings of each automation."
+  primaryLabel="Get a diagnosis"
+  primaryHref="/en/contacto"
+  secondaryLabel="See BIM process audit"
+  secondaryHref="/en/servicios/auditoria-procesos-bim"
+/>
+
+## Related resources
+
+- **What to automate next:** [automating Revit tasks: the 12 that save the most time](/en/blog/automatizar-tareas-revit-dynamo-plugins).
+- **So everyone delivers the same way:** [standardizing BIM processes in your company](/en/blog/estandarizar-procesos-bim-empresa).
+- **When the model is slow:** [slow Revit model, how to audit it](/en/blog/revit-lento-modelo-pesado-auditoria).
+- **The cost of catching it late:** [rework on site, the hidden cost](/en/blog/reprocesos-obra-costo-oculto).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · BIM automation"
+  title="A team of civil engineers and software engineers"
+  body="We audit from the inside: we understand the project because we've produced it, and we know how to build the tool that fixes what we find. We work with firms across the Americas and beyond."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contacto"
+  secondaryLabel="See all services"
+  secondaryHref="/en/servicios"
+/>

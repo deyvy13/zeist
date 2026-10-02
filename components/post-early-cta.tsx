@@ -60,12 +60,14 @@ export function PostEarlyCta({
             href={whatsappUrl(dict.whatsapp.prefill)}
             target="_blank"
             rel="noopener noreferrer"
+            data-cta="post-early-whatsapp"
             className="btn-primary justify-center"
           >
             {c.primary}
           </a>
           <Link
             href={localizedPath(lang, "servicios/add-ins-revit-civil-3d")}
+            data-cta="post-early-service"
             className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:border-[color:var(--color-mint-400)] hover:text-[color:var(--color-mint-300)]"
           >
             {c.secondary}

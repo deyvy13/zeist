@@ -1,0 +1,179 @@
+---
+title: "Automating Revit Tasks: The 12 That Save the Most Time (with Dynamo or a Plugin)"
+seoTitle: "Automate Revit Tasks: The 12 That Save the Most Time"
+ctaTitle: "Does your team repeat the same Revit tasks on every project? We turn them into buttons."
+description: "The 12 repetitive Revit tasks that save the most hours when automated: sheets, naming, parameters from Excel, batch export, tagging, model audits and more. Which to solve with Dynamo, which with a plugin, and how to prioritize."
+date: "2026-10-02T10:00:00.000Z"
+author: "Zeist"
+tags:
+  - Revit automation
+  - Dynamo automation
+  - Revit plugins
+  - BIM productivity
+  - Revit
+  - BIM automation
+---
+
+<BlogHero
+  eyebrow="Revit · Automation"
+  title="On every project, your team does the same twenty Revit tasks by hand. Twelve of them should never be done by hand again."
+  highlight="Renaming views, creating sheets, filling parameters, exporting PDFs, tagging, checking standards. Rule-based tasks with no judgment involved that eat hours on every submittal. This guide ranks them by savings, explains which fit Dynamo and which fit a plugin, and how to decide where to start."
+/>
+
+<Callout type="success" title="Quick answer">
+The Revit tasks most worth **automating** are the ones repeated on every project with fixed rules: **creating sheets and placing views, renaming views and sheets to the standard, filling parameters from Excel, batch-exporting PDF and DWG, numbering rooms and doors, batch tagging, creating views per level with templates, auditing model health, and checking the standard before submittal**. They're automated with **Dynamo**, which builds routines by connecting blocks with no code, or with a **plugin**, a button installed on the Revit toolbar. Dynamo is for testing quickly; a plugin pays off when the task is used on every project and run by several people.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain language">
+- **Dynamo** — Autodesk's tool for building routines by connecting blocks, with no code. It ships with Revit.
+- **Plugin (or add-in)** — A program installed inside Revit that adds its own buttons to the toolbar at the top. Anyone on the team can use it.
+- **Sheet** — Each drawing in the submittal set.
+- **View template** — The settings that define how a view looks.
+- **Parameter** — Any piece of data on an element: code, level, material, manufacturer.
+- **Batch export** — Exporting many sheets to PDF or DWG in a single operation.
+
+No programming jargon. This is written for BIM coordinators, modelers and project managers.
+</Callout>
+
+## How to decide which task to automate first
+
+Before the list, the rule that orders everything. A task is worth automating based on three numbers:
+
+**Frequency** — how many times it's done per project or per week.
+**Duration** — how long it takes each time.
+**People** — how many people do it.
+
+Multiply them and you get the hours per year the task consumes. A 20-minute task done by 6 people three times a week is **more than 300 hours a year**. That one goes first, even if it isn't the most exciting.
+
+There's a fourth condition: **it needs clear rules**. If two people solve it differently, agree on the criterion first.
+
+<AnimatedFlow
+  title="How to prioritize"
+  nodes="Frequency|Duration|People|Hours per year"
+  subs="Times per week|Minutes each time|Who does it|The biggest total goes first"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Sheet production (the 3 biggest savers)" time="~6 min">
+
+**1. Creating sheets and placing views.** Creating dozens of sheets with their number, name and title block, and placing views in the same position on all of them. One of the longest tasks before every submittal. We cover it in [automated plan production](/en/blog/produccion-planos-automatica-civil-3d-revit).
+
+**2. Renaming views and sheets to the standard.** When the client or agency requires a naming convention, renaming hundreds of views by hand is slow and always leaves a typo somewhere.
+
+**3. Batch-exporting PDF and DWG.** Exporting the full set with the file names the client asks for. Recent Revit versions can export multiple sheets to PDF, but client naming, format combinations and folder organization usually remain manual.
+
+<Callout type="info" title="Dynamo or plugin">
+All three can be prototyped in Dynamo. Because they're used on every submittal and by several people, they almost always end up as a plugin.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Data and parameters" time="~6 min">
+
+**4. Filling parameters from Excel.** Cost codes, manufacturer data, classifications: load them in a sheet and push them back to the model. We cover it in [export Revit schedules to Excel and import them back](/en/blog/exportar-tablas-revit-excel-editar-parametros).
+
+**5. Numbering rooms and doors.** Numbering by path or by level and zone, following the office's rule. Renumbering by hand after a change is tedious and prone to duplicates.
+
+**6. Copying values between parameters.** Moving data from one parameter to another, concatenating codes, or computing derived values across a whole category.
+
+<ComparisonTable
+  criterionLabel="Task"
+  leftLabel="Automated"
+  rightLabel="Manual"
+  rows="Code 2,000 elements from Excel | *An afternoon | A week || Renumber 300 rooms after a change | *Seconds | Hours || Copy or concatenate parameters | *Whole category at once | Element by element"
+/>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Views and documentation" time="~5 min">
+
+**7. Creating views per level and discipline.** Duplicating floor plans, ceiling plans and discipline views for every level, with the right view template and standard name.
+
+**8. Batch tagging.** Tagging every door, window, room or piece of equipment in a view or across the project, instead of one at a time.
+
+**9. Placing repetitive elements by rule.** Light fixtures, sprinklers, outlets or signage distributed by spacing or a design rule.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Quality control (the ones that prevent costly errors)" time="~6 min">
+
+**10. Auditing model health.** Measuring warnings, imported CAD, in-place families and file size every week, and alerting when something gets worse. We cover it in [slow Revit model: how to audit it](/en/blog/revit-lento-modelo-pesado-auditoria).
+
+**11. Checking the standard before submittal.** Reviewing naming, empty required parameters and views without templates before every submittal, with a report of what doesn't comply.
+
+**12. Comparing model versions.** Detecting what changed between the version you had and the one that arrived. We cover it in [compare two Revit models](/en/blog/comparar-modelos-revit-civil-3d-detectar-cambios).
+
+<Callout type="success" title="Why these three pay more than they seem">
+They don't just save hours: they **prevent errors** found late, in a reviewer's comments or on site. A single avoided comment is often worth more than weeks of savings on production tasks.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Dynamo, pyRevit or a custom plugin" time="~6 min">
+
+There are several ways to automate Revit, and they all have a place:
+
+**Dynamo.** Ships with Revit and requires no programming. Ideal for testing an automation and for one-off tasks. Its limit is that it depends on whoever can open the graph, and it slows down on large models.
+
+**Free community tools.** There are free toolbars, such as pyRevit, with many ready-made utilities. If one already solves your case, use it.
+
+**A custom plugin.** A button with your exact rules, naming and formats, with error handling and a log of what it did. Worth it when the task repeats on every project, several people run it, and generic tools don't apply your standard.
+
+<ComparisonTable
+  criterionLabel="Criterion"
+  leftLabel="Custom plugin"
+  rightLabel="Dynamo"
+  rows="Anyone on the team can use it | *Yes, it's a button | Only whoever can open it || Applies your exact standard | *Yes | *Yes || Speed on large models | *High | Medium to low || Error handling and log | *Complete | Basic || Time to a first version | Weeks | *Days"
+/>
+
+<Callout type="info" title="The order that works">
+Prove the rule in Dynamo on a real project. When the task is used every time, move it to a plugin. The full comparison is in [Dynamo vs C#: which one fits each case](/en/blog/dynamo-vs-csharp-civil3d-revit).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. A plan to start this month" time="~5 min">
+
+**Week 1 · List and measure.** Ask the team to log every repetitive task for a week and how long it took. Compute each task's hours per year.
+
+**Week 2 · Pick one.** The one with the most hours and clear rules. Write those rules on one page.
+
+**Week 3 · Prototype.** Solve it in Dynamo on a real project and compare the result with the manual one.
+
+**Week 4 · Decide.** If it'll be used on every project, move it to a plugin. Then move to the next one on the list.
+
+<Callout type="warn" title="The most common mistake">
+Starting with the most interesting task instead of the one that eats the most hours. The most profitable automation is almost never the flashiest: it's usually renaming, exporting or filling data.
+</Callout>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Revit plugins"
+  title="Your team's repetitive tasks, turned into buttons"
+  body="We measure where your team's Revit hours go and build the plugins that win them back, with your standard and your naming. We start with the task that adds up to the most hours."
+  primaryLabel="Get a diagnosis"
+  primaryHref="/en/contacto"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/servicios/add-ins-revit-civil-3d"
+/>
+
+## Related resources
+
+- **Before automating, measure:** [BIM audit, what it is and the full checklist](/en/blog/auditoria-bim-checklist-empresa).
+- **How a plugin gets built:** [Revit and Civil 3D add-in development, the complete guide](/en/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+- **If you work in infrastructure:** [automating Civil 3D, the complete guide](/en/blog/automatizar-civil-3d-guia-completa).
+- **If you're outsourcing it:** [how much a Revit or Civil 3D add-in costs](/en/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · BIM automation"
+  title="A team of civil engineers and software engineers"
+  body="We know the tasks that repeat in Revit because we've done them hundreds of times. We build the tools that remove them for engineering and construction firms across the Americas and beyond."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contacto"
+  secondaryLabel="See all services"
+  secondaryHref="/en/servicios"
+/>

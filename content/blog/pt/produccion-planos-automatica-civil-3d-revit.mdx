@@ -1,0 +1,201 @@
+---
+title: "Produção automática de pranchas no Civil 3D e Revit: planta e perfil, seções e conjuntos de folhas em minutos"
+seoTitle: "Produção automática de pranchas no Civil 3D e Revit"
+ctaTitle: "Montar as pranchas de cada entrega leva dias para a sua equipe? Nós transformamos isso em um botão."
+description: "Como gerar automaticamente pranchas de planta e perfil, seções transversais e conjuntos de folhas no Civil 3D e Revit: o que fazem as ferramentas nativas de produção de pranchas, onde ficam curtas e como um plugin monta, rotula e exporta o conjunto completo."
+date: "2026-10-01T11:00:00.000Z"
+author: "Zeist"
+tags:
+  - Produção de pranchas
+  - Pranchas
+  - Planta e perfil
+  - Civil 3D
+  - Revit
+  - Plugin
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Revit · Produção de pranchas"
+  title="O projeto já está pronto. O que falta são três dias montando pranchas."
+  highlight="Enquadrar cada prancha, ajustar as viewports, preencher o carimbo, numerar, conferir que todas dizem o mesmo, exportar para PDF. E se o traçado muda na véspera da entrega, de novo. Este guia explica o que as ferramentas nativas do Civil 3D e do Revit automatizam, o que não, e como um plugin gera o conjunto completo de pranchas."
+/>
+
+<Callout type="success" title="Resposta rápida">
+O Civil 3D inclui **ferramentas de produção de pranchas** que geram quadros de vista ao longo de um alinhamento e criam as pranchas de **planta e perfil** a partir de um modelo; também cria vistas e pranchas de **seções transversais**. O Revit cria pranchas uma a uma, com modelos de vista que ajudam a manter o estilo. O que nenhum resolve sozinho é o trabalho ao redor: **preencher o carimbo, numerar, colocar notas e rótulos coerentes, controlar revisões e exportar o conjunto completo** com a nomenclatura da empresa. Um **plugin de produção de pranchas** automatiza essa parte e regenera o conjunto inteiro quando o projeto muda.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Prancha** — Cada folha do conjunto de desenhos que se entrega ou se imprime.
+- **Planta e perfil** — A prancha típica de vias e redes: em cima a vista em planta, embaixo o perfil longitudinal do mesmo trecho.
+- **Quadro de vista** — O retângulo que define qual trecho do alinhamento entra em cada prancha.
+- **Viewport** — O recorte na prancha que mostra uma vista do modelo numa escala.
+- **Carimbo** — O quadro com os dados da prancha: projeto, número, título, escala, data, revisão, assinaturas.
+- **Modelo de vista** — O conjunto de ajustes que define como uma vista aparece: escala, layers visíveis, estilos.
+- **Plugin** — Um programa instalado dentro do Civil 3D ou do Revit que adiciona botões próprios na barra superior.
+
+Sem termos de programação. Escrito para projetistas, coordenadores e gestores de projeto.
+</Callout>
+
+## A parte do projeto que ninguém orça
+
+Num projeto de uma via de 8 km, o conjunto de pranchas pode ter 40 pranchas de planta e perfil, outras tantas de seções transversais, mais detalhes e obras de arte. Cada prancha passa pelas mesmas mãos:
+
+- Enquadrar o trecho e ajustar a escala
+- Conferir que a planta e o perfil correspondem ao mesmo trecho
+- Colocar linhas de continuação e referências às pranchas vizinhas
+- Preencher o carimbo: número, título, estacas, data, revisão
+- Ajustar rótulos sobrepostos
+- Exportar para PDF com o nome correto
+
+Nenhuma dessas tarefas é difícil. Todas juntas são **dias de trabalho por entrega**. E na véspera da entrega, quando o traçado muda, é preciso repetir boa parte.
+
+<AnimatedFlow
+  title="O que acontece a cada entrega"
+  nodes="Projeto pronto|Prancha por prancha|Carimbos e rótulos à mão|Mudança de última hora"
+  subs="O trabalho de engenharia|Enquadrar e ajustar|Quarenta vezes|Repetir tudo"
+  warnCount="4"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. O que o Civil 3D automatiza nativamente" time="~6 min">
+
+O Civil 3D tem ferramentas de produção de pranchas sólidas, e vale usá-las antes de pensar em desenvolver qualquer coisa.
+
+**Quadros de vista.** Divide o alinhamento em trechos que cabem numa prancha, conforme o modelo e a escala escolhidos, e coloca as linhas de continuação entre os trechos.
+
+**Pranchas de planta e perfil.** A partir dos quadros de vista, cria as pranchas com a viewport de planta e a de perfil, usando um modelo de desenho com o carimbo.
+
+**Seções transversais.** Cria as vistas de várias seções ao longo do alinhamento e as distribui em pranchas segundo um modelo.
+
+**Conjuntos de folhas.** O gerenciador de conjuntos de folhas agrupa as pranchas e permite numerá-las e publicá-las juntas, com campos que preenchem o carimbo.
+
+<Callout type="info" title="Use-as bem antes de automatizar">
+Muitos escritórios não aproveitam essas ferramentas porque nunca prepararam um bom modelo. Um modelo com o carimbo, as escalas e os estilos da empresa já resolve boa parte do enquadramento. Esse é o primeiro passo, com ou sem plugin.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Onde as ferramentas nativas ficam curtas" time="~6 min">
+
+O nativo resolve a geometria das pranchas. O que continua manual é tudo o que as transforma em **um conjunto de pranchas entregável**:
+
+- **Carimbos com dados do projeto**: estacas de início e fim do trecho, títulos na nomenclatura do cliente, códigos de prancha segundo o padrão do órgão.
+- **Rótulos sobrepostos** em curvas fechadas ou cruzamentos, que é preciso mover à mão.
+- **Notas e referências** próprias de cada trecho: obras de arte, cruzamentos, mudanças de seção.
+- **Revisões**: quais pranchas mudaram, com qual descrição e em que data.
+- **Exportação** do conjunto completo com a nomenclatura de arquivos que o cliente exige.
+- **Regenerar tudo** quando o alinhamento muda, sem perder os ajustes manuais.
+
+<ComparisonTable
+  criterionLabel="Tarefa"
+  leftLabel="Ferramentas nativas"
+  rightLabel="Continua manual"
+  rows="Dividir o alinhamento em trechos | *Sim | Não || Criar pranchas de planta e perfil | *Sim | Não || Criar pranchas de seções | *Sim | Não || Carimbo com estacas e códigos do cliente | Parcial | *Sim || Rótulos sobrepostos | Não | *Sim || Controle de revisões por prancha | Parcial | *Sim || Exportar com a nomenclatura do cliente | Parcial | *Sim"
+/>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. No Revit: pranchas uma a uma" time="~5 min">
+
+No Revit, cada prancha é criada à mão: escolhe-se o carimbo, arrastam-se as vistas, alinham-se, preenchem-se os parâmetros. Os modelos de vista ajudam a manter tudo igual, mas a montagem continua sendo prancha por prancha.
+
+Num edifício com 120 pranchas — plantas por pavimento, cortes, elevações, detalhes, quadros — isso é muito tempo, e um risco de inconsistência: vistas em posições diferentes em cada prancha, numeração pulada, carimbos com dados velhos.
+
+**O que mais consome tempo no Revit:**
+
+- Criar dezenas de pranchas com número e nome.
+- Colocar cada vista **na mesma posição** em todas as pranchas do mesmo tipo.
+- Duplicar vistas por pavimento com o modelo correto.
+- Preencher e atualizar os parâmetros do carimbo.
+- Imprimir ou exportar o conjunto completo com nomes de arquivo corretos.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Como funciona um plugin de produção de pranchas" time="~8 min">
+
+A ideia: **o conjunto de pranchas é descrito numa lista, e o plugin o monta**.
+
+**Passo 1 · A lista de pranchas.** Uma tabela — no Excel ou dentro do programa — com cada prancha: número, título, tipo, vistas que leva, trecho ou pavimento.
+
+**Passo 2 · Geração.** O plugin cria as pranchas que faltam, coloca as vistas em posições fixas segundo o tipo de prancha e aplica os modelos de vista corretos.
+
+**Passo 3 · Carimbo.** Preenche os dados de cada prancha a partir da lista e do modelo: no Civil 3D, por exemplo, as estacas de início e fim de cada trecho; no Revit, pavimento, disciplina e fase.
+
+**Passo 4 · Rotulagem.** Aplica os estilos de rótulos e sinaliza as sobreposições que exigem revisão humana.
+
+**Passo 5 · Revisões.** Registra quais pranchas mudaram em relação à entrega anterior e atualiza a tabela de revisões.
+
+**Passo 6 · Exportação.** Exporta o conjunto completo para PDF e DWG com a nomenclatura de arquivos do cliente, num único passo.
+
+<AnimatedFlow
+  title="Do modelo ao conjunto de pranchas"
+  nodes="Lista de pranchas|Pranchas e vistas|Carimbo e rótulos|PDF e DWG prontos"
+  subs="Número, título, tipo|Posições fixas por tipo|Dados do modelo|Com a nomenclatura do cliente"
+/>
+
+<Callout type="success" title="Quando o projeto muda na véspera">
+Este é o valor real. Se o traçado muda, o plugin regenera os quadros, atualiza as estacas dos carimbos, marca as pranchas modificadas na tabela de revisões e exporta de novo. O que antes era uma noite sem dormir vira uma execução.
+</Callout>
+
+<ComparisonTable
+  criterionLabel="Tarefa"
+  leftLabel="Com plugin"
+  rightLabel="Manual"
+  rows="Montar 40 pranchas de planta e perfil | *Minutos | Dois ou três dias || Carimbos com estacas corretas | *Automático a partir do modelo | Prancha por prancha || Vistas na mesma posição | *Sempre | Depende de quem montou || Refazer após mudança de traçado | *Executar de novo | Boa parte de novo || Exportar com nomenclatura do cliente | *Um passo | Arquivo por arquivo"
+/>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. O que a empresa ganha" time="~5 min">
+
+**Prazo.** A produção de pranchas deixa de ser o gargalo entre o projeto pronto e a entrega.
+
+**Consistência.** Todas as pranchas seguem o mesmo padrão, monte quem montar. Os apontamentos por formato e carimbo desaparecem.
+
+**Capacidade de mudar tarde.** Uma mudança de projeto de última hora deixa de pôr em risco a data de entrega.
+
+**Horas de engenharia para engenharia.** O tempo que hoje vai para enquadrar e preencher carimbos volta para o projeto, que é o que o cliente paga.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Como implantar" time="~5 min">
+
+**Passo 1 · Modelos.** Um modelo de prancha por tipo, com o carimbo e os estilos da empresa. Sem isso, nada se automatiza bem.
+
+**Passo 2 · A lista de pranchas padrão.** Quais tipos de prancha cada tipo de projeto leva, com a numeração.
+
+**Passo 3 · Piloto.** Gere o conjunto de pranchas de um projeto já entregue e compare com o que foi feito à mão.
+
+**Passo 4 · Uso num projeto real.** Com revisão do primeiro conjunto completo. A partir do segundo, vira rotina.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Civil 3D e Revit"
+  title="O conjunto completo de pranchas, gerado a partir do modelo"
+  body="Desenvolvemos plugins de produção de pranchas com os seus modelos, o seu carimbo e a nomenclatura dos seus clientes: pranchas de planta e perfil, seções, revisões e exportação num único passo."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **O guia principal do Civil 3D:** [automatizar o Civil 3D, o guia completo](/pt/blog/automatizar-civil-3d-guia-completa).
+- **Como se constrói um plugin:** [desenvolvimento de add-ins para Revit e Civil 3D, o guia completo](/pt/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+- **Redes em 3D:** [plugin para Civil 3D, desenho 3D automatizado](/pt/blog/plugin-civil-3d-dibujo-3d-automatizado).
+- **Se for terceirizar:** [quanto custa um add-in para Revit ou Civil 3D](/pt/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Automação BIM"
+  title="Uma equipe de engenheiros civis e engenheiros de sistemas"
+  body="Já montamos pranchas na noite antes de uma entrega. Por isso construímos ferramentas que as geram a partir do modelo. Trabalhamos com empresas de engenharia e construção do Brasil e da América Latina."
+  primaryLabel="Vamos falar do seu caso"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver todos os serviços"
+  secondaryHref="/pt/servicios"
+/>
