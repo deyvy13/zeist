@@ -1,0 +1,189 @@
+---
+title: "Topografía de Trujillo en DWG: curvas de nivel gratis para Civil 3D, qué precisión tienen y cuándo necesitas un levantamiento"
+seoTitle: "Topografía de Trujillo en DWG: curvas de nivel"
+ctaTitle: "¿Tu oficina arma superficies y limpia DWG antiguos a mano en cada proyecto? Lo automatizamos en Civil 3D."
+description: "Topografía de Trujillo en DWG: cómo obtener curvas de nivel gratis para Civil 3D, qué precisión tienen y cuándo necesitas un levantamiento topográfico."
+date: "2026-10-02T16:00:00.000Z"
+author: "Zeist"
+tags:
+  - Trujillo
+  - La Libertad
+  - Topografía
+  - Curvas de nivel
+  - Civil 3D
+  - Superficies
+---
+
+<BlogHero
+  eyebrow="Trujillo · Topografía · Curvas de nivel"
+  title="Trujillo es casi plana. Por eso sus curvas de nivel engañan."
+  highlight="Cómo conseguir la topografía de Trujillo en DWG para un anteproyecto, qué dice el relieve real de la ciudad, por qué el modelo satelital no alcanza para diseñar calles ni drenaje, y qué pedir en un levantamiento."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Para curvas de nivel de referencia de Trujillo, la vía más rápida es generarlas desde el modelo satelital SRTM. Nuestro [generador de curvas de nivel](/es/herramientas/generador-curvas-de-nivel) las entrega en DXF, que se abre en AutoCAD y Civil 3D, en UTM zona 17 Sur. Pero la ciudad es casi plana: sube cerca de 1 % desde el mar hasta el pie de los cerros. Como el SRTM tiene un error vertical de ±16 m, sirve para cerros, quebradas y anteproyectos. Para rasantes, drenaje o un expediente técnico hace falta un levantamiento topográfico.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Curvas de nivel** — Líneas que unen puntos de igual altura. Muy juntas, el terreno es empinado; separadas, es plano.
+- **DWG y DXF** — Los formatos de dibujo de AutoCAD. El DXF es el formato de intercambio: lo abre cualquier programa CAD.
+- **SRTM** — El modelo de elevación global de la NASA, gratuito, con una malla de unos 30 m.
+- **Superficie** — El modelo del terreno en Civil 3D, del que salen las curvas, los perfiles y los volúmenes.
+- **Levantamiento topográfico** — La medición del terreno en campo con estación total, GNSS o dron.
+- **BM** — Un punto con cota conocida que sirve de referencia para las alturas de un levantamiento.
+- **Quebrada** — Un cauce que baja de los cerros y casi siempre está seco, hasta que llueve fuerte.
+
+Sin términos de programación. Está escrito para proyectistas, topógrafos y estudiantes de ingeniería y arquitectura de Trujillo.
+</Callout>
+
+## Tres búsquedas distintas detrás de «topografía de Trujillo en DWG»
+
+Quien busca la topografía de Trujillo en DWG suele estar en uno de estos casos:
+
+1. **Necesita una base rápida** para un anteproyecto, una tesis o una propuesta técnica.
+2. **Necesita la topografía real** para diseñar una vía, una habilitación o una red de drenaje.
+3. **Le pasaron un DWG antiguo** y no sabe si puede confiar en él.
+
+Cada caso tiene una respuesta distinta. Lo que circula en internet como «topografía de Trujillo» suele venir de proyectos antiguos, sin fecha ni datum claros: sirve para el primer caso, rara vez para el segundo.
+
+<AnimatedFlow
+  title="De la búsqueda a una superficie confiable en Civil 3D"
+  nodes="¿Para qué la necesitas?|Modelo satelital o levantamiento|Superficie en Civil 3D|Curvas, perfiles y volúmenes"
+  subs="Anteproyecto o diseño|SRTM gratis o medición en campo|Puntos y líneas de quiebre|Con la precisión que pide el proyecto"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. El relieve de Trujillo, en cifras" time="~5 min">
+
+Medimos un perfil sobre el modelo SRTM, en línea recta desde el mar, frente a Buenos Aires, pasando por el centro, hasta el pie de los cerros al noreste:
+
+| Distancia desde el mar | Cota aproximada (SRTM) | Referencia |
+|---|---|---|
+| 0 km | 3 m | Orilla del mar |
+| 2.2 km | 17 m | Víctor Larco |
+| 4.3 km | 33 m | Cerca de la Plaza de Armas |
+| 6.5 km | 53 m | Hacia La Esperanza y El Porvenir |
+| 9.8 km | 101 m | El Porvenir |
+| 11.9 km | 119 m | Pie de los cerros |
+| 13 a 15 km | 180 a 420 m | Cerros del noreste |
+
+**La lectura:** la ciudad sube en promedio **cerca de 1 %** —un metro por cada cien— desde el mar hasta el pie de los cerros, y ahí el terreno se empina de golpe. De los cerros que rodean la ciudad bajan quebradas como San Ildefonso, San Carlos y El León; la de San Ildefonso llevó los huaicos de 2017 hasta el centro histórico.
+
+Otras referencias del mismo modelo: Huanchaco está a pocos metros sobre el mar, y el pie de las Huacas de Moche, junto al Cerro Blanco, ronda los 90 m.
+
+<Callout type="info" title="Son cifras de un modelo satelital">
+El SRTM tiene una precisión vertical de ±16 m, y en zona urbana mide en parte los techos y no el suelo. Las cotas de la tabla muestran la tendencia del terreno, no la cota de una esquina.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Curvas de nivel gratis con el generador, paso a paso" time="~5 min">
+
+Para una base de anteproyecto, no hace falta buscar un DWG ajeno:
+
+1. Abre el [generador de curvas de nivel](/es/herramientas/generador-curvas-de-nivel). El ejemplo que carga es justamente Trujillo, alrededor del Cerro Blanco: el terreno va de 22 a 364 m y salen curvas cada 20 m.
+2. Mueve el cuadrado a tu zona y elige el tamaño: de 0.5 a 5 km de lado.
+3. Elige el intervalo. El generador sugiere uno según el desnivel.
+4. Descarga lo que necesites:
+   - **DXF** con las curvas como polilíneas 3D en UTM zona 17 Sur, en capas separadas para maestras e intermedias, con rótulos. Se abre en AutoCAD o Civil 3D.
+   - **Puntos PNEZD** para crear una superficie en Civil 3D y controlar tú el intervalo y el estilo.
+   - **KML** para verlas sobre Google Earth.
+
+<Callout type="warn" title="El intervalo tiene que respetar los datos">
+En los cerros, curvas cada 10 o 20 m muestran bien el relieve. En la parte plana de la ciudad, curvas cada 1 o 2 m sacadas del SRTM solo dibujan el error del modelo: zigzags que no existen en el terreno.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Por qué el modelo satelital no alcanza para diseñar en la ciudad" time="~4 min">
+
+En una calle de Trujillo con 1 % de pendiente, el terreno baja **un metro cada cien metros**. Para diseñar su rasante o su drenaje necesitas saber la cota con precisión de centímetros. El SRTM da la cota con un error de **±16 m**, en una malla de unos 30 m.
+
+Además, en zona urbana el radar del satélite rebota en techos y muros: el modelo mide en parte la ciudad construida, no el suelo.
+
+**Para qué sí sirve:**
+
+- Ubicar cuencas y quebradas, y ver hacia dónde escurre el agua.
+- Anteproyectos y estudios de factibilidad en zonas de expansión o en los cerros.
+- Tesis y propuestas técnicas, declarando la fuente y su precisión.
+
+**Para qué no sirve:** rasantes de vías urbanas, pendientes de redes de agua, desagüe o drenaje, metrados de movimiento de tierras y planos de expediente técnico.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Cuándo necesitas un levantamiento, y qué pedir" time="~5 min">
+
+Para diseñar, la topografía sale de un levantamiento en campo: estación total, GNSS o dron, según el área y la precisión que pida el proyecto. Al contratarlo, pide por escrito:
+
+1. **Coordenadas en WGS84, UTM zona 17 Sur.** Nada de coordenadas locales sin georreferenciar ni PSAD56.
+2. **Cotas referidas a un BM con cota oficial**, no a una cota arbitraria de 100 m.
+3. **Puntos con códigos de campo** (terreno natural, borde de pista, sardinel, eje, buzón) para armar grupos y líneas de quiebre.
+4. **Líneas de quiebre** en bordes de pista, cunetas, canales y muros.
+5. **Entrega en PNEZD y DWG**, con un informe que diga equipo, fecha, datum y BM usados.
+
+<Callout type="success" title="Coordenadas que calzan">
+Si el levantamiento se va a unir con planos antiguos, revisa primero el datum. En Trujillo, un plano en PSAD56 queda corrido unos 447 m respecto de uno en WGS84: lo explicamos en [coordenadas UTM en Trujillo y La Libertad](/es/blog/coordenadas-utm-trujillo-la-libertad).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Si te pasaron un DWG antiguo: cinco revisiones antes de usarlo" time="~5 min">
+
+1. **El datum.** Superpón el DWG con un punto conocido en WGS84. Si todo aparece corrido al noreste, está en PSAD56.
+2. **La zona y las unidades.** Coordenadas con un Este de 6 dígitos y un Norte de 7, en metros. Si los números no se parecen a E 717000, N 9102000 en el centro de Trujillo, algo cambió.
+3. **Las curvas tienen cota.** Muchos planos antiguos dibujan las curvas como polilíneas 2D a cota cero y escriben la altura en un texto aparte. Civil 3D no puede crear una superficie con ellas hasta que cada curva tenga su cota.
+4. **La fecha.** Una ciudad que crece hacia los cerros cambia rápido: rellenos, cortes y nuevas pistas.
+5. **La fuente.** Si nadie sabe quién lo midió ni cómo, úsalo solo como referencia.
+
+**Cómo llevarlo a Civil 3D:** con las curvas ya acotadas, se añaden a la definición de la superficie como datos de curvas de nivel, junto con puntos y líneas de quiebre si los hay. La guía de [curvas de nivel en Civil 3D](/es/blog/curvas-de-nivel-civil-3d-google-earth) explica cada ruta.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Lo que se repite en cada proyecto, y se puede automatizar" time="~4 min">
+
+Si tu oficina trabaja en Trujillo todo el año, estas tareas vuelven en cada proyecto:
+
+- **Acotar curvas antiguas** leyendo el texto de la altura más cercano a cada polilínea.
+- **Importar levantamientos** con los códigos de tu oficina y crear los grupos de puntos y las líneas de quiebre por código.
+- **Construir la superficie** con los estilos y el intervalo de la empresa.
+- **Revisar datum y zona** de cada archivo que llega de afuera.
+
+Se hacen con un script de Dynamo para probar la regla, o con un plugin cuando lo usa toda la oficina. Mira [10 scripts de Dynamo para Civil 3D](/es/blog/dynamo-civil-3d-scripts) para ejemplos.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automatización Civil 3D"
+  title="Menos horas limpiando DWG, más horas diseñando"
+  body="Desarrollamos plugins para Civil 3D que acotan curvas antiguas, importan levantamientos con tus códigos y construyen la superficie con los estilos de tu oficina. Somos ingenieros civiles e ingenieros de sistemas en Trujillo."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Herramienta gratuita:** [generador de curvas de nivel en DXF](/es/herramientas/generador-curvas-de-nivel).
+- **Herramienta gratuita:** [conversor de coordenadas UTM y PSAD56](/es/herramientas/conversor-de-coordenadas).
+- **El paso a paso en Civil 3D:** [curvas de nivel en Civil 3D, de Google Earth al levantamiento](/es/blog/curvas-de-nivel-civil-3d-google-earth).
+- **Datums y zonas en la región:** [coordenadas UTM en Trujillo y La Libertad](/es/blog/coordenadas-utm-trujillo-la-libertad).
+- **Cuando la topografía se usa para drenar:** [drenaje pluvial en Trujillo con Civil 3D](/es/blog/drenaje-pluvial-trujillo-civil-3d).
+- **El contexto local:** [automatización BIM en Trujillo y La Libertad](/es/blog/automatizacion-bim-trujillo-la-libertad).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Trabajamos desde Trujillo con oficinas de ingeniería de La Libertad, del resto del Perú y de Latinoamérica. Conocemos el terreno de la ciudad y sabemos construir la herramienta que automatiza el trabajo con superficies."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota sobre las cifras:** las cotas se tomaron del modelo SRTM (malla de unos 30 m, precisión vertical de ±16 m) y muestran la tendencia del relieve. No reemplazan un levantamiento topográfico.

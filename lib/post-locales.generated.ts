@@ -40,6 +40,9 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "pt",
     "en"
   ],
+  "coordenadas-utm-trujillo-la-libertad": [
+    "es"
+  ],
   "crear-plugin-civil-3d-con-claude-code-sin-programar": [
     "es",
     "pt",
@@ -49,6 +52,9 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "es",
     "pt",
     "en"
+  ],
+  "cursos-revit-civil-3d-bim-trujillo": [
+    "es"
   ],
   "curvas-de-nivel-civil-3d-google-earth": [
     "es",
@@ -64,6 +70,9 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "es",
     "pt",
     "en"
+  ],
+  "drenaje-pluvial-trujillo-civil-3d": [
+    "es"
   ],
   "dynamo-civil-3d-scripts": [
     "es",
@@ -97,6 +106,9 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "es",
     "pt",
     "en"
+  ],
+  "habilitacion-urbana-trujillo-civil-3d": [
+    "es"
   ],
   "inteligencia-artificial-autocad-civil-3d": [
     "es",
@@ -148,5 +160,8 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "es",
     "pt",
     "en"
+  ],
+  "topografia-trujillo-curvas-de-nivel-dwg": [
+    "es"
   ]
 };

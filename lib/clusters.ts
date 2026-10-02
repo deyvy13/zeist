@@ -52,7 +52,11 @@ export const clusters: Cluster[] = [
   {
     id: "C4",
     pillar: "programacion-para-ingenieros-civiles",
-    satellites: ["aprende-a-programar-desde-cero", "ramas-ingenieria-sistemas-especializaciones"],
+    satellites: [
+      "aprende-a-programar-desde-cero",
+      "ramas-ingenieria-sistemas-especializaciones",
+      "cursos-revit-civil-3d-bim-trujillo",
+    ],
   },
   {
     id: "C5",
@@ -68,7 +72,19 @@ export const clusters: Cluster[] = [
   {
     id: "C6",
     pillar: "plugin-civil-3d-dibujo-3d-automatizado",
-    satellites: ["redes-tuberias-civil-3d-accesorios", "banco-de-ductos-civil-3d"],
+    satellites: ["redes-tuberias-civil-3d-accesorios", "banco-de-ductos-civil-3d", "drenaje-pluvial-trujillo-civil-3d"],
+  },
+  {
+    // SEO local: búsquedas con "Trujillo" / "La Libertad". Solo es, como C5.
+    id: "C7",
+    pillar: "automatizacion-bim-trujillo-la-libertad",
+    satellites: [
+      "coordenadas-utm-trujillo-la-libertad",
+      "topografia-trujillo-curvas-de-nivel-dwg",
+      "drenaje-pluvial-trujillo-civil-3d",
+      "habilitacion-urbana-trujillo-civil-3d",
+      "cursos-revit-civil-3d-bim-trujillo",
+    ],
   },
 ];
 

@@ -168,6 +168,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "topografia-trujillo-curvas-de-nivel-dwg",
       "curvas-de-nivel-civil-3d-google-earth",
       "automatizar-civil-3d-guia-completa",
       "plugin-civil-3d-dibujo-3d-automatizado",

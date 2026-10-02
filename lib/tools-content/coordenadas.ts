@@ -187,6 +187,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "coordenadas-utm-trujillo-la-libertad",
       "automatizar-civil-3d-guia-completa",
       "plugin-civil-3d-dibujo-3d-automatizado",
       "produccion-planos-automatica-civil-3d-revit",

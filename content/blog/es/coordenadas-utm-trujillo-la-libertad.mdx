@@ -1,0 +1,209 @@
+---
+title: "Coordenadas UTM en Trujillo y La Libertad: zona 17 o 18 Sur, WGS84 y planos antiguos en PSAD56"
+seoTitle: "Coordenadas UTM Trujillo: zona 17S, WGS84 y PSAD56"
+ctaTitle: "¿Tu equipo convierte y revisa coordenadas a mano en cada proyecto? Lo automatizamos en Civil 3D."
+description: "Coordenadas UTM en Trujillo y La Libertad: qué zona usar, cómo pasar planos de PSAD56 a WGS84 y qué datum piden SUNARP y las municipalidades."
+date: "2026-10-02T15:00:00.000Z"
+author: "Zeist"
+tags:
+  - Trujillo
+  - La Libertad
+  - Coordenadas UTM
+  - WGS84
+  - Topografía
+  - Civil 3D
+---
+
+<BlogHero
+  eyebrow="Trujillo · La Libertad · Coordenadas"
+  title="En Trujillo, un plano con el datum equivocado se corre casi medio kilómetro."
+  highlight="Qué zona UTM corresponde a cada provincia de La Libertad, cuánto se desplaza un punto entre PSAD56 y WGS84, qué piden SUNARP y las municipalidades, y cómo convertir cientos de puntos sin errores."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Trujillo está en la **zona UTM 17 Sur**, con el datum oficial **WGS84**. La Plaza de Armas queda alrededor de E 717207 m y N 9102837 m. Casi toda La Libertad usa la zona 17. Las provincias del este —Pataz, Bolívar y parte de Sánchez Carrión— caen en la zona 18. Muchos planos antiguos están en PSAD56, un datum que el IGN dejó sin efecto. En Trujillo, el mismo punto cambia unos 447 m entre PSAD56 y WGS84: hay que convertirlo antes de usarlo. Los planos para SUNARP van en WGS84 UTM.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **UTM** — Un sistema que convierte la Tierra en un plano por franjas, para medir en metros: Este (E) y Norte (N).
+- **Zona UTM** — Cada franja de 6° de longitud. El Perú usa las zonas 17, 18 y 19.
+- **Datum** — La forma y posición de la Tierra que se toma como referencia. Cambiar de datum mueve las coordenadas de un mismo punto.
+- **WGS84** — El datum de los GPS y de Google Earth. Es la referencia oficial en el Perú.
+- **PSAD56** — El datum antiguo (Provisional Sudamericano de 1956). Aparece en planos y cartas anteriores al cambio.
+- **Factor de escala** — La pequeña diferencia entre una distancia en el plano UTM y la misma distancia medida en el terreno.
+- **PNEZD** — Un formato de texto para puntos: número, norte, este, cota y descripción. Es el que importa Civil 3D.
+
+Sin términos de programación. Está escrito para topógrafos, proyectistas, verificadores y estudiantes de ingeniería de La Libertad.
+</Callout>
+
+## El error que más se repite en los planos de la región
+
+Llega un plano de hace años, se superpone con el levantamiento nuevo y nada calza: el lote aparece cruzando la pista, o a cuadras de distancia. Casi nunca es un error de medición. Es un problema de **datum** o de **zona**.
+
+En Trujillo pasa seguido, porque conviven planos de épocas distintas: catastros, habilitaciones y expedientes hechos en PSAD56, y levantamientos nuevos en WGS84. Esta guía explica cómo reconocer cada caso y cómo convertirlo.
+
+<AnimatedFlow
+  title="De una coordenada dudosa a un plano que calza"
+  nodes="Punto o plano de origen|Datum y zona correctos|Conversión|Civil 3D o SUNARP"
+  subs="GPS, Google Earth o plano antiguo|WGS84 · zona 17 Sur|Uno o cientos de puntos|PNEZD o plano perimétrico"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Trujillo en UTM: zona 17 Sur, y por qué el Norte empieza en 9 millones" time="~4 min">
+
+La zona UTM 17 cubre desde los 84° hasta los 78° de longitud oeste, y Trujillo está a unos 79° oeste: **toda la ciudad y su área metropolitana están en la zona 17 Sur**. En el datum WGS84, su código EPSG es el 32717.
+
+**Coordenadas de referencia (WGS84, zona 17 Sur), aproximadas:**
+
+| Lugar | Este (m) | Norte (m) |
+|---|---|---|
+| Plaza de Armas de Trujillo | 717207 | 9102837 |
+| Huanchaco | 706950 | 9106492 |
+| Pacasmayo | 657668 | 9181713 |
+| Otuzco | 768367 | 9125752 |
+
+**¿Por qué el Norte tiene 9 millones?** En el hemisferio sur, UTM suma 10 000 000 m al Norte para no trabajar con números negativos: la línea ecuatorial vale 10 000 000 y las coordenadas bajan hacia el sur. Trujillo, a unos 900 km del ecuador, queda cerca de 9 100 000.
+
+<Callout type="warn" title="Si el Norte sale negativo">
+Si la Plaza de Armas da un Norte cercano a −897 000 en lugar de 9102837, el punto se calculó con el hemisferio norte. Es uno de los errores más comunes al configurar un GPS o un programa: la zona es la 17, pero **Sur**.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. La Libertad está en dos zonas: la 17 y la 18" time="~5 min">
+
+El límite entre las zonas 17 y 18 es el meridiano 78° oeste, y atraviesa la sierra liberteña:
+
+- **Zona 17 Sur:** la costa y casi toda la sierra: Trujillo, Ascope, Chepén, Pacasmayo, Virú, Gran Chimú, Otuzco, Julcán y la mayor parte de Santiago de Chuco y Sánchez Carrión. Huamachuco queda en la zona 17 por apenas unos 5 km.
+- **Zona 18 Sur:** las provincias del este, Pataz y Bolívar, y el extremo oriental de Sánchez Carrión.
+
+**¿Y si el proyecto cruza el meridiano 78°?** Una carretera o una línea de transmisión entre Huamachuco y Pataz no puede dibujarse mitad en una zona y mitad en otra. Se elige **una sola zona para todo el proyecto** y se calculan todos los puntos en ella, aunque algunos queden fuera de su franja. Nuestro [conversor de coordenadas](/es/herramientas/conversor-de-coordenadas) permite forzar la zona para eso.
+
+<Callout type="info" title="Google Earth muestra 17 L o 17 M: la letra no es el hemisferio">
+Google Earth Pro agrega una letra a la zona: es la banda de latitud, no el hemisferio. El paralelo 8° Sur pasa unos 12 km al norte de la Plaza de Armas, así que Trujillo aparece como **17 L**, y Pacasmayo, Otuzco o Huamachuco como **17 M**. Las dos están en el hemisferio sur.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. WGS84 y PSAD56: los 447 metros que descuadran un plano" time="~6 min">
+
+El **PSAD56** fue el datum de la cartografía peruana durante décadas. El IGN lo dejó sin efecto con la Resolución Jefatural N.° 079-2006-IGN/OAJ/DGC, y cerró el periodo de conversión en 2011. Desde entonces, la referencia oficial es el sistema geodésico basado en SIRGAS, compatible con **WGS84**.
+
+Pero los planos antiguos siguen circulando, y el desplazamiento entre ambos datums no es pequeño. Calculado con los parámetros oficiales del registro EPSG, para el mismo punto:
+
+| Lugar | Diferencia en Este | Diferencia en Norte | Desplazamiento total |
+|---|---|---|---|
+| Plaza de Armas de Trujillo | 251 m | 370 m | 447 m |
+| Pacasmayo | 250 m | 371 m | 448 m |
+| Huamachuco | 253 m | 371 m | 449 m |
+| Tayabamba (Pataz, zona 18) | 222 m | 374 m | 435 m |
+
+En la zona 17, **un punto en PSAD56 tiene unos 251 m más de Este y 370 m más de Norte** que el mismo punto en WGS84. Si superpones un plano PSAD56 sobre un levantamiento WGS84, todo aparece corrido hacia el noreste casi medio kilómetro.
+
+<ComparisonTable
+  criterionLabel="Criterio"
+  leftLabel="PSAD56 (planos antiguos)"
+  rightLabel="WGS84 (oficial)"
+  rows="Estado | Sin efecto (IGN, 2006) | *Referencia oficial || Dónde aparece | Planos y cartas anteriores al cambio | *GPS, Google Earth y levantamientos actuales || Plaza de Armas de Trujillo | E 717458 · N 9103208 | *E 717207 · N 9102837 || Planos perimétricos para SUNARP | No | *Sí"
+/>
+
+<Callout type="warn" title="La conversión con parámetros generales tiene un margen">
+Los parámetros oficiales para pasar de PSAD56 a WGS84 en el Perú tienen una exactitud de unos ±16 m. Sirven para ubicar un plano antiguo, no para replantear linderos. Para trabajos de precisión se miden puntos comunes en campo y se calcula una transformación local.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Qué piden SUNARP y las municipalidades" time="~5 min">
+
+La normativa catastral vigente (Directiva N.° 01-2023-SNCP/CNC) pide que los planos de ubicación y perimétricos estén **georreferenciados en WGS84, con proyección UTM**, en una escala convencional y con su **cuadro de datos técnicos**: vértices, lados, distancias, ángulos y coordenadas.
+
+Por eso un plano en PSAD56, o en coordenadas locales sin georreferenciar, termina en observación: la base gráfica registral trabaja en WGS84 UTM y no puede comparar el predio con sus colindantes.
+
+**En la práctica, en Trujillo:**
+
+1. Verifica el datum de cualquier plano antiguo antes de usarlo como base.
+2. Convierte sus vértices a WGS84 zona 17 Sur.
+3. Arma el plano perimétrico con su cuadro de datos técnicos y la memoria descriptiva.
+
+<Callout type="success" title="El cuadro y la memoria, gratis">
+Nuestra [calculadora de área de terreno](/es/herramientas/calculadora-area-terreno) toma las coordenadas UTM de los vértices y genera el cuadro de datos técnicos, la memoria descriptiva en Word y el plano perimétrico en DXF. Los formatos varían según la entidad: úsalo como base y revísalo.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. El factor de escala: cuándo el plano y el terreno no miden lo mismo" time="~4 min">
+
+Una distancia en coordenadas UTM no es exactamente la distancia medida con wincha en el terreno. La diferencia depende de qué tan lejos estás del meridiano central de la zona y de la altura:
+
+- **En Trujillo**, el factor combinado es de 1.000178: las distancias UTM salen **18 cm más largas por cada kilómetro**, y un lote de una hectárea tiene unos 3.6 m² más en UTM que en el terreno.
+- **En Huamachuco**, lejos del meridiano central y a más de 3,100 m de altura, el factor llega a 1.000412: **41 cm por kilómetro** y unos 8.2 m² por hectárea.
+
+Para un lote urbano la diferencia es menor que la tolerancia de la medición. Importa en **replanteos largos**, como ejes de carreteras o canales, y cuando el área registral se compara con un levantamiento hecho en coordenadas topográficas locales.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Cómo convertir coordenadas paso a paso" time="~5 min">
+
+**Para uno o cientos de puntos:**
+
+1. Abre el [conversor de coordenadas](/es/herramientas/conversor-de-coordenadas) y elige el datum de origen (PSAD56, WGS84 o geográficas) y el de destino.
+2. Pega los puntos desde Excel: reconoce columnas separadas por tabulación, punto y coma o comas, y la coma decimal.
+3. Revisa los puntos en el mapa. Si caen en el mar o en otra ciudad, el datum o la zona de origen están mal.
+4. Descarga el resultado en PNEZD para Civil 3D, en Excel o en KML para Google Earth.
+
+**En Civil 3D**, configura el dibujo con el sistema de coordenadas **UTM84-17S** (WGS84, zona 17 Sur) antes de importar los puntos. Así los mapas de fondo y los datos externos caen en su lugar.
+
+<Callout type="info" title="Puntos tomados de Google Earth">
+Google Earth trabaja en WGS84, igual que los GPS. Sus coordenadas sirven para ubicar y planificar, no para linderos: la posición de las imágenes puede tener errores de varios metros.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Los errores más comunes, y cómo detectarlos" time="~4 min">
+
+- **Zona equivocada.** Puntos de Pataz calculados en zona 17, o de Trujillo en zona 18: el Este se corre cientos de kilómetros.
+- **Hemisferio norte.** El Norte sale negativo, cerca de −897 000, en lugar de unos 9 100 000.
+- **Latitud y longitud invertidas.** El punto aparece en otro continente.
+- **Coma decimal.** «717207,5» leído como dos números distintos en un CSV separado por comas.
+- **Datums mezclados.** Un plano PSAD56 sobre un levantamiento WGS84: todo corrido unos 447 m al noreste.
+- **Coordenadas locales.** Levantamientos con origen arbitrario (por ejemplo, E 1000, N 1000) que nunca se georreferenciaron.
+
+**La prueba más rápida:** pon dos o tres puntos en el mapa del conversor. Si caen donde deberían, el resto del archivo probablemente está bien.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automatización Civil 3D"
+  title="¿Tu oficina convierte y revisa coordenadas a mano en cada proyecto?"
+  body="Desarrollamos plugins para Civil 3D que importan levantamientos con tus códigos, detectan datums y zonas mezclados, y generan planos perimétricos y cuadros de datos técnicos con el formato que pide cada entidad. Somos ingenieros civiles e ingenieros de sistemas en Trujillo."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Herramienta gratuita:** [conversor de coordenadas UTM, geográficas y PSAD56](/es/herramientas/conversor-de-coordenadas).
+- **Herramienta gratuita:** [calculadora de área de terreno con memoria descriptiva](/es/herramientas/calculadora-area-terreno).
+- **El contexto local:** [automatización BIM en Trujillo y La Libertad](/es/blog/automatizacion-bim-trujillo-la-libertad).
+- **Del punto a la superficie:** [topografía de Trujillo y curvas de nivel para Civil 3D](/es/blog/topografia-trujillo-curvas-de-nivel-dwg).
+- **Lotes y trámites:** [habilitación urbana en Trujillo con Civil 3D](/es/blog/habilitacion-urbana-trujillo-civil-3d).
+- **Superficies desde modelos satelitales:** [curvas de nivel en Civil 3D y Google Earth](/es/blog/curvas-de-nivel-civil-3d-google-earth).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Trabajamos desde Trujillo con oficinas de ingeniería de La Libertad, del resto del Perú y de Latinoamérica. Hemos peleado con planos en PSAD56 y sabemos construir la herramienta que los ordena."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota sobre las cifras:** las coordenadas y desplazamientos se calcularon con los parámetros oficiales del registro EPSG para PSAD56 a WGS84 en el Perú (exactitud de unos ±16 m) y son aproximados. Para linderos y replanteos, usa puntos de control medidos en campo.

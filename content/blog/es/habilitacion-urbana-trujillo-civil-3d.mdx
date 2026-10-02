@@ -1,0 +1,190 @@
+---
+title: "Habilitación urbana en Trujillo: trámite, factibilidades, planos y cómo lotizar en Civil 3D sin rehacer el cuadro de áreas"
+seoTitle: "Habilitación urbana en Trujillo: planos y Civil 3D"
+ctaTitle: "¿Tu oficina lotiza y rehace cuadros de áreas a mano en cada cambio? Lo automatizamos en Civil 3D."
+description: "Habilitación urbana en Trujillo: trámite, factibilidades de SEDALIB e Hidrandina, planos que pide la municipalidad y cómo lotizar en Civil 3D."
+date: "2026-10-02T18:00:00.000Z"
+author: "Zeist"
+tags:
+  - Trujillo
+  - La Libertad
+  - Habilitación urbana
+  - Civil 3D
+  - Lotización
+  - Memoria descriptiva
+---
+
+<BlogHero
+  eyebrow="Trujillo · Habilitación urbana · Civil 3D"
+  title="Trujillo crece hacia los cerros y hacia el mar. Cada habilitación empieza con el mismo trámite y los mismos planos."
+  highlight="Qué norma regula la habilitación urbana, qué factibilidades se piden en Trujillo, qué planos exige la municipalidad, y cómo lotizar en Civil 3D para que un cambio de vía no obligue a rehacer el cuadro de áreas."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Una habilitación urbana convierte un terreno rústico en lotes urbanos con vías, redes y áreas de aporte. La regula la Ley 29090, cuyo texto único ordenado se aprobó con el DS 006-2017-VIVIENDA, y se tramita en la municipalidad competente en una de cuatro modalidades: A, B, C o D. En Trujillo hay que revisar la zonificación del Plan de Desarrollo Metropolitano y pedir la factibilidad de servicios a SEDALIB (agua y alcantarillado) y a Hidrandina (energía). Los planos base son ubicación, perimétrico y topográfico, trazado y lotización, más la memoria descriptiva.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Habilitación urbana** — El proceso que convierte un terreno rústico en urbano: lotes, vías, redes y áreas públicas.
+- **Lotización** — La división del terreno en manzanas y lotes.
+- **Aportes** — Los porcentajes del terreno que se ceden para recreación pública, educación y otros fines, según el tipo de habilitación.
+- **Factibilidad de servicios** — El documento en el que la empresa de agua o de energía indica las condiciones para dar el servicio.
+- **Zonificación** — El uso permitido del suelo (residencial, comercial, industrial) y sus parámetros.
+- **Parcela** — El objeto de Civil 3D que representa un lote, con su área y sus linderos.
+- **Memoria descriptiva** — El documento que describe el terreno: linderos, medidas, colindantes y área.
+
+Sin términos de programación. Está escrito para arquitectos, ingenieros, proyectistas y desarrolladores inmobiliarios de La Libertad.
+</Callout>
+
+## El expediente es largo, pero el problema es otro
+
+Una habilitación urbana en Trujillo junta normas nacionales, el plan urbano de la ciudad y los requisitos de dos empresas de servicios. Eso se aprende una vez. Lo que se paga en cada proyecto es otra cosa: **cada observación o ajuste de diseño mueve una vía, cambia lotes y obliga a rehacer el cuadro de áreas, los planos y las memorias**.
+
+Esta guía ordena el trámite y muestra cómo trabajar la lotización en Civil 3D para que esos cambios cuesten minutos.
+
+<AnimatedFlow
+  title="De terreno rústico a lotes inscritos"
+  nodes="Zonificación y factibilidades|Topografía y diseño urbano|Expediente en la municipalidad|Obras, recepción e inscripción"
+  subs="PDM, SEDALIB e Hidrandina|Vías, lotes, aportes y redes|Planos, memoria y FUHU|Lotes listos para vender"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Qué es una habilitación urbana, y qué norma la regula" time="~5 min">
+
+El marco legal es la **Ley 29090**, Ley de Regulación de Habilitaciones Urbanas y de Edificaciones. Su texto único ordenado (TUO) se aprobó con el **Decreto Supremo N.° 006-2017-VIVIENDA**, y los procedimientos se detallan en el **Reglamento de Licencias de Habilitación Urbana y Licencias de Edificación** (DS N.° 029-2019-VIVIENDA).
+
+**Las cuatro modalidades.** El proyecto se tramita en la modalidad A, B, C o D, según su tipo y su escala. En las modalidades C y D, el proyecto pasa por la evaluación previa de una Comisión Técnica.
+
+**El diseño urbano** se rige por el Reglamento Nacional de Edificaciones: la norma **GH.020** (componentes de diseño urbano: vías, manzanas, lotes, aportes) y la **TH.010** para habilitaciones residenciales, con los porcentajes de aporte según el tipo.
+
+**¿Dónde se tramita?** En la municipalidad competente: la Municipalidad Provincial de Trujillo para el distrito de Trujillo, y la municipalidad distrital en los demás, como Víctor Larco, La Esperanza, El Porvenir, Huanchaco o Moche.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Antes de diseñar: zonificación, factibilidades y arqueología" time="~6 min">
+
+**La zonificación.** El instrumento vigente es el **Plan de Desarrollo Metropolitano de Trujillo 2020-2040**, aprobado con la Ordenanza Municipal N.° 049-2021-MPT. Define usos, densidades y vías, y de ahí salen el lote mínimo, el frente mínimo y las secciones viales que el diseño debe respetar. Se acredita con el **certificado de zonificación y vías**.
+
+**Las factibilidades de servicios.** Antes de diseñar redes hay que saber de dónde se toman:
+
+- **SEDALIB** emite la factibilidad de agua potable y alcantarillado: indica el punto de empalme y las condiciones técnicas. La solicitud lleva planos y memoria firmados por un profesional colegiado.
+- **Hidrandina** emite la factibilidad de suministro eléctrico.
+
+Las condiciones de esas factibilidades definen el diseño de las redes: no conviene lotizar en detalle sin conocerlas.
+
+<Callout type="warn" title="Trujillo tiene mucho patrimonio arqueológico">
+Chan Chan, las huacas y numerosos sitios menores están dentro o cerca de la zona urbana y de expansión. Si el terreno está cerca de una zona arqueológica, consulta con el Ministerio de Cultura qué evaluación o certificado necesitas antes de diseñar. Descubrirlo en obra es lo más caro.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Los planos y documentos técnicos" time="~5 min">
+
+La documentación técnica base de una habilitación urbana es:
+
+1. **Plano de ubicación y localización** del terreno.
+2. **Plano perimétrico y topográfico.**
+3. **Plano de trazado y lotización**, con manzanas, lotes, vías y áreas de aporte.
+4. **Plano de ornamentación de parques**, cuando se requiere.
+5. **Memoria descriptiva.**
+
+A esto se suman el **Formulario Único de Habilitación Urbana (FUHU)**, la copia literal del predio, las factibilidades y los demás requisitos de la modalidad. La Municipalidad Provincial de Trujillo publica en su portal ejemplos del FUHU; revisa siempre el TUPA vigente de tu municipalidad.
+
+<Callout type="success" title="Perímetro y memoria, en minutos">
+Para el plano perimétrico y la memoria descriptiva del terreno matriz, nuestra [calculadora de área de terreno](/es/herramientas/calculadora-area-terreno) toma los vértices en UTM y genera el cuadro de datos técnicos, la memoria en Word y el plano en DXF. Los planos se presentan en WGS84 UTM zona 17 Sur: si tu plano base es antiguo, revisa antes el datum con la guía de [coordenadas UTM en Trujillo](/es/blog/coordenadas-utm-trujillo-la-libertad).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Lotizar en Civil 3D: parcelas en lugar de polilíneas" time="~6 min">
+
+La diferencia entre lotizar con polilíneas y con **parcelas de Civil 3D** aparece en el primer cambio:
+
+- **Parcelas desde objetos:** el perímetro, las vías y las manzanas generan las parcelas, y cada lote sabe su área y sus linderos.
+- **Herramientas de división:** Civil 3D crea lotes con área y frente mínimos, deslizando o girando una línea de división, en lugar de calcularlos a mano.
+- **Vías como alineamientos:** si una vía se mueve, las parcelas que dependen de ella se actualizan.
+- **Tablas del modelo:** áreas de lotes y cuadros de linderos salen del dibujo, no de una hoja aparte.
+
+<ComparisonTable
+  criterionLabel="Criterio"
+  leftLabel="Polilíneas en AutoCAD"
+  rightLabel="Parcelas en Civil 3D"
+  rows="Área de cada lote | Medida a mano | *Calculada por el objeto || Si se mueve una vía | Redibujar lotes y tablas | *Las parcelas se actualizan || Cuadro de áreas | Hoja de cálculo aparte | *Tablas del modelo || Lote y frente mínimos | Prueba y error | *Herramientas de división || Arranque | *Inmediato | Plantillas y estilos"
+/>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. El cuadro de áreas y los aportes" time="~5 min">
+
+El cuadro de áreas es la hoja que más se rehace en una habilitación. Resume:
+
+- **Área bruta** del terreno.
+- **Área de vías.**
+- **Aportes** para recreación pública, educación, otros fines y parques zonales, según el tipo de habilitación y la tabla de la TH.010.
+- **Área útil** de lotes, número de lotes y área por manzana.
+
+Cada aporte debe cumplir su porcentaje y su área mínima. Un ajuste en el ancho de una vía cambia el área bruta disponible, los aportes y los lotes a la vez: si el cuadro vive en Excel y los lotes en el dibujo, siempre hay una versión desactualizada.
+
+<Callout type="info" title="Lo que conviene automatizar primero">
+Un cuadro de áreas que se recalcula desde las parcelas del modelo, verifica los porcentajes de aporte y marca los lotes por debajo del mínimo de la zonificación. Es la automatización con más retorno en una oficina que hace habilitaciones todo el año.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Vías, redes y drenaje en el mismo modelo" time="~5 min">
+
+Con la lotización aprobada, el proyecto de obras completa la habilitación:
+
+- **Vías:** alineamientos, rasantes y corredores para pavimentos y veredas, sobre la superficie del levantamiento.
+- **Agua y alcantarillado:** redes a presión y por gravedad que parten del punto de empalme que fijó SEDALIB. La guía de [redes de tuberías en Civil 3D](/es/blog/redes-tuberias-civil-3d-accesorios) explica cómo modelarlas con sus accesorios.
+- **Drenaje pluvial:** en Trujillo es más que un detalle; lo explicamos en [drenaje pluvial en Trujillo con Civil 3D](/es/blog/drenaje-pluvial-trujillo-civil-3d).
+- **Metrados:** tubos, buzones, conexiones y movimiento de tierras salen del modelo.
+
+Todo sobre la misma superficie y en las mismas coordenadas, para que vías, lotes y redes no se contradigan entre planos.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Después: memorias y planos de cada lote" time="~4 min">
+
+Cuando la habilitación ya está recepcionada, empiezan las ventas, las subdivisiones y las independizaciones, y **cada lote necesita su plano perimétrico y su memoria descriptiva**. En una habilitación de 200 lotes, hacerlos uno por uno toma semanas.
+
+- Para **pocos lotes**, la [calculadora de área de terreno](/es/herramientas/calculadora-area-terreno) genera la memoria, el cuadro de datos técnicos y el DXF de cada uno.
+- Para **una habilitación completa**, un plugin puede recorrer todas las parcelas del modelo y generar en minutos la memoria y la lámina de cada lote, con el formato de tu oficina.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automatización Civil 3D"
+  title="Que mover una vía no te cueste rehacer el expediente"
+  body="Desarrollamos plugins para Civil 3D que recalculan el cuadro de áreas desde las parcelas, verifican aportes y lotes mínimos, y generan las memorias descriptivas y láminas de cada lote. Somos ingenieros civiles e ingenieros de sistemas en Trujillo."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Herramienta gratuita:** [calculadora de área de terreno con memoria descriptiva y plano perimétrico](/es/herramientas/calculadora-area-terreno).
+- **Datum y zona:** [coordenadas UTM en Trujillo y La Libertad](/es/blog/coordenadas-utm-trujillo-la-libertad).
+- **La base del diseño:** [topografía de Trujillo y curvas de nivel para Civil 3D](/es/blog/topografia-trujillo-curvas-de-nivel-dwg).
+- **El agua de lluvia:** [drenaje pluvial en Trujillo con Civil 3D](/es/blog/drenaje-pluvial-trujillo-civil-3d).
+- **Planos sin armar lámina por lámina:** [producción automática de planos en Civil 3D y Revit](/es/blog/produccion-planos-automatica-civil-3d-revit).
+- **El contexto local:** [automatización BIM en Trujillo y La Libertad](/es/blog/automatizacion-bim-trujillo-la-libertad).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Trabajamos desde Trujillo con oficinas de ingeniería, arquitectos y desarrolladores de La Libertad, del resto del Perú y de Latinoamérica. Conocemos el expediente de habilitación y sabemos construir la herramienta que lo acelera."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota:** este artículo orienta sobre el proceso y no reemplaza la revisión del TUPA vigente de cada municipalidad, de las normas del RNE ni de los requisitos actuales de SEDALIB e Hidrandina, que cambian con el tiempo.

@@ -214,6 +214,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "habilitacion-urbana-trujillo-civil-3d",
       "automatizar-civil-3d-guia-completa",
       "produccion-planos-automatica-civil-3d-revit",
       "deja-de-usar-excel-y-perder-horas",

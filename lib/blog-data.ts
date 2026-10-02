@@ -21,6 +21,253 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- SEO local Trujillo / La Libertad (oct-2026, solo es; autocompletado de Google Perú) ----
+  "coordenadas-utm-trujillo-la-libertad": {
+    es: {
+      roadmap: {
+        title: "Coordenadas UTM en Trujillo y La Libertad, en 7 bloques",
+        intro:
+          "Qué zona UTM corresponde a cada provincia, cuánto se mueve un punto entre PSAD56 y WGS84, qué piden SUNARP y las municipalidades, y cómo convertir sin errores.",
+        steps: [
+          { n: 1, title: "Trujillo en UTM", desc: "Zona 17 Sur y por qué el Norte empieza en 9 millones", tag: "Base" },
+          { n: 2, title: "Dos zonas en La Libertad", desc: "La 17 y la 18, y qué hacer si el proyecto cruza el meridiano 78°", tag: "Zonas" },
+          { n: 3, title: "WGS84 y PSAD56", desc: "Los 447 m que descuadran un plano antiguo", tag: "Datum" },
+          { n: 4, title: "SUNARP y municipalidades", desc: "Planos en WGS84 UTM con cuadro de datos técnicos", tag: "Trámites" },
+          { n: 5, title: "Factor de escala", desc: "Cuándo el plano y el terreno no miden lo mismo", tag: "Precisión" },
+          { n: 6, title: "Convertir paso a paso", desc: "De Excel a PNEZD para Civil 3D o a KML", tag: "Paso a paso" },
+          { n: 7, title: "Errores comunes", desc: "Zona, hemisferio, datum y coma decimal", tag: "Errores" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre coordenadas UTM en Trujillo",
+        items: [
+          {
+            q: "¿En qué zona UTM está Trujillo?",
+            a: "Trujillo está en la zona UTM 17 Sur. Con el datum oficial WGS84, su código EPSG es el 32717. La Plaza de Armas queda alrededor de E 717207 m y N 9102837 m. Toda el área metropolitana, incluidos Huanchaco, Víctor Larco, La Esperanza, El Porvenir y Moche, está en la misma zona.",
+          },
+          {
+            q: "¿Qué zona UTM corresponde a La Libertad?",
+            a: "La mayor parte de la región está en la zona 17 Sur: la costa y casi toda la sierra. Las provincias del este, Pataz y Bolívar, y el extremo oriental de Sánchez Carrión caen en la zona 18 Sur. El límite es el meridiano 78° oeste; Huamachuco queda en la zona 17 por apenas unos 5 km. Si un proyecto cruza ese meridiano, se elige una sola zona para todo el proyecto.",
+          },
+          {
+            q: "¿Cuánto se desplaza un punto de PSAD56 a WGS84 en Trujillo?",
+            a: "Unos 447 m. El mismo punto tiene alrededor de 251 m más de Este y 370 m más de Norte en PSAD56 que en WGS84. Por eso un plano antiguo superpuesto a un levantamiento nuevo aparece corrido hacia el noreste. La conversión con los parámetros oficiales tiene una exactitud de unos ±16 m: sirve para ubicar, no para replantear linderos.",
+          },
+          {
+            q: "¿Qué datum piden SUNARP y las municipalidades para los planos?",
+            a: "WGS84 con proyección UTM. La normativa catastral vigente pide planos de ubicación y perimétricos georreferenciados en ese sistema, en una escala convencional y con su cuadro de datos técnicos: vértices, lados, distancias, ángulos y coordenadas. Un plano en PSAD56 o en coordenadas locales sin georreferenciar suele terminar observado.",
+          },
+          {
+            q: "¿Por qué Google Earth muestra 17 L o 17 M en La Libertad?",
+            a: "La letra es la banda de latitud, no el hemisferio. El paralelo 8° Sur pasa unos 12 km al norte de la Plaza de Armas: Trujillo aparece como 17 L, y Pacasmayo, Otuzco o Huamachuco como 17 M. Todas están en el hemisferio sur, y en cualquier programa hay que elegir zona 17 Sur.",
+          },
+          {
+            q: "¿Cómo convierto coordenadas de PSAD56 a WGS84?",
+            a: "Con nuestro conversor de coordenadas gratuito: eliges PSAD56 como origen y WGS84 como destino, pegas los puntos desde Excel y revisas en el mapa que caigan donde deben. Descargas el resultado en PNEZD para Civil 3D, en Excel o en KML. Para linderos y replanteos de precisión, conviene calcular una transformación local con puntos medidos en campo.",
+          },
+          {
+            q: "¿Las coordenadas de Google Earth sirven para un plano perimétrico?",
+            a: "Sirven para ubicar el terreno y planificar, no para definir linderos. Google Earth trabaja en WGS84, igual que los GPS, pero la posición de sus imágenes puede tener errores de varios metros. Un plano perimétrico para trámites debe salir de un levantamiento topográfico georreferenciado.",
+          },
+        ],
+      },
+    },
+  },
+  "topografia-trujillo-curvas-de-nivel-dwg": {
+    es: {
+      roadmap: {
+        title: "La topografía de Trujillo, en 6 bloques",
+        intro:
+          "Cómo es el relieve de la ciudad, cómo sacar curvas de nivel gratis, por qué el modelo satelital no alcanza para diseñar y qué pedir en un levantamiento.",
+        steps: [
+          { n: 1, title: "El relieve de Trujillo", desc: "Del mar a los cerros, con cerca de 1 % de pendiente", tag: "Datos" },
+          { n: 2, title: "Curvas gratis", desc: "DXF, PNEZD y KML con el generador", tag: "Paso a paso" },
+          { n: 3, title: "Límites del satélite", desc: "Por qué no sirve para rasantes ni drenaje", tag: "Precisión" },
+          { n: 4, title: "El levantamiento", desc: "Qué pedir: datum, BM, códigos y líneas de quiebre", tag: "Campo" },
+          { n: 5, title: "DWG antiguos", desc: "Cinco revisiones antes de usarlos", tag: "Control" },
+          { n: 6, title: "Automatizar", desc: "Acotar curvas, importar puntos y armar superficies", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre la topografía de Trujillo",
+        items: [
+          {
+            q: "¿Dónde consigo la topografía de Trujillo en DWG?",
+            a: "Para una base de anteproyecto, puedes generar curvas de nivel gratis con nuestro generador: eliges la zona en el mapa y descargas un DXF, que se abre en AutoCAD y Civil 3D, en UTM zona 17 Sur. Los DWG que circulan en internet suelen venir de proyectos antiguos, sin fecha ni datum claros. Para diseñar, la topografía tiene que salir de un levantamiento.",
+          },
+          {
+            q: "¿A qué altura está Trujillo?",
+            a: "El centro de Trujillo está entre 30 y 40 m sobre el nivel del mar. La ciudad sube cerca de 1 % desde la orilla del mar hasta el pie de los cerros del noreste, hacia El Porvenir y Alto Trujillo, donde supera los 100 m. A partir de ahí el terreno se empina y los cerros superan los 400 m.",
+          },
+          {
+            q: "¿Las curvas de nivel del SRTM sirven para un expediente técnico?",
+            a: "No. El SRTM tiene una malla de unos 30 m y un error vertical de ±16 m, y en zona urbana mide en parte los techos. En una ciudad con calles de 1 % de pendiente, ese error es mucho mayor que el desnivel de una cuadra. Sirve para anteproyectos, cerros y quebradas; para rasantes, drenaje y metrados hace falta un levantamiento.",
+          },
+          {
+            q: "¿Qué intervalo de curvas de nivel uso en Trujillo?",
+            a: "Depende de la fuente. Con el modelo satelital, curvas cada 10 o 20 m en los cerros muestran bien el relieve; en la parte plana, curvas más finas solo dibujan el error del modelo. Con un levantamiento topográfico, en la ciudad se usan intervalos de 0.5 a 1 m.",
+          },
+          {
+            q: "¿Cómo paso las curvas de un DWG antiguo a una superficie de Civil 3D?",
+            a: "Primero verifica el datum: si el plano está en PSAD56, queda corrido unos 447 m respecto de WGS84. Luego confirma que cada curva tenga su cota; muchos planos antiguos las dibujan a cota cero con la altura en un texto aparte. Con las curvas acotadas, se añaden a la definición de la superficie como datos de curvas de nivel.",
+          },
+          {
+            q: "¿Qué debe incluir un levantamiento topográfico en Trujillo?",
+            a: "Coordenadas en WGS84 UTM zona 17 Sur, cotas referidas a un BM con cota oficial, puntos con códigos de campo, líneas de quiebre en bordes de pista, cunetas y muros, y la entrega en PNEZD y DWG con un informe del equipo, la fecha, el datum y el BM usados.",
+          },
+        ],
+      },
+    },
+  },
+  "drenaje-pluvial-trujillo-civil-3d": {
+    es: {
+      roadmap: {
+        title: "Drenaje pluvial en Trujillo, en 7 bloques",
+        intro:
+          "Qué dejaron los huaicos de 2017, qué obras avanzan hoy, qué regula la norma CE.040 y cómo se diseña y automatiza una red de drenaje en Civil 3D.",
+        steps: [
+          { n: 1, title: "Marzo de 2017", desc: "Los huaicos de San Ildefonso y la lección técnica", tag: "Contexto" },
+          { n: 2, title: "Obras en marcha", desc: "Quebradas y drenaje pluvial urbano a cargo de la ANIN", tag: "Proyectos" },
+          { n: 3, title: "La norma CE.040", desc: "La norma vigente que reemplazó a la OS.060", tag: "Norma" },
+          { n: 4, title: "El caudal", desc: "Método racional y Manning en calles casi planas", tag: "Cálculo" },
+          { n: 5, title: "Diseño en Civil 3D", desc: "Cuencas, redes por gravedad, sumideros y análisis", tag: "Modelo" },
+          { n: 6, title: "Qué se automatiza", desc: "Sumideros, diámetros, interferencias, perfiles y metrados", tag: "Solución" },
+          { n: 7, title: "Cómo empezar", desc: "Catálogo, criterios y un proyecto piloto", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre drenaje pluvial en Trujillo",
+        items: [
+          {
+            q: "¿Trujillo tiene sistema de drenaje pluvial?",
+            a: "Todavía no tiene uno integral. En años normales casi no llueve, y buena parte de la ciudad se construyó sin sumideros ni colectores pluviales. La Autoridad Nacional de Infraestructura desarrolla el proyecto de Drenaje Pluvial Urbano de Trujillo, cuyo diseño estaba al 99.95 % en septiembre de 2026 y que beneficiará a 416,115 habitantes de Alto Trujillo, La Esperanza, El Porvenir, Florencia de Mora, Trujillo y Víctor Larco Herrera.",
+          },
+          {
+            q: "¿Qué pasó en Trujillo en 2017 con la quebrada San Ildefonso?",
+            a: "El 15 de marzo de 2017, durante el Niño Costero, el agua de la quebrada San Ildefonso rompió el dique de Mampuesto e ingresó al centro de Trujillo por la avenida España y el jirón San Martín. Entre el 15 y el 22 de marzo la ciudad recibió siete huaicos, que recorrieron unos 15 km desde El Porvenir hasta Víctor Larco.",
+          },
+          {
+            q: "¿Qué obras ejecuta la ANIN en las quebradas de Trujillo?",
+            a: "En la quebrada El León, una obra inaugurada en enero de 2025 para proteger a unos 45 mil trujillanos. En las quebradas San Ildefonso y San Carlos, 61 diques, 35 y 26 respectivamente, que reducen la velocidad del agua y retienen sedimentos; en septiembre de 2026 reportaban un 77.2 % de avance.",
+          },
+          {
+            q: "¿Qué norma regula el drenaje pluvial en el Perú?",
+            a: "La norma técnica CE.040 Drenaje Pluvial del Reglamento Nacional de Edificaciones, aprobada con la Resolución Ministerial N.° 126-2021-VIVIENDA. Reemplazó a la antigua OS.060 Drenaje Pluvial Urbano, y su artículo 21 se modificó después. Muchos expedientes todavía citan la OS.060, y los revisores lo observan.",
+          },
+          {
+            q: "¿Cómo se diseña una red de drenaje pluvial en Civil 3D?",
+            a: "Sobre la superficie del levantamiento se definen las rasantes de las calles y las cuencas, que en Civil 3D tienen su tiempo de concentración y su coeficiente de escorrentía. Los colectores se modelan como una red de tuberías por gravedad, con buzones y sumideros como estructuras. Civil 3D analiza la red y redimensiona tubos, y los perfiles, planos y metrados salen del modelo.",
+          },
+          {
+            q: "¿Se puede conectar el agua de lluvia al desagüe?",
+            a: "No es buena práctica. Las redes de desagüe no están dimensionadas para el caudal de una lluvia fuerte: se sobrecargan, los buzones rebalsan y las aguas servidas terminan en las calles. El drenaje pluvial se diseña como un sistema separado, con su propia descarga.",
+          },
+        ],
+      },
+    },
+  },
+  "habilitacion-urbana-trujillo-civil-3d": {
+    es: {
+      roadmap: {
+        title: "Habilitación urbana en Trujillo, en 7 bloques",
+        intro:
+          "La norma, los requisitos previos, los planos del expediente y cómo lotizar en Civil 3D para que cada cambio no obligue a rehacer el cuadro de áreas.",
+        steps: [
+          { n: 1, title: "La norma", desc: "Ley 29090, su reglamento y las modalidades A, B, C y D", tag: "Marco legal" },
+          { n: 2, title: "Antes de diseñar", desc: "Zonificación, factibilidades de SEDALIB e Hidrandina, arqueología", tag: "Requisitos" },
+          { n: 3, title: "Los planos", desc: "Ubicación, perimétrico, lotización, parques y memoria", tag: "Expediente" },
+          { n: 4, title: "Lotizar en Civil 3D", desc: "Parcelas en lugar de polilíneas", tag: "Modelo" },
+          { n: 5, title: "Cuadro de áreas", desc: "Aportes, área útil y lotes mínimos", tag: "Control" },
+          { n: 6, title: "Vías, redes y drenaje", desc: "Todo sobre la misma superficie", tag: "Obras" },
+          { n: 7, title: "Memorias por lote", desc: "De uno en uno o toda la habilitación a la vez", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre habilitación urbana en Trujillo",
+        items: [
+          {
+            q: "¿Qué es una habilitación urbana?",
+            a: "Es el proceso que convierte un terreno rústico en urbano: se divide en manzanas y lotes, se trazan las vías, se proyectan las redes de agua, alcantarillado y energía, y se ceden las áreas de aporte para recreación pública y otros usos. Termina con la recepción de obras y la inscripción de los lotes.",
+          },
+          {
+            q: "¿Qué ley regula la habilitación urbana en el Perú?",
+            a: "La Ley 29090, Ley de Regulación de Habilitaciones Urbanas y de Edificaciones, cuyo texto único ordenado se aprobó con el DS N.° 006-2017-VIVIENDA, y el Reglamento de Licencias de Habilitación Urbana y Licencias de Edificación (DS N.° 029-2019-VIVIENDA). El diseño urbano se rige por las normas GH.020 y TH.010 del Reglamento Nacional de Edificaciones.",
+          },
+          {
+            q: "¿Qué requisitos tiene una habilitación urbana en Trujillo?",
+            a: "Entre los principales: el Formulario Único de Habilitación Urbana (FUHU), la copia literal del predio, el certificado de zonificación y vías, las factibilidades de servicios de SEDALIB y de Hidrandina, y la documentación técnica: planos de ubicación, perimétrico y topográfico, trazado y lotización, ornamentación de parques cuando corresponde, y la memoria descriptiva. Los requisitos exactos dependen de la modalidad y del TUPA vigente de la municipalidad.",
+          },
+          {
+            q: "¿Cómo se pide la factibilidad de servicios a SEDALIB?",
+            a: "Con una solicitud dirigida a SEDALIB que acompaña la documentación del predio, los planos de ubicación y la memoria descriptiva del proyecto firmados por un profesional colegiado. SEDALIB responde con las condiciones técnicas y el punto de empalme para el agua y el alcantarillado. Confirma los requisitos vigentes directamente con la empresa antes de presentar.",
+          },
+          {
+            q: "¿Dónde veo la zonificación de mi terreno en Trujillo?",
+            a: "En el Plan de Desarrollo Metropolitano de Trujillo 2020-2040, aprobado con la Ordenanza Municipal N.° 049-2021-MPT. Define usos, densidades y vías. Para el trámite, se acredita con el certificado de zonificación y vías, del que salen el lote mínimo, el frente mínimo y las secciones viales del diseño.",
+          },
+          {
+            q: "¿Qué es el cuadro de áreas de una habilitación urbana?",
+            a: "Es el resumen del proyecto: área bruta del terreno, área de vías, áreas de aporte para recreación pública, educación, otros fines y parques zonales, área útil de lotes y número de lotes. Cada aporte debe cumplir el porcentaje y el área mínima de la norma TH.010 según el tipo de habilitación. Cualquier cambio de vía o de lote lo modifica.",
+          },
+          {
+            q: "¿Cómo se lotiza en Civil 3D?",
+            a: "Con parcelas: se crean desde el perímetro, las vías y las manzanas, y cada lote conoce su área y sus linderos. Las herramientas de división crean lotes con área y frente mínimos, y si una vía modelada como alineamiento se mueve, las parcelas se actualizan. Las tablas de áreas y de linderos salen del modelo.",
+          },
+        ],
+      },
+    },
+  },
+  "cursos-revit-civil-3d-bim-trujillo": {
+    es: {
+      roadmap: {
+        title: "Formación BIM en Trujillo, en 7 bloques",
+        intro:
+          "Qué pide el mercado en La Libertad, qué aprender según tu perfil, dónde estudiar, cómo elegir un curso y cómo pasar de modelar a automatizar.",
+        steps: [
+          { n: 1, title: "El mercado en La Libertad", desc: "Plan BIM, obra pública e infraestructura", tag: "Contexto" },
+          { n: 2, title: "Según tu perfil", desc: "Revit, Civil 3D o coordinación", tag: "Ruta" },
+          { n: 3, title: "Dónde estudiar", desc: "SENCICO, universidades y cursos en línea", tag: "Opciones" },
+          { n: 4, title: "Elegir un curso", desc: "Siete preguntas y la certificación de Autodesk", tag: "Criterios" },
+          { n: 5, title: "Lo que no se enseña", desc: "Estándares, expediente y automatización", tag: "Diferencial" },
+          { n: 6, title: "Para empresas", desc: "Formar al equipo sobre sus propios proyectos", tag: "Equipos" },
+          { n: 7, title: "Ruta de 90 días", desc: "Programa, estándares y automatización", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre cursos BIM en Trujillo",
+        items: [
+          {
+            q: "¿Dónde puedo estudiar Civil 3D en Trujillo?",
+            a: "SENCICO, con sede en Trujillo, dicta un curso de Civil 3D de 40 horas con certificado. También hay cursos de extensión en universidades e institutos de la ciudad, y cursos en línea en vivo o grabados. Elige el que te haga modelar un proyecto completo, no solo ejercicios sueltos.",
+          },
+          {
+            q: "¿Dónde llevar un curso de Revit en Trujillo?",
+            a: "SENCICO dicta en Trujillo un curso de Revit Architecture de 40 horas con certificado, y universidades e institutos ofrecen cursos y diplomados. Los cursos en línea permiten elegir docentes de otras ciudades. Revisa quién dicta, cuántas horas son de práctica y si terminas con un proyecto para tu portafolio.",
+          },
+          {
+            q: "¿Qué conviene aprender primero, Revit o Civil 3D?",
+            a: "Depende de tu especialidad. Revit para edificaciones: arquitectura, estructuras e instalaciones. Civil 3D para infraestructura: topografía, vías, saneamiento y habilitaciones urbanas. En La Libertad, buena parte de la obra pública es vial, urbana y de saneamiento, así que Civil 3D tiene mucha demanda entre los ingenieros civiles.",
+          },
+          {
+            q: "¿Cuánto tiempo toma aprender Civil 3D?",
+            a: "Un curso de 40 horas da una base ordenada. Producir planos y metrados completos con soltura toma algunos meses de trabajo en proyectos reales. Como referencia, Autodesk recomienda entre 400 y 1200 horas de uso real antes de rendir su certificación profesional de Civil 3D.",
+          },
+          {
+            q: "¿Vale la pena la certificación de Autodesk?",
+            a: "Es la única acreditación oficial del dominio del programa. Las certificaciones profesionales, como Civil 3D for Infrastructure Design o Revit for Architectural Design, son exámenes de 120 minutos que se rinden en un centro Pearson VUE o en línea. Suma en el currículum, pero un proyecto completo bien resuelto pesa igual o más al contratar.",
+          },
+          {
+            q: "¿Qué hace un modelador BIM y qué piden las empresas en Trujillo?",
+            a: "El modelador construye y documenta el modelo: geometría, información, planos y metrados. Las oficinas de la región piden haber modelado un proyecto real, conocer estándares como los de la Guía Nacional BIM y entregar planos y metrados que cuadren. Con el Plan BIM obligatorio también en gobiernos regionales y locales, la demanda está creciendo.",
+          },
+          {
+            q: "¿Ofrecen capacitación BIM para empresas en Trujillo?",
+            a: "Sí. Zeist dicta cursos y mentorías en vivo y en línea de Revit, Civil 3D, Dynamo y programación en C# para equipos de ingeniería, sobre los proyectos reales de la empresa. Estamos en Trujillo y trabajamos con equipos de La Libertad y de todo el Perú.",
+          },
+        ],
+      },
+    },
+  },
   // ---- Curvas de nivel, IA para CAD y Dynamo (oct-2026, búsquedas de Google Trends) ----
   "curvas-de-nivel-civil-3d-google-earth": {
     es: {
