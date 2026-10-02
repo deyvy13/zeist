@@ -188,6 +188,18 @@ acero", "calculadora manning tuberías/canales".
   `.xlsx` real (`lib/tools/xlsx.ts`, sin dependencias). Tabla NTP 341.031 en
   `lib/tools/steel.ts`. Solo `es` porque las barras y la varilla de 9 m son de
   Perú; pt/en necesitarían sus propias tablas.
+- **Conversor de coordenadas** (es/pt/en, la herramienta más buscada: en
+  Google Trends Perú, "coordenadas utm" ≈ 6× "dosificación de concreto"):
+  UTM ⇄ geográficas y cambio de datum, de un punto o por lotes pegados desde
+  Excel (detecta tabulación / ; / , / espacios y coma decimal). El diferencial:
+  mapa de verificación (Leaflet + OpenStreetMap, carga diferida), descarga
+  PNEZD para Civil 3D (renumera si los nombres tienen letras), Excel y KML,
+  factor de escala / convergencia / factor combinado por punto, e historial
+  local (`useSyncExternalStore` sobre localStorage; nunca guarda el ejemplo
+  sin tocar). Matemática en `lib/tools/coordinates.ts`: Krüger 6.º orden,
+  validada contra PROJ (1 mm). Datums con parámetros EPSG: PSAD56 to WGS 84
+  (8) para Perú (±16 m; en Trujillo desplaza ~450 m), SAD69 to SIRGAS 2000 (1)
+  del IBGE (±5 m), SIRGAS 2000 y NAD83 ≈ WGS 84 (transformación nula).
 - **Calculadora de Manning** (es/pt/en): tubo parcialmente lleno y canales
   rectangular/trapezoidal/triangular, caudal o tirante normal, SI o US, Froude
   y tensión tractiva. En tubo circular el caudal máximo es a y/D ≈ 0.938 (no a
@@ -204,6 +216,8 @@ acero", "calculadora manning tuberías/canales".
   y el navegador rompería la hidratación. `es` usa punto decimal (como las
   tablas peruanas), `pt` coma. Los inputs aceptan punto o coma.
 - **Tests:** `npm run test:tools` (Node ≥ 23.6, importa los `.ts` directamente).
+  Las referencias de coordenadas salen de PROJ (pyproj) y están incrustadas
+  en el test; para regenerarlas hace falta un venv con pyproj.
   Los valores esperados se calcularon aparte en Python; los números del texto
   de cada página coinciden con el ejemplo precargado de la calculadora:
   cambiarlos juntos.
@@ -293,6 +307,11 @@ por página, p.ej. el visual del hero), NO el estilo de cada caja.
   `<PostFaqs />` sin props — se auto-vinculan por slug. Si creas un post con
   esos componentes, añade también su entrada aquí o saldrán vacíos (falla en
   silencio).
+- ⚠️ **`TopicCard` (módulos plegables) siempre monta su contenido**: cerrado
+  = altura 0 + `inert`. Antes se montaba con `{open && …}` y el 60-80 % del
+  texto de cada post (y sus enlaces internos) no existía en el HTML: Google
+  no hace clic y los crawlers de IA no ejecutan JS. No volver al montaje
+  condicional.
 - ⚠️ **Gotcha de MDX:** `{llaves}` fuera de un bloque de código rompen el build
   ("Could not parse expression with acorn"). Usa backticks + `<ángulos>`.
 
@@ -358,8 +377,8 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   Pendiente: **política de privacidad** (los términos de GA4 la exigen; el
   sitio aún no tiene) y dominio propio.
 - **Fase 5 (EN CURSO):** liberar las herramientas de `/herramientas`. Hechas
-  (oct-2026): calculadora de acero corrugado y calculadora de Manning. El resto
-  sigue "Pronto".
+  (oct-2026): conversor de coordenadas, calculadora de acero corrugado y
+  calculadora de Manning. El resto sigue "Pronto".
 - **Contacto — WhatsApp es el único canal publicado.** Número en
   `site.whatsapp` (`lib/site.ts`); enlaces siempre vía `whatsappUrl(mensaje)`,
   nunca hardcodeados. **El correo está oculto a propósito** (`site.showEmail:

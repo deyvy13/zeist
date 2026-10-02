@@ -132,7 +132,6 @@ const catalog: Record<Locale, Rubro[]> = {
       tools: [
         "Calculadora de volumen de movimiento de tierras",
         "Calculadora de pendientes y peraltes",
-        "Conversor de coordenadas topográficas",
         "Calculadora de curvas horizontales y verticales",
         "Estimador de horas ahorradas por automatización",
       ],
@@ -228,7 +227,6 @@ const catalog: Record<Locale, Rubro[]> = {
       tools: [
         "Calculadora de volume de movimento de terra",
         "Calculadora de declividades e superelevação",
-        "Conversor de coordenadas topográficas",
         "Calculadora de curvas horizontais e verticais",
         "Estimador de horas economizadas por automação",
       ],
@@ -324,7 +322,6 @@ const catalog: Record<Locale, Rubro[]> = {
       tools: [
         "Earthwork volume calculator",
         "Grade and superelevation calculator",
-        "Survey coordinate converter",
         "Horizontal and vertical curve calculator",
         "Hours-saved-by-automation estimator",
       ],

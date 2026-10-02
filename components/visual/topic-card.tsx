@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { useStepsSafe } from "./steps-provider";
 
@@ -122,24 +122,24 @@ export function TopicCard({
           </motion.span>
         </button>
 
-        <AnimatePresence initial={false}>
-          {open && (
-            <motion.div
-              id={contentId}
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="overflow-hidden"
-            >
-              <div className="relative px-5 pb-5 sm:px-6 sm:pb-6 md:px-8 md:pb-8">
-                <div className="border-t border-[color:var(--color-hairline)] pt-4 text-[color:var(--color-foreground)]/90">
-                  {children}
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Always mounted, collapsed only visually: the article text must ship
+            in the HTML so search engines index it and AI crawlers (which don't
+            run JS or click) can read it. `inert` keeps a closed body out of
+            the tab order and the accessibility tree. */}
+        <motion.div
+          id={contentId}
+          initial={false}
+          animate={open ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="overflow-hidden"
+          inert={!open}
+        >
+          <div className="relative px-5 pb-5 sm:px-6 sm:pb-6 md:px-8 md:pb-8">
+            <div className="border-t border-[color:var(--color-hairline)] pt-4 text-[color:var(--color-foreground)]/90">
+              {children}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </motion.div>
   );

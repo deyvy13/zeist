@@ -13,6 +13,21 @@ import {
 } from "../lib/tools/manning.ts";
 import { formatNumber, parseDecimal, NUMBER_STYLES } from "../lib/tools/number.ts";
 import { buildXlsx } from "../lib/tools/xlsx.ts";
+import {
+  convertRow,
+  elevationFactor,
+  formatDms,
+  geoToUtm,
+  hasPointNames,
+  parseAngle,
+  parseTable,
+  toGeoCsv,
+  toKml,
+  toPnezd,
+  transformDatum,
+  utmToGeo,
+  utmZone,
+} from "../lib/tools/coordinates.ts";
 
 const near = (actual, expected, rel = 1e-6, label = "") =>
   assert.ok(
@@ -191,4 +206,144 @@ test("xlsx is a well-formed stored zip", () => {
   for (const part of ["[Content_Types].xml", "xl/workbook.xml", "xl/worksheets/sheet1.xml", "Diámetro"]) {
     assert.ok(text.includes(part), part);
   }
+});
+
+// Reference values computed with PROJ 9.5 (pyproj 3.7) — EPSG:326xx/327xx, and the
+// EPSG transformations PSAD56 to WGS 84 (8) and SAD69 to SIRGAS 2000 (1).
+const PROJ_FORWARD = [
+  {"name":"trujillo","lat":-8.11165,"lon":-79.0287,"zone":17,"south":true,"e":717217.5751104329,"n":9102831.61259455,"scale":1.0001839701129176,"convergence":-0.2782651834069045},
+  {"name":"lima","lat":-12.04564,"lon":-77.03048,"zone":18,"south":true,"e":278958.52408431156,"n":8667581.942818232,"scale":1.0002045219406266,"convergence":0.423915511877962},
+  {"name":"cusco","lat":-13.5167,"lon":-71.9785,"zone":19,"south":true,"e":177558.39891575865,"n":8503763.045466641,"scale":1.0008863296944683,"convergence":0.6967659840139594},
+  {"name":"saopaulo","lat":-23.55052,"lon":-46.63331,"zone":23,"south":true,"e":333286.919438475,"n":7394586.092160614,"scale":0.9999433274838405,"convergence":0.6527524219266931},
+  {"name":"newyork","lat":40.7128,"lon":-74.006,"zone":18,"south":false,"e":583959.372324085,"n":4507350.998243321,"scale":0.9996867641116934,"convergence":0.6483919586127717},
+  {"name":"tromso","lat":69.6492,"lon":18.9553,"zone":34,"south":false,"e":420653.59408477886,"n":7728081.222099982,"scale":0.9996770203890329,"convergence":-1.9171704460642651},
+  {"name":"far_from_cm","lat":-5.0,"lon":-83.9,"zone":17,"south":true,"e":178386.22086739034,"n":9446625.868383944,"scale":1.0008805407116772,"convergence":0.2529703955739796},
+  {"name":"trujillo_forced_z18","lat":-8.11165,"lon":-79.0287,"zone":18,"south":true,"e":55808.21622416016,"n":9101152.778518144,"scale":1.0020427519000563,"convergence":0.5693980786426193},
+  {"name":"equator_north","lat":0.0005,"lon":-78.5,"zone":17,"south":false,"e":778276.316818102,"n":55.31802857097933,"scale":1.0005587314544444,"convergence":2.1830707743677763e-05},
+];
+const PROJ_DATUM = [
+  {"name":"trujillo","from":"psad56","to":"wgs84","lat":-8.11165,"lon":-79.0287,"outLat":-8.115099407256846,"outLon":-79.03088299062931},
+  {"name":"lima","from":"psad56","to":"wgs84","lat":-12.04564,"lon":-77.03048,"outLat":-12.04909429410711,"outLon":-77.03261627017456},
+  {"name":"cusco","from":"psad56","to":"wgs84","lat":-13.5167,"lon":-71.9785,"outLat":-13.52019041935985,"outLon":-71.98045067448015},
+  {"name":"saopaulo","from":"sad69","to":"sirgas2000","lat":-23.55052,"lon":-46.63331,"outLat":-23.55100944567162,"outLon":-46.63376344492811},
+  {"name":"manaus","from":"sad69","to":"sirgas2000","lat":-3.119,"lon":-60.0217,"outLat":-3.1193627582272736,"outLon":-60.02220740503238},
+];
+const PROJ_DATUM_UTM = [
+  {"name":"psad56_17s_to_wgs84_17s","e":717500.0,"n":9102800.0,"outE":717248.8987515783,"outN":9102429.632441718,"zone":17,"south":true,"from":"psad56","to":"wgs84"},
+  {"name":"sad69_23s_to_sirgas_23s","e":333500.0,"n":7394700.0,"outE":333454.9292347492,"outN":7394654.277764527,"zone":23,"south":true,"from":"sad69","to":"sirgas2000"},
+];
+
+// --- Coordinates ----------------------------------------------------------------
+
+test("UTM forward matches PROJ to 1 mm, with scale and convergence", () => {
+  for (const r of PROJ_FORWARD) {
+    const u = geoToUtm(r.lat, r.lon, "wgs84", r.zone, r.south);
+    near(u.e, r.e, 1e-3 / Math.max(1, r.e), `${r.name} E`);
+    near(u.n, r.n, 1e-3 / Math.max(1, r.n), `${r.name} N`);
+    near(u.scale, r.scale, 1e-9, `${r.name} k`);
+    near(u.convergence, r.convergence, 1e-7, `${r.name} convergence`);
+  }
+});
+
+test("UTM inverse round-trips PROJ grid values to 0.1 mm", () => {
+  for (const r of PROJ_FORWARD) {
+    const g = utmToGeo(r.e, r.n, r.zone, r.south, "wgs84");
+    near(g.lat, r.lat, 1e-9, `${r.name} lat`);
+    near(g.lon, r.lon, 1e-9, `${r.name} lon`);
+    near(g.scale, r.scale, 1e-9, `${r.name} k (inverse)`);
+  }
+});
+
+test("datum shifts match the EPSG transformations to 1 mm", () => {
+  for (const r of PROJ_DATUM) {
+    const [lat, lon] = transformDatum(r.lat, r.lon, r.from, r.to);
+    near(lat, r.outLat, 1e-8, `${r.name} lat`);
+    near(lon, r.outLon, 1e-8, `${r.name} lon`);
+  }
+  for (const r of PROJ_DATUM_UTM) {
+    const res = convertRow(
+      { line: 1, values: { E: String(r.e), N: String(r.n) } },
+      { kind: "utm", datum: r.from, zone: r.zone, south: r.south },
+      { kind: "utm", datum: r.to, zone: r.zone, south: r.south },
+      parseDecimal,
+    );
+    near(res.utm.e, r.outE, 2e-3 / r.outE, `${r.name} E`);
+    near(res.utm.n, r.outN, 2e-3 / r.outN, `${r.name} N`);
+  }
+});
+
+test("UTM zones, including Norway and Svalbard", () => {
+  assert.equal(utmZone(-8.11, -79.03), 17); // Trujillo
+  assert.equal(utmZone(-12.05, -77.03), 18); // Lima
+  assert.equal(utmZone(-13.52, -71.98), 19); // Cusco
+  assert.equal(utmZone(-23.55, -46.63), 23); // São Paulo
+  assert.equal(utmZone(60, 5), 32);
+  assert.equal(utmZone(78, 15), 33);
+  assert.equal(utmZone(0, 179.9), 60);
+  assert.equal(utmZone(0, -180), 1);
+});
+
+test("angles: parse decimal and DMS in es/pt/en notations, format with carry", () => {
+  near(parseAngle(`8°06'42.12"S`, "lat"), -(8 + 6 / 60 + 42.12 / 3600), 1e-12);
+  near(parseAngle("79 1 43.32 W", "lon"), -(79 + 1 / 60 + 43.32 / 3600), 1e-12);
+  near(parseAngle("79,0287 O", "lon"), -79.0287, 1e-12);
+  near(parseAngle("46,6333 L", "lon"), 46.6333, 1e-12);
+  near(parseAngle("S 8 6 42", "lat"), -(8 + 6 / 60 + 42 / 3600), 1e-12);
+  near(parseAngle("-79.0287", "lon"), -79.0287, 1e-12);
+  assert.ok(Number.isNaN(parseAngle("91", "lat")));
+  assert.ok(Number.isNaN(parseAngle("8 61 0", "lat")));
+  assert.ok(Number.isNaN(parseAngle("-8 S", "lat")));
+  assert.ok(Number.isNaN(parseAngle("8 E", "lat")));
+  const hemi = { n: "N", s: "S", e: "E", w: "W" };
+  assert.equal(formatDms(-8.11165, "lat", hemi), `8°06'41.940" S`);
+  assert.equal(formatDms(-79.99999999, "lon", hemi), `80°00'00.000" W`);
+});
+
+test("pasted tables: tabs with header, decimal commas, descriptions with spaces", () => {
+  const tab = parseTable("Punto\tNorte\tEste\tCota\tDesc\n1\t9102831.61\t717217.58\t32.5\tPlaza de Armas\n", "PNEZD");
+  assert.equal(tab.delimiter, "tab");
+  assert.equal(tab.rows.length, 2);
+  assert.equal(tab.rows[1].values.D, "Plaza de Armas");
+  const spaced = parseTable("1 9102831,61 717217,58 32,5 BM 1 norte\n", "PNEZD");
+  assert.equal(spaced.delimiter, "space");
+  assert.equal(spaced.rows[0].values.E, "717217,58");
+  assert.equal(spaced.rows[0].values.D, "BM 1 norte");
+  const semi = parseTable("1;9102831,61;717217,58\n", "PNEZD");
+  assert.equal(semi.delimiter, "semicolon");
+  assert.equal(semi.rows[0].values.N, "9102831,61");
+});
+
+test("row conversion flags swapped, out-of-range and unreadable values", () => {
+  const src = { kind: "utm", datum: "wgs84", zone: 17, south: true };
+  const dst = { kind: "geo", datum: "wgs84", zone: null, south: true };
+  const conv = (E, N, Z) => convertRow({ line: 1, values: { E, N, Z } }, src, dst, parseDecimal);
+  assert.equal(conv("9102831.61", "717217.58").error, "swapped");
+  assert.equal(conv("1717217", "9102831").error, "range");
+  assert.equal(conv("717217", "12000000").error, "range");
+  assert.equal(conv("abc", "9102831").error, "number");
+  const header = conv("Este", "Norte");
+  assert.equal(header.error, "number");
+  const ok = conv("717217,5751", "9102831,6126", "32.5");
+  near(ok.lat, -8.11165, 1e-8);
+  near(ok.combined, ok.scale * elevationFactor(ok.lat, 32.5, "wgs84"), 1e-12);
+  near(elevationFactor(0, 0, "wgs84"), 1, 1e-15);
+  assert.ok(elevationFactor(-12, 1000, "wgs84") < 0.99985 && elevationFactor(-12, 1000, "wgs84") > 0.99984);
+});
+
+test("exports: Civil 3D PNEZD renumbers alphanumeric points; KML is WGS 84 lon,lat", () => {
+  const src = { kind: "geo", datum: "wgs84", zone: null, south: true };
+  const dst = { kind: "utm", datum: "wgs84", zone: 17, south: true };
+  const rows = parseTable("BM-1\t-8.11165\t-79.0287\t32.5\tPlaza, centro\nBM-2\t-8.112\t-79.03\n", "PLATLON").rows;
+  const pts = rows.map((r) => convertRow(r, src, dst, parseDecimal));
+  const pnezd = toPnezd(pts);
+  assert.equal(pnezd.renumbered, true);
+  assert.equal(pnezd.text.split("\r\n")[0], "1,9102831.613,717217.575,32.500,BM-1 Plaza centro");
+  assert.equal(hasPointNames(pts), true);
+  const unnamed = convertRow({ line: 1, values: { LAT: "-8.11165", LON: "-79.0287" } }, src, dst, parseDecimal);
+  assert.equal(hasPointNames([unnamed]), false); // no "names moved" warning for a bare point
+  assert.equal(toPnezd([unnamed]).text.split(",")[0], "1");
+  const kml = toKml(pts, "Puntos & más");
+  assert.ok(kml.includes("<coordinates>-79.028700000,-8.111650000,0</coordinates>"));
+  assert.ok(kml.includes("Puntos &amp; más"));
+  assert.ok(toGeoCsv(pts).startsWith("BM-1,"));
 });
