@@ -22,6 +22,9 @@ export type Rubro = {
 };
 
 export type ToolsHubCopy = {
+  /** <title> (≤52 chars, keyword first) and meta description (≤155). */
+  seoTitle: string;
+  metaDescription: string;
   eyebrow: string;
   title: string;
   subtitle: string;
@@ -37,6 +40,8 @@ export type ToolsHubCopy = {
 
 export const toolsHubCopy: Record<Locale, ToolsHubCopy> = {
   es: {
+    seoTitle: "Herramientas gratis para ingeniería civil y BIM",
+    metaDescription: "Herramientas gratis para ingenieros: conversor de coordenadas UTM, área de terreno con memoria descriptiva, curvas de nivel, acero corrugado y Manning.",
     eyebrow: "Herramientas y recursos",
     title: "Todo para automatizar tu trabajo BIM, en un solo lugar.",
     subtitle:
@@ -51,6 +56,8 @@ export const toolsHubCopy: Record<Locale, ToolsHubCopy> = {
     open: "Abrir herramienta",
   },
   pt: {
+    seoTitle: "Ferramentas grátis para engenharia civil e BIM",
+    metaDescription: "Ferramentas grátis para engenheiros: conversor de coordenadas UTM, área de terreno com memorial descritivo, curvas de nível e calculadora de Manning.",
     eyebrow: "Ferramentas e recursos",
     title: "Tudo para automatizar seu trabalho BIM, num só lugar.",
     subtitle:
@@ -65,6 +72,8 @@ export const toolsHubCopy: Record<Locale, ToolsHubCopy> = {
     open: "Abrir ferramenta",
   },
   en: {
+    seoTitle: "Free Civil Engineering and BIM Tools (Online)",
+    metaDescription: "Free tools for engineers: UTM coordinate converter, land area with legal description, contour map generator and Manning's equation calculator.",
     eyebrow: "Tools & resources",
     title: "Everything to automate your BIM work, in one place.",
     subtitle:

@@ -3634,7 +3634,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           },
           {
             q: "¿Qué versión de Visual Studio necesito?",
-            a: "Visual Studio Community 2022 (gratuita) es suficiente. Al instalarlo, activa la carga 'Desarrollo de escritorio con .NET'. Necesitas .NET Framework 4.8 (Civil 3D 2024/2025) o .NET 8 (versiones más nuevas). Compruébalo en la documentación oficial del SDK de tu versión de Civil 3D."
+            a: "Visual Studio Community 2022 (gratuita) es suficiente. Al instalarlo, activa la carga 'Desarrollo de escritorio con .NET'. El framework depende de tu versión: .NET Framework 4.8 hasta Civil 3D 2024, .NET 8 en las versiones 2025 y 2026, y .NET 10 en la 2027. Compruébalo en la documentación oficial del SDK de tu versión de Civil 3D."
           },
           {
             q: "¿Puedo desarrollar plugins de Civil 3D en Mac o Linux?",
@@ -3686,7 +3686,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           },
           {
             q: "Qual versão de Visual Studio preciso?",
-            a: "Visual Studio Community 2022 (gratuito) é suficiente. Ao instalar, ative a carga 'Desenvolvimento desktop com .NET'. Você precisa de .NET Framework 4.8 (Civil 3D 2024/2025) ou .NET 8 (versões mais novas). Verifique na documentação oficial do SDK da sua versão de Civil 3D."
+            a: "Visual Studio Community 2022 (gratuito) é suficiente. Ao instalar, ative a carga 'Desenvolvimento desktop com .NET'. O framework depende da sua versão: .NET Framework 4.8 até o Civil 3D 2024, .NET 8 nas versões 2025 e 2026, e .NET 10 na 2027. Verifique na documentação oficial do SDK da sua versão de Civil 3D."
           },
           {
             q: "Posso desenvolver plugins de Civil 3D em Mac ou Linux?",
@@ -3738,7 +3738,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           },
           {
             q: "Which version of Visual Studio do I need?",
-            a: "Visual Studio Community 2022 (free) is enough. During installation, enable the '.NET desktop development' workload. You need .NET Framework 4.8 (Civil 3D 2024/2025) or .NET 8 (newer versions). Check the official SDK documentation for your Civil 3D version."
+            a: "Visual Studio Community 2022 (free) is enough. During installation, enable the '.NET desktop development' workload. The framework depends on your release: .NET Framework 4.8 up to Civil 3D 2024, .NET 8 for 2025 and 2026, and .NET 10 for 2027. Check the official SDK documentation for your Civil 3D version."
           },
           {
             q: "Can I develop Civil 3D plugins on Mac or Linux?",

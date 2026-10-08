@@ -1,7 +1,9 @@
 ---
 title: "Cómo crear un plugin para Civil 3D con Claude Code sin ser programador: guía end-to-end 2026"
-description: "Guía paso a paso para desarrollar un plugin de Civil 3D con Claude Code sin experiencia previa. Arquitectura recomendada, prompts que funcionan, y cómo compilar y distribuir al usuario final."
+seoTitle: "Claude Code y Civil 3D: crea un plugin sin programar"
+description: "Cómo crear un plugin para Civil 3D con Claude Code sin saber programar: arquitectura, prompts que funcionan, y cómo compilarlo e instalarlo en tu oficina."
 date: "2026-07-31T18:00:00.000Z"
+updated: "2026-10-08T12:00:00.000Z"
 author: "Zeist"
 tags:
   - Civil 3D
@@ -19,6 +21,10 @@ tags:
   title="Construir tu primer plugin de Civil 3D solía tomar semanas. Con Claude Code y esta arquitectura, un fin de semana."
   highlight="No es magia. Es método. Esta guía te lleva desde 'nunca abrí Visual Studio' hasta tener un .bundle listo para instalar en la máquina de tu jefe — con arquitectura escalable desde el minuto uno."
 />
+
+<Callout type="success" title="Respuesta rápida">
+Sí, se puede crear un plugin para Civil 3D con **Claude Code** sin ser programador, siguiendo un método. Necesitas Windows con Civil 3D, Visual Studio Community, que es gratuito, y el framework de tu versión: .NET 8 en Civil 3D 2025 y 2026, y .NET 10 en la 2027. Claude Code crea el proyecto en C#, escribe los comandos y te ayuda a compilar. Con una arquitectura en capas desde el inicio, el plugin se empaqueta como bundle y se instala en toda la oficina. Para sistemas grandes o cientos de usuarios, hace falta un desarrollador.
+</Callout>
 
 <Callout type="info" title="Para quién es esto">
 Ingenieros civiles, arquitectos y técnicos BIM que **usan Civil 3D todos los días y sienten que pierden horas en tareas repetitivas**. No necesitas haber programado antes, pero sí tener ganas de aprender los conceptos mínimos que la IA no puede saltar por ti.
@@ -156,7 +162,7 @@ Actúa como arquitecto senior de plugins .NET para Autodesk Civil 3D.
 
 Contexto:
 - Voy a crear mi PRIMER plugin de Civil 3D.
-- Uso Civil 3D 2025 (.NET Framework 4.8).
+- Uso Civil 3D 2025 (.NET 8).
 - Estoy en Windows con Visual Studio 2022 instalado.
 - SDK de Civil 3D instalado en C:\Program Files\Autodesk\Civil 3D 2025\
 - El plugin se llamará "ZeistTools" y su namespace raíz será "ZeistTools".
@@ -361,7 +367,7 @@ Cuando termines, dame las instrucciones para:
 5. Si tu dibujo tiene alineaciones, verás la lista. Si no, dibuja una alineación primero.
 
 <Callout type="warn">
-Si Civil 3D te dice "no se pudo cargar", el 90% de las veces es porque compilaste para un framework distinto al que espera Civil 3D (.NET 4.8 vs .NET 8). Verifica el `TargetFramework` en el `.csproj`.
+Si Civil 3D te dice "no se pudo cargar", el 90% de las veces es porque compilaste para un framework distinto al que espera Civil 3D: .NET Framework 4.8 hasta la versión 2024, .NET 8 en las 2025 y 2026, y .NET 10 en la 2027. Verifica el `TargetFramework` en el `.csproj`.
 </Callout>
 
 **Al llegar aquí ya eres oficialmente un desarrollador de plugins de Civil 3D.** Todo lo demás es agregar más comandos siguiendo el mismo patrón.
@@ -543,6 +549,7 @@ Empieza por Nivel 1, gradúa según crezca la demanda.
 - Para más contexto sobre desarrollo con IA en BIM, ver [Dynamo y plugins C# con IA (Claude)](/es/blog/dynamo-csharp-con-ia-claude).
 - Para el marco general de buenas prácticas, [Programación para ingenieros civiles](/es/blog/programacion-para-ingenieros-civiles).
 - **Documentación oficial:** [Civil 3D .NET API Reference](https://help.autodesk.com/view/CIV3D/2025/ENU/) y [Autodesk Developer Network](https://www.autodesk.com/developer-network/).
+- Qué IA trae ya el programa y qué no resuelve: [IA para AutoCAD y Civil 3D en 2026](/es/blog/inteligencia-artificial-autocad-civil-3d).
 
 <PostFaqs />
 

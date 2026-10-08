@@ -1,7 +1,9 @@
 ---
 title: "Vibe Coding for engineers: build your own BIM tools without being a programmer"
-description: "A step-by-step method for a civil engineer or architect to build their own Civil 3D and Revit tools by describing what they need in plain English, with AI as a copilot."
+seoTitle: "Vibe Coding for Engineers: A Beginner's Guide"
+description: "What vibe coding is and how an engineer can build their own BIM tools with AI without being a programmer: the method, the limits and first projects."
 date: "2026-07-24T10:00:00.000Z"
+updated: "2026-10-08T12:00:00.000Z"
 author: "Zeist"
 tags:
   - Vibe Coding
@@ -17,6 +19,10 @@ tags:
   title="Describe what you need in plain language and get code that works. With a method, it's not magic."
   highlight="Vibe Coding is building software by describing what you want in natural language. Without a method, it turns into chaos. This is the orderly route, adapted for people automating Civil 3D and Revit."
 />
+
+<Callout type="success" title="Quick answer">
+Vibe coding means building tools by describing what you need to an AI such as Claude or ChatGPT, then reviewing and testing what it writes. An engineer with no programming experience can build simple, useful BIM tools this way: exporting data, bulk renaming or generating reports. A Dynamo script can be ready in an afternoon and a simple C# plugin in a weekend. What AI doesn't replace is fundamentals: without them you can't evaluate or debug what it proposes. Always test on copies of your models.
+</Callout>
 
 <Callout type="info" title="Who this is for">
 Civil engineers, architects, and BIM technicians who want to build their own tools — a Dynamo script, a simple add-in — without a programming background. You don't need to know C# beforehand, but you do need to follow an order.
@@ -63,7 +69,7 @@ A context message you should reuse in every session:
 
 ```markdown
 Context for my environment:
-- Civil 3D 2025 (.NET Framework 4.8)
+- Civil 3D 2025 (.NET 8)
 - Windows 11, Visual Studio Community 2022
 - Goal: C# add-in using the official API
 - Level: I have never coded in C#, explain what you do
@@ -176,6 +182,7 @@ If the tool is going to be critical to the operation, it's time to decide betwee
 - If you're torn between Dynamo and C#: [Dynamo vs C# in Civil 3D and Revit](/en/blog/dynamo-vs-csharp-civil3d-revit).
 - If you want the full path to a real installer: [building a Civil 3D plugin with Claude Code](/en/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).
 - General overview of how AI changed BIM development: [Dynamo and C# plugins with AI](/en/blog/dynamo-csharp-con-ia-claude).
+- **Beyond the chat window:** [AI for AutoCAD and Civil 3D, what exists in 2026](/en/blog/inteligencia-artificial-autocad-civil-3d).
 
 <PostFaqs />
 

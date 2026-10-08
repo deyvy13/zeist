@@ -1,7 +1,9 @@
 ---
 title: "Desarrollo de add-ins para Revit y Civil 3D: la guía completa en español (2026)"
-description: "Guía de referencia para desarrollar plugins de Revit y Civil 3D en C#: qué son, requisitos, arquitectura recomendada, ciclo de desarrollo, interfaz, distribución y mantenimiento entre versiones."
+seoTitle: "Desarrollo de add-ins para Revit y Civil 3D: guía"
+description: "Guía completa para desarrollar add-ins para Revit y Civil 3D: qué son, qué automatizar, C# y la API de Autodesk, cómo se distribuyen y cuánto cuestan."
 date: "2026-08-04T11:00:00.000Z"
+updated: "2026-10-08T12:00:00.000Z"
 author: "Zeist"
 tags:
   - Add-in Revit
@@ -17,6 +19,10 @@ tags:
   title="Un add-in es la diferencia entre una automatización que usas tú y una que usa toda la oficina."
   highlight="Esta es la guía de referencia sobre desarrollo de plugins para Revit y Civil 3D: qué son, qué necesitas, cómo estructurarlos para que no se conviertan en un monstruo, y cómo llegar hasta el instalador."
 />
+
+<Callout type="success" title="Respuesta rápida">
+Un add-in es un programa compilado que se instala dentro de Revit o Civil 3D y agrega botones propios a la barra superior. Se desarrolla en **C#** sobre la API oficial de Autodesk, con Visual Studio Community, que es gratuito. La diferencia con un script de Dynamo es la distribución: el add-in se instala una vez y toda la oficina usa la misma versión. Conviene estructurarlo en capas para que los cambios de versión de Autodesk afecten una sola parte, distribuirlo como bundle o instalador y prever su mantenimiento anual.
+</Callout>
 
 <Callout type="info" title="Cómo usar esta guía">
 Es la guía madre del tema — larga a propósito. Los módulos están colapsados: ábrelos según lo que necesites. Si es tu primera vez, léelos en orden. Si ya tienes un add-in funcionando y quieres distribuirlo, salta al **módulo 7**.

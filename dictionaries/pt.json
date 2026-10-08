@@ -91,7 +91,9 @@
           "Mentoria 1-a-1"
         ]
       }
-    ]
+    ],
+    "seoTitle": "Serviços BIM: plugins, Dynamo, auditoria e cursos",
+    "metaDescription": "Plugins sob medida em C# para Revit e Civil 3D, scripts de Dynamo, auditoria de processos BIM e cursos para equipes. Engenheiros civis e de sistemas."
   },
   "serviceDetail": {
     "inShort": "Em poucas palavras",
@@ -160,14 +162,16 @@
       "secondary": "Ver add-ins sob medida",
       "note": "Diagnóstico sem compromisso · Respondemos no mesmo dia · Escritórios de todo o Brasil e América Latina"
     },
-    "related": "Continue lendo sobre este tema"
+    "related": "Continue lendo sobre este tema",
+    "updatedOn": "Atualizado em"
   },
   "tools": {
     "eyebrow": "Ferramentas",
     "title": "Scripts, templates e calculadoras para o seu dia a dia.",
     "subtitle": "Já disponíveis: conversor de coordenadas UTM, área de terreno com memorial descritivo, gerador de curvas de nível e calculadora de Manning. Em breve: grafos de Dynamo e templates de add-ins em C#.",
     "badge": "Grátis",
-    "cta": "Ver ferramentas"
+    "cta": "Ver ferramentas",
+    "moreTitle": "Mais ferramentas gratuitas"
   },
   "finalCta": {
     "title": "Que tarefa está roubando horas da sua equipe?",
@@ -186,7 +190,8 @@
     "links": {
       "contact": "Contato",
       "blog": "Blog",
-      "tools": "Ferramentas"
+      "tools": "Ferramentas",
+      "privacy": "Privacidade"
     },
     "languages": "Zeist em outros idiomas"
   },

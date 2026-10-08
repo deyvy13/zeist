@@ -1,8 +1,9 @@
 ---
 title: "Plugin para Civil 3D: dibujo 3D automatizado de redes y obras (de planos 2D a modelo 3D)"
 seoTitle: "Plugin para Civil 3D: dibujo 3D automatizado"
-description: "Qué puede dibujar en 3D un plugin para Civil 3D de forma automática —redes de tuberías, accesorios, bancos de ductos, estructuras—, cómo convertir planos 2D en modelo 3D y cómo detectar interferencias antes de la obra."
+description: "Plugin para Civil 3D que convierte planos 2D de redes de agua, desagüe y eléctricas en un modelo 3D con cotas, accesorios y metrados, con tus reglas."
 date: "2026-09-25T11:00:00.000Z"
+updated: "2026-10-08T12:00:00.000Z"
 author: "Zeist"
 tags:
   - Plugin Civil 3D
@@ -18,6 +19,10 @@ tags:
   title="Tu plano 2D ya tiene casi toda la información del modelo 3D. Solo falta que alguien la convierta."
   highlight="Ese alguien suele ser un proyectista, pieza por pieza, durante días. Esta guía explica qué parte de ese trabajo puede hacer un plugin para Civil 3D, cómo pasar de planos 2D a modelo 3D sin rehacer el diseño, y por qué el 3D se paga solo en la detección de interferencias."
 />
+
+<Callout type="success" title="Respuesta rápida">
+Un plugin para Civil 3D puede convertir un plano 2D en un modelo 3D cuando las capas siguen un estándar: cada polilínea indica qué es, por ejemplo una tubería de 160 mm de PVC. El plugin lee esas capas, toma la cota de la superficie del terreno y crea los objetos de Civil 3D: redes de tuberías con sus accesorios, alineamientos, corredores y estructuras, con sus metrados. Lo que se automatiza bien es la ejecución repetitiva del criterio; el trazado y las decisiones de diseño siguen siendo del ingeniero.
+</Callout>
 
 <Callout type="info" title="Glosario: los términos que vas a leer, en simple">
 - **Plugin (o add-in)** — Un programa que se instala dentro de Civil 3D y agrega botones propios en la barra superior. Hace en segundos una tarea que a mano toma horas.

@@ -1,8 +1,9 @@
 ---
 title: "Duct Banks in Civil 3D: How to Model Them in 3D and Automate Underground Electrical Design"
 seoTitle: "Duct Banks in Civil 3D: Automated 3D Modeling"
-description: "How to model an electrical or telecom duct bank in Civil 3D — conduits, concrete encasement, spacers, manholes and crossings with other utilities. The options that exist today and what a plugin can automate."
+description: "How to model a duct bank in Civil 3D, which has no native object: corridors, pipe networks or solids, and how to automate underground electrical design."
 date: "2026-09-25T10:00:00.000Z"
+updated: "2026-10-08T12:00:00.000Z"
 author: "Zeist"
 tags:
   - Duct bank
@@ -18,6 +19,10 @@ tags:
   title="Civil 3D has no button for drawing a duct bank. That's why almost everyone still draws them in 2D."
   highlight="And in 2D you can't see that the medium-voltage duct bank runs 4 inches from the sewer main. This guide covers the real ways to model a duct bank in 3D, which one fits which project, and what can be automated."
 />
+
+<Callout type="success" title="Quick answer">
+Civil 3D has no native duct bank object. Duct banks are modeled three ways: with a **corridor** that repeats the bank's typical section, usually built in Subassembly Composer; with a **pipe network** of parallel ducts; or with **3D solids** along the route. The corridor is the most complete, since it follows the alignment and profile and returns excavation and concrete volumes. A plugin automates what takes the longest: ducts, encasement and trench by bank type, vaults at changes in direction, and clearances to other utilities.
+</Callout>
 
 <Callout type="info" title="Glossary: the terms you'll read, in plain language">
 - **Duct bank** — A group of buried conduits, arranged in rows and columns, that carry electrical or telecom cables. Usually encased in concrete.

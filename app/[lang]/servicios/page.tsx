@@ -18,8 +18,8 @@ export async function generateMetadata({
   return buildMetadata({
     locale,
     path: "servicios",
-    title: `${dict.services.title} | ${dict.nav.services}`,
-    description: dict.services.subtitle + " " + dict.hero.subtitle,
+    title: dict.services.seoTitle,
+    description: dict.services.metaDescription,
   });
 }
 

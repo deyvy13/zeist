@@ -1,8 +1,9 @@
 ---
 title: "Redes de tubulação no Civil 3D: água, esgoto e conexões (joelhos, tês, junções) em 3D"
 seoTitle: "Redes de tubulação no Civil 3D: conexões em 3D"
-description: "Como modelar em 3D redes de água e esgoto no Civil 3D, com joelhos, tês, junções, reduções e registros, e como automatizar a colocação das conexões e o levantamento de quantitativos com um plugin."
+description: "Como modelar redes de água e esgoto no Civil 3D com curvas, tês e junções em 3D, por que os tubos não são desenhados e o que dá para automatizar."
 date: "2026-09-25T09:00:00.000Z"
+updated: "2026-10-08T12:00:00.000Z"
 author: "Zeist"
 tags:
   - Redes de tubulação
@@ -18,6 +19,10 @@ tags:
   title="Desenhar a rede em planta leva uma tarde. Colocar cada joelho, tê e junção em 3D leva uma semana."
   highlight="E cada vez que o traçado muda, essa semana recomeça. Este guia explica como o Civil 3D modela redes de água e esgoto, onde o tempo realmente se perde, e que parte dá para entregar a um plugin que coloca as conexões sozinho."
 />
+
+<Callout type="success" title="Resposta rápida">
+No Civil 3D, o esgoto é modelado como **rede de tubulação por gravidade**, com tubos retos entre PVs controlados pela declividade, e a água como **rede de pressão**, que acompanha o terreno com recobrimento mínimo e leva conexões em cada nó: curvas, tês, junções, reduções e registros. As duas precisam antes de uma lista de peças com os diâmetros e materiais do projeto. Se os tubos não são desenhados, o primeiro passo é conferir a lista de peças. Um plugin coloca as conexões por regra em todos os nós de uma vez.
+</Callout>
 
 <Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
 - **Rede por gravidade** — A que funciona por declividade, sem pressão: esgoto sanitário e drenagem pluvial. No Civil 3D é a *rede de tubulação*.

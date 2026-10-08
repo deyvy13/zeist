@@ -91,7 +91,9 @@
           "1-on-1 mentorship"
         ]
       }
-    ]
+    ],
+    "seoTitle": "BIM Services: Plugins, Dynamo, Audits and Training",
+    "metaDescription": "Custom C# plugins for Revit and Civil 3D, Dynamo scripts, BIM process audits and team training, from a team of civil engineers and software engineers."
   },
   "serviceDetail": {
     "inShort": "In short",
@@ -160,14 +162,16 @@
       "secondary": "See custom add-ins",
       "note": "No-commitment diagnosis · Same-day reply · Engineering offices across the Americas and beyond"
     },
-    "related": "Keep reading on this topic"
+    "related": "Keep reading on this topic",
+    "updatedOn": "Updated on"
   },
   "tools": {
     "eyebrow": "Tools",
     "title": "Scripts, templates, and calculators for your daily work.",
     "subtitle": "Available now: UTM coordinate converter, land area calculator with legal description, contour map generator and Manning's equation calculator. Coming soon: Dynamo graphs and C# add-in templates.",
     "badge": "Free",
-    "cta": "View tools"
+    "cta": "View tools",
+    "moreTitle": "More free tools"
   },
   "finalCta": {
     "title": "What task is stealing hours from your team?",
@@ -186,7 +190,8 @@
     "links": {
       "contact": "Contact",
       "blog": "Blog",
-      "tools": "Tools"
+      "tools": "Tools",
+      "privacy": "Privacy"
     },
     "languages": "Zeist in other languages"
   },

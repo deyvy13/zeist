@@ -236,6 +236,8 @@ acero", "calculadora manning tuberías/canales".
   guías; schema WebApplication + BreadcrumbList + FAQPage); contenido en
   `lib/tools-content/`. Herramienta nueva = slug + `toolLocales` + tarjeta en
   `lib/tools.ts`, carpeta en `app/[lang]/herramientas/<slug>/` y su contenido.
+  Cada herramienta enlaza a las demás de su idioma (bloque "Más herramientas
+  gratuitas" en `tool-layout.tsx`): antes recibían solo 1-6 enlaces contextuales.
 - **Números:** formato manual (`lib/tools/number.ts`), no `Intl`: los
   resultados se renderizan en el servidor y un separador distinto entre Node
   y el navegador rompería la hidratación. `es` usa punto decimal (como las
@@ -273,6 +275,15 @@ acero", "calculadora manning tuberías/canales".
   aunque GA no esté configurado.
 - En GA4 hay que marcar `whatsapp_click` como **evento clave** para verlo como
   conversión.
+- **Política de privacidad** (`app/[lang]/privacidad/page.tsx`, es/pt/en, enlazada
+  en el footer y bajo el formulario de contacto): describe exactamente lo que hace
+  el sitio — GA4 con Consent Mode, eventos y sus parámetros, WhatsApp, herramientas
+  locales (OSM y AWS Terrain Tiles), cada clave de localStorage — y cita la Ley
+  29733 + DS 016-2024-JUS (más LGPD/RGPD). **Si cambia la medición, una clave de
+  almacenamiento o un proveedor, actualizar la página y su fecha.** Incluye un
+  **opt-out** (`components/analytics-optout.tsx`): guarda `zeist-analytics-optout`
+  en localStorage y el loader de GA4 (`components/analytics.tsx`) fija
+  `ga-disable-<ID>` antes de `config`, así ese navegador no envía nada.
 - **Jerarquía de encabezados:** UN solo `<h1>` por página (título principal),
   `<h2>` para secciones, `<h3>` para tarjetas/subsecciones. **No romper esto.**
 - **Dominio:** `NEXT_PUBLIC_SITE_URL` apunta a `https://zeist.vercel.app` (fallback en `lib/site.ts` + `.env.local`). Cambiar en ambos sitios al migrar a dominio propio.
@@ -321,7 +332,13 @@ por página, p.ej. el visual del hero), NO el estilo de cada caja.
 ## 8. Blog
 
 - Archivos: `content/blog/<locale>/<slug>.mdx` con frontmatter:
-  `title, description, date (ISO), author, tags[], draft?, cover?`.
+  `title, seoTitle, description, date (ISO), updated? (ISO), author, tags[], draft?, cover?`.
+- **Reglas on-page (auditadas oct-2026, 0 fallos):** todo post lleva `seoTitle` ≤52
+  caracteres con la palabra clave primero (el layout añade " — Zeist"),
+  `description` ≤155 y un `<Callout>` de "Respuesta rápida" de 60-100 palabras
+  justo después del `BlogHero`. `updated` alimenta `dateModified`, la línea
+  visible "Actualizado el" y el `lastModified` del sitemap: ponerlo solo cuando el
+  contenido cambió de verdad (Google ignora fechas que siempre se mueven).
 - `lib/blog.ts`: `getAllPosts(locale)`, `getPost(locale, slug)`, `getPostSlugs`,
   `getAllTags`. Calcula tiempo de lectura. Ordena por fecha desc. Ignora `draft`.
 - Para publicar: crear el `.mdx` en `es/`, `pt/` y `en/` (mismo slug para que
@@ -377,6 +394,8 @@ a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
 
 > **Posts de captación (oct-2026).** Elegidos por volumen en el autocompletado de Google (Perú y EE. UU.) y por cercanía a la compra: `civil-3d-a-revit-topografia-coordenadas` y `secciones-transversales-civil-3d` en es/pt/en ("civil 3d a revit", "exportar/importar superficie civil 3d a revit"; "secciones transversales civil 3d" con generar/editar/actualizar/plantilla), y `metrados-en-revit` y `plan-ejecucion-bim-peb-peru` solo en `es` ("metrados en revit", "como hacer metrados en revit", "s10 revit"; "plan de ejecucion bim" con peru/plantilla/ejemplos/peb). Se descartó la migración de plugins a .NET 8/10 por bajo volumen. Hechos a no contradecir: Vincular topografía existe desde Revit 2019 vía Autodesk Construction Cloud y desde Revit 2024 crea toposólidos; la extensión Shared Reference Point exporta un XML desde Civil 3D que Revit importa por Complementos; Revit pierde precisión lejos de su origen (no mover el modelo a UTM); las láminas de secciones (Create Section Sheets, pestaña Salida) exigen vistas creadas con ubicación de producción; Civil 3D calcula volúmenes por áreas medias por defecto; en Revit, tablas de planificación y cómputo de materiales están en Vista › Crear, el encofrado no es nativo y el orden de Unir geometría decide a qué elemento va el volumen; Revit no exporta a S10 por sí solo (no se encontró un puente oficial: no afirmarlo); Norma Técnica de Metrados = RD 073-2010-VIVIENDA/VMCS-DNC; PEB: Guía Nacional BIM (actualizada con RD 0003-2023-EF/63.01), Formato N.° 05 de registro (RD 0005-2021-EF/63.01), cinco roles (Líder, Gestor, Coordinador, Modelador y Supervisor BIM).
 
+> **Search Console al 28-sep-2026** (informe de la sesión de Chrome en Descargas): 57 páginas indexadas, 28 clics, 740 impresiones, CTR 3.8 %. Consultas con impresiones: "dynamo automation", "claude civil 3d", "revit civil 3d", "bim audit", "automatizar tareas revit", "civil 3d automation", "automatização tarefas revit". La página con más clics es `crear-plugin-civil-3d-con-claude-code-sin-programar` (es/pt/en). Los `seoTitle` de esas páginas se alinearon a esas consultas en oct-2026; la siguiente pasada debe usar datos por página (impresiones, CTR y posición) para reescribir los títulos con CTR bajo y reforzar las páginas en posición 8-20.
+
 > **Conversión y respuestas de IA (sep-2026).** (1) Todo post muestra un CTA de servicio **bajo el título** (`components/post-early-cta.tsx`, copy en `blog.earlyCta` de los diccionarios); el frontmatter opcional `ctaTitle` lo adapta al dolor del post. (2) `seoTitle` (≤52 caracteres) para el `<title>`; `title` largo queda como `<h1>`. (3) Los posts nuevos abren con un `<Callout type="success" title="Respuesta rápida">`: 60-100 palabras que responden la búsqueda principal de forma citable — es lo que extraen Google y los asistentes de IA. (4) `/llms.txt` (`app/llms.txt/route.ts`) se genera del mismo contenido y `robots.ts` permite explícitamente a GPTBot, ClaudeBot, PerplexityBot, Google-Extended.
 
 **Fuente única de clusters: `lib/clusters.ts`.** Al crear un post, añádelo ahí: de ese mapa salen la prioridad 0.9 de los pillars en el sitemap y los "relacionados" del final de cada artículo (`getRelatedPosts`: pillar del cluster → satélites → etiquetas comunes → otros pillars). Antes los relacionados eran "los 2 posts más nuevos", lo que dejaba a los pillars sin enlaces.
@@ -416,8 +435,7 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   10. ~~Captación: Civil 3D a Revit, secciones transversales, metrados en Revit y PEB~~ (HECHO, oct-2026)
 - **Conversión (HECHA, oct-2026):** medición GA4 + clics de WhatsApp, y las 4
   páginas de servicio convertidas en landings de venta (ver sección 6).
-  Pendiente: **política de privacidad** (los términos de GA4 la exigen; el
-  sitio aún no tiene) y dominio propio.
+  Política de privacidad: HECHA (oct-2026). Pendiente: dominio propio.
 - **Fase 5 (EN CURSO):** liberar las herramientas de `/herramientas`. Hechas
   (oct-2026): conversor de coordenadas, calculadora de área de terreno
   (memoria descriptiva), generador de curvas de nivel, calculadora de acero

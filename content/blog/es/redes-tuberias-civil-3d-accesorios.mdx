@@ -1,8 +1,9 @@
 ---
 title: "Redes de tuberías en Civil 3D: agua potable, alcantarillado y accesorios (codos, tees, yees) en 3D"
 seoTitle: "Redes de tuberías Civil 3D: codos, tees y yees en 3D"
-description: "Cómo modelar en 3D redes de agua potable y alcantarillado en Civil 3D, con codos, tees, yees, reducciones y válvulas, y cómo automatizar la colocación de accesorios y su metrado con un plugin."
+description: "Cómo modelar redes de agua potable y alcantarillado en Civil 3D con codos, tees y yees en 3D, por qué no se dibujan las tuberías y qué se automatiza."
 date: "2026-09-25T09:00:00.000Z"
+updated: "2026-10-08T12:00:00.000Z"
 author: "Zeist"
 tags:
   - Redes de tuberías
@@ -18,6 +19,10 @@ tags:
   title="Dibujar la red en planta toma una tarde. Colocar cada codo, tee y yee en 3D toma una semana."
   highlight="Y cada vez que cambia el trazo, esa semana vuelve a empezar. Esta guía explica cómo modela Civil 3D las redes de agua potable y alcantarillado, dónde se va realmente el tiempo, y qué parte se puede dejar a un plugin que coloca los accesorios solo."
 />
+
+<Callout type="success" title="Respuesta rápida">
+En Civil 3D, el alcantarillado se modela como **red de tuberías por gravedad**, con tubos rectos entre buzones controlados por pendiente, y el agua potable como **red a presión**, que sigue el terreno con un recubrimiento mínimo y lleva accesorios en cada nudo: codos, tees, yees, reducciones y válvulas. Ambas necesitan antes una lista de piezas con los diámetros y materiales del proyecto. Si las tuberías no se dibujan, lo primero es revisar la lista de piezas. Un plugin coloca los accesorios por regla en todos los nudos a la vez.
+</Callout>
 
 <Callout type="info" title="Glosario: los términos que vas a leer, en simple">
 - **Red por gravedad** — La que funciona por pendiente, sin presión: alcantarillado sanitario y pluvial. En Civil 3D se llama *red de tuberías*.

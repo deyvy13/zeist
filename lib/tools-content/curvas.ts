@@ -13,7 +13,7 @@ const content: Record<Locale, ToolContent> = {
   es: {
     seoTitle: "Generador de curvas de nivel online (DXF y Civil 3D)",
     metaDescription:
-      "Genera curvas de nivel gratis de cualquier zona: elige el área en el mapa y descarga las curvas en DXF para AutoCAD y Civil 3D, o puntos para crear la superficie.",
+      "Genera curvas de nivel gratis de cualquier zona: elige el área en el mapa y descarga las curvas en DXF para AutoCAD y Civil 3D, o puntos para la superficie.",
     keywords: [
       "generar curvas de nivel online",
       "curvas de nivel google earth",

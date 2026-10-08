@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
-import { site, whatsappUrl } from "@/lib/site";
+import Link from "next/link";
+import { localizedPath, site, whatsappUrl } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
 import { ContactForm } from "@/components/contact-form";
 
@@ -10,6 +11,7 @@ const copy: Record<
   {
     title: string;
     subtitle: string;
+    metaDescription: string;
     labels: {
       name: string;
       email: string;
@@ -18,10 +20,13 @@ const copy: Record<
       subject: string;
     };
     orEmail: string;
+    privacy: { text: string; link: string };
   }
 > = {
   es: {
     title: "Cuéntanos qué te está robando horas",
+    metaDescription:
+      "Cuéntanos la tarea repetitiva que más pesa en tu equipo: te decimos si conviene automatizarla, con qué herramienta y cuánto tiempo recuperas.",
     subtitle:
       "Describe la tarea repetitiva que más pesa en tu equipo. Te decimos si conviene automatizarla, con qué herramienta y cuánto tiempo recuperas. Sin compromiso.",
     labels: {
@@ -32,9 +37,12 @@ const copy: Record<
       subject: "Diagnóstico de automatización BIM",
     },
     orEmail: "O escríbenos directamente por WhatsApp",
+    privacy: { text: "Usamos tus datos solo para responderte.", link: "Política de privacidad" },
   },
   pt: {
     title: "Conte-nos o que está roubando suas horas",
+    metaDescription:
+      "Conte a tarefa repetitiva que mais pesa na sua equipe: dizemos se vale automatizar, com qual ferramenta e quanto tempo você recupera.",
     subtitle:
       "Descreva a tarefa repetitiva que mais pesa na sua equipe. Dizemos se vale automatizar, com qual ferramenta e quanto tempo você recupera. Sem compromisso.",
     labels: {
@@ -45,9 +53,12 @@ const copy: Record<
       subject: "Diagnóstico de automação BIM",
     },
     orEmail: "Ou fale direto pelo WhatsApp",
+    privacy: { text: "Usamos seus dados só para responder.", link: "Política de privacidade" },
   },
   en: {
     title: "Tell us what's stealing your hours",
+    metaDescription:
+      "Tell us the repetitive task that weighs most on your team: we'll say if it's worth automating, with which tool, and how much time you'll get back.",
     subtitle:
       "Describe the repetitive task that weighs most on your team. We'll tell you if it's worth automating, with which tool, and how much time you'll get back. No commitment.",
     labels: {
@@ -58,6 +69,7 @@ const copy: Record<
       subject: "BIM automation diagnosis",
     },
     orEmail: "Or message us directly on WhatsApp",
+    privacy: { text: "We use your data only to reply to you.", link: "Privacy policy" },
   },
 };
 
@@ -73,7 +85,7 @@ export async function generateMetadata({
     locale,
     path: "contacto",
     title: c.title,
-    description: c.subtitle,
+    description: c.metaDescription,
   });
 }
 
@@ -99,6 +111,12 @@ export default async function ContactPage({
 
         <div className="mt-10">
           <ContactForm labels={c.labels} />
+          <p className="mt-4 text-xs text-[color:var(--color-muted)]">
+            {c.privacy.text}{" "}
+            <Link href={localizedPath(lang, "privacidad")} className="underline underline-offset-2 hover:text-[color:var(--color-foreground)]">
+              {c.privacy.link}
+            </Link>
+          </p>
         </div>
 
         <div className="mt-8 flex flex-col items-center gap-3">

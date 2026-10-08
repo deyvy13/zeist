@@ -1,8 +1,9 @@
 ---
 title: "Banco de dutos no Civil 3D: como modelar em 3D e automatizar o projeto elétrico subterrâneo"
 seoTitle: "Banco de dutos no Civil 3D: modelagem 3D automática"
-description: "Como modelar um banco de dutos elétrico ou de telecom no Civil 3D: dutos PEAD ou PVC, envelope de concreto, espaçadores, caixas de passagem e cruzamentos com outras redes. As opções que existem e o que um plugin automatiza."
+description: "Como modelar um banco de dutos no Civil 3D, que não tem um objeto próprio: corredor, rede de tubulação ou sólidos, e como automatizar o projeto elétrico."
 date: "2026-09-25T10:00:00.000Z"
+updated: "2026-10-08T12:00:00.000Z"
 author: "Zeist"
 tags:
   - Banco de dutos
@@ -18,6 +19,10 @@ tags:
   title="O Civil 3D não tem um botão para desenhar banco de dutos. Por isso quase todo mundo ainda o desenha em 2D."
   highlight="E em 2D não se vê que o banco de média tensão passa a 10 cm do coletor de esgoto. Este guia explica as formas reais de modelar um banco de dutos em 3D, qual convém em cada projeto, e o que dá para automatizar."
 />
+
+<Callout type="success" title="Resposta rápida">
+O Civil 3D não tem um objeto para bancos de dutos. Eles são modelados de três formas: com um **corredor** que repete a seção tipo do banco, criada normalmente com o Subassembly Composer; com uma **rede de tubulação** de dutos paralelos; ou com **sólidos 3D** ao longo do percurso. O corredor é o mais completo, porque segue o traçado e o perfil e entrega volumes de escavação e concreto. Um plugin automatiza o que mais toma tempo: dutos, envelope e vala por tipo de banco, caixas de passagem nas mudanças de direção e afastamentos de outras redes.
+</Callout>
 
 <Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
 - **Banco de dutos** — Conjunto de tubos enterrados, organizados em linhas e colunas, por onde passam cabos elétricos ou de telecomunicações. Normalmente envolvidos em concreto.

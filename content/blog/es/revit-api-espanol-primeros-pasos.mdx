@@ -1,7 +1,9 @@
 ---
 title: "Revit API en español: primeros pasos para automatizar Revit con C# (2026)"
-description: "Qué es la API de Revit explicada sin jerga, qué necesitas para empezar, cómo se estructura un add-in en C# y cuál es la primera automatización que conviene construir en una oficina."
+seoTitle: "Revit API en español: primeros pasos con C#"
+description: "Primeros pasos con la Revit API en español: qué necesitas instalar, tu primer comando en C#, cómo leer y modificar el modelo y los errores más comunes."
 date: "2026-09-10T10:00:00.000Z"
+updated: "2026-10-08T12:00:00.000Z"
 author: "Zeist"
 tags:
   - Revit API
@@ -17,6 +19,10 @@ tags:
   title="Revit puede hacer en segundos lo que tu equipo hace a mano cada semana. Sólo hay que pedírselo."
   highlight="La API de Revit es la puerta para eso. Esta guía explica qué es en lenguaje llano, qué necesitas para empezar, y cuál es la primera automatización que de verdad conviene construir — no la que sale en los tutoriales."
 />
+
+<Callout type="success" title="Respuesta rápida">
+La API de Revit es la puerta oficial para modificar el modelo con instrucciones en lugar de clics. Para empezar no hay que pagar nada: necesitas Visual Studio Community, que es gratuito, y las librerías RevitAPI.dll y RevitAPIUI.dll que ya vienen con Revit. Un add-in es un comando en C# que se registra con un archivo .addin. Todo cambio al modelo va dentro de una transacción, y conviene una sola por lote. Desde Revit 2025 se programa sobre .NET 8, y Revit 2027 usa .NET 10: cada versión exige recompilar.
+</Callout>
 
 <Callout type="info" title="Glosario: los términos que vas a leer, en simple">
 - **API** — La lista de cosas que Revit permite que un programa le pida. Como la carta de un restaurante: puedes pedir lo que está en la carta, no lo que se te ocurra.

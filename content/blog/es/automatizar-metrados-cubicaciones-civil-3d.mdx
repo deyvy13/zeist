@@ -1,7 +1,9 @@
 ---
 title: "Automatizar metrados y cubicaciones en Civil 3D: guía práctica 2026"
-description: "Cómo sacar metrados y cubicaciones de movimiento de tierras directamente del modelo de Civil 3D, con qué herramienta empezar y cómo evitar que las cantidades dejen de coincidir con los planos."
+seoTitle: "Automatizar metrados y cubicaciones en Civil 3D"
+description: "Cómo sacar metrados y cubicaciones de Civil 3D sin rehacerlos en Excel: superficies, volúmenes, cuadros con tus partidas y qué conviene automatizar."
 date: "2026-09-10T09:00:00.000Z"
+updated: "2026-10-08T12:00:00.000Z"
 author: "Zeist"
 tags:
   - Metrados
@@ -17,6 +19,10 @@ tags:
   title="El metrado ya está en el modelo. El problema es que lo estás volviendo a calcular a mano."
   highlight="Civil 3D conoce cada volumen de corte, cada área de pavimento y cada longitud de tubería. Esta guía explica cómo sacar esas cantidades de forma automática, con tus partidas y tu formato, para que dejen de desincronizarse en cada revisión de trazo."
 />
+
+<Callout type="success" title="Respuesta rápida">
+Civil 3D ya calcula los volúmenes de corte y relleno entre superficies o a lo largo del corredor, y las áreas por material de cada sección. Lo que falta casi siempre es el paso siguiente: convertir ese reporte en la planilla de partidas de tu empresa, con tus códigos, tu agrupación por tramos y tu formato. Eso es lo que se automatiza, primero con Dynamo para validar la regla y después con un plugin si se usa en cada entrega. El mayor ahorro está en las revisiones: cada cambio de trazo deja de obligar a rehacer el metrado a mano.
+</Callout>
 
 <Callout type="info" title="Glosario: lo que vas a leer, en simple">
 - **Metrado** — La cantidad de cada partida: metros cúbicos de corte, metros cuadrados de pavimento, metros lineales de tubería.

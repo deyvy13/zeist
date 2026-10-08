@@ -76,7 +76,7 @@ export default async function BlogPostPage({
     headline: meta.title,
     description: meta.description,
     datePublished: meta.date,
-    dateModified: meta.date,
+    dateModified: meta.updated ?? meta.date,
     author: {
       "@type": "Organization",
       name: meta.author,
@@ -165,6 +165,15 @@ export default async function BlogPostPage({
             <time dateTime={meta.date}>
               {dateFmt.format(new Date(meta.date))}
             </time>
+            {meta.updated && meta.updated.slice(0, 10) !== meta.date.slice(0, 10) && (
+              <>
+                <span>·</span>
+                <span>
+                  {dict.blog.updatedOn}{" "}
+                  <time dateTime={meta.updated}>{dateFmt.format(new Date(meta.updated))}</time>
+                </span>
+              </>
+            )}
             <span>·</span>
             <span>
               {meta.readingMinutes} {dict.blog.minRead}

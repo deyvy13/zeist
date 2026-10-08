@@ -19,8 +19,8 @@ export async function generateMetadata({
   return buildMetadata({
     locale,
     path: "herramientas",
-    title: copy.title,
-    description: copy.subtitle,
+    title: copy.seoTitle,
+    description: copy.metaDescription,
   });
 }
 

@@ -1,8 +1,9 @@
 ---
 title: "Civil 3D Plugin for Automated 3D Drawing: From 2D Sheets to a 3D Utility Model"
 seoTitle: "Civil 3D Plugin for Automated 3D Drawing"
-description: "What a Civil 3D plugin can draw in 3D automatically — pipe networks, fittings, duct banks, structures — how to turn 2D drawings into a 3D model, and how to catch utility clashes before construction."
+description: "A Civil 3D plugin that turns 2D water, sewer and electrical utility drawings into a 3D model with elevations, fittings and quantities, using your rules."
 date: "2026-09-25T11:00:00.000Z"
+updated: "2026-10-08T12:00:00.000Z"
 author: "Zeist"
 tags:
   - Civil 3D plugin
@@ -18,6 +19,10 @@ tags:
   title="Your 2D drawing already holds almost everything the 3D model needs. Someone just has to convert it."
   highlight="That someone is usually a designer, piece by piece, for days. This guide explains which part of that work a Civil 3D plugin can do, how to go from 2D sheets to a 3D model without redoing the design, and why 3D pays for itself in clash detection."
 />
+
+<Callout type="success" title="Quick answer">
+A Civil 3D plugin can turn a 2D drawing into a 3D model when the layers follow a standard: each polyline says what it is, for example a 160 mm PVC pipe. The plugin reads those layers, takes elevations from the ground surface and creates the Civil 3D objects: pipe networks with their fittings, alignments, corridors and structures, with their quantities. What automates well is the repetitive execution of design rules; the layout and design decisions stay with the engineer.
+</Callout>
 
 <Callout type="info" title="Glossary: the terms you'll read, in plain language">
 - **Plugin (or add-in)** — A program installed inside Civil 3D that adds its own buttons to the toolbar at the top. It does in seconds what takes hours by hand.

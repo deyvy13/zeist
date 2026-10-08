@@ -1,7 +1,9 @@
 ---
 title: "How to Build a Civil 3D Plugin with Claude Code Without Being a Programmer: End-to-End 2026 Guide"
-description: "Step-by-step guide to building a Civil 3D plugin with Claude Code with no prior experience. Recommended architecture, prompts that work, and how to compile and ship it to end users."
+seoTitle: "Claude Code for Civil 3D: Build a Plugin, No Coding"
+description: "How to build a Civil 3D plugin with Claude Code without coding experience: architecture, prompts that work, and how to compile and deploy it."
 date: "2026-07-31T18:00:00.000Z"
+updated: "2026-10-08T12:00:00.000Z"
 author: "Zeist"
 tags:
   - Civil 3D
@@ -19,6 +21,10 @@ tags:
   title="Building your first Civil 3D plugin used to take weeks. With Claude Code and this architecture, it takes a weekend."
   highlight="This isn't magic. It's method. This guide takes you from 'I've never opened Visual Studio' to a .bundle ready to install on your boss's machine — with an architecture that scales from day one."
 />
+
+<Callout type="success" title="Quick answer">
+Yes, you can build a Civil 3D plugin with **Claude Code** without being a programmer, if you follow a method. You need Windows with Civil 3D, the free Visual Studio Community, and the framework for your release: .NET 8 for Civil 3D 2025 and 2026, and .NET 10 for 2027. Claude Code creates the C# project, writes the commands and helps you compile. With a layered architecture from day one, the plugin is packaged as a bundle and installed across the office. For large systems or hundreds of users, you need a developer.
+</Callout>
 
 <Callout type="info" title="Who this is for">
 Civil engineers, architects, and BIM technicians who **use Civil 3D every day and feel like they're losing hours to repetitive tasks**. You don't need prior coding experience, but you do need the drive to learn the handful of concepts that AI can't skip for you.
@@ -156,7 +162,7 @@ Act as a senior .NET plugin architect for Autodesk Civil 3D.
 
 Context:
 - I'm building my FIRST Civil 3D plugin.
-- I'm using Civil 3D 2025 (.NET Framework 4.8).
+- I'm using Civil 3D 2025 (.NET 8).
 - I'm on Windows with Visual Studio 2022 installed.
 - Civil 3D SDK installed at C:\Program Files\Autodesk\Civil 3D 2025\
 - The plugin will be called "ZeistTools" and its root namespace will be "ZeistTools".
@@ -361,7 +367,7 @@ When you're done, give me instructions to:
 5. If your drawing has alignments, you'll see the list. If not, draw an alignment first.
 
 <Callout type="warn">
-If Civil 3D tells you it "couldn't load" the plugin, 90% of the time it's because you compiled for a different framework than the one Civil 3D expects (.NET 4.8 vs. .NET 8). Check the `TargetFramework` in the `.csproj`.
+If Civil 3D tells you it "couldn't load" the plugin, 90% of the time it's because you compiled for a different framework than the one Civil 3D expects: .NET Framework 4.8 up to the 2024 release, .NET 8 for 2025 and 2026, and .NET 10 for 2027. Check the `TargetFramework` in the `.csproj`.
 </Callout>
 
 **By this point you're officially a Civil 3D plugin developer.** Everything else is adding more commands following the same pattern.
@@ -544,6 +550,7 @@ Start at Level 1 and move up as demand grows.
 - For more context on AI-driven BIM development, see [Dynamo and C# Plugins with AI (Claude)](/en/blog/dynamo-csharp-con-ia-claude).
 - For the general framework of good practices, see [Programming for Civil Engineers](/en/blog/programacion-para-ingenieros-civiles).
 - **Official documentation:** [Civil 3D .NET API Reference](https://help.autodesk.com/view/CIV3D/2025/ENU/) and [Autodesk Developer Network](https://www.autodesk.com/developer-network/).
+- What AI already ships with the software and what it can't do: [AI for AutoCAD and Civil 3D in 2026](/en/blog/inteligencia-artificial-autocad-civil-3d).
 
 <PostFaqs />
 

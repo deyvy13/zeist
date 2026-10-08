@@ -32,6 +32,10 @@ export function SiteFooter({ lang, dict }: { lang: Locale; dict: Dictionary }) {
           label: dict.footer.links.contact,
           href: localizedPath(lang, "contacto"),
         },
+        {
+          label: dict.footer.links.privacy,
+          href: localizedPath(lang, "privacidad"),
+        },
       ],
     },
   ];

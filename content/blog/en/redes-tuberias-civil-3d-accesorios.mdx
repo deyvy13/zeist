@@ -1,8 +1,9 @@
 ---
 title: "Civil 3D Pipe Networks: Water, Sewer and Fittings (Elbows, Tees, Wyes) Modeled in 3D"
 seoTitle: "Civil 3D Pipe Networks: Elbows, Tees and Wyes in 3D"
-description: "How to model water and sewer networks in 3D in Civil 3D with elbows, tees, wyes, reducers and valves — pressure networks, parts lists, catalogs — and how a plugin can place fittings and count them automatically."
+description: "How to model water and sewer networks in Civil 3D with elbows, tees and wyes in 3D, why pipes don't draw, and what you can automate."
 date: "2026-09-25T09:00:00.000Z"
+updated: "2026-10-08T12:00:00.000Z"
 author: "Zeist"
 tags:
   - Pipe networks
@@ -18,6 +19,10 @@ tags:
   title="Drawing the network in plan takes an afternoon. Placing every elbow, tee and wye in 3D takes a week."
   highlight="And every time the layout changes, that week starts over. This guide explains how Civil 3D models water and sewer networks, where the time really goes, and which part you can hand to a plugin that places the fittings for you."
 />
+
+<Callout type="success" title="Quick answer">
+In Civil 3D, sewers are modeled as a **gravity pipe network**, with straight pipes between manholes controlled by slope, and water mains as a **pressure network**, which follows the ground at minimum cover and carries fittings at every node: elbows, tees, wyes, reducers and valves. Both need a parts list with the project's sizes and materials first. If pipes don't draw, check the parts list first. A plugin places fittings by rule at every node at once.
+</Callout>
 
 <Callout type="info" title="Glossary: the terms you'll read, in plain language">
 - **Gravity network** — Flows by slope, with no pressure: sanitary sewer and storm drainage. In Civil 3D it's a *pipe network*.

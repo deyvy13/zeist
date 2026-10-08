@@ -18,6 +18,13 @@ const rawId = process.env.NEXT_PUBLIC_GA_ID ?? "";
 /** GA4 measurement ID, only if it has the expected shape (guards the inline script). */
 export const gaMeasurementId = /^G-[A-Z0-9]{4,20}$/.test(rawId) ? rawId : "";
 
+/**
+ * localStorage flag set from the privacy page when a visitor opts out of
+ * measurement. The GA4 loader reads it before `config` and sets Google's
+ * official `ga-disable-<ID>` switch, so no hit is ever sent from that browser.
+ */
+export const ANALYTICS_OPTOUT_KEY = "zeist-analytics-optout";
+
 type Gtag = (...args: unknown[]) => void;
 type EventParams = Record<string, string | number>;
 

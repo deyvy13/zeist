@@ -1,8 +1,9 @@
 ---
 title: "Banco de ductos en Civil 3D: cómo modelarlo en 3D y automatizar el diseño de canalizaciones eléctricas"
 seoTitle: "Banco de ductos en Civil 3D: modelado 3D automático"
-description: "Cómo modelar un banco de ductos (bancoductos) eléctrico o de telecomunicaciones en Civil 3D: ductos, envolvente de concreto, registros y cruces con otras redes. Qué opciones existen y qué automatiza un plugin."
+description: "Cómo modelar un banco de ductos en Civil 3D, que no trae un objeto propio: corredor, red de tuberías o sólidos, y cómo automatizar las canalizaciones."
 date: "2026-09-25T10:00:00.000Z"
+updated: "2026-10-08T12:00:00.000Z"
 author: "Zeist"
 tags:
   - Banco de ductos
@@ -18,6 +19,10 @@ tags:
   title="Civil 3D no trae un botón para dibujar un banco de ductos. Por eso casi todos lo siguen dibujando en 2D."
   highlight="Y en 2D no se ve que el banco de media tensión pasa a 10 cm del colector de desagüe. Esta guía explica las formas reales de modelar un banco de ductos en 3D, cuál conviene según el proyecto, y qué se puede automatizar."
 />
+
+<Callout type="success" title="Respuesta rápida">
+Civil 3D no trae un objeto para bancos de ductos. Se modelan de tres formas: con un **corredor** que repite la sección tipo del banco, creada normalmente con Subassembly Composer; con una **red de tuberías** de ductos paralelos; o con **sólidos 3D** a lo largo del recorrido. El corredor es el más completo, porque sigue el trazo y el perfil y entrega volúmenes de excavación y concreto. Un plugin automatiza lo que más tiempo toma: ductos, envolvente y zanja por tipo de banco, registros en los cambios de dirección y separaciones con otras redes.
+</Callout>
 
 <Callout type="info" title="Glosario: los términos que vas a leer, en simple">
 - **Banco de ductos (o bancoductos)** — Grupo de tubos enterrados, ordenados en filas y columnas, por donde pasan cables eléctricos o de telecomunicaciones. Normalmente van embebidos en concreto.

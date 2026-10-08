@@ -12,6 +12,7 @@ const STATIC_PATHS = [
   "blog",
   "herramientas",
   "contacto",
+  "privacidad",
   ...SERVICE_SLUGS.map((s) => `servicios/${s}`),
 ];
 
@@ -24,6 +25,7 @@ function priorityFor(path: string): number {
     return PILLAR_SLUGS.has(path.slice("blog/".length)) ? 0.9 : 0.7;
   }
   if (path.startsWith("servicios/")) return 0.8;
+  if (path === "privacidad") return 0.3;
   return 0.8;
 }
 
@@ -37,6 +39,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // content such as Peru regulation ships only in `es`), so listing a /pt/ URL
   // for them would publish a 404 and a broken hreflang pair.
   const pathLocales = new Map<string, Locale[]>();
+  // "<locale>:<path>" -> real last-modified date for blog posts. Static pages,
+  // services and tools change with each deploy, so they keep the build time.
+  const lastMod = new Map<string, Date>();
 
   for (const path of STATIC_PATHS) pathLocales.set(path, [...locales]);
   // Tools ship per locale too (the steel calculator is es-only).
@@ -47,6 +52,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     for (const post of getAllPosts(l)) {
       const path = `blog/${post.slug}`;
       pathLocales.set(path, [...(pathLocales.get(path) ?? []), l]);
+      lastMod.set(`${l}:${path}`, new Date(post.updated ?? post.date));
     }
   }
 
@@ -60,7 +66,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     for (const locale of available) {
       entries.push({
         url: localePath(locale, path),
-        lastModified: now,
+        lastModified: lastMod.get(`${locale}:${path}`) ?? now,
         changeFrequency: path.startsWith("blog") ? "weekly" : "monthly",
         priority: priorityFor(path),
         alternates: { languages },

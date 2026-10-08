@@ -26,6 +26,12 @@ export type PostMeta = {
   ctaTitle?: string;
   description: string;
   date: string; // ISO
+  /**
+   * Last substantial revision (ISO). Feeds BlogPosting.dateModified, the
+   * visible "updated" line and the sitemap's lastModified. Set it only when the
+   * content really changed: Google learns to ignore dates that always move.
+   */
+  updated?: string;
   tags: string[];
   author: string;
   cover?: string;
@@ -51,6 +57,11 @@ export function getPostSlugs(locale: Locale): string[] {
     .map((f) => f.replace(/\.mdx$/, ""));
 }
 
+// gray-matter turns unquoted YAML dates into Date objects; keep ISO strings.
+function toIso(value: unknown): string {
+  return value instanceof Date ? value.toISOString() : String(value);
+}
+
 export function getPost(locale: Locale, slug: string): Post | null {
   const file = path.join(localeDir(locale), `${slug}.mdx`);
   if (!fs.existsSync(file)) return null;
@@ -67,6 +78,7 @@ export function getPost(locale: Locale, slug: string): Post | null {
     ctaTitle: data.ctaTitle ? String(data.ctaTitle) : undefined,
     description: String(data.description ?? ""),
     date: String(data.date ?? new Date().toISOString()),
+    updated: data.updated ? toIso(data.updated) : undefined,
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
     author: String(data.author ?? "Zeist"),
     cover: data.cover ? String(data.cover) : undefined,

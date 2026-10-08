@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { absoluteUrl, localizedPath, site, siteUrl, whatsappUrl } from "@/lib/site";
 import { getPost, type PostMeta } from "@/lib/blog";
-import type { ToolSlug } from "@/lib/tools";
+import { toolsFor, type ToolSlug } from "@/lib/tools";
 import type { ToolBlock, ToolContent } from "@/lib/tools-content/types";
 import { IconArrow, IconWhatsApp } from "@/components/icons";
 
@@ -184,6 +184,9 @@ export function ToolLayout({
 }) {
   const labels = dict.serviceDetail;
   const pageUrl = absoluteUrl(`${lang}/herramientas/${slug}`);
+  // Every tool links to the others in its locale: tools are the main traffic
+  // magnets, and before this block each one got only 1-6 contextual links.
+  const otherTools = toolsFor(lang).filter((t) => t.slug !== slug);
   const guides = content.guides
     .map((s) => getPost(lang, s))
     .filter((p): p is NonNullable<typeof p> => Boolean(p) && !p!.meta.draft)
@@ -409,6 +412,28 @@ export function ToolLayout({
                     <p className="mt-1.5 max-w-3xl text-sm text-[color:var(--color-muted)]">{guide.description}</p>
                   </div>
                   <IconArrow className="hidden h-5 w-5 text-[color:var(--color-muted)] transition-all group-hover:translate-x-1 group-hover:text-[color:var(--color-mint-600)] sm:block" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ========================= MORE TOOLS ========================= */}
+      {otherTools.length > 0 && (
+        <section className="section w-full">
+          <div className="container-zeist">
+            <span className="eyebrow">{dict.tools.eyebrow}</span>
+            <h2 className="mt-5 text-3xl sm:text-4xl">{dict.tools.moreTitle}</h2>
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {otherTools.map(({ slug: other, card }) => (
+                <Link
+                  key={other}
+                  href={localizedPath(lang, `herramientas/${other}`)}
+                  className="surface surface-hover group flex flex-col rounded-2xl p-5"
+                >
+                  <h3 className="text-base transition-colors group-hover:text-[color:var(--color-mint-700)]">{card.title}</h3>
+                  <p className="mt-2 text-sm text-[color:var(--color-muted)]">{card.body}</p>
                 </Link>
               ))}
             </div>
