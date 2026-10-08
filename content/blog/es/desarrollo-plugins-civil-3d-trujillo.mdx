@@ -1,0 +1,169 @@
+---
+title: "Desarrollo de plugins para Civil 3D en Trujillo: automatización para vías, saneamiento, drenaje y habilitaciones urbanas"
+seoTitle: "Desarrollo de plugins para Civil 3D en Trujillo"
+ctaTitle: "¿Tu oficina rehace secciones, metrados y láminas en Civil 3D en cada expediente? Lo automatizamos."
+description: "Desarrollo de plugins a medida para Civil 3D en Trujillo: qué se automatiza en vías, saneamiento, drenaje y habilitaciones, cómo se programa y cuánto toma."
+date: "2026-10-08T11:00:00.000Z"
+author: "Zeist"
+tags:
+  - Trujillo
+  - La Libertad
+  - Civil 3D
+  - Plugins para Civil 3D
+  - Civil 3D API
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Trujillo · Servicios · Plugins para Civil 3D"
+  title="En La Libertad, casi toda la obra pública es infraestructura. Y la infraestructura se hace en Civil 3D."
+  highlight="Qué conviene automatizar en Civil 3D para expedientes viales, de saneamiento, de drenaje y de habilitaciones urbanas, cuándo basta un plugin comercial o un script de Dynamo, y cómo se desarrolla uno a medida con el estándar de tu oficina."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+En Trujillo, **Zeist** desarrolla plugins a medida para Civil 3D: programa en C# sobre la API .NET de Autodesk, con un equipo de ingenieros civiles e ingenieros de sistemas. En las oficinas de La Libertad, los plugins más útiles automatizan metrados y cubicaciones, secciones y perfiles, redes de agua, desagüe y drenaje, lotización y memorias descriptivas, y la producción de láminas del expediente. Un plugin comercial resuelve tareas generales. Uno a medida aplica tu estándar y el formato de la entidad con un botón. Suele tomar de 4 a 8 semanas.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Plugin o add-in** — Un programa que se instala dentro de Civil 3D y agrega botones propios a la barra superior.
+- **API de Civil 3D** — La puerta oficial por la que un programa puede leer y crear alineamientos, superficies, corredores o redes.
+- **C# y .NET** — El lenguaje y la plataforma de Microsoft con los que se programan los plugins de Civil 3D.
+- **Dynamo** — Una herramienta para automatizar uniendo bloques en pantalla, sin escribir código.
+- **Corredor** — El modelo 3D de una vía o un canal, que sale de un alineamiento, un perfil y una sección típica.
+- **Expediente técnico** — El conjunto de planos, metrados y memorias que se presenta a la entidad.
+
+Sin más términos de programación. Está escrito para gerentes, jefes de proyecto y coordinadores de oficinas de infraestructura.
+</Callout>
+
+## Civil 3D se compra para diseñar, pero las horas se van en producir
+
+El diseño de una vía o de una red toma su tiempo. Lo que se come las semanas es lo que viene después, y se repite con cada cambio de trazo o cada observación de la entidad: **secciones, cuadros, perfiles, metrados y láminas**.
+
+Eso es exactamente lo que un plugin hace bien: tareas con reglas claras, que se repiten y que hoy dependen de que alguien las rehaga a mano.
+
+<AnimatedFlow
+  title="Dónde entra un plugin en un expediente de infraestructura"
+  nodes="Topografía y superficie|Diseño: ejes, rasantes, redes|Producción: secciones, cuadros, metrados|Láminas del expediente"
+  subs="Importar con tus códigos|Las decisiones del ingeniero|Lo que más se repite|Con el formato de la entidad"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Plugins comerciales para Civil 3D, Dynamo o plugin a medida" time="~5 min">
+
+Quien busca «los mejores plugins para Civil 3D» encuentra herramientas de topografía, de drenaje, de sólidos o de exportación. Antes de desarrollar algo propio, conviene saber qué resuelve cada camino:
+
+- **Plugin comercial:** ideal para tareas generales que son iguales en cualquier oficina. Se usa de inmediato, pero aplica las reglas del fabricante.
+- **Script de Dynamo:** ideal para probar una automatización en días, sin escribir código. Lo explicamos en [10 scripts de Dynamo para Civil 3D](/es/blog/dynamo-civil-3d-scripts).
+- **Plugin a medida en C#:** ideal cuando toda la oficina repite la tarea cada semana y debe salir con tu estándar y el formato de la entidad.
+
+<ComparisonTable
+  criterionLabel="Criterio"
+  leftLabel="Plugin a medida"
+  rightLabel="Plugin comercial o script"
+  rows="Aplica tus partidas y nomenclatura | *Exactamente | Solo si coinciden || Formato de láminas y cuadros | *El de tu oficina y la entidad | El del fabricante o el script || Con miles de objetos | *Rápido | Variable || Quién lo usa | *Toda la oficina, con un botón | Quien lo conoce || Tiempo hasta usarlo | Semanas | *Inmediato o días"
+/>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Qué se automatiza en las obras de La Libertad" time="~6 min">
+
+Ordenado por el tipo de obra que más se proyecta en la región:
+
+- **Vías:** secciones transversales con sus cuadros, perfiles longitudinales rotulados, y [metrados y cubicaciones](/es/blog/automatizar-metrados-cubicaciones-civil-3d) desde el corredor.
+- **Agua y desagüe:** [redes con sus codos, tees y yees](/es/blog/redes-tuberias-civil-3d-accesorios) colocados por regla, recubrimientos y metrado de accesorios.
+- **Drenaje pluvial:** sumideros por regla, dimensionamiento de colectores y perfiles; el contexto local está en [drenaje pluvial en Trujillo](/es/blog/drenaje-pluvial-trujillo-civil-3d).
+- **Habilitaciones urbanas:** lotización, cuadro de áreas con aportes y memorias descriptivas por lote. Ver [habilitación urbana en Trujillo](/es/blog/habilitacion-urbana-trujillo-civil-3d).
+- **Topografía:** importación de levantamientos con tus códigos, curvas antiguas acotadas y revisión de datum. Ver [topografía de Trujillo](/es/blog/topografia-trujillo-curvas-de-nivel-dwg) y [coordenadas UTM en Trujillo](/es/blog/coordenadas-utm-trujillo-la-libertad).
+- **Láminas:** planta y perfil, secciones y cajetín con progresivas, generados desde el modelo. Ver [producción automática de planos](/es/blog/produccion-planos-automatica-civil-3d-revit).
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Cómo se programa Civil 3D, en simple" time="~5 min">
+
+Civil 3D se construye sobre AutoCAD, y su API también: un plugin de Civil 3D usa la API de AutoCAD para el dibujo y la de Civil 3D para los objetos de ingeniería, como alineamientos, perfiles, superficies, corredores, secciones y redes de tuberías.
+
+**Lo que esto permite:** leer el modelo y producir lo que el expediente pide, con las mismas reglas cada vez; crear objetos de Civil 3D desde datos externos, como un Excel o un levantamiento; y revisar el modelo contra tu estándar antes de entregar.
+
+**Lo que conviene saber:** no todas las funciones de Civil 3D están disponibles en la API. Por eso el diagnóstico confirma primero qué se puede automatizar y cómo, antes de comprometer un alcance.
+
+**Las versiones:** Civil 3D 2025 pasó de .NET Framework a **.NET 8**, y Civil 3D 2027 a **.NET 10**. En cada salto los plugins se recompilan o se ajustan. Un plugin sin mantenimiento deja de funcionar cuando la oficina se actualiza.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Cómo se desarrolla, y qué recibes" time="~5 min">
+
+1. **Diagnóstico (1 semana, gratuito):** vemos la tarea en un expediente real, medimos cuánto tiempo consume y escribimos las reglas.
+2. **Prototipo (1 a 2 semanas):** validamos la lógica sobre tu proyecto, en Dynamo o en una versión mínima del plugin.
+3. **Desarrollo (2 a 4 semanas):** C# con manejo de errores, registro de lo que hace y pruebas sobre tus propios modelos.
+4. **Instalación y formación (unos días):** instalador para toda la oficina, botón en la barra superior de Civil 3D y manual.
+5. **Soporte:** ajustes y actualización con cada nueva versión de Civil 3D.
+
+**Lo que recibe tu empresa:** el plugin instalado, el instalador, el código fuente completo —el plugin es tuyo—, la documentación técnica, el manual y las pruebas sobre tus modelos.
+
+<Callout type="info" title="El criterio de aceptación">
+El plugin se acepta cuando da el mismo resultado que el método manual en un proyecto real, en una fracción del tiempo. Si una cubicación o un cuadro no cuadra, se corrige antes de instalarlo.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Un ejemplo de cálculo: secciones y cubicaciones de una vía" time="~4 min">
+
+Un ejemplo ilustrativo de cómo se mide el retorno, con números redondos:
+
+- Armar las láminas de secciones y el cuadro de cubicaciones de un tramo toma **2 días** de un proyectista.
+- Cada observación o cambio de rasante obliga a rehacerlos: digamos **3 veces por expediente**.
+- Si la oficina entrega **un expediente vial al mes**, son unos **72 días de trabajo al año** en una sola tarea.
+
+Con un plugin, esa producción se vuelve a generar en minutos después de cada cambio, y el proyectista vuelve a diseñar. Tus números serán otros: el diagnóstico gratuito los mide con tus proyectos. El método completo está en [cuánto cuesta un add-in para Revit o Civil 3D](/es/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Por qué un equipo de ingenieros civiles en Trujillo" time="~4 min">
+
+Un programador sin formación de ingeniería puede escribir un plugin que funcione. Lo difícil es que **haga lo correcto**: que la cubicación siga el criterio de medición, que el accesorio elegido sea el que corresponde al ángulo, que el cuadro tenga el formato que la entidad observa.
+
+- **Somos ingenieros civiles e ingenieros de sistemas:** el dominio y la programación en el mismo equipo.
+- **Estamos en Trujillo:** podemos visitar tu oficina, y conocemos los expedientes del Gobierno Regional, de las municipalidades y los requisitos locales.
+- **Trabajamos de forma remota** con oficinas de todo el Perú y Latinoamérica.
+
+<Callout type="success" title="Si también usas Revit">
+Para edificaciones, el camino es el mismo con Revit. Lo explicamos en [desarrollo de plugins para Revit en Trujillo](/es/blog/desarrollo-plugins-revit-trujillo).
+</Callout>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Civil 3D"
+  title="¿Qué parte del expediente rehace tu equipo en cada cambio?"
+  body="Cuéntanos qué tarea de Civil 3D repites en cada proyecto. En el diagnóstico gratuito medimos cuánto tiempo consume y te decimos si conviene un plugin, un script de Dynamo o ninguno. Somos ingenieros civiles e ingenieros de sistemas en Trujillo."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver el servicio de plugins"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **El mapa completo:** [automatizar Civil 3D, la guía completa](/es/blog/automatizar-civil-3d-guia-completa).
+- **La guía de desarrollo:** [desarrollo de add-ins para Revit y Civil 3D](/es/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+- **El caso más rentable:** [automatizar metrados y cubicaciones en Civil 3D](/es/blog/automatizar-metrados-cubicaciones-civil-3d).
+- **Para no recibir observaciones:** [observaciones al expediente técnico](/es/blog/expediente-tecnico-observaciones-reducir).
+- **Cómo elegir proveedor:** [empresas de automatización BIM en Trujillo y el Perú](/es/blog/empresas-automatizacion-bim-trujillo-peru).
+- **El contexto local:** [automatización BIM en Trujillo y La Libertad](/es/blog/automatizacion-bim-trujillo-la-libertad).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Desarrollamos plugins en C# para Civil 3D y Revit, scripts de Dynamo y formación para equipos BIM. Estamos en Trujillo y trabajamos con oficinas de La Libertad, del resto del Perú y de Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota técnica:** las versiones de .NET de Civil 3D corresponden a la documentación de Autodesk vigente en octubre de 2026. El ejemplo de cálculo es ilustrativo.

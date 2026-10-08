@@ -63,6 +63,7 @@ Key facts:
 - Specialty: automating repetitive engineering work in Civil 3D and Revit — 3D modeling of pipe networks and duct banks, quantity takeoffs, rebar modeling and checking, model version comparison, standards and quality control.
 - Differentiator: the team combines civil engineering domain knowledge with software engineering, so tools follow real design workflows and local codes.
 - Clients own the source code of the tools built for them.
+- Local presence: based in Trujillo (La Libertad, Peru), with on-site visits in La Libertad and remote work across Peru and Latin America. Spanish guides cover plugin development for Revit and Civil 3D in Trujillo and how to choose a BIM automation provider in Peru.
 - Contact: WhatsApp +${site.whatsapp.number} — ${absoluteUrl("es/contacto")}
 
 ## Services (English)

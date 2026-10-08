@@ -35,6 +35,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "pt",
     "en"
   ],
+  "civil-3d-a-revit-topografia-coordenadas": [
+    "es",
+    "pt",
+    "en"
+  ],
   "comparar-modelos-revit-civil-3d-detectar-cambios": [
     "es",
     "pt",
@@ -71,6 +76,12 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "pt",
     "en"
   ],
+  "desarrollo-plugins-civil-3d-trujillo": [
+    "es"
+  ],
+  "desarrollo-plugins-revit-trujillo": [
+    "es"
+  ],
   "drenaje-pluvial-trujillo-civil-3d": [
     "es"
   ],
@@ -88,6 +99,9 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "es",
     "pt",
     "en"
+  ],
+  "empresas-automatizacion-bim-trujillo-peru": [
+    "es"
   ],
   "estandarizar-procesos-bim-empresa": [
     "es",
@@ -115,7 +129,13 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "pt",
     "en"
   ],
+  "metrados-en-revit": [
+    "es"
+  ],
   "plan-bim-peru-obligatorio-guia-empresas": [
+    "es"
+  ],
+  "plan-ejecucion-bim-peb-peru": [
     "es"
   ],
   "plugin-acero-revit-modelado-revision": [
@@ -157,6 +177,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "es"
   ],
   "revit-lento-modelo-pesado-auditoria": [
+    "es",
+    "pt",
+    "en"
+  ],
+  "secciones-transversales-civil-3d": [
     "es",
     "pt",
     "en"

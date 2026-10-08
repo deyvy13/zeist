@@ -1,0 +1,178 @@
+---
+title: "Plan de Ejecución BIM (PEB) en el Perú: qué es, qué debe contener sección por sección y cómo cumplirlo de verdad en el modelo"
+seoTitle: "Plan de Ejecución BIM en el Perú: guía y plantilla"
+ctaTitle: "¿Tu PEB dice una cosa y tus modelos hacen otra? Te ayudamos a cumplirlo con estándares y herramientas."
+description: "Qué es el Plan de Ejecución BIM (PEB) según la Guía Nacional BIM del Perú, qué debe contener sección por sección y cómo cumplirlo en el modelo."
+date: "2026-10-08T16:00:00.000Z"
+author: "Zeist"
+tags:
+  - Plan BIM Perú
+  - Plan de Ejecución BIM
+  - Guía Nacional BIM
+  - ISO 19650
+  - Estándares BIM
+  - Obra pública
+---
+
+<BlogHero
+  eyebrow="Plan BIM Perú · Gestión de la información"
+  title="El PEB se escribe en Word. Se cumple, o no, en el modelo."
+  highlight="Qué es el Plan de Ejecución BIM según la Guía Nacional BIM, qué debe contener cada sección, los errores que lo convierten en un documento de trámite, y cómo verificar que los modelos cumplen lo que el plan promete."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+El **Plan de Ejecución BIM (PEB)** es el documento que define cómo se gestionará la información BIM de una inversión. Incluye los objetivos y usos BIM, los roles y responsabilidades, los entregables y su cronograma, los estándares de nomenclatura y coordenadas, el entorno de datos común, el software y los formatos, y el control de calidad. En el Perú lo orienta la **Guía Nacional BIM** del MEF, basada en la ISO 19650. El MEF publicó el Formato N.° 05 para registrarlo. Con el Plan BIM obligatorio, un PEB que el modelo no cumple termina en observaciones.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **PEB (o BEP)** — El Plan de Ejecución BIM: las reglas de juego de la información en un proyecto BIM.
+- **Guía Nacional BIM** — El documento del MEF que adapta la ISO 19650 a la inversión pública peruana.
+- **ISO 19650** — La norma internacional de gestión de la información con BIM.
+- **Usos BIM** — Para qué se usa el modelo: coordinar especialidades, sacar metrados, producir planos, planificar la obra.
+- **Entorno de datos común (CDE)** — La plataforma única donde se guardan, revisan y publican los archivos del proyecto.
+- **Nivel de información** — Cuánta geometría y cuántos datos debe tener cada elemento en cada entrega.
+- **IFC** — El formato abierto para intercambiar modelos entre programas de distintas marcas.
+
+Sin términos de programación. Está escrito para gerentes de proyecto, coordinadores BIM y jefes de oficina técnica que licitan obra pública.
+</Callout>
+
+## Por qué el PEB se volvió un documento de trámite
+
+Con el Plan BIM obligatorio, muchas consultoras empezaron a presentar un PEB en cada propuesta. Y en muchos casos es una plantilla copiada de otro proyecto, con roles que nadie ocupa, nomenclaturas que nadie aplica y usos BIM que el equipo no sabe ejecutar.
+
+El problema aparece después: el supervisor revisa los modelos contra lo que el plan prometió, y cada diferencia es una observación. Esta guía explica qué debe tener un PEB y, sobre todo, cómo hacer que el modelo lo cumpla.
+
+<AnimatedFlow
+  title="Del PEB a modelos que lo cumplen"
+  nodes="Requisitos de la entidad|PEB realista|Plantillas y estándares|Verificación automática"
+  subs="Qué información y cuándo|Lo que el equipo puede cumplir|El estándar ya puesto|Antes de cada entrega"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Qué es el PEB y qué norma lo respalda" time="~5 min">
+
+El PEB es el documento en el que se definen la metodología de trabajo, los procesos, las características técnicas, los roles y los requisitos de información de una inversión desarrollada con BIM, en las fases del ciclo de inversión.
+
+**El marco en el Perú:**
+
+- La **Guía Nacional BIM: Gestión de la información para inversiones desarrolladas con BIM**, del MEF. Su versión de 2021 se actualizó con la Resolución Directoral N.° 0003-2023-EF/63.01.
+- La guía adapta la **ISO 19650** al contexto peruano, tomando como referencia las normas técnicas peruanas NTP-ISO 19650-1 y 19650-2 de 2021.
+- El MEF publicó el **Formato N.° 05: Registro del Plan de Ejecución BIM**, aprobado con la Resolución Directoral N.° 0005-2021-EF/63.01, con su instructivo.
+
+**Antes y después de la adjudicación.** La ISO 19650 distingue un plan previo a la contratación, que acompaña la propuesta y muestra cómo se cumplirá, y uno posterior, que el equipo adjudicado detalla y acuerda con la entidad.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Qué debe contener, sección por sección" time="~8 min">
+
+Una estructura que cubre lo que pide la Guía Nacional BIM y que sirve como plantilla:
+
+| Sección | Qué debe decir | Error común |
+|---|---|---|
+| Información de la inversión | Nombre, código único de inversión, fase, entidad y equipo | Datos de otro proyecto |
+| Objetivos y usos BIM | Para qué se usará el modelo en cada fase | Prometer usos que el equipo no domina |
+| Roles y responsabilidades | Quién ocupa cada rol y qué decide | Roles sin nombre o una sola persona en todos |
+| Entregables y cronograma | Qué modelo, con qué nivel de información y cuándo | Fechas sin relación con el plan de trabajo |
+| Estándares | Nomenclatura de archivos y elementos, unidades, coordenadas, plantillas | Nomenclatura escrita que nadie aplica |
+| Entorno de datos común | Plataforma, estructura de carpetas y estados de la información | Archivos por correo y en carpetas personales |
+| Software y formatos | Programas, versiones y formato IFC de intercambio | Versiones distintas en cada especialidad |
+| Control de calidad | Qué se revisa, cómo y quién antes de cada entrega | «Se revisará el modelo», sin método |
+| Colaboración | Reuniones de coordinación, flujo de revisión y gestión de cambios | Coordinación solo al final |
+
+**Los roles.** La Guía Nacional BIM identifica cinco roles: **Líder BIM, Gestor BIM, Coordinador BIM, Modelador BIM y Supervisor BIM**. El PEB debe decir quién ocupa cada uno en tu equipo y qué responsabilidades tiene.
+
+<Callout type="info" title="Las coordenadas también van en el PEB">
+Define el sistema de referencia, normalmente WGS84 en proyección UTM, la zona y el punto de referencia compartido entre especialidades. Sin eso, los modelos de arquitectura e infraestructura no calzan. Lo explicamos en [Civil 3D a Revit: topografía y coordenadas](/es/blog/civil-3d-a-revit-topografia-coordenadas).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Los errores que convierten el PEB en un trámite" time="~5 min">
+
+- **Copiar el PEB de otro proyecto** sin adaptar usos, roles ni entregables.
+- **Prometer de más:** usos BIM, como 4D o 5D, que el equipo no sabe ejecutar en el plazo.
+- **Nomenclatura en papel:** un estándar descrito en el documento que no está en las plantillas, y que cada modelador interpreta a su manera.
+- **Nivel de información indefinido:** sin decir qué datos debe tener cada elemento, cada especialidad entrega lo que puede.
+- **Control de calidad sin método:** el plan dice que se revisará, pero no qué, cómo ni con qué herramienta.
+- **Software sin versión:** una especialidad en Revit 2025 y otra en 2026 no pueden trabajar sobre el mismo archivo.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Cómo hacer que el modelo cumpla el PEB" time="~6 min">
+
+Un PEB se cumple cuando cumplirlo es el camino más fácil para el equipo:
+
+1. **Plantillas con el estándar puesto.** Nombres de vistas y láminas, parámetros obligatorios, estilos y coordenadas ya configurados en la plantilla de Revit y de Civil 3D.
+2. **Parámetros obligatorios** definidos según el nivel de información, para que el modelo pida el dato y no dependa de la memoria de cada modelador.
+3. **Verificación automática antes de cada entrega:** nomenclatura de archivos y elementos, parámetros vacíos, coordenadas y versiones, con un reporte de lo que no cumple.
+4. **Paquete de entrega armado por herramienta:** modelos, IFC, planos y reportes con la estructura que pide la entidad.
+
+<ComparisonTable
+  criterionLabel="Criterio"
+  leftLabel="PEB verificado con herramientas"
+  rightLabel="PEB solo en documento"
+  rows="Nomenclatura | *Revisada automáticamente | Depende de cada modelador || Parámetros obligatorios | *El modelo los pide | Se descubren en la revisión || Antes de cada entrega | *Reporte de cumplimiento | Revisión visual si hay tiempo || Observaciones del supervisor | *Pocas y de fondo | Muchas y de forma || Esfuerzo inicial | Plantillas y herramientas | *Solo el documento"
+/>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Qué revisa un supervisor BIM, y cómo anticiparlo" time="~5 min">
+
+Las revisiones de modelos se concentran en lo que el PEB comprometió:
+
+- **Nomenclatura** de archivos, vistas, láminas y elementos.
+- **Información:** parámetros obligatorios completos y coherentes.
+- **Coordinación:** interferencias entre especialidades resueltas o documentadas.
+- **Coherencia:** que los planos y los metrados salgan del modelo y coincidan con él.
+- **Formatos:** IFC exportados con la versión y la configuración acordadas.
+
+La forma de anticiparlo es hacerse la misma revisión antes de entregar. El [checklist de auditoría BIM](/es/blog/auditoria-bim-checklist-empresa) sirve como punto de partida, y lo explicamos con ejemplos en [observaciones al expediente técnico](/es/blog/expediente-tecnico-observaciones-reducir).
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Por dónde empezar si tu empresa licita con BIM" time="~4 min">
+
+1. **Arma un PEB base de la empresa,** con tus roles reales, tus usos BIM probados y tus estándares, y adáptalo a cada licitación.
+2. **Lleva el estándar a las plantillas** antes del próximo proyecto, no durante.
+3. **Automatiza la verificación** de lo que más se observa: nomenclatura, parámetros y coherencia entre modelo y metrados.
+4. **Mide el primer proyecto:** cuántas observaciones de forma recibiste y cuánto tardó cada entrega.
+
+La guía completa de la obligatoriedad, con plazos y a quién alcanza, está en [Plan BIM Perú: qué exige y cómo prepararse](/es/blog/plan-bim-peru-obligatorio-guia-empresas).
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Auditoría y automatización BIM"
+  title="Que tus modelos cumplan el PEB antes de que lo revise el supervisor"
+  body="Revisamos tus modelos y tu proceso, llevamos el estándar a las plantillas y desarrollamos las herramientas que verifican nomenclatura, parámetros y entregables antes de cada entrega. Somos ingenieros civiles e ingenieros de sistemas."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver la auditoría BIM"
+  secondaryHref="/es/servicios/auditoria-procesos-bim"
+/>
+
+## Recursos relacionados
+
+- **La obligatoriedad, explicada:** [Plan BIM Perú, guía para empresas](/es/blog/plan-bim-peru-obligatorio-guia-empresas).
+- **Del documento a la herramienta:** [estandarizar procesos BIM en tu empresa](/es/blog/estandarizar-procesos-bim-empresa).
+- **La revisión antes de entregar:** [auditoría BIM: qué es y checklist completo](/es/blog/auditoria-bim-checklist-empresa).
+- **Las observaciones más repetidas:** [observaciones al expediente técnico](/es/blog/expediente-tecnico-observaciones-reducir).
+- **Metrados que cuadran:** [metrados en Revit](/es/blog/metrados-en-revit).
+- **Cómo elegir quién te ayude:** [empresas de automatización BIM en Trujillo y el Perú](/es/blog/empresas-automatizacion-bim-trujillo-peru).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Ayudamos a consultoras y constructoras a cumplir el Plan BIM con estándares, plantillas y herramientas de verificación para Revit y Civil 3D. Trabajamos con oficinas de todo el Perú."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota:** este artículo resume la Guía Nacional BIM y la práctica de proyectos con BIM a octubre de 2026. Revisa siempre los términos de referencia de cada entidad y la versión vigente de la guía y sus formatos.

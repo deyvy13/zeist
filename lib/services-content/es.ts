@@ -141,6 +141,10 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       "cuanto-cuesta-un-add-in-revit-civil-3d",
       "dynamo-vs-csharp-civil3d-revit",
       "automatizar-tareas-revit-dynamo-plugins",
+      "desarrollo-plugins-revit-trujillo",
+      "desarrollo-plugins-civil-3d-trujillo",
+      "metrados-en-revit",
+      "secciones-transversales-civil-3d",
     ],
     faqs: [
       {
@@ -477,6 +481,8 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       "estandarizar-procesos-bim-empresa",
       "plan-bim-peru-obligatorio-guia-empresas",
       "reprocesos-obra-costo-oculto",
+      "empresas-automatizacion-bim-trujillo-peru",
+      "plan-ejecucion-bim-peb-peru",
     ],
     faqs: [
       {
@@ -638,6 +644,7 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       "revit-api-espanol-primeros-pasos",
       "aprende-a-programar-desde-cero",
       "dynamo-vs-csharp-civil3d-revit",
+      "cursos-revit-civil-3d-bim-trujillo",
     ],
     faqs: [
       {

@@ -21,6 +21,519 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- Captación (oct-2026): Civil 3D a Revit, secciones transversales, metrados en Revit, PEB ----
+  "civil-3d-a-revit-topografia-coordenadas": {
+    es: {
+      roadmap: {
+        title: "De Civil 3D a Revit, en 7 bloques",
+        intro:
+          "Por qué los dos programas no se entienden solos, cómo compartir coordenadas, cómo llevar la topografía y qué hacer con ejes, corredores y redes.",
+        steps: [
+          { n: 1, title: "Por qué no se entienden", desc: "Coordenadas reales frente al origen de Revit", tag: "Concepto" },
+          { n: 2, title: "Coordenadas compartidas", desc: "Shared Reference Point o un DWG vinculado", tag: "Primero" },
+          { n: 3, title: "La topografía", desc: "Vincular desde la nube o importar como toposólido", tag: "Terreno" },
+          { n: 4, title: "Ejes y rasantes", desc: "Referencias, Dynamo o plugin, y la cota del nivel 0", tag: "Referencias" },
+          { n: 5, title: "Corredores y redes", desc: "Exportar como sólidos para coordinar", tag: "Coordinación" },
+          { n: 6, title: "Errores comunes", desc: "Terreno lejos, edificio girado, niveles y unidades", tag: "Errores" },
+          { n: 7, title: "Qué automatizar", desc: "Superficie, verificación de coordenadas y redes a Revit", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre pasar de Civil 3D a Revit",
+        items: [
+          {
+            q: "¿Cómo paso una superficie de Civil 3D a Revit?",
+            a: "Hay dos caminos. Con la herramienta Vincular topografía de Revit, disponible desde Revit 2019, se vincula una superficie de Civil 3D publicada en Autodesk Construction Cloud; desde Revit 2024 llega como toposólido y se actualiza cuando se publica una nueva versión. Sin la nube, se exporta la superficie a un archivo y en Revit se crea el toposólido a partir de esa importación o de puntos en un CSV.",
+          },
+          {
+            q: "¿Cómo comparto coordenadas entre Civil 3D y Revit?",
+            a: "Con la extensión Shared Reference Point de Autodesk: en Civil 3D se exportan un punto de origen y un segundo punto de dirección, a la misma cota, a un archivo XML, y en Revit se importan desde la pestaña Complementos eligiendo los mismos puntos en el mismo orden. La alternativa es vincular un DWG georreferenciado y adquirir sus coordenadas.",
+          },
+          {
+            q: "¿Por qué el terreno de Civil 3D aparece lejos en Revit?",
+            a: "Porque las coordenadas compartidas no se configuraron o porque se movió el modelo en lugar de usar el punto de reconocimiento. Civil 3D trabaja en coordenadas reales, a cientos de kilómetros del origen, y Revit pierde precisión lejos de su origen interno. También pasa cuando un archivo está en milímetros y el otro en metros.",
+          },
+          {
+            q: "¿Puedo llevar las tuberías de Civil 3D a Revit?",
+            a: "Como geometría, sí: Civil 3D exporta redes y corredores como sólidos, que Revit y Navisworks pueden vincular para coordinar y detectar interferencias. Pero un sólido no es una tubería de Revit: no tiene diámetro ni pendiente consultables. Para que lleguen como tuberías reales hace falta un script o un plugin que lea la red y la recree con familias de Revit.",
+          },
+          {
+            q: "¿Qué es un toposólido en Revit?",
+            a: "Es el objeto de terreno de Revit desde la versión 2024, que reemplazó a la toposuperficie. Tiene espesor y se puede crear desde puntos, desde un archivo CAD importado, desde un CSV o vinculando una superficie de Civil 3D publicada en la nube.",
+          },
+          {
+            q: "¿Necesito Autodesk Construction Cloud para vincular la topografía?",
+            a: "Para usar Vincular topografía, sí: la superficie de Civil 3D tiene que estar publicada en la nube de Autodesk. Sin ella, se puede exportar la superficie a un archivo e importarla en Revit, aunque cada cambio obliga a repetir el proceso.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Do Civil 3D para o Revit, em 7 blocos",
+        intro:
+          "Por que os dois programas não se entendem sozinhos, como compartilhar coordenadas, como levar a topografia e o que fazer com eixos, corredores e redes.",
+        steps: [
+          { n: 1, title: "Por que não se entendem", desc: "Coordenadas reais frente à origem do Revit", tag: "Conceito" },
+          { n: 2, title: "Coordenadas compartilhadas", desc: "Shared Reference Point ou um DWG vinculado", tag: "Primeiro" },
+          { n: 3, title: "A topografia", desc: "Vincular da nuvem ou importar como toposólido", tag: "Terreno" },
+          { n: 4, title: "Eixos e greides", desc: "Referências, Dynamo ou plugin, e a cota do nível 0", tag: "Referências" },
+          { n: 5, title: "Corredores e redes", desc: "Exportar como sólidos para compatibilizar", tag: "Compatibilização" },
+          { n: 6, title: "Erros comuns", desc: "Terreno longe, edifício girado, níveis e unidades", tag: "Erros" },
+          { n: 7, title: "O que automatizar", desc: "Superfície, conferência de coordenadas e redes no Revit", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre passar do Civil 3D para o Revit",
+        items: [
+          {
+            q: "Como passar uma superfície do Civil 3D para o Revit?",
+            a: "Há dois caminhos. Com a ferramenta Link Topography do Revit, disponível desde o Revit 2019, vincula-se uma superfície do Civil 3D publicada no Autodesk Construction Cloud; desde o Revit 2024 ela chega como toposólido e se atualiza quando uma nova versão é publicada. Sem a nuvem, exporta-se a superfície para um arquivo e no Revit cria-se o toposólido a partir dessa importação ou de pontos num CSV.",
+          },
+          {
+            q: "Como compartilhar coordenadas entre o Civil 3D e o Revit?",
+            a: "Com a extensão Shared Reference Point da Autodesk: no Civil 3D exportam-se um ponto de origem e um segundo ponto de direção, na mesma cota, para um arquivo XML, e no Revit eles são importados pela aba de suplementos, escolhendo os mesmos pontos na mesma ordem. A alternativa é vincular um DWG georreferenciado e adquirir suas coordenadas.",
+          },
+          {
+            q: "Por que o terreno do Civil 3D aparece longe no Revit?",
+            a: "Porque as coordenadas compartilhadas não foram configuradas ou porque o modelo foi movido em vez de usar o Survey Point. O Civil 3D trabalha em coordenadas reais, a centenas de quilômetros da origem, e o Revit perde precisão longe da sua origem interna. Também acontece quando um arquivo está em milímetros e o outro em metros.",
+          },
+          {
+            q: "Dá para levar as tubulações do Civil 3D para o Revit?",
+            a: "Como geometria, sim: o Civil 3D exporta redes e corredores como sólidos, que o Revit e o Navisworks podem vincular para compatibilizar e detectar interferências. Mas um sólido não é uma tubulação do Revit: não tem diâmetro nem declividade consultáveis. Para que cheguem como tubulações reais é preciso um script ou um plugin que leia a rede e a recrie com famílias do Revit.",
+          },
+          {
+            q: "O que é um toposólido no Revit?",
+            a: "É o objeto de terreno do Revit desde a versão 2024, que substituiu a toposuperfície. Tem espessura e pode ser criado a partir de pontos, de um arquivo CAD importado, de um CSV ou vinculando uma superfície do Civil 3D publicada na nuvem.",
+          },
+          {
+            q: "Preciso do Autodesk Construction Cloud para vincular a topografia?",
+            a: "Para usar o Link Topography, sim: a superfície do Civil 3D precisa estar publicada na nuvem da Autodesk. Sem ela, dá para exportar a superfície para um arquivo e importá-la no Revit, mas cada mudança obriga a repetir o processo.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "From Civil 3D to Revit, in 7 blocks",
+        intro:
+          "Why the two programs don't understand each other, how to share coordinates, how to bring the terrain across and what to do with alignments, corridors and pipes.",
+        steps: [
+          { n: 1, title: "Why they don't match", desc: "Real-world coordinates versus Revit's origin", tag: "Concept" },
+          { n: 2, title: "Shared coordinates", desc: "Shared Reference Point or a linked DWG", tag: "First" },
+          { n: 3, title: "The terrain", desc: "Link from the cloud or import as a toposolid", tag: "Terrain" },
+          { n: 4, title: "Alignments and profiles", desc: "References, Dynamo or a plugin, and level 0", tag: "References" },
+          { n: 5, title: "Corridors and pipes", desc: "Export as solids for coordination", tag: "Coordination" },
+          { n: 6, title: "Common errors", desc: "Terrain far away, rotated building, levels and units", tag: "Errors" },
+          { n: 7, title: "What to automate", desc: "Surface prep, coordinate checks and pipes into Revit", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about going from Civil 3D to Revit",
+        items: [
+          {
+            q: "How do I bring a Civil 3D surface into Revit?",
+            a: "There are two routes. With Revit's Link Topography tool, available since Revit 2019, you link a Civil 3D surface published to Autodesk Construction Cloud; since Revit 2024 it comes in as a toposolid and updates when a new version is published. Without the cloud, export the surface to a file and create the toposolid in Revit from that import or from points in a CSV.",
+          },
+          {
+            q: "How do I share coordinates between Civil 3D and Revit?",
+            a: "With Autodesk's Shared Reference Point extension: in Civil 3D you export an origin point and a second direction point, at the same elevation, to an XML file, and in Revit you import it from the Add-Ins tab, picking the same points in the same order. The alternative is to link a georeferenced DWG and acquire its coordinates.",
+          },
+          {
+            q: "Why does my Civil 3D terrain show up far away in Revit?",
+            a: "Because shared coordinates weren't set up, or the model was moved instead of using the Survey Point. Civil 3D works in real-world coordinates, far from the drawing origin, and Revit loses precision far from its internal origin. It also happens when one file is in millimeters or inches and the other in meters or feet.",
+          },
+          {
+            q: "Can I bring Civil 3D pipe networks into Revit?",
+            a: "As geometry, yes: Civil 3D exports pipe networks and corridors as solids, which Revit and Navisworks can link for coordination and clash detection. But a solid isn't a Revit pipe: it has no queryable diameter or slope. To bring them in as real pipes you need a script or plugin that reads the network and rebuilds it with Revit families.",
+          },
+          {
+            q: "What is a toposolid in Revit?",
+            a: "It's Revit's terrain object since the 2024 release, replacing the toposurface. It has thickness and can be created from points, from an imported CAD file, from a CSV or by linking a Civil 3D surface published to the cloud.",
+          },
+          {
+            q: "Do I need Autodesk Construction Cloud to link topography?",
+            a: "To use Link Topography, yes: the Civil 3D surface has to be published to Autodesk's cloud. Without it, you can export the surface to a file and import it into Revit, but every change means repeating the process.",
+          },
+        ],
+      },
+    },
+  },
+  "secciones-transversales-civil-3d": {
+    es: {
+      roadmap: {
+        title: "Secciones transversales en Civil 3D, en 6 bloques",
+        intro:
+          "Líneas de muestreo, vistas de sección, láminas y volúmenes, con los errores más buscados y lo que conviene automatizar en un expediente vial.",
+        steps: [
+          { n: 1, title: "Líneas de muestreo", desc: "Intervalos, progresivas, ancho y fuentes", tag: "Base" },
+          { n: 2, title: "Vistas de sección", desc: "Borrador o producción, estilos y bandas", tag: "Dibujo" },
+          { n: 3, title: "Láminas", desc: "Láminas de sección desde la producción", tag: "Planos" },
+          { n: 4, title: "Volúmenes", desc: "Criterios, materiales y tabla de volumen", tag: "Cubicación" },
+          { n: 5, title: "Errores más buscados", desc: "Fuentes, corredor desactualizado, cortes y vistas", tag: "Errores" },
+          { n: 6, title: "Qué automatizar", desc: "Progresivas, rótulos, cuadros y láminas", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre secciones transversales en Civil 3D",
+        items: [
+          {
+            q: "¿Cómo se crean secciones transversales en Civil 3D?",
+            a: "En cuatro pasos: se crean líneas de muestreo a lo largo del alineamiento, cada cierta distancia o en progresivas específicas; se eligen las fuentes que se cortan, como el terreno, el corredor y sus superficies; se crean las vistas de sección, normalmente varias a la vez; y se generan las láminas con la opción de producción.",
+          },
+          {
+            q: "¿Por qué no aparece el corredor o el terreno en la sección?",
+            a: "Porque no está entre las fuentes del grupo de líneas de muestreo. Lo que no se agrega como fuente no se corta ni se dibuja. También puede pasar que la línea de muestreo sea más angosta que el corredor con sus taludes, y la sección salga cortada.",
+          },
+          {
+            q: "¿Cómo se actualizan las secciones transversales?",
+            a: "Las secciones están enlazadas al corredor y a las superficies: cuando el corredor cambia y se reconstruye, las secciones se actualizan. Si no cambian, lo más común es que el corredor esté desactualizado. Lo que no se actualiza solo es lo que se hizo fuera del modelo, como cuadros copiados a Excel o rótulos manuales.",
+          },
+          {
+            q: "¿Cómo se generan las láminas de secciones en Civil 3D?",
+            a: "Las vistas de sección tienen que crearse con la opción de ubicación de producción, que usa una plantilla de lámina. Después, el comando de láminas de sección (Create Section Sheets), en la pestaña Salida, crea una presentación por lámina a partir del alineamiento, el grupo de líneas de muestreo y el grupo de vistas.",
+          },
+          {
+            q: "¿Cómo se calculan los volúmenes de corte y relleno en Civil 3D?",
+            a: "Se definen criterios de cálculo de cantidades que indican qué superficies se comparan, por ejemplo el terreno natural contra la subrasante; se calculan los materiales del grupo de líneas de muestreo y se genera la tabla de volumen total con el corte, el relleno y los acumulados por progresiva. Por defecto, Civil 3D usa el método de áreas medias.",
+          },
+          {
+            q: "¿Cómo creo líneas de muestreo en progresivas específicas?",
+            a: "Una a una, con la opción de crear una línea en una progresiva. Si son muchas y vienen en una lista, conviene automatizarlo: desde Civil 3D 2025.1, Dynamo tiene nodos para crear líneas de muestreo, y un plugin puede leerlas desde Excel y crearlas con el ancho y el estilo de la oficina.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Seções transversais no Civil 3D, em 6 blocos",
+        intro:
+          "Linhas de amostragem, vistas de seção, pranchas e volumes, com os erros mais buscados e o que vale automatizar num projeto rodoviário.",
+        steps: [
+          { n: 1, title: "Linhas de amostragem", desc: "Intervalos, estacas, largura e fontes", tag: "Base" },
+          { n: 2, title: "Vistas de seção", desc: "Rascunho ou produção, estilos e bandas", tag: "Desenho" },
+          { n: 3, title: "Pranchas", desc: "Pranchas de seção a partir da produção", tag: "Pranchas" },
+          { n: 4, title: "Volumes", desc: "Critérios, materiais e tabela de volume", tag: "Terraplenagem" },
+          { n: 5, title: "Erros mais buscados", desc: "Fontes, corredor desatualizado, cortes e vistas", tag: "Erros" },
+          { n: 6, title: "O que automatizar", desc: "Estacas, rótulos, quadros e pranchas", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre seções transversais no Civil 3D",
+        items: [
+          {
+            q: "Como criar seções transversais no Civil 3D?",
+            a: "Em quatro passos: criam-se linhas de amostragem ao longo do alinhamento, a cada certa distância ou em estacas específicas; escolhem-se as fontes que são cortadas, como o terreno, o corredor e suas superfícies; criam-se as vistas de seção, normalmente várias de uma vez; e geram-se as pranchas com a opção de produção.",
+          },
+          {
+            q: "Por que o corredor ou o terreno não aparece na seção?",
+            a: "Porque não está entre as fontes do grupo de linhas de amostragem. O que não é adicionado como fonte não é cortado nem desenhado. Também pode acontecer de a linha de amostragem ser mais estreita que o corredor com seus taludes, e a seção sair cortada.",
+          },
+          {
+            q: "Como as seções transversais se atualizam?",
+            a: "As seções estão ligadas ao corredor e às superfícies: quando o corredor muda e é reconstruído, as seções se atualizam. Se não mudam, o mais comum é o corredor estar desatualizado. O que não se atualiza sozinho é o que foi feito fora do modelo, como quadros copiados para o Excel ou rótulos manuais.",
+          },
+          {
+            q: "Como gerar as pranchas de seções no Civil 3D?",
+            a: "As vistas de seção precisam ser criadas com a opção de posicionamento de produção, que usa um modelo de prancha. Depois, o comando de pranchas de seção (Create Section Sheets), na aba Output, cria um layout por prancha a partir do alinhamento, do grupo de linhas de amostragem e do grupo de vistas.",
+          },
+          {
+            q: "Como calcular os volumes de corte e aterro no Civil 3D?",
+            a: "Definem-se critérios de cálculo de quantidades que indicam quais superfícies se comparam, por exemplo o terreno natural contra o subleito; calculam-se os materiais do grupo de linhas de amostragem e gera-se a tabela de volume total com o corte, o aterro e os acumulados por estaca. Por padrão, o Civil 3D usa o método das áreas médias.",
+          },
+          {
+            q: "Como criar linhas de amostragem em estacas específicas?",
+            a: "Uma a uma, com a opção de criar uma linha numa estaca. Se são muitas e vêm numa lista, vale automatizar: desde o Civil 3D 2025.1, o Dynamo tem nós para criar linhas de amostragem, e um plugin pode lê-las do Excel e criá-las com a largura e o estilo do escritório.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Civil 3D cross sections, in 6 blocks",
+        intro:
+          "Sample lines, section views, sheets and volumes, with the most-searched errors and what's worth automating on a roadway project.",
+        steps: [
+          { n: 1, title: "Sample lines", desc: "Intervals, stations, swath width and sources", tag: "Basics" },
+          { n: 2, title: "Section views", desc: "Draft or production, styles and bands", tag: "Drafting" },
+          { n: 3, title: "Sheets", desc: "Section sheets from production views", tag: "Plans" },
+          { n: 4, title: "Volumes", desc: "Criteria, materials and the volume table", tag: "Earthwork" },
+          { n: 5, title: "Most-searched errors", desc: "Sources, out-of-date corridor, clipped sections and views", tag: "Errors" },
+          { n: 6, title: "What to automate", desc: "Stations, labels, tables and sheets", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Civil 3D cross sections",
+        items: [
+          {
+            q: "How do you create cross sections in Civil 3D?",
+            a: "In four steps: create sample lines along the alignment, at a set interval or at specific stations; choose the sources to cut, such as existing ground, the corridor and its surfaces; create the section views, usually many at once; and generate the sheets using the production option.",
+          },
+          {
+            q: "Why doesn't the corridor or the ground show in my section view?",
+            a: "Because it isn't among the sources of the sample line group. Anything not added as a source isn't sampled or drawn. It can also happen that the sample line is narrower than the corridor with its daylight, so the section comes out clipped.",
+          },
+          {
+            q: "How do Civil 3D cross sections update?",
+            a: "Sections are linked to the corridor and the surfaces: when the corridor changes and is rebuilt, the sections update. If they don't change, the corridor is most likely out of date. What doesn't update on its own is anything done outside the model, such as tables copied into Excel or manual labels.",
+          },
+          {
+            q: "How do you create section sheets in Civil 3D?",
+            a: "The section views must be created with the production placement option, which uses a sheet template. Then Create Section Sheets, on the Output tab, builds one layout per sheet from the alignment, the sample line group and the section view group.",
+          },
+          {
+            q: "How do you calculate cut and fill volumes in Civil 3D?",
+            a: "Define quantity takeoff criteria that set which surfaces are compared, for example existing ground against the subgrade; compute materials for the sample line group; and generate the total volume table with cut, fill and cumulative volumes by station. By default, Civil 3D uses the average end area method.",
+          },
+          {
+            q: "How do I create sample lines at specific stations?",
+            a: "One at a time, with the option to create a line at a station. If there are many and they come in a list, it's worth automating: since Civil 3D 2025.1, Dynamo has sample line nodes, and a plugin can read them from Excel and create them with your firm's swath width and style.",
+          },
+        ],
+      },
+    },
+  },
+  "metrados-en-revit": {
+    es: {
+      roadmap: {
+        title: "Metrados en Revit, en 6 bloques",
+        intro:
+          "Qué mide Revit y qué no, cómo armar las tablas, cómo ordenar por partidas, por qué no cuadran y cómo llegar a S10 sin copiar a mano.",
+        steps: [
+          { n: 1, title: "Qué mide Revit", desc: "Lo que sale del modelo y lo que no, según la norma", tag: "Base" },
+          { n: 2, title: "Tablas y cómputo", desc: "Tablas de planificación y cómputo de materiales", tag: "Herramientas" },
+          { n: 3, title: "El código de partida", desc: "Un parámetro compartido en cada elemento", tag: "Estructura" },
+          { n: 4, title: "Por qué no cuadran", desc: "Encuentros, vanos, duplicados y criterios mezclados", tag: "Errores" },
+          { n: 5, title: "De Revit a S10", desc: "La hoja de partidas y el traspaso sin copias", tag: "Presupuesto" },
+          { n: 6, title: "Qué automatizar", desc: "Partidas, revisión, encofrados y exportación", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre metrados en Revit",
+        items: [
+          {
+            q: "¿Cómo se hacen metrados en Revit?",
+            a: "Con tablas de planificación y cómputos de materiales, que se crean desde la ficha Vista, grupo Crear, menú Tablas de planificación. La tabla lista los elementos de una categoría con sus áreas, volúmenes, longitudes o conteos; agrupada por partida y nivel, y con totales, funciona como un metrado conectado al modelo. Para que sirva al presupuesto, cada elemento necesita un parámetro con su código de partida.",
+          },
+          {
+            q: "¿Por qué los metrados de Revit no cuadran con el metrado manual?",
+            a: "Las causas más comunes son los encuentros entre elementos, donde el orden de Unir geometría decide a qué elemento se asigna el volumen; los vanos, que Revit descuenta del área del muro; los elementos duplicados u ocultos en otras fases; los criterios de modelado mezclados dentro del equipo; y el redondeo. Se corrige acordando las reglas de modelado según la norma de metrados y revisándolas antes de cada entrega.",
+          },
+          {
+            q: "¿Se puede exportar de Revit a S10?",
+            a: "Revit no exporta a S10 por sí solo. El camino habitual es exportar las tablas de planificación a texto o Excel, ordenarlas en una hoja con la estructura de partidas del presupuesto y llevar esa hoja al programa de costos. Como se repite con cada cambio del modelo, conviene automatizar la exportación con el formato de tu presupuesto.",
+          },
+          {
+            q: "¿Revit calcula el encofrado?",
+            a: "No de forma nativa. El área de encofrado se calcula aparte, a partir de las caras de contacto de columnas, vigas, losas y muros, con reglas manuales, scripts de Dynamo o un plugin que aplique el criterio de medición de la oficina.",
+          },
+          {
+            q: "¿Qué es el cómputo de materiales en Revit?",
+            a: "Es un tipo de tabla de planificación que suma áreas y volúmenes por material dentro de cada elemento. Sirve para separar, por ejemplo, el concreto y el ladrillo de un muro compuesto, o para obtener el volumen de cada material en todo el proyecto.",
+          },
+          {
+            q: "¿Qué norma rige los metrados en el Perú?",
+            a: "La Norma Técnica de Metrados para Obras de Edificación y Habilitaciones Urbanas, aprobada con la Resolución Directoral N.° 073-2010-VIVIENDA/VMCS-DNC. Es obligatoria para los expedientes técnicos y organiza las partidas en obras provisionales, estructuras, arquitectura, instalaciones y habilitaciones urbanas.",
+          },
+        ],
+      },
+    },
+  },
+  "plan-ejecucion-bim-peb-peru": {
+    es: {
+      roadmap: {
+        title: "El Plan de Ejecución BIM, en 6 bloques",
+        intro:
+          "Qué es el PEB y qué lo respalda, qué debe contener, los errores que lo vuelven un trámite y cómo hacer que el modelo lo cumpla.",
+        steps: [
+          { n: 1, title: "Qué es el PEB", desc: "Guía Nacional BIM, ISO 19650 y el Formato N.° 05", tag: "Marco" },
+          { n: 2, title: "Sección por sección", desc: "La plantilla, con lo que debe decir cada parte", tag: "Plantilla" },
+          { n: 3, title: "Errores comunes", desc: "Lo que convierte el PEB en un trámite", tag: "Errores" },
+          { n: 4, title: "Que el modelo lo cumpla", desc: "Plantillas, parámetros y verificación automática", tag: "Método" },
+          { n: 5, title: "La revisión del supervisor", desc: "Qué se revisa y cómo anticiparlo", tag: "Control" },
+          { n: 6, title: "Por dónde empezar", desc: "Un PEB base de la empresa y su verificación", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre el Plan de Ejecución BIM",
+        items: [
+          {
+            q: "¿Qué es el Plan de Ejecución BIM (PEB)?",
+            a: "Es el documento que define cómo se gestionará la información BIM de una inversión: la metodología de trabajo, los procesos, las características técnicas, los roles y los requisitos de información en cada fase. En el Perú lo orienta la Guía Nacional BIM del MEF, que adapta la ISO 19650 a la inversión pública.",
+          },
+          {
+            q: "¿Qué debe contener un Plan de Ejecución BIM?",
+            a: "Información de la inversión, objetivos y usos BIM, roles y responsabilidades, entregables con su nivel de información y cronograma, estándares de nomenclatura, unidades y coordenadas, el entorno de datos común, el software y los formatos de intercambio como IFC, el control de calidad y los procedimientos de colaboración y gestión de cambios.",
+          },
+          {
+            q: "¿Qué roles BIM define la Guía Nacional BIM del Perú?",
+            a: "Cinco roles: Líder BIM, Gestor BIM, Coordinador BIM, Modelador BIM y Supervisor BIM. El PEB debe indicar quién ocupa cada rol en el equipo y qué responsabilidades y decisiones tiene.",
+          },
+          {
+            q: "¿Qué es el Formato N.° 05 del MEF?",
+            a: "Es el formato de registro del Plan de Ejecución BIM, aprobado con la Resolución Directoral N.° 0005-2021-EF/63.01 junto con la primera versión de la Guía Nacional BIM. El MEF lo publica con su instructivo en los recursos del Plan BIM Perú.",
+          },
+          {
+            q: "¿Dónde consigo una plantilla de PEB?",
+            a: "El MEF publica el Formato N.° 05 y su instructivo en los recursos del Plan BIM Perú. Como estructura de trabajo, sirve recorrer las secciones de este artículo y adaptarlas a la entidad y al proyecto: lo importante no es la plantilla, sino que cada compromiso se pueda cumplir y verificar en el modelo.",
+          },
+          {
+            q: "¿Cómo hago que el modelo cumpla el PEB?",
+            a: "Llevando el estándar a las plantillas de Revit y Civil 3D, definiendo parámetros obligatorios según el nivel de información y verificando automáticamente, antes de cada entrega, la nomenclatura, los parámetros, las coordenadas y la coherencia entre modelo, planos y metrados. Un PEB que solo existe en el documento termina en observaciones.",
+          },
+        ],
+      },
+    },
+  },
+  // ---- Servicios en Trujillo (oct-2026, solo es): plugins para Revit y Civil 3D, elegir proveedor ----
+  "desarrollo-plugins-revit-trujillo": {
+    es: {
+      roadmap: {
+        title: "Plugins para Revit en Trujillo, en 7 bloques",
+        intro:
+          "Cuándo conviene un plugin a medida, qué se automatiza, cómo se desarrolla, qué debes recibir y qué pasa con cada nueva versión de Revit.",
+        steps: [
+          { n: 1, title: "Tienda o a medida", desc: "Complemento comercial o plugin propio", tag: "Decisión" },
+          { n: 2, title: "Qué se automatiza", desc: "Metrados, láminas, parámetros, acero y revisión del modelo", tag: "Casos" },
+          { n: 3, title: "Cómo se desarrolla", desc: "Diagnóstico, prototipo, desarrollo e instalación", tag: "Proceso" },
+          { n: 4, title: "Qué debes recibir", desc: "Código fuente, instalador, documentación y pruebas", tag: "Entregables" },
+          { n: 5, title: "Versiones de Revit", desc: ".NET 8 en 2025, .NET 10 en 2027 y el mantenimiento", tag: "Técnico" },
+          { n: 6, title: "Si se paga", desc: "Horas, frecuencia y costo de la tarea", tag: "Retorno" },
+          { n: 7, title: "Un equipo en Trujillo", desc: "Visitas, contexto regional y dominio de ingeniería", tag: "Local" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre desarrollo de plugins para Revit en Trujillo",
+        items: [
+          {
+            q: "¿Quién desarrolla plugins para Revit en Trujillo?",
+            a: "Zeist, un equipo de ingenieros civiles e ingenieros de sistemas con base en Trujillo, desarrolla plugins a medida para Revit en C# sobre la API oficial de Autodesk. Trabaja con oficinas de La Libertad, del resto del Perú y de Latinoamérica, y en Trujillo puede visitar la oficina para ver la tarea en el proceso real.",
+          },
+          {
+            q: "¿Qué es un plugin para Revit?",
+            a: "Es un programa que se instala dentro de Revit y agrega botones propios a la barra superior. Se escribe en C# sobre la API de Autodesk y convierte una tarea repetida, como generar láminas, extraer metrados o revisar el modelo contra un estándar, en un proceso de un clic que cualquiera del equipo puede usar.",
+          },
+          {
+            q: "¿Cuánto tiempo toma desarrollar un plugin para Revit?",
+            a: "Lo habitual son 4 a 8 semanas: una semana de diagnóstico, una o dos de prototipo, dos a cuatro de desarrollo y unos días de instalación y formación. Herramientas pequeñas, como un renombrado o una exportación con reglas, pueden estar listas antes.",
+          },
+          {
+            q: "¿Cuánto cuesta un plugin a medida para Revit?",
+            a: "Depende del alcance: cuántas reglas aplica, cuántas versiones de Revit soporta y qué tan distintos son los casos que resuelve. Se justifica comparando su costo con las horas que consume hoy la tarea, multiplicadas por las veces que se repite al año. En Zeist el diagnóstico inicial es gratuito y termina en una propuesta con alcance, plazo y costo.",
+          },
+          {
+            q: "¿El código del plugin es de mi empresa?",
+            a: "Debe serlo. Al encargar un plugin, exige el código fuente completo y la documentación técnica: sin ellos, la herramienta depende para siempre de quien la escribió. En Zeist el código fuente se entrega y el plugin es propiedad del cliente.",
+          },
+          {
+            q: "¿Qué pasa con mi plugin cuando sale una nueva versión de Revit?",
+            a: "Hay que actualizarlo. Revit 2025 pasó de .NET Framework 4.8 a .NET 8, y los plugins anteriores tuvieron que recompilarse; Revit 2027 se actualizó a .NET 10. Por eso, al encargar un plugin, se acuerda qué versiones soporta y quién lo mantiene. Un plugin sin mantenimiento deja de funcionar al actualizar Revit.",
+          },
+          {
+            q: "¿Conviene comprar un plugin o desarrollar uno a medida?",
+            a: "Si la tarea es igual en cualquier oficina, como exportar a un programa de renderizado, conviene comprar un complemento. Si depende de tus partidas, tu nomenclatura o el formato que exige tu cliente, un plugin a medida lo resuelve mejor, porque aplica tus reglas en lugar de obligarte a adaptarte a las del fabricante.",
+          },
+        ],
+      },
+    },
+  },
+  "desarrollo-plugins-civil-3d-trujillo": {
+    es: {
+      roadmap: {
+        title: "Plugins para Civil 3D en Trujillo, en 6 bloques",
+        intro:
+          "Qué camino conviene, qué se automatiza en vías, redes, drenaje y habilitaciones, cómo se programa Civil 3D y cómo se mide el retorno.",
+        steps: [
+          { n: 1, title: "Comercial, Dynamo o a medida", desc: "Qué resuelve cada camino", tag: "Decisión" },
+          { n: 2, title: "Qué se automatiza", desc: "Vías, redes, drenaje, habilitaciones, topografía y láminas", tag: "Casos" },
+          { n: 3, title: "La API de Civil 3D", desc: "Qué permite, sus límites y las versiones de .NET", tag: "Técnico" },
+          { n: 4, title: "Proceso y entregables", desc: "Del diagnóstico al plugin en toda la oficina", tag: "Proceso" },
+          { n: 5, title: "Un ejemplo de cálculo", desc: "Secciones y cubicaciones de una vía", tag: "Retorno" },
+          { n: 6, title: "Ingenieros civiles en Trujillo", desc: "Por qué el dominio de ingeniería importa", tag: "Local" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre desarrollo de plugins para Civil 3D en Trujillo",
+        items: [
+          {
+            q: "¿Quién desarrolla plugins para Civil 3D en Trujillo?",
+            a: "Zeist, un equipo de ingenieros civiles e ingenieros de sistemas con base en Trujillo, desarrolla plugins a medida para Civil 3D en C# sobre la API de Autodesk. Se especializa en infraestructura: vías, saneamiento, drenaje, habilitaciones urbanas y producción de expedientes técnicos, para oficinas de La Libertad, del resto del Perú y de Latinoamérica.",
+          },
+          {
+            q: "¿Cuáles son los mejores plugins para Civil 3D?",
+            a: "Depende de la tarea. Para tareas generales, como exportaciones o herramientas de dibujo, hay complementos comerciales que se usan de inmediato. Para tareas que dependen de tus reglas, como cubicaciones con tu criterio de medición, accesorios de redes por norma o láminas con el formato de la entidad, el mejor plugin es el que aplica esas reglas: casi siempre, uno a medida.",
+          },
+          {
+            q: "¿Se puede programar Civil 3D?",
+            a: "Sí. Civil 3D tiene una API oficial en .NET, construida sobre la de AutoCAD, que permite leer y crear alineamientos, perfiles, superficies, corredores, secciones y redes de tuberías. Para automatizar sin escribir código está Dynamo, incluido en Civil 3D desde la versión 2020. No todas las funciones están en la API, por eso conviene confirmar primero qué se puede automatizar.",
+          },
+          {
+            q: "¿Qué lenguaje se usa para programar plugins de Civil 3D?",
+            a: "C#, sobre la plataforma .NET de Microsoft. Civil 3D 2025 pasó de .NET Framework a .NET 8, y Civil 3D 2027 a .NET 10: en cada salto los plugins se recompilan o se ajustan, así que un plugin necesita mantenimiento cuando la oficina actualiza su versión.",
+          },
+          {
+            q: "¿Qué se puede automatizar en Civil 3D?",
+            a: "Lo que sigue reglas y se repite: metrados y cubicaciones desde el corredor, secciones transversales y sus cuadros, perfiles rotulados, redes de agua y desagüe con sus accesorios, drenaje pluvial, lotización con cuadro de áreas y memorias descriptivas, importación de levantamientos con códigos y producción de láminas del expediente.",
+          },
+          {
+            q: "¿Dynamo o un plugin para Civil 3D?",
+            a: "Dynamo es ideal para probar una automatización en días y para tareas de un proyecto. Un plugin en C# conviene cuando toda la oficina usa la herramienta cada semana, cuando trabaja con miles de objetos o cuando necesita una interfaz con validaciones y un instalador. Muchas veces se empieza en Dynamo y se termina en un plugin.",
+          },
+          {
+            q: "¿Trabajan con oficinas fuera de Trujillo?",
+            a: "Sí. Zeist trabaja de forma remota con oficinas de todo el Perú y Latinoamérica: el diagnóstico, las revisiones y la instalación se hacen a distancia. Para oficinas de Trujillo y La Libertad también es posible una visita.",
+          },
+        ],
+      },
+    },
+  },
+  "empresas-automatizacion-bim-trujillo-peru": {
+    es: {
+      roadmap: {
+        title: "Cómo elegir una empresa de automatización BIM, en 7 bloques",
+        intro:
+          "Qué es la automatización BIM, qué tipos de proveedores existen, qué preguntar, qué señales evitar y qué debe incluir una propuesta seria.",
+        steps: [
+          { n: 1, title: "Qué es automatizar", desc: "Herramientas, no modelos; y se empieza midiendo", tag: "Concepto" },
+          { n: 2, title: "Tipos de proveedores", desc: "Consultora, software generalista, independiente o especialista", tag: "Opciones" },
+          { n: 3, title: "El dominio de ingeniería", desc: "Las reglas que deciden si una herramienta sirve", tag: "Criterio" },
+          { n: 4, title: "Diez preguntas", desc: "Lo que hay que preguntar antes de contratar", tag: "Checklist" },
+          { n: 5, title: "Señales de alerta", desc: "Lo que anticipa una herramienta abandonada", tag: "Riesgos" },
+          { n: 6, title: "La propuesta", desc: "Alcance, versiones, entregables, aceptación y soporte", tag: "Contrato" },
+          { n: 7, title: "En Trujillo y La Libertad", desc: "Quién es Zeist y por dónde empezar", tag: "Local" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre empresas de automatización BIM",
+        items: [
+          {
+            q: "¿Qué empresas hacen automatización BIM en Trujillo?",
+            a: "Zeist es un equipo con base en Trujillo dedicado a la automatización de Revit y Civil 3D: desarrolla plugins en C#, scripts de Dynamo, auditorías de procesos BIM y formación para equipos. Para comparar proveedores, conviene preguntar si entienden la tarea de ingeniería, si programan sobre la API de Autodesk y si entregan el código fuente.",
+          },
+          {
+            q: "¿Qué es la automatización BIM?",
+            a: "Es convertir las tareas repetitivas de Revit o Civil 3D en herramientas: plugins que agregan botones al programa, scripts de Dynamo e integraciones con Excel. No es modelado ni coordinación: el resultado no es un modelo, sino una herramienta que el equipo usa en cada proyecto para producir más rápido y con menos errores.",
+          },
+          {
+            q: "¿Qué preguntar antes de contratar el desarrollo de un plugin?",
+            a: "Cómo van a medir la tarea antes de proponer, si han trabajado sobre la API de Revit o Civil 3D, si entienden la tarea de ingeniería, qué versiones soportarán, si entregan el código fuente y un instalador, cómo se prueba, qué pasa con cada nueva versión de Autodesk, quién da soporte y qué formación recibe el equipo.",
+          },
+          {
+            q: "¿Consultora BIM o desarrollador de plugins: cuál necesito?",
+            a: "Si necesitas que alguien modele o coordine tu proyecto, una consultora BIM. Si necesitas que tu equipo produzca más rápido en todos los proyectos, quien desarrolle herramientas: plugins y scripts sobre la API de Autodesk. Lo ideal es un proveedor que entienda la ingeniería y además programe.",
+          },
+          {
+            q: "¿Qué es una auditoría de procesos BIM?",
+            a: "Es un diagnóstico que revisa la calidad de los modelos y mide cómo trabaja el equipo: dónde se pierden horas, qué se rehace y qué estándares faltan. En Zeist dura cuatro semanas, puede hacerse de forma remota o presencial en Trujillo, y termina en un plan priorizado de qué corregir, qué estandarizar y qué automatizar primero.",
+          },
+          {
+            q: "¿Cómo se mide si una automatización vale la pena?",
+            a: "Multiplicando las horas que consume hoy la tarea por las veces que se repite al año y por el costo de esas horas, y comparando el resultado con el costo de la herramienta. Hay que medir antes de decidir: una propuesta que promete ahorros sin haber medido la tarea es una señal de alerta.",
+          },
+        ],
+      },
+    },
+  },
   // ---- SEO local Trujillo / La Libertad (oct-2026, solo es; autocompletado de Google Perú) ----
   "coordenadas-utm-trujillo-la-libertad": {
     es: {

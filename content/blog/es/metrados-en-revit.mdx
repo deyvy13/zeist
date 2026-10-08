@@ -1,0 +1,182 @@
+---
+title: "Metrados en Revit: cómo sacarlos con tablas de planificación, por qué no cuadran con el presupuesto y cómo llevarlos a S10"
+seoTitle: "Metrados en Revit: cómo hacerlos y que cuadren"
+ctaTitle: "¿Tus metrados de Revit no cuadran con el presupuesto, o los rehaces a mano? Lo automatizamos."
+description: "Cómo hacer metrados en Revit con tablas de planificación y cómputo de materiales, por qué no cuadran con la norma de metrados y cómo llevarlos a S10."
+date: "2026-10-08T15:00:00.000Z"
+author: "Zeist"
+tags:
+  - Revit
+  - Metrados
+  - Presupuestos
+  - S10
+  - Tablas de planificación
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Revit · Metrados · Presupuestos"
+  title="Revit cuenta lo que modelaste. El presupuesto necesita lo que dice la norma de metrados."
+  highlight="Cómo sacar metrados en Revit con tablas de planificación y cómputo de materiales, cómo ordenarlos por partidas, por qué casi nunca cuadran a la primera con el presupuesto, y cómo llegar a S10 sin copiar a mano en cada cambio."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Los metrados en Revit se sacan con **tablas de planificación**, que dan cantidades por categoría, y con el **cómputo de materiales**, que da áreas y volúmenes por material. Para que sirvan al presupuesto, cada elemento necesita un parámetro con el código de su partida, y el modelo debe seguir los criterios de la Norma Técnica de Metrados. Los metrados no cuadran cuando los encuentros duplican volúmenes, se mezclan criterios o hay elementos sin partida. Revit no exporta a S10 por sí solo: lo habitual es pasar por una hoja con la estructura de partidas.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Metrado** — La cantidad de cada partida de obra: m³ de concreto, m² de muro, kg de acero.
+- **Partida** — Cada línea del presupuesto, con su unidad y su precio.
+- **Tabla de planificación** — Una vista de Revit que lista elementos y sus cantidades, como una hoja de cálculo conectada al modelo.
+- **Cómputo de materiales** — Una tabla que suma áreas y volúmenes por material, dentro de cada elemento.
+- **Parámetro compartido** — Un dato propio que se agrega a los elementos de Revit, como el código de partida.
+- **Unir geometría** — La herramienta que resuelve los encuentros entre elementos, como una viga y una losa.
+- **S10** — El programa de costos y presupuestos más usado en el Perú.
+
+Sin términos de programación. Está escrito para metradores, presupuestistas, ingenieros residentes y coordinadores BIM.
+</Callout>
+
+## El modelo está terminado. El presupuesto, todavía no
+
+Muchas oficinas modelan en Revit, pero siguen metrando sobre los planos en Excel. El motivo casi nunca es el software: es que el primer intento de sacar metrados del modelo dio números que no coincidían con el metrado de siempre, y nadie tuvo tiempo de averiguar por qué.
+
+Esta guía explica cómo sacar metrados de Revit que se puedan defender ante una revisión, y qué hay que ordenar en el modelo para lograrlo.
+
+<AnimatedFlow
+  title="Del modelo de Revit al presupuesto"
+  nodes="Modelo con criterio de metrado|Partida en cada elemento|Tablas de planificación|Hoja de partidas y S10"
+  subs="Encuentros y fases ordenados|Parámetro compartido|Cantidades por partida|Sin copiar a mano"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Qué mide Revit, y qué no" time="~5 min">
+
+**Revit mide bien lo que está modelado:** volúmenes de concreto de columnas, vigas, losas y zapatas; áreas de muros, pisos y techos; longitudes; y conteos de puertas, ventanas o aparatos.
+
+**Lo que no sale solo del modelo:**
+
+- **Encofrados:** Revit no calcula el área de encofrado de forma nativa.
+- **Acero de refuerzo:** solo si se modeló con armaduras; si no, hay que calcularlo aparte. Lo explicamos en [plugin de acero para Revit](/es/blog/plugin-acero-revit-modelado-revision).
+- **Acabados que no se modelan como elementos**, como tarrajeos o pinturas, si el modelo no los incluye.
+- **Partidas sin geometría**, como obras provisionales, trabajos preliminares o transporte.
+
+**La referencia en el Perú** es la Norma Técnica de Metrados para Obras de Edificación y Habilitaciones Urbanas (RD N.° 073-2010-VIVIENDA/VMCS-DNC), obligatoria para los expedientes técnicos. Organiza las partidas en obras provisionales, estructuras, arquitectura, instalaciones y habilitaciones urbanas, y fija cómo se mide cada una.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Tablas de planificación y cómputo de materiales" time="~6 min">
+
+Ambas se crean desde la ficha **Vista**, grupo **Crear**, menú **Tablas de planificación**:
+
+- **Tabla de planificación/cantidades:** lista los elementos de una categoría, como muros o columnas, con los campos que elijas: tipo, nivel, área, volumen, longitud.
+- **Cómputo de materiales:** suma áreas y volúmenes por material dentro de cada elemento. Sirve, por ejemplo, para separar el concreto del ladrillo en un muro compuesto.
+
+**Para que la tabla sea un metrado:**
+
+1. **Agrupa** por partida y por nivel, y activa los totales.
+2. **Filtra** lo que no se metra: elementos de otras fases, de demolición o de referencia.
+3. **Revisa las unidades y el redondeo** de cada campo.
+
+Una tabla de planificación es otra vista del modelo: si el modelo cambia, la tabla cambia. Esa es la ventaja frente al Excel.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. El código de partida en cada elemento" time="~5 min">
+
+Revit organiza por categorías; el presupuesto, por partidas. El puente es un **parámetro compartido** con el código de partida, asignado a cada tipo de elemento:
+
+- Columna de concreto f'c 210 → partida de concreto en columnas.
+- Muro de ladrillo de soga → partida de muro de soga.
+
+Con ese parámetro, las tablas se agrupan por partida y el resultado se parece al presupuesto. Sin él, hay que traducir categorías a partidas a mano en cada entrega.
+
+<Callout type="info" title="Revisa lo que quedó sin partida">
+Una tabla filtrada por «partida vacía» muestra lo que el metrado está dejando fuera. Es la revisión más barata y la que más errores atrapa.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Por qué los metrados de Revit no cuadran" time="~7 min">
+
+Cuando el metrado del modelo no coincide con el metrado manual, las causas suelen ser estas:
+
+- **Los encuentros.** Donde se cruzan una viga y una losa, o una columna y una viga, el volumen solo debe contarse una vez. Revit lo decide con **Unir geometría** y su orden de unión: el elemento que corta se queda con el volumen. Si el orden no sigue el criterio de metrado de tu oficina, los volúmenes se mueven de una partida a otra.
+- **Los vanos.** Revit descuenta las aberturas del área del muro. Si tu criterio de metrado descuenta los vanos de otra forma, hay que ajustarlo.
+- **Elementos duplicados u ocultos.** Copias superpuestas, elementos en fases equivocadas o en grupos que nadie ve.
+- **Criterios mezclados.** Una parte del equipo modela el muro hasta el fondo de la viga y otra hasta el piso superior.
+- **Unidades y redondeo.** Áreas redondeadas por elemento que, sumadas, se alejan del total.
+
+**La solución no es corregir el metrado al final:** es acordar las reglas de modelado según la norma y revisarlas automáticamente antes de cada entrega.
+
+<ComparisonTable
+  criterionLabel="Criterio"
+  leftLabel="Metrado desde el modelo"
+  rightLabel="Metrado manual sobre planos"
+  rows="Si cambia el diseño | *Se actualiza la tabla | Rehacer el cálculo || Coherencia con los planos | *Sale del mismo modelo | Depende de quien mide || Trazabilidad | *Cada cantidad tiene sus elementos | Hojas de cálculo sueltas || Requisito previo | Modelo ordenado con criterio | *Ninguno || Encofrados y partidas sin geometría | Requieren reglas o herramientas | *Se calculan como siempre"
+/>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. De Revit a S10 o a tu presupuesto" time="~5 min">
+
+Revit no exporta a S10 por sí solo. El camino habitual es:
+
+1. Exportar las tablas de planificación a un archivo de texto o a Excel.
+2. Ordenarlas en una hoja con la estructura de partidas del presupuesto: código, descripción, unidad y metrado.
+3. Llevar esa hoja al programa de costos.
+
+**El problema** es que ese traspaso se repite con cada cambio del modelo, y cada copia manual es una oportunidad de error. Existen herramientas de terceros que conectan Revit con algunos programas de presupuestos; cuando la oficina tiene su propia estructura de partidas, lo más directo es una exportación a medida que genere la hoja con tu formato en un clic.
+
+Lo explicamos con más detalle en [deja de llevar tus metrados en Excel](/es/blog/deja-de-usar-excel-y-perder-horas) y en [exportar tablas de Revit a Excel](/es/blog/exportar-tablas-revit-excel-editar-parametros).
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Qué conviene automatizar" time="~5 min">
+
+Las tareas que más horas ahorran en una oficina que metra desde Revit:
+
+- **Asignar el código de partida por regla**, según categoría, tipo y material, en lugar de a mano.
+- **Revisar el modelo antes de metrar:** elementos sin partida, duplicados, fases y encuentros mal resueltos.
+- **Metrar lo que Revit no da solo:** encofrados por caras de contacto y acabados por superficie.
+- **Exportar el metrado con el formato del presupuesto**, listo para el programa de costos.
+- **Comparar dos versiones del metrado** para saber qué cambió entre entregas.
+
+Se hacen con un plugin que aplica las reglas de tu oficina. Si quieres saber cuánto cuesta y cómo se justifica, mira [cuánto cuesta un add-in para Revit](/es/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Revit"
+  title="Metrados que salen del modelo y cuadran con el presupuesto"
+  body="Desarrollamos plugins para Revit que asignan partidas por regla, revisan el modelo antes de metrar, calculan encofrados y acabados, y exportan el metrado con el formato de tu presupuesto. Somos ingenieros civiles e ingenieros de sistemas."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Metrados fuera de Excel:** [deja de llevar tus metrados en Excel](/es/blog/deja-de-usar-excel-y-perder-horas).
+- **Revit y Excel en ambos sentidos:** [exportar tablas de Revit a Excel y editar parámetros](/es/blog/exportar-tablas-revit-excel-editar-parametros).
+- **El acero:** [plugin de acero para Revit: modelado, revisión y metrado](/es/blog/plugin-acero-revit-modelado-revision).
+- **Para no recibir observaciones:** [observaciones al expediente técnico](/es/blog/expediente-tecnico-observaciones-reducir).
+- **Qué más automatizar:** [las 12 tareas de Revit que más tiempo ahorran](/es/blog/automatizar-tareas-revit-dynamo-plugins).
+- **Si lo vas a encargar:** [desarrollo de plugins para Revit en Trujillo](/es/blog/desarrollo-plugins-revit-trujillo).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Hemos metrado expedientes a mano y sabemos dónde se pierden las horas. Desarrollamos plugins en C# para Revit y Civil 3D para oficinas de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota:** los criterios de medición de cada partida están en la Norma Técnica de Metrados vigente y en las bases de cada entidad. Este artículo explica cómo llevar esos criterios al modelo, no los reemplaza.

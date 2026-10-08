@@ -141,6 +141,8 @@ export const servicesPt: Record<ServiceSlug, ServicePage> = {
       "cuanto-cuesta-un-add-in-revit-civil-3d",
       "dynamo-vs-csharp-civil3d-revit",
       "automatizar-tareas-revit-dynamo-plugins",
+      "secciones-transversales-civil-3d",
+      "civil-3d-a-revit-topografia-coordenadas",
     ],
     faqs: [
       {

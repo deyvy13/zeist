@@ -1,0 +1,169 @@
+---
+title: "Civil 3D cross sections: from sample lines to sheets and earthwork volumes, without redoing them on every change"
+seoTitle: "Civil 3D Cross Sections: From Sample Lines to Sheets"
+ctaTitle: "Does your team redo sections, tables and sheets on every profile change? We automate it in Civil 3D."
+description: "How to create cross sections in Civil 3D: sample lines, section views, section sheets and cut and fill volumes, plus the most common errors and fixes."
+date: "2026-10-08T14:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Cross sections
+  - Corridors
+  - Earthwork
+  - Plan production
+  - BIM automation
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Roadways · Cross sections"
+  title="Cross sections aren't drawn: they're sampled. And almost everything that goes wrong happens before the first view."
+  highlight="The full Civil 3D workflow: sample lines, sources, section views, production sheets and cut and fill volumes. With the most-searched errors and what's worth automating on a roadway project."
+/>
+
+<Callout type="success" title="Quick answer">
+In Civil 3D, cross sections take four steps. First, create **sample lines** along the alignment, at a set interval or at specific stations. Next, choose the **sources** to cut: existing ground, the corridor and its surfaces. Then create the **section views**, one at a time or as a group. Finally, generate the **sheets** using the production option. Cut and fill volumes come from the quantity takeoff criteria. When the corridor changes and is rebuilt, the sections update.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain words">
+- **Station** — The distance measured along the alignment.
+- **Sample line** — The line perpendicular to the alignment where Civil 3D «cuts» the ground and the corridor.
+- **Sample sources** — What shows in each section: existing ground, the corridor, the subgrade.
+- **Section view** — The drawing of one section, with its grid, elevations and labels.
+- **Corridor** — The 3D road model built from the alignment, the profile and the typical section.
+- **Quantity takeoff criteria** — The rule that says which surfaces are compared to get cut and fill.
+
+No programming terms. Written for roadway designers, surveyors and civil engineering students.
+</Callout>
+
+## The part of the plan set that gets redone the most
+
+On a roadway project, cross sections mean hundreds of drawings, an earthwork table and several sheets. And they get redone with every change to the profile, the typical section or the alignment. At many firms, producing them takes longer than the design itself.
+
+The good news is that Civil 3D links everything: set up the workflow well once, and sections, volumes and much of the sheet set update on their own. This guide shows how.
+
+<AnimatedFlow
+  title="The cross section workflow in Civil 3D"
+  nodes="Sample lines|Sources|Section views|Sheets and volumes"
+  subs="Every 50 ft or at fixed stations|Ground, corridor, subgrade|One at a time or as a group|Production and earthwork"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Sample lines: where the road gets cut" time="~6 min">
+
+Sample lines are created on the alignment and stored in a **sample line group**. The most common ways to create them:
+
+- **By range of stations:** every 50 ft on tangents and every 25 ft on curves, for example, from a start station to an end station.
+- **At corridor stations:** one line at every point where the corridor computes its section.
+- **At a specific station:** for culverts, section changes or control points.
+
+**The swath width on each side** must cover the full corridor including daylight. If it falls short, the section is clipped and the volume is incomplete.
+
+**Sources** are chosen in the group: existing ground, the corridor and its surfaces, such as the subgrade. Anything not in the sources won't show in the section.
+
+<Callout type="info" title="Stations that don't follow an interval">
+If the plans call for sections at a list of stations, creating them one by one is slow. Since Civil 3D 2025.1, Dynamo has sample line nodes: we cover it in [10 Dynamo scripts for Civil 3D](/en/blog/dynamo-civil-3d-scripts).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Section views: draft or production" time="~6 min">
+
+With the group ready, create the section views, usually many at once (Create Multiple Section Views). The key decision is **placement**:
+
+<ComparisonTable
+  criterionLabel="Criterion"
+  leftLabel="Production"
+  rightLabel="Draft"
+  rows="Use | *Sheets to plot | On-screen review || View placement | *Based on a sheet template | Free grid in model space || Automatic sheets | *Yes | No || Setup | Requires template and styles | *Immediate"
+/>
+
+**What controls the result:**
+
+- **The group plot style:** how views are arranged, in rows or columns, and their spacing.
+- **The section view style:** the grid, horizontal and vertical scales, and titles.
+- **Bands:** the data rows under each view, such as offsets and elevations.
+- **Labels:** grade elevations, edges, slopes and areas.
+
+Getting these styles right once, in your firm's template, is what lets the next road come out the same with no extra work.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Section sheets" time="~4 min">
+
+If the views were created with the **production** option, Civil 3D can build the sheets automatically with Create Section Sheets, on the Output tab: pick the alignment, the sample line group and the section view group, and it creates one layout per sheet.
+
+**What's usually missing** to make the sheet submittal-ready is what's specific to each firm or agency: a title block showing the stations on each sheet, numbering, file naming and the format of the earthwork table. That's where the hours go.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Cut and fill volumes" time="~6 min">
+
+Volumes are computed by comparing surfaces at each section:
+
+1. **Quantity takeoff criteria:** define what gets compared, for example existing ground against the corridor subgrade to get cut and fill.
+2. **Compute Materials:** applies those criteria to the sample line group.
+3. **Volume tables:** the total volume table gives cut, fill and cumulative volumes by station. Civil 3D also builds the mass haul diagram.
+
+By default, Civil 3D uses the **average end area method**, the one most plan sets use. The result depends on the interval: with sections every 50 ft, an abrupt terrain change between two sections isn't captured.
+
+<Callout type="warn" title="The earthwork table your agency wants">
+Civil 3D's table rarely matches the plan set format: pay items, columns, rounding, separation by material. Copying it into Excel by hand after every change is where many errors start. The map of what can be automated is in [automating Civil 3D, the complete guide](/en/blog/automatizar-civil-3d-guia-completa).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. The most-searched errors, and their cause" time="~6 min">
+
+- **The corridor or existing ground doesn't show in the section.** It's missing as a source in the sample line group.
+- **Sections don't change after editing.** The corridor is out of date: rebuild it.
+- **The section is clipped.** The sample line swath is narrower than the corridor with its daylight.
+- **Views overlap or don't fit the sheet.** The sheet template or the group plot style doesn't match the chosen scale.
+- **Volumes don't match the manual calculation.** The criteria compare the wrong surfaces, or the section interval differs from the one used by hand.
+- **Editing a section.** The corridor section editor lets you modify the section at a specific station; the change is applied to the corridor.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. What's worth automating on a roadway project" time="~5 min">
+
+Civil 3D's native workflow updates the geometry. What it doesn't do on its own is whatever depends on your rules, and that's what repeats the most:
+
+- **Sample lines at the stations in the plans**, read from a table.
+- **Labels in your firm's format**: elevations, widths, slopes and areas.
+- **The earthwork table in the agency's format**, generated from the model's volumes.
+- **Complete sheets**: title block with stations, numbering and file naming, regenerated after each change.
+
+With a plugin, all of that is regenerated in minutes after every review comment. We explain it in [automated plan production](/en/blog/produccion-planos-automatica-civil-3d-revit).
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Civil 3D automation"
+  title="Don't let a profile change cost you another week of sections"
+  body="We build Civil 3D plugins that create sample lines at your stations, label with your standard, and generate the earthwork table and sheets in your agency's format. We're civil engineers and software engineers."
+  primaryLabel="Request a diagnosis"
+  primaryHref="/en/contacto"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/servicios/add-ins-revit-civil-3d"
+/>
+
+## Related resources
+
+- **The full map:** [automating Civil 3D, the complete guide](/en/blog/automatizar-civil-3d-guia-completa).
+- **The sheets:** [automated plan production in Civil 3D and Revit](/en/blog/produccion-planos-automatica-civil-3d-revit).
+- **No coding:** [10 Dynamo scripts for Civil 3D](/en/blog/dynamo-civil-3d-scripts).
+- **The ground surface:** [Civil 3D contours](/en/blog/curvas-de-nivel-civil-3d-google-earth).
+- **If you're commissioning one:** [how much a Revit or Civil 3D add-in costs](/en/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+- **The add-in map:** [Revit and Civil 3D add-in development](/en/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Civil engineers who code"
+  title="A team of civil engineers and software engineers"
+  body="We've produced sections and earthwork tables for roadway projects, and we know how to build the tool that regenerates them. We work remotely with engineering firms in the US, Europe and Latin America."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contacto"
+  secondaryLabel="See all services"
+  secondaryHref="/en/servicios"
+/>

@@ -1,0 +1,174 @@
+---
+title: "Secciones transversales en Civil 3D: de las líneas de muestreo a las láminas y los volúmenes, sin rehacerlas en cada cambio"
+seoTitle: "Secciones transversales en Civil 3D: guía y errores"
+ctaTitle: "¿Tu equipo rehace secciones, cuadros y láminas en cada cambio de rasante? Lo automatizamos en Civil 3D."
+description: "Cómo generar secciones transversales en Civil 3D: líneas de muestreo, vistas de sección, láminas y volúmenes de corte y relleno, con los errores más comunes."
+date: "2026-10-08T14:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Secciones transversales
+  - Corredores
+  - Movimiento de tierras
+  - Planos
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Carreteras · Secciones transversales"
+  title="Las secciones transversales no se dibujan: se muestrean. Y casi todo lo que sale mal pasa antes de la primera vista."
+  highlight="El flujo completo en Civil 3D: líneas de muestreo, fuentes, vistas de sección, láminas de producción y volúmenes de corte y relleno. Con los errores que más se buscan y lo que conviene automatizar en un expediente vial."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+En Civil 3D, las secciones transversales se generan en cuatro pasos. Primero se crean **líneas de muestreo** a lo largo del alineamiento, cada cierta distancia o en progresivas específicas. Después se eligen las **fuentes** que se cortan: el terreno, el corredor y sus superficies. Luego se crean las **vistas de sección**, una a una o en grupo. Por último se generan las **láminas** con la opción de producción. Los volúmenes de corte y relleno salen de los criterios de cálculo de cantidades. Si el corredor cambia y se reconstruye, las secciones se actualizan.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Progresiva** — La distancia medida a lo largo del eje. Según el país, estación, P.K. o abscisa.
+- **Línea de muestreo** — La línea perpendicular al eje donde Civil 3D «corta» el terreno y el corredor.
+- **Fuentes de muestreo** — Lo que aparece en cada sección: el terreno natural, el corredor, la subrasante.
+- **Vista de sección** — El dibujo de una sección, con su grilla, sus cotas y sus rótulos.
+- **Corredor** — El modelo 3D de la vía, que sale del eje, el perfil y la sección típica.
+- **Criterios de cálculo de cantidades** — La regla que dice qué superficies se comparan para obtener corte y relleno.
+- **Cubicación** — El cálculo del volumen de movimiento de tierras.
+
+Sin términos de programación. Está escrito para proyectistas viales, topógrafos y estudiantes de ingeniería civil.
+</Callout>
+
+## La parte del expediente que más se rehace
+
+En un expediente vial, las secciones transversales son cientos de dibujos, un cuadro de cubicación y varias láminas. Y se rehacen con cada cambio de rasante, de sección típica o de trazo. En muchas oficinas, esa producción toma más tiempo que el diseño.
+
+La buena noticia es que Civil 3D enlaza todo: si el flujo se arma bien una vez, las secciones, los volúmenes y buena parte de las láminas se actualizan solos. Esta guía muestra cómo.
+
+<AnimatedFlow
+  title="El flujo de las secciones transversales en Civil 3D"
+  nodes="Líneas de muestreo|Fuentes|Vistas de sección|Láminas y volúmenes"
+  subs="Cada 20 m o en progresivas fijas|Terreno, corredor, subrasante|Una a una o en grupo|Producción y cubicación"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Líneas de muestreo: dónde se corta la vía" time="~6 min">
+
+Las líneas de muestreo se crean sobre el alineamiento y se agrupan en un **grupo de líneas de muestreo**. Las formas más usadas:
+
+- **Por rango de progresivas:** cada 20 m en tangente y cada 10 m en curva, por ejemplo, desde una progresiva inicial hasta una final.
+- **En las estaciones del corredor:** una línea en cada punto donde el corredor calcula su sección.
+- **En una progresiva específica:** para alcantarillas, cambios de sección o puntos de control.
+
+**El ancho a cada lado** tiene que cubrir el corredor completo con sus taludes. Si se queda corto, la sección sale cortada y el volumen, incompleto.
+
+**Las fuentes** se eligen en el grupo: el terreno natural, el corredor y sus superficies, como la subrasante. Lo que no está en las fuentes no aparece en la sección.
+
+<Callout type="info" title="Progresivas que no siguen un intervalo">
+Si el expediente pide secciones en una lista de progresivas, crearlas una por una es lento. Desde Civil 3D 2025.1, Dynamo tiene nodos para líneas de muestreo: lo explicamos en [10 scripts de Dynamo para Civil 3D](/es/blog/dynamo-civil-3d-scripts).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Vistas de sección: borrador o producción" time="~6 min">
+
+Con el grupo listo, se crean las vistas de sección, normalmente varias a la vez (Create Multiple Section Views). La decisión clave es la **ubicación**:
+
+<ComparisonTable
+  criterionLabel="Criterio"
+  leftLabel="Producción"
+  rightLabel="Borrador"
+  rows="Uso | *Láminas para imprimir | Revisión en pantalla || Ubicación de las vistas | *Según una plantilla de lámina | Grilla libre en el modelo || Láminas automáticas | *Sí | No || Arranque | Requiere plantilla y estilos | *Inmediato"
+/>
+
+**Lo que controla el resultado:**
+
+- **El estilo de trazado de grupo:** cómo se ordenan las vistas, en filas o columnas, y su separación.
+- **El estilo de la vista:** la grilla, la escala vertical y horizontal, y los títulos.
+- **Las bandas:** las filas de datos bajo cada vista, como distancias al eje y cotas.
+- **Las etiquetas:** cotas de rasante, bordes, taludes y áreas.
+
+Configurar bien estos estilos una vez, en la plantilla de la oficina, es lo que permite que la siguiente vía salga igual sin trabajo extra.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Láminas de secciones" time="~4 min">
+
+Si las vistas se crearon con la opción de **producción**, Civil 3D puede crear las láminas automáticamente con el comando de láminas de sección (Create Section Sheets), en la pestaña Salida: elige el alineamiento, el grupo de líneas de muestreo y el grupo de vistas, y genera una presentación por lámina.
+
+**Lo que suele faltar** para que la lámina quede lista para el expediente es lo que es propio de cada oficina o entidad: el cajetín con las progresivas que contiene cada lámina, la numeración, la nomenclatura del archivo y el formato del cuadro de cubicación. Ahí es donde se va el tiempo.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Volúmenes de corte y relleno" time="~6 min">
+
+Los volúmenes se calculan comparando superficies en cada sección:
+
+1. **Criterios de cálculo de cantidades:** definen qué se compara, por ejemplo el terreno natural contra la subrasante del corredor para obtener corte y relleno.
+2. **Calcular materiales** (Compute Materials): aplica esos criterios al grupo de líneas de muestreo.
+3. **Tablas de volumen:** la tabla de volumen total da el corte, el relleno y los acumulados por progresiva. Civil 3D también genera el diagrama de masas.
+
+Por defecto, Civil 3D calcula con el **método de áreas medias**, el mismo que suele usarse en los expedientes. El resultado depende del intervalo: con secciones cada 20 m, un cambio brusco de terreno entre dos secciones no queda medido.
+
+<Callout type="warn" title="El cuadro de cubicación que pide la entidad">
+La tabla de Civil 3D rara vez coincide con el formato del expediente: partidas, columnas, redondeo, separación por tipo de material. Pasarla a mano a Excel en cada cambio es el origen de muchos errores. Lo explicamos en [automatizar metrados y cubicaciones en Civil 3D](/es/blog/automatizar-metrados-cubicaciones-civil-3d).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Los errores más buscados, y su causa" time="~6 min">
+
+- **El corredor o el terreno no aparece en la sección.** Falta como fuente en el grupo de líneas de muestreo.
+- **Las secciones no cambian después de editar.** El corredor está desactualizado: hay que reconstruirlo.
+- **La sección sale cortada.** El ancho de las líneas de muestreo es menor que el corredor con sus taludes.
+- **Las vistas se superponen o no caben en la lámina.** La plantilla de lámina o el estilo de trazado de grupo no corresponden a la escala elegida.
+- **Los volúmenes no cuadran con el cálculo manual.** Los criterios comparan superficies equivocadas, o el intervalo de secciones es distinto del que usó el cálculo manual.
+- **Editar una sección.** El editor de secciones del corredor permite modificar la sección en una progresiva concreta; el cambio se refleja en el corredor.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Qué conviene automatizar en un expediente vial" time="~5 min">
+
+El flujo nativo de Civil 3D actualiza la geometría. Lo que no hace solo es lo que depende de tus reglas, y eso es lo que más se repite:
+
+- **Líneas de muestreo en las progresivas del expediente**, leídas desde una tabla.
+- **Rótulos con el formato de la oficina**: cotas, anchos, taludes y áreas.
+- **El cuadro de cubicación con el formato de la entidad**, generado desde los volúmenes del modelo.
+- **Láminas completas**: cajetín con progresivas, numeración y nomenclatura, regeneradas después de cada cambio.
+
+Con un plugin, todo esto vuelve a generarse en minutos después de cada observación. Lo explicamos en [producción automática de planos](/es/blog/produccion-planos-automatica-civil-3d-revit).
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automatización Civil 3D"
+  title="Que un cambio de rasante no te cueste otra semana de secciones"
+  body="Desarrollamos plugins para Civil 3D que crean las líneas de muestreo en tus progresivas, rotulan con tu estándar y generan el cuadro de cubicación y las láminas con el formato de la entidad. Somos ingenieros civiles e ingenieros de sistemas."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **El mapa completo:** [automatizar Civil 3D, la guía completa](/es/blog/automatizar-civil-3d-guia-completa).
+- **Los volúmenes:** [automatizar metrados y cubicaciones en Civil 3D](/es/blog/automatizar-metrados-cubicaciones-civil-3d).
+- **Las láminas:** [producción automática de planos en Civil 3D y Revit](/es/blog/produccion-planos-automatica-civil-3d-revit).
+- **Sin programar:** [10 scripts de Dynamo para Civil 3D](/es/blog/dynamo-civil-3d-scripts).
+- **La superficie del terreno:** [curvas de nivel en Civil 3D](/es/blog/curvas-de-nivel-civil-3d-google-earth).
+- **Si lo vas a encargar:** [desarrollo de plugins para Civil 3D en Trujillo](/es/blog/desarrollo-plugins-civil-3d-trujillo).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Hemos armado secciones y cubicaciones para expedientes viales, y sabemos construir la herramienta que las regenera sola. Trabajamos con oficinas de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota:** los nombres de los comandos de Civil 3D pueden variar según el idioma de instalación; entre paréntesis va el nombre en inglés.

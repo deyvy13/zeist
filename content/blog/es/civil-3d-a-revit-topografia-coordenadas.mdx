@@ -1,0 +1,179 @@
+---
+title: "De Civil 3D a Revit: cómo llevar la topografía, las coordenadas, los ejes y las redes sin que nada se mueva"
+seoTitle: "Civil 3D a Revit: topografía, coordenadas y redes"
+ctaTitle: "¿Tu equipo pasa información de Civil 3D a Revit a mano en cada proyecto? Lo automatizamos."
+description: "Cómo pasar de Civil 3D a Revit: vincular o importar la superficie como toposólido, compartir coordenadas y llevar ejes, corredores y redes."
+date: "2026-10-08T13:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Revit
+  - Interoperabilidad
+  - Topografía
+  - Coordenadas compartidas
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Revit · Interoperabilidad"
+  title="Civil 3D trabaja en coordenadas reales. Revit, cerca de su origen. Ahí empiezan todos los problemas."
+  highlight="Cómo compartir coordenadas entre los dos programas, cómo llevar la superficie de Civil 3D a Revit como toposólido, qué hacer con ejes, corredores y redes, y qué parte de ese traspaso conviene automatizar."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Para pasar de Civil 3D a Revit, primero se comparten las coordenadas, con la extensión Shared Reference Point de Autodesk o adquiriendo las coordenadas de un DWG vinculado. Después, la topografía se vincula con la herramienta **Vincular topografía** de Revit, que lee la superficie publicada en Autodesk Construction Cloud; desde Revit 2024 llega como toposólido. Sin la nube, se exporta la superficie a un archivo y se crea el toposólido desde él. Los corredores y las redes se exportan como sólidos, sin la inteligencia de Civil 3D. Nunca se mueve el modelo de Revit a coordenadas UTM.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Superficie** — El modelo del terreno en Civil 3D.
+- **Toposólido** — El objeto de terreno de Revit desde la versión 2024. Antes se usaba la topografía o toposuperficie.
+- **Punto de reconocimiento** — El punto de Revit que ata el modelo a las coordenadas reales del terreno.
+- **Punto base del proyecto** — El punto de Revit desde el que se mide dentro del edificio.
+- **Coordenadas compartidas** — El acuerdo entre dos archivos sobre dónde está cada uno en el mundo real.
+- **Autodesk Construction Cloud (ACC)** — La plataforma en la nube de Autodesk donde se publican y comparten los modelos.
+- **Sólido** — Una forma 3D sin inteligencia: tiene geometría, pero ya no sabe que era un tubo o una vía.
+
+Sin términos de programación. Está escrito para arquitectos, proyectistas y coordinadores BIM.
+</Callout>
+
+## El colegio está bien diseñado. El terreno, a 30 kilómetros
+
+Pasa en proyectos que combinan edificación e infraestructura: colegios, hospitales, plantas de tratamiento, habilitaciones con equipamiento. El ingeniero civil diseña el terreno, las vías y las redes en Civil 3D; el arquitecto, el edificio en Revit. Cuando se juntan, el edificio flota sobre el terreno, aparece girado o a kilómetros de distancia.
+
+Casi nunca es un error de diseño. Es que **los dos programas ubican las cosas de forma distinta**, y nadie acordó cómo traducir una al otro.
+
+<AnimatedFlow
+  title="El orden correcto para pasar de Civil 3D a Revit"
+  nodes="Coordenadas compartidas|Topografía como toposólido|Ejes y rasantes de referencia|Corredores y redes como sólidos"
+  subs="Primero, siempre|Vinculada o importada|Para ubicar el edificio|Para coordinar"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Por qué Civil 3D y Revit no se entienden solos" time="~4 min">
+
+**Civil 3D trabaja en coordenadas reales.** Un proyecto en Trujillo, por ejemplo, está en coordenadas UTM cercanas a E 717000 y N 9102000: cientos o miles de kilómetros desde el origen del dibujo. Para Civil 3D es normal.
+
+**Revit trabaja cerca de su origen interno.** Está pensado para edificios, y su precisión se degrada cuando la geometría queda muy lejos de ese origen. Por eso Revit advierte cuando hay elementos a decenas de kilómetros del origen.
+
+**La consecuencia:** si se mueve el modelo de Revit a las coordenadas UTM, aparecen errores gráficos y de precisión. Lo correcto es dejar el edificio cerca del origen y decirle a Revit, con coordenadas compartidas, dónde está en el mundo.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Primero las coordenadas compartidas" time="~6 min">
+
+Revit tiene dos puntos clave: el **punto base del proyecto**, desde el que se mide dentro del edificio, y el **punto de reconocimiento**, que lo ata a las coordenadas reales. Hay dos formas habituales de alinearlos con Civil 3D:
+
+**A. La extensión Shared Reference Point de Autodesk.**
+
+1. En Civil 3D, desde el administrador de extensiones del Espacio de herramientas, se exporta un punto de origen y un segundo punto que marca la dirección, ambos a la misma cota. Se genera un archivo XML.
+2. En Revit, desde la pestaña Complementos, se importan las coordenadas compartidas desde ese XML, eligiendo los mismos puntos en el mismo orden.
+3. Se activa el nuevo sistema como ubicación actual del proyecto.
+
+**B. Adquirir coordenadas de un DWG vinculado.** Se vincula a Revit un DWG de Civil 3D con su ubicación real y se usan sus coordenadas como referencia del proyecto. Es más rápido, pero depende de que el DWG esté bien georreferenciado.
+
+<Callout type="warn" title="La regla de oro">
+Las coordenadas se acuerdan una vez, al inicio, y se documentan: qué punto, qué cota y qué orientación. Cambiarlas a mitad del proyecto descuadra todos los vínculos.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. La topografía: vincular o importar como toposólido" time="~6 min">
+
+**Opción 1: Vincular topografía (con Autodesk Construction Cloud).** Desde Revit 2019, la herramienta Vincular topografía lee una superficie de Civil 3D publicada en la nube de Autodesk. Desde Revit 2024, el terreno llega como **toposólido**. Su ventaja: cuando el ingeniero civil publica una nueva versión de la superficie, Revit puede actualizarla.
+
+**Opción 2: Exportar e importar.** Sin la nube, se exporta la superficie de Civil 3D a un archivo y en Revit se crea el toposólido a partir de esa importación, o desde puntos en un CSV.
+
+<ComparisonTable
+  criterionLabel="Criterio"
+  leftLabel="Vincular topografía (nube)"
+  rightLabel="Exportar e importar archivo"
+  rows="Requiere Autodesk Construction Cloud | Sí | *No || Si cambia la superficie | *Se publica y se actualiza | Hay que exportar e importar otra vez || Arranque | Configurar el proyecto en la nube | *Inmediato || Ideal para | *Proyectos largos con cambios | Entregas puntuales"
+/>
+
+<Callout type="info" title="Recorta antes de enviar">
+Una superficie de todo el levantamiento puede pesar demasiado para Revit. Crea en Civil 3D una superficie recortada al área del edificio y su entorno, con los triángulos necesarios, y envía esa.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Ejes, rasantes y plataformas" time="~4 min">
+
+Los alineamientos y perfiles de Civil 3D no se convierten en objetos de Revit por sí solos. Los caminos habituales:
+
+- **Como referencia:** vincular a Revit un DWG con los ejes, bordes de vía y cotas de rasante, para ubicar accesos y niveles de piso.
+- **Con Dynamo:** herramientas de la comunidad, como CivilConnection, intercambian información entre Civil 3D, Dynamo y Revit.
+- **Con un plugin a medida:** cuando el traspaso se repite en cada proyecto con las mismas reglas.
+
+**Lo importante es la cota.** La plataforma del edificio, el nivel de piso terminado y las rasantes de los accesos tienen que coincidir en los dos modelos. Acordar a qué cota corresponde el nivel 0 de Revit evita la mitad de las incompatibilidades.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Corredores, redes y estructuras: como sólidos" time="~4 min">
+
+Para coordinar el edificio con las vías y las redes, Civil 3D puede **exportar sus objetos como sólidos**: corredores, redes de tuberías y superficies se convierten en geometría 3D que Revit, o Navisworks, pueden vincular.
+
+**El límite:** un sólido no sabe que fue un tubo. En Revit no se puede consultar su diámetro ni su pendiente como en una tubería de Revit. Sirve para ver y detectar interferencias, no para seguir diseñando.
+
+Si el proyecto necesita que las redes exteriores lleguen a Revit como tuberías de verdad —por ejemplo, para empalmar con las instalaciones del edificio—, eso se resuelve con un script o un plugin que lea la red de Civil 3D y la recree con familias de Revit.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Los errores más comunes, y su causa" time="~5 min">
+
+- **El terreno aparece lejísimos o en otra parte.** Las coordenadas compartidas no se configuraron, o se movió el modelo en lugar de usar el punto de reconocimiento.
+- **El edificio sale girado.** Falta acordar el norte: Civil 3D trabaja con el norte de la cuadrícula y Revit distingue entre norte del proyecto y norte real.
+- **Los niveles no coinciden.** La cota del nivel 0 de Revit no está referida a la misma altura que Civil 3D.
+- **Revit se pone lento o el toposólido falla.** La superficie es demasiado grande o tiene demasiados triángulos para el área que se necesita.
+- **Unidades distintas.** Un archivo en milímetros y otro en metros: todo sale mil veces más grande o más chico.
+- **La topografía no se actualiza.** El ingeniero civil modificó la superficie pero no publicó la nueva versión.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Qué conviene automatizar" time="~4 min">
+
+Si tu oficina hace este traspaso en cada proyecto, estas tareas se repiten siempre igual:
+
+- **Preparar la superficie** para Revit: recortarla al área del proyecto y simplificarla con un criterio fijo.
+- **Verificar coordenadas, norte y cotas** de los dos modelos antes de cada entrega, con un reporte.
+- **Llevar ejes, rasantes y niveles** de Civil 3D a referencias de Revit.
+- **Recrear las redes exteriores** como tuberías de Revit para empalmar con las instalaciones.
+
+Se prueban con Dynamo y, cuando se usan a diario, se convierten en un plugin. Lo explicamos en [desarrollo de add-ins para Revit y Civil 3D](/es/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Civil 3D y Revit"
+  title="Que el terreno y el edificio lleguen siempre al mismo lugar"
+  body="Desarrollamos plugins que preparan la superficie, verifican coordenadas, norte y cotas, y llevan ejes y redes de Civil 3D a Revit con las reglas de tu oficina. Somos ingenieros civiles e ingenieros de sistemas: trabajamos en los dos programas."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Coordenadas UTM y datums:** [conversor de coordenadas](/es/herramientas/conversor-de-coordenadas).
+- **La superficie, bien hecha:** [curvas de nivel en Civil 3D, de Google Earth al levantamiento](/es/blog/curvas-de-nivel-civil-3d-google-earth).
+- **Redes en 3D:** [redes de tuberías en Civil 3D con sus accesorios](/es/blog/redes-tuberias-civil-3d-accesorios).
+- **Qué cambió entre versiones:** [comparar modelos de Revit y Civil 3D](/es/blog/comparar-modelos-revit-civil-3d-detectar-cambios).
+- **El mapa de Civil 3D:** [automatizar Civil 3D, la guía completa](/es/blog/automatizar-civil-3d-guia-completa).
+- **El mapa de los plugins:** [desarrollo de add-ins para Revit y Civil 3D](/es/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Desarrollamos plugins en C# para Civil 3D y Revit, scripts de Dynamo y formación para equipos BIM. Trabajamos con oficinas de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota técnica:** los nombres de las herramientas y las versiones corresponden a la documentación de Autodesk vigente en octubre de 2026; pueden variar según el idioma de instalación.

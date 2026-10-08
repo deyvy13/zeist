@@ -27,6 +27,10 @@ export const clusters: Cluster[] = [
       "produccion-planos-automatica-civil-3d-revit",
       "automatizar-tareas-revit-dynamo-plugins",
       "auditoria-bim-checklist-empresa",
+      "desarrollo-plugins-revit-trujillo",
+      "empresas-automatizacion-bim-trujillo-peru",
+      "metrados-en-revit",
+      "civil-3d-a-revit-topografia-coordenadas",
     ],
   },
   {
@@ -38,6 +42,9 @@ export const clusters: Cluster[] = [
       "produccion-planos-automatica-civil-3d-revit",
       "dynamo-civil-3d-scripts",
       "curvas-de-nivel-civil-3d-google-earth",
+      "desarrollo-plugins-civil-3d-trujillo",
+      "secciones-transversales-civil-3d",
+      "civil-3d-a-revit-topografia-coordenadas",
     ],
   },
   {
@@ -67,6 +74,7 @@ export const clusters: Cluster[] = [
       "reprocesos-obra-costo-oculto",
       "estandarizar-procesos-bim-empresa",
       "auditoria-bim-checklist-empresa",
+      "plan-ejecucion-bim-peb-peru",
     ],
   },
   {
@@ -84,6 +92,9 @@ export const clusters: Cluster[] = [
       "drenaje-pluvial-trujillo-civil-3d",
       "habilitacion-urbana-trujillo-civil-3d",
       "cursos-revit-civil-3d-bim-trujillo",
+      "desarrollo-plugins-revit-trujillo",
+      "desarrollo-plugins-civil-3d-trujillo",
+      "empresas-automatizacion-bim-trujillo-peru",
     ],
   },
 ];
