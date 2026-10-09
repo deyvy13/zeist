@@ -188,6 +188,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "pt",
     "en"
   ],
+  "revisiones-firmas-revit-varios-planos": [
+    "es",
+    "pt",
+    "en"
+  ],
   "revit-api-espanol-primeros-pasos": [
     "es"
   ],

@@ -1,0 +1,218 @@
+---
+title: "Revisiones y firmas en Revit para muchos planos a la vez: nueva revisión, datos del cajetín y firmas en lote"
+seoTitle: "Revisiones en Revit: agregar y firmar varios planos"
+ctaTitle: "¿Cada nueva revisión te obliga a abrir lámina por lámina? Lo automatizamos con un solo botón."
+description: "Cómo agregar una revisión a muchas láminas de Revit, llenar el cajetín en lote, poner firmas en todos los planos y firmar el PDF."
+date: "2026-10-09T05:00:00.000Z"
+author: "Zeist"
+tags:
+  - Revit
+  - Revisiones
+  - Cajetín
+  - Producción de planos
+  - Plugins para Revit
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Revit · Revisiones · Firmas"
+  title="Una nueva revisión no debería significar abrir 120 láminas una por una."
+  highlight="Cómo agregar una revisión a muchas láminas a la vez, llenar los datos del cajetín en lote, poner la firma de cada profesional en todos los planos y firmar digitalmente los PDF. Con lo que trae Revit, lo que trae AutoCAD y lo que conviene automatizar."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+En Revit, una revisión se crea una sola vez en el cuadro de revisiones del proyecto, con su fecha y su descripción, y desde Revit 2023.1 se puede agregar a muchas láminas a la vez: se seleccionan en el navegador de proyectos y se marca en Revisiones en la lámina. Los datos del cajetín, como Dibujado por o Aprobado por, se llenan en lote seleccionando varias láminas o desde una tabla de láminas. La firma se agrega como imagen dentro de una familia anidada que se activa por lámina. Un plugin hace todo en un solo paso.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Lámina** — Cada hoja del juego de planos, con su cajetín.
+- **Cajetín** — El recuadro con los datos del plano: proyecto, número, quién dibujó, quién revisó, quién aprobó y la tabla de revisiones.
+- **Revisión** — Cada versión emitida del juego de planos, con su número, fecha y descripción.
+- **Nube de revisión** — La nube que marca en el plano qué cambió en una revisión.
+- **Navegador de proyectos** — El panel de Revit donde aparecen las vistas y las láminas.
+- **Familia anidada** — Una familia de Revit metida dentro de otra, como la imagen de una firma dentro del cajetín.
+- **Firma digital** — Una firma con certificado que da validez legal a un PDF. No es lo mismo que la imagen escaneada de una firma.
+
+Está escrito para coordinadores BIM, jefes de proyecto y modeladores que emiten planos en Revit.
+</Callout>
+
+## El trabajo que vuelve en cada entrega
+
+Cada observación del cliente o de la entidad termina en una nueva revisión: hay que marcarla en las láminas que cambiaron, actualizar la fecha, poner quién revisó y quién aprobó, activar las firmas y volver a exportar. En un juego de 120 láminas, hacerlo a mano toma horas y deja errores: una lámina con la revisión anterior, otra sin firma, una fecha distinta.
+
+La buena noticia es que buena parte de ese trabajo ya se puede hacer en lote dentro de Revit, y el resto se automatiza.
+
+<AnimatedFlow
+  title="Una revisión, de principio a fin"
+  nodes="Nueva revisión|Láminas que cambian|Cajetín y firmas|PDF firmado"
+  subs="Fecha y descripción, una vez|Elegidas por lista o por regla|Revisó, aprobó y firmas activas|Exportado y con firma digital"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Cómo funcionan las revisiones en Revit" time="~5 min">
+
+Una revisión en Revit no vive en cada lámina, sino en el proyecto:
+
+- **Se crea una sola vez** en el cuadro de revisiones del proyecto (Sheet Issues/Revisions, en la pestaña Vista), con su fecha, su descripción, para quién y por quién se emite.
+- **La numeración** la controla una secuencia de numeración: numérica, alfanumérica o con el formato de la oficina.
+- **Aparece en una lámina** por dos caminos: porque hay una **nube de revisión** de esa revisión en la lámina, o porque se marcó a mano en **Revisiones en la lámina** (Revisions on Sheet), en las propiedades de la lámina.
+- **La tabla de revisiones del cajetín** muestra todas las revisiones que participan en esa lámina.
+
+<Callout type="tip" title="Lo que pocos aprovechan">
+La fecha y la descripción viven en la revisión, no en cada lámina. Si cambias la fecha en el cuadro de revisiones, cambia en todos los cajetines que la muestran. No hace falta tocar lámina por lámina.
+</Callout>
+
+Cuando una revisión se marca como **emitida**, sus nubes quedan bloqueadas: no se pueden mover ni borrar hasta quitarle esa marca.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Agregar una revisión a muchas láminas a la vez" time="~5 min">
+
+**Desde Revit 2023.1** se puede hacer en un solo paso:
+
+1. Crea la revisión en el cuadro de revisiones del proyecto.
+2. En el navegador de proyectos, selecciona todas las láminas que cambian, con Ctrl o Mayús.
+3. En Propiedades, en **Revisiones en la lámina**, haz clic en Editar y marca la nueva revisión.
+
+La revisión queda en todas las láminas seleccionadas y aparece en sus tablas de revisiones.
+
+**En versiones anteriores** había que hacerlo lámina por lámina, o copiar una nube de revisión a todas las láminas, que es lo que muchos equipos siguen haciendo por costumbre.
+
+<Callout type="warn" title="¿La casilla aparece en gris?">
+Si en Revisiones en la lámina una revisión aparece marcada y en gris, es porque esa lámina tiene una nube de esa revisión, en la lámina o en una vista colocada en ella. Revit no deja quitarla mientras exista la nube. Para sacarla, hay que borrar la nube o cambiarla a otra revisión.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Llenar los datos del cajetín en lote" time="~6 min">
+
+Revit trae parámetros de lámina para el cajetín: **Dibujado por**, **Diseñado por**, **Comprobado por**, **Aprobado por** y la fecha de emisión de la lámina. Hay tres formas de llenarlos sin ir lámina por lámina:
+
+- **Selección múltiple.** Selecciona varias láminas en el navegador de proyectos y escribe el valor en Propiedades: queda igual en todas.
+- **Tabla de láminas.** Una tabla de planificación de láminas con esas columnas permite editar fila por fila, como en una hoja de cálculo, sin abrir ninguna lámina.
+- **Excel.** Exportar la tabla, llenarla en Excel y volver a cargarla en Revit. Revit no lo hace solo; lo explicamos en [exportar tablas de Revit a Excel y reimportarlas](/es/blog/exportar-tablas-revit-excel-editar-parametros).
+
+**Datos propios de la oficina**, como el número de colegiatura del ingeniero, la especialidad o el código del cliente, se agregan como parámetros compartidos de lámina y se llenan de la misma forma.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Firmas en el cajetín, activadas por lámina" time="~6 min">
+
+En Revit no se puede apagar o prender una imagen directamente con un parámetro. El método que funciona:
+
+1. **Una familia de anotación genérica por firma**, con la imagen escaneada de la firma de cada profesional, recortada y en un formato liviano.
+2. **Esas familias anidadas en el cajetín**, en el recuadro que corresponde a cada rol: proyectista, revisor, responsable.
+3. **Un parámetro Sí/No de ejemplar por firma** en el cajetín, que controla la visibilidad de cada familia anidada.
+
+Así, la firma se activa o desactiva por lámina desde Propiedades, y con selección múltiple se activa en todas las láminas aprobadas de una vez. Si cambia el profesional responsable, se reemplaza la imagen en la familia y se actualiza en todos los planos.
+
+<Callout type="warn" title="Cuida quién puede activarla">
+Una firma escaneada dentro del modelo la puede activar cualquiera que edite el archivo. Conviene que activar firmas sea el último paso, que lo haga una persona definida y que quede registrado en qué revisión se firmó cada lámina.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. La imagen de la firma no es una firma digital" time="~4 min">
+
+La imagen escaneada sirve para que el plano impreso o el PDF muestre la firma. Pero no prueba quién firmó ni que el documento no se cambió después.
+
+**La firma digital** se hace sobre el PDF ya exportado, con un certificado digital. En el Perú se rige por la Ley 27269, de firmas y certificados digitales, y se puede firmar con el certificado del DNI electrónico y aplicaciones como ReFirma PDF, de RENIEC, o las de la plataforma Firma Perú. Revisa siempre qué pide la entidad que recibe los planos.
+
+**El orden importa:** primero se exporta el PDF definitivo y al final se firma. Si el PDF cambia después de firmado, la firma deja de ser válida. Exportar todo el juego en un solo paso ayuda; lo contamos en [exportar PDF y DWG en Revit en lote](/es/blog/plugin-revit-exportar-pdf-dwg-masivo).
+
+</TopicCard>
+
+<TopicCard step="6" title="6. En AutoCAD y Civil 3D" time="~5 min">
+
+En AutoCAD y Civil 3D el cajetín suele ser un bloque con atributos en cada presentación. Para llenarlo en lote:
+
+- **GATTE**, de las Express Tools, cambia el valor de un atributo en todas las inserciones de un bloque del dibujo, en todas las presentaciones a la vez.
+- **ATTOUT y ATTIN**, también de las Express Tools, exportan los atributos a un archivo de texto que se edita en Excel y se vuelve a importar.
+- **El Administrador de conjuntos de planos** (Sheet Set Manager) guarda datos comunes, como el revisor o la fecha, que los cajetines de muchos dibujos leen con campos.
+
+**La firma** se agrega como un bloque con la imagen, en una capa que se enciende cuando el plano está aprobado.
+
+**Para firmar digitalmente muchos DWG** a la vez, AutoCAD trae la utilidad Attach Digital Signatures, que se abre desde el menú Inicio de Windows: se agregan los archivos, se elige el certificado y se firman todos en una operación.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Qué conviene automatizar con un plugin" time="~6 min">
+
+Lo nativo resuelve partes. Un plugin une todo el proceso en un botón «Nueva revisión»:
+
+- **Crea la revisión** con su fecha, descripción y emisor.
+- **La asigna a las láminas que cambiaron**, elegidas de una lista en Excel, por disciplina o por las nubes que tienen.
+- **Llena el cajetín**: revisó, aprobó y fecha de emisión, según las reglas de la oficina.
+- **Activa las firmas** solo en las láminas aprobadas, y deja registrado quién y cuándo.
+- **Revisa antes de emitir**: láminas sin la revisión nueva, cajetines con datos vacíos o nubes de revisiones sin emitir.
+- **Genera el registro de la revisión** en Excel y exporta el juego en PDF y DWG.
+
+El núcleo, con la API de Revit, es corto:
+
+```csharp
+// Crea una revisión, la agrega a las láminas elegidas y llena el cajetín
+using (var t = new Transaction(doc, "Nueva revisión"))
+{
+    t.Start();
+    Revision rev = Revision.Create(doc);
+    rev.RevisionDate = "09/10/2026";
+    rev.Description = "Levantamiento de observaciones";
+    rev.IssuedBy = "Proyectista";
+
+    foreach (ViewSheet lamina in laminas)
+    {
+        var revisiones = lamina.GetAdditionalRevisionIds();
+        revisiones.Add(rev.Id);
+        lamina.SetAdditionalRevisionIds(revisiones);
+        lamina.get_Parameter(BuiltInParameter.SHEET_CHECKED_BY).Set("Ing. revisor");
+        lamina.get_Parameter(BuiltInParameter.SHEET_APPROVED_BY).Set("Ing. responsable");
+    }
+    t.Commit();
+}
+```
+
+Si las revisiones vienen de observaciones de una entidad, el problema de fondo suele estar antes: lo vemos en [observaciones al expediente técnico](/es/blog/expediente-tecnico-observaciones-reducir).
+
+<ComparisonTable
+  criterionLabel="Tarea"
+  leftLabel="Con un plugin"
+  rightLabel="Nativo en Revit"
+  rows="Agregar la revisión a muchas láminas | *Por lista o por regla | Selección múltiple desde 2023.1 || Llenar revisó y aprobó | *Según las reglas de la oficina | Selección múltiple o tabla || Activar firmas | *Solo en láminas aprobadas, con registro | Lámina por lámina o selección múltiple || Revisar antes de emitir | *Reporte de faltantes | A ojo || Registro de la revisión | *Excel automático | A mano"
+/>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Revit"
+  title="Cada nueva revisión, emitida en minutos"
+  body="Desarrollamos plugins para Revit que crean la revisión, la asignan a las láminas que cambiaron, llenan el cajetín, activan las firmas y exportan el juego completo. Diagnóstico gratuito, instalador, código fuente que queda en tus manos y actualización con cada versión de Revit."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **El paso siguiente:** [exportar PDF y DWG en Revit en lote, sin límites](/es/blog/plugin-revit-exportar-pdf-dwg-masivo).
+- **Datos del cajetín en Excel:** [exportar tablas de Revit a Excel y reimportarlas](/es/blog/exportar-tablas-revit-excel-editar-parametros).
+- **Las láminas, desde cero:** [producción automática de planos en Civil 3D y Revit](/es/blog/produccion-planos-automatica-civil-3d-revit).
+- **Otras tareas que se automatizan:** [las 12 tareas de Revit que más tiempo ahorran](/es/blog/automatizar-tareas-revit-dynamo-plugins).
+- **Menos revisiones:** [observaciones al expediente técnico, cómo reducirlas](/es/blog/expediente-tecnico-observaciones-reducir).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Emitimos planos y programamos las herramientas que los producen. Trabajamos con oficinas de ingeniería y arquitectura de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota técnica:** las funciones corresponden a Revit 2026 y AutoCAD 2026. Los requisitos de firma de cada entidad pueden variar: revísalos antes de emitir.

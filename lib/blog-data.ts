@@ -21,6 +21,156 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- Captación (oct-2026): revisiones y firmas en lote en Revit ----
+  "revisiones-firmas-revit-varios-planos": {
+    es: {
+      roadmap: {
+        title: "Revisiones y firmas en Revit, en 7 pasos",
+        intro:
+          "Cómo funcionan las revisiones, cómo agregarlas a muchas láminas, llenar el cajetín en lote, poner firmas, firmar el PDF, el caso de AutoCAD y qué automatizar.",
+        steps: [
+          { n: 1, title: "Cómo funcionan", desc: "La revisión vive en el proyecto, no en la lámina", tag: "Concepto" },
+          { n: 2, title: "Muchas láminas a la vez", desc: "Revisiones en la lámina con selección múltiple", tag: "Revit 2023.1+" },
+          { n: 3, title: "Cajetín en lote", desc: "Selección múltiple, tabla de láminas y Excel", tag: "Datos" },
+          { n: 4, title: "Firmas en el cajetín", desc: "Familias anidadas con Sí/No por lámina", tag: "Firmas" },
+          { n: 5, title: "Firma digital", desc: "La imagen no es firma: el PDF se firma al final", tag: "Legal" },
+          { n: 6, title: "AutoCAD y Civil 3D", desc: "GATTE, ATTOUT/ATTIN y firma de DWG en lote", tag: "CAD" },
+          { n: 7, title: "Qué automatizar", desc: "Un botón Nueva revisión, de principio a fin", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre revisiones y firmas en Revit",
+        items: [
+          {
+            q: "¿Cómo agregar una revisión a varias láminas en Revit?",
+            a: "Desde Revit 2023.1: se crea la revisión en el cuadro de revisiones del proyecto, se seleccionan las láminas en el navegador de proyectos y, en Propiedades, se edita Revisiones en la lámina y se marca la revisión. En versiones anteriores hay que hacerlo lámina por lámina o con nubes de revisión.",
+          },
+          {
+            q: "¿Por qué Revisiones en la lámina aparece en gris en Revit?",
+            a: "Porque la lámina tiene una nube de esa revisión, en la lámina o en una vista colocada en ella. Mientras exista la nube, Revit mantiene la revisión en la lámina y no deja desmarcarla. Para quitarla, hay que borrar la nube o asignarla a otra revisión.",
+          },
+          {
+            q: "¿Cómo cambio la fecha de una revisión en todas las láminas?",
+            a: "Se cambia una sola vez en el cuadro de revisiones del proyecto. La fecha y la descripción pertenecen a la revisión, no a cada lámina, así que se actualizan en todos los cajetines que la muestran.",
+          },
+          {
+            q: "¿Cómo lleno Dibujado por y Aprobado por en muchas láminas?",
+            a: "Seleccionando varias láminas en el navegador de proyectos y escribiendo el valor en Propiedades, o desde una tabla de láminas con esas columnas, que se edita como una hoja de cálculo. Para cargar los datos desde Excel hace falta un complemento o un plugin que haga la ida y vuelta.",
+          },
+          {
+            q: "¿Cómo poner la firma en el cajetín de Revit?",
+            a: "Con una familia de anotación genérica por firma, que contiene la imagen escaneada, anidada en el cajetín y controlada por un parámetro Sí/No de ejemplar. Así la firma se activa por lámina, o en muchas a la vez con selección múltiple. Revit no permite controlar la visibilidad de una imagen directamente con un parámetro.",
+          },
+          {
+            q: "¿La firma escaneada en el plano tiene validez legal?",
+            a: "Por sí sola no equivale a una firma digital: no prueba quién firmó ni que el documento no cambió. En el Perú, la firma digital se rige por la Ley 27269 y se aplica al PDF con un certificado digital, por ejemplo el del DNI electrónico, con aplicaciones como ReFirma PDF. Conviene revisar qué exige la entidad que recibe los planos.",
+          },
+          {
+            q: "¿Se puede automatizar la emisión de revisiones en Revit?",
+            a: "Sí. Con la API de Revit, un plugin crea la revisión, la asigna a las láminas que cambiaron, llena el cajetín, activa las firmas y exporta el juego. En Zeist desarrollamos ese tipo de plugins con las reglas de cada oficina, con instalador y código fuente propiedad del cliente.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Revisões e assinaturas no Revit, em 7 passos",
+        intro:
+          "Como funcionam as revisões, como adicioná-las a muitas pranchas, preencher o carimbo em lote, pôr assinaturas, assinar o PDF, o caso do AutoCAD e o que automatizar.",
+        steps: [
+          { n: 1, title: "Como funcionam", desc: "A revisão vive no projeto, não na prancha", tag: "Conceito" },
+          { n: 2, title: "Muitas pranchas de uma vez", desc: "Revisões na folha com seleção múltipla", tag: "Revit 2023.1+" },
+          { n: 3, title: "Carimbo em lote", desc: "Seleção múltipla, tabela de pranchas e Excel", tag: "Dados" },
+          { n: 4, title: "Assinaturas no carimbo", desc: "Famílias aninhadas com Sim/Não por prancha", tag: "Assinaturas" },
+          { n: 5, title: "Assinatura digital", desc: "A imagem não é assinatura: o PDF se assina no fim", tag: "Legal" },
+          { n: 6, title: "AutoCAD e Civil 3D", desc: "GATTE, ATTOUT/ATTIN e assinatura de DWG em lote", tag: "CAD" },
+          { n: 7, title: "O que automatizar", desc: "Um botão Nova revisão, do início ao fim", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre revisões e assinaturas no Revit",
+        items: [
+          {
+            q: "Como adicionar uma revisão a várias pranchas no Revit?",
+            a: "Desde o Revit 2023.1: cria-se a revisão no quadro de revisões do projeto, selecionam-se as pranchas no navegador de projeto e, em Propriedades, edita-se Revisões na folha e marca-se a revisão. Em versões anteriores é preciso fazer prancha por prancha ou com nuvens de revisão.",
+          },
+          {
+            q: "Por que Revisões na folha aparece em cinza no Revit?",
+            a: "Porque a prancha tem uma nuvem dessa revisão, na prancha ou numa vista colocada nela. Enquanto a nuvem existir, o Revit mantém a revisão na prancha e não deixa desmarcá-la. Para tirá-la, é preciso apagar a nuvem ou atribuí-la a outra revisão.",
+          },
+          {
+            q: "Como mudar a data de uma revisão em todas as pranchas?",
+            a: "Muda-se uma única vez no quadro de revisões do projeto. A data e a descrição pertencem à revisão, não a cada prancha, então se atualizam em todos os carimbos que a mostram.",
+          },
+          {
+            q: "Como preencher Desenhado por e Aprovado por em muitas pranchas?",
+            a: "Selecionando várias pranchas no navegador de projeto e digitando o valor em Propriedades, ou numa tabela de pranchas com essas colunas, editada como uma planilha. Para carregar os dados do Excel é preciso um complemento ou um plugin que faça a ida e volta.",
+          },
+          {
+            q: "Como pôr a assinatura no carimbo do Revit?",
+            a: "Com uma família de anotação genérica por assinatura, que contém a imagem escaneada, aninhada no carimbo e controlada por um parâmetro Sim/Não de instância. Assim a assinatura é ativada por prancha, ou em muitas de uma vez com seleção múltipla. O Revit não permite controlar a visibilidade de uma imagem diretamente com um parâmetro.",
+          },
+          {
+            q: "A assinatura escaneada na prancha tem validade jurídica?",
+            a: "Sozinha, não equivale a uma assinatura digital: não prova quem assinou nem que o documento não mudou. No Brasil, a Lei 14.063/2020 define as assinaturas eletrônicas simples, avançada e qualificada; a qualificada usa certificado ICP-Brasil e é aplicada ao PDF. Vale conferir o que exige o órgão que recebe as pranchas.",
+          },
+          {
+            q: "Dá para automatizar a emissão de revisões no Revit?",
+            a: "Sim. Com a API do Revit, um plugin cria a revisão, atribui às pranchas que mudaram, preenche o carimbo, ativa as assinaturas e exporta o conjunto. Na Zeist desenvolvemos esse tipo de plugin com as regras de cada escritório, com instalador e código-fonte de propriedade do cliente.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Revit revisions and signatures, in 7 steps",
+        intro:
+          "How revisions work, how to add them to many sheets, fill the title block in bulk, add signatures, sign the PDF, the AutoCAD case, and what to automate.",
+        steps: [
+          { n: 1, title: "How they work", desc: "A revision lives in the project, not on the sheet", tag: "Concept" },
+          { n: 2, title: "Many sheets at once", desc: "Revisions on Sheet with multiple selection", tag: "Revit 2023.1+" },
+          { n: 3, title: "Title block in bulk", desc: "Multiple selection, sheet list and Excel", tag: "Data" },
+          { n: 4, title: "Title block signatures", desc: "Nested families with a Yes/No per sheet", tag: "Signatures" },
+          { n: 5, title: "Digital signature", desc: "An image isn't a signature: sign the PDF last", tag: "Legal" },
+          { n: 6, title: "AutoCAD and Civil 3D", desc: "GATTE, ATTOUT/ATTIN and batch DWG signing", tag: "CAD" },
+          { n: 7, title: "What to automate", desc: "One New revision button, end to end", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Revit revisions and signatures",
+        items: [
+          {
+            q: "How do I add a revision to multiple sheets in Revit?",
+            a: "Since Revit 2023.1: create the revision in Sheet Issues/Revisions, select the sheets in the Project Browser and, in Properties, edit Revisions on Sheet and check the revision. In earlier releases you have to do it sheet by sheet or with revision clouds.",
+          },
+          {
+            q: "Why is Revisions on Sheet greyed out in Revit?",
+            a: "Because the sheet has a cloud for that revision, on the sheet or in a view placed on it. While the cloud exists, Revit keeps the revision on the sheet and won't let you clear it. To remove it, delete the cloud or assign it to another revision.",
+          },
+          {
+            q: "How do I change a revision's date on every sheet?",
+            a: "Change it once in Sheet Issues/Revisions. The date and description belong to the revision, not to each sheet, so they update in every title block that shows it.",
+          },
+          {
+            q: "How do I fill Drawn By and Approved By on many sheets?",
+            a: "Select several sheets in the Project Browser and type the value in Properties, or use a sheet list schedule with those columns, which you edit like a spreadsheet. To load the data from Excel you need an add-in or plugin that handles the round trip.",
+          },
+          {
+            q: "How do I add a signature to a Revit title block?",
+            a: "With one generic annotation family per signature, holding the scanned image, nested in the title block and controlled by a Yes/No instance parameter. That way the signature turns on per sheet, or on many sheets at once with multiple selection. Revit can't control an image's visibility directly with a parameter.",
+          },
+          {
+            q: "Is a scanned signature on a drawing legally valid?",
+            a: "On its own it isn't a digital signature: it doesn't prove who signed or that the document wasn't changed. A digital signature is applied to the PDF with a certificate, and in the US the rules for sealing engineering drawings are set by each state's licensing board. Check what the receiving agency requires.",
+          },
+          {
+            q: "Can issuing revisions in Revit be automated?",
+            a: "Yes. With the Revit API, a plugin creates the revision, assigns it to the sheets that changed, fills the title block, turns on signatures and exports the set. Zeist builds these plugins around each firm's rules, with an installer and source code owned by the client.",
+          },
+        ],
+      },
+    },
+  },
   // ---- Captación (oct-2026): plugin de exportación masiva PDF + DWG en Revit ----
   "plugin-revit-exportar-pdf-dwg-masivo": {
     es: {
