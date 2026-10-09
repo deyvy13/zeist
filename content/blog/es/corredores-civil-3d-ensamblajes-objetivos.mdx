@@ -1,0 +1,220 @@
+---
+title: "Corredores en Civil 3D: ensamblajes, objetivos, superficie e intersecciones, sin pelearte con el modelo"
+seoTitle: "Corredores en Civil 3D: ensamblajes y objetivos"
+ctaTitle: "¿Armas los mismos corredores en cada proyecto? Automatizamos el armado con tus secciones típicas."
+description: "Cómo funciona un corredor en Civil 3D: alineamiento, perfil y ensamblaje, frecuencia, objetivos, superficie, intersecciones y los errores más comunes."
+date: "2026-10-09T02:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Corredores
+  - Ensamblajes
+  - Diseño vial
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Corredores"
+  title="El corredor es el corazón de un proyecto vial en Civil 3D. Y también donde más tiempo se pierde."
+  highlight="Qué piezas lo forman, cómo se arma un ensamblaje, qué son la frecuencia y los objetivos, cómo sacar una superficie limpia, cómo resolver intersecciones y cómo arreglar los errores que más se buscan."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Un corredor en Civil 3D, llamado obra lineal en la versión en español, es el modelo 3D de una vía, un canal o una plataforma. Se arma con tres piezas: un alineamiento, un perfil y un ensamblaje, que es la sección típica hecha de subensamblajes. Civil 3D coloca el ensamblaje a lo largo del eje cada cierta distancia, llamada frecuencia, y lo adapta con objetivos: superficies, alineamientos y perfiles que fijan anchos, cotas y taludes. Del corredor salen la superficie de la obra, las secciones transversales y los volúmenes de corte y relleno.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Alineamiento** — El eje de la vía en planta: rectas, curvas y espirales, con sus progresivas.
+- **Perfil o rasante** — El eje en alzado: a qué cota va la vía en cada progresiva.
+- **Ensamblaje** — La sección típica: carriles, bermas, sardineles, cunetas y taludes, armados como piezas.
+- **Subensamblaje** — Cada pieza del ensamblaje: un carril, un sardinel, un talud.
+- **Frecuencia** — Cada cuántos metros Civil 3D coloca la sección típica a lo largo del eje.
+- **Objetivo** — Algo del dibujo que la sección «persigue»: un terreno al que llevar el talud, un borde que marca el ancho, un perfil que fija una cota.
+- **Daylight** — El punto donde el talud de corte o de relleno toca el terreno natural.
+
+Está escrito para ingenieros civiles que ya diseñan en Civil 3D y quieren entender el corredor a fondo.
+</Callout>
+
+## Por qué el corredor es donde se pierde el tiempo
+
+En un proyecto vial, casi todo lo que se entrega sale del corredor: la superficie de la obra, las secciones transversales, los volúmenes y buena parte de los planos. Cuando el corredor está bien armado, un cambio de rasante se propaga solo. Cuando está mal armado, cada cambio obliga a revisar a mano huecos, taludes que no llegan al terreno y secciones que no cuadran.
+
+Esta guía explica cómo se arma de verdad, con los nombres que ves en pantalla, y cómo resolver los errores que más se buscan.
+
+<AnimatedFlow
+  title="De tres piezas a un modelo 3D"
+  nodes="Alineamiento|Perfil|Ensamblaje|Corredor"
+  subs="El eje en planta|La rasante|La sección típica|Superficie, secciones y volúmenes"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Las tres piezas de un corredor" time="~5 min">
+
+Un corredor necesita, como mínimo:
+
+- **Un alineamiento**, que marca por dónde va el eje.
+- **Un perfil de diseño** sobre ese alineamiento, que marca a qué cota va.
+- **Un ensamblaje**, que dice cómo es la sección a cada lado del eje.
+
+El alineamiento y el perfil forman la **línea base** del corredor. Un mismo corredor puede tener varias líneas base: una por calle, por ramal o por borde de una intersección.
+
+Sobre cada línea base se definen **regiones**: tramos entre dos progresivas que usan un ensamblaje. Si la sección cambia, por ejemplo de corte en ladera a una zona urbana con sardinel, se crea otra región con otro ensamblaje.
+
+<Callout type="tip" title="Antes de crear el corredor">
+Revisa que el perfil de diseño cubra todo el tramo. Donde el perfil no llega, el corredor tampoco: la región se queda corta y es fácil no notarlo hasta ver las secciones.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Ensamblajes y subensamblajes: la sección típica" time="~6 min">
+
+El ensamblaje se arma en planta, en un punto cualquiera del dibujo, enganchando subensamblajes a cada lado de un eje. Civil 3D trae una paleta de herramientas con decenas de subensamblajes listos. Los más usados:
+
+| Subensamblaje | Qué modela |
+|---|---|
+| BasicLane | Un carril con ancho, pendiente y espesor |
+| LaneSuperelevationAOR | Un carril que sigue el peralte del alineamiento |
+| BasicShoulder | Una berma |
+| BasicCurbAndGutter | Un sardinel con cuneta |
+| BasicSideSlopeCutDitch | Talud de corte con cuneta, o de relleno, hasta el terreno |
+| LinkSlopeToSurface | Un tramo con pendiente fija que busca la superficie |
+| ConditionalCutOrFill | Elige una rama u otra según haya corte o relleno |
+
+**Corte y relleno, cada uno con su talud: el ensamblaje condicional.** Con ConditionalCutOrFill, el ensamblaje puede tener una rama para corte, con cuneta y su talud, y otra para relleno, con un talud más tendido. Civil 3D usa la que corresponde en cada progresiva según dónde esté el terreno.
+
+**Si la sección típica no existe en la paleta**, se crea con **Subassembly Composer**, el programa que viene con Civil 3D para diseñar subensamblajes propios con un diagrama, sin escribir código. Se exporta un archivo .pkt y se importa en Civil 3D. Es el camino para cunetas especiales, muros o un [banco de ductos en Civil 3D](/es/blog/banco-de-ductos-civil-3d).
+
+<Callout type="info" title="Los códigos lo son todo">
+Cada subensamblaje tiene códigos en sus puntos, enlaces y formas: por ejemplo, Top para la superficie terminada y Datum para la subrasante. Esos códigos son los que usan la superficie del corredor, los rótulos de las secciones y los materiales para los volúmenes. Una oficina que respeta los mismos códigos en todos sus ensamblajes puede automatizar casi todo lo que viene después.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Regiones, frecuencia y objetivos" time="~7 min">
+
+**La frecuencia.** Civil 3D no modela el corredor de forma continua: coloca la sección típica en estaciones, cada cierta distancia en rectas, curvas y espirales, y además en los puntos donde cambia la geometría del alineamiento y del perfil. Entre una estación y la siguiente, une los puntos con líneas. Por eso:
+
+- Con una frecuencia baja en curvas, los bordes se ven quebrados y los volúmenes salen aproximados.
+- Con una frecuencia muy alta en todo el tramo, el corredor tarda más en reconstruirse y el dibujo pesa más.
+
+Una práctica común es usar más estaciones en curvas que en rectas, y siempre incluir los puntos de cambio de geometría.
+
+**Los objetivos.** Un subensamblaje puede perseguir algo del dibujo en lugar de usar un valor fijo. Se asignan en el cuadro de asignación de objetivos (Target Mapping), en las propiedades del corredor, y hay tres tipos:
+
+| Tipo de objetivo | Qué controla | Ejemplos |
+|---|---|---|
+| Superficie | Hasta dónde baja o sube un talud | El terreno natural, para el daylight |
+| Ancho o desfase | Hasta dónde llega un carril o una berma | Un alineamiento de borde, una polilínea, una línea característica |
+| Pendiente o elevación | A qué cota llega un punto | Un perfil de borde, una línea característica, una polilínea 3D |
+
+Un ejemplo: un ensanche antes de un puente se modela con un alineamiento de borde desplazado. El carril sigue ese borde y el ancho cambia solo, sin crear otra región.
+
+<Callout type="warn" title="Un objetivo vacío no avisa">
+Si un objetivo queda en «Ninguno», el subensamblaje usa su valor por defecto o deja de dibujar esa parte, sin un mensaje claro. Es la causa más común de taludes que no aparecen.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. La superficie del corredor y su contorno" time="~6 min">
+
+La superficie del corredor es la obra terminada. Se crea desde las propiedades del corredor, en la pestaña de superficies:
+
+- Se agregan **códigos de enlace**: Top para la superficie terminada o Datum para la subrasante, según para qué se use.
+- Si hace falta, se agregan **líneas características** como líneas de quiebre, para que la triangulación respete bordes y cunetas.
+- Se define el **contorno**, para que la triangulación no rellene los espacios entre ramales ni cruce por fuera de los taludes.
+
+**El contorno automático** se agrega desde la pestaña de contornos, usando la línea de daylight. Funciona solo si el daylight existe a los dos lados del corredor en todo el tramo. Si un lado no tiene talud, por ejemplo junto a un muro, hay que dibujar el contorno como polilínea y agregarlo.
+
+**Con la superficie del corredor** se comparan volúmenes contra el terreno, se dibujan las [curvas de nivel del proyecto](/es/blog/curvas-de-nivel-civil-3d-google-earth) y se lleva la obra a otros programas, como en [pasar la topografía de Civil 3D a Revit](/es/blog/civil-3d-a-revit-topografia-coordenadas).
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Intersecciones: el caso más difícil" time="~5 min">
+
+En una intersección cambian a la vez el bombeo, los bordes, los sardineles y las curvas de esquina. Civil 3D trae el asistente **Crear intersección** (Create Intersection), que a partir de dos alineamientos con sus perfiles crea:
+
+- El objeto intersección.
+- Los alineamientos de desfase de los bordes y los de las curvas de esquina, con sus perfiles.
+- Los ensamblajes y las regiones del corredor en la zona de la intersección.
+
+Lo que el asistente no resuelve es el criterio: qué vía manda en el bombeo, cómo se drena la esquina, qué radio usar. Eso sigue siendo diseño. Y cada cambio de radio o de rasante obliga a revisar la intersección.
+
+<Callout type="info" title="Cuando son decenas">
+En una habilitación urbana con decenas de calles e intersecciones, armarlas una a una consume días. Lo contamos en [habilitación urbana en Trujillo con Civil 3D](/es/blog/habilitacion-urbana-trujillo-civil-3d): es uno de los procesos que más conviene automatizar.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Los errores que más se buscan" time="~7 min">
+
+- **El corredor está desactualizado.** Cambiaste el perfil o un objetivo y el corredor no cambió. En el Prospector aparece marcado como desactualizado: hay que reconstruirlo, o activar la reconstrucción automática, que en dibujos grandes vuelve lento cada cambio.
+- **El talud no llega al terreno.** El objetivo de superficie no está asignado, el terreno no cubre esa zona o el talud tiene un ancho máximo que no alcanza.
+- **Huecos o picos en la superficie.** Regiones que no se tocan, pocas estaciones en curvas o falta de contorno: la triangulación une puntos que no debería.
+- **La superficie del corredor no se ve.** Se creó sin códigos de enlace y está vacía, el contorno la recorta entera o su estilo no muestra nada.
+- **El ancho no cambia en el ensanche.** El objetivo de ancho está asignado a otro subensamblaje, o el alineamiento de borde no cubre toda la región.
+- **La sección cambia de golpe entre regiones.** Pasar de un ensamblaje a otro sin transición deja escalones. La transición se modela con objetivos de ancho y de cota.
+- **Las secciones no muestran el corredor.** El corredor no está entre las fuentes de las líneas de muestreo. Lo explicamos en [secciones transversales en Civil 3D](/es/blog/secciones-transversales-civil-3d).
+- **El corredor es muy lento.** Demasiadas regiones, muchas estaciones en todo el tramo o un terreno muy denso como objetivo. Dividir el proyecto en varios corredores por tramo ayuda.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Volúmenes, y qué conviene automatizar" time="~5 min">
+
+Del corredor salen los volúmenes de dos formas:
+
+- **Por secciones:** líneas de muestreo, materiales y tabla de volumen, por el método de áreas medias. Paso a paso en [secciones transversales en Civil 3D](/es/blog/secciones-transversales-civil-3d).
+- **Por superficies:** comparando la superficie del corredor con el terreno en una superficie de volumen.
+
+**Lo que más horas consume en una oficina**, y se puede automatizar:
+
+- Crear los corredores de una habilitación con muchas calles, con la misma sección típica y sus regiones.
+- Asignar los objetivos en lote, sin abrir el cuadro calle por calle.
+- Exportar los puntos del corredor por código y progresiva a Excel, para replanteo o metrados.
+- Revisar, antes de sacar planos, que cada corredor esté reconstruido, con contorno y sin regiones vacías.
+
+Desde Civil 3D 2025.1, Dynamo trae nodos para trabajar con corredores; lo vemos en [10 scripts de Dynamo para Civil 3D](/es/blog/dynamo-civil-3d-scripts). Para herramientas que use toda la oficina, la [API de Civil 3D en C#](/es/blog/civil-3d-api-csharp-primeros-pasos) da control completo.
+
+<ComparisonTable
+  criterionLabel="Tarea"
+  leftLabel="Con un plugin"
+  rightLabel="A mano"
+  rows="Crear 30 calles con su sección típica | *Una ejecución con las reglas de la oficina | Días de trabajo repetitivo || Asignar objetivos | *En lote, con reglas | Calle por calle || Revisión antes de los planos | *Reporte con lo que falta | A ojo || Cambio de sección típica | *Volver a ejecutar | Rehacer regiones"
+/>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automatización de Civil 3D"
+  title="Tus corredores, armados con tus reglas"
+  body="Desarrollamos plugins en C# que crean corredores, asignan objetivos y revisan el modelo con las secciones típicas y los códigos de tu oficina. Somos ingenieros civiles e ingenieros de sistemas: entendemos el diseño vial porque lo hacemos."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **El paso siguiente:** [secciones transversales en Civil 3D](/es/blog/secciones-transversales-civil-3d).
+- **La guía completa:** [automatizar Civil 3D](/es/blog/automatizar-civil-3d-guia-completa).
+- **Volúmenes y metrados:** [automatizar metrados y cubicaciones en Civil 3D](/es/blog/automatizar-metrados-cubicaciones-civil-3d).
+- **Sin código:** [10 scripts de Dynamo para Civil 3D](/es/blog/dynamo-civil-3d-scripts).
+- **Con código:** [Civil 3D API en C#, primeros pasos](/es/blog/civil-3d-api-csharp-primeros-pasos).
+- **Subensamblajes propios:** [banco de ductos en Civil 3D](/es/blog/banco-de-ductos-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Diseñamos con Civil 3D y lo programamos. Trabajamos con oficinas de ingeniería de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu proyecto"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota técnica:** los nombres de comandos y subensamblajes corresponden a Civil 3D 2026. Revisa la ayuda de tu versión si alguno cambia.

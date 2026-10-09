@@ -21,6 +21,402 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- Autoridad (oct-2026): Civil 3D API en C#, corredores, rutinas LISP ----
+  "civil-3d-api-csharp-primeros-pasos": {
+    es: {
+      roadmap: {
+        title: "Civil 3D API en C#, en 6 pasos",
+        intro:
+          "Qué es la API, qué instalar, tu primer comando, los objetos clave, los errores de la primera semana y cómo convertir un comando en un plugin.",
+        steps: [
+          { n: 1, title: "Qué es la API", desc: "Dos capas, AutoCAD y Civil 3D, y sus alternativas", tag: "Concepto" },
+          { n: 2, title: "Lo que necesitas", desc: "Visual Studio, el .NET de tu versión y las referencias", tag: "Preparación" },
+          { n: 3, title: "Primer comando", desc: "Listar los alineamientos del dibujo", tag: "Código" },
+          { n: 4, title: "Objetos clave", desc: "Alineamientos, superficies, corredores y puntos", tag: "API" },
+          { n: 5, title: "Errores comunes", desc: "NETLOAD, Copiar localmente, Commit y bloqueo", tag: "Errores" },
+          { n: 6, title: "Del comando al plugin", desc: "Botón, bundle, errores y estructura", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre la API de Civil 3D",
+        items: [
+          {
+            q: "¿Qué es la API de Civil 3D?",
+            a: "Es la interfaz oficial de Autodesk para programar Civil 3D. Permite que un programa en C# lea y modifique alineamientos, perfiles, superficies, corredores, puntos COGO y redes de tuberías. Funciona sobre .NET y sobre la API de AutoCAD, que aporta los documentos, las transacciones y los objetos de dibujo.",
+          },
+          {
+            q: "¿Qué necesito para programar Civil 3D en C#?",
+            a: "Civil 3D instalado, Visual Studio Community, que es gratuito, y un proyecto de biblioteca de clases con el framework de tu versión. El proyecto referencia AcCoreMgd, AcDbMgd y AcMgd, de AutoCAD, y AecBaseMgd y AeccDbMgd, de Civil 3D, todas con Copiar localmente en No.",
+          },
+          {
+            q: "¿Qué versión de .NET usa Civil 3D?",
+            a: "Civil 3D 2024 y anteriores usan .NET Framework 4.8; Civil 3D 2025 y 2026, .NET 8; y Civil 3D 2027, .NET 10. Por eso un plugin hecho para la 2024 hay que recompilarlo, y a veces ajustarlo, para que funcione en la 2025 o en la 2027.",
+          },
+          {
+            q: "¿Cómo se carga un plugin en Civil 3D?",
+            a: "Para probarlo, con el comando NETLOAD, que pide la DLL. Para usarlo todos los días, como un bundle: una carpeta con el formato oficial de Autodesk que se copia en la carpeta ApplicationPlugins y que Civil 3D carga solo al iniciar, con sus botones en la barra superior.",
+          },
+          {
+            q: "¿Conviene más Dynamo o la API de Civil 3D?",
+            a: "Depende del uso. Dynamo sirve para automatizar sin escribir código, probar ideas y resolver tareas puntuales. La API en C# conviene para herramientas que usa toda la oficina a diario: es más rápida con miles de objetos, permite ventanas propias con validaciones y se distribuye con un instalador.",
+          },
+          {
+            q: "¿Se puede programar Civil 3D con Python?",
+            a: "Sí, dentro de los nodos de Python de Dynamo, que acceden a la misma API .NET de Civil 3D. Es útil cuando los nodos visuales no alcanzan. Para un plugin independiente, con botones propios e instalador, el camino que documenta Autodesk es .NET con C#.",
+          },
+          {
+            q: "¿Dónde aprender la API de Civil 3D en español?",
+            a: "La documentación oficial de Autodesk está en inglés y tiene pocos ejemplos. En Zeist dictamos cursos y mentorías en vivo y en línea de Civil 3D API, Revit API y Dynamo para equipos de ingeniería, adaptados a su nivel y trabajando sobre casos reales de la empresa.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Civil 3D API em C#, em 6 passos",
+        intro:
+          "O que é a API, o que instalar, seu primeiro comando, os objetos-chave, os erros da primeira semana e como transformar um comando num plugin.",
+        steps: [
+          { n: 1, title: "O que é a API", desc: "Duas camadas, AutoCAD e Civil 3D, e suas alternativas", tag: "Conceito" },
+          { n: 2, title: "O que você precisa", desc: "Visual Studio, o .NET da sua versão e as referências", tag: "Preparação" },
+          { n: 3, title: "Primeiro comando", desc: "Listar os alinhamentos do desenho", tag: "Código" },
+          { n: 4, title: "Objetos-chave", desc: "Alinhamentos, superfícies, corredores e pontos", tag: "API" },
+          { n: 5, title: "Erros comuns", desc: "NETLOAD, Copiar localmente, Commit e bloqueio", tag: "Erros" },
+          { n: 6, title: "Do comando ao plugin", desc: "Botão, bundle, erros e estrutura", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre a API do Civil 3D",
+        items: [
+          {
+            q: "O que é a API do Civil 3D?",
+            a: "É a interface oficial da Autodesk para programar o Civil 3D. Permite que um programa em C# leia e modifique alinhamentos, perfis, superfícies, corredores, pontos COGO e redes de tubulação. Funciona sobre o .NET e sobre a API do AutoCAD, que fornece os documentos, as transações e os objetos de desenho.",
+          },
+          {
+            q: "O que preciso para programar o Civil 3D em C#?",
+            a: "O Civil 3D instalado, o Visual Studio Community, que é gratuito, e um projeto de biblioteca de classes com o framework da sua versão. O projeto referencia AcCoreMgd, AcDbMgd e AcMgd, do AutoCAD, e AecBaseMgd e AeccDbMgd, do Civil 3D, todas com Copiar localmente em Não.",
+          },
+          {
+            q: "Que versão do .NET o Civil 3D usa?",
+            a: "O Civil 3D 2024 e anteriores usam .NET Framework 4.8; o Civil 3D 2025 e 2026, .NET 8; e o Civil 3D 2027, .NET 10. Por isso um plugin feito para o 2024 precisa ser recompilado, e às vezes ajustado, para funcionar no 2025 ou no 2027.",
+          },
+          {
+            q: "Como carregar um plugin no Civil 3D?",
+            a: "Para testá-lo, com o comando NETLOAD, que pede a DLL. Para usá-lo todos os dias, como um bundle: uma pasta no formato oficial da Autodesk que é copiada para a pasta ApplicationPlugins e que o Civil 3D carrega sozinho ao iniciar, com seus botões na barra superior.",
+          },
+          {
+            q: "Vale mais o Dynamo ou a API do Civil 3D?",
+            a: "Depende do uso. O Dynamo serve para automatizar sem escrever código, testar ideias e resolver tarefas pontuais. A API em C# vale para ferramentas que o escritório inteiro usa todos os dias: é mais rápida com milhares de objetos, permite janelas próprias com validações e é distribuída com um instalador.",
+          },
+          {
+            q: "Dá para programar o Civil 3D com Python?",
+            a: "Sim, dentro dos nós de Python do Dynamo, que acessam a mesma API .NET do Civil 3D. É útil quando os nós visuais não bastam. Para um plugin independente, com botões próprios e instalador, o caminho que a Autodesk documenta é o .NET com C#.",
+          },
+          {
+            q: "Onde aprender a API do Civil 3D?",
+            a: "A documentação oficial da Autodesk está em inglês e tem poucos exemplos. Na Zeist damos cursos e mentorias ao vivo e on-line de Civil 3D API, Revit API e Dynamo para equipes de engenharia, adaptados ao nível da equipe e trabalhando sobre casos reais da empresa.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Civil 3D API in C#, in 6 steps",
+        intro:
+          "What the API is, what to install, your first command, the key objects, the week-one errors and how to turn a command into a plugin.",
+        steps: [
+          { n: 1, title: "What the API is", desc: "Two layers, AutoCAD and Civil 3D, and the alternatives", tag: "Concept" },
+          { n: 2, title: "What you need", desc: "Visual Studio, your release's .NET and the references", tag: "Setup" },
+          { n: 3, title: "First command", desc: "List the alignments in the drawing", tag: "Code" },
+          { n: 4, title: "Key objects", desc: "Alignments, surfaces, corridors and points", tag: "API" },
+          { n: 5, title: "Common errors", desc: "NETLOAD, Copy Local, Commit and locking", tag: "Errors" },
+          { n: 6, title: "From command to plugin", desc: "Button, bundle, error handling and structure", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about the Civil 3D API",
+        items: [
+          {
+            q: "What is the Civil 3D API?",
+            a: "It's Autodesk's official interface for programming Civil 3D. It lets a C# program read and modify alignments, profiles, surfaces, corridors, COGO points and pipe networks. It runs on .NET and on top of the AutoCAD API, which provides documents, transactions and drawing objects.",
+          },
+          {
+            q: "What do I need to program Civil 3D in C#?",
+            a: "Civil 3D installed, the free Visual Studio Community, and a class library project targeting your release's framework. The project references AcCoreMgd, AcDbMgd and AcMgd from AutoCAD, and AecBaseMgd and AeccDbMgd from Civil 3D, all with Copy Local set to No.",
+          },
+          {
+            q: "Which .NET version does Civil 3D use?",
+            a: "Civil 3D 2024 and earlier use .NET Framework 4.8; Civil 3D 2025 and 2026 use .NET 8; and Civil 3D 2027 uses .NET 10. That's why a plugin built for 2024 has to be recompiled, and sometimes adjusted, to run on 2025 or 2027.",
+          },
+          {
+            q: "How do you load a plugin in Civil 3D?",
+            a: "To test it, with the NETLOAD command, which asks for the DLL. For daily use, as a bundle: a folder in Autodesk's official format, copied into the ApplicationPlugins folder, that Civil 3D loads at startup with its buttons on the top toolbar.",
+          },
+          {
+            q: "Should I use Dynamo or the Civil 3D API?",
+            a: "It depends on the use. Dynamo is for automating without writing code, testing ideas and one-off tasks. The C# API fits tools the whole firm uses every day: it's faster with thousands of objects, supports custom windows with validation, and ships with an installer.",
+          },
+          {
+            q: "Can you program Civil 3D with Python?",
+            a: "Yes, inside Dynamo's Python nodes, which access the same Civil 3D .NET API. It's useful when the visual nodes fall short. For a standalone plugin with its own buttons and installer, the path Autodesk documents is .NET with C#.",
+          },
+          {
+            q: "Where can I learn the Civil 3D API?",
+            a: "Autodesk's Developer's Guide and API Reference are the official starting point, and the Civil 3D Customization forum is the best place for specific questions. Zeist also runs live online Civil 3D API, Revit API and Dynamo courses and mentoring for engineering teams, built around the firm's real cases.",
+          },
+        ],
+      },
+    },
+  },
+  "corredores-civil-3d-ensamblajes-objetivos": {
+    es: {
+      roadmap: {
+        title: "Corredores en Civil 3D, en 7 bloques",
+        intro:
+          "Las piezas de un corredor, cómo se arma la sección típica, frecuencia y objetivos, la superficie, las intersecciones, los errores y qué automatizar.",
+        steps: [
+          { n: 1, title: "Las tres piezas", desc: "Alineamiento, perfil, ensamblaje y regiones", tag: "Base" },
+          { n: 2, title: "Ensamblajes", desc: "Subensamblajes, corte o relleno y Subassembly Composer", tag: "Sección típica" },
+          { n: 3, title: "Frecuencia y objetivos", desc: "Estaciones, superficies, anchos y cotas", tag: "Control" },
+          { n: 4, title: "Superficie", desc: "Códigos, líneas de quiebre y contorno", tag: "Modelo" },
+          { n: 5, title: "Intersecciones", desc: "El asistente Crear intersección y sus límites", tag: "Diseño" },
+          { n: 6, title: "Errores más buscados", desc: "Desactualizado, taludes, huecos y lentitud", tag: "Errores" },
+          { n: 7, title: "Volúmenes y automatización", desc: "Secciones, superficies y qué automatizar", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre corredores en Civil 3D",
+        items: [
+          {
+            q: "¿Qué es un corredor en Civil 3D?",
+            a: "Es el modelo 3D de una obra lineal, como una vía, un canal o una plataforma. Civil 3D lo arma colocando una sección típica, el ensamblaje, a lo largo de un alineamiento y un perfil. En la versión en español de Civil 3D se llama obra lineal. Del corredor salen la superficie de la obra, las secciones y los volúmenes.",
+          },
+          {
+            q: "¿Cómo se crea un corredor en Civil 3D?",
+            a: "Primero se crean el alineamiento, el perfil de diseño y el ensamblaje con sus subensamblajes. Luego, con el comando para crear el corredor, se eligen la línea base, el perfil y el ensamblaje, se asignan los objetivos, como el terreno para los taludes, y se ajusta la frecuencia. Al final se crea la superficie del corredor con su contorno.",
+          },
+          {
+            q: "¿Qué es la frecuencia de un corredor?",
+            a: "Es cada cuánto Civil 3D coloca la sección típica a lo largo del eje: en rectas, en curvas, en espirales y en los puntos donde cambia la geometría. Entre una estación y la siguiente une los puntos con líneas, así que una frecuencia baja en curvas deja bordes quebrados y volúmenes aproximados, y una muy alta vuelve lento el corredor.",
+          },
+          {
+            q: "¿Por qué el talud del corredor no llega al terreno?",
+            a: "Las causas más comunes son tres: el objetivo de superficie no está asignado en la asignación de objetivos, el terreno no cubre la zona por donde pasa el talud, o el subensamblaje tiene un ancho máximo que no alcanza. Un objetivo vacío no da error: simplemente esa parte no se dibuja.",
+          },
+          {
+            q: "¿Cómo se crea la superficie de un corredor con su contorno?",
+            a: "En las propiedades del corredor, en la pestaña de superficies, se crea la superficie y se le agregan códigos de enlace, como Top o Datum, y líneas características si hacen falta. En la pestaña de contornos se agrega el contorno automático con la línea de daylight, que funciona si hay daylight a los dos lados; si no, se usa una polilínea.",
+          },
+          {
+            q: "¿Qué es Subassembly Composer?",
+            a: "Es el programa que viene con Civil 3D para crear subensamblajes propios dibujando su lógica en un diagrama, sin escribir código. Sirve cuando la paleta no trae la sección que necesitas, como cunetas especiales, muros o bancos de ductos. Genera un archivo .pkt que se importa en Civil 3D.",
+          },
+          {
+            q: "¿Se pueden automatizar los corredores en Civil 3D?",
+            a: "Sí. Desde Civil 3D 2025.1, Dynamo trae nodos para trabajar con corredores, y con la API de Civil 3D en C# se pueden crear corredores, asignar objetivos en lote y revisar el modelo antes de los planos. En Zeist desarrollamos plugins que hacen ese trabajo con las secciones típicas y los códigos de cada oficina.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Corredor no Civil 3D, em 7 blocos",
+        intro:
+          "As peças de um corredor, como se monta a seção-tipo, frequência e alvos, a superfície, as interseções, os erros e o que automatizar.",
+        steps: [
+          { n: 1, title: "As três peças", desc: "Alinhamento, perfil, montagem e regiões", tag: "Base" },
+          { n: 2, title: "Montagens", desc: "Submontagens, corte ou aterro e Subassembly Composer", tag: "Seção-tipo" },
+          { n: 3, title: "Frequência e alvos", desc: "Estações, superfícies, larguras e cotas", tag: "Controle" },
+          { n: 4, title: "Superfície", desc: "Códigos, linhas de quebra e contorno", tag: "Modelo" },
+          { n: 5, title: "Interseções", desc: "O assistente Create Intersection e seus limites", tag: "Projeto" },
+          { n: 6, title: "Erros mais buscados", desc: "Desatualizado, taludes, buracos e lentidão", tag: "Erros" },
+          { n: 7, title: "Volumes e automação", desc: "Seções, superfícies e o que automatizar", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre corredores no Civil 3D",
+        items: [
+          {
+            q: "O que é um corredor no Civil 3D?",
+            a: "É o modelo 3D de uma obra linear, como uma via, um canal ou uma plataforma. O Civil 3D o monta aplicando uma seção-tipo, a montagem, ao longo de um alinhamento e um perfil. Do corredor saem a superfície da obra, as seções transversais e os volumes de corte e aterro.",
+          },
+          {
+            q: "Como criar um corredor no Civil 3D?",
+            a: "Primeiro criam-se o alinhamento, o perfil de projeto e a montagem com suas submontagens. Depois, com o comando para criar o corredor, escolhem-se a linha base, o perfil e a montagem, atribuem-se os alvos, como o terreno para os taludes, e ajusta-se a frequência. No fim, cria-se a superfície do corredor com seu contorno.",
+          },
+          {
+            q: "O que é a frequência de um corredor?",
+            a: "É a cada quanto o Civil 3D aplica a seção-tipo ao longo do eixo: em retas, em curvas, em espirais e nos pontos onde muda a geometria. Entre uma estação e a seguinte ele liga os pontos com linhas, então uma frequência baixa nas curvas deixa bordas quebradas e volumes aproximados, e uma muito alta deixa o corredor lento.",
+          },
+          {
+            q: "Por que o talude do corredor não chega ao terreno?",
+            a: "As causas mais comuns são três: o alvo de superfície não foi atribuído no mapeamento de alvos, o terreno não cobre a área por onde passa o talude, ou a submontagem tem uma largura máxima que não alcança. Um alvo vazio não dá erro: simplesmente essa parte não é desenhada.",
+          },
+          {
+            q: "Como criar a superfície do corredor com seu contorno?",
+            a: "Nas propriedades do corredor, na aba de superfícies, cria-se a superfície e adicionam-se códigos de link, como Top ou Datum, e feature lines se necessário. Na aba de contornos adiciona-se o contorno automático com a linha de daylight, que funciona se houver daylight dos dois lados; se não, usa-se uma polilinha.",
+          },
+          {
+            q: "O que é o Subassembly Composer?",
+            a: "É o programa que vem com o Civil 3D para criar submontagens próprias desenhando sua lógica num diagrama, sem escrever código. Serve quando a paleta não traz a seção de que você precisa, como valetas especiais, muros ou bancos de dutos. Gera um arquivo .pkt que é importado no Civil 3D.",
+          },
+          {
+            q: "Dá para automatizar corredores no Civil 3D?",
+            a: "Sim. Desde o Civil 3D 2025.1, o Dynamo traz nós para trabalhar com corredores, e com a API do Civil 3D em C# é possível criar corredores, atribuir alvos em lote e revisar o modelo antes das pranchas. Na Zeist desenvolvemos plugins que fazem esse trabalho com as seções-tipo e os códigos de cada escritório.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Civil 3D corridors, in 7 blocks",
+        intro:
+          "The pieces of a corridor, how the typical section is built, frequency and targets, the surface, intersections, errors and what to automate.",
+        steps: [
+          { n: 1, title: "The three pieces", desc: "Alignment, profile, assembly and regions", tag: "Basics" },
+          { n: 2, title: "Assemblies", desc: "Subassemblies, cut or fill and Subassembly Composer", tag: "Typical section" },
+          { n: 3, title: "Frequency and targets", desc: "Stations, surfaces, widths and elevations", tag: "Control" },
+          { n: 4, title: "Surface", desc: "Codes, breaklines and boundary", tag: "Model" },
+          { n: 5, title: "Intersections", desc: "The Create Intersection wizard and its limits", tag: "Design" },
+          { n: 6, title: "Most-searched errors", desc: "Out of date, slopes, holes and speed", tag: "Errors" },
+          { n: 7, title: "Volumes and automation", desc: "Sections, surfaces and what to automate", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Civil 3D corridors",
+        items: [
+          {
+            q: "What is a corridor in Civil 3D?",
+            a: "It's the 3D model of a linear project such as a road, channel or pad. Civil 3D builds it by applying a typical section, the assembly, along an alignment and a profile. The corridor produces the finished-grade surface, the cross sections and the cut and fill volumes.",
+          },
+          {
+            q: "How do you create a corridor in Civil 3D?",
+            a: "First create the alignment, the design profile and the assembly with its subassemblies. Then run the corridor command, pick the baseline, profile and assembly, map the targets, such as existing ground for the side slopes, and set the frequency. Finally, create the corridor surface with its boundary.",
+          },
+          {
+            q: "What is corridor frequency?",
+            a: "It's how often Civil 3D applies the typical section along the centerline: on tangents, curves and spirals, and at the points where the geometry changes. Between stations it joins the points with straight lines, so low frequency on curves leaves faceted edges and approximate volumes, while very high frequency slows the corridor down.",
+          },
+          {
+            q: "Why doesn't my corridor daylight reach the surface?",
+            a: "The three most common causes: the surface target isn't assigned in Target Mapping, the existing surface doesn't cover the area the slope runs through, or the subassembly has a maximum width that falls short. An empty target throws no error: that part simply isn't drawn.",
+          },
+          {
+            q: "How do I create a corridor surface with a boundary?",
+            a: "In the corridor properties, on the Surfaces tab, create the surface and add link codes such as Top or Datum, plus feature lines if needed. On the Boundaries tab, add the automatic boundary using the daylight feature line, which works when daylight exists on both sides; otherwise, use a polyline.",
+          },
+          {
+            q: "What is Subassembly Composer?",
+            a: "It's the program that ships with Civil 3D for creating your own subassemblies by drawing their logic in a flowchart, with no code. It's for when the tool palette doesn't have the section you need, such as special ditches, retaining walls or duct banks. It produces a .pkt file that you import into Civil 3D.",
+          },
+          {
+            q: "Can Civil 3D corridors be automated?",
+            a: "Yes. Since Civil 3D 2025.1, Dynamo includes nodes for working with corridors, and with the Civil 3D API in C# you can create corridors, map targets in bulk and check the model before plan production. Zeist develops plugins that do this work with each firm's typical sections and codes.",
+          },
+        ],
+      },
+    },
+  },
+  "rutinas-lisp-autocad-civil-3d": {
+    es: {
+      roadmap: {
+        title: "Rutinas LISP para AutoCAD y Civil 3D, en 7 bloques",
+        intro:
+          "Qué es AutoLISP, cómo cargar rutinas de forma segura, tres rutinas con su código, el riesgo del malware y cuándo pasar a un plugin.",
+        steps: [
+          { n: 1, title: "Qué es AutoLISP", desc: "Dónde funciona y para qué sirve hoy", tag: "Concepto" },
+          { n: 2, title: "Cómo cargarla", desc: "APPLOAD, Startup Suite y SECURELOAD", tag: "Primero" },
+          { n: 3, title: "Exportar puntos", desc: "Puntos a un CSV PNEZD para Civil 3D", tag: "Rutina 1" },
+          { n: 4, title: "Rotular coordenadas", desc: "Este y Norte de cada punto", tag: "Rutina 2" },
+          { n: 5, title: "Longitud total", desc: "Suma de líneas, polilíneas y arcos", tag: "Rutina 3" },
+          { n: 6, title: "Seguridad", desc: "El malware en LISP y cómo protegerte", tag: "Riesgo" },
+          { n: 7, title: "Cuándo pasar a un plugin", desc: "Los límites del LISP frente a C#", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre rutinas LISP",
+        items: [
+          {
+            q: "¿Qué es una rutina LISP?",
+            a: "Es un archivo de texto con código en AutoLISP, el lenguaje que trae AutoCAD, que agrega comandos nuevos. Se usa para automatizar tareas de dibujo repetitivas, como rotular, sumar longitudes, numerar o exportar puntos. Los archivos .lsp se pueden leer; los .fas y .vlx son versiones compiladas.",
+          },
+          {
+            q: "¿Cómo se carga un LISP en AutoCAD?",
+            a: "Con el comando APPLOAD: se busca el archivo .lsp, se hace clic en Cargar y se escribe el comando que define la rutina. Para que se cargue en cada dibujo, se agrega al Startup Suite desde el mismo cuadro. Conviene guardarla en una carpeta declarada como ubicación de confianza.",
+          },
+          {
+            q: "¿Funcionan las rutinas LISP en Civil 3D?",
+            a: "Sí. Civil 3D es AutoCAD con objetos de ingeniería encima, así que las rutinas LISP funcionan igual con líneas, polilíneas, textos y bloques. Lo que no hacen bien es trabajar con alineamientos, superficies o corredores: tienen que pasar por la interfaz COM, que es limitada, y ahí conviene un plugin en C#.",
+          },
+          {
+            q: "¿AutoCAD LT acepta rutinas LISP?",
+            a: "Sí, desde AutoCAD LT 2024 para Windows. Antes, las versiones LT no ejecutaban LISP. Tiene algunas limitaciones: no incluye el editor Visual LISP y no admite ciertas funciones, como las que crean sólidos 3D o se conectan con otros programas.",
+          },
+          {
+            q: "¿Es peligroso cargar rutinas LISP descargadas?",
+            a: "Puede serlo. Una rutina LISP puede hacer lo mismo que el usuario, incluido borrar o enviar archivos. En 2012, el malware ACAD/Medre.A, escrito en AutoLISP, envió decenas de miles de planos a cuentas de correo en China, sobre todo desde el Perú. Carga solo rutinas que puedas leer, desde una ubicación de confianza y con SECURELOAD en 1 o 2.",
+          },
+          {
+            q: "¿Qué editor se usa para programar en AutoLISP?",
+            a: "Desde AutoCAD 2021, Autodesk recomienda Visual Studio Code con su extensión de AutoLISP, que permite autocompletar, depurar y ejecutar código. El antiguo editor Visual LISP está retirado y Autodesk anunció que lo quitará en una versión futura.",
+          },
+          {
+            q: "¿Cuándo conviene pasar de LISP a un plugin en C#?",
+            a: "Cuando la rutina necesita leer objetos de Civil 3D, cuando necesita una ventana con opciones y validaciones, cuando la usa toda la oficina o cuando solo una persona la entiende. En Zeist revisamos las rutinas existentes y las pasamos a plugins en C# con instalador, manual y código fuente propiedad del cliente.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Rotinas LISP para AutoCAD e Civil 3D, em 7 blocos",
+        intro:
+          "O que é AutoLISP, como carregar rotinas com segurança, três rotinas com o código, o risco de malware e quando passar para um plugin.",
+        steps: [
+          { n: 1, title: "O que é AutoLISP", desc: "Onde funciona e para que serve hoje", tag: "Conceito" },
+          { n: 2, title: "Como carregar", desc: "APPLOAD, Startup Suite e SECURELOAD", tag: "Primeiro" },
+          { n: 3, title: "Exportar pontos", desc: "Pontos para um CSV PNEZD do Civil 3D", tag: "Rotina 1" },
+          { n: 4, title: "Rotular coordenadas", desc: "Este e Norte de cada ponto", tag: "Rotina 2" },
+          { n: 5, title: "Comprimento total", desc: "Soma de linhas, polilinhas e arcos", tag: "Rotina 3" },
+          { n: 6, title: "Segurança", desc: "Malware em LISP e como se proteger", tag: "Risco" },
+          { n: 7, title: "Quando passar para um plugin", desc: "Os limites do LISP frente ao C#", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre rotinas LISP",
+        items: [
+          {
+            q: "O que é uma rotina LISP?",
+            a: "É um arquivo de texto com código em AutoLISP, a linguagem que vem no AutoCAD, que adiciona comandos novos. É usada para automatizar tarefas de desenho repetitivas, como rotular, somar comprimentos, numerar ou exportar pontos. Os arquivos .lsp podem ser lidos; os .fas e .vlx são versões compiladas.",
+          },
+          {
+            q: "Como carregar um LISP no AutoCAD?",
+            a: "Com o comando APPLOAD: procura-se o arquivo .lsp, clica-se em Carregar e digita-se o comando que a rotina define. Para que seja carregada em cada desenho, ela é adicionada ao Startup Suite no mesmo quadro. Vale guardá-la numa pasta declarada como local confiável.",
+          },
+          {
+            q: "As rotinas LISP funcionam no Civil 3D?",
+            a: "Sim. O Civil 3D é o AutoCAD com objetos de engenharia por cima, então as rotinas LISP funcionam igual com linhas, polilinhas, textos e blocos. O que não fazem bem é trabalhar com alinhamentos, superfícies ou corredores: precisam passar pela interface COM, que é limitada, e aí vale um plugin em C#.",
+          },
+          {
+            q: "O AutoCAD LT aceita rotinas LISP?",
+            a: "Sim, desde o AutoCAD LT 2024 para Windows. Antes, as versões LT não executavam LISP. Há algumas limitações: não inclui o editor Visual LISP e não aceita certas funções, como as que criam sólidos 3D ou se conectam com outros programas.",
+          },
+          {
+            q: "É perigoso carregar rotinas LISP baixadas?",
+            a: "Pode ser. Uma rotina LISP pode fazer o mesmo que o usuário, inclusive apagar ou enviar arquivos. Em 2012, o malware ACAD/Medre.A, escrito em AutoLISP, enviou dezenas de milhares de desenhos para contas de e-mail na China, sobretudo a partir do Peru. Carregue só rotinas que você consiga ler, de um local confiável e com o SECURELOAD em 1 ou 2.",
+          },
+          {
+            q: "Que editor se usa para programar em AutoLISP?",
+            a: "Desde o AutoCAD 2021, a Autodesk recomenda o Visual Studio Code com sua extensão de AutoLISP, que permite autocompletar, depurar e executar código. O antigo editor Visual LISP está aposentado e a Autodesk anunciou que vai removê-lo numa versão futura.",
+          },
+          {
+            q: "Quando vale passar do LISP para um plugin em C#?",
+            a: "Quando a rotina precisa ler objetos do Civil 3D, quando precisa de uma janela com opções e validações, quando o escritório inteiro a usa ou quando só uma pessoa a entende. Na Zeist revisamos as rotinas existentes e as passamos para plugins em C# com instalador, manual e código-fonte de propriedade do cliente.",
+          },
+        ],
+      },
+    },
+  },
   // ---- Captación (oct-2026): Civil 3D a Revit, secciones transversales, metrados en Revit, PEB ----
   "civil-3d-a-revit-topografia-coordenadas": {
     es: {

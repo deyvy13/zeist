@@ -161,14 +161,14 @@ Un archivo compilado que se instala en Civil 3D y añade botones propios.
 
 **Limitaciones:** curva de aprendizaje mayor, requiere Visual Studio y ciclo de compilación.
 
-**Curva:** 2-3 meses para ser productivo — aunque con IA como copiloto se acorta muchísimo.
+**Curva:** 2-3 meses para ser productivo — aunque con IA como copiloto se acorta muchísimo. El primer comando, con código, está en [Civil 3D API en C#, primeros pasos](/es/blog/civil-3d-api-csharp-primeros-pasos).
 
 ### AutoLISP
 El lenguaje histórico de AutoCAD, todavía muy usado.
 
 **Bueno para:** tareas de dibujo puro (capas, bloques, textos, entidades básicas de AutoCAD), y aprovechar rutinas que tu oficina ya tenga escritas.
 
-**Limitación crítica:** **no accede a los objetos propios de Civil 3D**. No puede leer un corredor, una superficie ni una alineación como tal. Para eso necesitas Dynamo o .NET.
+**Limitación crítica:** **no accede de forma directa a los objetos propios de Civil 3D**. No puede leer un corredor, una superficie ni una alineación como tal, salvo por la interfaz COM, que es limitada. Para eso necesitas Dynamo o .NET. Cómo cargar rutinas sin riesgo y cuándo dar el salto, en [rutinas LISP para AutoCAD y Civil 3D](/es/blog/rutinas-lisp-autocad-civil-3d).
 
 **Curva:** días, pero es una inversión en tecnología de nicho.
 
@@ -385,6 +385,9 @@ Lo distribuyes a clientes o filiales. Necesitas instalador firmado, versionado, 
 - **Dudas entre Dynamo y C#:** la comparativa completa en [Dynamo vs C# en Civil 3D y Revit](/es/blog/dynamo-vs-csharp-civil3d-revit).
 - **Quieres empezar con Dynamo hoy:** [10 scripts de Dynamo para Civil 3D](/es/blog/dynamo-civil-3d-scripts), con lo que necesita cada uno.
 - **Rehaces secciones en cada cambio:** [secciones transversales en Civil 3D, de las líneas de muestreo a las láminas](/es/blog/secciones-transversales-civil-3d).
+- **Tus corredores fallan o tardan:** [corredores en Civil 3D: ensamblajes, objetivos y errores](/es/blog/corredores-civil-3d-ensamblajes-objetivos).
+- **Quieres programar Civil 3D tú mismo:** [Civil 3D API en C#, primeros pasos](/es/blog/civil-3d-api-csharp-primeros-pasos).
+- **Tu oficina vive de rutinas LISP:** [rutinas LISP para AutoCAD y Civil 3D, y cuándo pasar a un plugin](/es/blog/rutinas-lisp-autocad-civil-3d).
 - **Tu terreno tiene que llegar a Revit:** [de Civil 3D a Revit: topografía, coordenadas y redes](/es/blog/civil-3d-a-revit-topografia-coordenadas).
 - **Necesitas curvas de nivel sin topografía:** [curvas de nivel en Civil 3D desde Google Earth o el levantamiento](/es/blog/curvas-de-nivel-civil-3d-google-earth).
 - **Quieres construir tu primer add-in:** guía end-to-end en [crear un plugin de Civil 3D con Claude Code](/es/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).

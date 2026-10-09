@@ -40,6 +40,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "pt",
     "en"
   ],
+  "civil-3d-api-csharp-primeros-pasos": [
+    "es",
+    "pt",
+    "en"
+  ],
   "comparar-modelos-revit-civil-3d-detectar-cambios": [
     "es",
     "pt",
@@ -47,6 +52,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
   ],
   "coordenadas-utm-trujillo-la-libertad": [
     "es"
+  ],
+  "corredores-civil-3d-ensamblajes-objetivos": [
+    "es",
+    "pt",
+    "en"
   ],
   "crear-plugin-civil-3d-con-claude-code-sin-programar": [
     "es",
@@ -180,6 +190,10 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "es",
     "pt",
     "en"
+  ],
+  "rutinas-lisp-autocad-civil-3d": [
+    "es",
+    "pt"
   ],
   "secciones-transversales-civil-3d": [
     "es",

@@ -1,0 +1,223 @@
+---
+title: "Civil 3D API en C#: primeros pasos para programar Civil 3D, del primer comando al plugin"
+seoTitle: "Civil 3D API en C#: primeros pasos (guía 2026)"
+ctaTitle: "¿Quieres una herramienta para Civil 3D sin aprender la API? La programamos con tus reglas."
+description: "Qué es la API de Civil 3D, qué necesitas para programarla en C#, tu primer comando paso a paso, los objetos clave y los errores que más se repiten."
+date: "2026-10-09T01:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Civil 3D API
+  - C#
+  - .NET
+  - Plugins para Civil 3D
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · API · C#"
+  title="La API de Civil 3D es la puerta que casi nadie explica en español."
+  highlight="Qué es, qué necesitas instalar, cómo escribir tu primer comando en C#, cuáles son los objetos que vas a usar siempre y qué errores aparecen la primera semana. Con código que puedes copiar y versiones de .NET al día."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+La API de Civil 3D es la interfaz oficial que permite a un programa en **C#** leer y modificar alineamientos, perfiles, superficies, corredores, puntos COGO y redes de tuberías. Funciona sobre .NET y sobre la API de AutoCAD: un plugin referencia las librerías de AutoCAD (AcCoreMgd, AcDbMgd y AcMgd) y las de Civil 3D (AecBaseMgd y AeccDbMgd). El punto de entrada es `CivilApplication.ActiveDocument`. Se programa con Visual Studio Community, que es gratuito: Civil 3D 2025 y 2026 usan .NET 8, y la 2027, .NET 10. El plugin se carga con el comando NETLOAD o como bundle.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **API** — La lista de cosas que un programa le puede pedir a Civil 3D. Como el menú de un restaurante: lo que está en la carta, se puede pedir.
+- **C# y .NET** — El lenguaje y la plataforma de Microsoft con los que se programan los plugins de Civil 3D.
+- **Librería o DLL** — Un archivo con código listo para usar. Civil 3D trae las suyas; tu plugin también será una DLL.
+- **Referencia** — Decirle a tu proyecto qué librerías de Autodesk va a usar.
+- **Transacción** — El bloque dentro del cual se lee o modifica el dibujo. Se confirma o se descarta entera, como un Ctrl+Z al revés.
+- **ObjectId** — El número con el que Civil 3D identifica cada objeto del dibujo.
+- **Comando** — Lo que escribes en la línea de comandos para ejecutar tu código, como cualquier comando de Civil 3D.
+
+Está escrito para ingenieros civiles y coordinadores BIM que nunca programaron para Civil 3D.
+</Callout>
+
+## Por qué casi nadie programa Civil 3D
+
+Hay mucho material sobre la API de Revit y casi nada sobre la de Civil 3D, sobre todo en español. No es porque Civil 3D tenga menos que automatizar: un expediente vial repite tanto trabajo como un edificio. Es porque la API de Civil 3D tiene más capas, sus objetos son más complejos y su documentación tiene menos ejemplos.
+
+Esta guía recorre lo mínimo para empezar con el pie derecho: qué es, qué instalar, un primer comando real y los errores que conviene conocer antes de tropezar con ellos.
+
+<AnimatedFlow
+  title="Del código a un botón en Civil 3D"
+  nodes="Proyecto en Visual Studio|Referencias de Autodesk|Comando en C#|NETLOAD o bundle"
+  subs="Biblioteca de clases .NET|AutoCAD + Civil 3D, sin copiar|Lee y modifica el dibujo|Cargado en Civil 3D"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Qué es la API de Civil 3D, y qué alternativas hay" time="~5 min">
+
+Civil 3D se construye sobre AutoCAD, y su API también. Un programa para Civil 3D usa **dos capas**:
+
+- **La API de AutoCAD (.NET):** documentos, transacciones, la línea de comandos, líneas, polilíneas, bloques y capas.
+- **La API de Civil 3D (.NET):** los objetos de ingeniería: alineamientos, perfiles, superficies, corredores, secciones, puntos COGO, parcelas y redes de tuberías.
+
+**Las alternativas, según lo que necesites:**
+
+- **Dynamo**, para automatizar sin escribir código. Desde Civil 3D 2025.1 trae más de mil nodos nativos; lo explicamos en [10 scripts de Dynamo para Civil 3D](/es/blog/dynamo-civil-3d-scripts).
+- **Python**, dentro de los nodos de Python de Dynamo, cuando los nodos visuales se quedan cortos.
+- **La API COM**, más antigua, que todavía usan algunas rutinas LISP y VBA.
+- **C# sobre la API .NET**, para herramientas de producción que usa toda la oficina. Es el camino de esta guía.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Lo que necesitas antes de escribir código" time="~6 min">
+
+1. **Windows con Civil 3D instalado.** La API solo funciona dentro de Civil 3D.
+2. **Visual Studio Community**, gratuito, con la carga de trabajo de desarrollo de escritorio con .NET.
+3. **El framework correcto para tu versión:**
+
+| Versión de Civil 3D | Framework |
+|---|---|
+| 2024 y anteriores | .NET Framework 4.8 |
+| 2025 y 2026 | .NET 8 |
+| 2027 | .NET 10 |
+
+4. **Un proyecto de tipo biblioteca de clases**, con referencias a las librerías de la carpeta de instalación de Civil 3D: AcCoreMgd, AcDbMgd y AcMgd, de AutoCAD, y AecBaseMgd y AeccDbMgd, de Civil 3D.
+
+<Callout type="warn" title="Copiar localmente: No">
+En cada referencia de Autodesk, la propiedad **Copiar localmente** (Copy Local) debe estar en **No**. Si se copian a la carpeta de tu plugin, Civil 3D puede cargar dos versiones de la misma librería y fallar de formas difíciles de diagnosticar.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Tu primer comando: listar los alineamientos del dibujo" time="~8 min">
+
+Este comando recorre los alineamientos del dibujo y escribe su nombre y su longitud en la línea de comandos:
+
+```csharp
+using Autodesk.AutoCAD.ApplicationServices;
+using Autodesk.AutoCAD.DatabaseServices;
+using Autodesk.AutoCAD.EditorInput;
+using Autodesk.AutoCAD.Runtime;
+using Autodesk.Civil.ApplicationServices;
+using Autodesk.Civil.DatabaseServices;
+
+[assembly: CommandClass(typeof(ZeistDemo.Comandos))]
+
+namespace ZeistDemo
+{
+    public class Comandos
+    {
+        [CommandMethod("ZLISTAREJES")]
+        public void ListarEjes()
+        {
+            Document doc = Application.DocumentManager.MdiActiveDocument;
+            Editor ed = doc.Editor;
+            CivilDocument civil = CivilApplication.ActiveDocument;
+
+            using (Transaction tr = doc.Database.TransactionManager.StartTransaction())
+            {
+                foreach (ObjectId id in civil.GetAlignmentIds())
+                {
+                    var eje = (Alignment)tr.GetObject(id, OpenMode.ForRead);
+                    ed.WriteMessage($"\n{eje.Name}: {eje.Length:F2} m");
+                }
+                tr.Commit();
+            }
+        }
+    }
+}
+```
+
+**Qué hace cada parte:**
+
+- `CommandMethod` convierte el método en un comando que se escribe en Civil 3D.
+- `CivilApplication.ActiveDocument` da acceso a los objetos de Civil 3D del dibujo abierto.
+- `GetAlignmentIds()` devuelve los identificadores de todos los alineamientos.
+- La transacción abre cada alineamiento para leerlo, y `Commit` la cierra.
+
+**Para probarlo:** compila, abre Civil 3D con un dibujo que tenga alineamientos, escribe `NETLOAD`, elige tu DLL y ejecuta `ZLISTAREJES`.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Los objetos que vas a usar siempre" time="~5 min">
+
+Casi todo empieza en el `CivilDocument`, el documento de Civil 3D del dibujo abierto:
+
+| Quieres trabajar con | Punto de partida en CivilDocument |
+|---|---|
+| Alineamientos | GetAlignmentIds() |
+| Superficies | GetSurfaceIds() |
+| Corredores | CorridorCollection |
+| Puntos COGO | CogoPoints |
+| Redes de tuberías | GetPipeNetworkIds() |
+| Estilos | Styles |
+
+Desde cada alineamiento se llega a sus perfiles y a sus grupos de líneas de muestreo; desde cada corredor, a sus líneas base y regiones. La regla es siempre la misma: obtener el identificador, abrir el objeto dentro de una transacción y leerlo o modificarlo.
+
+<Callout type="info" title="Dónde está la documentación oficial">
+La guía del desarrollador y la referencia de la API de Civil 3D están en la ayuda de Autodesk, y el foro de personalización de Civil 3D en la comunidad de Autodesk es el mejor lugar para dudas concretas.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Los errores de la primera semana" time="~6 min">
+
+- **«No se pudo cargar» al hacer NETLOAD.** El proyecto apunta a un framework distinto del que usa tu versión de Civil 3D. Revisa la tabla del paso 2.
+- **Errores raros al cargar o al cerrar Civil 3D.** Las referencias de Autodesk quedaron con Copiar localmente en Sí.
+- **Los cambios no se guardan.** Falta `tr.Commit()`: una transacción que no se confirma se descarta entera.
+- **Error de bloqueo del documento (eLockViolation).** Pasa cuando el código se ejecuta desde una ventana propia y no desde un comando: hay que bloquear el documento antes de modificarlo.
+- **Funciona en tu versión y no en la de tu colega.** Cada versión de Civil 3D exige compilar contra sus propias librerías.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Del comando al plugin que usa toda la oficina" time="~5 min">
+
+Un comando que funciona en tu computadora todavía no es una herramienta. Para que la use la oficina hace falta:
+
+- **Un botón en la barra superior de Civil 3D**, en lugar de un comando escrito.
+- **Un bundle**: la carpeta con formato oficial de Autodesk que Civil 3D carga solo al iniciar.
+- **Manejo de errores y registro de lo que hace**, para que un fallo no deje el dibujo a medias.
+- **Una estructura en capas**, para que el cambio de versión de Autodesk toque una sola parte del código.
+
+Lo explicamos en [desarrollo de add-ins para Revit y Civil 3D](/es/blog/desarrollo-add-ins-revit-civil-3d-guia-completa), y si quieres llegar más rápido con IA, en [crear un plugin de Civil 3D con Claude Code](/es/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).
+
+<ComparisonTable
+  criterionLabel="Criterio"
+  leftLabel="Plugin en C# con la API"
+  rightLabel="Script de Dynamo"
+  rows="Velocidad con miles de objetos | *Alta | Variable || Interfaz propia y validaciones | *Sí | Básica || Distribución | *Instalador o bundle para toda la oficina | Archivo que cada uno abre || Curva de aprendizaje | Meses | *Semanas || Ideal para | *Herramientas de uso diario | Probar una idea rápido"
+/>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins y formación en Civil 3D API"
+  title="Programamos la herramienta, o te enseñamos a programarla"
+  body="Desarrollamos plugins en C# para Civil 3D con las reglas de tu oficina, y dictamos cursos y mentorías en vivo de Civil 3D API para equipos que quieren mantener sus propias herramientas. Somos ingenieros civiles e ingenieros de sistemas."
+  primaryLabel="Pedir diagnóstico"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver cursos y mentorías"
+  secondaryHref="/es/servicios/cursos-mentorias-bim"
+/>
+
+## Recursos relacionados
+
+- **La guía completa:** [desarrollo de add-ins para Revit y Civil 3D](/es/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+- **El equivalente en Revit:** [Revit API en español, primeros pasos](/es/blog/revit-api-espanol-primeros-pasos).
+- **Con ayuda de IA:** [crear un plugin de Civil 3D con Claude Code](/es/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).
+- **Dynamo o C#:** [cuál conviene en cada caso](/es/blog/dynamo-vs-csharp-civil3d-revit).
+- **Qué automatizar primero:** [automatizar Civil 3D, la guía completa](/es/blog/automatizar-civil-3d-guia-completa).
+- **Si prefieres encargarlo:** [desarrollo de plugins para Civil 3D](/es/blog/desarrollo-plugins-civil-3d-trujillo).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Programamos Civil 3D todos los días y publicamos lo que sabemos. Trabajamos con oficinas de ingeniería de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota técnica:** las versiones de .NET corresponden a la documentación de Autodesk vigente en octubre de 2026. Revisa la guía del desarrollador de tu versión antes de empezar.

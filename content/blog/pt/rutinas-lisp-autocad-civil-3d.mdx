@@ -1,0 +1,248 @@
+---
+title: "Rotinas LISP para AutoCAD e Civil 3D: como carregá-las sem risco, 3 rotinas úteis e quando passar para um plugin"
+seoTitle: "Rotinas LISP para AutoCAD e Civil 3D: guia e código"
+ctaTitle: "Seu escritório depende de rotinas LISP que ninguém entende? Nós as transformamos num plugin sustentável."
+description: "O que é AutoLISP, como carregar rotinas LISP no AutoCAD e no Civil 3D com segurança, 3 rotinas com código para copiar e quando vale um plugin em C#."
+date: "2026-10-09T03:00:00.000Z"
+author: "Zeist"
+tags:
+  - AutoCAD
+  - Civil 3D
+  - AutoLISP
+  - Rotinas LISP
+  - Automação BIM
+---
+
+<BlogHero
+  eyebrow="AutoCAD · Civil 3D · AutoLISP"
+  title="As rotinas LISP continuam economizando horas em milhares de escritórios. E continuam sendo um risco se ninguém as revisa."
+  highlight="O que é AutoLISP, como carregar uma rotina para que fique sempre disponível, três rotinas úteis com o código, como se proteger de malware em LISP e quando vale dar o salto para um plugin em C#."
+/>
+
+<Callout type="success" title="Resposta rápida">
+Uma rotina LISP é um arquivo de texto com código em AutoLISP, a linguagem que o AutoCAD traz desde os anos 80, que cria comandos novos. É carregada com o comando APPLOAD ou, para ficar sempre disponível, pelo Startup Suite do mesmo quadro. Funciona no AutoCAD, no Civil 3D e, desde a versão 2024, no AutoCAD LT para Windows. É ideal para tarefas de desenho repetitivas: rotular, somar comprimentos, exportar pontos. Para ler alinhamentos, superfícies ou corredores do Civil 3D ela fica curta, e aí vale um plugin em C#.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **AutoLISP** — A linguagem de programação que vem dentro do AutoCAD. Uma rotina LISP é um programa escrito nela.
+- **Arquivo .lsp** — A rotina em texto, que pode ser aberta e lida. Os .fas e .vlx são versões compiladas que não podem ser lidas.
+- **Carregar** — Dizer ao AutoCAD que leia a rotina para que seus comandos fiquem disponíveis.
+- **Comando** — O que você digita na linha de comando. Uma rotina define comandos novos, como `ZCOMPTOTAL`.
+- **Local confiável** — Uma pasta que o AutoCAD considera segura para carregar código sem perguntar.
+- **Plugin em C#** — Um programa compilado que se integra ao AutoCAD ou ao Civil 3D, com mais alcance que uma rotina LISP.
+
+Foi escrito para engenheiros, projetistas e topógrafos que usam rotinas LISP e querem entendê-las, não só copiá-las.
+</Callout>
+
+## Por que o LISP continua vivo
+
+Quase todo escritório de engenharia tem uma pasta com rotinas LISP: umas baixadas de fóruns, outras escritas por alguém que já não trabalha lá. Continuam funcionando porque o AutoLISP quase não mudou em décadas, e porque para tarefas de desenho simples é a forma mais rápida de automatizar.
+
+O problema aparece quando essas rotinas se tornam críticas e ninguém sabe o que fazem, ou quando se tenta usar LISP para algo que não lhe cabe, como ler os objetos de engenharia do Civil 3D. Este guia cobre as duas coisas.
+
+<AnimatedFlow
+  title="De um arquivo .lsp a um comando"
+  nodes="Arquivo .lsp|APPLOAD ou Startup Suite|Comando novo|Uso diário"
+  subs="Código em texto|A partir de um local confiável|Digitado na linha de comando|Em cada desenho que você abre"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. O que é AutoLISP e para que serve hoje" time="~4 min">
+
+AutoLISP é uma linguagem que o AutoCAD inclui desde os anos 80. Uma rotina LISP define um ou mais comandos novos que são executados como qualquer comando do AutoCAD.
+
+**Onde funciona:**
+
+- No **AutoCAD** e em todas as suas versões verticais, incluindo o **Civil 3D**.
+- No **AutoCAD LT para Windows desde a versão 2024**. Antes, as versões LT não executavam LISP.
+
+**Para que é bom:**
+
+- Rotular, numerar, renomear layers, mudar propriedades em lote.
+- Medir e somar: comprimentos, áreas, quantidades de blocos.
+- Exportar e importar dados simples para arquivos de texto ou CSV.
+
+**Onde se escreve:** desde o AutoCAD 2021, o editor recomendado é o Visual Studio Code com a extensão de AutoLISP da Autodesk, que substitui o antigo editor Visual LISP.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Como carregar uma rotina LISP, e mantê-la carregada" time="~5 min">
+
+**Para usá-la uma vez:**
+
+1. Digite `APPLOAD` na linha de comando.
+2. Procure o arquivo .lsp e clique em **Carregar**.
+3. Digite o comando que a rotina define.
+
+Você também pode arrastar o arquivo .lsp para a janela do desenho.
+
+**Para que fique sempre disponível:** no mesmo quadro do APPLOAD, adicione a rotina ao **Startup Suite** (os aplicativos de inicialização). Ela será carregada em cada desenho que você abrir.
+
+<Callout type="warn" title="Locais confiáveis e SECURELOAD">
+Desde o AutoCAD 2014, a variável **SECURELOAD** controla que código é carregado. Com o valor 1, o padrão de fábrica, o AutoCAD avisa antes de carregar código que não está num local confiável; com 2, só carrega desses locais. O correto num escritório é ter uma única pasta de rotinas revisadas, adicioná-la nas Opções como local confiável e não baixar o SECURELOAD para 0.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Rotina 1: exportar pontos para um CSV do Civil 3D" time="~6 min">
+
+Exporta os objetos ponto (POINT) selecionados para um arquivo CSV no formato **PNEZD**: número, Norte, Este, cota e descrição. Esse arquivo é importado diretamente no Civil 3D como pontos COGO.
+
+```lisp
+;; ZPONTOSCSV: exporta os pontos (POINT) selecionados para um CSV PNEZD
+(defun c:ZPONTOSCSV (/ ss arq f i n p)
+  (setq ss (ssget '((0 . "POINT"))))
+  (if ss
+    (progn
+      (setq arq (getfiled "Salvar pontos" "" "csv" 1))
+      (if arq
+        (progn
+          (setq f (open arq "w") i 0 n 1)
+          (repeat (sslength ss)
+            (setq p (cdr (assoc 10 (entget (ssname ss i)))))
+            (write-line
+              (strcat (itoa n) ","
+                      (rtos (cadr p) 2 3) ","
+                      (rtos (car p) 2 3) ","
+                      (rtos (caddr p) 2 3) ",PT")
+              f)
+            (setq i (1+ i) n (1+ n)))
+          (close f)
+          (princ (strcat "\n" (itoa (sslength ss)) " pontos exportados para " arq)))))
+    (princ "\nNenhum ponto selecionado."))
+  (princ))
+```
+
+**Como funciona:** `ssget` com o filtro `(0 . "POINT")` deixa selecionar só pontos; `getfiled` abre o quadro para salvar; cada linha escreve o Norte (Y) antes do Este (X), que é a ordem do PNEZD.
+
+<Callout type="tip" title="Se seus pontos estão em outro sistema">
+Se você precisa passar as coordenadas de geográficas para UTM ou mudar de datum antes de importá-las, o [conversor de coordenadas gratuito](/pt/herramientas/conversor-de-coordenadas) baixa o arquivo PNEZD pronto para o Civil 3D.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Rotina 2: rotular coordenadas Este e Norte" time="~5 min">
+
+Pede pontos no desenho e escreve ao lado um texto com seu Este e seu Norte. Serve para plantas de situação, vértices de um terreno ou pontos de controle.
+
+```lisp
+;; ZCOORD: rotula as coordenadas Este e Norte de cada ponto indicado
+(defun c:ZCOORD (/ alt p w)
+  (setq alt (getreal "\nAltura do texto <2.5>: "))
+  (if (not alt) (setq alt 2.5))
+  (while (setq p (getpoint "\nPonto a rotular (Enter para terminar): "))
+    (setq w (trans p 1 0))
+    (entmake
+      (list (cons 0 "TEXT")
+            (cons 10 w)
+            (cons 40 alt)
+            (cons 1 (strcat "E " (rtos (car w) 2 3) "  N " (rtos (cadr w) 2 3))))))
+  (princ))
+```
+
+**Como funciona:** `getpoint` devolve o ponto no sistema de coordenadas do usuário (UCS); `trans` o converte para o sistema universal (WCS), que é o que guarda as coordenadas reais. Sem esse passo, com um UCS girado, o rótulo mostraria coordenadas erradas.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Rotina 3: comprimento total de linhas, polilinhas e arcos" time="~4 min">
+
+Soma o comprimento de tudo o que foi selecionado. Útil para levantar tubulações, sarjetas, meios-fios ou qualquer elemento desenhado como linha.
+
+```lisp
+;; ZCOMPTOTAL: soma o comprimento de linhas, polilinhas, arcos, circulos e splines
+(vl-load-com)
+(defun c:ZCOMPTOTAL (/ ss i total e)
+  (setq ss (ssget '((0 . "LINE,LWPOLYLINE,POLYLINE,ARC,CIRCLE,SPLINE")))
+        total 0.0
+        i 0)
+  (if ss
+    (progn
+      (repeat (sslength ss)
+        (setq e (ssname ss i)
+              total (+ total (vlax-curve-getDistAtParam e (vlax-curve-getEndParam e)))
+              i (1+ i)))
+      (princ (strcat "\nObjetos: " (itoa (sslength ss))
+                     "   Comprimento total: " (rtos total 2 3))))
+    (princ "\nNada selecionado."))
+  (princ))
+```
+
+**Como funciona:** `vl-load-com` ativa as funções `vlax-curve`, que medem qualquer curva da mesma forma, seja uma linha, uma polilinha ou um arco.
+
+<Callout type="info" title="Antes de usá-las num projeto real">
+Teste-as primeiro num desenho de teste e confira o resultado contra uma medição manual. É a mesma regra que vale para qualquer rotina baixada da internet.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. O risco: malware escrito em LISP" time="~4 min">
+
+O AutoCAD carrega automaticamente certos arquivos, como acad.lsp e acaddoc.lsp, se os encontra na pasta do desenho ou nos caminhos de busca. Esse comportamento já foi usado para propagar malware: um arquivo LISP escondido que viaja junto com os desenhos e é executado ao abri-los.
+
+O caso mais conhecido aconteceu na América do Sul. Em 2012, a empresa de segurança ESET documentou o **ACAD/Medre.A**, um malware escrito em AutoLISP que se propagou sobretudo no Peru e enviou dezenas de milhares de desenhos por e-mail para contas na China.
+
+**Como se proteger:**
+
+- Mantenha o **SECURELOAD** em 1 ou 2, nunca em 0.
+- Tenha uma única pasta de rotinas revisadas como local confiável.
+- Desconfie de um acad.lsp ou acaddoc.lsp que apareça junto com desenhos recebidos de terceiros.
+- Não carregue arquivos .fas ou .vlx de origem desconhecida: não podem ser lidos, então você não sabe o que fazem.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Os limites do LISP, e quando passar para um plugin" time="~5 min">
+
+O LISP trabalha muito bem com o que o AutoCAD desenha: linhas, polilinhas, textos, blocos e layers. Com os objetos de engenharia do Civil 3D é outra história: ele os vê quase como caixas fechadas. Para ler os dados de um alinhamento, uma superfície ou um corredor, precisa passar pela interface COM do Civil 3D, que é trabalhosa, muda entre versões e não cobre tudo.
+
+**Sinais de que sua rotina já deveria ser um plugin:**
+
+- Precisa ler ou modificar alinhamentos, perfis, superfícies, corredores ou redes de tubulação.
+- Precisa de uma janela com opções, validações ou tabelas, além de perguntas na linha de comando.
+- O escritório inteiro a usa e um erro custa horas de trabalho.
+- Só uma pessoa a entende.
+
+<ComparisonTable
+  criterionLabel="Critério"
+  leftLabel="Plugin em C#"
+  rightLabel="Rotina LISP"
+  rows="Objetos do Civil 3D | *Acesso completo pela API .NET | Limitado, via COM || Interface | *Janelas, tabelas e validações | Linha de comando e quadros simples || Velocidade com milhares de objetos | *Alta | Aceitável || Distribuição | *Instalador com versão e registro de mudanças | Arquivo que se copia || Curva de aprendizado | Meses | *Dias || Ideal para | *Ferramentas críticas do escritório | Tarefas de desenho rápidas"
+/>
+
+Se você quer dar o passo sozinho, comece pela [API do Civil 3D em C#](/pt/blog/civil-3d-api-csharp-primeros-pasos). Se prefere que nós façamos, explicamos em [desenvolvimento de add-ins para Revit e Civil 3D](/pt/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Do LISP ao plugin"
+  title="Suas rotinas LISP, transformadas numa ferramenta que o escritório consegue manter"
+  body="Revisamos as rotinas que seu escritório já usa e as passamos para um plugin em C# para AutoCAD ou Civil 3D, com instalador, manual e código-fonte que fica com você. Somos engenheiros civis e engenheiros de sistemas."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **O próximo nível:** [Civil 3D API em C#, primeiros passos](/pt/blog/civil-3d-api-csharp-primeros-pasos).
+- **Sem código:** [10 scripts de Dynamo para Civil 3D](/pt/blog/dynamo-civil-3d-scripts).
+- **Dynamo ou C#:** [qual convém em cada caso](/pt/blog/dynamo-vs-csharp-civil3d-revit).
+- **Se você está começando a programar:** [programação para engenheiros civis](/pt/blog/programacion-para-ingenieros-civiles).
+- **O que automatizar primeiro:** [automatizar o Civil 3D, o guia completo](/pt/blog/automatizar-civil-3d-guia-completa).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Peru"
+  title="Uma equipe de engenheiros civis e engenheiros de sistemas"
+  body="Usamos o AutoCAD e o Civil 3D todos os dias e os programamos. Trabalhamos com escritórios do Brasil e de toda a América Latina."
+  primaryLabel="Vamos falar do seu caso"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver todos os serviços"
+  secondaryHref="/pt/servicios"
+/>
+
+---
+
+**Nota técnica:** o código é um exemplo de referência. Teste-o num desenho de teste antes de usá-lo num projeto.

@@ -161,14 +161,14 @@ A compiled file that installs into Civil 3D and adds its own buttons.
 
 **Limitations:** steeper learning curve, requires Visual Studio and a build cycle.
 
-**Learning curve:** 2-3 months to become productive — though AI as a copilot shortens this dramatically.
+**Learning curve:** 2-3 months to become productive — though AI as a copilot shortens this dramatically. Your first command, with code, is in [Civil 3D API in C#, getting started](/en/blog/civil-3d-api-csharp-primeros-pasos).
 
 ### AutoLISP
 AutoCAD's historic language, still widely used.
 
 **Good for:** pure drafting tasks (layers, blocks, text, basic AutoCAD entities), and reusing routines your office already has.
 
-**Critical limitation:** **it can't access Civil 3D's own objects.** It can't read a corridor, a surface, or an alignment as such. For that you need Dynamo or .NET.
+**Critical limitation:** **it can't access Civil 3D's own objects directly.** It can't read a corridor, a surface, or an alignment as such, except through the limited COM interface. For that you need Dynamo or .NET.
 
 **Learning curve:** days, but it's an investment in niche technology.
 
@@ -385,6 +385,8 @@ You distribute it to clients or affiliate offices. You need a signed installer, 
 - **Torn between Dynamo and C#:** the full comparison in [Dynamo vs C# for Civil 3D and Revit](/en/blog/dynamo-vs-csharp-civil3d-revit).
 - **Want to start with Dynamo today:** [10 Dynamo scripts for Civil 3D](/en/blog/dynamo-civil-3d-scripts), with what each one needs.
 - **You redo sections on every change:** [Civil 3D cross sections, from sample lines to sheets](/en/blog/secciones-transversales-civil-3d).
+- **Your corridors fail or crawl:** [the Civil 3D corridor tutorial: assemblies, targets and errors](/en/blog/corredores-civil-3d-ensamblajes-objetivos).
+- **Want to program Civil 3D yourself:** [Civil 3D API in C#, getting started](/en/blog/civil-3d-api-csharp-primeros-pasos).
 - **Your terrain has to reach Revit:** [Civil 3D to Revit: surfaces, coordinates and pipes](/en/blog/civil-3d-a-revit-topografia-coordenadas).
 - **Need contours without a survey:** [Civil 3D contours from Google Earth or a survey](/en/blog/curvas-de-nivel-civil-3d-google-earth).
 - **Want to build your first add-in:** the end-to-end guide in [building a Civil 3D plugin with Claude Code](/en/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).

@@ -31,6 +31,7 @@ export const clusters: Cluster[] = [
       "empresas-automatizacion-bim-trujillo-peru",
       "metrados-en-revit",
       "civil-3d-a-revit-topografia-coordenadas",
+      "civil-3d-api-csharp-primeros-pasos",
     ],
   },
   {
@@ -45,6 +46,9 @@ export const clusters: Cluster[] = [
       "desarrollo-plugins-civil-3d-trujillo",
       "secciones-transversales-civil-3d",
       "civil-3d-a-revit-topografia-coordenadas",
+      "civil-3d-api-csharp-primeros-pasos",
+      "corredores-civil-3d-ensamblajes-objetivos",
+      "rutinas-lisp-autocad-civil-3d",
     ],
   },
   {
@@ -63,6 +67,7 @@ export const clusters: Cluster[] = [
       "aprende-a-programar-desde-cero",
       "ramas-ingenieria-sistemas-especializaciones",
       "cursos-revit-civil-3d-bim-trujillo",
+      "rutinas-lisp-autocad-civil-3d",
     ],
   },
   {
