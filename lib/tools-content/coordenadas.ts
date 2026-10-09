@@ -187,6 +187,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "importar-puntos-civil-3d-excel",
       "coordenadas-utm-trujillo-la-libertad",
       "automatizar-civil-3d-guia-completa",
       "plugin-civil-3d-dibujo-3d-automatizado",
@@ -375,6 +376,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "importar-puntos-civil-3d-excel",
       "automatizar-civil-3d-guia-completa",
       "plugin-civil-3d-dibujo-3d-automatizado",
       "produccion-planos-automatica-civil-3d-revit",
@@ -548,6 +550,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "importar-puntos-civil-3d-excel",
       "automatizar-civil-3d-guia-completa",
       "plugin-civil-3d-dibujo-3d-automatizado",
       "produccion-planos-automatica-civil-3d-revit",

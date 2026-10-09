@@ -1,0 +1,184 @@
+---
+title: "Perfil longitudinal en Civil 3D: del terreno a la rasante, la guitarra y las láminas, con los errores más comunes"
+seoTitle: "Perfil longitudinal en Civil 3D: guía paso a paso"
+ctaTitle: "¿Armas perfiles y guitarras a mano en cada proyecto? Los generamos con las reglas de tu oficina."
+description: "Cómo crear un perfil longitudinal en Civil 3D: perfil del terreno, vista de perfil, rasante con curvas verticales, guitarra y errores comunes."
+date: "2026-10-09T18:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Perfil longitudinal
+  - Diseño vial
+  - Producción de planos
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Perfiles"
+  title="El perfil longitudinal es medio plano de un proyecto vial. Y la guitarra, la mitad de los dolores de cabeza."
+  highlight="Cómo crear el perfil del terreno y la vista de perfil, dibujar la rasante con curvas verticales, configurar la guitarra, dividir las vistas largas y resolver los errores que más se buscan."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Un perfil longitudinal en Civil 3D tiene dos partes: el perfil, que es la línea de cotas a lo largo de un alineamiento, y la vista de perfil, que es la cuadrícula donde se dibuja. Primero se crea el perfil del terreno desde una superficie; luego, la vista de perfil con su asistente, donde se definen la altura, si se divide y las bandas, que en el Perú se llaman guitarra. Después se dibuja la rasante con las herramientas de creación de perfiles: tangentes y curvas verticales. Si cambia el terreno, el perfil del terreno se actualiza solo.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Alineamiento** — El eje en planta, con sus progresivas.
+- **Perfil** — La línea de cotas a lo largo del alineamiento: la del terreno o la de diseño.
+- **Rasante** — El perfil de diseño: las cotas a las que irá la obra terminada.
+- **Vista de perfil** — La cuadrícula donde se dibujan los perfiles, con su escala y sus rótulos.
+- **PVI** — El punto donde se cruzan dos tangentes de la rasante; ahí se coloca la curva vertical.
+- **Curva vertical** — La parábola que suaviza el cambio de pendiente entre dos tangentes.
+- **Guitarra (bandas)** — La tabla bajo el perfil con progresivas, cotas de terreno y rasante, y alturas de corte o relleno.
+
+Está escrito para ingenieros que diseñan vías, canales, redes o plataformas en Civil 3D.
+</Callout>
+
+## Por qué el perfil se vuelve trabajo repetido
+
+El perfil longitudinal parece un solo dibujo, pero son varias piezas que deben coincidir: el perfil del terreno, la rasante, la vista con su escala, la guitarra con sus cotas y las láminas. Cuando alguna se arma a mano, cada cambio de trazo o de rasante obliga a revisar todas. Bien armado en Civil 3D, todo se actualiza solo.
+
+<AnimatedFlow
+  title="Del eje a la lámina de perfil"
+  nodes="Alineamiento|Perfil del terreno|Rasante|Vista y guitarra"
+  subs="El eje en planta|Desde la superficie, dinámico|Tangentes y curvas verticales|Lista para la lámina"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Perfil y vista de perfil: dos cosas distintas" time="~4 min">
+
+En Civil 3D, el **perfil** y la **vista de perfil** son objetos separados:
+
+- **El perfil** es la información: cotas a lo largo del alineamiento. Puede ser del terreno, tomado de una superficie, o de diseño, la rasante.
+- **La vista de perfil** es la forma de mostrarlo: la cuadrícula, la escala, los rótulos y la guitarra.
+
+Un mismo perfil puede mostrarse en varias vistas, con escalas o estilos distintos, y todas cambian si el perfil cambia.
+
+**La escala vertical** se define en el estilo de la vista de perfil. Lo habitual es exagerarla diez veces respecto a la horizontal, para que las pendientes se vean.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Crear el perfil del terreno y la vista de perfil" time="~6 min">
+
+1. **Inicio › Perfil › Crear perfil a partir de superficie.** Elige el alineamiento y la superficie del terreno, y agrega el perfil. Si necesitas los bordes, agrega también perfiles desplazados a la izquierda y a la derecha del eje.
+2. **Dibujar en vista de perfil** abre el asistente de creación de la vista. Los pasos principales:
+   - **Rango de progresivas:** todo el alineamiento o un tramo.
+   - **Altura de la vista:** automática o definida por el usuario.
+   - **Dividir la vista** cuando el rango de cotas es muy grande.
+   - **Opciones de visualización** de cada perfil.
+   - **Bandas:** el conjunto de bandas que forma la guitarra.
+3. Haz clic en el dibujo para ubicar la vista.
+
+El perfil del terreno queda **dinámico**: si cambia la superficie, el perfil se actualiza.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. La rasante: tangentes y curvas verticales" time="~7 min">
+
+La rasante se dibuja con las **herramientas de creación de perfiles**, seleccionando la vista de perfil:
+
+1. **Configura las curvas** antes de dibujar: tipo parabólica, y largo de curva o valor K, según tu criterio de diseño.
+2. **Dibuja tangentes con curvas**, punto a punto, desde el inicio hasta el final del tramo. Civil 3D coloca una curva vertical en cada PVI.
+3. **Ajusta**: arrastra los PVI con los pinzamientos, o edita progresivas, cotas, pendientes y largos de curva en la tabla de entidades del perfil.
+
+**Si la rasante viene de otro lado**, por ejemplo de una hoja de cálculo, se puede crear un perfil a partir de un archivo de texto con pares de progresiva y cota, y luego agregar las curvas.
+
+<Callout type="tip" title="Criterios de diseño">
+Civil 3D puede revisar la rasante contra criterios de diseño, como el valor K mínimo para la velocidad de diseño, y marcar las curvas que no cumplen. Los valores deben venir de la norma que aplica a tu proyecto; en el Perú, el Manual de Carreteras de Diseño Geométrico.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. La guitarra: bandas de datos" time="~6 min">
+
+La guitarra son las **bandas** de la vista de perfil. Las más usadas:
+
+| Banda | Qué muestra |
+|---|---|
+| Datos de perfil | Progresivas, cotas de terreno y de rasante, alturas de corte y relleno |
+| Geometría vertical | Tangentes y curvas verticales, con sus pendientes y largos |
+| Geometría horizontal | Rectas y curvas del alineamiento |
+| Peralte | La variación del peralte a lo largo del eje |
+
+**El paso que más se olvida:** en las propiedades de la vista de perfil, pestaña Bandas, hay que indicar qué perfil alimenta cada banda, en las columnas de perfil 1 y perfil 2. Lo habitual es el terreno como perfil 1 y la rasante como perfil 2. Si quedan mal asignados, la guitarra muestra cotas vacías, repetidas o de otro perfil.
+
+**Para no armarla cada vez**, guarda la combinación de bandas como un conjunto de bandas en la plantilla de la oficina.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Vistas divididas, vistas múltiples y láminas" time="~5 min">
+
+- **Vista dividida.** Si el terreno sube mucho, una sola vista quedaría demasiado alta. El asistente puede partirla en varias vistas apiladas, cada una con su propia cota de referencia.
+- **Vistas múltiples.** Para un alineamiento largo, el comando de crear varias vistas de perfil genera una vista por tramo de longitud fija, una al lado de otra.
+- **Láminas de planta y perfil.** Para el expediente, las herramientas de producción de planos crean marcos de vista a lo largo del eje y generan las láminas con la planta arriba y el perfil abajo. Lo explicamos en [producción automática de planos en Civil 3D y Revit](/es/blog/produccion-planos-automatica-civil-3d-revit).
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Los errores más buscados" time="~6 min">
+
+- **La rasante no aparece en la vista.** El perfil no está marcado para dibujarse en esa vista, su estilo no muestra nada o sus cotas quedan fuera de la altura de la vista.
+- **La guitarra sale vacía o con cotas repetidas.** Perfil 1 y perfil 2 no están asignados, o apuntan al mismo perfil.
+- **No aparecen las etiquetas del perfil.** El conjunto de etiquetas del perfil está vacío o los estilos de etiqueta no muestran nada.
+- **El perfil del terreno no se actualiza.** Su modo de actualización está en estático, o se creó desde otra superficie.
+- **La vista se divide sola.** La altura de la vista es fija y el terreno no entra; ajusta la altura o la opción de división.
+- **El perfil no coincide con la planta.** Se editó el alineamiento y el perfil de diseño quedó con progresivas antiguas: revisa el inicio y el final de la rasante.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Redes en el perfil, y qué conviene automatizar" time="~5 min">
+
+**Las redes de tuberías** se pueden mostrar en la vista de perfil: buzones, tuberías y sus cotas de fondo aparecen junto al terreno y la rasante. Lo vemos en [redes de tuberías en Civil 3D](/es/blog/redes-tuberias-civil-3d-accesorios).
+
+**La rasante alimenta al corredor:** cada cambio de perfil se propaga al modelo 3D, a las secciones y a los volúmenes. Lo explicamos en [corredores en Civil 3D](/es/blog/corredores-civil-3d-ensamblajes-objetivos).
+
+**Lo que más tiempo consume en una oficina**, y se puede automatizar:
+
+- Crear los perfiles del terreno y las vistas de todas las calles de una habilitación, con el mismo estilo y la misma guitarra.
+- Revisar la rasante contra la norma y reportar las curvas que no cumplen.
+- Exportar la tabla de progresivas, cotas y pendientes a Excel.
+- Generar las láminas de planta y perfil con el cajetín de la oficina.
+
+<ComparisonTable
+  criterionLabel="Tarea"
+  leftLabel="Con un plugin"
+  rightLabel="A mano"
+  rows="Perfiles y vistas de 30 calles | *Una ejecución | Calle por calle || Guitarra con el estándar de la oficina | *Siempre igual | Configurar cada vista || Revisión contra la norma | *Reporte de curvas que no cumplen | Curva por curva || Tabla de cotas a Excel | *Automática | Copiar y pegar"
+/>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automatización de Civil 3D"
+  title="Tus perfiles y guitarras, con las reglas de tu oficina"
+  body="Desarrollamos plugins para Civil 3D que crean perfiles, vistas y guitarras en lote, revisan la rasante contra tu norma y generan las láminas. Somos ingenieros civiles e ingenieros de sistemas: diseñamos vías y las programamos."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **El paso siguiente:** [corredores en Civil 3D, ensamblajes y objetivos](/es/blog/corredores-civil-3d-ensamblajes-objetivos).
+- **Después del corredor:** [secciones transversales en Civil 3D](/es/blog/secciones-transversales-civil-3d).
+- **Las láminas:** [producción automática de planos en Civil 3D y Revit](/es/blog/produccion-planos-automatica-civil-3d-revit).
+- **La superficie del terreno:** [curvas de nivel en Civil 3D](/es/blog/curvas-de-nivel-civil-3d-google-earth).
+- **La guía completa:** [automatizar Civil 3D](/es/blog/automatizar-civil-3d-guia-completa).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Diseñamos con Civil 3D y lo programamos. Trabajamos con oficinas de ingeniería de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu proyecto"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota técnica:** los nombres de comandos corresponden a Civil 3D 2026. Revisa la ayuda de tu versión si alguno cambia.

@@ -34,6 +34,7 @@ export const clusters: Cluster[] = [
       "civil-3d-api-csharp-primeros-pasos",
       "plugin-revit-exportar-pdf-dwg-masivo",
       "revisiones-firmas-revit-varios-planos",
+      "parametros-compartidos-revit",
     ],
   },
   {
@@ -51,6 +52,8 @@ export const clusters: Cluster[] = [
       "civil-3d-api-csharp-primeros-pasos",
       "corredores-civil-3d-ensamblajes-objetivos",
       "rutinas-lisp-autocad-civil-3d",
+      "importar-puntos-civil-3d-excel",
+      "perfil-longitudinal-civil-3d",
     ],
   },
   {

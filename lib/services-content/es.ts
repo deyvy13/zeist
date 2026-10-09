@@ -149,6 +149,7 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       "rutinas-lisp-autocad-civil-3d",
       "plugin-revit-exportar-pdf-dwg-masivo",
       "revisiones-firmas-revit-varios-planos",
+      "parametros-compartidos-revit",
     ],
     faqs: [
       {
@@ -315,6 +316,8 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       "automatizar-tareas-revit-dynamo-plugins",
       "dynamo-csharp-con-ia-claude",
       "automatizar-civil-3d-guia-completa",
+      "importar-puntos-civil-3d-excel",
+      "perfil-longitudinal-civil-3d",
     ],
     faqs: [
       {

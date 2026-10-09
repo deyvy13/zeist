@@ -1,0 +1,184 @@
+---
+title: "Perfil longitudinal no Civil 3D: do terreno ao greide, as bandas e as pranchas, com os erros mais comuns"
+seoTitle: "Perfil longitudinal no Civil 3D: guia passo a passo"
+ctaTitle: "Você monta perfis e bandas à mão em todo projeto? Nós os geramos com as regras do seu escritório."
+description: "Como criar um perfil longitudinal no Civil 3D: perfil do terreno, vista de perfil, greide com curvas verticais, bandas, vistas divididas e erros comuns."
+date: "2026-10-09T18:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Perfil longitudinal
+  - Projeto rodoviário
+  - Produção de pranchas
+  - Automação BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Perfis"
+  title="O perfil longitudinal é meia prancha de um projeto rodoviário. E as bandas, metade das dores de cabeça."
+  highlight="Como criar o perfil do terreno e a vista de perfil, desenhar o greide com curvas verticais, configurar as bandas, dividir as vistas longas e resolver os erros mais buscados."
+/>
+
+<Callout type="success" title="Resposta rápida">
+Um perfil longitudinal no Civil 3D tem duas partes: o perfil, que é a linha de cotas ao longo de um alinhamento, e a vista de perfil, que é a grade onde ele é desenhado. Primeiro cria-se o perfil do terreno a partir de uma superfície; depois, a vista de perfil com seu assistente, onde se definem a altura, se ela é dividida e as bandas, a tabela de dados sob o perfil. Em seguida desenha-se o greide com as ferramentas de criação de perfis: tangentes e curvas verticais. Se o terreno muda, o perfil do terreno se atualiza sozinho.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Alinhamento** — O eixo em planta, com suas estacas.
+- **Perfil** — A linha de cotas ao longo do alinhamento: a do terreno ou a de projeto.
+- **Greide** — O perfil de projeto: as cotas da obra acabada.
+- **Vista de perfil** — A grade onde os perfis são desenhados, com escala e rótulos.
+- **PVI** — O ponto onde duas tangentes do greide se cruzam; ali fica a curva vertical.
+- **Curva vertical** — A parábola que suaviza a mudança de inclinação entre duas tangentes.
+- **Bandas** — A tabela sob o perfil com estacas, cotas do terreno e do greide, e alturas de corte ou aterro.
+
+Foi escrito para engenheiros que projetam vias, canais, redes ou plataformas no Civil 3D.
+</Callout>
+
+## Por que o perfil vira trabalho repetido
+
+O perfil longitudinal parece um único desenho, mas são várias peças que precisam bater: o perfil do terreno, o greide, a vista com sua escala, as bandas com suas cotas e as pranchas. Quando alguma é montada à mão, cada mudança de traçado ou de greide obriga a revisar todas. Bem montado no Civil 3D, tudo se atualiza sozinho.
+
+<AnimatedFlow
+  title="Do eixo à prancha de perfil"
+  nodes="Alinhamento|Perfil do terreno|Greide|Vista e bandas"
+  subs="O eixo em planta|Da superfície, dinâmico|Tangentes e curvas verticais|Pronta para a prancha"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Perfil e vista de perfil: duas coisas diferentes" time="~4 min">
+
+No Civil 3D, o **perfil** e a **vista de perfil** são objetos separados:
+
+- **O perfil** é a informação: cotas ao longo do alinhamento. Pode ser do terreno, tirado de uma superfície, ou de projeto, o greide.
+- **A vista de perfil** é a forma de mostrá-lo: a grade, a escala, os rótulos e as bandas.
+
+Um mesmo perfil pode aparecer em várias vistas, com escalas ou estilos diferentes, e todas mudam se o perfil muda.
+
+**A escala vertical** é definida no estilo da vista de perfil. O usual é exagerá-la dez vezes em relação à horizontal, para que as inclinações fiquem visíveis.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Criar o perfil do terreno e a vista de perfil" time="~6 min">
+
+1. **Início › Perfil › Criar perfil a partir de superfície.** Escolha o alinhamento e a superfície do terreno, e adicione o perfil. Se precisar das bordas, adicione também perfis deslocados à esquerda e à direita do eixo.
+2. **Desenhar na vista de perfil** abre o assistente de criação da vista. Os passos principais:
+   - **Intervalo de estacas:** o alinhamento inteiro ou um trecho.
+   - **Altura da vista:** automática ou definida pelo usuário.
+   - **Dividir a vista** quando o intervalo de cotas é muito grande.
+   - **Opções de exibição** de cada perfil.
+   - **Bandas:** o conjunto de bandas sob o perfil.
+3. Clique no desenho para posicionar a vista.
+
+O perfil do terreno fica **dinâmico**: se a superfície muda, o perfil se atualiza.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. O greide: tangentes e curvas verticais" time="~7 min">
+
+O greide é desenhado com as **ferramentas de criação de perfis**, selecionando a vista de perfil:
+
+1. **Configure as curvas** antes de desenhar: tipo parabólica, e comprimento de curva ou valor K, segundo seu critério de projeto.
+2. **Desenhe tangentes com curvas**, ponto a ponto, do início ao fim do trecho. O Civil 3D coloca uma curva vertical em cada PVI.
+3. **Ajuste**: arraste os PVI pelos grips, ou edite estacas, cotas, inclinações e comprimentos de curva na tabela de entidades do perfil.
+
+**Se o greide vem de outro lugar**, por exemplo de uma planilha, é possível criar um perfil a partir de um arquivo de texto com pares de estaca e cota, e depois adicionar as curvas.
+
+<Callout type="tip" title="Critérios de projeto">
+O Civil 3D pode conferir o greide contra critérios de projeto, como o valor K mínimo para a velocidade de projeto, e marcar as curvas que não cumprem. Os valores devem vir da norma que se aplica ao seu projeto, como os manuais do DNIT ou do órgão contratante.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. As bandas: a tabela de dados" time="~6 min">
+
+As bandas são a tabela sob a vista de perfil. As mais usadas:
+
+| Banda | O que mostra |
+|---|---|
+| Dados do perfil | Estacas, cotas do terreno e do greide, alturas de corte e aterro |
+| Geometria vertical | Tangentes e curvas verticais, com inclinações e comprimentos |
+| Geometria horizontal | Retas e curvas do alinhamento |
+| Superelevação | A variação da superelevação ao longo do eixo |
+
+**O passo que mais se esquece:** nas propriedades da vista de perfil, aba Bandas, é preciso indicar qual perfil alimenta cada banda, nas colunas de perfil 1 e perfil 2. O usual é o terreno como perfil 1 e o greide como perfil 2. Se ficam mal atribuídos, as bandas mostram cotas vazias, repetidas ou de outro perfil.
+
+**Para não montá-las toda vez**, salve a combinação como um conjunto de bandas no template do escritório.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Vistas divididas, vistas múltiplas e pranchas" time="~5 min">
+
+- **Vista dividida.** Se o terreno sobe muito, uma única vista ficaria alta demais. O assistente pode parti-la em várias vistas empilhadas, cada uma com sua própria cota de referência.
+- **Vistas múltiplas.** Para um alinhamento longo, o comando de criar várias vistas de perfil gera uma vista por trecho de comprimento fixo, uma ao lado da outra.
+- **Pranchas de planta e perfil.** As ferramentas de produção de pranchas criam quadros de vista ao longo do eixo e geram as pranchas com a planta em cima e o perfil embaixo. Explicamos em [produção automática de pranchas no Civil 3D e Revit](/pt/blog/produccion-planos-automatica-civil-3d-revit).
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Os erros mais buscados" time="~6 min">
+
+- **O greide não aparece na vista.** O perfil não está marcado para ser desenhado nessa vista, seu estilo não mostra nada ou suas cotas ficam fora da altura da vista.
+- **As bandas saem vazias ou com cotas repetidas.** Perfil 1 e perfil 2 não foram atribuídos, ou apontam para o mesmo perfil.
+- **Os rótulos do perfil não aparecem.** O conjunto de rótulos do perfil está vazio ou os estilos de rótulo não mostram nada.
+- **O perfil do terreno não se atualiza.** Seu modo de atualização está como estático, ou foi criado a partir de outra superfície.
+- **A vista se divide sozinha.** A altura da vista é fixa e o terreno não cabe; ajuste a altura ou a opção de divisão.
+- **O perfil não bate com a planta.** O alinhamento foi editado e o greide ficou com estacas antigas: confira o início e o fim do greide.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Redes no perfil, e o que vale automatizar" time="~5 min">
+
+**As redes de tubulação** podem aparecer na vista de perfil: poços de visita, tubos e suas cotas de fundo ao lado do terreno e do greide. Vemos isso em [redes de tubulação no Civil 3D](/pt/blog/redes-tuberias-civil-3d-accesorios).
+
+**O greide alimenta o corredor:** cada mudança de perfil se propaga para o modelo 3D, as seções e os volumes. Explicamos em [corredor no Civil 3D](/pt/blog/corredores-civil-3d-ensamblajes-objetivos).
+
+**O que mais consome tempo num escritório**, e pode ser automatizado:
+
+- Criar os perfis do terreno e as vistas de todas as ruas de um loteamento, com o mesmo estilo e as mesmas bandas.
+- Conferir o greide contra a norma e relatar as curvas que não cumprem.
+- Exportar a tabela de estacas, cotas e inclinações para o Excel.
+- Gerar as pranchas de planta e perfil com o carimbo do escritório.
+
+<ComparisonTable
+  criterionLabel="Tarefa"
+  leftLabel="Com um plugin"
+  rightLabel="À mão"
+  rows="Perfis e vistas de 30 ruas | *Uma execução | Rua por rua || Bandas no padrão do escritório | *Sempre iguais | Configurar cada vista || Conferência contra a norma | *Relatório das curvas que não cumprem | Curva por curva || Tabela de cotas para o Excel | *Automática | Copiar e colar"
+/>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automação do Civil 3D"
+  title="Seus perfis e bandas, com as regras do seu escritório"
+  body="Desenvolvemos plugins para o Civil 3D que criam perfis, vistas e bandas em lote, conferem o greide contra sua norma e geram as pranchas. Somos engenheiros civis e engenheiros de sistemas: projetamos vias e as programamos."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **O próximo passo:** [corredor no Civil 3D, montagens e alvos](/pt/blog/corredores-civil-3d-ensamblajes-objetivos).
+- **Depois do corredor:** [seções transversais no Civil 3D](/pt/blog/secciones-transversales-civil-3d).
+- **As pranchas:** [produção automática de pranchas no Civil 3D e Revit](/pt/blog/produccion-planos-automatica-civil-3d-revit).
+- **A superfície do terreno:** [curvas de nível no Civil 3D](/pt/blog/curvas-de-nivel-civil-3d-google-earth).
+- **O guia completo:** [automatizar o Civil 3D](/pt/blog/automatizar-civil-3d-guia-completa).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Peru"
+  title="Uma equipe de engenheiros civis e engenheiros de sistemas"
+  body="Projetamos com o Civil 3D e o programamos. Trabalhamos com escritórios do Brasil e de toda a América Latina."
+  primaryLabel="Vamos falar do seu projeto"
+  primaryHref="/pt/contacto"
+  secondaryLabel="Ver todos os serviços"
+  secondaryHref="/pt/servicios"
+/>
+
+---
+
+**Nota técnica:** os nomes de comandos correspondem ao Civil 3D 2026. Consulte a ajuda da sua versão se algum mudar.

@@ -21,6 +21,454 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- Captación (oct-2026): importar puntos, perfil longitudinal, parámetros compartidos ----
+  "importar-puntos-civil-3d-excel": {
+    es: {
+      roadmap: {
+        title: "Importar puntos a Civil 3D, en 7 pasos",
+        intro:
+          "Preparar el archivo en Excel, importar, elegir el formato, traer puntos en latitud y longitud, resolver duplicados y errores, y qué hacer después.",
+        steps: [
+          { n: 1, title: "Preparar el archivo", desc: "Sin encabezado, número entero y punto decimal", tag: "Excel" },
+          { n: 2, title: "Importar", desc: "Insertar › Puntos de archivo y vista previa", tag: "Paso a paso" },
+          { n: 3, title: "Elegir el formato", desc: "PNEZD, PENZD y formatos propios", tag: "Formatos" },
+          { n: 4, title: "Latitud y longitud", desc: "Convertir antes o asignar el sistema de coordenadas", tag: "Coordenadas" },
+          { n: 5, title: "Números repetidos", desc: "Siguiente número, desfase, sobrescribir o fusionar", tag: "Duplicados" },
+          { n: 6, title: "Errores más buscados", desc: "Sin formato, puntos que no aparecen, cotas en cero", tag: "Errores" },
+          { n: 7, title: "Después de importar", desc: "Claves de descripción, grupos, superficie y automatización", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre importar puntos a Civil 3D",
+        items: [
+          {
+            q: "¿Cómo importar puntos de Excel a Civil 3D?",
+            a: "Civil 3D no lee archivos .xlsx. Hay que ordenar las columnas, por ejemplo número, norte, este, cota y descripción, borrar la fila de encabezado y guardar como CSV. Después, en Insertar › Puntos de archivo, se agrega el CSV, se elige el formato PNEZD delimitado por comas y se revisa la vista previa antes de aceptar.",
+          },
+          {
+            q: "¿Por qué Civil 3D dice que no encuentra un formato que coincida?",
+            a: "Porque el archivo no calza con el formato elegido. Las causas más comunes son una fila de encabezado, un archivo .xlsx en lugar de CSV, el punto y coma como separador o más columnas de las que espera el formato.",
+          },
+          {
+            q: "¿Por qué no aparecen los puntos después de importarlos?",
+            a: "Primero haz Zoom › Extensión. Si aparecen muy lejos, el norte y el este están invertidos: el archivo era PENZD y se importó como PNEZD. Si no aparecen en ningún lado, el estilo de punto o de etiqueta del grupo está en Ninguno o la capa está apagada.",
+          },
+          {
+            q: "¿Qué diferencia hay entre PNEZD y PENZD?",
+            a: "El orden del norte y el este. PNEZD es número, norte, este, cota y descripción; PENZD pone el este antes que el norte. Elegir el formato equivocado deja los puntos girados y a miles de kilómetros de su lugar.",
+          },
+          {
+            q: "¿Cómo importar puntos en latitud y longitud a Civil 3D?",
+            a: "Hay dos caminos: convertirlos antes a UTM, por ejemplo con un conversor de coordenadas, e importar el PNEZD resultante; o asignar primero el sistema de coordenadas del dibujo en Configuración del dibujo › Unidades y zona y crear un formato con columnas de latitud y longitud.",
+          },
+          {
+            q: "¿Qué hago si el CSV sale con punto y coma y coma decimal?",
+            a: "Es la configuración regional de Windows en español. En Excel, en Opciones › Avanzadas, desmarca Usar separadores del sistema y pon el punto como separador decimal antes de guardar. Si el separador sigue siendo punto y coma, crea en Civil 3D un formato de puntos que lo use.",
+          },
+          {
+            q: "¿Se puede automatizar la importación de puntos en Civil 3D?",
+            a: "Sí. Un plugin puede importar directo desde el Excel de campo, revisar duplicados, cotas en cero y puntos fuera de zona, y crear los grupos y la superficie con las reglas de la oficina. En Zeist desarrollamos ese tipo de plugins para Civil 3D, con instalador y código fuente propiedad del cliente.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Importar pontos no Civil 3D, em 7 passos",
+        intro:
+          "Preparar o arquivo no Excel, importar, escolher o formato, trazer pontos em latitude e longitude, resolver duplicados e erros, e o que fazer depois.",
+        steps: [
+          { n: 1, title: "Preparar o arquivo", desc: "Sem cabeçalho, número inteiro e ponto decimal", tag: "Excel" },
+          { n: 2, title: "Importar", desc: "Inserir › Pontos de arquivo e pré-visualização", tag: "Passo a passo" },
+          { n: 3, title: "Escolher o formato", desc: "PNEZD, PENZD e formatos próprios", tag: "Formatos" },
+          { n: 4, title: "Latitude e longitude", desc: "Converter antes ou atribuir o sistema de coordenadas", tag: "Coordenadas" },
+          { n: 5, title: "Números repetidos", desc: "Próximo número, deslocamento, sobrescrever ou mesclar", tag: "Duplicados" },
+          { n: 6, title: "Erros mais buscados", desc: "Sem formato, pontos que não aparecem, cotas zero", tag: "Erros" },
+          { n: 7, title: "Depois de importar", desc: "Chaves de descrição, grupos, superfície e automação", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre importar pontos no Civil 3D",
+        items: [
+          {
+            q: "Como importar pontos do Excel no Civil 3D?",
+            a: "O Civil 3D não lê arquivos .xlsx. É preciso ordenar as colunas, por exemplo número, norte, este, cota e descrição, apagar a linha de cabeçalho e salvar como CSV. Depois, em Inserir › Pontos de arquivo, adiciona-se o CSV, escolhe-se o formato PNEZD separado por vírgulas e confere-se a pré-visualização antes de aceitar.",
+          },
+          {
+            q: "Por que o Civil 3D diz que não encontra um formato correspondente?",
+            a: "Porque o arquivo não bate com o formato escolhido. As causas mais comuns são uma linha de cabeçalho, um arquivo .xlsx em vez de CSV, o ponto e vírgula como separador ou mais colunas do que o formato espera.",
+          },
+          {
+            q: "Por que os pontos não aparecem depois de importados?",
+            a: "Primeiro faça Zoom › Extensão. Se aparecem muito longe, o norte e o este estão invertidos: o arquivo era PENZD e foi importado como PNEZD. Se não aparecem em lugar nenhum, o estilo de ponto ou de rótulo do grupo está como Nenhum ou a layer está desligada.",
+          },
+          {
+            q: "Qual a diferença entre PNEZD e PENZD?",
+            a: "A ordem do norte e do este. PNEZD é número, norte, este, cota e descrição; PENZD coloca o este antes do norte. Escolher o formato errado deixa os pontos trocados e a milhares de quilômetros do lugar.",
+          },
+          {
+            q: "Como importar pontos em latitude e longitude no Civil 3D?",
+            a: "Há dois caminhos: convertê-los antes para UTM, por exemplo com um conversor de coordenadas, e importar o PNEZD resultante; ou atribuir primeiro o sistema de coordenadas do desenho em Configurações do desenho › Unidades e zona e criar um formato com colunas de latitude e longitude.",
+          },
+          {
+            q: "O que fazer se o CSV sai com ponto e vírgula e vírgula decimal?",
+            a: "É a configuração regional do Windows em português. No Excel, em Opções › Avançado, desmarque Usar separadores do sistema e coloque o ponto como separador decimal antes de salvar. Se o separador continuar sendo ponto e vírgula, crie no Civil 3D um formato de pontos que o use.",
+          },
+          {
+            q: "Dá para automatizar a importação de pontos no Civil 3D?",
+            a: "Sim. Um plugin pode importar direto do Excel de campo, conferir duplicados, cotas zero e pontos fora de zona, e criar os grupos e a superfície com as regras do escritório. Na Zeist desenvolvemos esse tipo de plugin para o Civil 3D, com instalador e código-fonte de propriedade do cliente.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Importing points into Civil 3D, in 7 steps",
+        intro:
+          "Prepare the file in Excel, import it, pick the format, bring in lat/long points, handle duplicates and errors, and what to do afterwards.",
+        steps: [
+          { n: 1, title: "Prepare the file", desc: "No header, whole numbers, decimal point", tag: "Excel" },
+          { n: 2, title: "Import", desc: "Insert › Points from File and the preview", tag: "Step by step" },
+          { n: 3, title: "Pick the format", desc: "PNEZD, PENZD and custom formats", tag: "Formats" },
+          { n: 4, title: "Latitude and longitude", desc: "Convert first or assign the coordinate system", tag: "Coordinates" },
+          { n: 5, title: "Duplicate numbers", desc: "Next number, offset, overwrite or merge", tag: "Duplicates" },
+          { n: 6, title: "Most-searched errors", desc: "No format match, missing points, zero elevations", tag: "Errors" },
+          { n: 7, title: "After importing", desc: "Description keys, groups, surface and automation", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about importing points into Civil 3D",
+        items: [
+          {
+            q: "How do I import points from Excel into Civil 3D?",
+            a: "Civil 3D doesn't read .xlsx files. Order the columns, for example number, northing, easting, elevation and description, delete the header row and save as CSV. Then, under Insert › Points from File, add the CSV, pick the PNEZD comma delimited format and check the preview before clicking OK.",
+          },
+          {
+            q: "Why does Civil 3D say no point file format match found?",
+            a: "Because the file doesn't fit the chosen format. The usual causes are a header row, an .xlsx file instead of CSV, a semicolon delimiter, or more columns than the format expects.",
+          },
+          {
+            q: "Why aren't my imported points showing?",
+            a: "First run Zoom › Extents. If they appear far away, northing and easting are swapped: the file was PENZD and was imported as PNEZD. If they don't appear at all, the group's point or label style is set to None, or the layer is off.",
+          },
+          {
+            q: "What's the difference between PNEZD and PENZD?",
+            a: "The order of northing and easting. PNEZD is number, northing, easting, elevation and description; PENZD puts the easting before the northing. Picking the wrong one leaves the points swapped and miles from where they belong.",
+          },
+          {
+            q: "How do I import latitude and longitude points into Civil 3D?",
+            a: "Two routes: convert them to a projected system first, for example with a coordinate converter, and import the resulting PNEZD file; or assign the drawing's coordinate system first under Drawing Settings › Units and Zone and create a format with latitude and longitude columns.",
+          },
+          {
+            q: "What if the CSV comes out with semicolons and decimal commas?",
+            a: "That's the Windows regional setting. In Excel Options › Advanced, clear Use system separators and set the decimal separator to a period before saving. If the delimiter is still a semicolon, create a point file format in Civil 3D that uses it.",
+          },
+          {
+            q: "Can point import be automated in Civil 3D?",
+            a: "Yes. A plugin can import straight from the field Excel file, check duplicates, zero elevations and out-of-area points, and build point groups and the surface with the firm's rules. Zeist builds these plugins for Civil 3D, with an installer and source code owned by the client.",
+          },
+        ],
+      },
+    },
+  },
+  "perfil-longitudinal-civil-3d": {
+    es: {
+      roadmap: {
+        title: "Perfil longitudinal en Civil 3D, en 7 pasos",
+        intro:
+          "Perfil y vista de perfil, el perfil del terreno, la rasante con curvas verticales, la guitarra, las vistas divididas, los errores y qué automatizar.",
+        steps: [
+          { n: 1, title: "Perfil y vista", desc: "Dos objetos distintos y la escala vertical", tag: "Concepto" },
+          { n: 2, title: "Perfil del terreno", desc: "Desde la superficie y el asistente de la vista", tag: "Terreno" },
+          { n: 3, title: "La rasante", desc: "Tangentes, curvas verticales y valor K", tag: "Diseño" },
+          { n: 4, title: "La guitarra", desc: "Bandas, perfil 1 y perfil 2", tag: "Bandas" },
+          { n: 5, title: "Vistas y láminas", desc: "Vistas divididas, múltiples y planta-perfil", tag: "Planos" },
+          { n: 6, title: "Errores más buscados", desc: "Rasante que no aparece, guitarra vacía, etiquetas", tag: "Errores" },
+          { n: 7, title: "Redes y automatización", desc: "Tuberías en el perfil y perfiles en lote", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre el perfil longitudinal en Civil 3D",
+        items: [
+          {
+            q: "¿Cómo crear un perfil longitudinal en Civil 3D?",
+            a: "Se necesita un alineamiento y una superficie del terreno. En Inicio › Perfil › Crear perfil a partir de superficie se crea el perfil del terreno; con Dibujar en vista de perfil se arma la vista con su altura y sus bandas. Después se dibuja la rasante con las herramientas de creación de perfiles.",
+          },
+          {
+            q: "¿Qué es la guitarra del perfil en Civil 3D?",
+            a: "Es el nombre que se usa en el Perú para las bandas de la vista de perfil: la tabla bajo el perfil con progresivas, cotas de terreno y de rasante, y alturas de corte o relleno. Se configura en las propiedades de la vista de perfil, pestaña Bandas.",
+          },
+          {
+            q: "¿Por qué la guitarra sale vacía o con cotas repetidas?",
+            a: "Porque en la pestaña Bandas de la vista de perfil no están asignados el perfil 1 y el perfil 2, o los dos apuntan al mismo perfil. Lo habitual es asignar el terreno como perfil 1 y la rasante como perfil 2.",
+          },
+          {
+            q: "¿Cómo dibujar la rasante con curvas verticales?",
+            a: "Con las herramientas de creación de perfiles: se configuran las curvas como parabólicas, con largo o valor K, y se dibujan tangentes con curvas punto a punto. Civil 3D coloca una curva vertical en cada PVI, y después se ajusta con pinzamientos o en la tabla de entidades del perfil.",
+          },
+          {
+            q: "¿Cómo dividir un perfil longitudinal muy largo o muy alto?",
+            a: "Si el rango de cotas es muy grande, el asistente de la vista de perfil puede dividirla en varias vistas apiladas. Si el alineamiento es muy largo, el comando de crear varias vistas de perfil genera una vista por tramo de longitud fija.",
+          },
+          {
+            q: "¿Por qué el perfil del terreno no se actualiza?",
+            a: "Porque su modo de actualización está en estático, o porque se creó desde otra superficie. Un perfil del terreno en modo dinámico se actualiza solo cuando cambia la superficie.",
+          },
+          {
+            q: "¿Se pueden automatizar los perfiles en Civil 3D?",
+            a: "Sí. Un plugin puede crear los perfiles y las vistas de muchas calles con la misma guitarra, revisar la rasante contra la norma y exportar las cotas a Excel. En Zeist desarrollamos esas herramientas para Civil 3D con las reglas de cada oficina.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Perfil longitudinal no Civil 3D, em 7 passos",
+        intro:
+          "Perfil e vista de perfil, o perfil do terreno, o greide com curvas verticais, as bandas, as vistas divididas, os erros e o que automatizar.",
+        steps: [
+          { n: 1, title: "Perfil e vista", desc: "Dois objetos diferentes e a escala vertical", tag: "Conceito" },
+          { n: 2, title: "Perfil do terreno", desc: "Da superfície e o assistente da vista", tag: "Terreno" },
+          { n: 3, title: "O greide", desc: "Tangentes, curvas verticais e valor K", tag: "Projeto" },
+          { n: 4, title: "As bandas", desc: "Bandas, perfil 1 e perfil 2", tag: "Bandas" },
+          { n: 5, title: "Vistas e pranchas", desc: "Vistas divididas, múltiplas e planta e perfil", tag: "Pranchas" },
+          { n: 6, title: "Erros mais buscados", desc: "Greide que não aparece, bandas vazias, rótulos", tag: "Erros" },
+          { n: 7, title: "Redes e automação", desc: "Tubulações no perfil e perfis em lote", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre o perfil longitudinal no Civil 3D",
+        items: [
+          {
+            q: "Como criar um perfil longitudinal no Civil 3D?",
+            a: "É preciso um alinhamento e uma superfície do terreno. Em Início › Perfil › Criar perfil a partir de superfície cria-se o perfil do terreno; com Desenhar na vista de perfil monta-se a vista com sua altura e bandas. Depois desenha-se o greide com as ferramentas de criação de perfis.",
+          },
+          {
+            q: "O que são as bandas do perfil no Civil 3D?",
+            a: "São a tabela sob a vista de perfil, com estacas, cotas do terreno e do greide, e alturas de corte ou aterro. São configuradas nas propriedades da vista de perfil, aba Bandas, e podem ser salvas como conjunto de bandas no template.",
+          },
+          {
+            q: "Por que as bandas saem vazias ou com cotas repetidas?",
+            a: "Porque na aba Bandas da vista de perfil não foram atribuídos o perfil 1 e o perfil 2, ou os dois apontam para o mesmo perfil. O usual é atribuir o terreno como perfil 1 e o greide como perfil 2.",
+          },
+          {
+            q: "Como desenhar o greide com curvas verticais?",
+            a: "Com as ferramentas de criação de perfis: configuram-se as curvas como parabólicas, com comprimento ou valor K, e desenham-se tangentes com curvas ponto a ponto. O Civil 3D coloca uma curva vertical em cada PVI, e depois ajusta-se pelos grips ou na tabela de entidades do perfil.",
+          },
+          {
+            q: "Como dividir um perfil longitudinal muito longo ou muito alto?",
+            a: "Se o intervalo de cotas é muito grande, o assistente da vista de perfil pode dividi-la em várias vistas empilhadas. Se o alinhamento é muito longo, o comando de criar várias vistas de perfil gera uma vista por trecho de comprimento fixo.",
+          },
+          {
+            q: "Por que o perfil do terreno não se atualiza?",
+            a: "Porque seu modo de atualização está como estático, ou porque foi criado a partir de outra superfície. Um perfil do terreno em modo dinâmico se atualiza sozinho quando a superfície muda.",
+          },
+          {
+            q: "Dá para automatizar os perfis no Civil 3D?",
+            a: "Sim. Um plugin pode criar os perfis e as vistas de muitas ruas com as mesmas bandas, conferir o greide contra a norma e exportar as cotas para o Excel. Na Zeist desenvolvemos essas ferramentas para o Civil 3D com as regras de cada escritório.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Civil 3D profiles, in 7 steps",
+        intro:
+          "Profiles and profile views, the existing ground profile, the finished grade with vertical curves, bands, split views, errors and what to automate.",
+        steps: [
+          { n: 1, title: "Profile and view", desc: "Two separate objects and vertical exaggeration", tag: "Concept" },
+          { n: 2, title: "Existing ground", desc: "From the surface and the profile view wizard", tag: "Ground" },
+          { n: 3, title: "Finished grade", desc: "Tangents, vertical curves and K values", tag: "Design" },
+          { n: 4, title: "Bands", desc: "Data bands, Profile 1 and Profile 2", tag: "Bands" },
+          { n: 5, title: "Views and sheets", desc: "Split, multiple and plan and profile sheets", tag: "Sheets" },
+          { n: 6, title: "Most-searched errors", desc: "Missing grade, blank bands, labels", tag: "Errors" },
+          { n: 7, title: "Pipes and automation", desc: "Pipe networks in the profile and bulk profiles", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Civil 3D profiles",
+        items: [
+          {
+            q: "How do I create a profile in Civil 3D?",
+            a: "You need an alignment and an existing ground surface. Home › Profile › Create Surface Profile creates the ground profile; Draw in Profile View builds the view with its height and bands. Then you draw the finished grade with the Profile Creation Tools.",
+          },
+          {
+            q: "What are profile view bands in Civil 3D?",
+            a: "They're the data table below the profile view, with stations, ground and design elevations, and cut or fill depths. You set them up in Profile View Properties, on the Bands tab, and can save them as a band set in the template.",
+          },
+          {
+            q: "Why are my profile band elevation labels blank or repeated?",
+            a: "Because Profile 1 and Profile 2 aren't assigned on the Bands tab of the profile view, or both point to the same profile. Usually existing ground is Profile 1 and finished grade is Profile 2.",
+          },
+          {
+            q: "How do I draw the finished grade with vertical curves?",
+            a: "With the Profile Creation Tools: set curves to parabolic, with a length or K value, and draw tangents with curves point by point. Civil 3D places a vertical curve at each PVI, and you adjust it with grips or in the Profile Entities grid.",
+          },
+          {
+            q: "How do I split a very long or very tall profile view?",
+            a: "If the elevation range is too large, the profile view wizard can split it into stacked views. If the alignment is very long, the Create Multiple Profile Views command generates one view per fixed length.",
+          },
+          {
+            q: "Why doesn't the existing ground profile update?",
+            a: "Because its update mode is set to static, or it was created from a different surface. A dynamic ground profile updates on its own when the surface changes.",
+          },
+          {
+            q: "Can Civil 3D profiles be automated?",
+            a: "Yes. A plugin can create profiles and views for many streets with the same bands, check the grade against the standard and export elevations to Excel. Zeist builds these tools for Civil 3D around each firm's rules.",
+          },
+        ],
+      },
+    },
+  },
+  "parametros-compartidos-revit": {
+    es: {
+      roadmap: {
+        title: "Parámetros compartidos en Revit, en 7 pasos",
+        intro:
+          "Los tres tipos de parámetros, el archivo .txt, cómo crearlos y cargarlos, su uso en tablas, etiquetas y cajetín, los errores, las buenas prácticas y qué automatizar.",
+        steps: [
+          { n: 1, title: "Tres tipos", desc: "De familia, de proyecto y compartidos", tag: "Concepto" },
+          { n: 2, title: "El archivo .txt", desc: "GUID, grupos y una sola fuente para la oficina", tag: "Archivo" },
+          { n: 3, title: "Crear y cargar", desc: "En el archivo, en el proyecto y en la familia", tag: "Paso a paso" },
+          { n: 4, title: "Tablas, etiquetas y cajetín", desc: "Dónde se usan y cómo", tag: "Uso" },
+          { n: 5, title: "Errores más buscados", desc: "No aparece, signo de interrogación, duplicados", tag: "Errores" },
+          { n: 6, title: "Buenas prácticas", desc: "Responsable, plantillas y auditorías", tag: "Estándar" },
+          { n: 7, title: "Qué automatizar", desc: "Carga en lote, duplicados y Excel", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre parámetros compartidos en Revit",
+        items: [
+          {
+            q: "¿Qué es un parámetro compartido en Revit?",
+            a: "Es un parámetro definido en un archivo de texto externo, con un identificador único llamado GUID, que se puede usar en muchas familias y proyectos. Es el único tipo que se puede usar a la vez en tablas y en etiquetas.",
+          },
+          {
+            q: "¿Qué diferencia hay entre un parámetro de proyecto y uno compartido?",
+            a: "El parámetro de proyecto se define en un proyecto y se puede tabular, pero no etiquetar. El compartido se define en un archivo externo con GUID, se puede tabular y etiquetar, y se usa igual en familias y en otros proyectos. Un parámetro de proyecto también puede crearse a partir de uno compartido.",
+          },
+          {
+            q: "¿Dónde está el archivo de parámetros compartidos de Revit?",
+            a: "Puede estar en cualquier carpeta. Cada usuario elige qué archivo usa en Gestionar › Parámetros compartidos, y Revit recuerda esa ruta en su equipo. Lo recomendable es un solo archivo maestro en una carpeta de red de solo lectura.",
+          },
+          {
+            q: "¿Por qué mi parámetro no aparece en la tabla de planificación?",
+            a: "Porque es un parámetro de familia, que no se puede tabular, o porque el parámetro no está vinculado a la categoría de esa tabla. Si debe aparecer en tablas y etiquetas, tiene que ser un parámetro compartido.",
+          },
+          {
+            q: "¿Por qué la etiqueta muestra un signo de interrogación?",
+            a: "Porque el parámetro existe en el elemento pero está vacío. Si la etiqueta no muestra nada, el elemento ni siquiera tiene ese parámetro: su familia no lo incluye o el parámetro de proyecto no está en su categoría.",
+          },
+          {
+            q: "¿Qué pasa si creo dos parámetros compartidos con el mismo nombre?",
+            a: "Tendrán GUID distintos y Revit los tratará como datos diferentes, aunque se llamen igual. La tabla puede leer uno y la etiqueta otro, y los valores no coinciden. Por eso nunca hay que borrar y recrear un parámetro: se recupera exportándolo desde una familia que lo tenga.",
+          },
+          {
+            q: "¿Se puede automatizar la carga de parámetros compartidos?",
+            a: "Sí. Con la API de Revit, un plugin carga los parámetros de la oficina en muchos proyectos y familias a la vez, detecta duplicados y llena valores desde Excel. En Zeist desarrollamos esas herramientas con instalador y código fuente propiedad del cliente.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Parâmetros compartilhados no Revit, em 7 passos",
+        intro:
+          "Os três tipos de parâmetros, o arquivo .txt, como criá-los e carregá-los, seu uso em tabelas, tags e carimbo, os erros, as boas práticas e o que automatizar.",
+        steps: [
+          { n: 1, title: "Três tipos", desc: "De família, de projeto e compartilhados", tag: "Conceito" },
+          { n: 2, title: "O arquivo .txt", desc: "GUID, grupos e uma única fonte para o escritório", tag: "Arquivo" },
+          { n: 3, title: "Criar e carregar", desc: "No arquivo, no projeto e na família", tag: "Passo a passo" },
+          { n: 4, title: "Tabelas, tags e carimbo", desc: "Onde são usados e como", tag: "Uso" },
+          { n: 5, title: "Erros mais buscados", desc: "Não aparece, ponto de interrogação, duplicados", tag: "Erros" },
+          { n: 6, title: "Boas práticas", desc: "Responsável, templates e auditorias", tag: "Padrão" },
+          { n: 7, title: "O que automatizar", desc: "Carga em lote, duplicados e Excel", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre parâmetros compartilhados no Revit",
+        items: [
+          {
+            q: "O que é um parâmetro compartilhado no Revit?",
+            a: "É um parâmetro definido num arquivo de texto externo, com um identificador único chamado GUID, que pode ser usado em muitas famílias e projetos. É o único tipo que pode ser usado ao mesmo tempo em tabelas e em tags.",
+          },
+          {
+            q: "Qual a diferença entre parâmetro de projeto e parâmetro compartilhado?",
+            a: "O parâmetro de projeto é definido num projeto e pode ir em tabelas, mas não em tags. O compartilhado é definido num arquivo externo com GUID, vai em tabelas e tags, e é usado igual em famílias e em outros projetos. Um parâmetro de projeto também pode ser criado a partir de um compartilhado.",
+          },
+          {
+            q: "Onde fica o arquivo de parâmetros compartilhados do Revit?",
+            a: "Pode ficar em qualquer pasta. Cada usuário escolhe qual arquivo usa em Gerenciar › Parâmetros compartilhados, e o Revit lembra esse caminho no computador. O recomendável é um único arquivo mestre numa pasta de rede somente leitura.",
+          },
+          {
+            q: "Por que meu parâmetro não aparece na tabela?",
+            a: "Porque é um parâmetro de família, que não pode ir em tabelas, ou porque o parâmetro não está vinculado à categoria daquela tabela. Se deve aparecer em tabelas e tags, precisa ser um parâmetro compartilhado.",
+          },
+          {
+            q: "Por que a tag mostra um ponto de interrogação?",
+            a: "Porque o parâmetro existe no elemento, mas está vazio. Se a tag não mostra nada, o elemento nem tem esse parâmetro: sua família não o inclui ou o parâmetro de projeto não está na sua categoria.",
+          },
+          {
+            q: "O que acontece se eu criar dois parâmetros compartilhados com o mesmo nome?",
+            a: "Terão GUIDs diferentes e o Revit os tratará como dados diferentes, mesmo com o mesmo nome. A tabela pode ler um e a tag outro, e os valores não batem. Por isso nunca se deve apagar e recriar um parâmetro: ele é recuperado exportando-o de uma família que o tenha.",
+          },
+          {
+            q: "Dá para automatizar a carga de parâmetros compartilhados?",
+            a: "Sim. Com a API do Revit, um plugin carrega os parâmetros do escritório em muitos projetos e famílias de uma vez, detecta duplicados e preenche valores pelo Excel. Na Zeist desenvolvemos essas ferramentas com instalador e código-fonte de propriedade do cliente.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Revit shared parameters, in 7 steps",
+        intro:
+          "The three kinds of parameters, the .txt file, how to create and load them, using them in schedules, tags and title blocks, errors, best practices and what to automate.",
+        steps: [
+          { n: 1, title: "Three kinds", desc: "Family, project and shared parameters", tag: "Concept" },
+          { n: 2, title: "The .txt file", desc: "GUIDs, groups and one source for the firm", tag: "File" },
+          { n: 3, title: "Create and load", desc: "In the file, the project and the family", tag: "Step by step" },
+          { n: 4, title: "Schedules, tags, title blocks", desc: "Where they're used and how", tag: "Use" },
+          { n: 5, title: "Most-searched errors", desc: "Not showing, question marks, duplicates", tag: "Errors" },
+          { n: 6, title: "Best practices", desc: "An owner, templates and audits", tag: "Standards" },
+          { n: 7, title: "What to automate", desc: "Bulk loading, duplicates and Excel", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Revit shared parameters",
+        items: [
+          {
+            q: "What is a shared parameter in Revit?",
+            a: "It's a parameter defined in an external text file, with a unique identifier called a GUID, that can be used across many families and projects. It's the only kind that can be used in both schedules and tags.",
+          },
+          {
+            q: "What's the difference between a project parameter and a shared parameter?",
+            a: "A project parameter is defined in one project and can be scheduled but not tagged. A shared parameter is defined in an external file with a GUID, can be scheduled and tagged, and works the same in families and other projects. A project parameter can also be created from a shared one.",
+          },
+          {
+            q: "Where is the Revit shared parameters file located?",
+            a: "It can be in any folder. Each user picks the file under Manage › Shared Parameters, and Revit remembers that path on their machine. Best practice is a single master file in a read-only network folder.",
+          },
+          {
+            q: "Why isn't my shared parameter showing in the schedule?",
+            a: "Because it's a family parameter, which can't be scheduled, or because the parameter isn't bound to that schedule's category. If it needs to appear in schedules and tags, it has to be a shared parameter.",
+          },
+          {
+            q: "Why does my tag show a question mark?",
+            a: "Because the parameter exists on the element but is empty. If the tag shows nothing at all, the element doesn't have the parameter: its family doesn't include it, or the project parameter isn't bound to its category.",
+          },
+          {
+            q: "What happens if I create two shared parameters with the same name?",
+            a: "They get different GUIDs and Revit treats them as different data, even with the same name. A schedule can read one and a tag the other, so values don't match. That's why you never delete and recreate a parameter: recover it by exporting it from a family that has it.",
+          },
+          {
+            q: "Can loading shared parameters be automated?",
+            a: "Yes. With the Revit API, a plugin loads the firm's parameters into many projects and families at once, finds duplicates and fills values from Excel. Zeist builds these tools with an installer and source code owned by the client.",
+          },
+        ],
+      },
+    },
+  },
   // ---- Captación (oct-2026): revisiones y firmas en lote en Revit ----
   "revisiones-firmas-revit-varios-planos": {
     es: {

@@ -1,0 +1,198 @@
+---
+title: "Importar puntos a Civil 3D desde Excel, CSV o TXT: formatos, latitud y longitud, duplicados y los errores más comunes"
+seoTitle: "Importar puntos a Civil 3D desde Excel, CSV o TXT"
+ctaTitle: "¿Tu equipo importa y ordena puntos a mano en cada levantamiento? Lo automatizamos con tus códigos."
+description: "Cómo importar puntos a Civil 3D desde Excel: preparar el CSV, elegir el formato PNEZD, puntos en latitud y longitud, duplicados y por qué no aparecen."
+date: "2026-10-09T17:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Puntos COGO
+  - Topografía
+  - Excel
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Puntos · Topografía"
+  title="Importar puntos parece lo más fácil de Civil 3D. Hasta que el archivo no entra o los puntos aparecen en otro lado."
+  highlight="Cómo preparar el archivo en Excel, qué formato elegir, cómo traer puntos en latitud y longitud, qué hacer con los números repetidos y por qué a veces los puntos no se ven. Con la causa real de cada error."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Para importar puntos a Civil 3D se usa Insertar › Puntos de archivo. Civil 3D no lee archivos de Excel: hay que guardarlos como CSV o TXT, sin fila de encabezado y con el número de punto como número entero. Se elige el formato que coincide con el orden de las columnas, casi siempre PNEZD (número, norte, este, cota y descripción), separado por comas para CSV o por espacios para TXT. La vista previa muestra si las columnas se leen bien. Si los puntos vienen en latitud y longitud, el dibujo necesita antes un sistema de coordenadas.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Punto COGO** — El punto propio de Civil 3D: guarda número, coordenadas, cota y descripción, y se dibuja con su estilo y su etiqueta.
+- **PNEZD** — El orden de columnas más usado: Punto, Norte, Este, cota (Z) y Descripción.
+- **CSV** — Un archivo de texto con los valores separados por comas. Excel lo guarda, pero no es un archivo de Excel.
+- **Formato de archivo de puntos** — La plantilla que le dice a Civil 3D qué hay en cada columna y cómo están separadas.
+- **Grupo de puntos** — Una colección de puntos con un criterio común, por ejemplo todos los de terreno natural.
+- **Clave de descripción** — Una regla que asigna estilo, etiqueta y capa según el código del punto, como BV para borde de vía.
+- **Sistema de coordenadas** — La proyección del dibujo, por ejemplo WGS 84 UTM zona 17 Sur.
+
+Está escrito para topógrafos e ingenieros que reciben levantamientos y los llevan a Civil 3D.
+</Callout>
+
+## Por qué falla algo tan simple
+
+El levantamiento llega en Excel, en un TXT de la estación total o en un CSV del GNSS. Cada uno con su orden de columnas, su separador y, a veces, con la coma decimal de Windows en español. Civil 3D es estricto: si el archivo no calza exactamente con el formato elegido, no importa nada o importa puntos en el lugar equivocado.
+
+Esta guía va en el orden en que conviene hacerlo: preparar el archivo, importar, elegir el formato y resolver los problemas.
+
+<AnimatedFlow
+  title="Del levantamiento a la superficie"
+  nodes="Excel o TXT|CSV limpio|Puntos de archivo|Grupos y superficie"
+  subs="Lo que entrega campo|Sin encabezado, con punto decimal|Formato PNEZD y vista previa|Claves de descripción y terreno"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Preparar el archivo en Excel" time="~6 min">
+
+Civil 3D no lee archivos .xlsx. Antes de importar:
+
+1. **Ordena las columnas** como el formato que vas a usar. Para PNEZD: número, norte, este, cota y descripción.
+2. **Borra la fila de encabezado.** Una fila con títulos como «Norte» o «Este» hace que el archivo no coincida con ningún formato.
+3. **El número de punto debe ser un número entero.** Si tus puntos se llaman BM-1 o E-12, ese nombre va en la descripción o en un formato propio con columna de nombre.
+4. **Quita las comas de la descripción.** «BV, lado izquierdo» parte la fila en dos columnas y desordena todo lo que viene después.
+5. **Guarda como CSV (delimitado por comas)** y ábrelo en el Bloc de notas para ver qué guardó Excel de verdad.
+
+<Callout type="warn" title="La trampa de la coma decimal">
+Con Windows en español, Excel suele guardar el CSV con punto y coma como separador y coma decimal: «1;9102837,452;717207,118». Civil 3D espera punto decimal. Para evitarlo, en Excel ve a Opciones › Avanzadas, desmarca Usar separadores del sistema y pon el punto como separador decimal antes de guardar. Si el archivo sigue saliendo con punto y coma, crea un formato de puntos que use ese separador.
+</Callout>
+
+El [conversor de coordenadas gratuito](/es/herramientas/conversor-de-coordenadas) evita estos tres problemas de una vez: descarga un PNEZD con punto decimal, sin comas en la descripción y con los puntos numerados, y si un punto se llama BM-1, mueve el nombre a la descripción.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Importar, paso a paso" time="~5 min">
+
+1. Pestaña **Insertar** › **Puntos de archivo** (Points from File).
+2. Agrega el archivo con el botón de añadir.
+3. Elige el **formato de archivo de puntos** que coincide con tus columnas.
+4. Mira la **vista previa**: los nortes deben tener siete cifras enteras en UTM del Perú y las cotas, valores razonables. Si los números se ven corridos de columna, el formato no es el correcto.
+5. Si quieres, marca **Añadir puntos a grupo de puntos** y crea un grupo con el nombre del levantamiento.
+6. Revisa las **opciones avanzadas** antes de aceptar: el ajuste de elevación y la transformación de coordenadas cambian cotas o coordenadas, y conviene activarlas solo si sabes que las necesitas.
+
+Después de importar, usa Zoom › Extensión para ver dónde quedaron todos los puntos.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Qué formato elegir" time="~5 min">
+
+| Si tu archivo tiene | Formato |
+|---|---|
+| Número, norte, este, cota, descripción, separados por comas | PNEZD (comma delimited) |
+| Lo mismo, separados por espacios (típico de un TXT) | PNEZD (space delimited) |
+| Número, **este**, norte, cota, descripción | PENZD |
+| Solo norte, este y cota | NEZ |
+| Un orden distinto o un separador propio | Un formato nuevo en Administrar formatos |
+
+**Este primero o norte primero** es la confusión más común: muchos colectores y hojas de cálculo entregan el este antes que el norte. Si eliges PNEZD para un archivo PENZD, los puntos quedan girados y a miles de kilómetros.
+
+**Para crear un formato propio**, en el cuadro de importación entra a Administrar formatos, copia uno parecido y cambia el orden de las columnas o el separador. Queda guardado en el dibujo y en la plantilla, si lo creas ahí.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Puntos en latitud y longitud" time="~5 min">
+
+Los puntos de Google Earth, de un GPS de mano o de muchos receptores GNSS vienen en grados. Hay dos caminos:
+
+**Convertirlos antes.** Pega los puntos en el [conversor de coordenadas](/es/herramientas/conversor-de-coordenadas), revísalos en el mapa y descarga el PNEZD en UTM. Es lo más seguro, porque ves dónde caen antes de importarlos.
+
+**Importarlos en grados.** Primero asigna el sistema de coordenadas del dibujo en Configuración del dibujo › Unidades y zona, por ejemplo WGS 84 UTM zona 17 Sur para Trujillo. Después crea un formato con columnas de latitud y longitud. Sin sistema de coordenadas, Civil 3D no sabe cómo proyectar los grados.
+
+<Callout type="warn" title="Revisa el datum">
+Un levantamiento antiguo en PSAD56 y un plano nuevo en WGS 84 pueden diferir cientos de metros. En Trujillo, la diferencia ronda los 450 metros. Lo explicamos en [coordenadas UTM en Trujillo y La Libertad](/es/blog/coordenadas-utm-trujillo-la-libertad).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Números de punto repetidos" time="~4 min">
+
+Si importas un punto con un número que ya existe en el dibujo, Civil 3D abre el cuadro de número de punto duplicado. Las opciones:
+
+- **Usar el siguiente número de punto:** le da el siguiente número libre.
+- **Añadir un desfase:** suma un valor fijo, por ejemplo 10000, al número del punto nuevo.
+- **Secuenciar desde:** renumera los puntos nuevos desde el número que indiques.
+- **Sobrescribir:** reemplaza el punto existente por el nuevo.
+- **Fusionar:** actualiza el punto existente con los datos del nuevo, sin borrar lo que el nuevo no trae.
+
+Con **Aplicar a todo** se usa la misma respuesta para el resto del archivo.
+
+<Callout type="tip" title="Una regla que evita el problema">
+Asigna un rango de números a cada levantamiento o a cada brigada: 1 a 9999 para el primero, 10000 a 19999 para el segundo. Así nunca se pisan y el número ya dice de dónde viene el punto.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Los errores más buscados" time="~6 min">
+
+- **«No se encontró un formato que coincida».** El archivo tiene encabezado, es un .xlsx, usa punto y coma o tiene más columnas que el formato.
+- **Los puntos no aparecen.** Haz Zoom › Extensión. Si aparecen lejísimos, el norte y el este están invertidos. Si no aparecen en ningún lado, el estilo o la etiqueta del grupo están en «Ninguno» o la capa está apagada.
+- **Todas las cotas salen en cero.** El formato elegido no tiene columna de cota o la cota está en otra posición.
+- **Los puntos caen desplazados cientos de metros.** El datum del archivo no es el del plano, o se importaron grados sin sistema de coordenadas.
+- **La descripción sale cortada.** Había una coma dentro del texto.
+- **Los números salen corridos.** Hay números de punto repetidos y Civil 3D usó el siguiente libre sin que lo notaras.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Después de importar, y qué conviene automatizar" time="~5 min">
+
+Importar es la mitad. Lo que hace útil al levantamiento:
+
+- **Claves de descripción.** Asignan estilo, etiqueta y capa según el código: todo lo que empieza con BV va a la capa de bordes de vía con su símbolo. Se configuran una vez en la plantilla.
+- **Grupos de puntos** por código, para decidir qué entra en la superficie del terreno y qué no.
+- **La superficie**, con líneas de quiebre y contorno. Lo contamos en [curvas de nivel en Civil 3D](/es/blog/curvas-de-nivel-civil-3d-google-earth).
+
+**Lo que más tiempo consume en una oficina**, y se puede automatizar:
+
+- Importar directo desde el Excel de campo, sin pasar por CSV, con el orden de columnas de cada brigada.
+- Revisar antes de importar: números repetidos, cotas en cero, puntos fuera de la zona del proyecto o códigos que no existen en las claves.
+- Crear los grupos por código y la superficie con las reglas de la oficina.
+- Exportar puntos del dibujo a Excel, como hace una de las [rutinas LISP para AutoCAD y Civil 3D](/es/blog/rutinas-lisp-autocad-civil-3d).
+
+<ComparisonTable
+  criterionLabel="Tarea"
+  leftLabel="Con un plugin"
+  rightLabel="A mano"
+  rows="Excel de campo a Civil 3D | *Directo, sin CSV | Guardar CSV y revisar separadores || Revisión previa | *Duplicados, cotas en cero y fuera de zona | Después, al ver el error || Grupos y superficie | *Con las reglas de la oficina | Uno por uno || Cada brigada con su formato | *Detectado solo | Elegir el formato cada vez"
+/>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automatización de Civil 3D"
+  title="Del levantamiento a la superficie, en un paso"
+  body="Desarrollamos plugins para Civil 3D que importan el Excel de campo, revisan los puntos, arman los grupos por código y crean la superficie con las reglas de tu oficina. Somos ingenieros civiles e ingenieros de sistemas."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Convierte antes de importar:** [conversor de coordenadas UTM y geográficas](/es/herramientas/conversor-de-coordenadas).
+- **El paso siguiente:** [curvas de nivel en Civil 3D, del levantamiento a la superficie](/es/blog/curvas-de-nivel-civil-3d-google-earth).
+- **Si trabajas en La Libertad:** [coordenadas UTM en Trujillo, zonas y datum](/es/blog/coordenadas-utm-trujillo-la-libertad).
+- **La guía completa:** [automatizar Civil 3D](/es/blog/automatizar-civil-3d-guia-completa).
+- **Sin código:** [10 scripts de Dynamo para Civil 3D](/es/blog/dynamo-civil-3d-scripts).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Trabajamos con levantamientos y con Civil 3D todos los días, y programamos las herramientas que los procesan. Atendemos oficinas de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota técnica:** los nombres de comandos corresponden a Civil 3D 2026. Revisa la ayuda de tu versión si alguno cambia.

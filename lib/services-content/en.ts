@@ -146,6 +146,7 @@ export const servicesEn: Record<ServiceSlug, ServicePage> = {
       "corredores-civil-3d-ensamblajes-objetivos",
       "plugin-revit-exportar-pdf-dwg-masivo",
       "revisiones-firmas-revit-varios-planos",
+      "parametros-compartidos-revit",
     ],
     faqs: [
       {
@@ -312,6 +313,8 @@ export const servicesEn: Record<ServiceSlug, ServicePage> = {
       "automatizar-tareas-revit-dynamo-plugins",
       "dynamo-csharp-con-ia-claude",
       "automatizar-civil-3d-guia-completa",
+      "importar-puntos-civil-3d-excel",
+      "perfil-longitudinal-civil-3d",
     ],
     faqs: [
       {

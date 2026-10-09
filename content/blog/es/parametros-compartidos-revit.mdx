@@ -1,0 +1,203 @@
+---
+title: "Parámetros compartidos en Revit: qué son, cómo crearlos, el archivo .txt, el cajetín y los errores que más se repiten"
+seoTitle: "Parámetros compartidos en Revit: guía y errores"
+ctaTitle: "¿Cada proyecto de tu oficina tiene parámetros distintos? Los estandarizamos y los cargamos en lote."
+description: "Qué son los parámetros compartidos de Revit, en qué se diferencian de los de familia y proyecto, cómo crearlos y usarlos en tablas, etiquetas y el cajetín."
+date: "2026-10-09T19:00:00.000Z"
+author: "Zeist"
+tags:
+  - Revit
+  - Parámetros compartidos
+  - Familias
+  - Estándares BIM
+  - Plugins para Revit
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Revit · Parámetros"
+  title="Casi todo lo que se automatiza en Revit pasa por un parámetro compartido. Y casi todos los desórdenes también."
+  highlight="Qué son, en qué se diferencian de los parámetros de familia y de proyecto, cómo se crean y se cargan, cómo se usan en tablas, etiquetas y el cajetín, y por qué un parámetro duplicado puede romper un proyecto entero."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Un parámetro compartido de Revit es un parámetro definido en un archivo de texto externo, con un identificador único llamado GUID, que se puede usar en muchas familias y proyectos. Es el único tipo que se puede poner a la vez en tablas y en etiquetas: los parámetros de familia no aparecen en ninguna de las dos, y los de proyecto se pueden tabular pero no etiquetar. Se crean en Gestionar › Parámetros compartidos. La regla de oro: un solo archivo para toda la oficina, en una carpeta de solo lectura, y nunca recrear un parámetro que ya existe.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Parámetro** — Un dato de un elemento: código, material, fabricante, quién dibujó una lámina.
+- **Familia** — Cada tipo de objeto de Revit: una puerta, una viga, un cajetín.
+- **Tabla de planificación** — La tabla de Revit que lista elementos con sus parámetros.
+- **Etiqueta** — La anotación que muestra un parámetro junto al elemento en el plano.
+- **GUID** — El código único con el que Revit reconoce un parámetro compartido, aunque otro tenga el mismo nombre.
+- **Ejemplar o tipo** — Si el valor cambia en cada elemento o es igual para todos los de un mismo tipo.
+
+Está escrito para coordinadores BIM y modeladores que arman familias, tablas y plantillas en Revit.
+</Callout>
+
+## Por qué importa tanto
+
+Una tabla de metrados que suma lo mismo dos veces, una etiqueta que muestra un signo de interrogación, un cajetín que no lee el número de colegiatura: detrás de muchos de estos problemas hay un parámetro mal definido. Y cuando una oficina quiere automatizar, los plugins leen y escriben justamente en esos parámetros. Ordenarlos es el primer paso.
+
+<AnimatedFlow
+  title="De un archivo a todos los proyectos"
+  nodes="Archivo .txt|Familias|Proyectos|Tablas, etiquetas y cajetín"
+  subs="Un GUID por parámetro|El mismo parámetro en cada una|Vinculado a sus categorías|Leen el mismo dato"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Los tres tipos de parámetros" time="~5 min">
+
+| Tipo | Dónde se define | Tablas | Etiquetas |
+|---|---|---|---|
+| De familia | Dentro de la familia | No | No |
+| De proyecto | En el proyecto, por categoría | Sí | No |
+| Compartido | En un archivo .txt externo, con GUID | Sí | Sí |
+
+**La diferencia de fondo es el GUID.** Revit reconoce un parámetro compartido por su GUID, no por su nombre. Por eso el mismo parámetro puede estar en cien familias y en diez proyectos y Revit sabe que es el mismo dato. Un parámetro de familia, en cambio, solo existe dentro de esa familia.
+
+**Cuándo usar cada uno:**
+
+- **De familia:** para controlar la geometría interna, como un ancho o un ángulo que nadie va a tabular.
+- **De proyecto:** para un dato que solo se tabula o filtra en ese proyecto.
+- **Compartido:** para todo lo que se etiqueta, se tabula en varios proyectos, va al cajetín o lo lee un plugin.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. El archivo de parámetros compartidos" time="~6 min">
+
+Los parámetros compartidos viven en un **archivo de texto** que guarda, para cada uno, su nombre, su GUID, su tipo de dato y el grupo al que pertenece. El propio archivo advierte en su encabezado que no se edite a mano.
+
+**Dónde está:** en cualquier carpeta. Cada usuario elige qué archivo usa en Gestionar › Parámetros compartidos, y Revit recuerda esa ruta en su equipo.
+
+**Lo que poca gente sabe:** una vez que un parámetro compartido está en un proyecto o en una familia, su definición queda guardada ahí. El archivo solo se necesita para **agregar** parámetros nuevos. Si el archivo se pierde, los proyectos siguen funcionando, y un parámetro se puede recuperar exportándolo desde una familia que lo tenga, con su mismo GUID. Lo que nunca hay que hacer es crearlo de nuevo con el mismo nombre.
+
+**Las reglas de una oficina ordenada:**
+
+- **Un solo archivo maestro**, en una carpeta de red de solo lectura para todos menos el responsable.
+- **Grupos por uso**, como Láminas, Estructuras o Metrados.
+- **Nombres con prefijo de la oficina**, para no confundirlos con los de fabricantes o clientes.
+- **Nunca borrar y recrear** un parámetro: el nuevo tendría otro GUID.
+
+<Callout type="info" title="La alternativa en la nube">
+Desde Revit 2023 existe el servicio de parámetros de Autodesk, que guarda las definiciones en la biblioteca de la cuenta de Autodesk Construction Cloud en lugar de un archivo de texto. Requiere esa cuenta y que un administrador cree las colecciones.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Crear y cargar un parámetro compartido" time="~6 min">
+
+**Crearlo en el archivo:**
+
+1. Gestionar › Parámetros compartidos.
+2. Elige el archivo o crea uno nuevo.
+3. Crea un grupo, o elige uno existente.
+4. Crea el parámetro: nombre, tipo de dato, como texto, número, longitud o sí/no, y una descripción que explique para qué sirve.
+
+**Agregarlo al proyecto:**
+
+1. Gestionar › Parámetros de proyecto › Añadir.
+2. Elige **Parámetro compartido** y selecciónalo del archivo.
+3. Decide si es de **ejemplar** o de **tipo**, en qué grupo de Propiedades aparece y a qué **categorías** se aplica.
+
+**Agregarlo a una familia:** en el editor de familias, Tipos de familia › Nuevo parámetro › Parámetro compartido. Si la familia y el proyecto usan el mismo parámetro compartido, Revit los reconoce como uno solo al cargar la familia.
+
+<Callout type="warn" title="El tipo de dato no se cambia">
+Un parámetro compartido creado como texto no se puede convertir en número después. Si te equivocaste, hay que crear otro con otro nombre y migrar los valores. Por eso conviene definir bien el archivo antes de usarlo en proyectos reales.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. En tablas, etiquetas y el cajetín" time="~5 min">
+
+- **Tablas de planificación.** Un parámetro compartido aparece en la lista de campos de las tablas de sus categorías, y se puede editar desde la tabla. Si necesitas llenarlo desde Excel, lo vemos en [exportar tablas de Revit a Excel y reimportarlas](/es/blog/exportar-tablas-revit-excel-editar-parametros).
+- **Etiquetas.** En la familia de etiqueta, el rótulo se arma con el mismo parámetro compartido. Así la etiqueta lee el valor de cualquier elemento que lo tenga.
+- **El cajetín.** Para mostrar un dato propio de la oficina en el cajetín, como el número de colegiatura del ingeniero o la especialidad, se crea un parámetro compartido, se agrega al proyecto en la categoría Láminas y se usa en el rótulo del cajetín. Lo contamos en [revisiones y firmas en Revit para varios planos](/es/blog/revisiones-firmas-revit-varios-planos).
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Los errores más buscados" time="~6 min">
+
+- **El parámetro no aparece en la tabla.** Es un parámetro de familia, no compartido; o no está vinculado a la categoría de esa tabla.
+- **La etiqueta no muestra nada.** El elemento no tiene ese parámetro: su familia no lo incluye o el parámetro de proyecto no está en su categoría.
+- **La etiqueta muestra un signo de interrogación.** El parámetro existe, pero está vacío en ese elemento.
+- **Dos parámetros con el mismo nombre.** Alguien creó otro con el mismo nombre en otro archivo: tiene otro GUID y Revit los trata como datos distintos. La tabla lee uno, la etiqueta otro y los valores no coinciden.
+- **No encuentro el parámetro al cargarlo.** Revit está apuntando a otro archivo de parámetros compartidos; revisa la ruta en Gestionar › Parámetros compartidos.
+- **Ejemplar o tipo equivocado.** Si el valor debe cambiar en cada elemento y se creó como de tipo, al cambiarlo cambian todos los del mismo tipo.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Buenas prácticas para toda la oficina" time="~4 min">
+
+- **Un responsable** del archivo maestro, y un registro de cada parámetro nuevo: para qué sirve, quién lo pidió, en qué categorías va.
+- **Plantillas con los parámetros ya cargados**, para que cada proyecto empiece igual.
+- **Familias revisadas** antes de entrar a la biblioteca: que usen los parámetros del archivo maestro y no copias.
+- **Auditorías periódicas** de los proyectos para encontrar parámetros duplicados o huérfanos. Es parte de lo que revisa una [auditoría BIM](/es/blog/auditoria-bim-checklist-empresa).
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Qué conviene automatizar con un plugin" time="~6 min">
+
+- **Cargar los parámetros de la oficina en lote**, en muchos proyectos y familias a la vez, con sus categorías y grupos.
+- **Detectar duplicados**: el mismo nombre con distinto GUID, en todos los modelos de un proyecto.
+- **Llenar valores desde Excel** y devolverlos, sin pasar por cada elemento.
+- **Revisar familias** antes de que entren a la biblioteca.
+
+El núcleo, con la API de Revit, es corto:
+
+```csharp
+// Agrega un parámetro compartido de texto a la categoría Láminas
+DefinitionFile archivo = app.OpenSharedParameterFile();
+DefinitionGroup grupo = archivo.Groups.get_Item("Laminas") ?? archivo.Groups.Create("Laminas");
+Definition def = grupo.Definitions.get_Item("OF_Colegiatura")
+    ?? grupo.Definitions.Create(new ExternalDefinitionCreationOptions("OF_Colegiatura", SpecTypeId.String.Text));
+
+CategorySet categorias = app.Create.NewCategorySet();
+categorias.Insert(doc.Settings.Categories.get_Item(BuiltInCategory.OST_Sheets));
+
+using (var t = new Transaction(doc, "Parámetro compartido"))
+{
+    t.Start();
+    doc.ParameterBindings.Insert(def, app.Create.NewInstanceBinding(categorias), GroupTypeId.IdentityData);
+    t.Commit();
+}
+```
+
+Si quieres empezar con la API desde cero, lo explicamos en [Revit API en español, primeros pasos](/es/blog/revit-api-espanol-primeros-pasos).
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Revit"
+  title="Parámetros ordenados en todos tus proyectos"
+  body="Desarrollamos plugins para Revit que cargan los parámetros de tu oficina en lote, detectan duplicados y llenan valores desde Excel. Diagnóstico gratuito, instalador, código fuente que queda en tus manos y actualización con cada versión de Revit."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Llenar parámetros desde Excel:** [exportar tablas de Revit a Excel y reimportarlas](/es/blog/exportar-tablas-revit-excel-editar-parametros).
+- **El cajetín:** [revisiones y firmas en Revit para varios planos](/es/blog/revisiones-firmas-revit-varios-planos).
+- **Metrados que cuadran:** [metrados en Revit](/es/blog/metrados-en-revit).
+- **La API:** [Revit API en español, primeros pasos](/es/blog/revit-api-espanol-primeros-pasos).
+- **Estandarizar la oficina:** [estandarizar procesos BIM en tu empresa](/es/blog/estandarizar-procesos-bim-empresa).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Trabajamos en Revit todos los días y programamos las herramientas que lo ordenan. Atendemos oficinas de ingeniería y arquitectura de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota técnica:** las funciones y la API corresponden a Revit 2026. Revisa la ayuda de tu versión si alguna cambia.

@@ -1,0 +1,184 @@
+---
+title: "Civil 3D profiles and profile views: from existing ground to finished grade, bands and sheets, with the most common errors"
+seoTitle: "Civil 3D Profiles and Profile Views: Step by Step"
+ctaTitle: "Building profiles and bands by hand on every project? We generate them with your firm's rules."
+description: "How to create profiles in Civil 3D: existing ground profile, profile view, finished grade with vertical curves, bands, split views and common errors."
+date: "2026-10-09T18:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Profiles
+  - Roadway design
+  - Plan production
+  - BIM automation
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Profiles"
+  title="The profile is half the sheet on a roadway project. And the bands are half the headaches."
+  highlight="How to create the existing ground profile and the profile view, draw the finished grade with vertical curves, set up the data bands, split long views and fix the most-searched errors."
+/>
+
+<Callout type="success" title="Quick answer">
+A Civil 3D profile has two parts: the profile, which is the line of elevations along an alignment, and the profile view, which is the grid it's drawn in. First you create the existing ground profile from a surface; then the profile view with its wizard, where you set the height, whether it splits, and the data bands below it. Then you draw the finished grade with the Profile Creation Tools: tangents and vertical curves. If the ground surface changes, the existing ground profile updates on its own.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain words">
+- **Alignment** — The centerline in plan, with its stations.
+- **Profile** — The line of elevations along the alignment: existing ground or design.
+- **Finished grade** — The design profile: the elevations of the completed work.
+- **Profile view** — The grid where profiles are drawn, with its scale and labels.
+- **PVI** — The point where two grade tangents meet; that's where the vertical curve goes.
+- **Vertical curve** — The parabola that smooths the change of grade between two tangents.
+- **Bands** — The table below the profile with stations, ground and design elevations, and cut or fill depths.
+
+Written for engineers designing roads, channels, utilities or pads in Civil 3D.
+</Callout>
+
+## Why profiles turn into repeated work
+
+A profile looks like one drawing, but it's several pieces that have to agree: the existing ground profile, the finished grade, the view and its scale, the bands and their elevations, and the sheets. When any of them is built by hand, every alignment or grade change means checking all of them. Built properly in Civil 3D, everything updates on its own.
+
+<AnimatedFlow
+  title="From centerline to profile sheet"
+  nodes="Alignment|Existing ground|Finished grade|View and bands"
+  subs="Centerline in plan|From the surface, dynamic|Tangents and vertical curves|Ready for the sheet"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Profile and profile view: two different things" time="~4 min">
+
+In Civil 3D, the **profile** and the **profile view** are separate objects:
+
+- **The profile** is the data: elevations along the alignment. It can be existing ground, sampled from a surface, or design, the finished grade.
+- **The profile view** is how it's displayed: the grid, the scale, the labels and the bands.
+
+The same profile can appear in several views, with different scales or styles, and they all change when the profile changes.
+
+**Vertical exaggeration** is set in the profile view style. Ten times the horizontal scale is common, so grades are easy to read.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Create the existing ground profile and the profile view" time="~6 min">
+
+1. **Home › Profile › Create Surface Profile.** Pick the alignment and the existing ground surface, and add the profile. If you need the edges, also add offset profiles left and right of the centerline.
+2. **Draw in Profile View** opens the Create Profile View wizard. The main steps:
+   - **Station range:** the whole alignment or a segment.
+   - **Profile view height:** automatic or user specified.
+   - **Split profile view** when the elevation range is too large.
+   - **Profile display options** for each profile.
+   - **Data bands:** the band set below the profile.
+3. Click in the drawing to place the view.
+
+The existing ground profile stays **dynamic**: if the surface changes, the profile updates.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Finished grade: tangents and vertical curves" time="~7 min">
+
+You draw the finished grade with the **Profile Creation Tools**, selecting the profile view:
+
+1. **Set the curve settings** before drawing: parabolic, with curve length or K value, based on your design criteria.
+2. **Draw tangents with curves**, point by point, from the start to the end of the segment. Civil 3D places a vertical curve at each PVI.
+3. **Adjust**: drag PVIs with grips, or edit stations, elevations, grades and curve lengths in the Profile Entities grid.
+
+**If the grade comes from elsewhere**, such as a spreadsheet, you can create a profile from a text file of station and elevation pairs, then add the curves.
+
+<Callout type="tip" title="Design criteria">
+Civil 3D can check the finished grade against design criteria, such as the minimum K value for the design speed, and flag the curves that don't comply. The values should come from the standard that governs your project, such as the AASHTO Green Book or your state DOT manual.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Profile view bands" time="~6 min">
+
+Bands are the data table below the profile view. The most used:
+
+| Band | What it shows |
+|---|---|
+| Profile data | Stations, ground and design elevations, cut and fill depths |
+| Vertical geometry | Grade tangents and vertical curves, with grades and lengths |
+| Horizontal geometry | Tangents and curves of the alignment |
+| Superelevation | How superelevation changes along the centerline |
+
+**The step most people miss:** in Profile View Properties, on the Bands tab, you choose which profile feeds each band, in the Profile 1 and Profile 2 columns. Usually existing ground is Profile 1 and finished grade is Profile 2. If they're assigned wrong, the band elevation labels come out blank, repeated or from another profile.
+
+**So you don't rebuild it every time**, save the combination as a band set in your firm's template.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Split views, multiple views and sheets" time="~5 min">
+
+- **Split profile view.** If the ground climbs a lot, one view would be far too tall. The wizard can split it into stacked views, each with its own datum.
+- **Multiple profile views.** For a long alignment, the Create Multiple Profile Views command generates one view per fixed length, side by side.
+- **Plan and profile sheets.** The plan production tools create view frames along the alignment and generate sheets with the plan on top and the profile below. We explain it in [automated plan production in Civil 3D and Revit](/en/blog/produccion-planos-automatica-civil-3d-revit).
+
+</TopicCard>
+
+<TopicCard step="6" title="6. The most-searched errors" time="~6 min">
+
+- **The finished grade doesn't show in the view.** The profile isn't set to draw in that view, its style displays nothing, or its elevations fall outside the view height.
+- **Bands come out blank or repeated.** Profile 1 and Profile 2 aren't assigned, or both point to the same profile.
+- **Profile labels not showing.** The profile's label set is empty, or the label styles display nothing.
+- **The existing ground profile doesn't update.** Its update mode is set to static, or it was created from a different surface.
+- **The view splits on its own.** The view height is fixed and the ground doesn't fit; adjust the height or the split option.
+- **The profile doesn't match the plan.** The alignment was edited and the design profile kept old stations: check the start and end of the grade.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Pipe networks in the profile, and what's worth automating" time="~5 min">
+
+**Pipe networks** can be shown in the profile view: structures, pipes and their inverts appear next to the ground and the finished grade. We cover it in [Civil 3D pipe networks](/en/blog/redes-tuberias-civil-3d-accesorios).
+
+**The finished grade drives the corridor:** every profile change flows into the 3D model, the sections and the volumes. We explain it in [the Civil 3D corridor tutorial](/en/blog/corredores-civil-3d-ensamblajes-objetivos).
+
+**What eats the most time in a firm**, and can be automated:
+
+- Creating ground profiles and views for every street in a subdivision, with the same style and bands.
+- Checking the finished grade against the standard and reporting curves that don't comply.
+- Exporting the station, elevation and grade table to Excel.
+- Generating plan and profile sheets with the firm's title block.
+
+<ComparisonTable
+  criterionLabel="Task"
+  leftLabel="With a plugin"
+  rightLabel="By hand"
+  rows="Profiles and views for 30 streets | *One run | Street by street || Bands to the firm's standard | *Always consistent | Configure every view || Check against the standard | *Report of non-compliant curves | Curve by curve || Elevation table to Excel | *Automatic | Copy and paste"
+/>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Civil 3D automation"
+  title="Your profiles and bands, with your firm's rules"
+  body="We build Civil 3D plugins that create profiles, views and bands in bulk, check the grade against your standard and generate the sheets. We're civil engineers and software engineers: we design roads and we program the tools."
+  primaryLabel="Request a free diagnosis"
+  primaryHref="/en/contacto"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/servicios/add-ins-revit-civil-3d"
+/>
+
+## Related resources
+
+- **The next step:** [the Civil 3D corridor tutorial](/en/blog/corredores-civil-3d-ensamblajes-objetivos).
+- **After the corridor:** [Civil 3D cross sections](/en/blog/secciones-transversales-civil-3d).
+- **The sheets:** [automated plan production in Civil 3D and Revit](/en/blog/produccion-planos-automatica-civil-3d-revit).
+- **The ground surface:** [Civil 3D contours](/en/blog/curvas-de-nivel-civil-3d-google-earth).
+- **The complete guide:** [Civil 3D automation](/en/blog/automatizar-civil-3d-guia-completa).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Civil engineers who code"
+  title="A team of civil engineers and software engineers"
+  body="We design in Civil 3D and we program it. We work remotely with engineering firms in the US, Europe and Latin America."
+  primaryLabel="Let's talk about your project"
+  primaryHref="/en/contacto"
+  secondaryLabel="See all services"
+  secondaryHref="/en/servicios"
+/>
+
+---
+
+**Technical note:** command names match Civil 3D 2026. Check your release's help if any of them change.

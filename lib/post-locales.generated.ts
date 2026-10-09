@@ -134,6 +134,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
   "habilitacion-urbana-trujillo-civil-3d": [
     "es"
   ],
+  "importar-puntos-civil-3d-excel": [
+    "es",
+    "pt",
+    "en"
+  ],
   "inteligencia-artificial-autocad-civil-3d": [
     "es",
     "pt",
@@ -141,6 +146,16 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
   ],
   "metrados-en-revit": [
     "es"
+  ],
+  "parametros-compartidos-revit": [
+    "es",
+    "pt",
+    "en"
+  ],
+  "perfil-longitudinal-civil-3d": [
+    "es",
+    "pt",
+    "en"
   ],
   "plan-bim-peru-obligatorio-guia-empresas": [
     "es"

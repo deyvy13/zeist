@@ -168,6 +168,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "importar-puntos-civil-3d-excel",
       "topografia-trujillo-curvas-de-nivel-dwg",
       "curvas-de-nivel-civil-3d-google-earth",
       "automatizar-civil-3d-guia-completa",
@@ -335,6 +336,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "importar-puntos-civil-3d-excel",
       "curvas-de-nivel-civil-3d-google-earth",
       "automatizar-civil-3d-guia-completa",
       "plugin-civil-3d-dibujo-3d-automatizado",
@@ -501,6 +503,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "importar-puntos-civil-3d-excel",
       "curvas-de-nivel-civil-3d-google-earth",
       "automatizar-civil-3d-guia-completa",
       "plugin-civil-3d-dibujo-3d-automatizado",
