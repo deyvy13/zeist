@@ -145,6 +145,7 @@ export const servicesPt: Record<ServiceSlug, ServicePage> = {
       "civil-3d-a-revit-topografia-coordenadas",
       "corredores-civil-3d-ensamblajes-objetivos",
       "rutinas-lisp-autocad-civil-3d",
+      "plugin-revit-exportar-pdf-dwg-masivo",
     ],
     faqs: [
       {

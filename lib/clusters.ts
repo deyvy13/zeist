@@ -32,6 +32,7 @@ export const clusters: Cluster[] = [
       "metrados-en-revit",
       "civil-3d-a-revit-topografia-coordenadas",
       "civil-3d-api-csharp-primeros-pasos",
+      "plugin-revit-exportar-pdf-dwg-masivo",
     ],
   },
   {

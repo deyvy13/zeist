@@ -21,6 +21,153 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- Captación (oct-2026): plugin de exportación masiva PDF + DWG en Revit ----
+  "plugin-revit-exportar-pdf-dwg-masivo": {
+    es: {
+      roadmap: {
+        title: "Exportar PDF y DWG en Revit en lote, en 6 pasos",
+        intro:
+          "Qué trae Revit, dónde se queda corto, qué herramientas existen, cómo funciona un plugin de exportación masiva, su código y qué significa que no tenga límites.",
+        steps: [
+          { n: 1, title: "Lo que Revit ya trae", desc: "PDF desde 2022, segundo plano desde 2025 y DWG", tag: "Nativo" },
+          { n: 2, title: "Dónde se queda corto", desc: "Un modelo a la vez, dos procesos y nombres rígidos", tag: "Límites" },
+          { n: 3, title: "Herramientas", desc: "ProSheets, Revit Batch Processor y plugin propio", tag: "Mercado" },
+          { n: 4, title: "Cómo funciona el plugin", desc: "Modelos, reglas, revisión, PDF + DWG y registro", tag: "Plugin" },
+          { n: 5, title: "El núcleo en código", desc: "PDFExportOptions y DWGExportOptions", tag: "Código" },
+          { n: 6, title: "Sin límites", desc: "Sin tope de láminas, modelos ni usuarios", tag: "Acción" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre exportar PDF y DWG en Revit",
+        items: [
+          {
+            q: "¿Cómo exportar varias láminas de Revit a PDF a la vez?",
+            a: "Desde Revit 2022, en Archivo › Exportar › PDF: se eligen las láminas o un conjunto guardado, se desmarca la opción de combinar si se quieren archivos separados y se define una regla de nombres con parámetros, como número y nombre de lámina. En versiones anteriores hay que imprimir con una impresora PDF.",
+          },
+          {
+            q: "¿Cómo exportar láminas de Revit a DWG?",
+            a: "En Archivo › Exportar › Formatos CAD › DWG se elige una configuración de exportación, con capas, grosores de línea y coordenadas, y el conjunto de láminas. Cada lámina sale en su propio DWG, con un prefijo y un nombre automático. Las vistas pueden salir como referencias externas o todo en un solo archivo.",
+          },
+          {
+            q: "¿Se pueden exportar PDF y DWG al mismo tiempo en Revit?",
+            a: "De forma nativa, no: son dos comandos distintos y hay que elegir las láminas y la carpeta dos veces. Un plugin de exportación masiva hace las dos cosas en la misma pasada, cada formato con su configuración y con la misma nomenclatura.",
+          },
+          {
+            q: "¿Cómo exportar láminas de varios modelos de Revit a la vez?",
+            a: "Revit exporta un modelo a la vez. Para varios modelos hace falta una herramienta: Revit Batch Processor, que es gratuito pero exige escribir un script, o un plugin que abra cada modelo en segundo plano, separado del modelo central, exporte las láminas elegidas y lo cierre sin guardar.",
+          },
+          {
+            q: "¿Revit puede exportar PDF en segundo plano?",
+            a: "Sí, desde Revit 2025. La opción Exportar en segundo plano, en las opciones del cuadro de exportación a PDF, permite seguir trabajando mientras se genera el archivo. Viene desactivada por defecto y el avance se ve en la barra de estado. Solo aplica a la exportación a PDF.",
+          },
+          {
+            q: "¿Hay plugins gratuitos para exportar láminas de Revit en lote?",
+            a: "Sí. ProSheets, de DiRoots, exporta vistas y láminas a PDF, DWG y otros formatos con funciones básicas gratuitas; desde octubre de 2024 es freemium y funciones como la exportación programada requieren una suscripción anual por usuario. Revit Batch Processor es gratuito y de código abierto, pero funciona con scripts.",
+          },
+          {
+            q: "¿Qué ventaja tiene un plugin de exportación propio?",
+            a: "Que no tiene límites ni depende de las condiciones de un proveedor: no hay tope de láminas, modelos ni usuarios, y exporta con la nomenclatura y las carpetas exactas de la oficina. En Zeist desarrollamos plugins de exportación a medida para Revit, con instalador, código fuente propiedad del cliente y actualización con cada versión.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Exportar PDF e DWG no Revit em lote, em 6 passos",
+        intro:
+          "O que o Revit traz, onde fica curto, que ferramentas existem, como funciona um plugin de exportação em lote, seu código e o que significa não ter limites.",
+        steps: [
+          { n: 1, title: "O que o Revit já traz", desc: "PDF desde 2022, segundo plano desde 2025 e DWG", tag: "Nativo" },
+          { n: 2, title: "Onde fica curto", desc: "Um modelo de cada vez, dois processos e nomes rígidos", tag: "Limites" },
+          { n: 3, title: "Ferramentas", desc: "ProSheets, Revit Batch Processor e plugin próprio", tag: "Mercado" },
+          { n: 4, title: "Como funciona o plugin", desc: "Modelos, regras, conferência, PDF + DWG e registro", tag: "Plugin" },
+          { n: 5, title: "O núcleo em código", desc: "PDFExportOptions e DWGExportOptions", tag: "Código" },
+          { n: 6, title: "Sem limites", desc: "Sem teto de pranchas, modelos nem usuários", tag: "Ação" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre exportar PDF e DWG no Revit",
+        items: [
+          {
+            q: "Como exportar várias pranchas do Revit para PDF de uma vez?",
+            a: "Desde o Revit 2022, em Arquivo › Exportar › PDF: escolhem-se as pranchas ou um conjunto salvo, desmarca-se a opção de combinar se quiser arquivos separados e define-se uma regra de nomenclatura com parâmetros, como número e nome da prancha. Em versões anteriores é preciso imprimir com uma impressora PDF.",
+          },
+          {
+            q: "Como exportar pranchas do Revit para DWG?",
+            a: "Em Arquivo › Exportar › Formatos CAD › DWG escolhe-se uma configuração de exportação, com layers, espessuras de linha e coordenadas, e o conjunto de pranchas. Cada prancha sai no seu próprio DWG, com um prefixo e um nome automático. As vistas podem sair como referências externas ou tudo num único arquivo.",
+          },
+          {
+            q: "Dá para exportar PDF e DWG ao mesmo tempo no Revit?",
+            a: "De forma nativa, não: são dois comandos diferentes e é preciso escolher as pranchas e a pasta duas vezes. Um plugin de exportação em lote faz as duas coisas na mesma passada, cada formato com sua configuração e com a mesma nomenclatura.",
+          },
+          {
+            q: "Como exportar pranchas de vários modelos do Revit de uma vez?",
+            a: "O Revit exporta um modelo de cada vez. Para vários modelos é preciso uma ferramenta: o Revit Batch Processor, que é gratuito mas exige escrever um script, ou um plugin que abra cada modelo em segundo plano, desvinculado do modelo central, exporte as pranchas escolhidas e o feche sem salvar.",
+          },
+          {
+            q: "O Revit consegue exportar PDF em segundo plano?",
+            a: "Sim, desde o Revit 2025. A opção Exportar em segundo plano, nas opções do quadro de exportação para PDF, permite continuar trabalhando enquanto o arquivo é gerado. Vem desativada por padrão e o andamento aparece na barra de status. Vale só para a exportação para PDF.",
+          },
+          {
+            q: "Existem plugins gratuitos para exportar pranchas do Revit em lote?",
+            a: "Sim. O ProSheets, da DiRoots, exporta vistas e pranchas para PDF, DWG e outros formatos com funções básicas gratuitas; desde outubro de 2024 é freemium e funções como a exportação agendada exigem uma assinatura anual por usuário. O Revit Batch Processor é gratuito e de código aberto, mas funciona com scripts.",
+          },
+          {
+            q: "Que vantagem tem um plugin de exportação próprio?",
+            a: "Não ter limites nem depender das condições de um fornecedor: não há teto de pranchas, modelos nem usuários, e ele exporta com a nomenclatura e as pastas exatas do escritório. Na Zeist desenvolvemos plugins de exportação sob medida para o Revit, com instalador, código-fonte de propriedade do cliente e atualização a cada versão.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Batch exporting PDF and DWG in Revit, in 6 steps",
+        intro:
+          "What Revit does natively, where it falls short, which tools exist, how a batch export plugin works, its code, and what it means for it to have no limits.",
+        steps: [
+          { n: 1, title: "What Revit already does", desc: "PDF since 2022, background since 2025, and DWG", tag: "Native" },
+          { n: 2, title: "Where it falls short", desc: "One model at a time, two processes, rigid names", tag: "Limits" },
+          { n: 3, title: "Tools", desc: "ProSheets, Revit Batch Processor and your own plugin", tag: "Market" },
+          { n: 4, title: "How the plugin works", desc: "Models, rules, checks, PDF + DWG and a log", tag: "Plugin" },
+          { n: 5, title: "The core in code", desc: "PDFExportOptions and DWGExportOptions", tag: "Code" },
+          { n: 6, title: "No limits", desc: "No cap on sheets, models or users", tag: "Action" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about batch exporting PDF and DWG in Revit",
+        items: [
+          {
+            q: "How do I export multiple Revit sheets to PDF at once?",
+            a: "Since Revit 2022, under File › Export › PDF: select the sheets or a saved set, clear the combine option if you want separate files, and set up a naming rule from parameters such as sheet number and sheet name. In earlier releases you have to print to a PDF printer.",
+          },
+          {
+            q: "How do I export Revit sheets to DWG?",
+            a: "Under File › Export › CAD Formats › DWG, choose an export setup, with layers, lineweights and coordinates, and the sheet set. Each sheet becomes its own DWG, named with a prefix plus an automatic name. Views can go out as external references or everything in a single file.",
+          },
+          {
+            q: "Can Revit export PDF and DWG at the same time?",
+            a: "Not natively: they're two separate commands, and you pick the sheets and folder twice. A batch export plugin does both in the same pass, each format with its own export setup and the same naming convention.",
+          },
+          {
+            q: "How do I batch print sheets from multiple Revit files?",
+            a: "Revit exports one model at a time. For several models you need a tool: Revit Batch Processor, which is free but requires writing a script, or a plugin that opens each model in the background, detached from the central model, exports the chosen sheets and closes it without saving.",
+          },
+          {
+            q: "Can Revit export PDFs in the background?",
+            a: "Yes, since Revit 2025. The Export in Background option, in the PDF export dialog's options, lets you keep working while the file is generated. It's off by default, and progress shows on the status bar. It applies to PDF export only.",
+          },
+          {
+            q: "Are there free plugins to batch export Revit sheets?",
+            a: "Yes. DiRoots ProSheets exports views and sheets to PDF, DWG and other formats with free basic features; since October 2024 it's freemium, and features such as scheduled exports need an annual per-user subscription. Revit Batch Processor is free and open source, but it works through scripts.",
+          },
+          {
+            q: "What's the advantage of owning your export plugin?",
+            a: "It has no limits and doesn't depend on a vendor's terms: no cap on sheets, models or users, and it exports with the firm's exact naming and folders. Zeist builds custom export plugins for Revit, with an installer, source code owned by the client and updates with every release.",
+          },
+        ],
+      },
+    },
+  },
   // ---- Autoridad (oct-2026): Civil 3D API en C#, corredores, rutinas LISP ----
   "civil-3d-api-csharp-primeros-pasos": {
     es: {

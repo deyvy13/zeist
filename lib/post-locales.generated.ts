@@ -158,6 +158,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "pt",
     "en"
   ],
+  "plugin-revit-exportar-pdf-dwg-masivo": [
+    "es",
+    "pt",
+    "en"
+  ],
   "produccion-planos-automatica-civil-3d-revit": [
     "es",
     "pt",

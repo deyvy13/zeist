@@ -147,6 +147,7 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       "secciones-transversales-civil-3d",
       "corredores-civil-3d-ensamblajes-objetivos",
       "rutinas-lisp-autocad-civil-3d",
+      "plugin-revit-exportar-pdf-dwg-masivo",
     ],
     faqs: [
       {

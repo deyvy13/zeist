@@ -1,0 +1,191 @@
+---
+title: "Plugin para Revit que exporta PDF y DWG en lote: todas las láminas, de todos los modelos, sin límites"
+seoTitle: "Exportar PDF y DWG en Revit en lote, sin límites"
+ctaTitle: "¿Tu equipo pierde horas ploteando cada entrega? Te hacemos un plugin que exporta todo en una pasada."
+description: "Cómo exportar muchas láminas de Revit a PDF y DWG a la vez: lo que trae Revit, los plugins que existen y cómo es uno propio, sin límites."
+date: "2026-10-09T04:00:00.000Z"
+author: "Zeist"
+tags:
+  - Revit
+  - Plugins para Revit
+  - PDF
+  - DWG
+  - Producción de planos
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Revit · PDF · DWG"
+  title="Plotear 300 láminas no debería tomarte la tarde. Ni repetirlo en cada modelo."
+  highlight="Qué hace Revit de forma nativa, dónde se queda corto cuando la entrega tiene varios modelos y cientos de láminas, qué plugins existen y cómo es un plugin propio que exporta PDF y DWG en una sola pasada, sin límites."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Revit exporta PDF de forma nativa desde la versión 2022 y DWG desde siempre, pero lo hace modelo por modelo y en dos procesos separados. Un plugin de exportación masiva abre cada modelo de una lista, elige las láminas por reglas, como disciplina o revisión, y exporta PDF y DWG en una sola pasada, con la nomenclatura de la oficina, en carpetas ordenadas y con un registro de lo exportado. Si el plugin es de la empresa, con su código fuente, no tiene límite de láminas, de modelos ni de usuarios.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Lámina** — Cada hoja del juego de planos: lo que se imprime o se entrega en PDF.
+- **Plotear** — Imprimir o exportar las láminas a PDF o DWG para entregarlas.
+- **Conjunto de láminas** — Una selección guardada de láminas para no elegirlas una por una cada vez.
+- **Configuración de exportación** — Las opciones guardadas para exportar: capas, grosores de línea, coordenadas, tamaño de papel.
+- **Regla de nombres** — La fórmula que arma el nombre de cada archivo, por ejemplo código de proyecto, número de lámina y revisión.
+- **Modelo central** — El archivo de Revit compartido en el que trabaja todo el equipo.
+- **Plugin** — Un programa que se instala dentro de Revit y agrega sus propios botones en la barra superior.
+
+Está escrito para coordinadores BIM, jefes de proyecto y modeladores que entregan planos en Revit.
+</Callout>
+
+## El cuello de botella que nadie presupuesta
+
+Una entrega de un proyecto mediano puede tener cientos de láminas repartidas en varios modelos: arquitectura, estructuras, instalaciones. Y no se exporta una sola vez: cada revisión, cada observación del cliente y cada licitación pide el juego completo otra vez, en PDF para revisar y en DWG para los que trabajan en AutoCAD.
+
+Exportar no tiene criterio técnico. Es abrir cada modelo, elegir las láminas, revisar los nombres, esperar, repetir en DWG y ordenar carpetas. Justo el tipo de tarea que conviene automatizar.
+
+<AnimatedFlow
+  title="Una entrega completa en una sola pasada"
+  nodes="Lista de modelos|Láminas por reglas|PDF + DWG|Registro de entrega"
+  subs="Todos los RVT del proyecto|Disciplina, revisión o conjunto|Con tu nomenclatura y carpetas|Qué se exportó y qué falló"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Lo que Revit ya trae" time="~6 min">
+
+**PDF nativo, desde Revit 2022.** En Archivo › Exportar › PDF se eligen las vistas o láminas, o un conjunto guardado, y se decide si salen en un solo PDF o en archivos separados con la opción de combinar. Para archivos separados hay **reglas de nombres** con parámetros, por ejemplo número de lámina y nombre de lámina, con el separador que quieras. Las opciones se guardan como configuración de exportación.
+
+**PDF en segundo plano, desde Revit 2025.** La opción **Exportar en segundo plano** permite seguir trabajando mientras se genera el PDF. Viene desactivada por defecto y su avance se ve en la barra de estado.
+
+**DWG nativo.** En Archivo › Exportar › Formatos CAD › DWG se elige una configuración de exportación, con capas, grosores de línea y si se usan coordenadas compartidas o el origen interno, y el conjunto de láminas. El nombre de cada archivo se arma con un prefijo más un nombre automático. Una opción permite exportar las vistas de la lámina como referencias externas, o dejar todo en un solo archivo.
+
+**Antes de 2022**, la única vía para PDF era imprimir con una impresora PDF instalada en Windows.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Dónde se queda corto" time="~5 min">
+
+Para una lámina o un modelo, lo nativo alcanza. Para una entrega real, aparecen los límites:
+
+- **Un modelo a la vez.** Hay que abrir cada modelo, exportar y cerrarlo. Con cinco modelos, son cinco rondas.
+- **PDF y DWG son dos procesos.** Se elige todo dos veces: láminas, configuración y carpeta.
+- **El nombre DWG es rígido.** Prefijo más nombre automático. Si el cliente pide su propia codificación, por ejemplo proyecto, especialidad, número y revisión, hay que renombrar a mano.
+- **No revisa antes de exportar.** Si una lámina no tiene la revisión al día, sale igual.
+- **Carpetas y lista de entrega, a mano.** Separar por disciplina o por revisión y armar la lista de planos entregados sigue siendo trabajo manual.
+- **Ocupa la computadora.** Salvo el PDF en segundo plano, Revit queda bloqueado mientras exporta.
+
+Lo mismo pasa con la tarea que viene antes: armar las láminas. Lo contamos en [producción automática de planos en Civil 3D y Revit](/es/blog/produccion-planos-automatica-civil-3d-revit).
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Qué herramientas existen" time="~5 min">
+
+| Herramienta | Qué hace | A tener en cuenta |
+|---|---|---|
+| Exportación nativa de Revit | PDF con reglas de nombre y DWG con configuraciones | Un modelo a la vez, dos procesos separados |
+| ProSheets, de DiRoots | Exporta vistas y láminas a PDF, DWG, DGN, DWF, NWC, IFC e imágenes | Desde octubre de 2024 es freemium: funciones como la exportación programada requieren suscripción anual por usuario |
+| Revit Batch Processor | Ejecuta scripts de Python o Dynamo sobre muchos modelos | Gratuito y de código abierto, pero hay que escribir el script |
+| Plugin propio | Exporta con las reglas exactas de la oficina | Hay que desarrollarlo una vez; después es de la empresa |
+
+Las herramientas comerciales resuelven bien el caso general. El problema aparece cuando el proceso de la oficina depende de una licencia por usuario, de funciones que pasan a ser de pago o de un formato de nombres que la herramienta no contempla.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Cómo funciona un plugin de exportación masiva" time="~7 min">
+
+Un plugin pensado para entregas completas hace en una sola ejecución lo que hoy toma una tarde:
+
+1. **Lista de modelos.** Se eligen los archivos RVT del proyecto. El plugin abre cada uno en segundo plano, separado del modelo central para no tocarlo, y lo cierra sin guardar al terminar.
+2. **Láminas por reglas.** Todas las de una disciplina, las que tienen una revisión concreta, las de un conjunto guardado o las que coinciden con un filtro de número.
+3. **Revisión previa.** Avisa si una lámina no tiene la revisión al día, si falta un parámetro del cajetín o si dos archivos saldrían con el mismo nombre.
+4. **PDF y DWG en la misma pasada**, cada uno con su configuración de exportación.
+5. **Nomenclatura de la oficina o del cliente**, armada con cualquier parámetro: código de proyecto, especialidad, número, revisión y fecha.
+6. **Carpetas ordenadas** por disciplina, formato o revisión.
+7. **Registro de la entrega:** un Excel con cada lámina exportada, su revisión, su archivo y lo que falló, sin detener el resto del lote.
+
+Como trabaja solo, se puede dejar corriendo al final del día y encontrar la entrega lista a la mañana siguiente.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. El núcleo, en código" time="~5 min">
+
+La API de Revit tiene un método de exportación para cada formato. Este fragmento exporta cada lámina a PDF y a DWG con un nombre armado por la oficina:
+
+```csharp
+// Exporta cada lámina a PDF y DWG con el nombre que define la oficina
+var pdf = new PDFExportOptions { Combine = true };
+var dwg = DWGExportOptions.GetPredefinedOptions(doc, "Oficina-DWG");
+
+foreach (ViewSheet lamina in laminas)
+{
+    string rev = lamina.get_Parameter(BuiltInParameter.SHEET_CURRENT_REVISION).AsString();
+    string nombre = $"{codigoProyecto}-{lamina.SheetNumber}-R{rev}";
+
+    pdf.FileName = nombre;
+    doc.Export(carpetaPdf, new List<ElementId> { lamina.Id }, pdf);
+    doc.Export(carpetaDwg, nombre, new List<ElementId> { lamina.Id }, dwg);
+}
+```
+
+**Qué hace cada parte:**
+
+- `PDFExportOptions` y `DWGExportOptions` son las mismas opciones del cuadro de exportación; `GetPredefinedOptions` carga una configuración DWG guardada en el modelo.
+- Exportar lámina por lámina permite poner cualquier nombre, sin depender de la regla nativa.
+- El resto del plugin es lo que lo vuelve confiable: abrir y cerrar modelos, revisar antes de exportar, registrar errores y seguir con el lote.
+
+Si quieres entender la API desde cero, empieza por [Revit API en español, primeros pasos](/es/blog/revit-api-espanol-primeros-pasos).
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Sin límites, de verdad" time="~4 min">
+
+Que un plugin sea «ilimitado» no depende de una promesa comercial, sino de quién es su dueño. Cuando la empresa tiene el código fuente:
+
+- **No hay tope de láminas ni de modelos.** El límite es el tiempo de exportación de Revit, no una licencia.
+- **No hay licencias por usuario.** Se instala en todas las computadoras de la oficina.
+- **No cambia sin aviso.** Si un proveedor pasa funciones a un plan de pago, tu proceso de entrega no se ve afectado.
+- **Se adapta a tus reglas.** La nomenclatura, las carpetas y la revisión previa son las de tu oficina, no las genéricas.
+
+Lo que sí hay que prever es el mantenimiento: cada versión nueva de Revit puede exigir recompilar el plugin. Por eso conviene que la actualización esté incluida desde el principio.
+
+<ComparisonTable
+  criterionLabel="Criterio"
+  leftLabel="Plugin propio"
+  rightLabel="Exportación nativa"
+  rows="Varios modelos en una ejecución | *Sí, en segundo plano | No, uno a la vez || PDF y DWG | *En la misma pasada | Dos procesos separados || Nomenclatura del cliente | *Cualquier parámetro, en PDF y DWG | Reglas en PDF; prefijo en DWG || Revisión antes de exportar | *Revisión, cajetín y nombres duplicados | No || Registro de la entrega | *Excel automático | A mano || Costo por usuario | *Ninguno, el código es tuyo | Incluido en Revit"
+/>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Revit"
+  title="Tu entrega completa, en PDF y DWG, con un clic"
+  body="Desarrollamos plugins de exportación a medida con la nomenclatura, las carpetas y las revisiones de tu oficina. Diagnóstico gratuito, instalador para toda la oficina, código fuente que queda en tus manos y actualización con cada versión de Revit."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Antes de exportar:** [producción automática de planos en Civil 3D y Revit](/es/blog/produccion-planos-automatica-civil-3d-revit).
+- **Otras tareas que se automatizan:** [las 12 tareas de Revit que más tiempo ahorran](/es/blog/automatizar-tareas-revit-dynamo-plugins).
+- **La guía completa:** [desarrollo de add-ins para Revit y Civil 3D](/es/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+- **Para presupuestar:** [cuánto cuesta un add-in para Revit o Civil 3D](/es/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+- **Si prefieres encargarlo en Trujillo:** [desarrollo de plugins para Revit](/es/blog/desarrollo-plugins-revit-trujillo).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Entregamos planos y programamos las herramientas que los producen. Trabajamos con oficinas de ingeniería y arquitectura de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota técnica:** las opciones de exportación corresponden a Revit 2026. Las condiciones de las herramientas de terceros pueden cambiar: revisa la página de cada proveedor.

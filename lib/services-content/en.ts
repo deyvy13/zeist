@@ -144,6 +144,7 @@ export const servicesEn: Record<ServiceSlug, ServicePage> = {
       "secciones-transversales-civil-3d",
       "civil-3d-a-revit-topografia-coordenadas",
       "corredores-civil-3d-ensamblajes-objetivos",
+      "plugin-revit-exportar-pdf-dwg-masivo",
     ],
     faqs: [
       {
