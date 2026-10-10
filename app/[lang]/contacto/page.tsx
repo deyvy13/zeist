@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
 import Link from "next/link";
-import { localizedPath, site, whatsappUrl } from "@/lib/site";
+import { localizedPath, mailtoUrl, site, whatsappUrl } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
 import { ContactForm } from "@/components/contact-form";
 
@@ -36,7 +36,7 @@ const copy: Record<
       send: "Enviar mensaje",
       subject: "Diagnóstico de automatización BIM",
     },
-    orEmail: "O escríbenos directamente por WhatsApp",
+    orEmail: "O escríbenos directamente por WhatsApp o por correo",
     privacy: { text: "Usamos tus datos solo para responderte.", link: "Política de privacidad" },
   },
   pt: {
@@ -52,7 +52,7 @@ const copy: Record<
       send: "Enviar mensagem",
       subject: "Diagnóstico de automação BIM",
     },
-    orEmail: "Ou fale direto pelo WhatsApp",
+    orEmail: "Ou fale direto pelo WhatsApp ou por e-mail",
     privacy: { text: "Usamos seus dados só para responder.", link: "Política de privacidade" },
   },
   en: {
@@ -68,7 +68,7 @@ const copy: Record<
       send: "Send message",
       subject: "BIM automation diagnosis",
     },
-    orEmail: "Or message us directly on WhatsApp",
+    orEmail: "Or reach us directly on WhatsApp or by email",
     privacy: { text: "We use your data only to reply to you.", link: "Privacy policy" },
   },
 };
@@ -121,19 +121,43 @@ export default async function ContactPage({
 
         <div className="mt-8 flex flex-col items-center gap-3">
           <p className="text-sm text-[color:var(--color-muted)]">{c.orEmail}</p>
-          <a
-            href={whatsappUrl(dict.whatsapp.prefill)}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={dict.whatsapp.aria}
-            data-cta="contact-page"
-            className="inline-flex items-center gap-2.5 rounded-full bg-[linear-gradient(120deg,#2ee06a,#12a150)] px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_-10px_rgba(18,161,80,0.9)] transition-transform hover:scale-[1.03] active:scale-95"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="currentColor">
-              <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.24 8.24 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.21-8.24 8.21z" />
-            </svg>
-            {site.whatsapp.display}
-          </a>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <a
+              href={whatsappUrl(dict.whatsapp.prefill)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={dict.whatsapp.aria}
+              data-cta="contact-page"
+              className="inline-flex items-center gap-2.5 rounded-full bg-[linear-gradient(120deg,#2ee06a,#12a150)] px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_-10px_rgba(18,161,80,0.9)] transition-transform hover:scale-[1.03] active:scale-95"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="currentColor">
+                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01a8.24 8.24 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.21-8.24 8.21z" />
+              </svg>
+              {site.whatsapp.display}
+            </a>
+            {site.showEmail && (
+              <a
+                href={mailtoUrl(c.labels.subject)}
+                data-cta="contact-page-email"
+                className="btn-ghost text-sm"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m3 7 9 6 9-6" />
+                </svg>
+                {site.email}
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </section>

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { localeNames, locales, type Dictionary, type Locale } from "@/lib/i18n";
-import { localizedPath, site, whatsappUrl } from "@/lib/site";
+import { localizedPath, mailtoUrl, site, whatsappUrl } from "@/lib/site";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 
 export function SiteFooter({ lang, dict }: { lang: Locale; dict: Dictionary }) {
@@ -84,6 +84,28 @@ export function SiteFooter({ lang, dict }: { lang: Locale; dict: Dictionary }) {
               </svg>
               {site.whatsapp.display}
             </a>
+            {site.showEmail && (
+              <a
+                href={mailtoUrl()}
+                data-cta="footer-email"
+                className="mt-3 flex w-fit items-center gap-2 text-sm font-medium text-white/70 transition hover:text-white"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m3 7 9 6 9-6" />
+                </svg>
+                {site.email}
+              </a>
+            )}
           </div>
 
           {columns.map((col) => (

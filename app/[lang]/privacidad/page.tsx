@@ -9,7 +9,7 @@ import { AnalyticsOptOut, type AnalyticsOptOutLabels } from "@/components/analyt
 
 // Privacy policy. Describes what the site actually does — keep it in sync with
 // components/analytics.tsx (GA4 + consent regions), components/contact-form.tsx
-// and cta-tracker (WhatsApp), the tools (local processing, OSM and AWS tiles)
+// and cta-tracker (WhatsApp and email clicks), the tools (local processing, OSM and AWS tiles)
 // and every localStorage key. Update `updated` whenever any of those change.
 
 type Section = { id: string; h: string; paras?: string[]; list?: string[]; after?: string[] };
@@ -28,19 +28,20 @@ type Copy = {
 };
 
 const wa = site.whatsapp.display;
+const mail = site.email;
 
 const copy: Record<Locale, Copy> = {
   es: {
     title: "Política de privacidad",
     description:
-      "Qué datos trata Zeist en este sitio, para qué y cómo ejercer tus derechos: analítica sin publicidad, herramientas que funcionan en tu navegador y WhatsApp.",
-    updated: "Última actualización: 8 de octubre de 2026",
+      "Qué datos trata Zeist, para qué y cómo ejercer tus derechos: analítica sin publicidad, herramientas que funcionan en tu navegador, WhatsApp y correo.",
+    updated: "Última actualización: 10 de octubre de 2026",
     summaryTitle: "En corto",
     summary: [
       "No vendemos ni cedemos tus datos, y no mostramos publicidad.",
       "Las calculadoras y conversores funcionan en tu navegador: lo que ingresas no llega a nuestros servidores.",
       "Medimos las visitas con Google Analytics, sin cookies en Europa, y puedes desactivar la medición en este navegador.",
-      "Si nos escribes por WhatsApp, usamos tus datos solo para responderte.",
+      "Si nos escribes por WhatsApp o por correo, usamos tus datos solo para responderte.",
     ],
     tableTitle: "Qué datos tratamos y para qué",
     tableHead: ["Dato", "Para qué", "Dónde se procesa", "Cuánto tiempo"],
@@ -52,9 +53,9 @@ const copy: Record<Locale, Copy> = {
         "Hasta 14 meses",
       ],
       [
-        "Lo que escribes por WhatsApp o en el formulario: nombre, mensaje, correo si lo agregas y la página desde la que escribes",
+        "Lo que escribes por WhatsApp, por correo o en el formulario: nombre, mensaje, tu correo si lo agregas y la página desde la que escribes",
         "Responderte y preparar el diagnóstico o la propuesta",
-        "WhatsApp (Meta) y nuestros dispositivos",
+        "WhatsApp (Meta), Gmail (Google) y nuestros dispositivos",
         "Mientras dure tu consulta o la relación comercial",
       ],
       [
@@ -75,7 +76,7 @@ const copy: Record<Locale, Copy> = {
         id: "responsable",
         h: "1. Quién es responsable",
         paras: [
-          `El responsable del tratamiento es **Zeist**, un equipo de automatización BIM con base en Trujillo, La Libertad, Perú. Para cualquier consulta sobre tus datos, escríbenos por WhatsApp al ${wa} o desde la [página de contacto](/es/contacto).`,
+          `El responsable del tratamiento es **Zeist**, un equipo de automatización BIM con base en Trujillo, La Libertad, Perú. Para cualquier consulta sobre tus datos, escríbenos por WhatsApp al ${wa}, al correo [${mail}](mailto:${mail}) o desde la [página de contacto](/es/contacto).`,
         ],
       },
       {
@@ -84,7 +85,7 @@ const copy: Record<Locale, Copy> = {
         paras: [
           "Usamos Google Analytics 4 para contar visitas y saber qué páginas y herramientas se usan. No mostramos publicidad, y el almacenamiento con fines publicitarios está desactivado en todos los casos.",
           "En el Espacio Económico Europeo, el Reino Unido y Suiza, la medición funciona **sin cookies**: Google recibe solo señales anónimas. En el resto de países, Google Analytics usa sus cookies de medición.",
-          "Además de las páginas vistas, registramos los clics en los botones de WhatsApp y de contacto (qué botón, en qué página y en qué idioma) y el uso de las herramientas (qué herramienta, el formato exportado y la cantidad de puntos o vértices). **Nunca enviamos las coordenadas, archivos o datos que ingresas en las herramientas.**",
+          "Además de las páginas vistas, registramos los clics en los botones de WhatsApp, de correo y de contacto (qué botón, en qué página y en qué idioma) y el uso de las herramientas (qué herramienta, el formato exportado y la cantidad de puntos o vértices). **Nunca enviamos las coordenadas, archivos o datos que ingresas en las herramientas.**",
           "Los datos de eventos se conservan 14 meses.",
         ],
         after: [
@@ -93,11 +94,12 @@ const copy: Record<Locale, Copy> = {
       },
       {
         id: "whatsapp",
-        h: "3. WhatsApp y el formulario de contacto",
+        h: "3. WhatsApp, correo y formulario de contacto",
         paras: [
           "El formulario de contacto no envía datos a un servidor nuestro: arma el mensaje y abre WhatsApp en tu dispositivo. Nada se envía hasta que lo confirmas en WhatsApp.",
           "Cuando usas un botón de WhatsApp del sitio, el mensaje incluye el título de la página desde la que escribes, para entender mejor tu consulta. Puedes editarlo o borrarlo antes de enviarlo.",
           "WhatsApp es un servicio de Meta con su [propia política de privacidad](https://www.whatsapp.com/legal/privacy-policy). Usamos lo que nos escribes solo para responderte y preparar el diagnóstico o la propuesta que pidas.",
+          `Si nos escribes al correo [${mail}](mailto:${mail}), el mensaje llega a una cuenta de Gmail, un servicio de Google con su [propia política de privacidad](https://policies.google.com/privacy). Lo usamos solo para responderte.`,
         ],
       },
       {
@@ -126,7 +128,7 @@ const copy: Record<Locale, Copy> = {
         id: "terceros",
         h: "6. Con quién compartimos datos",
         paras: [
-          "No vendemos ni cedemos tus datos. Solo intervienen los proveedores que hacen funcionar el sitio: Google (analítica), Meta (WhatsApp), Vercel (alojamiento), la Fundación OpenStreetMap (mapas) y Amazon Web Services (datos de elevación).",
+          "No vendemos ni cedemos tus datos. Solo intervienen los proveedores que hacen funcionar el sitio: Google (analítica y correo), Meta (WhatsApp), Vercel (alojamiento), la Fundación OpenStreetMap (mapas) y Amazon Web Services (datos de elevación).",
           "Sus servidores pueden estar fuera del Perú, por lo que usar el sitio implica una transferencia internacional de datos a esos proveedores, que aplican sus propias medidas de seguridad.",
         ],
       },
@@ -135,7 +137,7 @@ const copy: Record<Locale, Copy> = {
         h: "7. Tus derechos",
         paras: [
           "De acuerdo con la Ley N.° 29733, Ley de Protección de Datos Personales, y su Reglamento (Decreto Supremo N.° 016-2024-JUS), puedes pedir el acceso, la rectificación, la cancelación o la portabilidad de tus datos, u oponerte a su tratamiento.",
-          `Para ejercerlos, escríbenos por WhatsApp al ${wa} indicando qué derecho quieres ejercer. Te responderemos dentro de los plazos que fija la ley. Si consideras que no atendimos tu pedido, puedes acudir a la Autoridad Nacional de Protección de Datos Personales del Ministerio de Justicia y Derechos Humanos.`,
+          `Para ejercerlos, escríbenos por WhatsApp al ${wa} o al correo [${mail}](mailto:${mail}) indicando qué derecho quieres ejercer. Te responderemos dentro de los plazos que fija la ley. Si consideras que no atendimos tu pedido, puedes acudir a la Autoridad Nacional de Protección de Datos Personales del Ministerio de Justicia y Derechos Humanos.`,
           "Si escribes desde el Brasil, también tienes los derechos de la LGPD (Ley n.º 13.709/2018); desde el Espacio Económico Europeo o el Reino Unido, los del Reglamento General de Protección de Datos.",
         ],
       },
@@ -170,14 +172,14 @@ const copy: Record<Locale, Copy> = {
   pt: {
     title: "Política de privacidade",
     description:
-      "Que dados a Zeist trata neste site, para quê e como exercer seus direitos: análise sem publicidade, ferramentas que funcionam no navegador e WhatsApp.",
-    updated: "Última atualização: 8 de outubro de 2026",
+      "Que dados a Zeist trata neste site, para quê e como exercer seus direitos: análise sem publicidade, ferramentas que funcionam no navegador, WhatsApp e e-mail.",
+    updated: "Última atualização: 10 de outubro de 2026",
     summaryTitle: "Em resumo",
     summary: [
       "Não vendemos nem cedemos seus dados, e não exibimos publicidade.",
       "As calculadoras e conversores funcionam no seu navegador: o que você digita não chega aos nossos servidores.",
       "Medimos as visitas com o Google Analytics, sem cookies na Europa, e você pode desativar a medição neste navegador.",
-      "Se você nos escreve pelo WhatsApp, usamos seus dados só para responder.",
+      "Se você nos escreve pelo WhatsApp ou por e-mail, usamos seus dados só para responder.",
     ],
     tableTitle: "Que dados tratamos e para quê",
     tableHead: ["Dado", "Para quê", "Onde é processado", "Por quanto tempo"],
@@ -189,9 +191,9 @@ const copy: Record<Locale, Copy> = {
         "Até 14 meses",
       ],
       [
-        "O que você escreve pelo WhatsApp ou no formulário: nome, mensagem, e-mail se você incluir e a página de onde escreve",
+        "O que você escreve pelo WhatsApp, por e-mail ou no formulário: nome, mensagem, seu e-mail se você incluir e a página de onde escreve",
         "Responder e preparar o diagnóstico ou a proposta",
-        "WhatsApp (Meta) e nossos dispositivos",
+        "WhatsApp (Meta), Gmail (Google) e nossos dispositivos",
         "Enquanto durar a consulta ou a relação comercial",
       ],
       [
@@ -212,7 +214,7 @@ const copy: Record<Locale, Copy> = {
         id: "responsavel",
         h: "1. Quem é o responsável",
         paras: [
-          `O controlador dos dados é a **Zeist**, uma equipe de automação BIM com sede em Trujillo, La Libertad, Peru. Para qualquer dúvida sobre seus dados, escreva pelo WhatsApp para ${wa} ou pela [página de contato](/pt/contacto).`,
+          `O controlador dos dados é a **Zeist**, uma equipe de automação BIM com sede em Trujillo, La Libertad, Peru. Para qualquer dúvida sobre seus dados, escreva pelo WhatsApp para ${wa}, para o e-mail [${mail}](mailto:${mail}) ou pela [página de contato](/pt/contacto).`,
         ],
       },
       {
@@ -221,7 +223,7 @@ const copy: Record<Locale, Copy> = {
         paras: [
           "Usamos o Google Analytics 4 para contar visitas e saber quais páginas e ferramentas são usadas. Não exibimos publicidade, e o armazenamento para fins publicitários está desativado em todos os casos.",
           "No Espaço Econômico Europeu, no Reino Unido e na Suíça, a medição funciona **sem cookies**: o Google recebe só sinais anônimos. Nos demais países, o Google Analytics usa seus cookies de medição.",
-          "Além das páginas vistas, registramos os cliques nos botões de WhatsApp e de contato (qual botão, em que página e em que idioma) e o uso das ferramentas (qual ferramenta, o formato exportado e a quantidade de pontos ou vértices). **Nunca enviamos as coordenadas, arquivos ou dados que você digita nas ferramentas.**",
+          "Além das páginas vistas, registramos os cliques nos botões de WhatsApp, de e-mail e de contato (qual botão, em que página e em que idioma) e o uso das ferramentas (qual ferramenta, o formato exportado e a quantidade de pontos ou vértices). **Nunca enviamos as coordenadas, arquivos ou dados que você digita nas ferramentas.**",
           "Os dados de eventos são guardados por 14 meses.",
         ],
         after: [
@@ -230,11 +232,12 @@ const copy: Record<Locale, Copy> = {
       },
       {
         id: "whatsapp",
-        h: "3. WhatsApp e o formulário de contato",
+        h: "3. WhatsApp, e-mail e formulário de contato",
         paras: [
           "O formulário de contato não envia dados a um servidor nosso: ele monta a mensagem e abre o WhatsApp no seu dispositivo. Nada é enviado até você confirmar no WhatsApp.",
           "Quando você usa um botão de WhatsApp do site, a mensagem inclui o título da página de onde você escreve, para entendermos melhor sua consulta. Você pode editar ou apagar antes de enviar.",
           "O WhatsApp é um serviço da Meta com sua [própria política de privacidade](https://www.whatsapp.com/legal/privacy-policy). Usamos o que você nos escreve só para responder e preparar o diagnóstico ou a proposta que você pedir.",
+          `Se você nos escreve para o e-mail [${mail}](mailto:${mail}), a mensagem chega a uma conta do Gmail, um serviço do Google com sua [própria política de privacidade](https://policies.google.com/privacy). Usamos só para responder.`,
         ],
       },
       {
@@ -263,7 +266,7 @@ const copy: Record<Locale, Copy> = {
         id: "terceiros",
         h: "6. Com quem compartilhamos dados",
         paras: [
-          "Não vendemos nem cedemos seus dados. Só participam os fornecedores que fazem o site funcionar: Google (análise), Meta (WhatsApp), Vercel (hospedagem), a Fundação OpenStreetMap (mapas) e a Amazon Web Services (dados de elevação).",
+          "Não vendemos nem cedemos seus dados. Só participam os fornecedores que fazem o site funcionar: Google (análise e e-mail), Meta (WhatsApp), Vercel (hospedagem), a Fundação OpenStreetMap (mapas) e a Amazon Web Services (dados de elevação).",
           "Os servidores deles podem estar fora do Peru e do Brasil, então usar o site implica uma transferência internacional de dados para esses fornecedores, que aplicam suas próprias medidas de segurança.",
         ],
       },
@@ -272,7 +275,7 @@ const copy: Record<Locale, Copy> = {
         h: "7. Seus direitos",
         paras: [
           "Se você está no Brasil, a Lei Geral de Proteção de Dados (Lei n.º 13.709/2018) garante, entre outros, os direitos de confirmação e acesso, correção, anonimização, bloqueio ou eliminação, portabilidade e revogação do consentimento. Como a Zeist está no Peru, também se aplica a Lei n.º 29733 de Proteção de Dados Pessoais e seu Regulamento (Decreto Supremo n.º 016-2024-JUS).",
-          `Para exercer seus direitos, escreva pelo WhatsApp para ${wa} indicando qual direito deseja exercer. Responderemos dentro dos prazos legais. Você também pode recorrer à autoridade de proteção de dados do seu país; no Brasil, a Autoridade Nacional de Proteção de Dados (ANPD).`,
+          `Para exercer seus direitos, escreva pelo WhatsApp para ${wa} ou para o e-mail [${mail}](mailto:${mail}) indicando qual direito deseja exercer. Responderemos dentro dos prazos legais. Você também pode recorrer à autoridade de proteção de dados do seu país; no Brasil, a Autoridade Nacional de Proteção de Dados (ANPD).`,
         ],
       },
       {
@@ -306,14 +309,14 @@ const copy: Record<Locale, Copy> = {
   en: {
     title: "Privacy policy",
     description:
-      "What data Zeist handles on this site, why, and how to exercise your rights: analytics with no ads, tools that run in your browser, and WhatsApp.",
-    updated: "Last updated: October 8, 2026",
+      "What data Zeist handles on this site, why, and how to exercise your rights: analytics with no ads, tools that run in your browser, WhatsApp and email.",
+    updated: "Last updated: October 10, 2026",
     summaryTitle: "In short",
     summary: [
       "We don't sell or share your data, and we don't show ads.",
       "The calculators and converters run in your browser: what you enter never reaches our servers.",
       "We measure visits with Google Analytics, cookieless in Europe, and you can turn measurement off in this browser.",
-      "If you message us on WhatsApp, we use your data only to reply.",
+      "If you message us on WhatsApp or by email, we use your data only to reply.",
     ],
     tableTitle: "What data we handle and why",
     tableHead: ["Data", "Purpose", "Where it's processed", "How long"],
@@ -325,9 +328,9 @@ const copy: Record<Locale, Copy> = {
         "Up to 14 months",
       ],
       [
-        "What you write on WhatsApp or in the form: name, message, email if you add it, and the page you're writing from",
+        "What you write on WhatsApp, by email or in the form: name, message, your email if you add it, and the page you're writing from",
         "Reply to you and prepare the diagnosis or proposal",
-        "WhatsApp (Meta) and our devices",
+        "WhatsApp (Meta), Gmail (Google) and our devices",
         "For as long as your inquiry or the business relationship lasts",
       ],
       [
@@ -348,7 +351,7 @@ const copy: Record<Locale, Copy> = {
         id: "controller",
         h: "1. Who is responsible",
         paras: [
-          `The data controller is **Zeist**, a BIM automation team based in Trujillo, La Libertad, Peru. For any question about your data, message us on WhatsApp at ${wa} or through the [contact page](/en/contacto).`,
+          `The data controller is **Zeist**, a BIM automation team based in Trujillo, La Libertad, Peru. For any question about your data, message us on WhatsApp at ${wa}, email [${mail}](mailto:${mail}) or use the [contact page](/en/contacto).`,
         ],
       },
       {
@@ -357,7 +360,7 @@ const copy: Record<Locale, Copy> = {
         paras: [
           "We use Google Analytics 4 to count visits and learn which pages and tools are used. We don't show ads, and advertising storage is disabled in every case.",
           "In the European Economic Area, the United Kingdom and Switzerland, measurement runs **without cookies**: Google receives only anonymous signals. Everywhere else, Google Analytics uses its measurement cookies.",
-          "Besides page views, we record clicks on WhatsApp and contact buttons (which button, on which page and in which language) and tool usage (which tool, the export format and the number of points or vertices). **We never send the coordinates, files or data you enter in the tools.**",
+          "Besides page views, we record clicks on WhatsApp, email and contact buttons (which button, on which page and in which language) and tool usage (which tool, the export format and the number of points or vertices). **We never send the coordinates, files or data you enter in the tools.**",
           "Event data is kept for 14 months.",
         ],
         after: [
@@ -366,11 +369,12 @@ const copy: Record<Locale, Copy> = {
       },
       {
         id: "whatsapp",
-        h: "3. WhatsApp and the contact form",
+        h: "3. WhatsApp, email and the contact form",
         paras: [
           "The contact form doesn't send data to a server of ours: it composes the message and opens WhatsApp on your device. Nothing is sent until you confirm it in WhatsApp.",
           "When you use a WhatsApp button on the site, the message includes the title of the page you're writing from, so we understand your question better. You can edit or delete it before sending.",
           "WhatsApp is a Meta service with its [own privacy policy](https://www.whatsapp.com/legal/privacy-policy). We use what you write only to reply and to prepare the diagnosis or proposal you ask for.",
+          `If you email us at [${mail}](mailto:${mail}), the message reaches a Gmail account, a Google service with its [own privacy policy](https://policies.google.com/privacy). We use it only to reply.`,
         ],
       },
       {
@@ -399,7 +403,7 @@ const copy: Record<Locale, Copy> = {
         id: "sharing",
         h: "6. Who we share data with",
         paras: [
-          "We don't sell or share your data. Only the providers that run the site are involved: Google (analytics), Meta (WhatsApp), Vercel (hosting), the OpenStreetMap Foundation (maps) and Amazon Web Services (elevation data).",
+          "We don't sell or share your data. Only the providers that run the site are involved: Google (analytics and email), Meta (WhatsApp), Vercel (hosting), the OpenStreetMap Foundation (maps) and Amazon Web Services (elevation data).",
           "Their servers may be outside Peru and outside your country, so using the site involves an international transfer of data to those providers, which apply their own security measures.",
         ],
       },
@@ -408,7 +412,7 @@ const copy: Record<Locale, Copy> = {
         h: "7. Your rights",
         paras: [
           "Zeist is based in Peru, where Law No. 29733 on Personal Data Protection and its Regulation (Supreme Decree No. 016-2024-JUS) give you the right to access, rectify, cancel or port your data, and to object to its processing. If you're in the European Economic Area or the United Kingdom, you also have your rights under the GDPR.",
-          `To exercise them, message us on WhatsApp at ${wa} stating which right you want to exercise. We'll reply within the legal deadlines. You can also contact the data protection authority in your country.`,
+          `To exercise them, message us on WhatsApp at ${wa} or email [${mail}](mailto:${mail}) stating which right you want to exercise. We'll reply within the legal deadlines. You can also contact the data protection authority in your country.`,
         ],
       },
       {
@@ -458,6 +462,12 @@ function inline(text: string): ReactNode {
         <Link key={i++} href={m[3]} className="font-medium text-[color:var(--color-mint-700)] underline underline-offset-2">
           {m[2]}
         </Link>,
+      );
+    } else if (m[3].startsWith("mailto:")) {
+      parts.push(
+        <a key={i++} href={m[3]} className="font-medium text-[color:var(--color-mint-700)] underline underline-offset-2">
+          {m[2]}
+        </a>,
       );
     } else {
       parts.push(

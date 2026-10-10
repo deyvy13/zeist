@@ -13,11 +13,11 @@ export const site = {
   name: "Zeist",
   // Brand-first name (like Nike/Adidas). The niche lives in the slogan, not the name.
   legalName: "Zeist",
-  // Contact. The email is intentionally NOT rendered anywhere right now —
-  // WhatsApp is the single published channel. The address stays here so
-  // restoring it later is one flag flip, not an archaeology exercise.
-  email: "hola@zeist.dev",
-  showEmail: false,
+  // Contact. WhatsApp is the main channel; the email is published next to it
+  // (footer, contact page, JSON-LD, /llms.txt, privacy policy). Setting
+  // `showEmail` to false hides it from the footer, contact page and JSON-LD.
+  email: "contacto.zeist@gmail.com",
+  showEmail: true,
   whatsapp: {
     /** Digits only, country code first. This is the format wa.me requires. */
     number: "51994764550",
@@ -57,4 +57,10 @@ export function absoluteUrl(path = ""): string {
 export function whatsappUrl(message?: string): string {
   const base = `https://wa.me/${site.whatsapp.number}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}
+
+/** mailto: link to the published address, with an optional prefilled subject. */
+export function mailtoUrl(subject?: string): string {
+  const base = `mailto:${site.email}`;
+  return subject ? `${base}?subject=${encodeURIComponent(subject)}` : base;
 }

@@ -265,7 +265,7 @@ acero", "calculadora manning tuberías/canales".
 - **Consentimiento por región:** en EEE/Reino Unido/Suiza `analytics_storage`
   arranca denegado (Consent Mode v2, sin cookies); en el resto, concedido.
   `ad_storage` denegado en todas partes. Lista en `consentDeniedRegions`.
-- **Eventos:** `whatsapp_click` y `contact_click`, con `cta`, `page_path` y
+- **Eventos:** `whatsapp_click`, `email_click` (enlaces `mailto:`) y `contact_click`, con `cta`, `page_path` y
   `locale`. Los dispara `components/cta-tracker.tsx` (un único listener
   delegado), no cada botón. **Todo enlace a WhatsApp o a /contacto lleva
   `data-cta="<ubicación>"`** (p. ej. `service-hero`, `post-early-whatsapp`,
@@ -452,14 +452,17 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   (oct-2026): conversor de coordenadas, calculadora de área de terreno
   (memoria descriptiva), generador de curvas de nivel, calculadora de acero
   corrugado y calculadora de Manning. El resto sigue "Pronto".
-- **Contacto — WhatsApp es el único canal publicado.** Número en
-  `site.whatsapp` (`lib/site.ts`); enlaces siempre vía `whatsappUrl(mensaje)`,
-  nunca hardcodeados. **El correo está oculto a propósito** (`site.showEmail:
-  false`): no se renderiza en ninguna parte ni se publica en el JSON-LD, que
-  declara `telephone` + `contactPoint`. El formulario de contacto compone el
-  mensaje y abre WhatsApp; el campo de correo es opcional. Si algún día vuelve
-  el correo, es un solo flag. Migrar a un endpoint real (Resend / Route Handler)
-  sigue pendiente.
+- **Contacto — WhatsApp (principal) y correo `contacto.zeist@gmail.com`** (publicado
+  el 10-oct-2026). Ambos viven en `site` (`lib/site.ts`); enlaces siempre vía
+  `whatsappUrl(mensaje)` y `mailtoUrl(asunto)`, nunca hardcodeados. El correo
+  sale en el footer, en la página de contacto (botón junto al de WhatsApp, con el
+  asunto del formulario), en el JSON-LD (`email` en Organization, ContactPoint y
+  el provider de cada Service), en `/llms.txt` y en la política de privacidad
+  (Gmail figura como proveedor). `site.showEmail: false` lo oculta del footer,
+  la página de contacto, el JSON-LD y `/llms.txt`; la política de privacidad lo
+  nombra siempre, así que habría que editarla a mano. El formulario de contacto
+  sigue armando el mensaje y abriendo WhatsApp; el campo de correo es opcional.
+  Migrar a un endpoint real (Resend / Route Handler) sigue pendiente.
 - ⚠️ **Bloqueante antes de publicar:** fijar `NEXT_PUBLIC_SITE_URL` al dominio real.
   Mientras no se haga, los canonical y las OG salen apuntando a `localhost:3000`.
 

@@ -3,7 +3,7 @@
 //
 // Two complementary measurements:
 //  1. GA4 (optional, env-gated): page views and conversion events such as
-//     `whatsapp_click` and `contact_click`. Loads only when NEXT_PUBLIC_GA_ID
+//     `whatsapp_click`, `email_click` and `contact_click`. Loads only when NEXT_PUBLIC_GA_ID
 //     is set at build time, so local builds and previews stay clean.
 //  2. Page reference in the WhatsApp message (always on, no cookies): when a
 //     visitor taps a WhatsApp button, the prefilled text gets the title of the

@@ -68,6 +68,7 @@ export default async function ServiceDetailPage({ params }: Props) {
     name: site.name,
     url: `${siteUrl}/`,
     telephone: `+${site.whatsapp.number}`,
+    ...(site.showEmail ? { email: site.email } : {}),
   };
 
   const serviceJsonLd = {

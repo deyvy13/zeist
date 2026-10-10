@@ -124,14 +124,16 @@ export function organizationJsonLd(locale: Locale) {
     name: site.name,
     url: `${siteUrl}/`,
     logo: `${siteUrl}/icon-512.png`,
-    // The email is hidden from the site for now (site.showEmail), so it is not
-    // published here either — WhatsApp is the declared contact channel.
+    // Same channels the site shows: WhatsApp always, the email while
+    // site.showEmail is on.
     telephone: `+${site.whatsapp.number}`,
+    ...(site.showEmail ? { email: site.email } : {}),
     contactPoint: [
       {
         "@type": "ContactPoint",
         contactType: "sales",
         telephone: `+${site.whatsapp.number}`,
+        ...(site.showEmail ? { email: site.email } : {}),
         availableLanguage: ["es", "pt", "en"],
         areaServed: ["PE", "LATAM", "US", "ES"],
       },

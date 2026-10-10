@@ -10,6 +10,7 @@ import { trackEvent, withPageReference } from "@/lib/analytics";
 //  - WhatsApp links (wa.me): the prefilled message gets the current page
 //    title appended, then a `whatsapp_click` event is sent to GA4.
 //  - Links to /<lang>/contacto: a `contact_click` event.
+//  - mailto: links (the published email): an `email_click` event.
 //
 // Runs in the capture phase, before the browser follows the link, so the
 // rewritten href is the one that opens. The original href is kept in
@@ -38,6 +39,11 @@ export function CtaTracker() {
         link.href = out;
         link.dataset.waOut = link.href; // read back: the browser may normalize it
         trackEvent("whatsapp_click", params);
+        return;
+      }
+
+      if (link.href.startsWith("mailto:")) {
+        trackEvent("email_click", params);
         return;
       }
 
