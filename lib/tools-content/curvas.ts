@@ -546,7 +546,7 @@ const labels: Record<Locale, ContourLabels> = {
     pointsDescription: "TN",
     fileBase: "curvas-de-nivel-zeist",
     kmlName: "Curvas de nivel (Zeist)",
-    dxfComment: "Curvas de nivel - Zeist (zeist.vercel.app)\nUTM WGS 84 zona {zone}, cotas en m sobre el nivel del mar, intervalo {interval} m\nDatos: Terrain Tiles (SRTM, 3DEP, EU-DEM, ETOPO1). Solo para anteproyectos.",
+    dxfComment: "Curvas de nivel - Zeist (zeist.dev)\nUTM WGS 84 zona {zone}, cotas en m sobre el nivel del mar, intervalo {interval} m\nDatos: Terrain Tiles (SRTM, 3DEP, EU-DEM, ETOPO1). Solo para anteproyectos.",
     cta: {
       title: "¿Superficies y movimiento de tierras cada semana?",
       body: "Un plugin de Civil 3D construye la superficie con tus reglas y genera perfiles, secciones y cubicaciones.",
@@ -588,7 +588,7 @@ const labels: Record<Locale, ContourLabels> = {
     pointsDescription: "TN",
     fileBase: "curvas-de-nivel-zeist",
     kmlName: "Curvas de nível (Zeist)",
-    dxfComment: "Curvas de nivel - Zeist (zeist.vercel.app)\nUTM WGS 84 fuso {zone}, cotas em m sobre o nivel do mar, equidistancia {interval} m\nDados: Terrain Tiles (SRTM, 3DEP, EU-DEM, ETOPO1). Apenas para estudos preliminares.",
+    dxfComment: "Curvas de nivel - Zeist (zeist.dev)\nUTM WGS 84 fuso {zone}, cotas em m sobre o nivel do mar, equidistancia {interval} m\nDados: Terrain Tiles (SRTM, 3DEP, EU-DEM, ETOPO1). Apenas para estudos preliminares.",
     cta: {
       title: "Superfícies e terraplenagem toda semana?",
       body: "Um plugin de Civil 3D constrói a superfície com as suas regras e gera perfis, seções e volumes.",
@@ -630,7 +630,7 @@ const labels: Record<Locale, ContourLabels> = {
     pointsDescription: "EG",
     fileBase: "contours-zeist",
     kmlName: "Contour lines (Zeist)",
-    dxfComment: "Contour lines - Zeist (zeist.vercel.app)\nUTM WGS 84 zone {zone}, elevations in m above mean sea level, interval {interval} m\nData: Terrain Tiles (SRTM, 3DEP, EU-DEM, ETOPO1). For preliminary studies only.",
+    dxfComment: "Contour lines - Zeist (zeist.dev)\nUTM WGS 84 zone {zone}, elevations in m above mean sea level, interval {interval} m\nData: Terrain Tiles (SRTM, 3DEP, EU-DEM, ETOPO1). For preliminary studies only.",
     cta: {
       title: "Surfaces and earthwork every week?",
       body: "A Civil 3D plugin builds the surface with your rules and generates profiles, sections and volumes.",

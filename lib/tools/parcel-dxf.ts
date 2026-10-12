@@ -46,7 +46,7 @@ export function buildParcelDxf(input: ParcelDxfInput): Uint8Array {
     .layer(layers.vertices, 3)
     .layer(layers.distances, 7)
     .layer(layers.table, 7);
-  dxf.comment("Zeist - zeist.vercel.app");
+  dxf.comment("Zeist - zeist.dev");
   dxf.polyline(pts, { layer: layers.boundary, closed: true });
 
   // Outward unit normal of each side (the outside is left of travel on a clockwise ring).

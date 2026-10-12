@@ -6,7 +6,7 @@ import type { Locale } from "@/lib/i18n";
 // -----------------------------------------------------------------------------
 
 export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://zeist.vercel.app"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://zeist.dev"
 ).replace(/\/$/, "");
 
 export const site = {

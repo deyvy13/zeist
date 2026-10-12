@@ -286,7 +286,7 @@ acero", "calculadora manning tuberías/canales".
   `ga-disable-<ID>` antes de `config`, así ese navegador no envía nada.
 - **Jerarquía de encabezados:** UN solo `<h1>` por página (título principal),
   `<h2>` para secciones, `<h3>` para tarjetas/subsecciones. **No romper esto.**
-- **Dominio:** `NEXT_PUBLIC_SITE_URL` apunta a `https://zeist.vercel.app` (fallback en `lib/site.ts` + `.env.local`). Cambiar en ambos sitios al migrar a dominio propio.
+- **Dominio: `https://zeist.dev`** (migrado el 11-oct-2026). Toda URL absoluta sale de `siteUrl` en `lib/site.ts`: valor de `NEXT_PUBLIC_SITE_URL` o, si falta, el fallback `https://zeist.dev` (también en `.env.local`). Las redirecciones 308 del subdominio antiguo de Vercel al dominio nuevo viven en Vercel, no en el código: no añadir redirects en `proxy.ts` ni en `next.config`. El archivo de verificación de Search Console (`public/google…html`) no se borra.
 
 ## 7. Sistema de diseño (editorial + claymorfismo como acento)
 
@@ -447,7 +447,7 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   14. ~~Captación: importar puntos a Civil 3D, perfil longitudinal y parámetros compartidos~~ (HECHO, oct-2026)
 - **Conversión (HECHA, oct-2026):** medición GA4 + clics de WhatsApp, y las 4
   páginas de servicio convertidas en landings de venta (ver sección 6).
-  Política de privacidad: HECHA (oct-2026). Pendiente: dominio propio.
+  Política de privacidad: HECHA (oct-2026). Dominio propio `zeist.dev`: HECHO (11-oct-2026).
 - **Fase 5 (EN CURSO):** liberar las herramientas de `/herramientas`. Hechas
   (oct-2026): conversor de coordenadas, calculadora de área de terreno
   (memoria descriptiva), generador de curvas de nivel, calculadora de acero
@@ -463,8 +463,7 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   nombra siempre, así que habría que editarla a mano. El formulario de contacto
   sigue armando el mensaje y abriendo WhatsApp; el campo de correo es opcional.
   Migrar a un endpoint real (Resend / Route Handler) sigue pendiente.
-- ⚠️ **Bloqueante antes de publicar:** fijar `NEXT_PUBLIC_SITE_URL` al dominio real.
-  Mientras no se haga, los canonical y las OG salen apuntando a `localhost:3000`.
+- **Dominio propio: HECHO (11-oct-2026)**, `https://zeist.dev`. Si `NEXT_PUBLIC_SITE_URL` está definida en Vercel, debe valer `https://zeist.dev` en Production.
 
 ## 10. Comandos
 
