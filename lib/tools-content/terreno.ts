@@ -219,6 +219,7 @@ const content: Record<Locale, ToolContent> = {
       "produccion-planos-automatica-civil-3d-revit",
       "deja-de-usar-excel-y-perder-horas",
       "expediente-tecnico-observaciones-reducir",
+      "ubicar-plano-coordenadas-utm-google-maps",
     ],
   },
 
@@ -405,6 +406,7 @@ const content: Record<Locale, ToolContent> = {
       "produccion-planos-automatica-civil-3d-revit",
       "deja-de-usar-excel-y-perder-horas",
       "plugin-civil-3d-dibujo-3d-automatizado",
+      "ubicar-plano-coordenadas-utm-google-maps",
     ],
   },
 
@@ -593,6 +595,7 @@ const content: Record<Locale, ToolContent> = {
       "produccion-planos-automatica-civil-3d-revit",
       "deja-de-usar-excel-y-perder-horas",
       "plugin-civil-3d-dibujo-3d-automatizado",
+      "ubicar-plano-coordenadas-utm-google-maps",
     ],
   },
 };

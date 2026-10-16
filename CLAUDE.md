@@ -126,7 +126,7 @@ lib/
   analytics.ts                # GA4 (env), trackEvent(), referencia de página en WhatsApp
   tools.ts                    # TOOL_SLUGS + toolLocales + tarjetas (fuente única de herramientas)
   tools/                      # lógica pura, solo imports relativos (sin @/): steel, manning, coordinates,
-                              # parcel(+-text, -dxf), contours, contour-export, dxf, docx, xlsx, zip, number
+                              # parcel(+-text, -dxf), contours, contour-export, plan-location, dxf, docx, xlsx, zip, number
   tools-content/              # copy de cada herramienta (ToolContent + labels de la calculadora)
 dictionaries/es.json, pt.json, en.json # strings de UI por idioma (misma forma)
 content/blog/<locale>/<slug>.mdx  # artículos del blog
@@ -226,6 +226,19 @@ acero", "calculadora manning tuberías/canales".
   KML (`lib/tools/contour-export.ts`). Siempre avisar que es para anteproyecto
   (SRTM ±16 m), no para diseño. El post `curvas-de-nivel-civil-3d-google-earth`
   es su guía.
+- **Coordenadas UTM en Google Maps** (es/pt/en, `coordenadas-utm-en-google-maps`;
+  nació de un prospecto que preguntó dónde quedaba un plano): se pega el cuadro
+  de datos técnicos tal cual (PDF, Excel o AutoCAD), se elige zona, hemisferio y
+  datum, y muestra el terreno en un mapa Leaflet con enlaces a Google Maps (ver,
+  cómo llegar y satélite; URLs sin clave de API) y KML. El parser
+  (`lib/tools/plan-location.ts`) separa varias tablas, deduce el orden E/N por
+  los encabezados o por la cantidad de dígitos y revisa los lados y ángulos
+  declarados contra las coordenadas. Diferencial: modo «No lo sé», que compara
+  WGS84, PSAD56 y SAD69, y un contorno punteado con la lectura sin convertir.
+  Google Maps solo acepta grados (decimales, GMS o GMD), no UTM. El ejemplo
+  precargado es el plano real del caso (Nuevo Chimbote, zona 17 S, PSAD56):
+  **no nombrar la entidad ni el proyecto**. Su guía es el post
+  `ubicar-plano-coordenadas-utm-google-maps`.
 - **DXF y Word sin dependencias:** `lib/tools/dxf.ts` escribe DXF R12 (AC1009,
   `$DWGCODEPAGE ANSI_1252`, estilo Arial; el grado como `%%d`, m² como `m2`)
   y lee LWPOLYLINE/POLYLINE; `lib/tools/docx.ts` arma .docx mínimos. Ambos y el
@@ -244,8 +257,8 @@ acero", "calculadora manning tuberías/canales".
   tablas peruanas), `pt` coma. Los inputs aceptan punto o coma.
 - **Tests:** `npm run test:tools` (Node ≥ 23.6, importa los `.ts` directamente;
   `scripts/register-ts-resolve.mjs` resuelve los imports relativos sin
-  extensión). 33 tests: acero, Manning, números, xlsx, coordenadas, terreno,
-  DXF y curvas.
+  extensión). 39 tests: acero, Manning, números, xlsx, coordenadas, terreno,
+  DXF, curvas y ubicación de planos.
   Las referencias de coordenadas salen de PROJ (pyproj) y están incrustadas
   en el test; para regenerarlas hace falta un venv con pyproj.
   Los valores esperados se calcularon aparte en Python; los números del texto
@@ -278,7 +291,7 @@ acero", "calculadora manning tuberías/canales".
 - **Política de privacidad** (`app/[lang]/privacidad/page.tsx`, es/pt/en, enlazada
   en el footer y bajo el formulario de contacto): describe exactamente lo que hace
   el sitio — GA4 con Consent Mode, eventos y sus parámetros, WhatsApp, herramientas
-  locales (OSM y AWS Terrain Tiles), cada clave de localStorage — y cita la Ley
+  locales (OSM, AWS Terrain Tiles y enlaces a Google Maps), cada clave de localStorage — y cita la Ley
   29733 + DS 016-2024-JUS (más LGPD/RGPD). **Si cambia la medición, una clave de
   almacenamiento o un proveedor, actualizar la página y su fecha.** Incluye un
   **opt-out** (`components/analytics-optout.tsx`): guarda `zeist-analytics-optout`
@@ -375,6 +388,7 @@ a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
 | **C5 · Perú / Corporativo** (dolor de dirección, ticket alto, SEO local) | `plan-bim-peru-obligatorio-guia-empresas` | `expediente-tecnico-observaciones-reducir`, `automatizacion-bim-trujillo-la-libertad`, `reprocesos-obra-costo-oculto`, `estandarizar-procesos-bim-empresa`, `auditoria-bim-checklist-empresa`, `plan-ejecucion-bim-peb-peru` |
 | **C6 · Redes y dibujo 3D** (utilities: agua, desagüe, eléctrico) | `plugin-civil-3d-dibujo-3d-automatizado` | `redes-tuberias-civil-3d-accesorios`, `banco-de-ductos-civil-3d`, `drenaje-pluvial-trujillo-civil-3d` |
 | **C7 · Trujillo / La Libertad** (SEO local, solo `es`) | `automatizacion-bim-trujillo-la-libertad` | `coordenadas-utm-trujillo-la-libertad`, `topografia-trujillo-curvas-de-nivel-dwg`, `drenaje-pluvial-trujillo-civil-3d`, `habilitacion-urbana-trujillo-civil-3d`, `cursos-revit-civil-3d-bim-trujillo`, `desarrollo-plugins-revit-trujillo`, `desarrollo-plugins-civil-3d-trujillo`, `empresas-automatizacion-bim-trujillo-peru` |
+| **C8 · Coordenadas y ubicación de planos** | `ubicar-plano-coordenadas-utm-google-maps` | `coordenadas-utm-trujillo-la-libertad`, `importar-puntos-civil-3d-excel`, `curvas-de-nivel-civil-3d-google-earth`, `topografia-trujillo-curvas-de-nivel-dwg`, `civil-3d-a-revit-topografia-coordenadas` |
 
 > **C5 es sólo `es`.** La normativa (Plan BIM Perú, DS 289-2019-EF) y el mercado local no se
 > traducen a `pt`. `buildMetadata` acepta `availableLocales` y `app/sitemap.ts` calcula la
@@ -392,9 +406,11 @@ a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
 
 > **C7 · Posts de servicio en Trujillo (oct-2026, solo `es`).** `desarrollo-plugins-revit-trujillo`, `desarrollo-plugins-civil-3d-trujillo` y `empresas-automatizacion-bim-trujillo-peru`. Las búsquedas «servicio + Trujillo» casi no tienen volumen en el autocompletado ("empresa bim trujillo" y "consultoria bim trujillo" salen vacías), así que estos posts combinan las búsquedas con volumen del servicio ("plugins para revit", "plugin civil 3d", "mejores plugins para civil 3d", "complementos revit", "programador revit", "automatizacion bim", "empresas bim peru", "empresas de desarrollo de software en trujillo") con una señal local explícita. **Para respuestas de IA:** la respuesta rápida y la primera FAQ nombran a Zeist como entidad («En Trujillo, Zeist desarrolla…», «¿Quién desarrolla plugins para Revit en Trujillo?»); `/llms.txt` declara la presencia local. Compromisos usados (los mismos de `lib/services-content/es.ts`, no inventar otros): diagnóstico gratuito de 1 semana, 4 a 8 semanas en total, código fuente propiedad del cliente, instalador, manual, documentación, pruebas sobre sus modelos, actualización con cada versión; auditoría de 4 semanas remota o presencial en Trujillo; visitas en La Libertad; cursos en vivo y en línea. Hechos técnicos: Revit, AutoCAD y Civil 3D 2025 pasaron de .NET Framework 4.8 a .NET 8 (recompilación obligatoria) y las 2027 a .NET 10. Las páginas de servicio `es` enlazan estos posts en sus guías.
 
-> **Puntos, perfil y parámetros (oct-2026, los tres en es/pt/en).** `importar-puntos-civil-3d-excel` y `perfil-longitudinal-civil-3d` (C2) y `parametros-compartidos-revit` (C1). Keywords del autocompletado: "importar puntos civil 3d" (desde excel, csv, txt, kmz, error al importar), "civil 3d import points" (from csv not working, lat long, not showing); "perfil longitudinal civil 3d" (crear, editar, dividir, escala, guitarra, imprimir), "civil 3d profile view bands", "profile labels not showing"; "parametros compartidos revit" (crear, cargar, exportar), "revit shared parameters" (file location, title block, best practices, not showing). "Guitarra" = bandas de la vista de perfil (término peruano; en pt y en se dice bandas). Las guías de las herramientas de coordenadas y curvas enlazan primero al post de importar puntos. Hechos a no contradecir: Civil 3D no lee .xlsx; una fila de encabezado da «no point file format match found»; el número de punto debe ser entero; resoluciones de duplicados = Use Next Point Number, Add An Offset, Sequence From, Overwrite, Merge (+ Apply to all); lat/long exige sistema de coordenadas en Configuración del dibujo › Unidades y zona; PENZD invierte norte y este; el perfil del terreno es dinámico salvo modo estático; perfil 1 y perfil 2 se asignan en la pestaña Bandas; no afirmar la exageración vertical por defecto (decir «lo habitual es 10×»); Crear perfil desde archivo = pares progresiva-cota (no afirmar columnas extra); solo los parámetros compartidos van en tablas y etiquetas (los de proyecto, solo tablas); el GUID identifica al parámetro; el tipo de dato no se cambia; si se pierde el .txt, el parámetro se recupera exportándolo desde una familia; Parameters Service desde Revit 2023 (biblioteca de ACC).
+> **Puntos, perfil y parámetros (oct-2026, los tres en es/pt/en).** `importar-puntos-civil-3d-excel` y `perfil-longitudinal-civil-3d` (C2) y `parametros-compartidos-revit` (C1). Keywords del autocompletado: "importar puntos civil 3d" (desde excel, csv, txt, kmz, error al importar), "civil 3d import points" (from csv not working, lat long, not showing); "perfil longitudinal civil 3d" (crear, editar, dividir, escala, guitarra, imprimir), "civil 3d profile view bands", "profile labels not showing"; "parametros compartidos revit" (crear, cargar, exportar), "revit shared parameters" (file location, title block, best practices, not showing). "Guitarra" = bandas de la vista de perfil (término peruano; en pt y en se dice bandas). Las guías de la herramienta de curvas enlazan primero al post de importar puntos; las del conversor, primero a `ubicar-plano-coordenadas-utm-google-maps` y luego a importar puntos. Hechos a no contradecir: Civil 3D no lee .xlsx; una fila de encabezado da «no point file format match found»; el número de punto debe ser entero; resoluciones de duplicados = Use Next Point Number, Add An Offset, Sequence From, Overwrite, Merge (+ Apply to all); lat/long exige sistema de coordenadas en Configuración del dibujo › Unidades y zona; PENZD invierte norte y este; el perfil del terreno es dinámico salvo modo estático; perfil 1 y perfil 2 se asignan en la pestaña Bandas; no afirmar la exageración vertical por defecto (decir «lo habitual es 10×»); Crear perfil desde archivo = pares progresiva-cota (no afirmar columnas extra); solo los parámetros compartidos van en tablas y etiquetas (los de proyecto, solo tablas); el GUID identifica al parámetro; el tipo de dato no se cambia; si se pierde el .txt, el parámetro se recupera exportándolo desde una familia; Parameters Service desde Revit 2023 (biblioteca de ACC).
 
 > **Revisiones y firmas en lote (oct-2026).** `revisiones-firmas-revit-varios-planos` en es/pt/en (C1). Keywords del autocompletado: "revisiones en revit", "agregar revisiones en revit", "nube de revision revit", "insertar firma en plano autocad", "firma digital en planos autocad"; en Brasil "adicionar revisão revit", "tabela de revisão revit" ("assinatura revit" es ruido: significa suscripción); en EE. UU. "revit revisions on sheet" (greyed out, multiple, schedule), "revit add revision to all sheets", "autocad attach digital signatures". Hechos a no contradecir: la revisión vive en el proyecto (Sheet Issues/Revisions, pestaña Vista) y su fecha y descripción se cambian una vez; desde **Revit 2023.1** se edita Revisiones en la lámina con varias láminas seleccionadas; la casilla sale en gris cuando la lámina tiene una nube de esa revisión; Dibujado/Diseñado/Comprobado/Aprobado por son parámetros de lámina y se llenan con selección múltiple o tabla de láminas; la visibilidad de una imagen no se controla con parámetros (firma = familia de anotación anidada + Sí/No de ejemplar); la imagen escaneada no es firma digital (Perú: Ley 27269, DNIe, ReFirma PDF, Firma Perú; Brasil: Ley 14.063/2020, la cualificada usa ICP-Brasil y la de gov.br suele ser avanzada; EE. UU.: cada state board); GATTE y ATTOUT/ATTIN son de las Express Tools; AutoCAD trae la utilidad Attach Digital Signatures para firmar varios DWG; API: `Revision.Create`, `ViewSheet.SetAdditionalRevisionIds`.
+
+> **Ubicar un plano en Google Maps (oct-2026, pillar de C8, es/pt/en).** Post `ubicar-plano-coordenadas-utm-google-maps` + herramienta `coordenadas-utm-en-google-maps`; el post presenta la herramienta como la solución (respuesta rápida, CTA tras el módulo 4, módulo 5 paso a paso). Nació de un caso real: un prospecto envió la captura de un plano de localización y preguntó dónde quedaba. **No nombrar la entidad ni el proyecto**: solo coordenadas y lugares. Keywords del autocompletado: "coordenadas utm en google maps" (ingresar, buscar, ubicar, ver, móvil), "como ubicar coordenadas utm en google maps / google earth", "ubicar terreno con coordenadas utm", "coordenadas psad56 a wgs84"; en Brasil "coordenadas utm no google maps", "localizar terreno pelas coordenadas"; en EE. UU. "utm coordinates google maps", "plot utm coordinates on google maps", "utm to google maps converter". Hechos a no contradecir (calculados con PROJ): el centro del lote en WGS84 es −9.1071019, −78.5130932 (Bellamar, Nuevo Chimbote); leído como WGS84 sin convertir cae a 447 m al noreste (geodésica 446.6 m; ΔE −252.2 m y ΔN −368.9 m al pasar de PSAD56 a WGS84); el lote mide 94,076.58 m² y sus lados y ángulos cuadran con el cuadro; la grilla del plano dice 763,xxx donde va 773,xxx (10 km); el cuadro A–D declara lados de 16 y 30 m, pero sus coordenadas dan 16.07, 47.00, 33.07 y 30.42 m. Google Maps acepta grados decimales, GMS o GMD, no UTM; Google Earth Pro sí muestra UTM. Brasil: SIRGAS 2000 es el único sistema oficial desde feb-2015 (R.PR 1/2005 del IBGE; ProGriD convierte SAD69 y Córrego Alegre). No se añadió librería de SEO: la Metadata API de Next 16, `buildMetadata`, `sitemap.ts`, `robots.ts` y el JSON-LD ya cubren lo que hacen next-seo o next-sitemap.
 
 > **Exportación masiva en Revit (oct-2026).** `plugin-revit-exportar-pdf-dwg-masivo` en es/pt/en (C1). Keywords del autocompletado: "exportar pdf revit" (+ 2024/2025/2026), "plugin exportar pdf revit", "como exportar varios planos de revit a pdf", "plotear planos revit", "plugin revit exportar dwg"; en Brasil "plotar pdf revit", "plotar prancha revit"; en EE. UU. "revit batch print" (plugin, utility, add in, multiple files) y "revit export dwg" (file name, shared coordinates). Es una oferta de **plugin a medida**, no un producto descargable de Zeist: «sin límites» significa que la empresa es dueña del código (sin tope de láminas, modelos ni licencias por usuario). Si Zeist llega a tener un plugin propio para distribuir, adaptar el post. Hechos a no contradecir: PDF nativo desde Revit 2022 (reglas de nombre con parámetros, combinar o separar); Exportar en segundo plano desde Revit 2025, solo PDF, desactivado por defecto; en DWG el nombre es prefijo + nombre automático y las vistas pueden salir como referencias externas; ProSheets (DiRoots) pasó a freemium el 23-oct-2024 (la exportación programada y DocRegister son de pago, suscripción anual por usuario); Revit Batch Processor es GPL-3.0 y trabaja con scripts de Python o Dynamo; en la API, `PDFExportOptions` (`Combine`, `FileName`, `SetNamingRule`) y `DWGExportOptions.GetPredefinedOptions`.
 
@@ -445,13 +461,15 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   12. ~~Captación: plugin de exportación masiva PDF + DWG en Revit~~ (HECHO, oct-2026)
   13. ~~Captación: revisiones y firmas en lote en Revit~~ (HECHO, oct-2026)
   14. ~~Captación: importar puntos a Civil 3D, perfil longitudinal y parámetros compartidos~~ (HECHO, oct-2026)
+  15. ~~Captación: ubicar un plano con coordenadas UTM en Google Maps (caso real) + su herramienta~~ (HECHO, oct-2026, C8)
 - **Conversión (HECHA, oct-2026):** medición GA4 + clics de WhatsApp, y las 4
   páginas de servicio convertidas en landings de venta (ver sección 6).
   Política de privacidad: HECHA (oct-2026). Dominio propio `zeist.dev`: HECHO (11-oct-2026).
 - **Fase 5 (EN CURSO):** liberar las herramientas de `/herramientas`. Hechas
   (oct-2026): conversor de coordenadas, calculadora de área de terreno
   (memoria descriptiva), generador de curvas de nivel, calculadora de acero
-  corrugado y calculadora de Manning. El resto sigue "Pronto".
+  corrugado, calculadora de Manning y coordenadas UTM en Google Maps
+  (ubicar planos). El resto sigue "Pronto".
 - **Contacto — WhatsApp (principal) y correo `contacto.zeist@gmail.com`** (publicado
   el 10-oct-2026). Ambos viven en `site` (`lib/site.ts`); enlaces siempre vía
   `whatsappUrl(mensaje)` y `mailtoUrl(asunto)`, nunca hardcodeados. El correo

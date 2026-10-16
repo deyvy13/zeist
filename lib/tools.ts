@@ -7,6 +7,7 @@ import type { Locale } from "@/lib/i18n";
 // -----------------------------------------------------------------------------
 
 export const TOOL_SLUGS = [
+  "coordenadas-utm-en-google-maps",
   "conversor-de-coordenadas",
   "calculadora-area-terreno",
   "generador-curvas-de-nivel",
@@ -22,6 +23,7 @@ export type ToolSlug = (typeof TOOL_SLUGS)[number];
  * own tables (Brazil: CA-50 in mm, 12 m bars; US: bar sizes #3-#11).
  */
 export const toolLocales: Record<ToolSlug, readonly Locale[]> = {
+  "coordenadas-utm-en-google-maps": ["es", "pt", "en"],
   "conversor-de-coordenadas": ["es", "pt", "en"],
   "calculadora-area-terreno": ["es", "pt", "en"],
   "generador-curvas-de-nivel": ["es", "pt", "en"],
@@ -32,6 +34,23 @@ export const toolLocales: Record<ToolSlug, readonly Locale[]> = {
 export type ToolCard = { title: string; body: string; tags: string[] };
 
 export const toolCards: Record<ToolSlug, Partial<Record<Locale, ToolCard>>> = {
+  "coordenadas-utm-en-google-maps": {
+    es: {
+      title: "Coordenadas UTM en Google Maps",
+      body: "Pega el cuadro de coordenadas de tu plano y mira dónde queda. Corrige PSAD56, revisa el cuadro y abre la ubicación en Google Maps para llegar.",
+      tags: ["Google Maps", "PSAD56 → WGS84", "Planos"],
+    },
+    pt: {
+      title: "Coordenadas UTM no Google Maps",
+      body: "Cole o quadro de coordenadas da planta e veja onde fica o terreno. Corrige SAD69 e PSAD56, confere o quadro e abre no Google Maps.",
+      tags: ["Google Maps", "SAD69 → SIRGAS", "Plantas"],
+    },
+    en: {
+      title: "UTM coordinates on Google Maps",
+      body: "Paste a site plan coordinate table and see where it is. Fixes legacy datums, checks the table and opens the location in Google Maps.",
+      tags: ["Google Maps", "Site plans", "Datum shift"],
+    },
+  },
   "conversor-de-coordenadas": {
     es: {
       title: "Conversor de coordenadas",

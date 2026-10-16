@@ -69,7 +69,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "La diferencia no es pequeña: en Trujillo, un punto en PSAD56 queda unos **250 m al oeste y 370 m al sur** al pasarlo a WGS84, casi 450 m en total. Por eso un plano antiguo no calza sobre Google Earth ni sobre un levantamiento con GPS.",
+            text: "La diferencia no es pequeña: en Trujillo, un punto en PSAD56 queda unos **250 m al oeste y 370 m al sur** al pasarlo a WGS84, casi 450 m en total. Por eso un plano antiguo no calza sobre Google Earth ni sobre un levantamiento con GPS. Si solo necesitas ver dónde queda un plano y llegar, usa [Coordenadas UTM en Google Maps](/es/herramientas/coordenadas-utm-en-google-maps): pegas el cuadro del plano y lo abres en Google Maps.",
           },
           {
             type: "table",
@@ -187,6 +187,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "ubicar-plano-coordenadas-utm-google-maps",
       "importar-puntos-civil-3d-excel",
       "coordenadas-utm-trujillo-la-libertad",
       "automatizar-civil-3d-guia-completa",
@@ -258,7 +259,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "Em São Paulo, um ponto em SAD69 fica cerca de **45 m a oeste e 46 m ao sul** ao passar para SIRGAS 2000, uns 64 m no total. Por isso uma planta antiga não bate com o Google Earth nem com um levantamento GNSS.",
+            text: "Em São Paulo, um ponto em SAD69 fica cerca de **45 m a oeste e 46 m ao sul** ao passar para SIRGAS 2000, uns 64 m no total. Por isso uma planta antiga não bate com o Google Earth nem com um levantamento GNSS. Se você só precisa ver onde fica uma planta e chegar lá, use [Coordenadas UTM no Google Maps](/pt/herramientas/coordenadas-utm-en-google-maps): cole o quadro da planta e abra no Google Maps.",
           },
           {
             type: "table",
@@ -376,6 +377,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "ubicar-plano-coordenadas-utm-google-maps",
       "importar-puntos-civil-3d-excel",
       "automatizar-civil-3d-guia-completa",
       "plugin-civil-3d-dibujo-3d-automatizado",
@@ -448,7 +450,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "For South American projects, the converter also handles legacy datums: PSAD56 to WGS 84 for Peru (EPSG, ±16 m), where the shift is about 450 m, and SAD69 to SIRGAS 2000 for Brazil (IBGE, ±5 m), where it is about 64 m.",
+            text: "For South American projects, the converter also handles legacy datums: PSAD56 to WGS 84 for Peru (EPSG, ±16 m), where the shift is about 450 m, and SAD69 to SIRGAS 2000 for Brazil (IBGE, ±5 m), where it is about 64 m. To just see where a site plan is and get directions, use [UTM coordinates on Google Maps](/en/herramientas/coordenadas-utm-en-google-maps).",
           },
         ],
       },
@@ -550,6 +552,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "ubicar-plano-coordenadas-utm-google-maps",
       "importar-puntos-civil-3d-excel",
       "automatizar-civil-3d-guia-completa",
       "plugin-civil-3d-dibujo-3d-automatizado",

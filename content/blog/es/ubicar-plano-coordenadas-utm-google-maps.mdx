@@ -1,0 +1,217 @@
+---
+title: "Cómo saber la ubicación exacta de un plano con coordenadas UTM y abrirla en Google Maps"
+seoTitle: "Ubicar un terreno con coordenadas UTM en Google Maps"
+ctaTitle: "¿Recibes planos en PSAD56 o sin georreferenciar? Lo automatizamos en AutoCAD y Civil 3D."
+description: "Cómo saber dónde queda un plano: lee su cuadro de coordenadas, la zona y el datum, corrige PSAD56 a WGS84 y ábrelo en Google Maps. Con un caso real."
+date: "2026-10-16T17:00:00.000Z"
+author: "Zeist"
+tags:
+  - Coordenadas UTM
+  - Google Maps
+  - PSAD56
+  - Topografía
+  - Planos
+---
+
+<BlogHero
+  eyebrow="Coordenadas · Planos · Google Maps"
+  title="Un prospecto nos mandó un plano y una sola pregunta: ¿dónde queda exactamente?"
+  highlight="La respuesta estaba en el plano, pero repartida entre tres sistemas de coordenadas distintos. Así se lee un plano para encontrar su ubicación exacta, con un caso real de Nuevo Chimbote y una herramienta gratuita que lo resuelve en segundos."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Para saber dónde queda un plano, usa su cuadro de datos técnicos: las coordenadas Este y Norte de cada vértice, con la zona UTM y el datum que indica el rótulo. Google Maps no acepta coordenadas UTM, así que hay que convertirlas a latitud y longitud en WGS84. Si el plano está en PSAD56, como muchos planos peruanos, también hay que cambiar el datum: sin ese paso, el punto se corre unos 450 m. La herramienta [Coordenadas UTM en Google Maps](/es/herramientas/coordenadas-utm-en-google-maps) hace todo y abre la ubicación para que llegues.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Coordenadas UTM** — La posición en metros: un Este (X) y un Norte (Y). Es lo que traen casi todos los planos de ingeniería.
+- **Zona UTM** — La franja de 6° de longitud en la que valen esas coordenadas. El Perú ocupa las zonas 17, 18 y 19, todas en el hemisferio sur.
+- **Datum** — El modelo de la Tierra al que se refieren las coordenadas. Los planos peruanos antiguos usan **PSAD56**; el GPS y Google Maps usan **WGS84**.
+- **Cuadro de datos técnicos** — La tabla del plano con los vértices, los lados, las longitudes, los ángulos y las coordenadas de cada vértice.
+- **Plano de localización** — El croquis que muestra dónde está la obra dentro de la ciudad, con una grilla de coordenadas en los bordes.
+- **Coordenadas del dibujo** — Las que muestra AutoCAD al tocar un punto. En una lámina son milímetros del papel, y en el modelo solo coinciden con el terreno si el plano se dibujó en coordenadas reales.
+
+Está escrito para ingenieros, arquitectos, topógrafos y cualquier persona que recibe un plano y necesita llegar al terreno.
+</Callout>
+
+## La pregunta que parecía fácil
+
+Hace poco un prospecto nos escribió con una captura de pantalla: un plano de localización de una obra en Nuevo Chimbote, en Áncash, abierto en el celular. Solo quería saber una cosa: **dónde queda exactamente**.
+
+Parece una pregunta de un minuto. Pero en ese mismo plano había tres juegos de coordenadas distintos, y solo uno llevaba al lugar correcto. Si alguno de ellos se pega tal cual en Google Maps, el resultado es otro barrio o el centro de otra ciudad.
+
+<AnimatedFlow
+  title="Del plano a Google Maps"
+  nodes="Cuadro de datos técnicos|Zona y datum|WGS84|Google Maps"
+  subs="Este y Norte de cada vértice|17 S · PSAD56|Latitud y longitud|Ver, satélite y cómo llegar"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Tres coordenadas en un mismo plano, y solo una sirve" time="~5 min">
+
+Esto es lo que mostraba el plano, tal como llegó:
+
+| Dónde aparece | Qué dice | ¿Sirve para ubicar el terreno? |
+|---|---|---|
+| Esquina del visor del celular | 266.2624, 106.4341 | No: son coordenadas de la lámina o del dibujo |
+| Grilla del plano de localización | Este 763 200 a 764 000; Norte 8 992 400 | Solo a ojo, y aquí tenía un error |
+| Cuadro de datos técnicos | Este 773 650.1996; Norte 8 992 962.5553… | Sí: es la fuente que vale |
+| Rótulo | Zona geográfica 17; datum geodésico PSAD 56 | Sí: sin esto, el cuadro no se puede leer |
+
+**Las coordenadas del visor** son las del punto que tocas en el dibujo. En una lámina, que es lo que mostraba la captura, son milímetros del papel; en el espacio modelo, solo son UTM si el plano se dibujó en coordenadas reales. Aquí, 266 y 106 no corresponden a ningún lugar del terreno.
+
+**La grilla del plano de localización** sirve para ubicarse a ojo dentro de la ciudad, pero no para medir. Y en este caso, como veremos en el paso 4, tenía un dígito equivocado.
+
+**El cuadro de datos técnicos**, con la zona y el datum del rótulo, es lo único que permite ubicar el terreno con precisión.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Los tres datos que necesitas: coordenadas, zona y datum" time="~5 min">
+
+Unas coordenadas UTM solas no bastan. Necesitas tres cosas:
+
+1. **El Este y el Norte**, en metros. En el Perú, el Este tiene seis cifras y el Norte siete.
+2. **La zona y el hemisferio.** El mismo Este se repite en cada zona: con la zona equivocada, el punto salta unos 650 km.
+3. **El datum.** Con el datum equivocado, el punto se corre cientos de metros.
+
+| Zona | Longitudes | Ciudades |
+|---|---|---|
+| 17 S | 84° O – 78° O | Tumbes, Piura, Chiclayo, Trujillo, Chimbote, Cajamarca |
+| 18 S | 78° O – 72° O | Lima, Huaraz, Ica, Huancayo, Ayacucho, Iquitos |
+| 19 S | 72° O – 66° O | Arequipa, Cusco, Puno, Tacna, Puerto Maldonado |
+
+En nuestro caso, el rótulo lo decía todo: **zona 17, hemisferio sur, datum PSAD 56**. Si lo quieres ver con detalle para La Libertad, lo explicamos en [coordenadas UTM en Trujillo y La Libertad](/es/blog/coordenadas-utm-trujillo-la-libertad).
+
+</TopicCard>
+
+<TopicCard step="3" title="3. PSAD56 o WGS84: por qué el punto cae a 447 metros" time="~6 min">
+
+Google Maps, el GPS del celular y Google Earth trabajan en **WGS84**. Muchos planos peruanos siguen en **PSAD56**, el datum de la cartografía antigua. El IGN adoptó WGS84 en 2006 y hoy la Directiva N.° 01-2023-SNCP/CNC pide los planos en WGS84 UTM, pero los planos y expedientes anteriores siguen circulando.
+
+El mismo punto tiene coordenadas distintas en cada datum. En nuestro plano:
+
+| Lectura | Centro del terreno | Dónde cae |
+|---|---|---|
+| PSAD56 convertido a WGS84 (correcto) | −9.1071019, −78.5130932 | Bellamar, Nuevo Chimbote |
+| Coordenadas pegadas como si fueran WGS84 | −9.1037527, −78.5108236 | El Pescador, otro barrio |
+
+La diferencia es de **447 m hacia el noreste**: una distancia que, en una ciudad, es otra manzana u otro barrio. Expresado en coordenadas UTM, pasar de PSAD56 a WGS84 resta unos 252 m al Este y 369 m al Norte en esta zona.
+
+<Callout type="warn" title="El error más común">
+Pegar las coordenadas de un plano PSAD56 en un conversor o en un GPS configurado en WGS84, sin cambiar el datum. El resultado se ve razonable, porque cae en la misma ciudad, y por eso nadie sospecha.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Revisa el plano antes de confiar en él" time="~6 min">
+
+Un cuadro de datos técnicos se puede revisar contra sí mismo: las longitudes y los ángulos que declara deben coincidir con los que dan sus coordenadas. En este plano encontramos tres cosas.
+
+**El cuadro del terreno es coherente.** Los cuatro lados y los cuatro ángulos coinciden con las coordenadas, al milímetro y al segundo:
+
+| Lado | Longitud del cuadro | Calculada con las coordenadas |
+|---|---|---|
+| 1 – 2 | 234.8918 m | 234.8918 m |
+| 2 – 3 | 400.1637 m | 400.1637 m |
+| 3 – 4 | 235.1478 m | 235.1478 m |
+| 4 – 1 | 400.4244 m | 400.4245 m |
+
+El terreno encierra 94,076.58 m², unas 9.41 ha.
+
+**La grilla del plano de localización tiene un dígito equivocado.** Sus etiquetas dicen 763 200, 763 600 y 764 000 de Este, mientras el cuadro dice 773 xxx. Son 10 km de diferencia: leída tal cual, la grilla apunta al centro de Chimbote. ¿Cuál vale? La del cuadro, porque cae entre los barrios que el mismo plano rotula, como Bellamar y California. La grilla tenía un 6 donde iba un 7.
+
+**El segundo cuadro no cierra.** El plano trae una segunda área, con vértices A a D, que declara lados de 16 y 30 m, un rectángulo. Sus coordenadas, en cambio, dibujan lados de 16.07, 47.00, 33.07 y 30.42 m. Una de las dos cosas está mal, y antes de usar esa área hay que confirmarlo con quien hizo el plano.
+
+<Callout type="tip" title="Lo que puedes revisar en un minuto">
+Calcula un lado con las coordenadas de sus dos vértices: la raíz de la diferencia de Este al cuadrado más la diferencia de Norte al cuadrado. Si coincide con la longitud del cuadro, las coordenadas son coherentes. La herramienta lo hace con todos los lados y ángulos a la vez.
+</Callout>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Herramienta gratuita"
+  title="Pega el cuadro de tu plano y mira dónde queda"
+  body="Corrige PSAD56 a WGS84, revisa el cuadro, te muestra el terreno en el mapa y abre la ubicación en Google Maps para llegar. El ejemplo cargado es este mismo plano."
+  primaryLabel="Abrir Coordenadas UTM en Google Maps"
+  primaryHref="/es/herramientas/coordenadas-utm-en-google-maps"
+  secondaryLabel="Ver el conversor por lotes"
+  secondaryHref="/es/herramientas/conversor-de-coordenadas"
+/>
+
+<TopicCard step="5" title="5. Paso a paso con la herramienta" time="~4 min">
+
+1. Abre [Coordenadas UTM en Google Maps](/es/herramientas/coordenadas-utm-en-google-maps).
+2. **Pega el cuadro de datos técnicos** tal como viene del PDF, Excel o AutoCAD, con vértices, lados, longitudes y ángulos. La herramienta encuentra el Este y el Norte en cada fila y separa los cuadros. Si solo tienes un punto, escríbelo en el modo «Un punto».
+3. Elige **zona 17**, **hemisferio sur** y **datum PSAD56**, o lo que diga tu plano. Si el plano no dice el datum, elige «No lo sé» y compara en el mapa dónde cae con cada uno.
+4. Mira el resultado: **Tu plano está aquí**, con la latitud y la longitud del centro del terreno, el polígono en el mapa y una línea punteada que muestra dónde caerías sin corregir el datum.
+5. Revisa la **revisión del cuadro**: en verde lo que coincide, en amarillo lo que no.
+
+Con el ejemplo cargado, la herramienta marca el terreno en Bellamar, muestra los 447 m de diferencia con la lectura sin corregir y señala que el cuadro A–D no cierra.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Cómo llegar: Google Maps, satélite y Google Earth" time="~4 min">
+
+Google Maps acepta coordenadas en grados decimales, en grados, minutos y segundos o en grados con minutos decimales. Por eso la herramienta te da cuatro salidas:
+
+- **Abrir en Google Maps**: el punto, listo para guardar o compartir.
+- **Cómo llegar**: la ruta desde donde estés.
+- **Vista satélite**: la foto aérea, para reconocer el terreno antes de ir.
+- **KML**: el polígono del terreno para abrirlo en Google Earth.
+
+**¿Qué tan exacta es la ubicación?** Si el plano está en WGS84, tanto como las coordenadas del plano. Si está en PSAD56, el cambio de datum usa la transformación EPSG para el Perú, con una precisión de unos ±16 m: alcanza para llegar al terreno, no para replantear linderos. Para eso se enlaza el trabajo a puntos de control medidos con GPS diferencial.
+
+<Callout type="info" title="¿Y Google Earth en UTM?">
+Google Earth Pro puede mostrar la cuadrícula UTM en sus opciones, pero también trabaja en WGS84. Unas coordenadas PSAD56 escritas ahí caen igual de corridas: el datum hay que corregirlo antes.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Si tienes el DWG: georreferenciarlo en AutoCAD o Civil 3D" time="~5 min">
+
+Si además del PDF tienes el archivo DWG y quieres que el dibujo calce sobre un mapa:
+
+1. **Comprueba en qué coordenadas está dibujado.** En el espacio modelo, no en una lámina, toca un vértice: si no ves su Este y su Norte del cuadro, el plano está en coordenadas locales.
+2. **Llévalo a sus coordenadas reales** con el comando ALINEAR (ALIGN): eliges dos vértices del dibujo y les indicas sus coordenadas del cuadro. Así el plano se mueve, gira y queda a escala.
+3. **Asigna el sistema de coordenadas del dibujo.** En Civil 3D, en Configuración del dibujo › Unidades y zona, elige el sistema del plano, por ejemplo PSAD56 zona 17 sur. Con eso, Civil 3D puede mostrar el dibujo sobre un mapa de fondo y convertir sus puntos.
+4. **Si vas a combinarlo con un levantamiento nuevo en WGS84**, conviértelo a WGS84 antes de mezclar, nunca después.
+
+Si tu oficina recibe planos así todas las semanas, es un trabajo repetitivo que se automatiza. Lo contamos en [automatizar Civil 3D, la guía completa](/es/blog/automatizar-civil-3d-guia-completa).
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automatización de AutoCAD y Civil 3D"
+  title="Planos georreferenciados en lote, con las reglas de tu oficina"
+  body="Desarrollamos plugins que convierten coordenadas entre PSAD56 y WGS84, georreferencian planos en coordenadas locales y revisan los cuadros de datos técnicos antes de que lleguen al diseño. Somos ingenieros civiles e ingenieros de sistemas."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **La herramienta de este caso:** [Coordenadas UTM en Google Maps](/es/herramientas/coordenadas-utm-en-google-maps).
+- **Para cientos de puntos:** [conversor de coordenadas UTM y geográficas](/es/herramientas/conversor-de-coordenadas), con exportación a Excel, Civil 3D y Google Earth.
+- **Si trabajas en La Libertad:** [coordenadas UTM en Trujillo, zonas y datum](/es/blog/coordenadas-utm-trujillo-la-libertad).
+- **Llevar los puntos a Civil 3D:** [importar puntos a Civil 3D desde Excel, CSV o TXT](/es/blog/importar-puntos-civil-3d-excel).
+- **El relieve del terreno:** [curvas de nivel en Civil 3D, de Google Earth al levantamiento](/es/blog/curvas-de-nivel-civil-3d-google-earth).
+- **Área y memoria descriptiva:** [calculadora de área de terreno](/es/herramientas/calculadora-area-terreno).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Trabajamos con planos, coordenadas y Civil 3D todos los días, y programamos las herramientas que los procesan. Atendemos oficinas de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota técnica:** las conversiones de este artículo se verificaron con PROJ usando la transformación EPSG PSAD56 to WGS 84 (8). No nombramos a la entidad ni al proyecto del plano.

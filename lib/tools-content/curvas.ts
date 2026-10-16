@@ -174,6 +174,7 @@ const content: Record<Locale, ToolContent> = {
       "automatizar-civil-3d-guia-completa",
       "plugin-civil-3d-dibujo-3d-automatizado",
       "automatizar-metrados-cubicaciones-civil-3d",
+      "ubicar-plano-coordenadas-utm-google-maps",
     ],
   },
 
@@ -341,6 +342,7 @@ const content: Record<Locale, ToolContent> = {
       "automatizar-civil-3d-guia-completa",
       "plugin-civil-3d-dibujo-3d-automatizado",
       "redes-tuberias-civil-3d-accesorios",
+      "ubicar-plano-coordenadas-utm-google-maps",
     ],
   },
 
@@ -508,6 +510,7 @@ const content: Record<Locale, ToolContent> = {
       "automatizar-civil-3d-guia-completa",
       "plugin-civil-3d-dibujo-3d-automatizado",
       "redes-tuberias-civil-3d-accesorios",
+      "ubicar-plano-coordenadas-utm-google-maps",
     ],
   },
 };

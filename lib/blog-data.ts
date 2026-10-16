@@ -21,6 +21,156 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- Coordenadas (oct-2026): ubicar un plano con coordenadas UTM en Google Maps ----
+  "ubicar-plano-coordenadas-utm-google-maps": {
+    es: {
+      roadmap: {
+        title: "Ubicar un plano con coordenadas UTM, en 7 pasos",
+        intro:
+          "Las tres coordenadas de un plano, los datos que necesitas, el error del datum, cómo revisar el plano, la herramienta, cómo llegar y cómo georreferenciar el DWG.",
+        steps: [
+          { n: 1, title: "Tres coordenadas", desc: "Visor, grilla y cuadro: solo una sirve", tag: "Lectura" },
+          { n: 2, title: "Coordenadas, zona y datum", desc: "Lo que hace falta para ubicar un punto", tag: "Base" },
+          { n: 3, title: "PSAD56 o WGS84", desc: "Por qué el punto cae a 447 m", tag: "Datum" },
+          { n: 4, title: "Revisa el plano", desc: "Lados, ángulos y una grilla con un dígito equivocado", tag: "Revisión" },
+          { n: 5, title: "La herramienta", desc: "Pega el cuadro y mira dónde queda", tag: "Herramienta" },
+          { n: 6, title: "Cómo llegar", desc: "Google Maps, satélite y Google Earth", tag: "Navegación" },
+          { n: 7, title: "Si tienes el DWG", desc: "Georreferenciarlo en AutoCAD o Civil 3D", tag: "CAD" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre ubicar un plano con coordenadas UTM",
+        items: [
+          {
+            q: "¿Cómo saber la ubicación exacta de un plano?",
+            a: "Con su cuadro de datos técnicos: las coordenadas Este y Norte de los vértices, con la zona UTM y el datum que indica el rótulo. Esas coordenadas se convierten a latitud y longitud en WGS84 y se abren en un mapa. La herramienta gratuita Coordenadas UTM en Google Maps, de Zeist, lo hace en un paso: pegas el cuadro, eliges zona y datum y ves el terreno.",
+          },
+          {
+            q: "¿Cómo pongo coordenadas UTM en Google Maps?",
+            a: "Google Maps solo acepta grados: decimales, con minutos y segundos o con minutos decimales. Las coordenadas UTM hay que convertirlas antes a latitud y longitud en WGS84, con su zona y su datum. Después se pega la latitud y la longitud en el buscador, o se usa un enlace que abra el punto directamente.",
+          },
+          {
+            q: "¿Por qué mi plano cae a 400 o 500 metros en Google Maps?",
+            a: "Casi siempre porque el plano está en PSAD56 y se leyó como si fuera WGS84, el datum de Google Maps. En el norte del Perú la diferencia ronda los 450 m: en nuestro caso de Nuevo Chimbote fueron 447 m hacia el noreste. Hay que convertir el datum antes de abrir el punto.",
+          },
+          {
+            q: "¿Qué zona UTM tiene mi plano?",
+            a: "La indica el rótulo, como «Zona geográfica: 17». Si no está, depende de la longitud: en el Perú, la zona 17 cubre Tumbes, Piura, Chiclayo, Trujillo y Chimbote; la 18, Lima, Huaraz, Ica y Huancayo; y la 19, Arequipa, Cusco, Puno y Tacna. El hemisferio es sur.",
+          },
+          {
+            q: "¿Sirven las coordenadas que muestra el visor de AutoCAD?",
+            a: "Solo en el espacio modelo y si el plano se dibujó en coordenadas UTM reales. En una lámina, las coordenadas son milímetros del papel, y muchos planos se dibujan en coordenadas locales. Para ubicar el terreno, usa siempre el cuadro de datos técnicos.",
+          },
+          {
+            q: "¿Qué hago si la grilla del plano y el cuadro de coordenadas no coinciden?",
+            a: "Revisa el cuadro contra sí mismo: si sus longitudes y ángulos coinciden con sus coordenadas, y el terreno cae donde el plano dice que está, el cuadro es el que vale. En nuestro caso, la grilla tenía un 6 donde iba un 7, una diferencia de 10 km. Ante la duda, confírmalo con quien hizo el plano.",
+          },
+          {
+            q: "¿Quién puede georreferenciar mis planos de forma automática?",
+            a: "En Zeist desarrollamos plugins para AutoCAD y Civil 3D que convierten coordenadas entre PSAD56 y WGS84, georreferencian planos dibujados en coordenadas locales y revisan los cuadros de datos técnicos. Para un caso puntual, la herramienta gratuita Coordenadas UTM en Google Maps ubica un plano en segundos.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Localizar uma planta com coordenadas UTM, em 7 passos",
+        intro:
+          "As três coordenadas de uma planta, os dados de que você precisa, o erro do datum, como conferir a planta, a ferramenta, como chegar e como georreferenciar o DWG.",
+        steps: [
+          { n: 1, title: "Três coordenadas", desc: "Visualizador, grade e quadro: só uma serve", tag: "Leitura" },
+          { n: 2, title: "Coordenadas, fuso e datum", desc: "O que é preciso para localizar um ponto", tag: "Base" },
+          { n: 3, title: "Datum antigo ou WGS 84", desc: "Por que o ponto cai a 447 m", tag: "Datum" },
+          { n: 4, title: "Confira a planta", desc: "Lados, ângulos e uma grade com um dígito errado", tag: "Conferência" },
+          { n: 5, title: "A ferramenta", desc: "Cole o quadro e veja onde fica", tag: "Ferramenta" },
+          { n: 6, title: "Como chegar", desc: "Google Maps, satélite e Google Earth", tag: "Navegação" },
+          { n: 7, title: "Se você tem o DWG", desc: "Georreferenciá-lo no AutoCAD ou no Civil 3D", tag: "CAD" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre localizar uma planta com coordenadas UTM",
+        items: [
+          {
+            q: "Como saber a localização exata de uma planta?",
+            a: "Pelo quadro de coordenadas: o E e o N dos vértices, com o fuso UTM e o datum indicados no carimbo. Essas coordenadas são convertidas para latitude e longitude em WGS 84 e abertas num mapa. A ferramenta gratuita Coordenadas UTM no Google Maps, da Zeist, faz isso num passo: você cola o quadro, escolhe fuso e datum e vê o terreno.",
+          },
+          {
+            q: "Como colocar coordenadas UTM no Google Maps?",
+            a: "O Google Maps só aceita graus: decimais, com minutos e segundos ou com minutos decimais. As coordenadas UTM precisam ser convertidas antes para latitude e longitude em WGS 84, com o fuso e o datum. Depois cola-se a latitude e a longitude na busca, ou usa-se um link que abre o ponto diretamente.",
+          },
+          {
+            q: "Por que minha planta cai longe do lugar no Google Maps?",
+            a: "Quase sempre porque a planta está num datum antigo e foi lida como se fosse WGS 84. De SAD69 para SIRGAS 2000, um ponto em São Paulo se move cerca de 64 m; no nosso caso do Peru, de PSAD56 para WGS 84, foram 447 m. É preciso converter o datum antes de abrir o ponto.",
+          },
+          {
+            q: "Qual é o fuso UTM da minha planta?",
+            a: "O carimbo costuma indicar. Se não indica, depende da longitude: São Paulo, Rio de Janeiro, Belo Horizonte e Brasília estão no fuso 23 Sul; Porto Alegre e Curitiba no 22 Sul; Salvador e Fortaleza no 24 Sul.",
+          },
+          {
+            q: "As coordenadas que o visualizador do AutoCAD mostra servem?",
+            a: "Só no espaço do modelo e se a planta foi desenhada em coordenadas UTM reais. Numa folha (layout), as coordenadas são milímetros do papel, e muitas plantas são desenhadas em coordenadas locais. Para localizar o terreno, use sempre o quadro de coordenadas.",
+          },
+          {
+            q: "O que fazer se a grade da planta e o quadro não batem?",
+            a: "Confira o quadro contra ele mesmo: se as distâncias e os ângulos batem com as coordenadas, e o terreno cai onde a planta diz, o quadro é o que vale. No nosso caso, a grade tinha um 6 onde ia um 7, uma diferença de 10 km. Na dúvida, confirme com quem fez a planta.",
+          },
+          {
+            q: "Quem pode georreferenciar minhas plantas automaticamente?",
+            a: "Na Zeist desenvolvemos plugins para AutoCAD e Civil 3D que convertem coordenadas entre datums, georreferenciam plantas desenhadas em coordenadas locais e conferem os quadros de coordenadas. Para um caso pontual, a ferramenta gratuita Coordenadas UTM no Google Maps localiza uma planta em segundos.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Locating a site plan from UTM coordinates, in 7 steps",
+        intro:
+          "The three sets of coordinates on a plan, what you need, the datum mistake, how to check the plan, the tool, getting there and georeferencing the DWG.",
+        steps: [
+          { n: 1, title: "Three sets of coordinates", desc: "Viewer, grid and table: only one works", tag: "Reading" },
+          { n: 2, title: "Coordinates, zone and datum", desc: "What it takes to place a point", tag: "Basics" },
+          { n: 3, title: "Legacy datum vs WGS 84", desc: "Why the point lands 447 m off", tag: "Datum" },
+          { n: 4, title: "Check the plan", desc: "Sides, angles and a grid with a wrong digit", tag: "Check" },
+          { n: 5, title: "The tool", desc: "Paste the table and see where it is", tag: "Tool" },
+          { n: 6, title: "Getting there", desc: "Google Maps, satellite and Google Earth", tag: "Navigation" },
+          { n: 7, title: "If you have the DWG", desc: "Georeference it in AutoCAD or Civil 3D", tag: "CAD" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about locating a site plan from UTM coordinates",
+        items: [
+          {
+            q: "How do I find the exact location of a site plan?",
+            a: "From its coordinate table: the easting and northing of each corner, with the UTM zone and datum from the title block. Convert them to latitude and longitude on WGS 84 and open them on a map. Zeist's free UTM coordinates on Google Maps tool does it in one step: paste the table, pick zone and datum, and see the site.",
+          },
+          {
+            q: "How do I enter UTM coordinates in Google Maps?",
+            a: "Google Maps only accepts degrees: decimal, degrees-minutes-seconds or decimal minutes. Convert the UTM coordinates to latitude and longitude on WGS 84 first, using their zone and datum. Then paste the latitude and longitude into the search box, or use a link that opens the point directly.",
+          },
+          {
+            q: "Why does my plan land hundreds of meters off in Google Maps?",
+            a: "Usually because the plan is on a legacy datum and was read as WGS 84, the datum Google Maps uses. In our Peruvian case, PSAD56 read as WGS 84 landed 447 m to the northeast. Apply the datum shift before opening the point.",
+          },
+          {
+            q: "How do I find the UTM zone of a plan?",
+            a: "The title block usually states it. If not, it follows from the longitude: zone = 1 + floor((longitude + 180) / 6). The contiguous US spans zones 10 to 19, northern hemisphere.",
+          },
+          {
+            q: "Can I use the coordinates the AutoCAD viewer shows?",
+            a: "Only in model space, and only if the plan was drawn in real UTM coordinates. On a layout the coordinates are millimeters of paper, and many plans are drawn in local coordinates. To locate the site, always use the coordinate table.",
+          },
+          {
+            q: "What if the plan's grid and coordinate table disagree?",
+            a: "Check the table against itself: if its distances and angles match its coordinates, and the site lands where the plan says it is, trust the table. In our case the grid had a 6 where a 7 belonged, a 10 km gap. When in doubt, confirm with whoever made the plan.",
+          },
+          {
+            q: "Who can georeference my plans automatically?",
+            a: "Zeist builds AutoCAD and Civil 3D plugins that convert coordinates between datums, georeference plans drawn in local coordinates and check coordinate tables. For a one-off case, the free UTM coordinates on Google Maps tool locates a plan in seconds.",
+          },
+        ],
+      },
+    },
+  },
   // ---- Captación (oct-2026): importar puntos, perfil longitudinal, parámetros compartidos ----
   "importar-puntos-civil-3d-excel": {
     es: {

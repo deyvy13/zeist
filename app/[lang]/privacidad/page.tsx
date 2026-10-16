@@ -9,7 +9,8 @@ import { AnalyticsOptOut, type AnalyticsOptOutLabels } from "@/components/analyt
 
 // Privacy policy. Describes what the site actually does — keep it in sync with
 // components/analytics.tsx (GA4 + consent regions), components/contact-form.tsx
-// and cta-tracker (WhatsApp and email clicks), the tools (local processing, OSM and AWS tiles)
+// and cta-tracker (WhatsApp and email clicks), the tools (local processing, OSM and AWS tiles,
+// Google Maps links)
 // and every localStorage key. Update `updated` whenever any of those change.
 
 type Section = { id: string; h: string; paras?: string[]; list?: string[]; after?: string[] };
@@ -35,7 +36,7 @@ const copy: Record<Locale, Copy> = {
     title: "Política de privacidad",
     description:
       "Qué datos trata Zeist, para qué y cómo ejercer tus derechos: analítica sin publicidad, herramientas que funcionan en tu navegador, WhatsApp y correo.",
-    updated: "Última actualización: 10 de octubre de 2026",
+    updated: "Última actualización: 16 de octubre de 2026",
     summaryTitle: "En corto",
     summary: [
       "No vendemos ni cedemos tus datos, y no mostramos publicidad.",
@@ -85,7 +86,7 @@ const copy: Record<Locale, Copy> = {
         paras: [
           "Usamos Google Analytics 4 para contar visitas y saber qué páginas y herramientas se usan. No mostramos publicidad, y el almacenamiento con fines publicitarios está desactivado en todos los casos.",
           "En el Espacio Económico Europeo, el Reino Unido y Suiza, la medición funciona **sin cookies**: Google recibe solo señales anónimas. En el resto de países, Google Analytics usa sus cookies de medición.",
-          "Además de las páginas vistas, registramos los clics en los botones de WhatsApp, de correo y de contacto (qué botón, en qué página y en qué idioma) y el uso de las herramientas (qué herramienta, el formato exportado y la cantidad de puntos o vértices). **Nunca enviamos las coordenadas, archivos o datos que ingresas en las herramientas.**",
+          "Además de las páginas vistas, registramos los clics en los botones de WhatsApp, de correo y de contacto (qué botón, en qué página y en qué idioma) y el uso de las herramientas (qué herramienta, la acción —exportar un formato, copiar o abrir en Google Maps— y la cantidad de puntos o vértices). **Nunca enviamos las coordenadas, archivos o datos que ingresas en las herramientas.**",
           "Los datos de eventos se conservan 14 meses.",
         ],
         after: [
@@ -108,6 +109,7 @@ const copy: Record<Locale, Copy> = {
         paras: [
           "Las calculadoras y conversores funcionan en tu navegador: las coordenadas, los archivos DXF y los datos que ingresas se procesan en tu equipo y no se envían a nuestros servidores. Los archivos que descargas se generan en tu propio navegador.",
           "Los mapas cargan imágenes de [OpenStreetMap](https://osmfoundation.org/wiki/Privacy_Policy), y el generador de curvas de nivel descarga datos de elevación del servicio público Terrain Tiles en Amazon Web Services. Como ocurre con cualquier mapa web, esos servicios reciben tu dirección IP y la zona del mapa que estás viendo.",
+          "Las herramientas de coordenadas tienen enlaces para abrir un punto en Google Maps. Solo cuando haces clic en uno, tu navegador abre Google Maps con las coordenadas de ese punto, y desde ahí se aplica la [política de privacidad de Google](https://policies.google.com/privacy). Mientras no hagas clic, Google no recibe esas coordenadas.",
         ],
       },
       {
@@ -128,7 +130,7 @@ const copy: Record<Locale, Copy> = {
         id: "terceros",
         h: "6. Con quién compartimos datos",
         paras: [
-          "No vendemos ni cedemos tus datos. Solo intervienen los proveedores que hacen funcionar el sitio: Google (analítica y correo), Meta (WhatsApp), Vercel (alojamiento), la Fundación OpenStreetMap (mapas) y Amazon Web Services (datos de elevación).",
+          "No vendemos ni cedemos tus datos. Solo intervienen los proveedores que hacen funcionar el sitio: Google (analítica, correo y Google Maps, si abres sus enlaces), Meta (WhatsApp), Vercel (alojamiento), la Fundación OpenStreetMap (mapas) y Amazon Web Services (datos de elevación).",
           "Sus servidores pueden estar fuera del Perú, por lo que usar el sitio implica una transferencia internacional de datos a esos proveedores, que aplican sus propias medidas de seguridad.",
         ],
       },
@@ -173,7 +175,7 @@ const copy: Record<Locale, Copy> = {
     title: "Política de privacidade",
     description:
       "Que dados a Zeist trata neste site, para quê e como exercer seus direitos: análise sem publicidade, ferramentas que funcionam no navegador, WhatsApp e e-mail.",
-    updated: "Última atualização: 10 de outubro de 2026",
+    updated: "Última atualização: 16 de outubro de 2026",
     summaryTitle: "Em resumo",
     summary: [
       "Não vendemos nem cedemos seus dados, e não exibimos publicidade.",
@@ -223,7 +225,7 @@ const copy: Record<Locale, Copy> = {
         paras: [
           "Usamos o Google Analytics 4 para contar visitas e saber quais páginas e ferramentas são usadas. Não exibimos publicidade, e o armazenamento para fins publicitários está desativado em todos os casos.",
           "No Espaço Econômico Europeu, no Reino Unido e na Suíça, a medição funciona **sem cookies**: o Google recebe só sinais anônimos. Nos demais países, o Google Analytics usa seus cookies de medição.",
-          "Além das páginas vistas, registramos os cliques nos botões de WhatsApp, de e-mail e de contato (qual botão, em que página e em que idioma) e o uso das ferramentas (qual ferramenta, o formato exportado e a quantidade de pontos ou vértices). **Nunca enviamos as coordenadas, arquivos ou dados que você digita nas ferramentas.**",
+          "Além das páginas vistas, registramos os cliques nos botões de WhatsApp, de e-mail e de contato (qual botão, em que página e em que idioma) e o uso das ferramentas (qual ferramenta, a ação —exportar um formato, copiar ou abrir no Google Maps— e a quantidade de pontos ou vértices). **Nunca enviamos as coordenadas, arquivos ou dados que você digita nas ferramentas.**",
           "Os dados de eventos são guardados por 14 meses.",
         ],
         after: [
@@ -246,6 +248,7 @@ const copy: Record<Locale, Copy> = {
         paras: [
           "As calculadoras e conversores funcionam no seu navegador: as coordenadas, os arquivos DXF e os dados que você digita são processados no seu computador e não são enviados aos nossos servidores. Os arquivos que você baixa são gerados no seu próprio navegador.",
           "Os mapas carregam imagens do [OpenStreetMap](https://osmfoundation.org/wiki/Privacy_Policy), e o gerador de curvas de nível baixa dados de elevação do serviço público Terrain Tiles na Amazon Web Services. Como acontece com qualquer mapa na web, esses serviços recebem seu endereço IP e a área do mapa que você está vendo.",
+          "As ferramentas de coordenadas têm links para abrir um ponto no Google Maps. Só quando você clica em um deles o navegador abre o Google Maps com as coordenadas desse ponto, e a partir daí vale a [política de privacidade do Google](https://policies.google.com/privacy). Enquanto você não clica, o Google não recebe essas coordenadas.",
         ],
       },
       {
@@ -266,7 +269,7 @@ const copy: Record<Locale, Copy> = {
         id: "terceiros",
         h: "6. Com quem compartilhamos dados",
         paras: [
-          "Não vendemos nem cedemos seus dados. Só participam os fornecedores que fazem o site funcionar: Google (análise e e-mail), Meta (WhatsApp), Vercel (hospedagem), a Fundação OpenStreetMap (mapas) e a Amazon Web Services (dados de elevação).",
+          "Não vendemos nem cedemos seus dados. Só participam os fornecedores que fazem o site funcionar: Google (análise, e-mail e Google Maps, se você abrir os links), Meta (WhatsApp), Vercel (hospedagem), a Fundação OpenStreetMap (mapas) e a Amazon Web Services (dados de elevação).",
           "Os servidores deles podem estar fora do Peru e do Brasil, então usar o site implica uma transferência internacional de dados para esses fornecedores, que aplicam suas próprias medidas de segurança.",
         ],
       },
@@ -310,7 +313,7 @@ const copy: Record<Locale, Copy> = {
     title: "Privacy policy",
     description:
       "What data Zeist handles on this site, why, and how to exercise your rights: analytics with no ads, tools that run in your browser, WhatsApp and email.",
-    updated: "Last updated: October 10, 2026",
+    updated: "Last updated: October 16, 2026",
     summaryTitle: "In short",
     summary: [
       "We don't sell or share your data, and we don't show ads.",
@@ -360,7 +363,7 @@ const copy: Record<Locale, Copy> = {
         paras: [
           "We use Google Analytics 4 to count visits and learn which pages and tools are used. We don't show ads, and advertising storage is disabled in every case.",
           "In the European Economic Area, the United Kingdom and Switzerland, measurement runs **without cookies**: Google receives only anonymous signals. Everywhere else, Google Analytics uses its measurement cookies.",
-          "Besides page views, we record clicks on WhatsApp, email and contact buttons (which button, on which page and in which language) and tool usage (which tool, the export format and the number of points or vertices). **We never send the coordinates, files or data you enter in the tools.**",
+          "Besides page views, we record clicks on WhatsApp, email and contact buttons (which button, on which page and in which language) and tool usage (which tool, the action — exporting a format, copying or opening in Google Maps — and the number of points or vertices). **We never send the coordinates, files or data you enter in the tools.**",
           "Event data is kept for 14 months.",
         ],
         after: [
@@ -383,6 +386,7 @@ const copy: Record<Locale, Copy> = {
         paras: [
           "The calculators and converters run in your browser: the coordinates, DXF files and data you enter are processed on your device and never sent to our servers. The files you download are generated in your own browser.",
           "Maps load imagery from [OpenStreetMap](https://osmfoundation.org/wiki/Privacy_Policy), and the contour generator downloads elevation data from the public Terrain Tiles service on Amazon Web Services. As with any web map, those services receive your IP address and the map area you're viewing.",
+          "The coordinate tools include links that open a point in Google Maps. Only when you click one does your browser open Google Maps with that point's coordinates, and from there [Google's privacy policy](https://policies.google.com/privacy) applies. Until you click, Google doesn't receive those coordinates.",
         ],
       },
       {
@@ -403,7 +407,7 @@ const copy: Record<Locale, Copy> = {
         id: "sharing",
         h: "6. Who we share data with",
         paras: [
-          "We don't sell or share your data. Only the providers that run the site are involved: Google (analytics and email), Meta (WhatsApp), Vercel (hosting), the OpenStreetMap Foundation (maps) and Amazon Web Services (elevation data).",
+          "We don't sell or share your data. Only the providers that run the site are involved: Google (analytics, email and Google Maps, if you open its links), Meta (WhatsApp), Vercel (hosting), the OpenStreetMap Foundation (maps) and Amazon Web Services (elevation data).",
           "Their servers may be outside Peru and outside your country, so using the site involves an international transfer of data to those providers, which apply their own security measures.",
         ],
       },

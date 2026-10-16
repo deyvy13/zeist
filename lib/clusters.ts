@@ -107,6 +107,18 @@ export const clusters: Cluster[] = [
       "empresas-automatizacion-bim-trujillo-peru",
     ],
   },
+  {
+    // Coordenadas y topografía: ubicar planos, datums, puntos y superficies.
+    id: "C8",
+    pillar: "ubicar-plano-coordenadas-utm-google-maps",
+    satellites: [
+      "coordenadas-utm-trujillo-la-libertad",
+      "importar-puntos-civil-3d-excel",
+      "curvas-de-nivel-civil-3d-google-earth",
+      "topografia-trujillo-curvas-de-nivel-dwg",
+      "civil-3d-a-revit-topografia-coordenadas",
+    ],
+  },
 ];
 
 export const pillarSlugs = new Set(clusters.map((c) => c.pillar));

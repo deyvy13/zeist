@@ -31,6 +31,18 @@ import {
   utmToGeo,
   utmZone,
 } from "../lib/tools/coordinates.ts";
+import {
+  analyzeGroup,
+  distanceM,
+  googleMapsLinks,
+  groupCenter,
+  latLonText,
+  outsideDatumArea,
+  parsePlanTable,
+  planKml,
+  toWgs84,
+} from "../lib/tools/plan-location.ts";
+import { getPlanLocatorContent, getPlanLocatorLabels } from "../lib/tools-content/coordenadas-google-maps.ts";
 
 const near = (actual, expected, rel = 1e-6, label = "") =>
   assert.ok(
@@ -536,4 +548,117 @@ test("contours: tile math and Terrarium decoding", () => {
   assert.deepEqual(Array.from(g), [0, 0, 50, 0, 0, 0, 50, 0]);
   assert.ok(Number.isNaN(assembleGrid(new Map(), 0, 0, 1, 1)[0]));
   near(sampleGrid([0, 10, 20, 30], 2, 2, 0.5, 0.5), 15, 1e-12);
+});
+
+// --- Plan locator ("coordenadas UTM en Google Maps") ---------------------------------
+
+// Reference values computed with PROJ 9.5 (pyproj 3.7): EPSG:24877 (PSAD56 / UTM 17S)
+// → EPSG:4248 → WGS 84 with "PSAD56 to WGS 84 (8)", and EPSG:32717 for the mistaken
+// reading (PSAD56 numbers taken as WGS 84). [e, n, lat, lon, latAsWgs, lonAsWgs]
+const PROJ_PLAN = {
+  "1": [773650.1996, 8992962.5553, -9.105055120886226, -78.51264382641313, -9.101705833591026, -78.51037423202155],
+  "2": [773822.0104, 8992802.3829, -9.106491817399933, -78.51107172678525, -9.103142539541215, -78.50880211710748],
+  "3": [773548.4967, 8992510.2849, -9.109148300429363, -78.51354024689948, -9.105799073928708, -78.51127062987032],
+  "4": [773376.3213, 8992670.4415, -9.107711759304157, -78.515115667992, -9.104362523386252, -78.51284606626655],
+  centroid: [773599.2229, 8992736.3979, -9.107101918741824, -78.5130931729854, -9.103752661850999, -78.51082356727957],
+};
+
+test("plan table: the real example reads as two tables with stated sides and angles", () => {
+  const p = parsePlanTable(getPlanLocatorLabels("es").example.text);
+  assert.equal(p.groups.length, 2);
+  assert.equal(p.order, "EN");
+  assert.deepEqual(p.groups[0].map((r) => r.name), ["1", "2", "3", "4"]);
+  assert.deepEqual(p.groups[1].map((r) => r.name), ["A", "B", "C", "D"]);
+  assert.deepEqual(p.groups[0].map((r) => r.length), [234.8918, 400.1637, 235.1478, 400.4244]);
+  assert.deepEqual(p.groups[0][3].side, ["4", "1"]);
+  near(p.groups[0][0].angle, 90 + 9 / 60 + 45 / 3600, 1e-12);
+  assert.equal(p.groups[1][0].angle, null);
+  assert.deepEqual(p.skipped, []);
+});
+
+test("plan check: the lot closes to the mm, the second table does not", () => {
+  const [lotRows, parkRows] = parsePlanTable(getPlanLocatorLabels("es").example.text).groups;
+  const lot = analyzeGroup(lotRows);
+  assert.equal(lot.consistent, true);
+  near(lot.parcel.area, 94076.58, 1e-7, "lot area");
+  near(lot.parcel.perimeter, 1270.6278, 1e-7, "lot perimeter");
+  assert.ok(lot.angles.every((a) => a.ok));
+  const park = analyzeGroup(parkRows);
+  assert.equal(park.consistent, false);
+  assert.deepEqual(park.sides.map((x) => x.computed.toFixed(2)), ["16.07", "47.00", "33.07", "30.42"]);
+  assert.ok(park.sides.every((x) => x.ok === false));
+});
+
+test("plan location: PSAD56 vertices and centroid match PROJ, mistaken reading 447 m away", () => {
+  for (const [name, [e, n, lat, lon, latW, lonW]] of Object.entries(PROJ_PLAN)) {
+    const p = toWgs84(e, n, 17, true, "psad56");
+    near(p.lat, lat, 2e-8, `${name} lat`);
+    near(p.lon, lon, 2e-9, `${name} lon`);
+    const w = toWgs84(e, n, 17, true, "wgs84");
+    near(w.lat, latW, 2e-8, `${name} lat as wgs`);
+    near(w.lon, lonW, 2e-9, `${name} lon as wgs`);
+  }
+  const [lotRows] = parsePlanTable(getPlanLocatorLabels("es").example.text).groups;
+  const c = groupCenter(analyzeGroup(lotRows));
+  const right = toWgs84(c.e, c.n, 17, true, "psad56");
+  assert.equal(latLonText(right), "-9.1071019,-78.5130932");
+  const wrong = toWgs84(c.e, c.n, 17, true, "wgs84");
+  // PROJ geodesic (pyproj Geod, WGS 84) between the two readings: 446.617 m.
+  near(distanceM(right, wrong), 446.617, 2e-4, "datum gap vs PROJ geodesic");
+  assert.equal(Math.round(distanceM(right, wrong)), 447);
+  assert.ok(wrong.lat > right.lat && wrong.lon > right.lon, "mistaken reading lands to the northeast");
+  assert.equal(outsideDatumArea(right, "psad56"), false);
+  assert.equal(outsideDatumArea({ lat: -23.55, lon: -46.63 }, "psad56"), true);
+});
+
+test("plan copy: the numbers on the page match what the tool computes", () => {
+  const [lotRows] = parsePlanTable(getPlanLocatorLabels("es").example.text).groups;
+  for (const locale of ["es", "pt", "en"]) {
+    const content = getPlanLocatorContent(locale);
+    const text = JSON.stringify(content);
+    assert.ok(text.includes("−9.1071019, −78.5130932"), `${locale} centroid`);
+    assert.ok(text.includes("447 m"), `${locale} 447 m`);
+    assert.ok(text.includes(locale === "pt" ? "94.076,58" : "94,076.58"), `${locale} area`);
+    const table = content.sections.flatMap((s) => s.blocks).find((b) => b.type === "table" && b.rows.length === 4 && b.head.length === 5);
+    assert.ok(table, `${locale} example table`);
+    table.rows.forEach((row, i) => {
+      const p = toWgs84(lotRows[i].e, lotRows[i].n, 17, true, "psad56");
+      assert.equal(row[3].replace("−", "-"), p.lat.toFixed(7), `${locale} row ${i + 1} lat`);
+      assert.equal(row[4].replace("−", "-"), p.lon.toFixed(7), `${locale} row ${i + 1} lon`);
+    });
+  }
+});
+
+test("plan parser: labeled, decimal comma, grouped, CSV, cell by cell", () => {
+  const read = (text, order) => parsePlanTable(text, order).groups.flat().map((r) => [r.name, r.e, r.n]);
+  assert.deepEqual(read("P1 N: 8992962.5553 E: 773650.1996"), [["P1", 773650.1996, 8992962.5553]]);
+  assert.deepEqual(read("1;773650,1996;8992962,5553"), [["1", 773650.1996, 8992962.5553]]);
+  assert.deepEqual(read("1 773,650.1996 8,992,962.5553\n2 773.548,4967 8.992.510,2849"), [
+    ["1", 773650.1996, 8992962.5553],
+    ["2", 773548.4967, 8992510.2849],
+  ]);
+  assert.deepEqual(read("BM-1,8992962.5553,773650.1996,38.25,TN"), [["BM-1", 773650.1996, 8992962.5553]]);
+  assert.deepEqual(read("773650,8992962"), [["", 773650, 8992962]]);
+  const cells = parsePlanTable("VERTICE\n1\n1 - 2\n234.8918\n773650.1996\n8992962.5553\n2\n2 - 3\n773822.0104\n8992802.3829");
+  assert.equal(cells.stream, true);
+  assert.deepEqual(cells.groups[0].map((r) => [r.e, r.n]), [[773650.1996, 8992962.5553], [773822.0104, 8992802.3829]]);
+  // Six-digit northings (northern tropics) follow the header order.
+  assert.deepEqual(read("PUNTO NORTE ESTE\n1 485120.55 612340.10"), [["1", 612340.1, 485120.55]]);
+  assert.deepEqual(read("1 485120.55 612340.10", "NE"), [["1", 612340.1, 485120.55]]);
+  // A PNEZD elevation is not a side length.
+  assert.equal(parsePlanTable("1 8992962.5553 773650.1996 38.25").groups[0][0].length, null);
+});
+
+test("plan links and KML", () => {
+  const links = googleMapsLinks({ lat: -9.1071019, lon: -78.5130932 });
+  assert.equal(links.place, "https://www.google.com/maps/search/?api=1&query=-9.1071019%2C-78.5130932");
+  assert.equal(links.directions, "https://www.google.com/maps/dir/?api=1&destination=-9.1071019%2C-78.5130932");
+  assert.equal(links.satellite, "https://www.google.com/maps/@?api=1&map_action=map&center=-9.1071019%2C-78.5130932&zoom=18&basemap=satellite");
+  const kml = planKml(
+    [{ name: "Lote <1> & más", points: [{ name: "1", lat: -9.1, lon: -78.5 }, { name: "2", lat: -9.2, lon: -78.5 }, { name: "3", lat: -9.2, lon: -78.6 }] }],
+    "Doc",
+  );
+  assert.ok(kml.includes("<Polygon>") && kml.includes("Lote &lt;1&gt; &amp; más"));
+  assert.equal((kml.match(/<Point>/g) || []).length, 3);
+  assert.ok(kml.includes("-78.500000000,-9.100000000,0 -78.500000000,-9.200000000,0 -78.600000000,-9.200000000,0 -78.500000000,-9.100000000,0"));
 });

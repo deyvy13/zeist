@@ -227,5 +227,10 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
   ],
   "topografia-trujillo-curvas-de-nivel-dwg": [
     "es"
+  ],
+  "ubicar-plano-coordenadas-utm-google-maps": [
+    "es",
+    "pt",
+    "en"
   ]
 };
