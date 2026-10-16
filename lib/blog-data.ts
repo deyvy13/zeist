@@ -21,6 +21,156 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- Civil 3D (oct-2026): líneas de muestreo automáticas ----
+  "lineas-de-muestreo-civil-3d-automaticas": {
+    es: {
+      roadmap: {
+        title: "Líneas de muestreo automáticas en Civil 3D, en 7 pasos",
+        intro:
+          "Para qué sirven, cómo se crean, lo que Civil 3D ya automatiza, cómo editarlas, lo que no hace solo, cómo se automatiza y cómo lo hacemos en Zeist.",
+        steps: [
+          { n: 1, title: "Para qué sirven", desc: "Dónde se corta la vía y con qué ancho", tag: "Base" },
+          { n: 2, title: "Los cinco métodos", desc: "Intervalo, corredor, P.K., puntos o polilíneas", tag: "Crear" },
+          { n: 3, title: "Lo que ya es automático", desc: "Intervalos, geometría y Bloquear en P.K.", tag: "Nativo" },
+          { n: 4, title: "Editar, agregar y borrar", desc: "Anchos, grupos existentes y nombres", tag: "Edición" },
+          { n: 5, title: "Lo que no hace solo", desc: "Tablas, muchos ejes y cambios de diseño", tag: "Límites" },
+          { n: 6, title: "Dynamo o plugin", desc: "Dos formas de automatizarlo", tag: "Automatización" },
+          { n: 7, title: "Cómo lo hacemos", desc: "Un plugin con las reglas de tu oficina", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre las líneas de muestreo en Civil 3D",
+        items: [
+          {
+            q: "¿Para qué sirven las líneas de muestreo en Civil 3D?",
+            a: "Definen dónde se corta la vía y con qué ancho. En cada línea, Civil 3D corta el terreno, el corredor y sus superficies para armar la sección transversal. De ellas dependen las vistas de sección, los volúmenes de corte y relleno, el diagrama de masas y las láminas de secciones.",
+          },
+          {
+            q: "¿Cómo creo líneas de muestreo cada 20 metros en Civil 3D?",
+            a: "Con Líneas de muestreo y el método Por intervalo de P.K. En el cuadro eliges el rango, el intervalo en tangente, por ejemplo 20 m, en curva y en espiral, y el ancho a cada lado. Si cuentas desde la progresiva cero, las líneas caen en progresivas redondas. También puedes agregar líneas en los puntos de geometría horizontal y en las progresivas críticas del peralte.",
+          },
+          {
+            q: "¿Se pueden crear líneas de muestreo automáticamente desde una tabla de Excel?",
+            a: "No de forma nativa: Civil 3D crea líneas por intervalo, en las estaciones del corredor o una por una. Para leer una tabla de progresivas hace falta Dynamo, con nodos nativos desde Civil 3D 2025.1, o un plugin en C#. En Zeist desarrollamos ese plugin a medida, con tu tabla, tus anchos y tus nombres.",
+          },
+          {
+            q: "¿Cómo agrego líneas de muestreo a un grupo que ya existe?",
+            a: "Ejecuta de nuevo Líneas de muestreo, elige el mismo alineamiento y selecciona el grupo existente en la barra de herramientas. Las vistas de sección nuevas no entran solas al grupo de vistas: muévelas con el comando Move to Section View Group, porque el comando de actualizar no las reordena.",
+          },
+          {
+            q: "¿Cómo elimino líneas de muestreo en Civil 3D?",
+            a: "Selecciónalas en el dibujo y bórralas. Ten en cuenta que las vistas de sección que dependen de una línea se borran junto con ella. Si vas a rehacer las secciones, conviene volver a crearlas con las mismas reglas de intervalo y ancho.",
+          },
+          {
+            q: "¿Qué pasa con las líneas de muestreo si cambio el alineamiento?",
+            a: "Depende de la opción Bloquear en P.K. Si está activada, cada línea se desliza a la nueva ubicación de su progresiva; si no, se queda en su lugar y Civil 3D recalcula su progresiva. En ningún caso se agregan ni se quitan líneas solas: un tramo nuevo o una curva nueva quedan sin líneas.",
+          },
+          {
+            q: "¿Quién automatiza las líneas de muestreo en Civil 3D?",
+            a: "Zeist desarrolla plugins a medida para Civil 3D que crean las líneas de muestreo en todas las progresivas y alineamientos, con los anchos, nombres y fuentes de tu oficina, y que las ajustan después de cada cambio. El diagnóstico es gratuito y dura una semana, y el código fuente queda en tu empresa.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Sample lines automáticas no Civil 3D, em 7 passos",
+        intro:
+          "Para que servem, como se criam, o que o Civil 3D já automatiza, como editá-las, o que ele não faz sozinho, como se automatiza e como fazemos isso na Zeist.",
+        steps: [
+          { n: 1, title: "Para que servem", desc: "Onde a via é cortada e com qual largura", tag: "Base" },
+          { n: 2, title: "Os cinco métodos", desc: "Faixa, corredor, estaca, pontos ou polilinhas", tag: "Criar" },
+          { n: 3, title: "O que já é automático", desc: "Intervalos, geometria e Bloqueio para a estaca", tag: "Nativo" },
+          { n: 4, title: "Editar, acrescentar e excluir", desc: "Larguras, grupos existentes e nomes", tag: "Edição" },
+          { n: 5, title: "O que não faz sozinho", desc: "Tabelas, muitos eixos e mudanças de projeto", tag: "Limites" },
+          { n: 6, title: "Dynamo ou plugin", desc: "Duas formas de automatizar", tag: "Automação" },
+          { n: 7, title: "Como fazemos", desc: "Um plugin com as regras do seu escritório", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre sample lines no Civil 3D",
+        items: [
+          {
+            q: "Para que servem as sample lines no Civil 3D?",
+            a: "Definem onde a via é cortada e com qual largura. Em cada linha, o Civil 3D corta o terreno, o corredor e suas superfícies para montar a seção transversal. Delas dependem as vistas de seção, os volumes de corte e aterro, o diagrama de massas e as pranchas de seções.",
+          },
+          {
+            q: "Como criar sample lines a cada 20 metros no Civil 3D?",
+            a: "Com Linhas de amostra e o método Por faixa de estacas. Na caixa você escolhe a faixa, o intervalo em tangente, por exemplo 20 m, em curva e em espiral, e a largura para cada lado. Contando a partir da estaca zero, as linhas caem em estacas redondas. Também dá para acrescentar linhas nos pontos de geometria horizontal e nas estacas críticas da superelevação.",
+          },
+          {
+            q: "Dá para criar sample lines automaticamente a partir de uma tabela do Excel?",
+            a: "Não de forma nativa: o Civil 3D cria linhas por faixa de estacas, nas estacas do corredor ou uma a uma. Para ler uma tabela de estacas é preciso o Dynamo, com nós nativos desde o Civil 3D 2025.1, ou um plugin em C#. Na Zeist desenvolvemos esse plugin sob medida, com a sua tabela, as suas larguras e os seus nomes.",
+          },
+          {
+            q: "Como acrescentar sample lines a um grupo que já existe?",
+            a: "Execute de novo Linhas de amostra, escolha o mesmo alinhamento e selecione o grupo existente na barra de ferramentas. As vistas de seção novas não entram sozinhas no grupo de vistas: mova-as com o comando Move to Section View Group, porque o comando de atualizar não as reordena.",
+          },
+          {
+            q: "Como excluir sample lines no Civil 3D?",
+            a: "Selecione-as no desenho e apague. Lembre que as vistas de seção que dependem de uma linha são apagadas junto com ela. Se você vai refazer as seções, convém criá-las de novo com as mesmas regras de intervalo e largura.",
+          },
+          {
+            q: "O que acontece com as sample lines se eu mudar o alinhamento?",
+            a: "Depende da opção Bloqueio para a estaca. Se estiver marcada, cada linha desliza para a nova posição da sua estaca; se não, fica no lugar e o Civil 3D recalcula a sua estaca. Em nenhum caso linhas são acrescentadas ou removidas sozinhas: um trecho novo ou uma curva nova ficam sem linhas.",
+          },
+          {
+            q: "Quem automatiza as sample lines no Civil 3D?",
+            a: "A Zeist desenvolve plugins sob medida para o Civil 3D que criam as sample lines em todas as estacas e alinhamentos, com as larguras, os nomes e as fontes do seu escritório, e que as ajustam depois de cada mudança. O diagnóstico é gratuito e dura uma semana, e o código-fonte fica com a sua empresa.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Automated Civil 3D sample lines, in 7 steps",
+        intro:
+          "What they're for, how to create them, what Civil 3D already automates, how to edit them, what it doesn't do on its own, how to automate it and how we do it at Zeist.",
+        steps: [
+          { n: 1, title: "What they're for", desc: "Where the road is cut, and how wide", tag: "Basics" },
+          { n: 2, title: "The five methods", desc: "Range, corridor, station, points or polylines", tag: "Create" },
+          { n: 3, title: "What's already automatic", desc: "Increments, geometry points and Lock To Station", tag: "Built-in" },
+          { n: 4, title: "Edit, add and delete", desc: "Widths, existing groups and names", tag: "Editing" },
+          { n: 5, title: "What it won't do alone", desc: "Lists, many alignments and design changes", tag: "Limits" },
+          { n: 6, title: "Dynamo or a plugin", desc: "Two ways to automate it", tag: "Automation" },
+          { n: 7, title: "How we do it", desc: "A plugin with your firm's rules", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Civil 3D sample lines",
+        items: [
+          {
+            q: "What are sample lines used for in Civil 3D?",
+            a: "They define where the road is cut and how wide. At each line, Civil 3D cuts the ground, the corridor and its surfaces to build the cross section. Section views, cut and fill volumes, the mass haul diagram and section sheets all depend on them.",
+          },
+          {
+            q: "How do I create multiple sample lines at once in Civil 3D?",
+            a: "Use Sample Lines with the By range of stations method. In the dialog, set the range, the increments on tangents, curves and spirals, and the swath width on each side. With Absolute Station, lines land on round stations. You can also add lines at horizontal geometry points and superelevation critical stations.",
+          },
+          {
+            q: "Can Civil 3D create sample lines from an Excel list of stations?",
+            a: "Not out of the box: Civil 3D creates lines by station range, at corridor stations or one at a time. Reading a station list takes Dynamo, with out-of-the-box nodes since Civil 3D 2025.1, or a C# plugin. Zeist builds that plugin to order, with your list, your widths and your names.",
+          },
+          {
+            q: "How do I add sample lines to an existing group?",
+            a: "Run Sample Lines again, pick the same alignment and choose the existing group on the Sample Line Tools toolbar. New section views don't join the existing section view group on their own: use Move to Section View Group, because the Update command doesn't re-sort them.",
+          },
+          {
+            q: "How do I delete sample lines in Civil 3D?",
+            a: "Select them in the drawing and erase them. Keep in mind that the section views under a sample line are deleted with it. If you're redoing the sections, recreate them with the same increment and width rules.",
+          },
+          {
+            q: "What happens to sample lines when the alignment changes?",
+            a: "It depends on Lock To Station. When it's checked, each line slides to the new location of its station; when it's cleared, the line stays put and Civil 3D recalculates its station. Lines are never added or removed on their own: a new stretch or a new curve is left without lines.",
+          },
+          {
+            q: "Who automates sample lines in Civil 3D?",
+            a: "Zeist builds custom Civil 3D plugins that create sample lines at every station and on every alignment, with your firm's widths, names and sources, and adjust them after each change. The diagnosis is free and takes one week, and your company owns the source code.",
+          },
+        ],
+      },
+    },
+  },
   // ---- Coordenadas (oct-2026): ubicar un plano con coordenadas UTM en Google Maps ----
   "ubicar-plano-coordenadas-utm-google-maps": {
     es: {

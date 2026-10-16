@@ -1,0 +1,234 @@
+---
+title: "Líneas de muestreo en Civil 3D: cómo crearlas automáticamente, en cualquier progresiva, y no rehacerlas en cada cambio"
+seoTitle: "Líneas de muestreo en Civil 3D: crear y automatizar"
+ctaTitle: "¿Tu equipo crea y rehace líneas de muestreo a mano en cada cambio de trazo? Lo automatizamos en Civil 3D."
+description: "Cómo crear líneas de muestreo en Civil 3D por intervalo, desde el corredor o desde una tabla de progresivas, editarlas, borrarlas y automatizarlas."
+date: "2026-10-16T21:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Líneas de muestreo
+  - Secciones transversales
+  - Corredores
+  - Plugins para Civil 3D
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Secciones · Automatización"
+  title="¿Se pueden generar líneas de muestreo automáticas en Civil 3D? Sí. Y también mantenerlas al día sin rehacerlas."
+  highlight="Lo que Civil 3D ya hace solo, lo que no hace y cómo se automatiza el resto con Dynamo o con un plugin: líneas en las progresivas de tu expediente, en todos los alineamientos a la vez y ajustadas después de cada cambio. Al final, cómo lo hacemos en Zeist."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Sí. Civil 3D ya crea líneas de muestreo en lote: **por intervalo de progresivas**, con distancias distintas en tangente, curva y espiral, o **en cada estación del corredor**. Lo que no hace solo es crearlas desde una tabla de progresivas, en varios alineamientos a la vez, ni agregar o quitar líneas cuando cambia el diseño. Eso se automatiza con Dynamo, desde Civil 3D 2025.1, o con un plugin en C#. En Zeist desarrollamos ese plugin a medida, con las reglas de tu oficina.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Línea de muestreo** — La línea que cruza el eje y marca dónde Civil 3D corta el terreno y el corredor para dibujar una sección transversal.
+- **Grupo de líneas de muestreo** — El conjunto de líneas de un alineamiento. Guarda qué se corta en cada sección y con qué estilos.
+- **Progresiva** — La distancia medida a lo largo del eje, como 0+020. En Civil 3D en español se llama P.K.
+- **Alineamiento** — El eje de la vía. En Civil 3D en español se llama alineación.
+- **Corredor** — El modelo 3D de la vía. En Civil 3D en español se llama obra lineal.
+- **Ancho de franja** — Cuánto se extiende la línea a cada lado del eje. Tiene que cubrir la vía completa con sus taludes.
+- **Plugin** — Un programa que se instala dentro de Civil 3D y agrega sus propios botones en la barra superior.
+
+Está escrito para proyectistas viales, topógrafos y coordinadores BIM. El único bloque de código es opcional.
+</Callout>
+
+## Sí se puede, aunque casi siempre se hace a mano
+
+En un expediente vial, cada alineamiento puede llevar cientos de líneas de muestreo: una cada 20 m, más las de las curvas, las alcantarillas y los cambios de sección. En muchas oficinas se crean de una en una, o se borran y se vuelven a crear con cada cambio de trazo.
+
+Civil 3D trae más automatización de la que se usa, y lo que le falta se puede programar. Esta guía separa las dos cosas: primero lo nativo, después lo que se automatiza con Dynamo o con un plugin y, al final, cómo lo hacemos en Zeist.
+
+<AnimatedFlow
+  title="Líneas de muestreo automáticas, de principio a fin"
+  nodes="Reglas de la oficina|Líneas de muestreo|Secciones|Láminas y volúmenes"
+  subs="Intervalos, tabla de progresivas, anchos|En todos los alineamientos|Terreno, corredor y superficies|Se ajustan tras cada cambio"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Para qué sirven las líneas de muestreo" time="~4 min">
+
+Una línea de muestreo dice **dónde** se corta la vía y **con qué ancho**. En cada línea, Civil 3D corta las fuentes que elijas —el terreno natural, el corredor, sus superficies y también las redes de tuberías— y con eso arma la sección transversal.
+
+De ellas depende todo lo que viene después:
+
+- **Las vistas de sección**, una por cada línea.
+- **Los volúmenes de corte y relleno**, que se calculan entre secciones.
+- **El diagrama de masas y las láminas de secciones.**
+
+Por eso las líneas viven en un **grupo de líneas de muestreo**, que pertenece a un alineamiento. El grupo guarda las fuentes, los estilos y las etiquetas de todas sus líneas.
+
+<Callout type="warn" title="Antes de borrar una línea">
+Las secciones y las vistas de sección dependen de su línea de muestreo. Si borras una línea en el dibujo, se borran también las vistas de sección que cuelgan de ella.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Cómo crear líneas de muestreo: los cinco métodos" time="~6 min">
+
+El comando está en la pestaña **Inicio** › Visualizaciones del perfil y vistas en sección › **Líneas de muestreo**. En la línea de comandos es `_CREATESAMPLELINES`, en cualquier idioma.
+
+Eliges el alineamiento. Si es el primer grupo, se abre **Crear/Editar grupo de líneas de muestreo**, donde se eligen las fuentes y los estilos. Después aparece la barra **Herramientas de línea de muestreo**, con cinco formas de crearlas:
+
+| Método | Qué hace | Cuándo usarlo |
+|---|---|---|
+| **Por intervalo de P.K.** | Muchas líneas a la vez, cada cierta distancia | La base de cualquier expediente vial |
+| **A partir de P.K. de obras lineales** | Una línea en cada estación del corredor | Cuando cada sección debe coincidir con el modelo |
+| **Por P.K.** | Una línea en la progresiva que escribas o marques | Alcantarillas, cambios de sección, puntos de control |
+| **Designar puntos en pantalla** | Una línea que dibujas punto por punto | Secciones que no son perpendiculares al eje |
+| **Desde polilíneas** (Select existing polylines) | Convierte polilíneas dibujadas en líneas de muestreo | Cuando las líneas ya están trazadas en el plano |
+
+**El ancho a cada lado** se define al crearlas: un valor fijo, o «pegado» a otra alineación, como el límite del derecho de vía, para que el ancho cambie a lo largo de la vía. Si se queda corto, la sección sale cortada y el volumen, incompleto.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Sí, Civil 3D ya las crea en lote" time="~6 min">
+
+Cuando alguien pregunta si las líneas de muestreo se pueden generar de forma automática, la primera respuesta es que Civil 3D ya lo hace, y más de lo que se suele usar.
+
+**Por intervalo de P.K.** abre un cuadro con lo que pide un expediente:
+
+- **El rango:** del inicio al final del alineamiento, o entre dos progresivas.
+- **Intervalos distintos en tangente, curva y espiral:** por ejemplo, cada 20 m en tangente y cada 10 m en curva, o lo que pidan tus términos de referencia.
+- **Desde dónde se cuenta:** desde la progresiva cero o desde el inicio del rango. Contando desde cero, las líneas caen en progresivas redondas —0+020, 0+040— aunque el rango empiece en 0+013.
+- **Líneas adicionales:** al inicio y al final del rango, en los puntos de geometría horizontal —inicio y fin de curvas y espirales— y en las progresivas críticas del peralte.
+- **El ancho a cada lado:** fijo, o hasta una alineación de desfase.
+
+**A partir de P.K. de obras lineales** crea una línea en cada estación del corredor. Es la opción más fiel al modelo, porque cada sección muestra exactamente lo que el corredor calculó. Solo está disponible si el alineamiento ya tiene un corredor.
+
+**Y las líneas acompañan al eje.** Cada línea tiene la opción **Bloquear en P.K.**, en sus propiedades, ficha Datos de línea de muestreo:
+
+- **Activada:** si el alineamiento cambia, la línea se desliza a la nueva ubicación de su progresiva.
+- **Desactivada:** la línea se queda donde está y Civil 3D recalcula su progresiva.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Editar, agregar y borrar líneas de muestreo" time="~6 min">
+
+**Editar una línea.** Al seleccionarla aparecen sus pinzamientos: uno la mueve a lo largo del eje, otros alargan cada lado y otros cambian su ángulo.
+
+**Cambiar el ancho de todas a la vez.** En la barra Herramientas de línea de muestreo, **Editar anchura de franja de grupo** alarga o recorta todas las líneas del grupo al mismo ancho.
+
+**Agregar líneas a un grupo que ya existe.** Vuelve a ejecutar Líneas de muestreo, elige el mismo alineamiento y, en la barra de herramientas, el grupo existente. Las vistas de sección nuevas no entran solas al grupo de vistas: muévelas con el comando para moverlas a un grupo de vistas de sección (Move to Section View Group), porque el comando de actualizar no las reordena. Las láminas tampoco se regeneran solas.
+
+**Borrar líneas.** Selecciónalas en el dibujo y bórralas. Sus vistas de sección se borran con ellas.
+
+**Nombres y números.** Civil 3D asigna el número de cada línea en orden de progresiva. El nombre sale de una plantilla con un contador, como SL-1 o SL-2. Para mostrar la progresiva en el plano se usa la etiqueta de la línea. Civil 3D no trae un comando para renombrar a la vez todas las líneas de un grupo.
+
+<Callout type="tip" title="Si no se ven las líneas o las secciones salen vacías">
+Si no ves las líneas, revisa que su capa esté encendida y su estilo las muestre. Si lo que falta es el terreno o el corredor dentro de la sección, no está entre las fuentes del grupo: agrégalo desde las propiedades del grupo (Sample More Sources). Los demás errores de las secciones están en [secciones transversales en Civil 3D](/es/blog/secciones-transversales-civil-3d).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Lo que Civil 3D no hace solo" time="~5 min">
+
+Lo anterior funciona bien en un alineamiento con intervalos regulares. Los problemas aparecen en los proyectos reales:
+
+- **Progresivas de una tabla.** Las del expediente, las alcantarillas, los cambios de sección o las que pide el supervisor. Civil 3D no lee una lista: se crean una por una con Por P.K.
+- **Muchos alineamientos.** Una habilitación urbana con 30 calles son 30 grupos y 30 veces el mismo cuadro, con el riesgo de olvidar una fuente o un ancho.
+- **Cambios de diseño.** Las líneas acompañan al eje, pero no se agregan ni se quitan solas. Si el eje se alarga, el tramo nuevo queda sin líneas. Si aparece una curva nueva, sus puntos de geometría no tienen línea. Si cambia la frecuencia del corredor, las líneas siguen en las estaciones de antes.
+- **Rehacer cuesta caro.** Lo habitual es borrar y crear de nuevo. Pero al borrar las líneas se borran sus vistas de sección, y las láminas se arman otra vez.
+- **El ancho.** Es fijo o llega hasta una alineación de desfase. Si un relleno alto se abre más allá, la sección sale cortada, y a veces nadie lo nota hasta revisar el volumen.
+- **Los nombres.** Si el expediente identifica cada sección por su progresiva, renombrar las líneas es trabajo manual.
+
+<Callout type="info" title="Señales de que conviene automatizar">
+Creas líneas una por una desde una tabla. Tus proyectos tienen muchos alineamientos. Rehaces secciones y láminas después de cada observación. O un error de ancho o de fuente apareció en el metrado y no en el dibujo.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Dos formas de automatizarlo: Dynamo o un plugin" time="~6 min">
+
+**Con Dynamo, sin escribir código.** Dynamo es la programación visual de Civil 3D: se conectan bloques en lugar de escribir código. Desde Civil 3D 2025.1 trae nodos nativos para crear grupos de líneas de muestreo y líneas de muestreo, y uno para crear vistas de sección. En versiones anteriores, el paquete gratuito Camber también tiene nodos de líneas de muestreo. Un script típico lee las progresivas de un Excel y crea una línea en cada una: lo explicamos en [10 scripts de Dynamo para Civil 3D](/es/blog/dynamo-civil-3d-scripts).
+
+**Con un plugin en C#.** La API de Civil 3D tiene lo necesario: `SampleLineGroup.Create` crea el grupo en un alineamiento y `SampleLine.Create` crea cada línea en una progresiva, o con los puntos que definas.
+
+```csharp
+// Un grupo por alineamiento y una línea en cada progresiva de la tabla
+ObjectId grupo = SampleLineGroup.Create("Secciones del expediente", alineamientoId);
+
+foreach (double pk in progresivas)          // leídas del Excel del expediente
+{
+    string nombre = pk.ToString("0+000");   // 20 -> "0+020"
+    SampleLine.Create(nombre, grupo, pk);
+}
+```
+
+Son dos llamadas. Lo que lleva trabajo, y lo que hace útil al plugin, es lo de alrededor: leer y validar la tabla, calcular el ancho de cada línea, asignar fuentes y estilos, decidir qué líneas agregar o quitar después de un cambio y registrar lo que hizo.
+
+<ComparisonTable
+  criterionLabel="Criterio"
+  leftLabel="Plugin en C#"
+  rightLabel="Script de Dynamo"
+  rows="Tiempo hasta funcionar | Semanas | *Días || Cómo lo usa el equipo | *Un botón en la barra superior | Desde el Reproductor de Dynamo || Todos los alineamientos en una pasada | *Sí | Posible, más difícil de mantener || Agregar y quitar líneas tras un cambio | *Sí, con reglas | Requiere lógica adicional || Ideal para | *Producción diaria | Validar la idea"
+/>
+
+La comparación completa está en [Dynamo o C# para Civil 3D y Revit](/es/blog/dynamo-vs-csharp-civil3d-revit). Y si tu equipo quiere aprender la API, empieza por [Civil 3D API en C#, primeros pasos](/es/blog/civil-3d-api-csharp-primeros-pasos).
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Cómo lo hacemos en Zeist" time="~5 min">
+
+Desarrollamos plugins a medida para Civil 3D. Para las líneas de muestreo, un plugin típico:
+
+- **Lee tus reglas:** intervalos en tangente, curva y espiral, más una tabla de progresivas en Excel con las alcantarillas, los cambios de sección y los puntos que pide el supervisor.
+- **Trabaja en todos los alineamientos del dibujo** en una sola pasada, con un grupo por alineamiento.
+- **Calcula el ancho** de cada línea para que cubra el corredor con sus taludes, más un margen.
+- **Nombra cada línea con su progresiva** y asigna las fuentes, los estilos y las etiquetas de tu plantilla.
+- **Después de un cambio, compara** las líneas que existen con las que deberían existir: agrega las que faltan, quita las que sobran y deja intactas las demás, con sus vistas de sección.
+- **Registra lo que hizo** en un reporte, para revisarlo antes de armar las láminas.
+
+Si también necesitas las vistas, las láminas o el cuadro de cubicación, se suman al mismo plugin. Lo explicamos en [producción automática de planos](/es/blog/produccion-planos-automatica-civil-3d-revit) y en [automatizar metrados y cubicaciones](/es/blog/automatizar-metrados-cubicaciones-civil-3d).
+
+**Cómo trabajamos:**
+
+1. **Diagnóstico (1 semana, gratuito):** vemos la tarea en uno de tus proyectos y escribimos las reglas.
+2. **Prototipo (1 a 2 semanas):** validamos la lógica sobre tu proyecto.
+3. **Desarrollo (2 a 4 semanas):** el plugin en C#, con pruebas sobre tus propios modelos.
+4. **Instalación:** instalador para toda la oficina, botón en la barra superior de Civil 3D, manual y documentación.
+5. **Soporte:** actualización con cada versión nueva de Civil 3D.
+
+El código fuente queda en tu empresa: el plugin es tuyo.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Civil 3D"
+  title="Tus líneas de muestreo, en todas las progresivas y en todos los ejes, con un botón"
+  body="Desarrollamos el plugin con las reglas de tu oficina: intervalos, tabla de progresivas, anchos, nombres, fuentes y lo que debe pasar después de cada cambio. Diagnóstico gratuito, instalador para toda la oficina, código fuente que queda en tus manos y actualización con cada versión de Civil 3D."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **El flujo completo de secciones:** [secciones transversales en Civil 3D](/es/blog/secciones-transversales-civil-3d).
+- **El modelo que se corta:** [corredores en Civil 3D: ensamblajes, objetivos y errores](/es/blog/corredores-civil-3d-ensamblajes-objetivos).
+- **Los volúmenes:** [automatizar metrados y cubicaciones en Civil 3D](/es/blog/automatizar-metrados-cubicaciones-civil-3d).
+- **Sin programar:** [10 scripts de Dynamo para Civil 3D](/es/blog/dynamo-civil-3d-scripts).
+- **El mapa completo:** [automatizar Civil 3D, la guía completa](/es/blog/automatizar-civil-3d-guia-completa).
+- **Para presupuestar:** [cuánto cuesta un add-in para Revit o Civil 3D](/es/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+- **Si prefieres encargarlo en Trujillo:** [desarrollo de plugins para Civil 3D](/es/blog/desarrollo-plugins-civil-3d-trujillo).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Hemos armado secciones para expedientes viales y programamos las herramientas que las generan. Trabajamos con oficinas de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota técnica:** los nombres de la interfaz son los de Civil 3D en español; entre paréntesis va el nombre en inglés cuando hace falta. Las opciones corresponden a Civil 3D 2024 en adelante, y los nodos nativos de Dynamo para líneas de muestreo, a Civil 3D 2025.1 en adelante.

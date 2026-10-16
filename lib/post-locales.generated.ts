@@ -144,6 +144,11 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "pt",
     "en"
   ],
+  "lineas-de-muestreo-civil-3d-automaticas": [
+    "es",
+    "pt",
+    "en"
+  ],
   "metrados-en-revit": [
     "es"
   ],

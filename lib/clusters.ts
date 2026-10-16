@@ -54,6 +54,7 @@ export const clusters: Cluster[] = [
       "rutinas-lisp-autocad-civil-3d",
       "importar-puntos-civil-3d-excel",
       "perfil-longitudinal-civil-3d",
+      "lineas-de-muestreo-civil-3d-automaticas",
     ],
   },
   {

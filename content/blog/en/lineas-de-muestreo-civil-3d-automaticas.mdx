@@ -1,0 +1,232 @@
+---
+title: "Civil 3D sample lines: how to create them automatically, at any station, and stop redoing them after every change"
+seoTitle: "Civil 3D Sample Lines: Create, Edit and Automate"
+ctaTitle: "Does your team create and redo sample lines by hand after every alignment change? We automate it in Civil 3D."
+description: "How to create Civil 3D sample lines by station range, from corridor stations or from a station list, edit them, add them to a group and automate them."
+date: "2026-10-16T21:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Sample lines
+  - Cross sections
+  - Corridors
+  - Civil 3D plugins
+  - BIM automation
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Sections · Automation"
+  title="Can Civil 3D generate sample lines automatically? Yes. And they can stay current without being redone."
+  highlight="What Civil 3D already does on its own, what it doesn't, and how Dynamo or a plugin automates the rest: sample lines at every station on your plans, on every alignment at once, adjusted after each change. At the end, how we do it at Zeist."
+/>
+
+<Callout type="success" title="Quick answer">
+Yes. Civil 3D already creates sample lines in bulk: **by range of stations**, with different increments on tangents, curves and spirals, or **at every corridor station**. What it doesn't do on its own is create them from a list of stations, on many alignments at once, or add and remove lines when the design changes. Dynamo, since Civil 3D 2025.1, or a C# plugin automates that. At Zeist we build that plugin to order, with your firm's rules.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain words">
+- **Sample line** — The line across the alignment that marks where Civil 3D cuts the ground and the corridor to draw a cross section.
+- **Sample line group** — All the sample lines of one alignment. It stores what gets cut in each section and which styles to use.
+- **Station** — The distance measured along the alignment, such as 1+50.
+- **Swath width** — How far the line extends on each side of the alignment. It must cover the whole road, slopes included.
+- **Corridor stations** — The points where the corridor computes its section, set by its frequency.
+- **Plugin** — A program installed inside Civil 3D that adds its own buttons to the top toolbar.
+
+Written for roadway designers, surveyors and BIM coordinators. The only code block is optional.
+</Callout>
+
+## Yes, it can be done, but it's usually done by hand
+
+On a roadway project, each alignment can carry hundreds of sample lines: one every 50 ft, plus extra ones at curves, culverts and section changes. Many firms create them one at a time, or delete and recreate them after every alignment change.
+
+Civil 3D has more automation than most people use, and the rest can be programmed. This guide separates the two: first what's built in, then what Dynamo or a plugin automates and, finally, how we do it at Zeist.
+
+<AnimatedFlow
+  title="Automated sample lines, end to end"
+  nodes="Your firm's rules|Sample lines|Sections|Sheets and volumes"
+  subs="Increments, station list, widths|On every alignment|Ground, corridor, surfaces|Adjusted after each change"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. What sample lines are for" time="~4 min">
+
+A sample line tells Civil 3D **where** to cut the road and **how wide**. At each line, Civil 3D cuts the sources you choose (existing ground, the corridor, its surfaces, even pipe networks) and builds the cross section from them.
+
+Everything that follows depends on them:
+
+- **Section views**, one per line.
+- **Cut and fill volumes**, computed between sections.
+- **The mass haul diagram and section sheets.**
+
+That's why sample lines live in a **sample line group**, which belongs to an alignment. The group stores the sources, styles and labels for all its lines.
+
+<Callout type="warn" title="Before you delete a line">
+Sections and section views depend on their sample line. If you delete a sample line in the drawing, the section views under it are deleted too.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. How to create sample lines: the five methods" time="~6 min">
+
+The command is on the **Home** tab › Profile & Section Views panel › **Sample Lines**. At the command line it's `CREATESAMPLELINES`.
+
+Pick the alignment. For the first group, the **Create Sample Line Group** dialog opens, where you choose sources and styles. Then the **Sample Line Tools** toolbar appears, with five ways to create them:
+
+| Method | What it does | When to use it |
+|---|---|---|
+| **By range of stations** | Creates multiple sample lines at once, at an increment | The base of any roadway plan set |
+| **From corridor stations** | One line at every corridor station | When each section must match the model |
+| **At a station** | One line at the station you type or pick | Culverts, section changes, control points |
+| **Pick points on screen** | A line you draw point by point | Sections that aren't perpendicular to the alignment |
+| **Select existing polylines** | Turns drawn polylines into sample lines | When the lines are already drafted in the drawing |
+
+**The swath width on each side** is set when you create them: a fixed width, or snapped to another alignment, such as a right-of-way line, so the width changes along the road. If it falls short, the section is clipped and the volume is incomplete.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Yes, Civil 3D already creates them in bulk" time="~6 min">
+
+When someone asks whether sample lines can be generated automatically, the first answer is that Civil 3D already does it, more than most people use.
+
+**By range of stations** opens a dialog with what a plan set needs:
+
+- **The range:** from the start to the end of the alignment, or between two stations.
+- **Different increments on tangents, curves and spirals.** The Wisconsin DOT Civil 3D knowledge base, for example, uses 50 ft on tangents, 25 ft on curves and 50 ft on spirals, with 75 ft swaths on each side.
+- **Where increments count from:** Absolute Station, from station 0+00, or Station Range Start. With Absolute Station, lines land on round stations such as 0+50 and 1+00, even if the range starts at 0+13.
+- **Additional sample controls:** at the range start and end, at horizontal geometry points (the start and end of curves and spirals) and at superelevation critical stations.
+- **The swath width on each side:** fixed, or snapped to an offset alignment.
+
+**From corridor stations** creates one line at every corridor station. It's the most faithful option, because each section shows exactly what the corridor computed. It's only available if the alignment already has a corridor.
+
+**And the lines follow the alignment.** Each sample line has a **Lock To Station** option, in its properties on the Sample Line Data tab:
+
+- **Checked:** if the alignment changes, the line slides to the new location of its station.
+- **Cleared:** the line stays where it is and Civil 3D recalculates its station.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Edit, add to a group, delete and rename" time="~6 min">
+
+**Edit a line.** Select it to see its grips: one slides it along the alignment, others stretch each side and others change its angle.
+
+**Change every width at once.** On the Sample Line Tools toolbar, **Edit Swath Widths for Group** extends or trims every line in the group to the same width.
+
+**Add sample lines to an existing group.** Run Sample Lines again, pick the same alignment and choose the existing group on the toolbar. New section views don't join the existing section view group on their own: use **Move to Section View Group**, because the Update command doesn't re-sort them. Sheets aren't regenerated automatically either.
+
+**Delete sample lines.** Select them in the drawing and erase them. Their section views go with them.
+
+**Rename and renumber.** Civil 3D assigns each line's number in station order. The name comes from a template with a counter, such as SL-1 or SL-2. To show the station on the plans, use the sample line label. Civil 3D has no command to rename every line in a group at once.
+
+<Callout type="tip" title="Sample lines not showing, or empty sections">
+If you can't see the lines, check that their layer is on and their style displays them. If what's missing is the ground or the corridor inside the section, it isn't a source of the group: add it from the group properties with Sample More Sources. Other section errors are covered in [Civil 3D cross sections](/en/blog/secciones-transversales-civil-3d).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. What Civil 3D doesn't do on its own" time="~5 min">
+
+All of the above works well on one alignment with regular increments. Real projects are where the problems start:
+
+- **Stations from a list.** The ones on the plans, culverts, section changes, or the ones a reviewer asks for. Civil 3D doesn't read a list: you create them one at a time with At a station.
+- **Many alignments.** A subdivision with 30 streets means 30 groups and the same dialog 30 times, with the risk of missing a source or a width.
+- **Design changes.** The lines follow the alignment, but they aren't added or removed on their own. If the alignment gets longer, the new stretch has no lines. If a new curve appears, its geometry points have no line. If the corridor frequency changes, the lines stay at the old stations.
+- **Redoing them is costly.** The usual fix is to delete and recreate. But deleting the lines deletes their section views, and the sheets must be built again.
+- **Swath width.** It's fixed or runs to an offset alignment. If a high fill spreads past it, the section is clipped, and sometimes nobody notices until the volumes are checked.
+- **Names.** If the plans identify each section by its station, renaming the lines is manual work.
+
+<Callout type="info" title="Signs it's worth automating">
+You create lines one by one from a list. Your projects have many alignments. You redo sections and sheets after every review comment. Or a width or source error showed up in the quantities, not in the drawing.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Two ways to automate it: Dynamo or a plugin" time="~6 min">
+
+**With Dynamo, no coding.** Dynamo is Civil 3D's visual programming: you connect blocks instead of writing code. Since Civil 3D 2025.1 it includes out-of-the-box nodes to create sample line groups and sample lines, plus one to create section views. On earlier releases, the free Camber package also has sample line nodes. A typical script reads stations from Excel and creates a line at each one: we cover it in [10 Dynamo scripts for Civil 3D](/en/blog/dynamo-civil-3d-scripts).
+
+**With a C# plugin.** The Civil 3D API has what's needed: `SampleLineGroup.Create` creates the group on an alignment and `SampleLine.Create` creates each line at a station, or from points you define.
+
+```csharp
+// One group per alignment and one sample line at each station in the list
+ObjectId group = SampleLineGroup.Create("Plan set sections", alignmentId);
+
+foreach (double station in stations)          // read from the project's Excel file
+{
+    string name = station.ToString("0+00");   // 150 -> "1+50"
+    SampleLine.Create(name, group, station);
+}
+```
+
+That's two calls. What takes the work, and what makes the plugin useful, is everything around them: reading and validating the list, computing each line's width, assigning sources and styles, deciding which lines to add or remove after a change, and logging what it did.
+
+<ComparisonTable
+  criterionLabel="Criterion"
+  leftLabel="C# plugin"
+  rightLabel="Dynamo script"
+  rows="Time to a working tool | Weeks | *Days || How the team runs it | *A button on the top toolbar | From Dynamo Player || Every alignment in one pass | *Yes | Possible, harder to maintain || Add and remove lines after a change | *Yes, by rule | Needs extra logic || Best for | *Daily production | Testing the idea"
+/>
+
+The full comparison is in [Dynamo or C# for Civil 3D and Revit](/en/blog/dynamo-vs-csharp-civil3d-revit). If your team wants to learn the API, start with [Civil 3D API in C#, getting started](/en/blog/civil-3d-api-csharp-primeros-pasos).
+
+</TopicCard>
+
+<TopicCard step="7" title="7. How we do it at Zeist" time="~5 min">
+
+We build custom Civil 3D plugins. For sample lines, a typical plugin:
+
+- **Reads your rules:** increments on tangents, curves and spirals, plus an Excel list of stations with culverts, section changes and the points reviewers ask for.
+- **Works on every alignment in the drawing** in one pass, with one group per alignment.
+- **Computes each line's width** so it covers the corridor and its slopes, plus a margin.
+- **Names each line after its station** and assigns the sources, styles and labels from your template.
+- **After a change, compares** the lines that exist with the ones that should: it adds the missing ones, removes the extra ones and leaves the rest untouched, section views included.
+- **Logs what it did** in a report, so you can check it before building the sheets.
+
+If you also need the section views or the sheets, they go into the same plugin. We cover that in [automated plan production in Civil 3D and Revit](/en/blog/produccion-planos-automatica-civil-3d-revit).
+
+**How we work:**
+
+1. **Diagnosis (1 week, free):** we look at the task on one of your projects and write down the rules.
+2. **Prototype (1 to 2 weeks):** we validate the logic on your project.
+3. **Development (2 to 4 weeks):** the C# plugin, tested on your own models.
+4. **Installation:** an installer for the whole firm, a button on the Civil 3D top toolbar, a manual and documentation.
+5. **Support:** updates with every new Civil 3D release.
+
+The source code belongs to your company: the plugin is yours.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Civil 3D plugins"
+  title="Your sample lines, at every station and on every alignment, with one button"
+  body="We build the plugin around your firm's rules: increments, station lists, widths, names, sources and what should happen after each change. Free diagnosis, an installer for the whole office, source code you own, and updates with every Civil 3D release."
+  primaryLabel="Request a free diagnosis"
+  primaryHref="/en/contacto"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/servicios/add-ins-revit-civil-3d"
+/>
+
+## Related resources
+
+- **The full section workflow:** [Civil 3D cross sections](/en/blog/secciones-transversales-civil-3d).
+- **The model being cut:** [the Civil 3D corridor tutorial](/en/blog/corredores-civil-3d-ensamblajes-objetivos).
+- **No coding:** [10 Dynamo scripts for Civil 3D](/en/blog/dynamo-civil-3d-scripts).
+- **The full map:** [automating Civil 3D, the complete guide](/en/blog/automatizar-civil-3d-guia-completa).
+- **For budgeting:** [how much a Revit or Civil 3D add-in costs](/en/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+- **The add-in map:** [Revit and Civil 3D add-in development](/en/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Civil engineers who code"
+  title="A team of civil engineers and software engineers"
+  body="We've produced cross sections for roadway projects, and we build the tools that generate them. We work remotely with engineering firms in the US, Europe and Latin America."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contacto"
+  secondaryLabel="See all services"
+  secondaryHref="/en/servicios"
+/>
+
+---
+
+**Technical note:** interface names match Civil 3D in US English. The options apply to Civil 3D 2024 and later, and the out-of-the-box Dynamo sample line nodes to Civil 3D 2025.1 and later.

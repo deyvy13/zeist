@@ -145,6 +145,7 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       "desarrollo-plugins-civil-3d-trujillo",
       "metrados-en-revit",
       "secciones-transversales-civil-3d",
+      "lineas-de-muestreo-civil-3d-automaticas",
       "corredores-civil-3d-ensamblajes-objetivos",
       "rutinas-lisp-autocad-civil-3d",
       "plugin-revit-exportar-pdf-dwg-masivo",
@@ -318,6 +319,7 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       "automatizar-civil-3d-guia-completa",
       "importar-puntos-civil-3d-excel",
       "perfil-longitudinal-civil-3d",
+      "lineas-de-muestreo-civil-3d-automaticas",
     ],
     faqs: [
       {

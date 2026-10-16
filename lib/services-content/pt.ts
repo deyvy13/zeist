@@ -142,6 +142,7 @@ export const servicesPt: Record<ServiceSlug, ServicePage> = {
       "dynamo-vs-csharp-civil3d-revit",
       "automatizar-tareas-revit-dynamo-plugins",
       "secciones-transversales-civil-3d",
+      "lineas-de-muestreo-civil-3d-automaticas",
       "civil-3d-a-revit-topografia-coordenadas",
       "corredores-civil-3d-ensamblajes-objetivos",
       "rutinas-lisp-autocad-civil-3d",
@@ -316,6 +317,7 @@ export const servicesPt: Record<ServiceSlug, ServicePage> = {
       "automatizar-civil-3d-guia-completa",
       "importar-puntos-civil-3d-excel",
       "perfil-longitudinal-civil-3d",
+      "lineas-de-muestreo-civil-3d-automaticas",
     ],
     faqs: [
       {
