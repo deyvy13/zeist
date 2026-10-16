@@ -1,0 +1,195 @@
+---
+title: "Membrete de planos automático: crea las láminas y llena el cajetín de todos los planos desde una tabla, en Revit y AutoCAD"
+seoTitle: "Membrete de planos automático en Revit y AutoCAD"
+ctaTitle: "¿Tu equipo llena el membrete plano por plano en cada entrega? Lo generamos desde una sola tabla."
+description: "Cómo crear láminas en lote y llenar el membrete de todos los planos desde una tabla en Revit, AutoCAD y Civil 3D, sin escribirlo plano por plano."
+date: "2026-10-16T23:30:00.000Z"
+author: "Zeist"
+tags:
+  - Revit
+  - AutoCAD
+  - Civil 3D
+  - Membrete
+  - Producción de planos
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Revit · AutoCAD · Civil 3D · Planos"
+  title="¿Se pueden generar los planos con el membrete lleno, de forma masiva? Sí. Y manejar sus datos desde una sola tabla."
+  highlight="Qué datos lleva un membrete, cómo se arma para que se llene solo en Revit y en AutoCAD, cómo se crean muchas láminas a la vez y cómo se automatiza lo que sigue siendo manual. Al final, cómo lo hacemos en Zeist."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Sí. En Revit, el membrete se llena solo si sus textos están vinculados a parámetros del proyecto y de cada lámina, y se pueden crear varias láminas a la vez desde la lista de láminas. En AutoCAD, el membrete con atributos y campos se alimenta desde el administrador de conjuntos de planos. Lo que no se hace solo es generar las láminas desde una tabla de Excel, numerarlas con tu regla y revisar que todos los datos coincidan. Eso se automatiza con un plugin, y en Zeist lo desarrollamos a medida.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Membrete** — El recuadro con los datos del plano: proyecto, lámina, escala, fecha y profesionales. También se dice cajetín o rótulo.
+- **Lámina** — Cada hoja del juego de planos, con su membrete.
+- **Parámetro** — Un dato con nombre que guarda Revit, como el número de la lámina o el nombre del cliente.
+- **Atributo** — Un dato guardado dentro de un bloque de AutoCAD, como el número de plano.
+- **Campo** — Un texto de AutoCAD que se llena solo con un dato del dibujo o del conjunto de planos.
+- **Conjunto de planos** — El grupo de láminas de AutoCAD que se administra como uno solo.
+- **Plugin** — Un programa que se instala dentro de Revit, AutoCAD o Civil 3D y agrega sus propios botones en la barra superior.
+
+Está escrito para jefes de proyecto, dibujantes, proyectistas y coordinadores BIM.
+</Callout>
+
+## Cien planos, cien membretes
+
+Un expediente puede tener cien láminas o más. Cada membrete lleva el nombre del proyecto, el número y el nombre de la lámina, la escala, la fecha, la revisión y los profesionales. Cuando cambia un dato, como la fecha de entrega o un profesional, alguien lo corrige plano por plano, y casi siempre se escapa alguno.
+
+Revit y AutoCAD tienen todo para que el membrete se llene solo. Esta guía muestra cómo armarlo y cómo se automatiza lo que falta.
+
+<AnimatedFlow
+  title="De una tabla a todo el juego de planos"
+  nodes="Tabla de láminas|Láminas|Membrete lleno|Entrega"
+  subs="Número, nombre, escala, datos|Creadas en lote|Proyecto y lámina|PDF, índice y revisión"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Qué datos lleva un membrete, y de dónde salen" time="~4 min">
+
+Los datos de un membrete son de dos tipos:
+
+| Datos del proyecto, iguales en todas las láminas | Datos de cada lámina |
+|---|---|
+| Nombre del proyecto, cliente, ubicación | Número y nombre de la lámina |
+| Especialidad, fase, código del proyecto | Escala y formato |
+| Profesionales y sus colegiaturas | Fecha, revisión, dibujado y revisado por |
+| Logos y sellos | Número de lámina sobre el total |
+
+La regla para no repetir trabajo: **cada dato se escribe una sola vez**, en su lugar, y el membrete lo lee. Si un dato está escrito a mano en cada membrete, cambiarlo es abrir cada plano.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. En Revit: un membrete que se llena solo" time="~6 min">
+
+En Revit, el membrete es una familia de cajetín con **etiquetas** vinculadas a parámetros:
+
+- **Información del proyecto**, en la pestaña Gestionar: los datos iguales en todas las láminas, como el nombre del proyecto o el cliente.
+- **Parámetros de la lámina**: número, nombre, fecha de emisión, dibujado por, revisado por, aprobado por.
+
+Para datos propios, como la colegiatura de un profesional, la etiqueta necesita un **parámetro compartido**, cargado en la familia y en el proyecto, y asignado a la información del proyecto o a las láminas, no a las dos. Si la etiqueta del membrete no se puede editar en el proyecto, casi siempre falta ese paso. Lo explicamos en [parámetros compartidos en Revit](/es/blog/parametros-compartidos-revit).
+
+Armado así, cambiar el nombre del cliente es cambiar un dato: todas las láminas lo muestran.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. En Revit: crear y llenar muchas láminas a la vez" time="~5 min">
+
+**Crear láminas en lote.** En una tabla de lista de láminas puedes agregar filas de láminas que aún no existen, con su número y nombre. Después, al crear una lámina nueva, eliges varias de esas filas y el cajetín, y Revit crea todas en una pasada.
+
+**Llenar datos en lote.** En la misma tabla de láminas puedes editar los parámetros de muchas láminas a la vez, como quién dibujó, quién revisó o la fecha. Las revisiones y las firmas en lote las explicamos en [revisiones y firmas en varios planos](/es/blog/revisiones-firmas-revit-varios-planos).
+
+**Lo que Revit no trae:** crear las láminas desde un Excel, con sus vistas colocadas, ni aplicar una regla de numeración. Para eso se usa Dynamo o un plugin.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. En AutoCAD y Civil 3D: atributos, campos y conjuntos de planos" time="~6 min">
+
+En AutoCAD, el membrete es un **bloque con atributos**. Para que se llene solo:
+
+1. **Crea un conjunto de planos** con el administrador de conjuntos de planos, y define sus propiedades: proyecto, cliente, profesionales y las que necesites.
+2. **En cada atributo del membrete, inserta un campo** que lea esas propiedades o los datos de la lámina, como su número y su título.
+3. **Cambia el dato una vez**, en las propiedades del conjunto, y todos los membretes lo muestran. Si alguno no se actualiza, guarda de nuevo las láminas del conjunto o regenera.
+
+Si los membretes ya existen sin campos, las Express Tools ayudan: ATTOUT exporta los atributos a un archivo que editas en Excel y ATTIN los devuelve; GATTE cambia un atributo en todos los bloques iguales.
+
+**En Civil 3D**, la producción de planos crea las láminas desde los marcos de vista con una plantilla que ya trae el membrete, y puede crear o usar un conjunto de planos en el mismo paso. Lo explicamos en [producción automática de planos](/es/blog/produccion-planos-automatica-civil-3d-revit).
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Lo que sigue siendo manual" time="~5 min">
+
+Con el membrete bien armado, lo que queda manual es la gestión:
+
+- **Crear las láminas desde la lista del proyecto**, con sus vistas o sus ventanas gráficas.
+- **Numerar con la regla del cliente**, como especialidad, número y revisión, y el número de lámina sobre el total.
+- **Revisar que todo coincida:** la escala del membrete con la de la vista, las fechas, los profesionales y los nombres de los archivos.
+- **Mezclar programas:** un expediente con láminas de Revit, AutoCAD y Civil 3D en un solo índice.
+- **Cambiar de formato** cuando otra entidad pide otro membrete.
+- **El índice de láminas**, al día con cada entrega.
+
+<Callout type="info" title="Señales de que conviene automatizar">
+Corriges datos del membrete plano por plano. La numeración se arma a mano. Un cambio de fecha de entrega toma una tarde. O una entrega salió con láminas de dos revisiones distintas.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Cómo se automatiza: una tabla manda" time="~5 min">
+
+La idea es simple: **una sola tabla de Excel** con todas las láminas y sus datos, y una herramienta que la aplica.
+
+**Con Dynamo**, en Revit, un script lee el Excel y crea las láminas con su número, su nombre y su cajetín, y llena sus parámetros. Es una buena forma de empezar.
+
+**Con un plugin**, lo mismo sale con un botón, en Revit, AutoCAD y Civil 3D, con la regla de numeración, la revisión de datos y la exportación a PDF. La exportación masiva la explicamos en [plugin para exportar PDF y DWG en lote](/es/blog/plugin-revit-exportar-pdf-dwg-masivo).
+
+<ComparisonTable
+  criterionLabel="Criterio"
+  leftLabel="Plugin"
+  rightLabel="Script de Dynamo"
+  rows="Tiempo hasta funcionar | Semanas | *Días || Revit, AutoCAD y Civil 3D | *Los tres | Revit y Civil 3D || Regla de numeración y revisión de datos | *Sí | Requiere lógica adicional || Índice y exportación | *En la misma pasada | Scripts aparte || Ideal para | *Cada entrega | Validar el flujo"
+/>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Cómo lo hacemos en Zeist" time="~5 min">
+
+Desarrollamos plugins a medida para Revit, AutoCAD y Civil 3D. Para el membrete y las láminas, un plugin típico:
+
+- **Lee la tabla de láminas** de tu proyecto en Excel: número, nombre, escala, formato, especialidad y datos.
+- **Crea las láminas que faltan** con el membrete correcto, y actualiza las que ya existen.
+- **Llena el membrete** con los datos del proyecto y de cada lámina, incluidos los profesionales y sus colegiaturas.
+- **Numera con tu regla** y calcula el número de lámina sobre el total.
+- **Revisa antes de entregar:** escalas, fechas, datos vacíos y nombres repetidos.
+- **Genera el índice de láminas** y, si lo necesitas, exporta todo a PDF.
+
+**Cómo trabajamos:**
+
+1. **Diagnóstico (1 semana, gratuito):** vemos tus membretes y tu entrega, y escribimos las reglas.
+2. **Prototipo (1 a 2 semanas):** validamos la lógica sobre uno de tus proyectos.
+3. **Desarrollo (2 a 4 semanas):** el plugin, con pruebas sobre tus propios modelos.
+4. **Instalación:** instalador para toda la oficina, botón en la barra superior, manual y documentación.
+5. **Soporte:** actualización con cada versión nueva de Revit, AutoCAD o Civil 3D.
+
+El código fuente queda en tu empresa: el plugin es tuyo.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Revit, AutoCAD y Civil 3D"
+  title="Todo tu juego de planos, con el membrete lleno, desde una sola tabla"
+  body="Desarrollamos el plugin con tus membretes, tu regla de numeración y el formato de tus clientes, con la revisión de datos antes de cada entrega. Diagnóstico gratuito, instalador para toda la oficina, código fuente que queda en tus manos y actualización con cada versión."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Revisiones y firmas:** [revisiones y firmas en varios planos de Revit](/es/blog/revisiones-firmas-revit-varios-planos).
+- **Los datos propios del membrete:** [parámetros compartidos en Revit](/es/blog/parametros-compartidos-revit).
+- **La entrega:** [plugin para exportar PDF y DWG en lote](/es/blog/plugin-revit-exportar-pdf-dwg-masivo).
+- **Las láminas de Civil 3D:** [producción automática de planos en Civil 3D y Revit](/es/blog/produccion-planos-automatica-civil-3d-revit).
+- **Las secciones:** [vistas de sección automáticas en Civil 3D](/es/blog/vistas-de-seccion-civil-3d-automaticas).
+- **Para presupuestar el desarrollo:** [cuánto cuesta un add-in para Revit o Civil 3D](/es/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Entregamos planos y programamos las herramientas que los producen. Trabajamos con oficinas de ingeniería y arquitectura de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota técnica:** las opciones corresponden a Revit 2024, AutoCAD 2024 y Civil 3D 2024 en adelante. ATTOUT, ATTIN y GATTE son de las Express Tools de AutoCAD, que no vienen en AutoCAD LT.

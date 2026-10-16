@@ -91,6 +91,26 @@ export const servicesEn: Record<ServiceSlug, ServicePage> = {
         body: "Model health, standards checks and automatic review before every deliverable.",
         guide: "revit-lento-modelo-pesado-auditoria",
       },
+      {
+        title: "Bills of materials for purchasing",
+        body: "From Revit, AutoCAD and Civil 3D, with your inventory codes, stock lengths and waste, compared with the previous order.",
+        guide: "lista-de-materiales-revit-autocad-civil-3d",
+      },
+      {
+        title: "Quantity takeoff with backup",
+        body: "The bill of quantities by line item, with the backup for every measurement and in your client's format, generated from the model.",
+        guide: "tabla-de-metrados-automatica-revit-civil-3d",
+      },
+      {
+        title: "Section views to your standard",
+        body: "Section views for every alignment with your firm's range, bands, labels and hatching, laid out on sheets.",
+        guide: "vistas-de-seccion-civil-3d-automaticas",
+      },
+      {
+        title: "Sheets and title blocks in bulk",
+        body: "Sheets created from a table and title blocks filled with project data, numbering and the engineers on each sheet.",
+        guide: "membrete-planos-automatico-revit-autocad",
+      },
     ],
     processTitle: "How we build your plugin",
     process: [

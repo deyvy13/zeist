@@ -149,6 +149,16 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "pt",
     "en"
   ],
+  "lista-de-materiales-revit-autocad-civil-3d": [
+    "es",
+    "pt",
+    "en"
+  ],
+  "membrete-planos-automatico-revit-autocad": [
+    "es",
+    "pt",
+    "en"
+  ],
   "metrados-en-revit": [
     "es"
   ],
@@ -230,10 +240,20 @@ export const postLocales: Readonly<Record<string, Locale[]>> = {
     "pt",
     "en"
   ],
+  "tabla-de-metrados-automatica-revit-civil-3d": [
+    "es",
+    "pt",
+    "en"
+  ],
   "topografia-trujillo-curvas-de-nivel-dwg": [
     "es"
   ],
   "ubicar-plano-coordenadas-utm-google-maps": [
+    "es",
+    "pt",
+    "en"
+  ],
+  "vistas-de-seccion-civil-3d-automaticas": [
     "es",
     "pt",
     "en"

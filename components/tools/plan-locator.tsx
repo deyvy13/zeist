@@ -1,30 +1,38 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { DATUMS, formatDms, type DatumId, type Hemispheres } from "@/lib/tools/coordinates";
 import { formatAngle, type ParcelError } from "@/lib/tools/parcel";
 import {
   analyzeGroup,
   distanceM,
+  emptyRow,
+  fillColumn,
   googleMapsLinks,
   groupCenter,
+  groupsToTable,
+  incompleteRows,
   latLonText,
   outsideDatumArea,
   parsePlanTable,
+  pasteKind,
   planKml,
+  tableToGroups,
   toWgs84,
   type ColumnOrder,
   type GroupAnalysis,
   type GroupWarning,
   type LatLon,
   type PlanParse,
+  type TableRow,
 } from "@/lib/tools/plan-location";
 import { NUMBER_STYLES, formatNumber, parseDecimal } from "@/lib/tools/number";
 import { whatsappUrl } from "@/lib/site";
 import { trackEvent } from "@/lib/analytics";
 import { downloadFile } from "@/components/tools/download";
 import { IconWhatsApp } from "@/components/icons";
+import { PlanTable, type PasteTarget, type PlanTableLabels } from "@/components/tools/plan-table";
 import type { PlanMapLayer } from "@/components/tools/plan-map";
 
 // Leaflet touches `window` on import: client only, loaded on first use.
@@ -57,10 +65,20 @@ export type PlanLocatorLabels = {
   datums: Record<DatumId, string>;
   datumOrder: DatumId[];
   datumUnknown: string;
-  order: string;
+  /** How a pasted table's columns were read. */
   orders: Record<ColumnOrder, string>;
-  paste: string;
-  pasteHint: string;
+  tableHeading: string;
+  pasteTip: string;
+  pasteButton: string;
+  table: PlanTableLabels;
+  /** Opens the note after a paste; the read summary follows. */
+  pasted: string;
+  pasteFailed: string;
+  clipboardBlocked: string;
+  cleared: string;
+  undo: string;
+  /** [one, other] with {n} */
+  incomplete: [string, string];
   loadExample: string;
   clear: string;
   easting: string;
@@ -133,15 +151,16 @@ export type PlanLocatorLabels = {
 type DatumChoice = DatumId | "compare";
 type State = {
   mode: "table" | "single";
-  text: string;
+  tables: TableRow[][];
   e: string;
   n: string;
   zone: string;
   south: boolean;
   datum: DatumChoice;
-  order: ColumnOrder;
   showRaw: boolean;
 };
+/** A note under the toolbar; `undo` brings back the table a paste or a clear replaced. */
+type Notice = { tone: "info" | "error"; text: string; undo?: TableRow[][] } | null;
 
 const ZONES = Array.from({ length: 60 }, (_, i) => String(i + 1));
 const COMPARE: { id: CompareId; datum: DatumId; color: string }[] = [
@@ -159,17 +178,19 @@ const FIELD =
   "w-full rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/60 px-3 py-2.5 text-sm outline-none transition focus:border-[color:var(--color-mint-500)] placeholder:text-[color:var(--color-muted)]/70";
 const LABEL = "mb-1 block text-xs font-medium text-[color:var(--color-muted)]";
 
-function initialState(labels: PlanLocatorLabels): State {
+const exampleTables = (labels: PlanLocatorLabels, decimal: "." | ",") =>
+  groupsToTable(parsePlanTable(labels.example.text).groups, decimal);
+
+function initialState(labels: PlanLocatorLabels, decimal: "." | ","): State {
   const ex = labels.example;
   return {
     mode: "table",
-    text: ex.text,
+    tables: exampleTables(labels, decimal),
     e: ex.e,
     n: ex.n,
     zone: String(ex.zone),
     south: ex.south,
     datum: ex.datum,
-    order: "auto",
     showRaw: true,
   };
 }
@@ -178,9 +199,26 @@ const finite = (p: LatLon) => Number.isFinite(p.lat) && Number.isFinite(p.lon);
 
 export function PlanLocator({ labels, locale }: { labels: PlanLocatorLabels; locale: "es" | "pt" | "en" }) {
   const style = NUMBER_STYLES[locale];
-  const [s, setS] = useState<State>(() => initialState(labels));
+  const decimal = style.decimal === "," ? "," : ".";
+  const [s, setS] = useState<State>(() => initialState(labels, decimal));
   const [copied, setCopied] = useState(false);
+  const [notice, setNotice] = useState<Notice>(null);
+  // The map and the checks follow the table a moment after typing stops, so a
+  // half-typed coordinate doesn't send the map across the country.
+  const [settled, setSettled] = useState<TableRow[][]>(s.tables);
   const set = (patch: Partial<State>) => setS((prev) => ({ ...prev, ...patch }));
+
+  useEffect(() => {
+    if (settled === s.tables) return;
+    const id = setTimeout(() => setSettled(s.tables), 350);
+    return () => clearTimeout(id);
+  }, [s.tables, settled]);
+
+  /** Replaces the whole table; `now` skips the typing delay (paste, example, clear). */
+  function setTables(tables: TableRow[][], now = false) {
+    set({ tables });
+    if (now) setSettled(tables);
+  }
 
   const parsed = useMemo<PlanParse>(() => {
     if (s.mode === "single") {
@@ -194,8 +232,70 @@ export function PlanLocator({ labels, locale }: { labels: PlanLocatorLabels; loc
         stream: false,
       };
     }
-    return parsePlanTable(s.text, s.order);
-  }, [s.mode, s.e, s.n, s.text, s.order, labels.pointName]);
+    return { groups: tableToGroups(settled), skipped: [], order: "EN", stream: false };
+  }, [s.mode, s.e, s.n, settled, labels.pointName]);
+
+  const num = (v: number) => String(v).replace(".", decimal);
+
+  /** Several values pasted into a cell: one column fills down; a table is read with the plan parser. */
+  function handlePaste(text: string, at: PasteTarget, asTable = false): boolean {
+    const kind = asTable ? "table" : pasteKind(text);
+    if (kind === "cell") return false;
+    const current = s.tables;
+    const withRows = (t: number, rows: TableRow[]) => current.map((r, i) => (i === t ? rows : r));
+    if (kind === "column") {
+      setTables(withRows(at.table, fillColumn(current[at.table], at.row, at.field, text)));
+      setNotice(null);
+      return true;
+    }
+    const read = parsePlanTable(text);
+    const points = read.groups.reduce((n, g) => n + g.length, 0);
+    if (points === 0) {
+      setNotice({ tone: "error", text: labels.pasteFailed });
+      return true;
+    }
+    if (points === 1 && !asTable) {
+      // One row from a spreadsheet: it fills the row it was pasted on.
+      const p = read.groups[0][0];
+      const rows = current[at.table].map((r, i) =>
+        i === at.row
+          ? {
+              name: p.name || r.name,
+              e: num(p.e),
+              n: num(p.n),
+              length: p.length === null ? r.length : num(p.length),
+              angle: p.angle === null ? r.angle : formatAngle(p.angle),
+            }
+          : r,
+      );
+      setTables(withRows(at.table, rows), true);
+      setNotice(null);
+      return true;
+    }
+    const tables = groupsToTable(read.groups, decimal);
+    setTables(tables, true);
+    const parts = [
+      labels.pasted,
+      fill(labels.readSummary, { points, groups: tables.length }),
+      fill(labels.columnsRead, { order: labels.orders[read.order] }),
+    ];
+    if (read.stream) parts.push(labels.streamNote);
+    if (read.skipped.length) parts.push(fill(labels.skipped, { lines: read.skipped.slice(0, 12).join(", ") }));
+    setNotice({ tone: "info", text: parts.join(" "), undo: current });
+    return true;
+  }
+
+  async function pasteFromClipboard() {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (!text.trim()) throw new Error("empty");
+      handlePaste(text, { table: 0, row: 0, field: "name" }, true);
+    } catch {
+      setNotice({ tone: "error", text: labels.clipboardBlocked });
+    }
+  }
+
+  const incomplete = s.mode === "table" ? incompleteRows(s.tables) : 0;
 
   const analyses = useMemo(() => parsed.groups.map(analyzeGroup), [parsed]);
   const zone = Number(s.zone);
@@ -295,7 +395,7 @@ export function PlanLocator({ labels, locale }: { labels: PlanLocatorLabels; loc
           ))}
         </div>
 
-        <div className={`grid gap-3 sm:grid-cols-2 ${s.mode === "table" ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
+        <div className="grid gap-3 sm:grid-cols-3">
           <label className="block">
             <span className={LABEL}>{labels.zone}</span>
             <select value={s.zone} onChange={(e) => set({ zone: e.target.value })} className={FIELD}>
@@ -324,18 +424,6 @@ export function PlanLocator({ labels, locale }: { labels: PlanLocatorLabels; loc
               <option value="compare">{labels.datumUnknown}</option>
             </select>
           </label>
-          {s.mode === "table" && (
-            <label className="block">
-              <span className={LABEL}>{labels.order}</span>
-              <select value={s.order} onChange={(e) => set({ order: e.target.value as ColumnOrder })} className={FIELD}>
-                {(["auto", "EN", "NE"] as const).map((o) => (
-                  <option key={o} value={o}>
-                    {labels.orders[o]}
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
         </div>
         <p className="text-xs leading-relaxed text-[color:var(--color-muted)]">{labels.zoneHint}</p>
 
@@ -345,37 +433,80 @@ export function PlanLocator({ labels, locale }: { labels: PlanLocatorLabels; loc
             <CoordField label={labels.northing} value={s.n} onChange={(n) => set({ n })} />
           </div>
         ) : (
-          <div className="space-y-3 border-t border-[color:var(--color-hairline)] pt-5">
-            <div className="flex flex-wrap items-end justify-between gap-3">
-              <span className="text-xs font-medium text-[color:var(--color-muted)]">{labels.paste}</span>
-              <div className="flex gap-2">
-                <button type="button" onClick={() => set({ text: labels.example.text, mode: "table" })} className="btn-ghost px-4 py-2 text-sm">
+          <div className="space-y-4 border-t border-[color:var(--color-hairline)] pt-5">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h3 className="text-base font-semibold">{labels.tableHeading}</h3>
+              <div className="flex flex-wrap gap-2">
+                <button type="button" onClick={pasteFromClipboard} className="btn-primary px-4 py-2 text-sm">
+                  <ClipboardIcon />
+                  {labels.pasteButton}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setTables(exampleTables(labels, decimal), true);
+                    setNotice(null);
+                  }}
+                  className="btn-ghost px-4 py-2 text-sm"
+                >
                   {labels.loadExample}
                 </button>
-                <button type="button" onClick={() => set({ text: "" })} className="btn-ghost px-4 py-2 text-sm">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const current = s.tables;
+                    setTables([[emptyRow("1")]], true);
+                    setNotice({ tone: "info", text: labels.cleared, undo: current });
+                  }}
+                  className="btn-ghost px-4 py-2 text-sm"
+                >
                   {labels.clear}
                 </button>
               </div>
             </div>
-            <textarea
-              value={s.text}
-              onChange={(e) => set({ text: e.target.value })}
-              rows={9}
-              spellCheck={false}
-              aria-label={labels.paste}
-              placeholder={labels.pasteHint}
-              className={`${FIELD} font-mono text-[13px] leading-relaxed`}
+            <p className="text-xs leading-relaxed text-[color:var(--color-muted)]">{labels.pasteTip}</p>
+
+            {notice && (
+              <div
+                role="status"
+                className={`flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl px-4 py-3 text-sm ${
+                  notice.tone === "error" ? "bg-amber-500/10" : "bg-[color:var(--color-mint-500)]/10"
+                }`}
+              >
+                <span className="leading-relaxed">{notice.text}</span>
+                {notice.undo && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTables(notice.undo!, true);
+                      setNotice(null);
+                    }}
+                    className="shrink-0 text-sm font-semibold text-[color:var(--color-mint-700)] underline-offset-4 hover:underline"
+                  >
+                    {labels.undo}
+                  </button>
+                )}
+              </div>
+            )}
+
+            <PlanTable
+              tables={s.tables}
+              onChange={(tables) => {
+                setTables(tables);
+                setNotice(null);
+              }}
+              onPaste={handlePaste}
+              labels={labels.table}
             />
-            {totalPoints > 0 && (
-              <p className="text-xs text-[color:var(--color-muted)]">
-                {fill(labels.readSummary, { points: totalPoints, groups: analyses.length })}{" "}
-                {fill(labels.columnsRead, { order: labels.orders[parsed.order] })}
-                {parsed.stream && ` ${labels.streamNote}`}
-              </p>
-            )}
-            {parsed.skipped.length > 0 && (
-              <p className="rounded-xl bg-amber-500/10 px-3 py-2 text-xs">{fill(labels.skipped, { lines: parsed.skipped.slice(0, 12).join(", ") })}</p>
-            )}
+
+            <div className="space-y-2">
+              {totalPoints > 0 && (
+                <p className="text-xs text-[color:var(--color-muted)]">{fill(labels.readSummary, { points: totalPoints, groups: analyses.length })}</p>
+              )}
+              {incomplete > 0 && (
+                <p className="rounded-xl bg-amber-500/10 px-3 py-2 text-xs">{fill(labels.incomplete[incomplete === 1 ? 0 : 1], { n: incomplete })}</p>
+              )}
+            </div>
           </div>
         )}
       </div>
@@ -711,6 +842,15 @@ function Legend({ color, label, dashed = false }: { color: string; label: string
       />
       {label}
     </span>
+  );
+}
+
+function ClipboardIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="8" y="3" width="8" height="4" rx="1" />
+      <path d="M16 5h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2" />
+    </svg>
   );
 }
 

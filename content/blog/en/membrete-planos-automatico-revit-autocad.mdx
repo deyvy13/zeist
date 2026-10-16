@@ -1,0 +1,195 @@
+---
+title: "Title blocks filled automatically: create the sheets and fill in every title block from one table, in Revit and AutoCAD"
+seoTitle: "Revit and AutoCAD Title Blocks, Filled Automatically"
+ctaTitle: "Does your team fill in title blocks sheet by sheet for every submittal? We generate them from a single table."
+description: "How to create sheets in bulk and fill in every title block from one table in Revit, AutoCAD and Civil 3D, instead of typing it sheet by sheet."
+date: "2026-10-16T23:30:00.000Z"
+author: "Zeist"
+tags:
+  - Revit
+  - AutoCAD
+  - Civil 3D
+  - Title blocks
+  - Plan production
+  - BIM automation
+---
+
+<BlogHero
+  eyebrow="Revit · AutoCAD · Civil 3D · Sheets"
+  title="Can you generate sheets with the title block already filled in, in bulk? Yes. And manage all that data from one table."
+  highlight="What goes in a title block, how to build it so it fills itself in Revit and AutoCAD, how to create many sheets at once and how to automate what's still manual. At the end, how we do it at Zeist."
+/>
+
+<Callout type="success" title="Quick answer">
+Yes. In Revit, the title block fills itself when its labels are tied to project and sheet parameters, and you can create several sheets at once from a sheet list. In AutoCAD, a title block with attributes and fields is driven by the Sheet Set Manager. What doesn't happen on its own is generating the sheets from an Excel table, numbering them by your rule and checking that every value matches. A plugin automates that, and at Zeist we build it to order.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain words">
+- **Title block** — The box with the sheet's data: project, sheet number, scale, date and responsible engineers.
+- **Sheet** — Each page of the drawing set, with its title block.
+- **Parameter** — A named value Revit stores, such as the sheet number or the client's name.
+- **Attribute** — A value stored inside an AutoCAD block, such as the sheet number.
+- **Field** — AutoCAD text that fills itself with a value from the drawing or the sheet set.
+- **Sheet set** — A group of AutoCAD layouts managed as one.
+- **Plugin** — A program installed inside Revit, AutoCAD or Civil 3D that adds its own buttons to the top toolbar.
+
+Written for project managers, drafters, designers and BIM coordinators.
+</Callout>
+
+## A hundred sheets, a hundred title blocks
+
+A plan set can have a hundred sheets or more. Each title block carries the project name, the sheet number and title, the scale, the date, the revision and the responsible engineers, often with their license numbers. When something changes, such as the submittal date or an engineer, someone fixes it sheet by sheet, and one usually slips through.
+
+Revit and AutoCAD have everything needed for the title block to fill itself. This guide shows how to set it up and how to automate the rest.
+
+<AnimatedFlow
+  title="From one table to the whole plan set"
+  nodes="Sheet table|Sheets|Filled title block|Submittal"
+  subs="Number, title, scale, data|Created in bulk|Project and sheet data|PDF, index and revision"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. What goes in a title block, and where it comes from" time="~4 min">
+
+Title block data comes in two kinds:
+
+| Project data, the same on every sheet | Data for each sheet |
+|---|---|
+| Project name, client, location | Sheet number and title |
+| Discipline, phase, project number | Scale and sheet size |
+| Engineers of record and license numbers | Date, revision, drawn and checked by |
+| Logos and seal areas | Sheet number out of the total |
+
+The rule that saves the work: **each value is typed once**, in its own place, and the title block reads it. If a value is typed by hand on every title block, changing it means opening every sheet.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. In Revit: title block parameters that fill themselves" time="~6 min">
+
+In Revit, the title block is a family with **labels** tied to parameters:
+
+- **Project Information**, on the Manage tab: values that are the same on every sheet, such as the project name or the client.
+- **Sheet parameters**: number, name, issue date, drawn by, checked by, approved by.
+
+For custom values, such as an engineer's license number, the label needs a **shared parameter**, loaded in the family and in the project, and assigned to Project Information or to Sheets, not both. If a title block label isn't editable in the project, that step is usually what's missing. We cover it in [Revit shared parameters](/en/blog/parametros-compartidos-revit).
+
+Set up this way, changing the client's name is changing one value: every sheet shows it.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. In Revit: creating and filling many sheets at once" time="~5 min">
+
+**Creating sheets in bulk.** In a sheet list schedule you can add rows for sheets that don't exist yet, with their numbers and names. Then, when you create a new sheet, you pick several of those placeholder rows and a title block, and Revit creates them all in one pass.
+
+**Filling data in bulk.** In the same sheet list you can edit parameters for many sheets at once, such as drawn by, checked by or the date. Revisions and signatures in bulk are covered in [revisions and signatures on many sheets](/en/blog/revisiones-firmas-revit-varios-planos).
+
+**What Revit doesn't include:** creating sheets from Excel, with their views placed, or applying a numbering rule. That's what Dynamo or a plugin is for.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. In AutoCAD and Civil 3D: title block attributes, fields and sheet sets" time="~6 min">
+
+In AutoCAD, the title block is a **block with attributes**. To make it fill itself:
+
+1. **Create a sheet set** with the Sheet Set Manager and define its properties: project, client, engineers and anything else you need.
+2. **In each title block attribute, insert a field** that reads those properties or the sheet's own data, such as its number and title.
+3. **Change a value once**, in the sheet set properties, and every title block shows it. If one doesn't update, resave all the sheets in the set or regenerate.
+
+If the title blocks already exist without fields, the Express Tools help you edit multiple title block attributes: ATTOUT exports the attributes to a file you edit in Excel and ATTIN brings them back; GATTE changes one attribute in every matching block.
+
+**In Civil 3D**, plan production creates sheets from view frames using a template that already includes the title block, and can create or use a sheet set in the same step. We cover it in [automated plan production](/en/blog/produccion-planos-automatica-civil-3d-revit).
+
+</TopicCard>
+
+<TopicCard step="5" title="5. What's still manual" time="~5 min">
+
+With the title block set up properly, what's left is managing the set:
+
+- **Creating sheets from the project's sheet list**, with their views or viewports.
+- **Numbering by the client's rule**, such as discipline, number and revision, plus the sheet number out of the total.
+- **Checking that everything matches:** the title block scale against the view scale, dates, engineers and file names.
+- **Mixing programs:** one submittal with Revit, AutoCAD and Civil 3D sheets in a single index.
+- **Switching formats** when another client asks for another title block.
+- **The sheet index**, current for every submittal.
+
+<Callout type="info" title="Signs it's worth automating">
+You fix title block data sheet by sheet. Numbering is done by hand. A change in the submittal date takes an afternoon. Or a submittal went out with sheets from two different revisions.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. How it's automated: one table rules" time="~5 min">
+
+The idea is simple: **one Excel table** with every sheet and its data, and a tool that applies it.
+
+**With Dynamo**, in Revit, a script reads the Excel file, creates the sheets with their numbers, names and title block, and fills their parameters. It's a good way to start.
+
+**With a plugin**, the same comes out with one button, in Revit, AutoCAD and Civil 3D, with the numbering rule, the data checks and the export to PDF. We cover bulk export in [a plugin to export PDF and DWG in bulk](/en/blog/plugin-revit-exportar-pdf-dwg-masivo).
+
+<ComparisonTable
+  criterionLabel="Criterion"
+  leftLabel="Plugin"
+  rightLabel="Dynamo script"
+  rows="Time to a working tool | Weeks | *Days || Revit, AutoCAD and Civil 3D | *All three | Revit and Civil 3D || Numbering rule and data checks | *Yes | Needs extra logic || Index and export | *In the same pass | Separate scripts || Best for | *Every submittal | Testing the workflow"
+/>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. How we do it at Zeist" time="~5 min">
+
+We build custom plugins for Revit, AutoCAD and Civil 3D. For title blocks and sheets, a typical plugin:
+
+- **Reads your project's sheet table** in Excel: number, title, scale, sheet size, discipline and data.
+- **Creates the missing sheets** with the right title block, and updates the existing ones.
+- **Fills in the title block** with project and sheet data, including the engineers and their license numbers.
+- **Numbers sheets by your rule** and works out the sheet number out of the total.
+- **Checks before submitting:** scales, dates, empty values and duplicate names.
+- **Builds the sheet index** and, if you need it, exports everything to PDF.
+
+**How we work:**
+
+1. **Diagnosis (1 week, free):** we look at your title blocks and your submittals, and write down the rules.
+2. **Prototype (1 to 2 weeks):** we validate the logic on one of your projects.
+3. **Development (2 to 4 weeks):** the plugin, tested on your own models.
+4. **Installation:** an installer for the whole firm, a button on the top toolbar, a manual and documentation.
+5. **Support:** updates with every new release of Revit, AutoCAD or Civil 3D.
+
+The source code belongs to your company: the plugin is yours.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Revit, AutoCAD and Civil 3D plugins"
+  title="Your whole plan set, with every title block filled in, from one table"
+  body="We build the plugin around your title blocks, your numbering rule and your clients' formats, with data checks before every submittal. Free diagnosis, an installer for the whole office, source code you own, and updates with every release."
+  primaryLabel="Request a free diagnosis"
+  primaryHref="/en/contacto"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/servicios/add-ins-revit-civil-3d"
+/>
+
+## Related resources
+
+- **Revisions and signatures:** [revisions and signatures on many Revit sheets](/en/blog/revisiones-firmas-revit-varios-planos).
+- **Custom title block values:** [Revit shared parameters](/en/blog/parametros-compartidos-revit).
+- **The submittal:** [a plugin to export PDF and DWG in bulk](/en/blog/plugin-revit-exportar-pdf-dwg-masivo).
+- **Civil 3D sheets:** [automated plan production in Civil 3D and Revit](/en/blog/produccion-planos-automatica-civil-3d-revit).
+- **Sections:** [automated Civil 3D section views](/en/blog/vistas-de-seccion-civil-3d-automaticas).
+- **For budgeting the work:** [how much a Revit or Civil 3D add-in costs](/en/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Civil engineers who code"
+  title="A team of civil engineers and software engineers"
+  body="We issue drawings and we build the tools that produce them. We work remotely with engineering and architecture firms in the US, Europe and Latin America."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contacto"
+  secondaryLabel="See all services"
+  secondaryHref="/en/servicios"
+/>
+
+---
+
+**Technical note:** the options apply to Revit 2024, AutoCAD 2024 and Civil 3D 2024 and later. ATTOUT, ATTIN and GATTE are AutoCAD Express Tools, which don't come with AutoCAD LT.

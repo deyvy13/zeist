@@ -1,0 +1,196 @@
+---
+title: "Vistas de sección en Civil 3D: cómo crearlas en lote, acomodarlas sin que se encimen y automatizarlas con tu estándar"
+seoTitle: "Vistas de sección en Civil 3D: crear y automatizar"
+ctaTitle: "¿Tu equipo acomoda vistas de sección a mano en cada entrega? Las generamos con tu estándar."
+description: "Cómo crear vistas de sección en Civil 3D en lote, con rango de elevación, bandas, rótulos y sombreado de corte y relleno, y cómo automatizarlas."
+date: "2026-10-16T22:30:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Vistas de sección
+  - Secciones transversales
+  - Producción de planos
+  - Plugins para Civil 3D
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Secciones · Automatización"
+  title="¿Se pueden automatizar las vistas de sección en Civil 3D? Sí. Y también que salgan con el estándar de tu oficina."
+  highlight="Cómo se crean todas a la vez, qué decide cada página del asistente, por qué se encima una sobre otra y cómo se automatiza lo que el asistente no hace: el estándar completo, en todos los ejes y después de cada cambio. Al final, cómo lo hacemos en Zeist."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Sí. Civil 3D crea todas las vistas de sección de un grupo de una vez con el asistente para varias vistas (Create Multiple Section Views): eliges el rango de progresivas, el ancho, el rango de elevación, las bandas y si van acomodadas para láminas. Lo que no hace solo es aplicar el estándar completo de tu oficina —rangos, rótulos, sombreado y cuadros— en todos los alineamientos, ni reordenar las vistas cuando se agregan líneas. Eso se automatiza con un plugin, y en Zeist lo desarrollamos a medida.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Vista de sección** — El dibujo de una sección transversal, con su grilla, sus cotas y sus rótulos.
+- **Grupo de vistas** — Las vistas creadas juntas, que Civil 3D acomoda como un bloque.
+- **Estilo de trazado de grupo** — La regla que acomoda las vistas en filas o columnas y fija su separación.
+- **Rango de elevación** — La altura que muestra cada vista: automática o fija.
+- **Bandas** — Las filas de datos bajo la vista, como distancias al eje y cotas.
+- **Producción y borrador** — Vistas acomodadas para láminas, o sueltas en el modelo.
+- **Plugin** — Un programa que se instala dentro de Civil 3D y agrega sus propios botones en la barra superior.
+
+Está escrito para proyectistas viales, dibujantes y coordinadores BIM.
+</Callout>
+
+## Cientos de vistas, una por una
+
+En un expediente vial, cada línea de muestreo da una vista de sección, y un proyecto puede tener cientos. Crearlas es lo fácil: el trabajo está en que salgan con la altura correcta, sin encimarse, con los rótulos y el sombreado de la oficina, y listas para las láminas. Y en repetirlo después de cada cambio de trazo.
+
+Civil 3D automatiza más de lo que se suele usar. Esta guía recorre lo nativo y después lo que se automatiza con un plugin.
+
+<AnimatedFlow
+  title="De las líneas de muestreo a las láminas"
+  nodes="Líneas de muestreo|Vistas de sección|Rótulos y sombreado|Láminas"
+  subs="Una vista por línea|Rango, bandas y estilo|Corte, relleno y cotas|Producción con tu cajetín"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Cada vista depende de una línea de muestreo" time="~4 min">
+
+Una vista de sección dibuja lo que corta una línea de muestreo: el terreno, el corredor y sus superficies. Por eso:
+
+- **Sin líneas de muestreo no hay vistas.** Primero se crea el grupo de líneas; lo explicamos en [líneas de muestreo automáticas en Civil 3D](/es/blog/lineas-de-muestreo-civil-3d-automaticas).
+- **Lo que no está entre las fuentes del grupo no aparece en la vista.**
+- **Si borras una línea, se borran sus vistas de sección.**
+- **Si el corredor o el terreno cambian, las secciones se actualizan**, porque leen el modelo.
+
+Las vistas se crean una por una (Create Section View) o todas a la vez (Create Multiple Section Views), desde la pestaña Inicio, en el panel de perfiles y vistas en sección.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. El asistente para varias vistas, página por página" time="~7 min">
+
+| Página | Qué decides |
+|---|---|
+| **General** | El alineamiento, el grupo de líneas de muestreo, el rango de progresivas, el nombre, el estilo y la capa |
+| **Ubicación** | Producción, acomodadas según una plantilla de lámina, o borrador, en una grilla del modelo |
+| **Rango de desfase** | Automático, según el ancho de las líneas de muestreo, o un ancho fijo |
+| **Rango de elevación** | Automático, o una altura fija que sigue a una sección, por ejemplo el terreno |
+| **Opciones de visualización** | Qué fuentes se dibujan y con qué estilo y rótulos |
+| **Bandas** | Las filas de datos bajo cada vista |
+| **Tablas** | Cuadros de áreas o volúmenes por sección; solo aparece si ya calculaste materiales |
+
+Lo que más cambia el resultado es la **altura**. Con el rango automático, cada vista toma la altura de lo que corta, y una sola sección rara puede producir vistas altísimas. Con una altura fija que sigue al terreno, todas salen del mismo tamaño y centradas en lo que importa.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Que no se encimen: ubicación y estilo de grupo" time="~5 min">
+
+**En producción**, las vistas se acomodan según la plantilla de lámina y su ventana gráfica, a la escala elegida. Si las vistas no caben, el problema suele estar en la plantilla o en la escala.
+
+**En borrador**, las acomoda el **estilo de trazado de grupo**, en su pestaña de matriz:
+
+- **Filas o columnas:** si se llenan de lado a lado o de abajo hacia arriba, y desde qué esquina.
+- **Tamaño de celda:** igual para todas, según la vista más grande, o igual por fila o columna, que aprovecha mejor el espacio.
+- **Separación:** el espacio entre columnas y entre filas.
+
+Después de cambiar el estilo, actualiza el acomodo del grupo con el comando de actualizar la disposición de las vistas. Las bandas también cuentan: una banda más alta hace más grande cada celda.
+
+<Callout type="tip" title="Si las vistas salen unas sobre otras">
+Revisa tres cosas, en este orden: el rango de elevación, por si una sección rara agrandó todas las celdas; la separación del estilo de grupo; y, en producción, que la plantilla de lámina corresponda a la escala elegida.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Rótulos, sombreado de corte y relleno, y objetos proyectados" time="~6 min">
+
+**Rótulos.** Las vistas llevan rótulos de desfase y cota, de pendiente y de los bordes del corredor. Se definen en los estilos y se pueden cambiar para todo el grupo.
+
+**Sombreado de corte y relleno.** No se dibuja a mano: sale de **Calcular materiales** (Compute Materials), con los criterios de cálculo de cantidades. Cada material tiene un estilo de forma que la vista muestra con su sombreado. Si los colores salen al revés o el corte da cero, revisa el orden de las superficies en los criterios.
+
+**Cuadros por sección.** Con los materiales calculados, el asistente puede agregar a cada vista un cuadro con las áreas y los volúmenes de corte y relleno.
+
+**Objetos proyectados.** Puedes proyectar a las vistas líneas características, figuras de levantamiento, polilíneas 3D, puntos COGO y otros objetos, a todas las vistas de un grupo a la vez. Sirve para mostrar un muro, un canal o un punto de control en cada sección.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Agregar vistas, actualizar y pasar a láminas" time="~5 min">
+
+**Si agregas líneas de muestreo**, sus vistas no entran solas al grupo existente: crea las vistas nuevas y muévelas con el comando para moverlas a un grupo de vistas de sección (Move to Section View Group). El comando de actualizar no las reordena.
+
+**Las láminas de secciones** se crean desde la pestaña Salida con el comando de láminas de sección (Create Section Sheets), siempre que las vistas se hayan creado en producción. Si después agregas vistas, las láminas no se regeneran solas.
+
+**El cajetín** de cada lámina sale de la plantilla. Llenar sus datos en todas las láminas es otro trabajo: lo explicamos en [membrete de planos automático](/es/blog/membrete-planos-automatico-revit-autocad).
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Lo que el asistente no hace solo" time="~5 min">
+
+El asistente resuelve un grupo con una configuración. En los proyectos reales:
+
+- **Muchos alineamientos.** Una habilitación urbana con 30 calles son 30 veces el mismo asistente, con el riesgo de que una salga con otro estilo o con otra altura.
+- **El estándar completo.** Rango de elevación, bandas, rótulos, sombreado y cuadros, todo con la configuración de la oficina o de la entidad.
+- **Después de un cambio.** Líneas nuevas, vistas que hay que mover al grupo y láminas que se arman otra vez.
+- **Rótulos en puntos concretos.** Cotas en el eje, en los bordes de la calzada o en el pie del talud, en todas las vistas.
+- **El orden de las láminas.** Numeración, progresivas de cada lámina en el cajetín y el índice.
+
+<Callout type="info" title="Señales de que conviene automatizar">
+Cada entrega pasa por acomodar vistas a mano. Tus proyectos tienen muchos ejes. Las vistas cambian de altura o de estilo según quién las hizo. O las láminas de secciones se rehacen después de cada observación.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Cómo lo hacemos en Zeist" time="~5 min">
+
+Desarrollamos plugins a medida para Civil 3D. Para las vistas de sección, un plugin típico:
+
+- **Crea las vistas de todos los alineamientos** en una sola pasada, con un grupo por eje.
+- **Aplica tu estándar:** rango de elevación, bandas, rótulos, sombreado de corte y relleno y cuadros por sección.
+- **Agrega los rótulos que pide tu entidad** en el eje, los bordes y el pie de talud.
+- **Mantiene el grupo en orden** cuando se agregan o quitan líneas de muestreo.
+- **Arma las láminas** con la numeración y las progresivas en el cajetín.
+- **Registra lo que hizo** en un reporte, para revisarlo antes de imprimir.
+
+Si prefieres empezar sin código, desde Civil 3D 2025.1 Dynamo trae un nodo para crear vistas de sección desde una línea de muestreo. Lo explicamos en [10 scripts de Dynamo para Civil 3D](/es/blog/dynamo-civil-3d-scripts).
+
+**Cómo trabajamos:**
+
+1. **Diagnóstico (1 semana, gratuito):** vemos cómo arman hoy las secciones y escribimos el estándar.
+2. **Prototipo (1 a 2 semanas):** validamos la lógica sobre uno de tus proyectos.
+3. **Desarrollo (2 a 4 semanas):** el plugin en C#, con pruebas sobre tus propios modelos.
+4. **Instalación:** instalador para toda la oficina, botón en la barra superior de Civil 3D, manual y documentación.
+5. **Soporte:** actualización con cada versión nueva de Civil 3D.
+
+El código fuente queda en tu empresa: el plugin es tuyo.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Civil 3D"
+  title="Tus vistas de sección y sus láminas, con tu estándar, en todos los ejes"
+  body="Desarrollamos el plugin con la configuración de tu oficina o de la entidad: rangos, bandas, rótulos, sombreado, cuadros y láminas, y lo que debe pasar después de cada cambio. Diagnóstico gratuito, instalador para toda la oficina, código fuente que queda en tus manos y actualización con cada versión de Civil 3D."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **El flujo completo:** [secciones transversales en Civil 3D](/es/blog/secciones-transversales-civil-3d).
+- **Antes de las vistas:** [líneas de muestreo automáticas en Civil 3D](/es/blog/lineas-de-muestreo-civil-3d-automaticas).
+- **El cajetín de cada lámina:** [membrete de planos automático](/es/blog/membrete-planos-automatico-revit-autocad).
+- **Las láminas:** [producción automática de planos en Civil 3D y Revit](/es/blog/produccion-planos-automatica-civil-3d-revit).
+- **Los volúmenes:** [automatizar metrados y cubicaciones en Civil 3D](/es/blog/automatizar-metrados-cubicaciones-civil-3d).
+- **El mapa completo:** [automatizar Civil 3D, la guía completa](/es/blog/automatizar-civil-3d-guia-completa).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Hemos armado secciones y láminas para expedientes viales, y programamos las herramientas que las generan. Trabajamos con oficinas de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota técnica:** los nombres de los comandos pueden variar según el idioma de instalación; entre paréntesis va el nombre en inglés. Las opciones corresponden a Civil 3D 2024 en adelante, y el nodo de Dynamo para vistas de sección, a Civil 3D 2025.1 en adelante.

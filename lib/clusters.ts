@@ -35,6 +35,9 @@ export const clusters: Cluster[] = [
       "plugin-revit-exportar-pdf-dwg-masivo",
       "revisiones-firmas-revit-varios-planos",
       "parametros-compartidos-revit",
+      "lista-de-materiales-revit-autocad-civil-3d",
+      "tabla-de-metrados-automatica-revit-civil-3d",
+      "membrete-planos-automatico-revit-autocad",
     ],
   },
   {
@@ -55,6 +58,7 @@ export const clusters: Cluster[] = [
       "importar-puntos-civil-3d-excel",
       "perfil-longitudinal-civil-3d",
       "lineas-de-muestreo-civil-3d-automaticas",
+      "vistas-de-seccion-civil-3d-automaticas",
     ],
   },
   {

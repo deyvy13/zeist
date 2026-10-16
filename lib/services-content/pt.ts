@@ -91,6 +91,26 @@ export const servicesPt: Record<ServiceSlug, ServicePage> = {
         body: "Saúde do modelo, conferência do padrão e revisão automática antes de cada entrega.",
         guide: "revit-lento-modelo-pesado-auditoria",
       },
+      {
+        title: "Listas de materiais para compras",
+        body: "Do Revit, do AutoCAD e do Civil 3D, com o código do seu almoxarifado, medidas comerciais e perda, comparadas com o pedido anterior.",
+        guide: "lista-de-materiales-revit-autocad-civil-3d",
+      },
+      {
+        title: "Planilha de quantitativos com memória de cálculo",
+        body: "A planilha por serviço, com a memória de cálculo de cada medida e no formato do cliente, gerada a partir do modelo.",
+        guide: "tabla-de-metrados-automatica-revit-civil-3d",
+      },
+      {
+        title: "Vistas de seção com o seu padrão",
+        body: "Vistas de seção de todos os eixos com a faixa, as bandas, os rótulos e as hachuras do seu escritório, organizadas em pranchas.",
+        guide: "vistas-de-seccion-civil-3d-automaticas",
+      },
+      {
+        title: "Pranchas e carimbos em lote",
+        body: "Pranchas criadas a partir de uma tabela e carimbos preenchidos com os dados do projeto, a numeração e os responsáveis de cada prancha.",
+        guide: "membrete-planos-automatico-revit-autocad",
+      },
     ],
     processTitle: "Como desenvolvemos o seu plugin",
     process: [

@@ -1,0 +1,200 @@
+---
+title: "Tabla de metrados automática: de Revit y Civil 3D a tu planilla de metrados en Excel, con su sustento"
+seoTitle: "Tabla de metrados automática: del modelo a Excel"
+ctaTitle: "¿Tu equipo arma la planilla de metrados a mano en cada versión del proyecto? La generamos desde el modelo."
+description: "Cómo pasar los metrados de Revit y Civil 3D a una planilla de metrados en Excel, con su sustento, por partida y en tu formato, y cómo automatizarla."
+date: "2026-10-16T23:00:00.000Z"
+author: "Zeist"
+tags:
+  - Metrados
+  - Revit
+  - Civil 3D
+  - Excel
+  - Presupuestos
+  - Automatización BIM
+---
+
+<BlogHero
+  eyebrow="Metrados · Revit · Civil 3D · Excel"
+  title="¿Se puede generar la tabla de metrados automáticamente? Sí. Con su sustento, por partida y en el formato de la entidad."
+  highlight="Qué lleva una planilla de metrados, de dónde salen las cantidades, por qué no cuadran y cómo se automatiza el paso que hoy se hace a mano: del modelo a la planilla. Al final, cómo lo hacemos en Zeist."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Sí. Revit y Civil 3D ya calculan cantidades: Revit con sus tablas de planificación y su cómputo de materiales, y Civil 3D con los volúmenes por sección y las partidas de pago. Lo que no hacen solos es llevarlas a la **planilla de metrados**: asignar cada elemento a su partida, escribir el sustento con el detalle de cada medida, juntar varios modelos y usar el formato de la entidad. Eso se automatiza con un plugin que genera la planilla en Excel desde el modelo. En Zeist lo desarrollamos a medida.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Metrado** — La cantidad de trabajo de cada partida: metros, metros cuadrados, metros cúbicos, kilos o unidades.
+- **Partida** — Cada rubro del presupuesto, con su código, su descripción y su unidad.
+- **Planilla de metrados** — La tabla que lista las partidas con su metrado. También se dice tabla u hoja de metrados.
+- **Sustento** — El detalle que justifica cada metrado: qué elementos se midieron y con qué medidas.
+- **Tabla de planificación** — La tabla de Revit que lista y mide elementos del modelo.
+- **Plugin** — Un programa que se instala dentro de Revit o Civil 3D y agrega sus propios botones en la barra superior.
+
+Está escrito para costos y presupuestos, residentes, supervisores y coordinadores BIM.
+</Callout>
+
+## El paso que siempre se hace a mano
+
+El modelo ya sabe cuánto concreto lleva cada viga y cuántos metros cúbicos de corte tiene cada tramo de vía. Pero la planilla de metrados se sigue armando a mano: se exportan tablas, se copian a Excel, se reordenan por partida y se escribe el sustento renglón por renglón. Y con cada versión del proyecto, se repite.
+
+Esta guía separa lo que ya calculan Revit y Civil 3D de lo que falta para tener la planilla, y muestra cómo se automatiza ese tramo.
+
+<AnimatedFlow
+  title="Del modelo a la planilla de metrados"
+  nodes="Modelos|Cantidades|Partidas|Planilla"
+  subs="Revit, Civil 3D, AutoCAD|Áreas, volúmenes, longitudes|Código, unidad y criterio|Sustento, resumen y formato"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Qué lleva una planilla de metrados" time="~5 min">
+
+Una planilla de metrados tiene tres partes:
+
+1. **Las partidas**, ordenadas como el presupuesto: código, descripción y unidad.
+2. **El sustento** de cada partida: los elementos medidos, cuántas veces se repiten y sus medidas, con el parcial de cada renglón.
+3. **El resumen**, con el total de cada partida, que pasa al presupuesto.
+
+En el Perú, la **Norma Técnica de Metrados para Obras de Edificación y Habilitaciones Urbanas** (RD 073-2010-VIVIENDA/VMCS-DNC) define cómo se mide cada partida: qué se descuenta, en qué unidad y con qué criterio. Muchas entidades piden, además, su propio formato de planilla.
+
+Por eso la planilla no es una tabla exportada: es un documento con un orden, un criterio y un formato. Una lista para comprar es otra cosa; la explicamos en [lista de materiales en Revit y AutoCAD](/es/blog/lista-de-materiales-revit-autocad-civil-3d).
+
+</TopicCard>
+
+<TopicCard step="2" title="2. De dónde salen las cantidades" time="~5 min">
+
+| Fuente | Qué mide bien | Dónde se explica |
+|---|---|---|
+| **Revit** | Concreto, áreas de muros y losas, acabados, puertas y ventanas, acero modelado | [Metrados en Revit](/es/blog/metrados-en-revit) |
+| **Civil 3D** | Corte y relleno por secciones o entre superficies, longitudes de tuberías, cantidades por partida de pago | [Metrados y cubicaciones en Civil 3D](/es/blog/automatizar-metrados-cubicaciones-civil-3d) |
+| **AutoCAD** | Áreas y longitudes de polilíneas, y conteos de bloques | [Lista de materiales](/es/blog/lista-de-materiales-revit-autocad-civil-3d) |
+| **A mano** | Lo que no se modela: obras provisionales, trazos, pruebas, partidas globales | La planilla |
+
+Cada fuente entrega sus cantidades a su manera. Ninguna entrega la planilla.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Del modelo a la planilla: el tramo manual" time="~5 min">
+
+Lo que hoy se hace a mano, en cada versión:
+
+- **Exportar** las tablas de Revit, que salen como texto delimitado, y los volúmenes de Civil 3D.
+- **Asignar cada elemento a su partida.** Si el modelo no tiene el código de partida en cada elemento, se hace de memoria. Lo explicamos en [metrados en Revit](/es/blog/metrados-en-revit).
+- **Escribir el sustento:** un renglón por elemento, con sus veces, largo, ancho y alto.
+- **Aplicar el criterio de la norma**, como los descuentos de vanos o las unidades.
+- **Darle el formato de la entidad**, con sus columnas, encabezados y totales.
+- **Juntar las especialidades** en un resumen general.
+
+Es el trabajo que más tiempo toma y el que más errores mete, porque cada copia es una oportunidad de equivocarse.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Por qué los números no cuadran" time="~5 min">
+
+Cuando la planilla y el modelo no coinciden, casi siempre es por una de estas causas:
+
+- **Elementos sin partida** o con la partida equivocada, que quedan fuera del total.
+- **Volúmenes contados dos veces**, por ejemplo en las uniones entre vigas, columnas y losas. En Revit, el orden de unir geometría decide a qué elemento va cada volumen.
+- **Unidades y redondeos distintos** entre el modelo, Excel y el presupuesto.
+- **Criterios de medición distintos** a los de la norma o la entidad.
+- **Cambios de diseño que no llegaron a la planilla**, porque se actualizó una hoja y otra no.
+
+<Callout type="warn" title="El mayor metrado que nadie puede sustentar">
+En obra, un mayor metrado se sustenta comparando lo ejecutado con lo del expediente. Si la planilla del expediente se armó a mano y no se puede rastrear hasta el modelo, esa comparación se vuelve una discusión.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Lo que se puede automatizar" time="~5 min">
+
+El cálculo ya lo hace el modelo. Lo que se automatiza es el tramo hasta la planilla:
+
+- **Asignar partidas por regla**, con una tabla de equivalencias: categoría, tipo o material del modelo, y su partida.
+- **Escribir el sustento** de cada partida desde los elementos del modelo, con sus medidas.
+- **Aplicar los criterios** de medición que use tu oficina o la entidad.
+- **Juntar Revit, Civil 3D y las partidas manuales** en un solo libro de Excel, con el formato de la entidad.
+- **Comparar versiones** y mostrar qué partidas subieron o bajaron, y por qué elementos.
+- **Revisar antes de entregar:** elementos sin partida, cantidades en cero o partidas duplicadas.
+
+<Callout type="info" title="Señales de que conviene automatizar">
+Cada versión del proyecto pasa por rehacer la planilla. El sustento se escribe a mano. Las especialidades llegan en formatos distintos. O una observación de la entidad obliga a rehacer todo el presupuesto.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Dynamo o un plugin" time="~5 min">
+
+**Con Dynamo**, en Revit o Civil 3D, un script lee los elementos, agrupa por un parámetro de partida y escribe un Excel. Es rápido de armar y sirve para validar la tabla de equivalencias.
+
+**Con un plugin**, la planilla completa sale con un botón: todas las especialidades, el sustento, el resumen, el formato de la entidad y la comparación con la versión anterior.
+
+<ComparisonTable
+  criterionLabel="Criterio"
+  leftLabel="Plugin"
+  rightLabel="Script de Dynamo"
+  rows="Tiempo hasta funcionar | Semanas | *Días || Planilla con sustento y resumen | *Completa, en tu formato | Básica || Revit y Civil 3D en un solo libro | *Sí | Un script por programa || Comparación entre versiones | *Sí | Requiere lógica adicional || Ideal para | *Cada versión del expediente | Validar las reglas"
+/>
+
+La comparación completa está en [Dynamo o C# para Civil 3D y Revit](/es/blog/dynamo-vs-csharp-civil3d-revit).
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Cómo lo hacemos en Zeist" time="~5 min">
+
+Desarrollamos plugins a medida para Revit y Civil 3D. Para la tabla de metrados, un plugin típico:
+
+- **Lee los modelos** de todas las especialidades y los volúmenes de Civil 3D.
+- **Asigna cada elemento a su partida** con la tabla de equivalencias de tu oficina.
+- **Escribe la planilla en tu formato de Excel**, con el sustento de cada partida y el resumen.
+- **Agrega las partidas manuales** desde una hoja que mantiene tu equipo.
+- **Compara con la versión anterior** y marca qué cambió y por qué.
+- **Avisa de lo que no pudo medir** o clasificar, antes de que llegue al presupuesto.
+
+**Cómo trabajamos:**
+
+1. **Diagnóstico (1 semana, gratuito):** vemos tu planilla actual y escribimos las reglas de cada partida.
+2. **Prototipo (1 a 2 semanas):** validamos la lógica sobre uno de tus proyectos.
+3. **Desarrollo (2 a 4 semanas):** el plugin, con pruebas sobre tus propios modelos.
+4. **Instalación:** instalador para toda la oficina, botón en la barra superior, manual y documentación.
+5. **Soporte:** actualización con cada versión nueva de Revit y Civil 3D.
+
+El código fuente queda en tu empresa: el plugin es tuyo.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Revit y Civil 3D"
+  title="Tu planilla de metrados, desde el modelo, con su sustento y en tu formato"
+  body="Desarrollamos el plugin con tus partidas, tus criterios de medición y el formato de la entidad, con la comparación contra la versión anterior. Diagnóstico gratuito, instalador para toda la oficina, código fuente que queda en tus manos y actualización con cada versión."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **En Revit:** [metrados en Revit, cómo hacerlos y que cuadren](/es/blog/metrados-en-revit).
+- **En Civil 3D:** [automatizar metrados y cubicaciones en Civil 3D](/es/blog/automatizar-metrados-cubicaciones-civil-3d).
+- **Para compras:** [lista de materiales en Revit, AutoCAD y Civil 3D](/es/blog/lista-de-materiales-revit-autocad-civil-3d).
+- **Revit y Excel:** [exportar tablas de Revit a Excel y reimportarlas](/es/blog/exportar-tablas-revit-excel-editar-parametros).
+- **Excel en la oficina:** [deja de usar Excel y perder horas](/es/blog/deja-de-usar-excel-y-perder-horas).
+- **Para presupuestar el desarrollo:** [cuánto cuesta un add-in para Revit o Civil 3D](/es/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Perú"
+  title="Un equipo de ingenieros civiles e ingenieros de sistemas"
+  body="Hemos armado metrados y presupuestos para expedientes técnicos, y programamos las herramientas que los generan. Trabajamos con oficinas y constructoras de todo el Perú y Latinoamérica."
+  primaryLabel="Hablemos de tu caso"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver todos los servicios"
+  secondaryHref="/es/servicios"
+/>
+
+---
+
+**Nota técnica:** las opciones corresponden a Revit 2024 y Civil 3D 2024 en adelante. La norma citada es la vigente para edificaciones y habilitaciones urbanas en el Perú; revisa siempre el formato que pide tu entidad.

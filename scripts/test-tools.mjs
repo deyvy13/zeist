@@ -34,12 +34,20 @@ import {
 import {
   analyzeGroup,
   distanceM,
+  emptyRow,
+  fillColumn,
   googleMapsLinks,
   groupCenter,
+  groupsToTable,
+  incompleteRows,
   latLonText,
+  nextVertexName,
   outsideDatumArea,
+  parseAngleText,
   parsePlanTable,
+  pasteKind,
   planKml,
+  tableToGroups,
   toWgs84,
 } from "../lib/tools/plan-location.ts";
 import { getPlanLocatorContent, getPlanLocatorLabels } from "../lib/tools-content/coordenadas-google-maps.ts";
@@ -661,4 +669,47 @@ test("plan links and KML", () => {
   assert.ok(kml.includes("<Polygon>") && kml.includes("Lote &lt;1&gt; &amp; más"));
   assert.equal((kml.match(/<Point>/g) || []).length, 3);
   assert.ok(kml.includes("-78.500000000,-9.100000000,0 -78.500000000,-9.200000000,0 -78.600000000,-9.200000000,0 -78.500000000,-9.100000000,0"));
+});
+
+test("plan grid: the example round-trips through the editable table", () => {
+  const groups = parsePlanTable(getPlanLocatorLabels("es").example.text).groups;
+  const table = groupsToTable(groups);
+  assert.deepEqual(table[0][0], { name: "1", e: "773650.1996", n: "8992962.5553", length: "234.8918", angle: `90°09'45"` });
+  assert.deepEqual(table[1].map((r) => r.length), ["16", "30", "16", "30"]);
+  assert.equal(groupsToTable(groups, ",")[0][0].e, "773650,1996");
+  const back = tableToGroups(table);
+  const lot = analyzeGroup(back[0]);
+  const park = analyzeGroup(back[1]);
+  assert.equal(lot.consistent, true);
+  assert.equal(park.consistent, false);
+  assert.deepEqual(groupCenter(lot), groupCenter(analyzeGroup(groups[0])));
+  assert.deepEqual(lot.sides.map((x) => x.stated), [234.8918, 400.1637, 235.1478, 400.4244]);
+  // Decimal commas, blank names and half-typed rows.
+  const typed = tableToGroups([[
+    { name: "", e: "773650,1996", n: "8.992.962,5553", length: "", angle: "" },
+    { name: "B", e: "77365", n: "", length: "", angle: "" },
+    emptyRow(),
+  ]]);
+  assert.deepEqual(typed[0].map((r) => [r.name, r.e, r.n]), [["1", 773650.1996, 8992962.5553]]);
+  assert.equal(incompleteRows([[emptyRow("1"), { ...emptyRow("2"), e: "77365" }, { ...emptyRow("3"), e: "1", n: "x" }]]), 2);
+});
+
+test("plan grid: angles, names and pastes as people type them", () => {
+  const dms = 90 + 9 / 60 + 45 / 3600;
+  for (const text of [`90°09'45"`, "90 09 45", "90-09-45", "90:09:45", "90º 9' 45''"]) near(parseAngleText(text), dms, 1e-12, text);
+  near(parseAngleText("90.1625"), 90.1625, 1e-12);
+  near(parseAngleText("89,5"), 89.5, 1e-12);
+  near(parseAngleText(`270°00'30.5"`), 270 + 30.5 / 3600, 1e-12);
+  for (const bad of ["", "abc", "90 75 00", "400", "1.2.3", "0"]) assert.equal(parseAngleText(bad), null, bad);
+  assert.equal(nextVertexName("4"), "5");
+  assert.equal(nextVertexName("D"), "E");
+  assert.equal(nextVertexName("P07"), "P08");
+  assert.equal(nextVertexName("BM-9"), "BM-10");
+  assert.equal(nextVertexName("Z"), "");
+  assert.equal(pasteKind("773650.1996"), "cell");
+  assert.equal(pasteKind("773650.1996\n773822.0104\n"), "column");
+  assert.equal(pasteKind("773650.1996\t8992962.5553"), "table");
+  assert.equal(pasteKind("1 773650.1996 8992962.5553\n2 773822.0104 8992802.3829"), "table");
+  const filled = fillColumn([emptyRow("1")], 0, "e", "773650.1996\n773822.0104\n773548.4967");
+  assert.deepEqual(filled.map((r) => [r.name, r.e]), [["1", "773650.1996"], ["2", "773822.0104"], ["3", "773548.4967"]]);
 });

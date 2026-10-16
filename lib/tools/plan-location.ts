@@ -7,7 +7,8 @@
 // -----------------------------------------------------------------------------
 
 import { transformDatum, utmToGeo, type DatumId } from "./coordinates";
-import { analyzeParcel, type Parcel, type ParcelError, type Vertex } from "./parcel";
+import { parseDecimal } from "./number";
+import { analyzeParcel, formatAngle, type Parcel, type ParcelError, type Vertex } from "./parcel";
 
 export type ColumnOrder = "auto" | "EN" | "NE";
 
@@ -308,6 +309,110 @@ export function analyzeGroup(rows: PlanRow[]): GroupAnalysis {
     warnings,
     consistent: checks.length ? checks.every((c) => c.ok) : null,
   };
+}
+
+// --- Editable table -----------------------------------------------------------------
+// The tool shows the coordinate table as an editable grid. Cells stay strings so a
+// half-typed value survives; each row carries the side that starts at its vertex.
+
+export type TableRow = { name: string; e: string; n: string; length: string; angle: string };
+export type TableField = keyof TableRow;
+
+export const emptyRow = (name = ""): TableRow => ({ name, e: "", n: "", length: "", angle: "" });
+
+/**
+ * An interior angle as people type it: 90°09'45", 90 09 45, 90-09-45, 90:09:45 or
+ * 90.1625 (decimal degrees). Null when empty, unreadable or outside 0–360°.
+ */
+export function parseAngleText(text: string): number | null {
+  const parts = text.trim().replace(/,/g, ".").split(/[^\d.]+/).filter(Boolean);
+  if (parts.length === 0 || parts.length > 3 || parts.some((p) => !/^\d+(?:\.\d+)?$/.test(p))) return null;
+  const [d, m = 0, s = 0] = parts.map(Number);
+  if (parts.length > 1 && (!Number.isInteger(d) || !Number.isInteger(m) || m >= 60 || s >= 60)) return null;
+  const value = d + m / 60 + s / 3600;
+  return value > 0 && value < 360 ? value : null;
+}
+
+/** The name that follows: 4 → 5, D → E, P07 → P08; "" when there's no obvious next one. */
+export function nextVertexName(name: string): string {
+  const numbered = /^(.*?)(\d+)$/.exec(name.trim());
+  if (numbered) return numbered[1] + String(Number(numbered[2]) + 1).padStart(numbered[2].length, "0");
+  if (/^[A-Ya-y]$/.test(name.trim())) return String.fromCharCode(name.trim().charCodeAt(0) + 1);
+  return "";
+}
+
+/** Grid rows → the vertex groups the checks and the map read. Rows without a valid East and North are left out. */
+export function tableToGroups(tables: TableRow[][]): PlanRow[][] {
+  return tables
+    .map((rows) =>
+      rows.flatMap((r, i): PlanRow[] => {
+        const e = parseDecimal(r.e);
+        const n = parseDecimal(r.n);
+        if (!Number.isFinite(e) || !Number.isFinite(n)) return [];
+        const length = parseDecimal(r.length);
+        return [
+          {
+            line: i + 1,
+            name: r.name.trim() || String(i + 1),
+            e,
+            n,
+            side: null,
+            length: Number.isFinite(length) && length > 0 ? length : null,
+            angle: parseAngleText(r.angle),
+          },
+        ];
+      }),
+    )
+    .filter((rows) => rows.length > 0);
+}
+
+/** Parsed groups → grid rows, with each stated length on the vertex where its side starts. */
+export function groupsToTable(groups: PlanRow[][], decimal: "." | "," = "."): TableRow[][] {
+  const num = (v: number) => String(v).replace(".", decimal);
+  return groups.map((rows) => {
+    const named = rows.map((r, i) => ({ ...r, name: r.name || String(i + 1) }));
+    return named.map((r, i) => {
+      const next = named[i + 1] ?? (named.length >= 3 ? named[0] : null);
+      const length = next ? statedLength(named, r.name, next.name) : null;
+      return {
+        name: r.name,
+        e: num(r.e),
+        n: num(r.n),
+        length: length === null ? "" : num(length),
+        angle: r.angle === null ? "" : formatAngle(r.angle),
+      };
+    });
+  });
+}
+
+/** Rows that have something typed but no valid East and North. */
+export function incompleteRows(tables: TableRow[][]): number {
+  return tables
+    .flat()
+    .filter((r) => (r.e.trim() || r.n.trim()) && !(Number.isFinite(parseDecimal(r.e)) && Number.isFinite(parseDecimal(r.n)))).length;
+}
+
+/**
+ * What a paste holds: one value (let the cell take it), one column of values
+ * (fill down from the cell) or a table (read it with the plan parser).
+ */
+export function pasteKind(text: string): "cell" | "column" | "table" {
+  const lines = text.replace(/\r/g, "").split("\n").map((l) => l.trim()).filter(Boolean);
+  if (lines.length <= 1 && !/\t/.test(text.trim())) return "cell";
+  if (lines.every((l) => !/[\t;]/.test(l) && !/\s/.test(l))) return "column";
+  return "table";
+}
+
+/** One value per line, written down a column from `start`; adds rows when the block is longer. */
+export function fillColumn(rows: TableRow[], start: number, field: TableField, text: string): TableRow[] {
+  const values = text.replace(/\r/g, "").split("\n").map((l) => l.trim()).filter(Boolean);
+  const out = rows.map((r) => ({ ...r }));
+  values.forEach((value, k) => {
+    const i = start + k;
+    if (!out[i]) out[i] = emptyRow(i > 0 ? nextVertexName(out[i - 1].name) : "1");
+    out[i][field] = value;
+  });
+  return out;
 }
 
 // --- Location -----------------------------------------------------------------------

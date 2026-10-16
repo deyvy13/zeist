@@ -91,6 +91,26 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
         body: "Salud del modelo, verificación del estándar y revisión automática antes de cada entrega.",
         guide: "revit-lento-modelo-pesado-auditoria",
       },
+      {
+        title: "Listas de materiales para compras",
+        body: "Desde Revit, AutoCAD y Civil 3D, con el código de tu almacén, medidas comerciales y desperdicio, y comparadas con el pedido anterior.",
+        guide: "lista-de-materiales-revit-autocad-civil-3d",
+      },
+      {
+        title: "Tabla de metrados con su sustento",
+        body: "La planilla de metrados por partida, con el sustento de cada medida y en el formato de la entidad, generada desde el modelo.",
+        guide: "tabla-de-metrados-automatica-revit-civil-3d",
+      },
+      {
+        title: "Vistas de sección con tu estándar",
+        body: "Vistas de sección de todos los ejes con el rango, las bandas, los rótulos y el sombreado de tu oficina, ordenadas en láminas.",
+        guide: "vistas-de-seccion-civil-3d-automaticas",
+      },
+      {
+        title: "Láminas y membretes en lote",
+        body: "Láminas creadas desde una tabla y membretes llenos con los datos del proyecto, la numeración y los profesionales de cada plano.",
+        guide: "membrete-planos-automatico-revit-autocad",
+      },
     ],
     processTitle: "Cómo desarrollamos tu plugin",
     process: [

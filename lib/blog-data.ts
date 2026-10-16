@@ -21,6 +21,603 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- Servicios (oct-2026): lista de materiales, vistas de sección, tabla de metrados, membretes ----
+  "lista-de-materiales-revit-autocad-civil-3d": {
+    es: {
+      roadmap: {
+        title: "Lista de materiales automática, en 7 pasos",
+        intro:
+          "La diferencia con el metrado, lo que traen Revit, AutoCAD y Civil 3D, lo que ninguna lista hace sola, cómo se automatiza y cómo lo hacemos en Zeist.",
+        steps: [
+          { n: 1, title: "Lista o metrado", desc: "Comprar no es lo mismo que presupuestar", tag: "Base" },
+          { n: 2, title: "En Revit", desc: "Tablas de planificación y cómputo de materiales", tag: "Revit" },
+          { n: 3, title: "En AutoCAD", desc: "Extracción de datos y COUNT", tag: "AutoCAD" },
+          { n: 4, title: "En Civil 3D", desc: "Tuberías, estructuras y partidas de pago", tag: "Civil 3D" },
+          { n: 5, title: "Lo que falta", desc: "Varias fuentes, códigos, desperdicio y cambios", tag: "Límites" },
+          { n: 6, title: "Dynamo o plugin", desc: "Dos formas de automatizarla", tag: "Automatización" },
+          { n: 7, title: "Cómo lo hacemos", desc: "Un plugin con tu formato de compras", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre la lista de materiales en Revit, AutoCAD y Civil 3D",
+        items: [
+          {
+            q: "¿Cómo saco la lista de materiales en Revit?",
+            a: "Con una tabla de planificación, en Vista › Crear, que liste la categoría con sus tipos y medidas sin detallar cada ejemplar, para que agrupe y cuente, o con un cómputo de materiales para sumar áreas y volúmenes por material. Se exporta desde Archivo › Exportar › Informes como texto delimitado que Excel abre.",
+          },
+          {
+            q: "¿Cómo hago una lista de materiales en AutoCAD?",
+            a: "Con la extracción de datos (DATAEXTRACTION), que lee los bloques y sus atributos y deja una tabla en el dibujo o un archivo de Excel, o con COUNT, desde AutoCAD 2022, que cuenta los bloques e inserta una tabla. AutoCAD LT no trae la extracción de datos; lo más cercano es ATTEXT.",
+          },
+          {
+            q: "¿Qué es la lista de materiales en Civil 3D?",
+            a: "En las secciones transversales, es la lista de materiales de corte y relleno que calcula Calcular materiales con los criterios de cantidades; se guarda en el grupo de líneas de muestreo y alimenta las tablas de volumen. Para redes de tuberías, la lista de piezas sale de las tablas de tuberías y estructuras o de las partidas de pago.",
+          },
+          {
+            q: "¿Cuál es la diferencia entre lista de materiales y metrado?",
+            a: "La lista de materiales sirve para comprar: se agrupa por material, medida y código del proveedor, en unidades de compra y con desperdicio. El metrado sirve para presupuestar: se agrupa por partida, en la unidad de cada partida y con el criterio de la norma.",
+          },
+          {
+            q: "¿Se puede exportar la lista de materiales de Revit a Excel?",
+            a: "Sí, como texto delimitado que Excel abre, desde Archivo › Exportar › Informes › Tabla de planificación. Para obtener un Excel con formato, varias tablas juntas o tus códigos de compra hace falta Dynamo o un plugin.",
+          },
+          {
+            q: "¿Se puede automatizar la lista de materiales para compras?",
+            a: "Sí. Un plugin lee los modelos de Revit, AutoCAD y Civil 3D, asigna a cada elemento el código de tu almacén, aplica medidas comerciales, desperdicio y unidades, escribe la lista en tu formato de Excel y la compara con el pedido anterior.",
+          },
+          {
+            q: "¿Quién automatiza listas de materiales en Revit, AutoCAD y Civil 3D?",
+            a: "Zeist desarrolla plugins a medida que generan la lista de materiales desde el modelo, con los códigos, las medidas comerciales y el formato de compras de tu empresa. El diagnóstico es gratuito y dura una semana, y el código fuente queda en tu empresa.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Lista de materiais automática, em 7 passos",
+        intro:
+          "A diferença para os quantitativos, o que o Revit, o AutoCAD e o Civil 3D trazem, o que nenhuma lista faz sozinha, como se automatiza e como fazemos isso na Zeist.",
+        steps: [
+          { n: 1, title: "Lista ou quantitativo", desc: "Comprar não é o mesmo que orçar", tag: "Base" },
+          { n: 2, title: "No Revit", desc: "Tabelas de quantidades e levantamento de material", tag: "Revit" },
+          { n: 3, title: "No AutoCAD", desc: "Extração de dados e COUNT", tag: "AutoCAD" },
+          { n: 4, title: "No Civil 3D", desc: "Tubulações, estruturas e itens de pagamento", tag: "Civil 3D" },
+          { n: 5, title: "O que falta", desc: "Várias fontes, códigos, perda e mudanças", tag: "Limites" },
+          { n: 6, title: "Dynamo ou plugin", desc: "Duas formas de automatizar", tag: "Automação" },
+          { n: 7, title: "Como fazemos", desc: "Um plugin com o seu formato de compras", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre a lista de materiais no Revit, no AutoCAD e no Civil 3D",
+        items: [
+          {
+            q: "Como gerar a lista de materiais no Revit?",
+            a: "Com uma tabela de quantidades, na guia Vista, painel Criar, que liste a categoria com os seus tipos e medidas sem listar cada instância separadamente, para que agrupe e conte, ou com um levantamento de material para somar áreas e volumes por material. A exportação de relatórios gera um texto delimitado que o Excel abre.",
+          },
+          {
+            q: "Como fazer uma lista de materiais no AutoCAD?",
+            a: "Com a extração de dados (DATAEXTRACTION), que lê os blocos e os seus atributos e deixa uma tabela no desenho ou um arquivo do Excel, ou com o COUNT, desde o AutoCAD 2022, que conta os blocos e insere uma tabela. O AutoCAD LT não traz a extração de dados; o mais próximo é o ATTEXT.",
+          },
+          {
+            q: "O que é a lista de materiais no Civil 3D?",
+            a: "Nas seções transversais, é a lista de materiais de corte e aterro calculada com Compute Materials a partir dos critérios de quantidades; ela fica no grupo de linhas de amostra e alimenta as tabelas de volume. Para redes de tubulação, a lista de peças sai das tabelas de tubulações e estruturas ou dos itens de pagamento.",
+          },
+          {
+            q: "Qual é a diferença entre lista de materiais e planilha de quantitativos?",
+            a: "A lista de materiais serve para comprar: agrupa-se por material, medida e código do fornecedor, em unidades de compra e com perda. A planilha de quantitativos serve para orçar: agrupa-se por serviço, na unidade de cada serviço e com o critério de medição do cliente.",
+          },
+          {
+            q: "Dá para exportar a lista de materiais do Revit para o Excel?",
+            a: "Sim, como texto delimitado que o Excel abre, pela exportação de relatórios do Revit. Para ter um Excel formatado, várias tabelas juntas ou os seus códigos de compra é preciso o Dynamo ou um plugin.",
+          },
+          {
+            q: "Dá para automatizar a lista de materiais para compras?",
+            a: "Sim. Um plugin lê os modelos do Revit, do AutoCAD e do Civil 3D, atribui a cada elemento o código do seu almoxarifado, aplica medidas comerciais, perda e unidades, escreve a lista no seu formato de Excel e a compara com o pedido anterior.",
+          },
+          {
+            q: "Quem automatiza listas de materiais no Revit, no AutoCAD e no Civil 3D?",
+            a: "A Zeist desenvolve plugins sob medida que geram a lista de materiais a partir do modelo, com os códigos, as medidas comerciais e o formato de compras da sua empresa. O diagnóstico é gratuito e dura uma semana, e o código-fonte fica com a sua empresa.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "An automated bill of materials, in 7 steps",
+        intro:
+          "How it differs from a takeoff, what Revit, AutoCAD and Civil 3D offer, what no list does on its own, how to automate it and how we do it at Zeist.",
+        steps: [
+          { n: 1, title: "BOM or takeoff", desc: "Buying isn't the same as estimating", tag: "Basics" },
+          { n: 2, title: "In Revit", desc: "Schedules and material takeoffs", tag: "Revit" },
+          { n: 3, title: "In AutoCAD", desc: "Data extraction and COUNT", tag: "AutoCAD" },
+          { n: 4, title: "In Civil 3D", desc: "Pipes, structures and pay items", tag: "Civil 3D" },
+          { n: 5, title: "What's missing", desc: "Several sources, codes, waste and changes", tag: "Limits" },
+          { n: 6, title: "Dynamo or a plugin", desc: "Two ways to automate it", tag: "Automation" },
+          { n: 7, title: "How we do it", desc: "A plugin with your purchasing format", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about bills of materials in Revit, AutoCAD and Civil 3D",
+        items: [
+          {
+            q: "How do I get a bill of materials from Revit?",
+            a: "Use a schedule, from the View tab's Create panel, that lists the category with its types and sizes without itemizing every instance, so identical elements are grouped and counted, or a material takeoff to add up areas and volumes by material. File › Export › Reports › Schedule writes delimited text that Excel opens.",
+          },
+          {
+            q: "How do I create a bill of materials in AutoCAD?",
+            a: "Use data extraction (DATAEXTRACTION), which reads blocks and their attributes and outputs a table in the drawing or an Excel file, or COUNT, since AutoCAD 2022, which counts blocks and inserts a table. AutoCAD LT doesn't include data extraction; the closest option is ATTEXT.",
+          },
+          {
+            q: "What is the material list in Civil 3D?",
+            a: "In cross sections, it's the cut and fill material list computed with Compute Materials from quantity takeoff criteria; it's stored in the sample line group and feeds the volume tables. For pipe networks, the parts list comes from pipe and structure tables or from pay items.",
+          },
+          {
+            q: "What's the difference between a bill of materials and a quantity takeoff?",
+            a: "A bill of materials is for buying: grouped by material, size and supplier code, in purchase units and with waste. A quantity takeoff is for estimating: grouped by line item, in each item's unit and by the client's measurement rules.",
+          },
+          {
+            q: "Can I export a Revit bill of materials to Excel?",
+            a: "Yes, as delimited text that Excel opens, from File › Export › Reports › Schedule. For a formatted Excel workbook, several schedules combined or your purchasing codes, you need Dynamo or a plugin.",
+          },
+          {
+            q: "Can a bill of materials for purchasing be automated?",
+            a: "Yes. A plugin reads the Revit, AutoCAD and Civil 3D models, assigns each element your inventory code, applies stock lengths, waste and units, writes the list in your Excel format and compares it with the previous order.",
+          },
+          {
+            q: "Who automates bills of materials for Revit, AutoCAD and Civil 3D?",
+            a: "Zeist builds custom plugins that generate the bill of materials from the model, with your company's codes, stock lengths and purchasing format. The diagnosis is free and takes one week, and your company owns the source code.",
+          },
+        ],
+      },
+    },
+  },
+  "vistas-de-seccion-civil-3d-automaticas": {
+    es: {
+      roadmap: {
+        title: "Vistas de sección automáticas en Civil 3D, en 7 pasos",
+        intro:
+          "De qué dependen, el asistente página por página, cómo evitar que se encimen, rótulos y sombreado, cómo agregar vistas, lo que no hace solo y cómo lo hacemos en Zeist.",
+        steps: [
+          { n: 1, title: "La línea de muestreo", desc: "Cada vista depende de una", tag: "Base" },
+          { n: 2, title: "El asistente", desc: "Página por página", tag: "Crear" },
+          { n: 3, title: "Que no se encimen", desc: "Ubicación, estilo de grupo y altura", tag: "Acomodo" },
+          { n: 4, title: "Rótulos y sombreado", desc: "Corte, relleno y objetos proyectados", tag: "Estilo" },
+          { n: 5, title: "Agregar y pasar a láminas", desc: "Grupo de vistas y láminas de sección", tag: "Láminas" },
+          { n: 6, title: "Lo que no hace solo", desc: "Muchos ejes, el estándar y los cambios", tag: "Límites" },
+          { n: 7, title: "Cómo lo hacemos", desc: "Un plugin con tu estándar", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre las vistas de sección en Civil 3D",
+        items: [
+          {
+            q: "¿Cómo creo vistas de sección en Civil 3D?",
+            a: "Con el asistente para varias vistas (Create Multiple Section Views), en la pestaña Inicio: eliges el alineamiento, el grupo de líneas de muestreo y el rango de progresivas, y defines la ubicación, el rango de desfase, el rango de elevación, las bandas y las tablas. También se pueden crear una por una (Create Section View).",
+          },
+          {
+            q: "¿Por qué las vistas de sección salen una encima de otra?",
+            a: "Casi siempre por el rango de elevación automático, cuando una sección rara agranda todas las celdas, por la separación del estilo de trazado de grupo o, en producción, por una plantilla de lámina que no corresponde a la escala. Una altura fija que sigue al terreno suele resolverlo.",
+          },
+          {
+            q: "¿Cómo cambio el rango de elevación de las vistas de sección?",
+            a: "En el asistente o en las propiedades de las vistas: automático, según lo que corta cada sección, o una altura fija que sigue a una sección, por ejemplo el terreno. Con la altura fija todas las vistas salen del mismo tamaño.",
+          },
+          {
+            q: "¿Cómo agrego una vista de sección a un grupo existente?",
+            a: "Crea la vista de la nueva línea de muestreo y muévela con el comando Move to Section View Group. El comando de actualizar no reordena las vistas, y las láminas de sección no se regeneran solas.",
+          },
+          {
+            q: "¿Cómo sombreo el corte y el relleno en las vistas de sección?",
+            a: "Calcula los materiales (Compute Materials) con los criterios de cálculo de cantidades: cada material tiene un estilo de forma que la vista muestra con su sombreado. Si los colores salen al revés o el corte da cero, revisa el orden de las superficies en los criterios.",
+          },
+          {
+            q: "¿Se pueden automatizar las vistas de sección?",
+            a: "Sí. Un plugin crea las vistas de todos los alineamientos en una pasada, aplica el rango, las bandas, los rótulos, el sombreado y los cuadros de tu estándar, mantiene el grupo en orden cuando se agregan líneas y arma las láminas. Desde Civil 3D 2025.1, Dynamo también trae un nodo para crear vistas de sección.",
+          },
+          {
+            q: "¿Quién automatiza las vistas de sección en Civil 3D?",
+            a: "Zeist desarrolla plugins a medida para Civil 3D que generan las vistas de sección y sus láminas con el estándar de tu oficina o de la entidad, en todos los ejes. El diagnóstico es gratuito y dura una semana, y el código fuente queda en tu empresa.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Section views automáticas no Civil 3D, em 7 passos",
+        intro:
+          "Do que dependem, o assistente página por página, como evitar sobreposição, rótulos e hachuras, como acrescentar vistas, o que ele não faz sozinho e como fazemos isso na Zeist.",
+        steps: [
+          { n: 1, title: "A linha de amostra", desc: "Cada vista depende de uma", tag: "Base" },
+          { n: 2, title: "O assistente", desc: "Página por página", tag: "Criar" },
+          { n: 3, title: "Sem sobreposição", desc: "Posicionamento, estilo de grupo e altura", tag: "Organização" },
+          { n: 4, title: "Rótulos e hachuras", desc: "Corte, aterro e objetos projetados", tag: "Estilo" },
+          { n: 5, title: "Acrescentar e ir para pranchas", desc: "Grupo de vistas e pranchas de seção", tag: "Pranchas" },
+          { n: 6, title: "O que não faz sozinho", desc: "Muitos eixos, o padrão e as mudanças", tag: "Limites" },
+          { n: 7, title: "Como fazemos", desc: "Um plugin com o seu padrão", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre section views no Civil 3D",
+        items: [
+          {
+            q: "Como criar section views no Civil 3D?",
+            a: "Com o assistente de várias vistas (Create Multiple Section Views), na guia Início: você escolhe o alinhamento, o grupo de linhas de amostra e a faixa de estacas, e define o posicionamento, a faixa de afastamento, a faixa de elevação, as bandas e as tabelas. Também dá para criá-las uma a uma (Create Section View).",
+          },
+          {
+            q: "Por que as section views saem umas por cima das outras?",
+            a: "Quase sempre pela faixa de elevação automática, quando uma seção estranha aumenta todas as células, pelo espaçamento do estilo de plotagem de grupo ou, em produção, por um modelo de prancha que não corresponde à escala. Uma altura fixa que acompanha o terreno costuma resolver.",
+          },
+          {
+            q: "Como mudar a faixa de elevação das section views?",
+            a: "No assistente ou nas propriedades das vistas: automática, segundo o que cada seção corta, ou uma altura fixa que acompanha uma seção, por exemplo o terreno. Com a altura fixa todas as vistas saem do mesmo tamanho.",
+          },
+          {
+            q: "Como acrescentar uma section view a um grupo existente?",
+            a: "Crie a vista da nova linha de amostra e mova-a com o comando Move to Section View Group. O comando de atualizar não reorganiza as vistas, e as pranchas de seção não se regeneram sozinhas.",
+          },
+          {
+            q: "Como hachurar corte e aterro nas section views?",
+            a: "Calcule os materiais (Compute Materials) com os critérios de cálculo de quantidades: cada material tem um estilo de forma que a vista mostra com a sua hachura. Se as cores saem trocadas ou o corte dá zero, confira a ordem das superfícies nos critérios.",
+          },
+          {
+            q: "Dá para automatizar as section views?",
+            a: "Sim. Um plugin cria as vistas de todos os alinhamentos numa passada, aplica a faixa, as bandas, os rótulos, as hachuras e os quadros do seu padrão, mantém o grupo em ordem quando entram linhas e monta as pranchas. Desde o Civil 3D 2025.1, o Dynamo também traz um nó para criar vistas de seção.",
+          },
+          {
+            q: "Quem automatiza as section views no Civil 3D?",
+            a: "A Zeist desenvolve plugins sob medida para o Civil 3D que geram as vistas de seção e as suas pranchas com o padrão do seu escritório ou do cliente, em todos os eixos. O diagnóstico é gratuito e dura uma semana, e o código-fonte fica com a sua empresa.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Automated Civil 3D section views, in 7 steps",
+        intro:
+          "What they depend on, the wizard page by page, how to stop overlaps, labels and hatching, adding views, what the wizard won't do and how we do it at Zeist.",
+        steps: [
+          { n: 1, title: "The sample line", desc: "Every view depends on one", tag: "Basics" },
+          { n: 2, title: "The wizard", desc: "Page by page", tag: "Create" },
+          { n: 3, title: "No overlaps", desc: "Placement, group plot style and height", tag: "Layout" },
+          { n: 4, title: "Labels and hatching", desc: "Cut, fill and projected objects", tag: "Style" },
+          { n: 5, title: "Adding views and sheets", desc: "Section view groups and section sheets", tag: "Sheets" },
+          { n: 6, title: "What it won't do alone", desc: "Many alignments, standards and changes", tag: "Limits" },
+          { n: 7, title: "How we do it", desc: "A plugin with your standards", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about Civil 3D section views",
+        items: [
+          {
+            q: "How do I create section views in Civil 3D?",
+            a: "Use the Create Multiple Section Views wizard on the Home tab: pick the alignment, the sample line group and the station range, then set the placement, offset range, elevation range, bands and tables. You can also create them one at a time with Create Section View.",
+          },
+          {
+            q: "Why are my Civil 3D section views on top of each other?",
+            a: "Usually because of an automatic elevation range, when one odd section enlarges every cell, the spacing in the group plot style, or, in production, a sheet template that doesn't match the scale. A fixed height that follows the ground usually fixes it.",
+          },
+          {
+            q: "How do I change the elevation range of section views?",
+            a: "In the wizard or in the section view properties: automatic, based on what each section cuts, or a fixed height that follows a section, such as existing ground. With a fixed height, every view comes out the same size.",
+          },
+          {
+            q: "How do I add a section view to an existing group?",
+            a: "Create the view for the new sample line and use Move to Section View Group. The Update command doesn't re-sort the views, and section sheets aren't regenerated automatically.",
+          },
+          {
+            q: "How do I hatch cut and fill in section views?",
+            a: "Compute materials with your quantity takeoff criteria: each material has a shape style that the view shows with its hatch. If the colors come out swapped or cut shows zero, check the surface order in the criteria.",
+          },
+          {
+            q: "Can section views be automated?",
+            a: "Yes. A plugin creates the views for every alignment in one pass, applies your range, bands, labels, hatching and tables, keeps the group in order when sample lines are added, and builds the sheets. Since Civil 3D 2025.1, Dynamo also includes a node to create section views.",
+          },
+          {
+            q: "Who automates section views in Civil 3D?",
+            a: "Zeist builds custom Civil 3D plugins that generate section views and their sheets to your firm's or agency's standards, on every alignment. The diagnosis is free and takes one week, and your company owns the source code.",
+          },
+        ],
+      },
+    },
+  },
+  "tabla-de-metrados-automatica-revit-civil-3d": {
+    es: {
+      roadmap: {
+        title: "Tabla de metrados automática, en 7 pasos",
+        intro:
+          "Qué lleva la planilla, de dónde salen las cantidades, el tramo manual, por qué no cuadran, qué se automatiza, Dynamo o plugin y cómo lo hacemos en Zeist.",
+        steps: [
+          { n: 1, title: "La planilla", desc: "Partidas, sustento y resumen", tag: "Base" },
+          { n: 2, title: "Las fuentes", desc: "Revit, Civil 3D, AutoCAD y lo manual", tag: "Cantidades" },
+          { n: 3, title: "El tramo manual", desc: "Del modelo a la planilla", tag: "Proceso" },
+          { n: 4, title: "Por qué no cuadran", desc: "Partidas, uniones, unidades y cambios", tag: "Errores" },
+          { n: 5, title: "Qué se automatiza", desc: "Partidas, sustento, formato y versiones", tag: "Automatización" },
+          { n: 6, title: "Dynamo o plugin", desc: "Dos formas de hacerlo", tag: "Herramientas" },
+          { n: 7, title: "Cómo lo hacemos", desc: "Un plugin con tu formato", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre la tabla de metrados automática",
+        items: [
+          {
+            q: "¿Qué es una tabla de metrados?",
+            a: "Es la planilla que lista las partidas de un proyecto con su metrado: código, descripción, unidad y cantidad, con el sustento que detalla qué elementos se midieron y con qué medidas, y un resumen con el total de cada partida. En el Perú, la Norma Técnica de Metrados define cómo se mide cada partida en edificaciones y habilitaciones urbanas.",
+          },
+          {
+            q: "¿Cómo hago una tabla de metrados en Excel desde Revit?",
+            a: "Revit mide con tablas de planificación y cómputo de materiales, y las exporta como texto delimitado que Excel abre. Para llegar a la planilla hay que asignar cada elemento a su partida, escribir el sustento y darle el formato de la entidad: es el tramo que conviene automatizar.",
+          },
+          {
+            q: "¿Qué es el sustento de metrados?",
+            a: "Es el detalle que justifica cada metrado: los elementos medidos, cuántas veces se repiten y sus medidas, con el parcial de cada renglón. Permite revisar la planilla y comparar lo del expediente con lo ejecutado.",
+          },
+          {
+            q: "¿Por qué los metrados del modelo no cuadran con la planilla?",
+            a: "Por elementos sin partida, volúmenes contados dos veces en las uniones, unidades o redondeos distintos, criterios de medición diferentes a los de la norma o cambios de diseño que no llegaron a la planilla.",
+          },
+          {
+            q: "¿Se puede generar la planilla de metrados automáticamente?",
+            a: "Sí. Un plugin lee los modelos de Revit y Civil 3D, asigna cada elemento a su partida con una tabla de equivalencias, escribe el sustento y el resumen en el formato de Excel de la entidad, suma las partidas manuales y compara con la versión anterior.",
+          },
+          {
+            q: "¿Sirve Dynamo para la tabla de metrados?",
+            a: "Sí, para empezar: un script lee los elementos, agrupa por un parámetro de partida y escribe un Excel. Para la planilla completa, con sustento, varias especialidades, formato de la entidad y comparación entre versiones, conviene un plugin.",
+          },
+          {
+            q: "¿Quién automatiza la tabla de metrados desde Revit y Civil 3D?",
+            a: "Zeist desarrolla plugins a medida que generan la planilla de metrados desde el modelo, con el sustento, las partidas y el formato de tu oficina o de la entidad. El diagnóstico es gratuito y dura una semana, y el código fuente queda en tu empresa.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Planilha de quantitativos automática, em 7 passos",
+        intro:
+          "O que a planilha leva, de onde saem as quantidades, o trecho manual, por que não batem, o que se automatiza, Dynamo ou plugin e como fazemos isso na Zeist.",
+        steps: [
+          { n: 1, title: "A planilha", desc: "Serviços, memória de cálculo e resumo", tag: "Base" },
+          { n: 2, title: "As fontes", desc: "Revit, Civil 3D, AutoCAD e o manual", tag: "Quantidades" },
+          { n: 3, title: "O trecho manual", desc: "Do modelo à planilha", tag: "Processo" },
+          { n: 4, title: "Por que não batem", desc: "Serviços, ligações, unidades e mudanças", tag: "Erros" },
+          { n: 5, title: "O que se automatiza", desc: "Serviços, memória, formato e versões", tag: "Automação" },
+          { n: 6, title: "Dynamo ou plugin", desc: "Duas formas de fazer", tag: "Ferramentas" },
+          { n: 7, title: "Como fazemos", desc: "Um plugin com o seu formato", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre a planilha de quantitativos automática",
+        items: [
+          {
+            q: "O que é uma planilha de quantitativos?",
+            a: "É a tabela que lista os serviços de um projeto com os seus quantitativos: código, descrição, unidade e quantidade, com a memória de cálculo que detalha quais elementos foram medidos e com quais medidas, e um resumo com o total de cada serviço.",
+          },
+          {
+            q: "Como fazer a planilha de quantitativos no Excel a partir do Revit?",
+            a: "O Revit mede com tabelas de quantidades e levantamento de material, e as exporta como texto delimitado que o Excel abre. Para chegar à planilha é preciso atribuir cada elemento ao seu serviço, escrever a memória de cálculo e dar o formato do cliente: é o trecho que vale a pena automatizar.",
+          },
+          {
+            q: "O que é a memória de cálculo dos quantitativos?",
+            a: "É o detalhe que justifica cada quantitativo: os elementos medidos, quantas vezes se repetem e as suas medidas, com o parcial de cada linha. Permite conferir a planilha e comparar o projeto com o executado.",
+          },
+          {
+            q: "O que é o SINAPI e por que aparece nas planilhas?",
+            a: "É o sistema de referência de custos mantido pela CAIXA e pelo IBGE. Pelo Decreto 7.983/2013, é a referência para obras com recursos da União, exceto as de infraestrutura de transportes; por isso muitas planilhas usam os códigos das suas composições.",
+          },
+          {
+            q: "Dá para gerar a planilha de quantitativos automaticamente?",
+            a: "Sim. Um plugin lê os modelos do Revit e do Civil 3D, atribui cada elemento ao seu serviço com uma tabela de equivalências, escreve a memória de cálculo e o resumo no formato de Excel do cliente, soma os serviços manuais e compara com a versão anterior.",
+          },
+          {
+            q: "O Dynamo serve para a planilha de quantitativos?",
+            a: "Sim, para começar: um script lê os elementos, agrupa por um parâmetro de serviço e escreve um Excel. Para a planilha completa, com memória de cálculo, várias disciplinas, formato do cliente e comparação entre versões, vale um plugin.",
+          },
+          {
+            q: "Quem automatiza a planilha de quantitativos a partir do Revit e do Civil 3D?",
+            a: "A Zeist desenvolve plugins sob medida que geram a planilha de quantitativos a partir do modelo, com a memória de cálculo, os serviços e o formato do seu escritório ou do cliente. O diagnóstico é gratuito e dura uma semana, e o código-fonte fica com a sua empresa.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "An automated quantity takeoff, in 7 steps",
+        intro:
+          "What the deliverable includes, where quantities come from, the manual stretch, why they don't add up, what to automate, Dynamo or a plugin and how we do it at Zeist.",
+        steps: [
+          { n: 1, title: "The deliverable", desc: "Line items, backup and summary", tag: "Basics" },
+          { n: 2, title: "The sources", desc: "Revit, Civil 3D, AutoCAD and manual items", tag: "Quantities" },
+          { n: 3, title: "The manual stretch", desc: "From the model to the spreadsheet", tag: "Process" },
+          { n: 4, title: "Why it doesn't add up", desc: "Items, joins, units and changes", tag: "Errors" },
+          { n: 5, title: "What to automate", desc: "Items, backup, format and versions", tag: "Automation" },
+          { n: 6, title: "Dynamo or a plugin", desc: "Two ways to do it", tag: "Tools" },
+          { n: 7, title: "How we do it", desc: "A plugin with your format", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about automated quantity takeoff",
+        items: [
+          {
+            q: "What does a quantity takeoff deliverable include?",
+            a: "The line items with their code, description, unit and quantity; the backup that shows which elements were measured and how; and a summary with the total for each item, which feeds the estimate or the summary of quantities on the plans.",
+          },
+          {
+            q: "How do I get a Revit quantity takeoff into Excel?",
+            a: "Revit measures with schedules and material takeoffs and exports them as delimited text that Excel opens. Getting to the deliverable means mapping each element to its line item, writing the backup and formatting it for the client: that's the stretch worth automating.",
+          },
+          {
+            q: "Can Civil 3D do quantity takeoff?",
+            a: "Yes: cut and fill volumes from sections or between surfaces, and quantities by pay item with QTO Manager, for example for pipes and structures. The reports still need to be mapped to your estimate format.",
+          },
+          {
+            q: "Why don't model quantities match the spreadsheet?",
+            a: "Because of elements with no line item, volumes counted twice at joins, different units or rounding, measurement rules that differ from the client's, or design changes that never reached the spreadsheet.",
+          },
+          {
+            q: "Can a bill of quantities be generated automatically?",
+            a: "Yes. A plugin reads the Revit and Civil 3D models, maps each element to its line item through a lookup table, writes the backup and summary in the client's Excel format, adds manual items and compares with the previous version.",
+          },
+          {
+            q: "Is Dynamo enough for quantity takeoff automation?",
+            a: "It's a good start: a script reads the elements, groups them by a line item parameter and writes an Excel file. For the full deliverable, with backup, several disciplines, the client's format and version comparison, a plugin is the better fit.",
+          },
+          {
+            q: "Who automates quantity takeoff from Revit and Civil 3D?",
+            a: "Zeist builds custom plugins that generate the bill of quantities from the model, with the backup, line items and format your firm or client uses. The diagnosis is free and takes one week, and your company owns the source code.",
+          },
+        ],
+      },
+    },
+  },
+  "membrete-planos-automatico-revit-autocad": {
+    es: {
+      roadmap: {
+        title: "Membrete de planos automático, en 7 pasos",
+        intro:
+          "Qué datos lleva, cómo se llena solo en Revit, cómo crear muchas láminas, atributos y conjuntos de planos en AutoCAD, lo que sigue manual, cómo se automatiza y cómo lo hacemos en Zeist.",
+        steps: [
+          { n: 1, title: "Los datos", desc: "Del proyecto y de cada lámina", tag: "Base" },
+          { n: 2, title: "En Revit", desc: "Etiquetas y parámetros", tag: "Revit" },
+          { n: 3, title: "Muchas láminas", desc: "Crear y llenar en lote", tag: "Revit" },
+          { n: 4, title: "En AutoCAD y Civil 3D", desc: "Atributos, campos y conjuntos de planos", tag: "AutoCAD" },
+          { n: 5, title: "Lo que sigue manual", desc: "Numeración, revisión e índice", tag: "Límites" },
+          { n: 6, title: "Una tabla manda", desc: "Dynamo o plugin", tag: "Automatización" },
+          { n: 7, title: "Cómo lo hacemos", desc: "Un plugin con tus membretes", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Preguntas frecuentes sobre el membrete de planos automático",
+        items: [
+          {
+            q: "¿Cómo hago un membrete que se llene solo en Revit?",
+            a: "Crea la familia de cajetín con etiquetas vinculadas a parámetros: los de información del proyecto para los datos iguales en todas las láminas y los de lámina para número, nombre, fecha y responsables. Para datos propios, usa parámetros compartidos cargados en la familia y en el proyecto.",
+          },
+          {
+            q: "¿Por qué no puedo editar una etiqueta del membrete en Revit?",
+            a: "Casi siempre porque el parámetro compartido de la etiqueta no se agregó al proyecto, o no se asignó a información del proyecto o a láminas. Debe ser un parámetro de ejemplar, de tipo texto, asignado a una sola de las dos categorías.",
+          },
+          {
+            q: "¿Se pueden crear muchas láminas a la vez en Revit?",
+            a: "Sí. En una tabla de lista de láminas agregas las láminas que aún no existen; al crear una lámina nueva eliges varias de ellas y el cajetín, y Revit las crea en una pasada. Para crearlas desde un Excel hace falta Dynamo o un plugin.",
+          },
+          {
+            q: "¿Cómo cambio los datos del membrete en todos los planos de AutoCAD?",
+            a: "Con un conjunto de planos: insertas en los atributos del membrete campos que leen las propiedades del conjunto y de cada lámina, y cambias el dato una sola vez. Si los membretes no tienen campos, ATTOUT y ATTIN de las Express Tools permiten editarlos en Excel, y GATTE cambia un atributo en todos los bloques iguales.",
+          },
+          {
+            q: "¿Qué datos debe llevar un membrete de planos?",
+            a: "Los del proyecto, iguales en todas las láminas, como nombre, cliente, ubicación y profesionales con su colegiatura, y los de cada lámina, como número, nombre, escala, fecha, revisión y el número de lámina sobre el total. Cada entidad puede pedir su propio formato.",
+          },
+          {
+            q: "¿Se puede automatizar la generación de planos con su membrete?",
+            a: "Sí. Un plugin lee una tabla de Excel con todas las láminas, crea las que faltan con el cajetín correcto, llena el membrete, numera con tu regla, revisa los datos y genera el índice y los PDF, en Revit, AutoCAD y Civil 3D.",
+          },
+          {
+            q: "¿Quién automatiza membretes y láminas en Revit y AutoCAD?",
+            a: "Zeist desarrolla plugins a medida que crean las láminas y llenan el membrete desde una sola tabla, con tu regla de numeración y el formato de tus clientes. El diagnóstico es gratuito y dura una semana, y el código fuente queda en tu empresa.",
+          },
+        ],
+      },
+    },
+    pt: {
+      roadmap: {
+        title: "Carimbo de prancha automático, em 7 passos",
+        intro:
+          "Que dados ele leva, como se preenche sozinho no Revit, como criar muitas pranchas, atributos e conjuntos de folhas no AutoCAD, o que continua manual, como se automatiza e como fazemos isso na Zeist.",
+        steps: [
+          { n: 1, title: "Os dados", desc: "Do projeto e de cada prancha", tag: "Base" },
+          { n: 2, title: "No Revit", desc: "Rótulos e parâmetros", tag: "Revit" },
+          { n: 3, title: "Muitas pranchas", desc: "Criar e preencher em lote", tag: "Revit" },
+          { n: 4, title: "No AutoCAD e no Civil 3D", desc: "Atributos, campos e conjuntos de folhas", tag: "AutoCAD" },
+          { n: 5, title: "O que continua manual", desc: "Numeração, conferência e índice", tag: "Limites" },
+          { n: 6, title: "Uma tabela manda", desc: "Dynamo ou plugin", tag: "Automação" },
+          { n: 7, title: "Como fazemos", desc: "Um plugin com os seus carimbos", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Perguntas frequentes sobre o carimbo de prancha automático",
+        items: [
+          {
+            q: "Como fazer um carimbo que se preenche sozinho no Revit?",
+            a: "Crie a família de carimbo com rótulos ligados a parâmetros: os de informações do projeto para os dados iguais em todas as pranchas e os da prancha para número, título, data e responsáveis. Para dados próprios, use parâmetros compartilhados carregados na família e no projeto.",
+          },
+          {
+            q: "Por que não consigo editar um rótulo do carimbo no Revit?",
+            a: "Quase sempre porque o parâmetro compartilhado do rótulo não foi acrescentado ao projeto, ou não foi atribuído às informações do projeto ou às pranchas. Ele deve ser um parâmetro de instância, do tipo texto, atribuído a só uma das duas categorias.",
+          },
+          {
+            q: "Dá para criar muitas pranchas de uma vez no Revit?",
+            a: "Sim. Numa tabela de pranchas você acrescenta as pranchas que ainda não existem; ao criar uma prancha nova, escolhe várias delas e o carimbo, e o Revit cria todas numa passada. Para criá-las a partir de um Excel é preciso o Dynamo ou um plugin.",
+          },
+          {
+            q: "Como mudar os dados do carimbo em todas as pranchas do AutoCAD?",
+            a: "Com um conjunto de folhas: você insere nos atributos do carimbo campos que leem as propriedades do conjunto e de cada prancha, e muda o dado uma única vez. Se os carimbos não têm campos, ATTOUT e ATTIN das Express Tools permitem editá-los no Excel, e GATTE muda um atributo em todos os blocos iguais.",
+          },
+          {
+            q: "Que dados um carimbo de prancha deve levar?",
+            a: "Os do projeto, iguais em todas as pranchas, como nome, cliente, endereço e responsáveis com o registro no CREA ou no CAU, e os de cada prancha, como número, título, escala, data, revisão e o número da prancha sobre o total. Cada cliente pode pedir o seu próprio formato.",
+          },
+          {
+            q: "Dá para automatizar a geração de pranchas com o carimbo?",
+            a: "Sim. Um plugin lê uma tabela de Excel com todas as pranchas, cria as que faltam com o carimbo certo, preenche os dados, numera com a sua regra, confere os dados e gera a lista e os PDF, no Revit, no AutoCAD e no Civil 3D.",
+          },
+          {
+            q: "Quem automatiza carimbos e pranchas no Revit e no AutoCAD?",
+            a: "A Zeist desenvolve plugins sob medida que criam as pranchas e preenchem o carimbo a partir de uma única tabela, com a sua regra de numeração e o formato dos seus clientes. O diagnóstico é gratuito e dura uma semana, e o código-fonte fica com a sua empresa.",
+          },
+        ],
+      },
+    },
+    en: {
+      roadmap: {
+        title: "Title blocks filled automatically, in 7 steps",
+        intro:
+          "What goes in a title block, how it fills itself in Revit, creating many sheets, attributes and sheet sets in AutoCAD, what's still manual, how to automate it and how we do it at Zeist.",
+        steps: [
+          { n: 1, title: "The data", desc: "Project data and sheet data", tag: "Basics" },
+          { n: 2, title: "In Revit", desc: "Labels and parameters", tag: "Revit" },
+          { n: 3, title: "Many sheets", desc: "Create and fill in bulk", tag: "Revit" },
+          { n: 4, title: "In AutoCAD and Civil 3D", desc: "Attributes, fields and sheet sets", tag: "AutoCAD" },
+          { n: 5, title: "What's still manual", desc: "Numbering, checks and the index", tag: "Limits" },
+          { n: 6, title: "One table rules", desc: "Dynamo or a plugin", tag: "Automation" },
+          { n: 7, title: "How we do it", desc: "A plugin with your title blocks", tag: "Zeist" },
+        ],
+      },
+      faqs: {
+        title: "Frequently asked questions about automated title blocks",
+        items: [
+          {
+            q: "How do I make a Revit title block fill itself?",
+            a: "Build the title block family with labels tied to parameters: Project Information parameters for values shared by every sheet, and sheet parameters for number, name, date and responsible people. For custom values, use shared parameters loaded in both the family and the project.",
+          },
+          {
+            q: "Why can't I edit a title block label in Revit?",
+            a: "Usually because the label's shared parameter wasn't added to the project, or wasn't assigned to Project Information or to Sheets. It should be an instance parameter of type text, assigned to only one of the two categories.",
+          },
+          {
+            q: "Can Revit create many sheets at once?",
+            a: "Yes. In a sheet list schedule you add rows for sheets that don't exist yet; when you create a new sheet, you pick several of them and a title block, and Revit creates them in one pass. Creating them from Excel takes Dynamo or a plugin.",
+          },
+          {
+            q: "How do I edit multiple title block attributes in AutoCAD?",
+            a: "With a sheet set: insert fields in the title block attributes that read the sheet set and sheet properties, then change each value once. If the title blocks have no fields, the Express Tools ATTOUT and ATTIN let you edit them in Excel, and GATTE changes one attribute in every matching block.",
+          },
+          {
+            q: "What should a title block include?",
+            a: "Project data that's the same on every sheet, such as name, client, location and engineers of record with their license numbers, and data for each sheet, such as number, title, scale, date, revision and the sheet number out of the total. Each client may require its own format.",
+          },
+          {
+            q: "Can sheet creation with filled title blocks be automated?",
+            a: "Yes. A plugin reads an Excel table with every sheet, creates the missing ones with the right title block, fills in the data, numbers them by your rule, checks the values and builds the index and the PDFs, in Revit, AutoCAD and Civil 3D.",
+          },
+          {
+            q: "Who automates title blocks and sheets in Revit and AutoCAD?",
+            a: "Zeist builds custom plugins that create the sheets and fill in every title block from a single table, with your numbering rule and your clients' formats. The diagnosis is free and takes one week, and your company owns the source code.",
+          },
+        ],
+      },
+    },
+  },
   // ---- Civil 3D (oct-2026): líneas de muestreo automáticas ----
   "lineas-de-muestreo-civil-3d-automaticas": {
     es: {
