@@ -371,7 +371,7 @@ export const servicesEn: Record<ServiceSlug, ServicePage> = {
 
   // ---------------------------------------------------------------------------
   "auditoria-procesos-bim": {
-    seoTitle: "BIM Audit and BIM Consulting Services",
+    seoTitle: "BIM Audit Services: Revit Model and Workflow Audits",
     metaDescription:
       "BIM audit of models and workflows for engineering and construction firms: a diagnosis backed by numbers and a plan to fix, standardize and automate.",
     keywords: [

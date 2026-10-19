@@ -13,6 +13,7 @@ const STATIC_PATHS = [
   "herramientas",
   "contacto",
   "privacidad",
+  "nosotros",
   ...SERVICE_SLUGS.map((s) => `servicios/${s}`),
 ];
 

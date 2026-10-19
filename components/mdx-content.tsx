@@ -21,6 +21,28 @@ import { AnimatedFlow } from "@/components/visual/animated-flow";
 import { ComparisonTable } from "@/components/visual/comparison-table";
 import { AuroraText } from "@/components/visual/aurora-text";
 import type { Locale } from "@/lib/i18n";
+import Image from "next/image";
+
+/**
+ * A screenshot or diagram inside a post: optimized by next/image, with its alt
+ * text and an optional caption. The post page also lists it in the BlogPosting
+ * JSON-LD. Props are strings so MDX needs no braces: <Figure src="/blog/…" … />.
+ */
+function Figure({ src, alt, caption, width, height }: { src: string; alt: string; caption?: string; width: string; height: string }) {
+  return (
+    <figure className="mt-8">
+      <Image
+        src={src}
+        alt={alt}
+        width={Number(width)}
+        height={Number(height)}
+        sizes="(min-width: 1024px) 760px, 100vw"
+        className="h-auto w-full rounded-2xl border border-[color:var(--color-border)]"
+      />
+      {caption && <figcaption className="mt-2 text-sm text-[color:var(--color-muted)]">{caption}</figcaption>}
+    </figure>
+  );
+}
 
 // Styled element map — full control over prose without a typography plugin.
 const components: MDXComponents = {
@@ -103,8 +125,9 @@ const components: MDXComponents = {
   hr: () => <hr className="my-10 border-[color:var(--color-border)]" />,
   img: ({ alt = "", ...props }) => (
     // eslint-disable-next-line @next/next/no-img-element
-    <img alt={alt} className="mt-6 rounded-2xl" {...props} />
+    <img alt={alt} className="mt-6 rounded-2xl" loading="lazy" decoding="async" {...props} />
   ),
+  Figure,
   // Custom visual components exposed to MDX authors.
   TopicCard,
   Callout,

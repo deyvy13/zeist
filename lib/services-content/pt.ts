@@ -372,7 +372,7 @@ export const servicesPt: Record<ServiceSlug, ServicePage> = {
 
   // ---------------------------------------------------------------------------
   "auditoria-procesos-bim": {
-    seoTitle: "Auditoria e consultoria BIM para empresas",
+    seoTitle: "Auditoria BIM: modelos Revit, Civil 3D e processos",
     metaDescription:
       "Auditoria BIM de modelos e processos para empresas de engenharia e construção: diagnóstico com números e um plano para corrigir, padronizar e automatizar.",
     keywords: [
@@ -386,7 +386,7 @@ export const servicesPt: Record<ServiceSlug, ServicePage> = {
     ],
     serviceType: "Auditoria e consultoria BIM",
     eyebrow: "Serviço · Auditoria e consultoria BIM",
-    h1: "Auditoria e consultoria BIM: descubra onde sua equipe perde horas e o que automatizar primeiro",
+    h1: "Auditoria BIM e consultoria: descubra onde sua equipe perde horas e o que automatizar primeiro",
     intro:
       "Revisamos os seus modelos e medimos como sua equipe trabalha. Em quatro semanas você recebe um diagnóstico com números e um plano priorizado: o que corrigir, o que padronizar e o que automatizar primeiro, com a economia estimada de cada ação.",
     answer:

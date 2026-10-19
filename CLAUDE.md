@@ -109,13 +109,15 @@ app/
     servicios/[slug]/page.tsx # Landing de venta de cada servicio (plantilla; contenido en lib/services-content)
     blog/page.tsx             # Índice del blog
     blog/[slug]/page.tsx      # Artículo (renderiza MDX, JSON-LD BlogPosting)
-    herramientas/page.tsx     # Hub: herramientas disponibles + propuestas "Pronto" por rubro
+    herramientas/page.tsx     # Hub: solo herramientas publicadas (H1 con la keyword, sin "Pronto"; copy en lib/tools-catalog.ts)
     herramientas/<slug>/page.tsx # Una carpeta por herramienta (acero: solo es; el resto: es/pt/en)
     contacto/page.tsx         # Formulario (abre WhatsApp, sin backend aún)
+    nosotros/page.tsx         # Quiénes somos: la página de autor que citan los posts (rel="author" + JSON-LD)
   globals.css                 # SISTEMA DE DISEÑO completo (tokens + claymorfismo)
   sitemap.ts / robots.ts / manifest.ts / opengraph-image.tsx   # SEO (raíz)
 components/                   # site-header, site-footer, logo, locale-switcher,
-                              # theme-toggle, contact-form, mdx-content, icons
+                              # theme-toggle, contact-form, mdx-content, icons,
+                              # json-ld (<script> por objeto), post-author (caja de autor del post)
 lib/
   i18n.ts                     # locales, Locale, getDictionary, Dictionary (tipo)
   site.ts                     # marca, siteUrl, absoluteUrl, localizedPath
@@ -124,7 +126,7 @@ lib/
   services.ts                 # SERVICE_SLUGS (fuente única) + tipo ServicePage + getServicePage()
   services-content/<locale>.ts # copy largo de las 4 páginas de servicio, por idioma
   analytics.ts                # GA4 (env), trackEvent(), referencia de página en WhatsApp
-  tools.ts                    # TOOL_SLUGS + toolLocales + tarjetas (fuente única de herramientas)
+  tools.ts                    # TOOL_SLUGS + toolLocales + tarjetas con `cta` (fuente única de herramientas)
   tools/                      # lógica pura, solo imports relativos (sin @/): steel, manning, coordinates,
                               # parcel(+-text, -dxf), contours, contour-export, plan-location, dxf, docx, xlsx, zip, number
   tools-content/              # copy de cada herramienta (ToolContent + labels de la calculadora)
@@ -150,6 +152,29 @@ proxy.ts                      # redirección de locale por Accept-Language
   sin imagen. No existen rutas OG por post.
 - **JSON-LD:** Organization + WebSite (layout/landing), Service + FAQPage +
   BreadcrumbList (servicios; + Course en `cursos-mentorias-bim`), BlogPosting (artículos).
+  Los índices también llevan el suyo (oct-2026), con `collectionJsonLd` y
+  `breadcrumbJsonLd` de `lib/seo.ts`: `/blog` = Blog, `/servicios` y
+  `/herramientas` = CollectionPage con ItemList, `/contacto` = ContactPage,
+  `/nosotros` = AboutPage. Se pintan con `components/json-ld.tsx`.
+- **Autor = Zeist (Organization), no una persona** (decisión del usuario,
+  19-oct-2026). `site.linkedin` (`https://www.linkedin.com/company/zeist-latam`)
+  va en `sameAs` de Organization, del autor y del publisher. `authorJsonLd()`
+  apunta a `/<lang>/nosotros`; cada post muestra el autor bajo el título
+  (enlace `rel="author"`) y la caja `PostAuthor` antes de los relacionados.
+  Copy en `blog.author*` de los diccionarios. No inventar personas, cargos ni
+  tamaño del equipo.
+- **Posts = `og:type article`:** `buildMetadata({ article })` añade
+  `publishedTime`, `modifiedTime` (`updated` o la fecha), autor y etiquetas.
+  El resto de páginas sigue como `website`.
+- **Imágenes en posts:** `<Figure src="/blog/<slug>/<archivo>.webp" alt="…"
+  caption="…" width="…" height="…" />` (props de texto, sin llaves; `next/image`).
+  El ancho y alto son los píxeles reales del archivo. Cada `<Figure>` entra
+  también como `ImageObject` en el `image` del BlogPosting. Hoy solo hay
+  capturas de las herramientas de Zeist (curvas, conversor, ubicar planos),
+  hechas con el build local en tema claro. ⚠️ En la captura de ubicar planos
+  el lote va con relleno opaco: el mapa de OSM rotula ahí el nombre de la
+  entidad, que no se nombra. Capturas de Revit/Civil 3D: solo si las pasa el
+  usuario.
 - **Sitemap** (`app/sitemap.ts`): todas las rutas × ambos locales, con `alternates.languages`.
 
 ### Páginas de servicio = landings de venta (oct-2026)
@@ -255,9 +280,15 @@ acero", "calculadora manning tuberías/canales".
   (calculadora → respuesta citable → contenido → CTA → FAQ `<details>` →
   guías; schema WebApplication + BreadcrumbList + FAQPage); contenido en
   `lib/tools-content/`. Herramienta nueva = slug + `toolLocales` + tarjeta en
-  `lib/tools.ts`, carpeta en `app/[lang]/herramientas/<slug>/` y su contenido.
+  `lib/tools.ts` (con `cta`: el texto del enlace, con la búsqueda; p. ej.
+  «Generar curvas de nivel gratis», nunca «Abrir»), carpeta en
+  `app/[lang]/herramientas/<slug>/` y su contenido.
   Cada herramienta enlaza a las demás de su idioma (bloque "Más herramientas
   gratuitas" en `tool-layout.tsx`): antes recibían solo 1-6 enlaces contextuales.
+  La landing también enlaza cada herramienta con su `cta` (banda mint).
+- **Hub `/herramientas` (oct-2026):** solo lo publicado. Se quitaron las
+  propuestas «Pronto» por rubro: nombres sin página son contenido vacío y
+  enlaces a ninguna parte. Si vuelve una herramienta futura, que sea con página.
 - **Números:** formato manual (`lib/tools/number.ts`), no `Intl`: los
   resultados se renderizan en el servidor y un separador distinto entre Node
   y el navegador rompería la hidratación. `es` usa punto decimal (como las
@@ -431,6 +462,8 @@ a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
 
 > **Search Console al 28-sep-2026** (informe de la sesión de Chrome en Descargas): 57 páginas indexadas, 28 clics, 740 impresiones, CTR 3.8 %. Consultas con impresiones: "dynamo automation", "claude civil 3d", "revit civil 3d", "bim audit", "automatizar tareas revit", "civil 3d automation", "automatização tarefas revit". La página con más clics es `crear-plugin-civil-3d-con-claude-code-sin-programar` (es/pt/en). Los `seoTitle` de esas páginas se alinearon a esas consultas en oct-2026; la siguiente pasada debe usar datos por página (impresiones, CTR y posición) para reescribir los títulos con CTR bajo y reforzar las páginas en posición 8-20.
 
+> **Search Console al 19-oct-2026** (estrategia de la sesión de Chrome). Perú es el país que mejor convierte; Brasil suma 601 impresiones con pocos clics y EE. UU., 579 impresiones y 6 clics. El mejor activo es `es/herramientas/generador-curvas-de-nivel` (30 clics, CTR 12.5 %): **no tocar su título**. Ronda 1 aplicada el 19-oct-2026 (`updated` en esa fecha): nuevos `seoTitle`, `description` y respuesta rápida en 6 páginas con impresiones y 0 clics (en `inteligencia-artificial-autocad-civil-3d`, en `revit-lento-modelo-pesado-auditoria`, es `curvas-de-nivel-civil-3d-google-earth`, en `guia-vibe-coding-para-empezar`, en `auditoria-bim-checklist-empresa`, es `coordenadas-utm-trujillo-la-libertad`); títulos de herramientas por búsquedas perdidas («convertir coordenadas UTM a geográficas y viceversa», «convert UTM to lat long», «gerador de curvas de nível grátis», «free contour map generator»); «BIM audit»: la página de servicio toma la intención comercial (`BIM Audit Services…`) y el checklist la informativa, sin canibalizarse; Brasil: «exportar tabela do Revit para o Excel» y «automatizar tarefas repetitivas no Revit»; y `produccion-planos-automatica-civil-3d-revit` sumó el módulo 7, que responde las preguntas largas tipo asistente de IA sobre láminas de Civil 3D (tipos de lámina nativos, qué plugin elegir, plantillas, capacitación, prueba gratuita). Hecho a no contradecir: las láminas de Civil 3D no quedan vinculadas a los marcos de vista; si los marcos cambian, se crean de nuevo. **Medir a los 14 días como mínimo** (desde el 2-nov-2026) antes de tocar de nuevo esos títulos.
+
 > **Conversión y respuestas de IA (sep-2026).** (1) Todo post muestra un CTA de servicio **bajo el título** (`components/post-early-cta.tsx`, copy en `blog.earlyCta` de los diccionarios); el frontmatter opcional `ctaTitle` lo adapta al dolor del post. (2) `seoTitle` (≤52 caracteres) para el `<title>`; `title` largo queda como `<h1>`. (3) Los posts nuevos abren con un `<Callout type="success" title="Respuesta rápida">`: 60-100 palabras que responden la búsqueda principal de forma citable — es lo que extraen Google y los asistentes de IA. (4) `/llms.txt` (`app/llms.txt/route.ts`) se genera del mismo contenido y `robots.ts` permite explícitamente a GPTBot, ClaudeBot, PerplexityBot, Google-Extended.
 
 **Fuente única de clusters: `lib/clusters.ts`.** Al crear un post, añádelo ahí: de ese mapa salen la prioridad 0.9 de los pillars en el sitemap y los "relacionados" del final de cada artículo (`getRelatedPosts`: pillar del cluster → satélites → etiquetas comunes → otros pillars). Antes los relacionados eran "los 2 posts más nuevos", lo que dejaba a los pillars sin enlaces.
@@ -475,6 +508,7 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   15. ~~Captación: ubicar un plano con coordenadas UTM en Google Maps (caso real) + su herramienta~~ (HECHO, oct-2026, C8)
   16. ~~Captación: líneas de muestreo automáticas en Civil 3D (sí se puede y lo hacemos)~~ (HECHO, oct-2026, C2)
   17. ~~Servicios: lista de materiales, vistas de sección, tabla de metrados y membretes en lote~~ (HECHO, oct-2026, C1 y C2)
+  18. ~~Search Console, ronda 1: snippets de 6 páginas, títulos de herramientas, auditoría BIM, Brasil, láminas de Civil 3D, autor y página «Quiénes somos», JSON-LD de índices y capturas~~ (HECHO, 19-oct-2026)
 - **Conversión (HECHA, oct-2026):** medición GA4 + clics de WhatsApp, y las 4
   páginas de servicio convertidas en landings de venta (ver sección 6).
   Política de privacidad: HECHA (oct-2026). Dominio propio `zeist.dev`: HECHO (11-oct-2026).
@@ -482,7 +516,8 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   (oct-2026): conversor de coordenadas, calculadora de área de terreno
   (memoria descriptiva), generador de curvas de nivel, calculadora de acero
   corrugado, calculadora de Manning y coordenadas UTM en Google Maps
-  (ubicar planos). El resto sigue "Pronto".
+  (ubicar planos). El hub ya no muestra las propuestas «Pronto» (19-oct-2026):
+  una herramienta nueva aparece cuando tiene página.
 - **Contacto — WhatsApp (principal) y correo `contacto.zeist@gmail.com`** (publicado
   el 10-oct-2026). Ambos viven en `site` (`lib/site.ts`); enlaces siempre vía
   `whatsappUrl(mensaje)` y `mailtoUrl(asunto)`, nunca hardcodeados. El correo

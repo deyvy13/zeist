@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
 import Link from "next/link";
-import { localizedPath, mailtoUrl, site, whatsappUrl } from "@/lib/site";
-import { buildMetadata } from "@/lib/seo";
+import { absoluteUrl, localizedPath, mailtoUrl, site, whatsappUrl } from "@/lib/site";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
 import { ContactForm } from "@/components/contact-form";
 
 const copy: Record<
@@ -101,6 +102,32 @@ export default async function ContactPage({
 
   return (
     <section className="container-zeist py-16">
+      <JsonLd
+        data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: c.title,
+            description: c.metaDescription,
+            url: absoluteUrl(`${lang}/contacto`),
+            inLanguage: lang,
+            mainEntity: {
+              "@type": "Organization",
+              name: site.name,
+              url: absoluteUrl(""),
+              sameAs: [site.linkedin],
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "sales",
+                telephone: `+${site.whatsapp.number}`,
+                ...(site.showEmail ? { email: site.email } : {}),
+                availableLanguage: ["es", "pt", "en"],
+              },
+            },
+          },
+          breadcrumbJsonLd(lang, [[dict.nav.contact, "contacto"]]),
+        ]}
+      />
       <div className="mx-auto max-w-2xl">
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl">{c.title}</h1>

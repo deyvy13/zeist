@@ -3,12 +3,23 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
 import { localizedPath, absoluteUrl, site } from "@/lib/site";
-import { buildMetadata } from "@/lib/seo";
+import { authorJsonLd, buildMetadata } from "@/lib/seo";
 import { getPost, getPostSlugs, getRelatedPosts } from "@/lib/blog";
 import { MdxContent } from "@/components/mdx-content";
 import { ReadingProgress } from "@/components/visual/reading-progress";
 import { ShareLinkedIn } from "@/components/visual/share-linkedin";
 import { PostEarlyCta } from "@/components/post-early-cta";
+import { PostAuthor } from "@/components/post-author";
+
+/** The <Figure> images of a post, for the BlogPosting `image` list. */
+function postFigures(content: string): { src: string; alt: string; width?: number; height?: number }[] {
+  return [...content.matchAll(/<Figure\b([^>]*)\/>/g)].flatMap((m) => {
+    const attr = (name: string) => new RegExp(`\\b${name}="([^"]*)"`).exec(m[1])?.[1];
+    const src = attr("src");
+    if (!src) return [];
+    return [{ src, alt: attr("alt") ?? "", width: Number(attr("width")) || undefined, height: Number(attr("height")) || undefined }];
+  });
+}
 
 export function generateStaticParams() {
   return locales.flatMap((lang) =>
@@ -42,6 +53,11 @@ export async function generateMetadata({
     keywords: post.meta.tags,
     ogImage: post.meta.cover,
     availableLocales,
+    article: {
+      publishedTime: post.meta.date,
+      modifiedTime: post.meta.updated ?? post.meta.date,
+      tags: post.meta.tags,
+    },
   });
 }
 
@@ -69,6 +85,17 @@ export default async function BlogPostPage({
   const canonical = absoluteUrl(`${lang}/blog/${slug}`);
   // There is no per-post OG route; the site-wide image is the fallback.
   const ogImage = meta.cover ?? absoluteUrl("opengraph-image");
+  // Screenshots and diagrams placed with <Figure> are listed too, with their alt
+  // text as caption: real images of the content, not only the brand card.
+  const images = [
+    ogImage,
+    ...postFigures(post.content).map((f) => ({
+      "@type": "ImageObject",
+      url: absoluteUrl(f.src),
+      caption: f.alt,
+      ...(f.width && f.height ? { width: f.width, height: f.height } : {}),
+    })),
+  ];
 
   const postJsonLd = {
     "@context": "https://schema.org",
@@ -77,17 +104,15 @@ export default async function BlogPostPage({
     description: meta.description,
     datePublished: meta.date,
     dateModified: meta.updated ?? meta.date,
-    author: {
-      "@type": "Organization",
-      name: meta.author,
-      url: absoluteUrl(lang),
-    },
+    author: authorJsonLd(lang),
     publisher: {
       "@type": "Organization",
       name: site.name,
       url: absoluteUrl(lang),
+      logo: { "@type": "ImageObject", url: absoluteUrl("icon-512.png") },
+      sameAs: [site.linkedin],
     },
-    image: ogImage,
+    image: images.length === 1 ? ogImage : images,
     inLanguage: lang,
     mainEntityOfPage: canonical,
     url: canonical,
@@ -160,7 +185,9 @@ export default async function BlogPostPage({
             {meta.description}
           </p>
           <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-[color:var(--color-muted)]">
-            <span>{meta.author}</span>
+            <Link href={localizedPath(lang, "nosotros")} rel="author" className="font-medium hover:text-[color:var(--color-mint-700)]">
+              {meta.author}
+            </Link>
             <span>·</span>
             <time dateTime={meta.date}>
               {dateFmt.format(new Date(meta.date))}
@@ -191,6 +218,7 @@ export default async function BlogPostPage({
       </div>
 
       <div className="mx-auto max-w-3xl">
+        <PostAuthor lang={lang} dict={dict} />
 
         {related.length > 0 && (
           <section className="mt-16">

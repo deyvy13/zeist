@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
 import { localizedPath } from "@/lib/site";
-import { buildMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata, collectionJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
 import { serviceIcons, IconArrow } from "@/components/icons";
 import { MagneticCard } from "@/components/visual/magnetic-card";
 
@@ -34,6 +35,18 @@ export default async function ServicesPage({
 
   return (
     <section className="section container-zeist">
+      <JsonLd
+        data={[
+          collectionJsonLd(
+            lang,
+            "servicios",
+            dict.services.seoTitle,
+            dict.services.metaDescription,
+            dict.services.items.map((s) => ({ name: s.title, path: `servicios/${s.slug}`, type: "Service", description: s.body })),
+          ),
+          breadcrumbJsonLd(lang, [[dict.nav.services, "servicios"]]),
+        ]}
+      />
       <div className="max-w-2xl">
         <span className="eyebrow">{dict.services.eyebrow}</span>
         <h1 className="mt-5 text-4xl md:text-5xl lg:text-6xl">{dict.services.title}</h1>

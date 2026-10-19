@@ -1,9 +1,10 @@
 ---
 title: "Coordenadas UTM en Trujillo y La Libertad: zona 17 o 18 Sur, WGS84 y planos antiguos en PSAD56"
-seoTitle: "Coordenadas UTM Trujillo: zona 17S, WGS84 y PSAD56"
+seoTitle: "Coordenadas de Trujillo: UTM zona 17 Sur y WGS84"
 ctaTitle: "¿Tu equipo convierte y revisa coordenadas a mano en cada proyecto? Lo automatizamos en Civil 3D."
-description: "Coordenadas UTM en Trujillo y La Libertad: qué zona usar, cómo pasar planos de PSAD56 a WGS84 y qué datum piden SUNARP y las municipalidades."
+description: "Coordenadas de Trujillo en UTM y geográficas: zona 17 Sur, la Plaza de Armas en WGS84 y cómo pasar planos de PSAD56 a WGS84 en La Libertad."
 date: "2026-10-02T15:00:00.000Z"
+updated: "2026-10-19T15:00:00.000Z"
 author: "Zeist"
 tags:
   - Trujillo
@@ -21,7 +22,7 @@ tags:
 />
 
 <Callout type="success" title="Respuesta rápida">
-Trujillo está en la **zona UTM 17 Sur**, con el datum oficial **WGS84**. La Plaza de Armas queda alrededor de E 717207 m y N 9102837 m. Casi toda La Libertad usa la zona 17. Las provincias del este —Pataz, Bolívar y parte de Sánchez Carrión— caen en la zona 18. Muchos planos antiguos están en PSAD56, un datum que el IGN dejó sin efecto. En Trujillo, el mismo punto cambia unos 447 m entre PSAD56 y WGS84: hay que convertirlo antes de usarlo. Los planos para SUNARP van en WGS84 UTM.
+Trujillo está en la **zona UTM 17 Sur**, con el datum oficial **WGS84**. La Plaza de Armas queda cerca de E 717207 m y N 9102837 m, que en geográficas son unos 8.1116° S y 79.0288° O. Casi toda La Libertad usa la zona 17; Pataz, Bolívar y el este de Sánchez Carrión caen en la zona 18. Muchos planos antiguos están en PSAD56, un datum que el IGN dejó sin efecto: en Trujillo, el mismo punto se mueve unos 447 m al pasarlo a WGS84. Los planos para SUNARP van en WGS84 UTM.
 </Callout>
 
 <Callout type="info" title="Glosario: los términos que vas a leer, en simple">
@@ -151,6 +152,8 @@ Para un lote urbano la diferencia es menor que la tolerancia de la medición. Im
 2. Pega los puntos desde Excel: reconoce columnas separadas por tabulación, punto y coma o comas, y la coma decimal.
 3. Revisa los puntos en el mapa. Si caen en el mar o en otra ciudad, el datum o la zona de origen están mal.
 4. Descarga el resultado en PNEZD para Civil 3D, en Excel o en KML para Google Earth.
+
+<Figure src="/blog/coordenadas-utm-trujillo-la-libertad/conversor-psad56-wgs84-trujillo.webp" alt="Conversor de coordenadas de Zeist: cinco puntos de Trujillo pasados de PSAD56 a WGS84 en la zona 17 Sur, ubicados en el mapa alrededor de la Plaza de Armas" caption="El ejemplo del conversor: cinco puntos de Trujillo pasados de PSAD56 a WGS84, con su factor de escala, y su ubicación alrededor de la Plaza de Armas." width="1986" height="1782" />
 
 **En Civil 3D**, configura el dibujo con el sistema de coordenadas **UTM84-17S** (WGS84, zona 17 Sur) antes de importar los puntos. Así los mapas de fondo y los datos externos caen en su lugar.
 

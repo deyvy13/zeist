@@ -433,7 +433,8 @@ export function ToolLayout({
                   className="surface surface-hover group flex flex-col rounded-2xl p-5"
                 >
                   <h3 className="text-base transition-colors group-hover:text-[color:var(--color-mint-700)]">{card.title}</h3>
-                  <p className="mt-2 text-sm text-[color:var(--color-muted)]">{card.body}</p>
+                  <p className="mt-2 flex-1 text-sm text-[color:var(--color-muted)]">{card.body}</p>
+                  <span className="mt-4 text-sm font-semibold text-[color:var(--color-mint-700)]">{card.cta} →</span>
                 </Link>
               ))}
             </div>

@@ -3682,7 +3682,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
   "produccion-planos-automatica-civil-3d-revit": {
     es: {
       roadmap: {
-        title: "Del modelo al juego de planos, en 6 bloques",
+        title: "Del modelo al juego de planos, en 7 bloques",
         intro:
           "Qué automatizan Civil 3D y Revit de forma nativa, dónde se quedan cortos y cómo un plugin genera, rotula y exporta el juego completo.",
         steps: [
@@ -3692,6 +3692,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           { n: 4, title: "Cómo funciona el plugin", desc: "De una lista de láminas al juego exportado", tag: "Solución" },
           { n: 5, title: "Qué gana la empresa", desc: "Plazo, consistencia y capacidad de cambiar tarde", tag: "Retorno" },
           { n: 6, title: "Implementarlo", desc: "Plantillas, lista estándar, piloto y uso real", tag: "Plan" },
+          { n: 7, title: "Antes de elegir un plugin", desc: "Tipos de lámina, cambios, plantillas y prueba", tag: "Decisión" },
         ],
       },
       faqs: {
@@ -3721,12 +3722,20 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
             q: "¿Cuánto tiempo ahorra automatizar la producción de planos?",
             a: "Armar 40 láminas de planta y perfil a mano suele tomar dos o tres días; con un plugin, minutos. El ahorro mayor aparece en cada cambio de diseño, porque el juego completo se regenera sin repetir el trabajo manual.",
           },
+          {
+            q: "¿Qué plugin elegir para automatizar láminas de planta y perfil en Civil 3D?",
+            a: "Primero conviene usar las herramientas nativas de producción de planos con una buena plantilla. Si lo que consume horas es el estándar de la oficina —cajetín, progresivas por lámina, códigos de la entidad, revisiones y exportación—, un producto genérico no lo aplica; un plugin a medida, sí. Zeist lo desarrolla con un diagnóstico gratuito de una semana.",
+          },
+          {
+            q: "¿Un plugin de láminas funciona con nuestras plantillas actuales de Civil 3D?",
+            a: "Sí. Civil 3D necesita una plantilla con una ventana gráfica para cada escala, y adaptamos el plugin a las plantillas y cajetines que tu oficina ya usa. Las pruebas se hacen sobre tus propios proyectos.",
+          },
         ],
       },
     },
     pt: {
       roadmap: {
-        title: "Do modelo ao conjunto de pranchas, em 6 blocos",
+        title: "Do modelo ao conjunto de pranchas, em 7 blocos",
         intro:
           "O que o Civil 3D e o Revit automatizam nativamente, onde ficam curtos e como um plugin gera, rotula e exporta o conjunto completo.",
         steps: [
@@ -3736,6 +3745,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           { n: 4, title: "Como funciona o plugin", desc: "De uma lista de pranchas ao conjunto exportado", tag: "Solução" },
           { n: 5, title: "O que a empresa ganha", desc: "Prazo, consistência e capacidade de mudar tarde", tag: "Retorno" },
           { n: 6, title: "Implantar", desc: "Modelos, lista padrão, piloto e uso real", tag: "Plano" },
+          { n: 7, title: "Antes de escolher um plugin", desc: "Tipos de prancha, mudanças, modelos e teste", tag: "Decisão" },
         ],
       },
       faqs: {
@@ -3765,12 +3775,20 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
             q: "Quanto tempo economiza automatizar a produção de pranchas?",
             a: "Montar 40 pranchas de planta e perfil à mão costuma levar dois ou três dias; com um plugin, minutos. A maior economia aparece a cada mudança de projeto, porque o conjunto completo é regenerado sem repetir o trabalho manual.",
           },
+          {
+            q: "Qual plugin escolher para automatizar pranchas de planta e perfil no Civil 3D?",
+            a: "Primeiro vale usar as ferramentas nativas de produção de pranchas com um bom modelo. Se o que consome horas é o padrão do escritório —carimbo, estacas por prancha, códigos do cliente, revisões e exportação—, um produto genérico não o aplica; um plugin sob medida, sim. A Zeist o desenvolve com um diagnóstico gratuito de uma semana.",
+          },
+          {
+            q: "Um plugin de pranchas funciona com os nossos modelos atuais do Civil 3D?",
+            a: "Sim. O Civil 3D precisa de um modelo com uma janela de visualização para cada escala, e adaptamos o plugin aos modelos e carimbos que o seu escritório já usa. Os testes são feitos nos seus próprios projetos.",
+          },
         ],
       },
     },
     en: {
       roadmap: {
-        title: "From model to drawing set, in 6 blocks",
+        title: "From model to drawing set, in 7 blocks",
         intro:
           "What Civil 3D and Revit automate natively, where they fall short, and how a plugin builds, labels and exports the full set.",
         steps: [
@@ -3780,6 +3798,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           { n: 4, title: "How the plugin works", desc: "From a sheet list to the exported set", tag: "Solution" },
           { n: 5, title: "What the firm gains", desc: "Schedule, consistency and room to change late", tag: "Return" },
           { n: 6, title: "Roll it out", desc: "Templates, standard list, pilot and real use", tag: "Plan" },
+          { n: 7, title: "Before choosing a plugin", desc: "Sheet types, changes, templates and trials", tag: "Decision" },
         ],
       },
       faqs: {
@@ -3808,6 +3827,14 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           {
             q: "How much time does automating plan production save?",
             a: "Building 40 plan and profile sheets by hand usually takes two or three days; with a plugin, minutes. The biggest savings come with every design change, because the full set regenerates without repeating the manual work.",
+          },
+          {
+            q: "Which Civil 3D plugin should I choose to automate plan and profile sheets?",
+            a: "Start with Civil 3D's native plan production tools and a good template. If what eats the hours is your firm's standard (title blocks, station ranges per sheet, agency codes, revisions and exports), a generic product won't apply it; a custom plugin will. Zeist builds one, starting with a free one-week diagnosis.",
+          },
+          {
+            q: "Will a sheet plugin work with our existing Civil 3D templates?",
+            a: "Yes. Civil 3D needs a template with a viewport for each scale, and we adapt the plugin to the templates and title blocks your firm already uses. Testing is done on your own projects.",
           },
         ],
       },

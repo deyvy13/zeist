@@ -32,6 +32,8 @@ type BuildMetadataArgs = {
    * emitting an hreflang to a `pt` URL that 404s is an SEO error.
    */
   availableLocales?: readonly Locale[];
+  /** Blog posts: emits og:type=article with its dates, author page and tags. */
+  article?: { publishedTime: string; modifiedTime?: string; tags?: string[] };
 };
 
 function localePath(locale: Locale, path = ""): string {
@@ -48,6 +50,7 @@ export function buildMetadata({
   noindex,
   keywords,
   availableLocales = locales,
+  article,
 }: BuildMetadataArgs): Metadata {
   const canonical = absoluteUrl(localePath(locale, path).slice(1));
 
@@ -95,7 +98,15 @@ export function buildMetadata({
           "max-video-preview": -1,
         },
     openGraph: {
-      type: "website",
+      ...(article
+        ? {
+            type: "article" as const,
+            publishedTime: article.publishedTime,
+            modifiedTime: article.modifiedTime ?? article.publishedTime,
+            authors: [absoluteUrl(localePath(locale, "nosotros").slice(1))],
+            tags: article.tags,
+          }
+        : { type: "website" as const }),
       siteName: site.name,
       title,
       description,
@@ -139,7 +150,7 @@ export function organizationJsonLd(locale: Locale) {
       },
     ],
     description: site.description[locale],
-    sameAs: [] as string[],
+    sameAs: [site.linkedin],
     slogan: site.slogan[locale],
     // Local signal: the team is based in Trujillo (La Libertad, Peru) and works
     // remotely across LATAM and, since the English site launched, globally.
@@ -161,6 +172,77 @@ export function organizationJsonLd(locale: Locale) {
       "Desarrollo de add-ins en C#",
       "Plan BIM Perú",
     ],
+  };
+}
+
+/**
+ * Zeist as the author of the guides: an Organization tied to its about page and
+ * its LinkedIn profile, so the byline points at something verifiable.
+ */
+export function authorJsonLd(locale: Locale) {
+  return {
+    "@type": "Organization",
+    name: site.name,
+    url: absoluteUrl(localePath(locale, "nosotros").slice(1)),
+    sameAs: [site.linkedin],
+    description: site.description[locale],
+  };
+}
+
+/** BreadcrumbList from [name, path-without-locale] pairs; the home is added first. */
+export function breadcrumbJsonLd(locale: Locale, items: [string, string][]) {
+  const all: [string, string][] = [[site.name, ""], ...items];
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: all.map(([name, path], i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name,
+      item: absoluteUrl(localePath(locale, path).slice(1)),
+    })),
+  };
+}
+
+/** A listing page (blog, services, tools) with the items it links to. */
+export function collectionJsonLd(
+  locale: Locale,
+  path: string,
+  name: string,
+  description: string,
+  items: { name: string; path: string; type?: string; description?: string }[],
+  pageType = "CollectionPage",
+) {
+  const url = absoluteUrl(localePath(locale, path).slice(1));
+  return {
+    "@context": "https://schema.org",
+    "@type": pageType,
+    name,
+    description,
+    url,
+    inLanguage: hreflangByLocale[locale],
+    isPartOf: { "@type": "WebSite", name: site.name, url: `${siteUrl}/` },
+    publisher: { "@type": "Organization", name: site.name, url: `${siteUrl}/`, sameAs: [site.linkedin] },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: items.length,
+      itemListElement: items.map((it, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: absoluteUrl(localePath(locale, it.path).slice(1)),
+        name: it.name,
+        ...(it.type
+          ? {
+              item: {
+                "@type": it.type,
+                name: it.name,
+                url: absoluteUrl(localePath(locale, it.path).slice(1)),
+                ...(it.description ? { description: it.description } : {}),
+              },
+            }
+          : {}),
+      })),
+    },
   };
 }
 

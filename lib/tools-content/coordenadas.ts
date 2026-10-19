@@ -14,7 +14,7 @@ const SLUG = "conversor-de-coordenadas";
 const content: Record<Locale, ToolContent> = {
   // ---------------------------------------------------------------------------
   es: {
-    seoTitle: "Conversor de coordenadas UTM a geográficas",
+    seoTitle: "Convertir coordenadas UTM a geográficas y viceversa",
     metaDescription:
       "Convierte coordenadas UTM a geográficas y PSAD56 a WGS84, de un punto o cientos desde Excel. Exporta a Civil 3D, Excel y Google Earth, con mapa. Gratis.",
     keywords: [
@@ -28,7 +28,7 @@ const content: Record<Locale, ToolContent> = {
     ],
     name: "Conversor de coordenadas",
     eyebrow: "Herramienta gratuita · Topografía y Civil 3D",
-    h1: "Conversor de coordenadas UTM a geográficas, por lotes y listo para Civil 3D",
+    h1: "Convertir coordenadas UTM a geográficas y viceversa: por lotes, con mapa y listo para Civil 3D",
     intro:
       "Convierte coordenadas UTM y geográficas, y de PSAD56 a WGS84, para un punto o para cientos pegados desde Excel. Comprueba los puntos en el mapa y descárgalos listos para importar en Civil 3D, Excel o Google Earth.",
     badges: ["Gratis y sin registro", "Lotes desde Excel", "Exporta a Civil 3D (PNEZD)", "PSAD56 → WGS84"],
@@ -388,9 +388,9 @@ const content: Record<Locale, ToolContent> = {
 
   // ---------------------------------------------------------------------------
   en: {
-    seoTitle: "UTM to Lat Long Converter (Batch, Civil 3D Export)",
+    seoTitle: "Convert UTM to Lat Long and Back, Free and in Batch",
     metaDescription:
-      "Convert UTM to latitude/longitude and back, one point or hundreds pasted from Excel. Check them on a map and export to Civil 3D, Excel and Google Earth.",
+      "Convert UTM northing and easting to latitude and longitude and back, one point or hundreds from Excel. Check them on a map, export to Civil 3D or Google Earth.",
     keywords: [
       "utm to lat long converter",
       "lat long to utm",
@@ -402,7 +402,7 @@ const content: Record<Locale, ToolContent> = {
     ],
     name: "UTM to lat long converter",
     eyebrow: "Free tool · Surveying and Civil 3D",
-    h1: "UTM to lat long converter: batch conversion with Civil 3D export",
+    h1: "Convert UTM to lat long and back: batch conversion with Civil 3D export",
     intro:
       "Convert between UTM and latitude/longitude, for one point or hundreds pasted from Excel. Check the points on a map and download them ready to import into Civil 3D, Excel or Google Earth.",
     badges: ["Free, no sign-up", "Batch from Excel", "Civil 3D export (PNEZD)", "Scale factor per point"],

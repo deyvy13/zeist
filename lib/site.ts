@@ -24,6 +24,9 @@ export const site = {
     display: "+51 994 764 550",
   },
   twitter: "@zeist", // update when the handle exists
+  // Public profiles: the footer and the about page link them, and the JSON-LD
+  // declares them as `sameAs` so search engines tie the brand to its profiles.
+  linkedin: "https://www.linkedin.com/company/zeist-latam",
   themeColor: "#00FFCE",
   // Localized one-liners used for <title> templates and OG defaults.
   // Keyword-led: "add-in" + "Civil 3D" + "Revit" are the target search terms.

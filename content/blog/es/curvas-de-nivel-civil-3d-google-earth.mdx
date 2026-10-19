@@ -1,9 +1,10 @@
 ---
 title: "Curvas de nivel en Civil 3D: de Google Earth y los modelos satelitales a tu levantamiento, paso a paso"
-seoTitle: "Curvas de nivel en Civil 3D y Google Earth: guía"
+seoTitle: "Curvas de nivel gratis con Google Earth y Civil 3D"
 ctaTitle: "¿Tu equipo arma superficies y curvas a mano en cada proyecto? Lo automatizamos en Civil 3D."
-description: "Cómo obtener curvas de nivel en Civil 3D: por qué Google Earth no exporta el terreno, qué modelo de elevación usar y cómo crear la superficie paso a paso."
+description: "Cómo sacar curvas de nivel gratis de la zona que ves en Google Earth: el modelo SRTM, un generador online y cómo llevarlas a Civil 3D, paso a paso."
 date: "2026-10-02T13:00:00.000Z"
+updated: "2026-10-19T15:00:00.000Z"
 author: "Zeist"
 tags:
   - Curvas de nivel
@@ -21,7 +22,7 @@ tags:
 />
 
 <Callout type="success" title="Respuesta rápida">
-Civil 3D genera las curvas de nivel a partir de una **superficie**. Para crearla sin levantamiento, Google Earth no sirve directamente: no exporta el terreno y Civil 3D ya no lo importa. Se usa un **modelo de elevación abierto**, como el SRTM, con una malla de unos 30 m. Se añade a la superficie como archivo DEM o se importa como malla de puntos, por ejemplo desde nuestro [generador de curvas de nivel](/es/herramientas/generador-curvas-de-nivel). Con levantamiento, la superficie se crea desde los puntos y las líneas de quiebre. En ambos casos, el intervalo y las etiquetas se definen en el estilo de la superficie.
+Google Earth muestra el relieve, pero **no exporta el terreno**. Para sacar curvas de nivel gratis de esa misma zona se usa un **modelo de elevación abierto**, como el SRTM, con una malla de unos 30 m: nuestro [generador de curvas de nivel](/es/herramientas/generador-curvas-de-nivel) lo descarga y entrega las curvas en DXF y los puntos para Civil 3D. En Civil 3D, la **superficie** se crea desde esos puntos o desde el archivo DEM, y el intervalo y las etiquetas se definen en su estilo. Sirve para anteproyecto; para diseño, hace falta levantamiento.
 </Callout>
 
 <Callout type="info" title="Glosario: los términos que vas a leer, en simple">
@@ -68,6 +69,8 @@ Civil 3D tuvo hace años un comando para importar la superficie de Google Earth,
 <Callout type="success" title="La ruta más corta">
 Si solo necesitas curvas para un anteproyecto, usa nuestro [generador de curvas de nivel](/es/herramientas/generador-curvas-de-nivel): eliges la zona en el mapa y descargas las curvas en DXF o una malla de puntos PNEZD para Civil 3D, en coordenadas UTM y con su cota. Sin instalar nada.
 </Callout>
+
+<Figure src="/blog/curvas-de-nivel-civil-3d-google-earth/generador-curvas-de-nivel-es.webp" alt="Generador de curvas de nivel de Zeist: curvas cada 20 m del cerro Blanco, junto a las Huacas de Moche, en Trujillo, con cotas de 22 a 364 m" caption="El generador con su ejemplo: curvas cada 20 m del cerro Blanco, en Trujillo, listas para descargar en DXF o como puntos para Civil 3D." width="1986" height="1578" />
 
 **Sobre la precisión.** El SRTM tiene una precisión vertical especificada de ±16 m. Sirve para planificar —anteproyectos, factibilidad, trazos preliminares, tesis—, pero no para el diseño definitivo ni para metrar movimiento de tierras. Para eso hace falta levantamiento.
 

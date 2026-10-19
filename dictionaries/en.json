@@ -163,7 +163,13 @@
       "note": "No-commitment diagnosis · Same-day reply · Engineering offices across the Americas and beyond"
     },
     "related": "Keep reading on this topic",
-    "updatedOn": "Updated on"
+    "updatedOn": "Updated on",
+    "seoTitle": "BIM Automation Blog: Civil 3D, Revit and Dynamo",
+    "metaDescription": "Practical guides to Civil 3D, Revit, Dynamo and C#: sections, quantity takeoff, sheets, coordinates and plugins, written by civil and software engineers.",
+    "authorTitle": "About the author",
+    "authorBio": "Zeist is a team of civil engineers and software engineers based in Trujillo, Peru. We build C# plugins for Civil 3D and Revit, Dynamo scripts and training for BIM teams, and we publish what we learn on every project.",
+    "authorMore": "About Zeist",
+    "authorLinkedin": "Follow Zeist on LinkedIn"
   },
   "tools": {
     "eyebrow": "Tools",
@@ -191,7 +197,9 @@
       "contact": "Contact",
       "blog": "Blog",
       "tools": "Tools",
-      "privacy": "Privacy"
+      "privacy": "Privacy",
+      "about": "About Zeist",
+      "linkedin": "LinkedIn"
     },
     "languages": "Zeist in other languages"
   },

@@ -180,7 +180,7 @@ const content: Record<Locale, ToolContent> = {
 
   // ---------------------------------------------------------------------------
   pt: {
-    seoTitle: "Gerador de curvas de nível online (DXF e Civil 3D)",
+    seoTitle: "Gerador de curvas de nível grátis online (DXF)",
     metaDescription:
       "Gere curvas de nível grátis de qualquer área: escolha a região no mapa e baixe as curvas em DXF para AutoCAD e Civil 3D, ou pontos para criar a superfície.",
     keywords: [
@@ -194,7 +194,7 @@ const content: Record<Locale, ToolContent> = {
     ],
     name: "Gerador de curvas de nível",
     eyebrow: "Ferramenta gratuita · Topografia preliminar",
-    h1: "Gerador de curvas de nível online: de uma área do mapa ao AutoCAD e ao Civil 3D",
+    h1: "Gerador de curvas de nível grátis online: de uma área do mapa ao AutoCAD e ao Civil 3D",
     intro:
       "Escolha uma região no mapa e obtenha as curvas de nível em segundos. Baixe em DXF, em coordenadas UTM e com a cota, ou baixe uma malha de pontos para criar a superfície no Civil 3D. Grátis, sem instalar nada e sem Global Mapper.",
     badges: ["Grátis e sem cadastro", "DXF com cotas", "Pontos para o Civil 3D", "Para estudos preliminares"],
@@ -348,7 +348,7 @@ const content: Record<Locale, ToolContent> = {
 
   // ---------------------------------------------------------------------------
   en: {
-    seoTitle: "Contour Map Generator: DXF for AutoCAD and Civil 3D",
+    seoTitle: "Free Contour Map Generator Online (DXF, Civil 3D)",
     metaDescription:
       "Generate contour lines for any area: pick it on the map and download contours as DXF for AutoCAD and Civil 3D, or points to build the surface. Free.",
     keywords: [
@@ -362,7 +362,7 @@ const content: Record<Locale, ToolContent> = {
     ],
     name: "Contour map generator",
     eyebrow: "Free tool · Preliminary topography",
-    h1: "Contour map generator: from an area on the map to AutoCAD and Civil 3D",
+    h1: "Free contour map generator online: from an area on the map to AutoCAD and Civil 3D",
     intro:
       "Pick an area on the map and get its contour lines in seconds. Download them as DXF, in UTM coordinates with their elevations, or download a grid of points to build the surface in Civil 3D. Free, nothing to install, no Global Mapper.",
     badges: ["Free, no sign-up", "DXF with elevations", "Points for Civil 3D", "For preliminary studies"],

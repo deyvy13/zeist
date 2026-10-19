@@ -3,8 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
 import { localizedPath } from "@/lib/site";
-import { buildMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata, collectionJsonLd } from "@/lib/seo";
 import { getAllPosts } from "@/lib/blog";
+import { JsonLd } from "@/components/json-ld";
 
 export async function generateMetadata({
   params,
@@ -17,8 +18,8 @@ export async function generateMetadata({
   return buildMetadata({
     locale,
     path: "blog",
-    title: dict.blog.title,
-    description: dict.blog.subtitle,
+    title: dict.blog.seoTitle,
+    description: dict.blog.metaDescription,
   });
 }
 
@@ -40,6 +41,19 @@ export default async function BlogIndexPage({
 
   return (
     <section className="section container-zeist">
+      <JsonLd
+        data={[
+          collectionJsonLd(
+            lang,
+            "blog",
+            dict.blog.seoTitle,
+            dict.blog.metaDescription,
+            posts.map((p) => ({ name: p.title, path: `blog/${p.slug}`, type: "BlogPosting", description: p.description })),
+            "Blog",
+          ),
+          breadcrumbJsonLd(lang, [[dict.nav.blog, "blog"]]),
+        ]}
+      />
       <div className="max-w-2xl">
         <span className="eyebrow">{dict.blog.eyebrow}</span>
         <h1 className="mt-5 text-4xl md:text-5xl lg:text-6xl">{dict.blog.title}</h1>

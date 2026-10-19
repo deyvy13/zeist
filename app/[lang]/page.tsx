@@ -5,6 +5,7 @@ import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
 import { localizedPath, whatsappUrl } from "@/lib/site";
 import { buildMetadata, websiteJsonLd } from "@/lib/seo";
 import { getAllPosts } from "@/lib/blog";
+import { toolsFor } from "@/lib/tools";
 import { serviceIcons, IconArrow } from "@/components/icons";
 import { AuroraText } from "@/components/visual/aurora-text";
 import { HeroParallax } from "@/components/visual/hero-parallax";
@@ -340,6 +341,20 @@ export default async function HomePage({
               <p className="mt-4 max-w-xl text-[color:var(--color-ink-800)]">
                 {dict.tools.subtitle}
               </p>
+              {/* Each tool by what it does: descriptive links from the home page. */}
+              <ul className="mt-6 grid gap-x-6 gap-y-2 sm:grid-cols-2">
+                {toolsFor(lang).map(({ slug, card }) => (
+                  <li key={slug}>
+                    <Link
+                      href={localizedPath(lang, `herramientas/${slug}`)}
+                      className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--color-ink-950)] underline-offset-4 hover:underline"
+                    >
+                      <IconArrow className="h-3.5 w-3.5 shrink-0" />
+                      {card.cta}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div className="lg:justify-self-end">
               <Link

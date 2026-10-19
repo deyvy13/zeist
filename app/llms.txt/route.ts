@@ -65,6 +65,7 @@ Key facts:
 - Clients own the source code of the tools built for them.
 - Local presence: based in Trujillo (La Libertad, Peru), with on-site visits in La Libertad and remote work across Peru and Latin America. Spanish guides cover plugin development for Revit and Civil 3D in Trujillo and how to choose a BIM automation provider in Peru.
 - Contact: WhatsApp +${site.whatsapp.number}${site.showEmail ? ` · Email ${site.email}` : ""} — ${absoluteUrl("es/contacto")}
+- About and author of the guides: ${absoluteUrl("en/nosotros")} (es: ${absoluteUrl("es/nosotros")}) · LinkedIn: ${site.linkedin}
 
 ## Services (English)
 
