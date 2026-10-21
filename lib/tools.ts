@@ -31,6 +31,20 @@ export const toolLocales: Record<ToolSlug, readonly Locale[]> = {
   "calculadora-manning": ["es", "pt", "en"],
 };
 
+/**
+ * Last real change of each tool page (calculator or its copy), ISO date. The
+ * sitemap's lastmod: bump it when the tool or its text changes, never on a
+ * plain redeploy (Google stops trusting a lastmod that always moves).
+ */
+export const toolUpdated: Record<ToolSlug, string> = {
+  "coordenadas-utm-en-google-maps": "2026-10-16",
+  "conversor-de-coordenadas": "2026-10-19",
+  "calculadora-area-terreno": "2026-10-16",
+  "generador-curvas-de-nivel": "2026-10-19",
+  "calculadora-acero-corrugado": "2026-10-01",
+  "calculadora-manning": "2026-10-02",
+};
+
 /** `cta` is the link text on cards: what the tool does, in the words people search for. */
 export type ToolCard = { title: string; body: string; tags: string[]; cta: string };
 

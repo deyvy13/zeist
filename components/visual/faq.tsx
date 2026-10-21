@@ -1,67 +1,38 @@
-"use client";
-
-import { motion, AnimatePresence } from "motion/react";
-import { useState } from "react";
-import type { ReactNode } from "react";
-
-// Interactive FAQ list. Emits FAQPage JSON-LD on the server via a separate
-// helper (in mdx-content) so the schema stays SEO-friendly even without JS.
+// FAQ list for posts. Native <details>: every answer ships in the HTML, open or
+// closed, so Google and AI crawlers (which don't run JS or click) read the same
+// answers the FAQPage JSON-LD declares. The animated version mounted only the
+// open answer, which left 7 of 8 answers out of the page.
 
 export type FaqItem = { q: string; a: string };
 
 export function Faq({ items = [], title }: { items?: FaqItem[]; title?: string }) {
-  const [open, setOpen] = useState<number | null>(0);
   return (
     <section className="mt-12">
       {title && (
         <h2 className="!mt-0 text-2xl md:text-3xl">{title}</h2>
       )}
       <div className="mt-6 divide-y divide-[color:var(--color-hairline)] rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)]/60">
-        {items.map((item, i) => {
-          const isOpen = open === i;
-          return (
-            <div key={item.q} className="px-6 py-4">
-              <button
-                type="button"
-                aria-expanded={isOpen}
-                onClick={() => setOpen(isOpen ? null : i)}
-                className="flex w-full items-center justify-between gap-4 text-left"
+        {items.map((item, i) => (
+          <details key={item.q} open={i === 0} className="group px-6 py-4">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left [&::-webkit-details-marker]:hidden">
+              <h3 className="!mt-0 text-base font-semibold leading-snug">{item.q}</h3>
+              <span
+                aria-hidden
+                className="text-xl leading-none text-[color:var(--color-mint-700)] transition-transform duration-200 group-open:rotate-45"
               >
-                <span className="font-semibold">{item.q}</span>
-                <motion.span
-                  animate={{ rotate: isOpen ? 45 : 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="text-xl leading-none text-[color:var(--color-mint-700)]"
-                  aria-hidden
-                >
-                  +
-                </motion.span>
-              </button>
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="overflow-hidden"
-                  >
-                    <p className="pt-3 text-[color:var(--color-muted)]">
-                      {item.a}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          );
-        })}
+                +
+              </span>
+            </summary>
+            <p className="pt-3 text-[color:var(--color-muted)]">{item.a}</p>
+          </details>
+        ))}
       </div>
     </section>
   );
 }
 
-// Server helper: emits <script type="application/ld+json"> with FAQPage schema
-// so Google can render the FAQ rich result even before hydration.
+// Server helper: emits <script type="application/ld+json"> with FAQPage schema.
+// The answers it declares are the same ones rendered above.
 export function FaqJsonLd({ items = [] }: { items?: FaqItem[] }) {
   const data = {
     "@context": "https://schema.org",

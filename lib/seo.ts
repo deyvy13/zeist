@@ -112,14 +112,14 @@ export function buildMetadata({
       description,
       url: canonical,
       locale: ogLocale,
-      images: [{ url: image }],
+      images: [{ url: image, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
       site: site.twitter,
-      images: [image],
+      images: [{ url: image, alt: title }],
     },
   };
 }

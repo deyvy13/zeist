@@ -176,6 +176,12 @@ proxy.ts                      # redirección de locale por Accept-Language
   entidad, que no se nombra. Capturas de Revit/Civil 3D: solo si las pasa el
   usuario.
 - **Sitemap** (`app/sitemap.ts`): todas las rutas × ambos locales, con `alternates.languages`.
+  **`lastmod` real (20-oct-2026):** los posts usan `updated` o `date`; las
+  páginas fijas, `PAGE_UPDATED` (en el propio `sitemap.ts`); los servicios,
+  `SERVICE_UPDATED` (`lib/services.ts`); las herramientas, `toolUpdated`
+  (`lib/tools.ts`). La home y `/blog` toman además la fecha del post más nuevo.
+  **Al cambiar el contenido de una página, sube su fecha**; nunca la fecha del
+  build (antes todo lo que no era post salía con la fecha de cada deploy).
 
 ### Páginas de servicio = landings de venta (oct-2026)
 
@@ -408,6 +414,11 @@ por página, p.ej. el visual del hero), NO el estilo de cada caja.
   texto de cada post (y sus enlaces internos) no existía en el HTML: Google
   no hace clic y los crawlers de IA no ejecutan JS. No volver al montaje
   condicional.
+- ⚠️ **Las FAQs de los posts (`<PostFaqs />` → `components/visual/faq.tsx`)
+  son `<details>` nativos** (20-oct-2026), como en servicios y herramientas.
+  El componente animado anterior montaba solo la respuesta abierta: 7 de cada
+  8 respuestas no estaban en el HTML aunque el JSON-LD FAQPage las declaraba
+  (923 respuestas en 140 posts). No volver a `{open && …}`.
 - ⚠️ **Gotcha de MDX:** `{llaves}` fuera de un bloque de código rompen el build
   ("Could not parse expression with acorn"). Usa backticks + `<ángulos>`.
 
@@ -463,6 +474,8 @@ a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
 > **Search Console al 28-sep-2026** (informe de la sesión de Chrome en Descargas): 57 páginas indexadas, 28 clics, 740 impresiones, CTR 3.8 %. Consultas con impresiones: "dynamo automation", "claude civil 3d", "revit civil 3d", "bim audit", "automatizar tareas revit", "civil 3d automation", "automatização tarefas revit". La página con más clics es `crear-plugin-civil-3d-con-claude-code-sin-programar` (es/pt/en). Los `seoTitle` de esas páginas se alinearon a esas consultas en oct-2026; la siguiente pasada debe usar datos por página (impresiones, CTR y posición) para reescribir los títulos con CTR bajo y reforzar las páginas en posición 8-20.
 
 > **Search Console al 19-oct-2026** (estrategia de la sesión de Chrome). Perú es el país que mejor convierte; Brasil suma 601 impresiones con pocos clics y EE. UU., 579 impresiones y 6 clics. El mejor activo es `es/herramientas/generador-curvas-de-nivel` (30 clics, CTR 12.5 %): **no tocar su título**. Ronda 1 aplicada el 19-oct-2026 (`updated` en esa fecha): nuevos `seoTitle`, `description` y respuesta rápida en 6 páginas con impresiones y 0 clics (en `inteligencia-artificial-autocad-civil-3d`, en `revit-lento-modelo-pesado-auditoria`, es `curvas-de-nivel-civil-3d-google-earth`, en `guia-vibe-coding-para-empezar`, en `auditoria-bim-checklist-empresa`, es `coordenadas-utm-trujillo-la-libertad`); títulos de herramientas por búsquedas perdidas («convertir coordenadas UTM a geográficas y viceversa», «convert UTM to lat long», «gerador de curvas de nível grátis», «free contour map generator»); «BIM audit»: la página de servicio toma la intención comercial (`BIM Audit Services…`) y el checklist la informativa, sin canibalizarse; Brasil: «exportar tabela do Revit para o Excel» y «automatizar tarefas repetitivas no Revit»; y `produccion-planos-automatica-civil-3d-revit` sumó el módulo 7, que responde las preguntas largas tipo asistente de IA sobre láminas de Civil 3D (tipos de lámina nativos, qué plugin elegir, plantillas, capacitación, prueba gratuita). Hecho a no contradecir: las láminas de Civil 3D no quedan vinculadas a los marcos de vista; si los marcos cambian, se crean de nuevo. **Medir a los 14 días como mínimo** (desde el 2-nov-2026) antes de tocar de nuevo esos títulos.
+
+> **Plan de contenido SEO + GEO (20-oct-2026).** El usuario entregó `prompt-plan-contenido-seo-geo-zeist-2026-10-20.md` (13 clusters de búsquedas de Search Console, plantilla de pieza, GEO y calendario por olas). Reglas que trae y que mandan para contenido nuevo: una intención = una URL (si existe, se mejora); cero invención (dato que falte = `[DATO REAL DEL AUTOR: …]`); ≤ 9 URLs nuevas por día y ≤ ~10 solicitudes de indexación diarias en GSC, contando las mejoras; respuesta directa de 40-60 palabras en contenido nuevo; H2 en forma de pregunta real; fuentes enlazadas con fecha de verificación. Medición GEO: `docs/geo-tracking.csv` (13 prompts × 5 asistentes, una fila por prueba mensual). Antes de producir la Ola 1 hace falta la aprobación del usuario al calendario y sus decisiones sobre autor, slugs localizados y canibalizaciones.
 
 > **Conversión y respuestas de IA (sep-2026).** (1) Todo post muestra un CTA de servicio **bajo el título** (`components/post-early-cta.tsx`, copy en `blog.earlyCta` de los diccionarios); el frontmatter opcional `ctaTitle` lo adapta al dolor del post. (2) `seoTitle` (≤52 caracteres) para el `<title>`; `title` largo queda como `<h1>`. (3) Los posts nuevos abren con un `<Callout type="success" title="Respuesta rápida">`: 60-100 palabras que responden la búsqueda principal de forma citable — es lo que extraen Google y los asistentes de IA. (4) `/llms.txt` (`app/llms.txt/route.ts`) se genera del mismo contenido y `robots.ts` permite explícitamente a GPTBot, ClaudeBot, PerplexityBot, Google-Extended.
 
