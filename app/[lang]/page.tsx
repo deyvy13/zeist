@@ -267,7 +267,7 @@ export default async function HomePage({
             <div className="mt-12 grid gap-8 lg:grid-cols-[1.3fr_1fr]">
               {/* Featured post */}
               <Link
-                href={localizedPath(lang, `blog/${featured.slug}`)}
+                href={localizedPath(lang, `blog/${featured.key}`)}
                 className="surface surface-hover flex flex-col justify-between rounded-3xl p-8"
               >
                 <div>
@@ -293,8 +293,8 @@ export default async function HomePage({
               <div className="flex flex-col">
                 {rest.map((post, i) => (
                   <Link
-                    key={post.slug}
-                    href={localizedPath(lang, `blog/${post.slug}`)}
+                    key={post.key}
+                    href={localizedPath(lang, `blog/${post.key}`)}
                     className={`group flex flex-col gap-2 py-6 ${
                       i === 0 ? "" : "hairline"
                     }`}

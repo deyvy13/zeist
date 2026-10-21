@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
 import Link from "next/link";
-import { absoluteUrl, localizedPath, mailtoUrl, site, whatsappUrl } from "@/lib/site";
+import { absoluteUrl, localizedPath, localizedUrl, mailtoUrl, site, whatsappUrl } from "@/lib/site";
 import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 import { JsonLd } from "@/components/json-ld";
 import { ContactForm } from "@/components/contact-form";
@@ -109,7 +109,7 @@ export default async function ContactPage({
             "@type": "ContactPage",
             name: c.title,
             description: c.metaDescription,
-            url: absoluteUrl(`${lang}/contacto`),
+            url: localizedUrl(lang, "contacto"),
             inLanguage: lang,
             mainEntity: {
               "@type": "Organization",

@@ -1,4 +1,5 @@
 ---
+translationKey: "dynamo-civil-3d-scripts"
 title: "Dynamo for Civil 3D: 10 scripts that automate repetitive work, and when to move to a plugin"
 seoTitle: "Dynamo for Civil 3D: 10 Scripts to Automate Work"
 ctaTitle: "Does your team repeat the same Civil 3D tasks on every project? We automate them with Dynamo or a plugin."
@@ -117,10 +118,10 @@ A clear rule — every 50 ft, 12 ft off the centerline, numbered in the directio
 - **What it does:** creates the sample lines for cross sections at the exact stations in a list (the ones in the plans, the control points, the section changes), with the swath width you set on each side.
 - **What it saves:** creating sections one by one when they don't fall at regular intervals.
 - **What it needs:** on Civil 3D 2025.1 or later, out-of-the-box sample line nodes; on earlier releases, Camber.
-- **If you'd rather have a button:** a plugin does the same on every alignment and adjusts the lines after each change; see [automated Civil 3D sample lines](/en/blog/lineas-de-muestreo-civil-3d-automaticas).
+- **If you'd rather have a button:** a plugin does the same on every alignment and adjusts the lines after each change; see [automated Civil 3D sample lines](/en/blog/civil-3d-sample-lines).
 
 <Callout type="info" title="If the goal is earthwork quantities">
-Volume calculations have their own traps: comparison surfaces, materials and measurement criteria. The full map is in [automating Civil 3D, the complete guide](/en/blog/automatizar-civil-3d-guia-completa).
+Volume calculations have their own traps: comparison surfaces, materials and measurement criteria. The full map is in [automating Civil 3D, the complete guide](/en/blog/civil-3d-automation-guide).
 </Callout>
 
 </TopicCard>
@@ -182,7 +183,7 @@ If the script fails, the user sees an unclear error. That's why scripts meant fo
 - **Keep scripts under version control**, not on the desktop of whoever wrote them.
 
 <Callout type="info" title="Dynamo with AI">
-Assistants like ChatGPT or Claude help plan a script's logic and write Python nodes, but they sometimes invent nodes that don't exist. We explain it in [Dynamo and C# with AI](/en/blog/dynamo-csharp-con-ia-claude).
+Assistants like ChatGPT or Claude help plan a script's logic and write Python nodes, but they sometimes invent nodes that don't exist. We explain it in [Dynamo and C# with AI](/en/blog/dynamo-csharp-ai-claude).
 </Callout>
 
 </TopicCard>
@@ -198,7 +199,7 @@ Dynamo is ideal for proving an automation quickly. Its limits show up as usage g
   rows="Development time | *Days | Weeks || Who uses it | Whoever knows Dynamo or the Player | *The whole office, with a button || With thousands of objects | Slow | *Fast || Dependencies | Packages to install on every machine | *Installs with everything it needs || Interface | Basic | *Its own windows and validation || Best for | *Testing an idea and one-project tasks | Daily production and company standards"
 />
 
-**The rule of thumb: if the whole office uses a script every week, it's a plugin candidate.** We explain it in [Dynamo vs C#, which one fits each case](/en/blog/dynamo-vs-csharp-civil3d-revit), and the budget in [how much a Revit or Civil 3D add-in costs](/en/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+**The rule of thumb: if the whole office uses a script every week, it's a plugin candidate.** We explain it in [Dynamo vs C#, which one fits each case](/en/blog/dynamo-vs-csharp-civil3d-revit), and the budget in [how much a Revit or Civil 3D add-in costs](/en/blog/revit-civil-3d-add-in-cost).
 
 <Callout type="success" title="It's not one or the other">
 The path that works best: prototype in Dynamo to validate the rule with the team, and build the plugin once the rule is proven. That way you don't pay for development nobody uses.
@@ -211,21 +212,21 @@ The path that works best: prototype in Dynamo to validate the rule with the team
   title="Got a task that repeats on every project?"
   body="We build the Dynamo scripts your team needs, ready for Dynamo Player and documented, and turn them into a plugin when usage justifies it. We're civil engineers and software engineers."
   primaryLabel="Request a diagnosis"
-  primaryHref="/en/contacto"
+  primaryHref="/en/contact"
   secondaryLabel="See Dynamo automation"
-  secondaryHref="/en/servicios/automatizacion-dynamo"
+  secondaryHref="/en/services/dynamo-scripts"
 />
 
 ## Related resources
 
-- **The cluster guide:** [automating Civil 3D, the complete guide](/en/blog/automatizar-civil-3d-guia-completa).
+- **The cluster guide:** [automating Civil 3D, the complete guide](/en/blog/civil-3d-automation-guide).
 - **Which tool to use:** [Dynamo vs C#, which one fits each case](/en/blog/dynamo-vs-csharp-civil3d-revit).
-- **When Dynamo isn't enough:** [Civil 3D API in C#, getting started](/en/blog/civil-3d-api-csharp-primeros-pasos).
-- **The roadway model:** [the Civil 3D corridor tutorial](/en/blog/corredores-civil-3d-ensamblajes-objetivos).
-- **The same in Revit:** [the 12 Revit tasks that save the most time](/en/blog/automatizar-tareas-revit-dynamo-plugins).
-- **Scripts with AI help:** [Dynamo and C# with AI](/en/blog/dynamo-csharp-con-ia-claude).
-- **Surfaces and contours:** [Civil 3D contours from Google Earth or a survey](/en/blog/curvas-de-nivel-civil-3d-google-earth).
-- **AI in CAD:** [AI for AutoCAD and Civil 3D, what exists in 2026](/en/blog/inteligencia-artificial-autocad-civil-3d).
+- **When Dynamo isn't enough:** [Civil 3D API in C#, getting started](/en/blog/civil-3d-api-csharp-getting-started).
+- **The roadway model:** [the Civil 3D corridor tutorial](/en/blog/civil-3d-corridor-tutorial).
+- **The same in Revit:** [the 12 Revit tasks that save the most time](/en/blog/automate-revit-tasks).
+- **Scripts with AI help:** [Dynamo and C# with AI](/en/blog/dynamo-csharp-ai-claude).
+- **Surfaces and contours:** [Civil 3D contours from Google Earth or a survey](/en/blog/civil-3d-contours-google-earth).
+- **AI in CAD:** [AI for AutoCAD and Civil 3D, what exists in 2026](/en/blog/autocad-ai-civil-3d).
 
 <PostFaqs />
 
@@ -234,9 +235,9 @@ The path that works best: prototype in Dynamo to validate the rule with the team
   title="A team of civil engineers and software engineers"
   body="We've designed roads, utilities and earthworks in Civil 3D, and we know how to build the tool that automates that work, in Dynamo or C#. We work remotely with engineering firms in the US, Europe and Latin America."
   primaryLabel="Let's talk about your case"
-  primaryHref="/en/contacto"
+  primaryHref="/en/contact"
   secondaryLabel="See all services"
-  secondaryHref="/en/servicios"
+  secondaryHref="/en/services"
 />
 
 ---

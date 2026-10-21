@@ -274,7 +274,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "Este gerador resolve o mesmo no navegador: escolha a área, o intervalo e baixe o DXF. Para converter um ponto do Google Earth para UTM, use o [conversor de coordenadas](/pt/herramientas/conversor-de-coordenadas).",
+            text: "Este gerador resolve o mesmo no navegador: escolha a área, o intervalo e baixe o DXF. Para converter um ponto do Google Earth para UTM, use o [conversor de coordenadas](/pt/ferramentas/conversor-de-coordenadas).",
           },
         ],
       },
@@ -428,7 +428,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "Civil 3D can also build a surface straight from an elevation file (DEM): it accepts .dem, GeoTIFF (.tif), ESRI ASCII (.asc) and ESRI binary (.adf). The full walkthrough is in the guide to [contours in Civil 3D](/en/blog/curvas-de-nivel-civil-3d-google-earth).",
+            text: "Civil 3D can also build a surface straight from an elevation file (DEM): it accepts .dem, GeoTIFF (.tif), ESRI ASCII (.asc) and ESRI binary (.adf). The full walkthrough is in the guide to [contours in Civil 3D](/en/blog/civil-3d-contours-google-earth).",
           },
         ],
       },
@@ -442,7 +442,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "This generator does the same job in the browser: pick the area and interval, then download the DXF. To convert a Google Earth point to UTM, use the [UTM to lat long converter](/en/herramientas/conversor-de-coordenadas).",
+            text: "This generator does the same job in the browser: pick the area and interval, then download the DXF. To convert a Google Earth point to UTM, use the [UTM to lat long converter](/en/tools/utm-converter).",
           },
         ],
       },

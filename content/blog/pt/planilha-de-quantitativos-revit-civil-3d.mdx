@@ -1,0 +1,200 @@
+---
+translationKey: "tabla-de-metrados-automatica-revit-civil-3d"
+title: "Planilha de quantitativos automática: do Revit e do Civil 3D para o Excel, com memória de cálculo"
+seoTitle: "Planilha de quantitativos automática no Excel"
+ctaTitle: "Sua equipe monta a planilha de quantitativos à mão a cada versão do projeto? Nós a geramos a partir do modelo."
+description: "Como levar os quantitativos do Revit e do Civil 3D para uma planilha no Excel, com memória de cálculo, por serviço e no seu formato, e como automatizá-la."
+date: "2026-10-16T23:00:00.000Z"
+author: "Zeist"
+tags:
+  - Quantitativos
+  - Revit
+  - Civil 3D
+  - Excel
+  - Orçamento
+  - Automação BIM
+---
+
+<BlogHero
+  eyebrow="Quantitativos · Revit · Civil 3D · Excel"
+  title="Dá para gerar a planilha de quantitativos automaticamente? Sim. Com memória de cálculo, por serviço e no formato do cliente."
+  highlight="O que leva uma planilha de quantitativos, de onde saem as quantidades, por que não batem e como se automatiza o passo que hoje é feito à mão: do modelo à planilha. No fim, como fazemos isso na Zeist."
+/>
+
+<Callout type="success" title="Resposta rápida">
+Sim. O Revit e o Civil 3D já calculam quantidades: o Revit com as tabelas de quantidades e o levantamento de material, e o Civil 3D com os volumes por seção e os itens de pagamento. O que eles não fazem sozinhos é levá-las para a **planilha de quantitativos**: atribuir cada elemento ao seu serviço, escrever a memória de cálculo com o detalhe de cada medida, juntar vários modelos e usar o formato do cliente. Isso se automatiza com um plugin que gera a planilha no Excel a partir do modelo. Na Zeist o desenvolvemos sob medida.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Quantitativo** — A quantidade de cada serviço: metros, metros quadrados, metros cúbicos, quilos ou unidades.
+- **Serviço** — Cada item da planilha orçamentária, com seu código, sua descrição e sua unidade.
+- **Planilha de quantitativos** — A tabela que lista os serviços com os seus quantitativos.
+- **Memória de cálculo** — O detalhe que justifica cada quantitativo: quais elementos foram medidos e com quais medidas.
+- **Tabela de quantidades** — A tabela do Revit que lista e mede elementos do modelo.
+- **Plugin** — Um programa que se instala dentro do Revit ou do Civil 3D e acrescenta seus próprios botões na barra superior.
+
+Escrito para orçamentistas, engenheiros de obra, fiscalização e coordenadores BIM.
+</Callout>
+
+## O passo que sempre é feito à mão
+
+O modelo já sabe quanto concreto leva cada viga e quantos metros cúbicos de corte tem cada trecho de via. Mas a planilha de quantitativos continua sendo montada à mão: exportam-se tabelas, copiam-se para o Excel, reorganizam-se por serviço e escreve-se a memória de cálculo linha por linha. E a cada versão do projeto, tudo se repete.
+
+Este guia separa o que o Revit e o Civil 3D já calculam do que falta para ter a planilha, e mostra como se automatiza esse trecho.
+
+<AnimatedFlow
+  title="Do modelo à planilha de quantitativos"
+  nodes="Modelos|Quantidades|Serviços|Planilha"
+  subs="Revit, Civil 3D, AutoCAD|Áreas, volumes, comprimentos|Código, unidade e critério|Memória, resumo e formato"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. O que leva uma planilha de quantitativos" time="~5 min">
+
+Uma planilha de quantitativos tem três partes:
+
+1. **Os serviços**, na ordem do orçamento: código, descrição e unidade.
+2. **A memória de cálculo** de cada serviço: os elementos medidos, quantas vezes se repetem e as suas medidas, com o parcial de cada linha.
+3. **O resumo**, com o total de cada serviço, que vai para a planilha orçamentária.
+
+Em obras com recursos da União, o Decreto 7.983/2013 define o SINAPI, mantido pela CAIXA e pelo IBGE, como referência de custos, com exceção das obras de infraestrutura de transportes. Por isso muitas planilhas usam os códigos das composições do SINAPI. Além disso, cada cliente costuma pedir o seu próprio formato.
+
+A planilha não é uma tabela exportada: é um documento com uma ordem, um critério e um formato. Uma lista para comprar é outra coisa; explicamos em [lista de materiais no Revit e no AutoCAD](/pt/blog/lista-de-materiais-revit-autocad).
+
+</TopicCard>
+
+<TopicCard step="2" title="2. De onde saem as quantidades" time="~5 min">
+
+| Fonte | O que mede bem |
+|---|---|
+| **Revit** | Concreto, áreas de paredes e lajes, revestimentos, portas e janelas, aço modelado |
+| **Civil 3D** | Corte e aterro por seções ou entre superfícies, comprimentos de tubulações, quantidades por item de pagamento |
+| **AutoCAD** | Áreas e comprimentos de polilinhas, e contagens de blocos |
+| **À mão** | O que não se modela: canteiro, locação, ensaios, serviços por verba |
+
+Cada fonte entrega as suas quantidades do seu jeito. Nenhuma entrega a planilha. Os volumes do Civil 3D explicamos em [seções transversais no Civil 3D](/pt/blog/secoes-transversais-civil-3d).
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Do modelo à planilha: o trecho manual" time="~5 min">
+
+O que hoje se faz à mão, a cada versão:
+
+- **Exportar** as tabelas do Revit, que saem como texto delimitado, e os volumes do Civil 3D.
+- **Atribuir cada elemento ao seu serviço.** Se o modelo não tem o código do serviço em cada elemento, isso é feito de memória.
+- **Escrever a memória de cálculo:** uma linha por elemento, com vezes, comprimento, largura e altura.
+- **Aplicar o critério de medição**, como os descontos de vãos ou as unidades.
+- **Dar o formato do cliente**, com suas colunas, cabeçalhos e totais.
+- **Juntar as disciplinas** num resumo geral.
+
+É o trabalho que mais tempo leva e o que mais erros introduz, porque cada cópia é uma oportunidade de errar.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Por que os números não batem" time="~5 min">
+
+Quando a planilha e o modelo não coincidem, quase sempre é por uma destas causas:
+
+- **Elementos sem serviço** ou com o serviço errado, que ficam fora do total.
+- **Volumes contados duas vezes**, por exemplo nas ligações entre vigas, pilares e lajes. No Revit, a ordem da união de geometria decide a qual elemento vai cada volume.
+- **Unidades e arredondamentos diferentes** entre o modelo, o Excel e o orçamento.
+- **Critérios de medição diferentes** dos do cliente.
+- **Mudanças de projeto que não chegaram à planilha**, porque uma aba foi atualizada e outra não.
+
+<Callout type="warn" title="O aditivo que ninguém consegue justificar">
+Na obra, um aditivo de quantidades se justifica comparando o executado com o projeto. Se a planilha do projeto foi montada à mão e não dá para rastreá-la até o modelo, essa comparação vira discussão.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. O que dá para automatizar" time="~5 min">
+
+O cálculo o modelo já faz. O que se automatiza é o trecho até a planilha:
+
+- **Atribuir serviços por regra**, com uma tabela de equivalências: categoria, tipo ou material do modelo, e o seu serviço.
+- **Escrever a memória de cálculo** de cada serviço a partir dos elementos do modelo, com as suas medidas.
+- **Aplicar os critérios** de medição do escritório ou do cliente.
+- **Juntar Revit, Civil 3D e os serviços manuais** num só arquivo de Excel, no formato do cliente.
+- **Comparar versões** e mostrar quais serviços subiram ou desceram, e por quais elementos.
+- **Conferir antes de entregar:** elementos sem serviço, quantidades zeradas ou serviços duplicados.
+
+<Callout type="info" title="Sinais de que vale a pena automatizar">
+Cada versão do projeto passa por refazer a planilha. A memória de cálculo é escrita à mão. As disciplinas chegam em formatos diferentes. Ou uma revisão do cliente obriga a refazer todo o orçamento.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Dynamo ou plugin" time="~5 min">
+
+**Com o Dynamo**, no Revit ou no Civil 3D, um script lê os elementos, agrupa por um parâmetro de serviço e escreve um Excel. É rápido de montar e serve para validar a tabela de equivalências.
+
+**Com um plugin**, a planilha completa sai com um botão: todas as disciplinas, a memória de cálculo, o resumo, o formato do cliente e a comparação com a versão anterior.
+
+<ComparisonTable
+  criterionLabel="Critério"
+  leftLabel="Plugin"
+  rightLabel="Script de Dynamo"
+  rows="Tempo até funcionar | Semanas | *Dias || Planilha com memória e resumo | *Completa, no seu formato | Básica || Revit e Civil 3D num só arquivo | *Sim | Um script por programa || Comparação entre versões | *Sim | Exige lógica adicional || Ideal para | *Cada versão do projeto | Validar as regras"
+/>
+
+A comparação completa está em [Dynamo ou C# para Civil 3D e Revit](/pt/blog/dynamo-vs-csharp-civil3d-revit).
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Como fazemos isso na Zeist" time="~5 min">
+
+Desenvolvemos plugins sob medida para Revit e Civil 3D. Para a planilha de quantitativos, um plugin típico:
+
+- **Lê os modelos** de todas as disciplinas e os volumes do Civil 3D.
+- **Atribui cada elemento ao seu serviço** com a tabela de equivalências do seu escritório, por exemplo com os códigos do SINAPI.
+- **Escreve a planilha no seu formato de Excel**, com a memória de cálculo de cada serviço e o resumo.
+- **Acrescenta os serviços manuais** a partir de uma aba que a sua equipe mantém.
+- **Compara com a versão anterior** e marca o que mudou e por quê.
+- **Avisa do que não conseguiu medir** ou classificar, antes que chegue ao orçamento.
+
+**Como trabalhamos:**
+
+1. **Diagnóstico (1 semana, gratuito):** vemos a sua planilha atual e escrevemos as regras de cada serviço.
+2. **Protótipo (1 a 2 semanas):** validamos a lógica num dos seus projetos.
+3. **Desenvolvimento (2 a 4 semanas):** o plugin, com testes nos seus próprios modelos.
+4. **Instalação:** instalador para todo o escritório, botão na barra superior, manual e documentação.
+5. **Suporte:** atualização a cada nova versão do Revit e do Civil 3D.
+
+O código-fonte fica com a sua empresa: o plugin é seu.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Revit e Civil 3D"
+  title="Sua planilha de quantitativos, a partir do modelo, com memória de cálculo e no seu formato"
+  body="Desenvolvemos o plugin com os seus serviços, os seus critérios de medição e o formato do cliente, com a comparação contra a versão anterior. Diagnóstico gratuito, instalador para todo o escritório, código-fonte que fica com você e atualização a cada versão."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicos/plugins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Para compras:** [lista de materiais no Revit, no AutoCAD e no Civil 3D](/pt/blog/lista-de-materiais-revit-autocad).
+- **Revit e Excel:** [exportar tabelas do Revit para o Excel e reimportá-las](/pt/blog/exportar-tabela-revit-excel).
+- **Os volumes:** [seções transversais no Civil 3D](/pt/blog/secoes-transversais-civil-3d).
+- **Excel no escritório:** [pare de usar Excel e perder horas](/pt/blog/quantitativos-no-excel).
+- **Para orçar o desenvolvimento:** [quanto custa um add-in para Revit ou Civil 3D](/pt/blog/quanto-custa-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Peru"
+  title="Uma equipe de engenheiros civis e engenheiros de sistemas"
+  body="Já montamos quantitativos e orçamentos de projetos, e programamos as ferramentas que os geram. Trabalhamos com escritórios e construtoras do Brasil e de toda a América Latina."
+  primaryLabel="Vamos falar do seu caso"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver todos os serviços"
+  secondaryHref="/pt/servicos"
+/>
+
+---
+
+**Nota técnica:** as opções correspondem ao Revit 2024 e ao Civil 3D 2024 em diante. Confira sempre o formato e os critérios de medição que o seu cliente pede.

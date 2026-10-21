@@ -1,0 +1,193 @@
+---
+translationKey: "plugin-revit-exportar-pdf-dwg-masivo"
+title: "Revit batch print plugin: export PDF and DWG for every sheet, across every model, without limits"
+seoTitle: "Revit Batch Print: Export PDF and DWG Without Limits"
+ctaTitle: "Is your team losing hours printing every submittal? We build a plugin that exports it all in one pass."
+description: "How to batch export Revit sheets to PDF and DWG: what Revit does natively, which plugins exist, and how your own plugin works, with no limits."
+date: "2026-10-09T04:00:00.000Z"
+author: "Zeist"
+tags:
+  - Revit
+  - Revit plugins
+  - PDF
+  - DWG
+  - Plan production
+  - BIM automation
+---
+
+<BlogHero
+  eyebrow="Revit · PDF · DWG"
+  title="Printing 300 sheets shouldn't take your afternoon. Or happen again for every model."
+  highlight="What Revit does natively, where it falls short when a submittal spans several models and hundreds of sheets, which plugins exist, and what your own plugin looks like when it exports PDF and DWG in a single pass, without limits."
+/>
+
+<Callout type="success" title="Quick answer">
+Revit has exported PDF natively since the 2022 release and DWG for much longer, but it works one model at a time and in two separate processes. A batch export plugin opens each model on a list, picks sheets by rule, such as discipline or revision, and exports PDF and DWG in a single pass, with the firm's naming convention, into organized folders and with a log of what was exported. If the firm owns the plugin and its source code, there's no limit on sheets, models or users.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain words">
+- **Sheet** — Each page of the drawing set: what gets printed or issued as a PDF.
+- **Batch print** — Printing or exporting many sheets in one operation instead of one by one.
+- **Sheet set** — A saved selection of sheets, so you don't pick them one by one every time.
+- **Export setup** — Saved export options: layers, lineweights, coordinates, paper size.
+- **Naming rule** — The formula that builds each file name, for example project code, sheet number and revision.
+- **Central model** — The shared Revit file the whole team works in.
+- **Plugin** — A program installed inside Revit that adds its own buttons to the top toolbar.
+
+Written for BIM coordinators, project managers and modelers who issue drawings from Revit.
+</Callout>
+
+## The bottleneck nobody budgets for
+
+A mid-size project submittal can hold hundreds of sheets spread across several models: architecture, structure, MEP. And it's never exported just once: every revision, every round of client comments and every bid package asks for the full set again, as PDF for review and as DWG for whoever works in AutoCAD.
+
+Exporting involves no engineering judgment. It's opening each model, picking sheets, checking names, waiting, repeating it for DWG and sorting folders. Exactly the kind of task worth automating.
+
+<AnimatedFlow
+  title="A full submittal in a single pass"
+  nodes="Model list|Sheets by rule|PDF + DWG|Submittal log"
+  subs="Every RVT in the project|Discipline, revision or set|Your naming and folders|What exported and what failed"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. What Revit already does" time="~6 min">
+
+**Native PDF, since Revit 2022.** Under File › Export › PDF you select views or sheets, or a saved set, and choose whether they go into one PDF or separate files with the combine option. For separate files there are **naming rules** built from parameters, such as sheet number and sheet name, with the separator of your choice. Options are saved as an export setup.
+
+**Background PDF, since Revit 2025.** The **Export in Background** option lets you keep working while the PDF is generated. It's off by default, and progress shows on the status bar.
+
+**Native DWG.** Under File › Export › CAD Formats › DWG you choose an export setup, with layers, lineweights and whether to use shared coordinates or the internal origin, and the sheet set. Each file name is a prefix plus an automatic name. One option exports the views on sheets as external references, or keeps everything in a single file.
+
+**Before 2022**, the only route to PDF was printing to a PDF printer installed in Windows.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Where it falls short" time="~5 min">
+
+For one sheet or one model, native export is enough. For a real submittal, the limits show up:
+
+- **One model at a time.** You open each model, export and close it. Five models means five rounds.
+- **PDF and DWG are two processes.** You pick everything twice: sheets, setup and folder.
+- **DWG naming is rigid.** A prefix plus an automatic name. If the client wants its own code, say project, discipline, number and revision, you rename by hand.
+- **No check before exporting.** If a sheet's revision isn't current, it goes out anyway.
+- **Folders and transmittals by hand.** Splitting by discipline or revision and building the list of issued sheets is still manual work.
+- **It ties up the machine.** Apart from background PDF, Revit is blocked while it exports.
+
+The step before has the same problem: building the sheets. We cover it in [automated plan production in Civil 3D and Revit](/en/blog/civil-3d-revit-plan-production).
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Which tools exist" time="~5 min">
+
+| Tool | What it does | Keep in mind |
+|---|---|---|
+| Native Revit export | PDF with naming rules and DWG with export setups | One model at a time, two separate processes |
+| DiRoots ProSheets | Exports views and sheets to PDF, DWG, DGN, DWF, NWC, IFC and images | Freemium since October 2024: features such as scheduled exports need an annual per-user subscription |
+| Revit Batch Processor | Runs Python or Dynamo scripts across many models | Free and open source, but you have to write the script |
+| Your own plugin | Exports with the firm's exact rules | Built once; after that, the firm owns it |
+
+Commercial tools handle the general case well. The trouble starts when the firm's process depends on a per-user license, on features that move to a paid tier, or on a naming format the tool doesn't support.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. How a batch export plugin works" time="~7 min">
+
+A plugin built for full submittals does in one run what takes an afternoon today:
+
+1. **Model list.** You pick the project's RVT files. The plugin opens each one in the background, detached from the central model so it's never touched, and closes it without saving when done.
+2. **Sheets by rule.** Every sheet in a discipline, the ones on a given revision, a saved set, or those matching a number filter.
+3. **Pre-export check.** It flags sheets whose revision isn't current, missing title block parameters, or two files that would end up with the same name. How to bring revisions and title blocks up to date on every sheet is in [Revit revisions on multiple sheets](/en/blog/revit-revisions-multiple-sheets).
+4. **PDF and DWG in the same pass**, each with its own export setup.
+5. **The firm's or client's naming**, built from any parameter: project code, discipline, number, revision and date.
+6. **Organized folders** by discipline, format or revision.
+7. **Submittal log:** an Excel file with every exported sheet, its revision, its file and anything that failed, without stopping the rest of the batch.
+
+Because it runs unattended, you can start it at the end of the day and find the submittal ready the next morning.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. The core, in code" time="~5 min">
+
+The Revit API has an export method for each format. This snippet exports each sheet to PDF and DWG with a name the firm defines:
+
+```csharp
+// Export each sheet to PDF and DWG with the firm's file name
+var pdf = new PDFExportOptions { Combine = true };
+var dwg = DWGExportOptions.GetPredefinedOptions(doc, "Firm-DWG");
+
+foreach (ViewSheet sheet in sheets)
+{
+    string rev = sheet.get_Parameter(BuiltInParameter.SHEET_CURRENT_REVISION).AsString();
+    string name = $"{projectCode}-{sheet.SheetNumber}-R{rev}";
+
+    pdf.FileName = name;
+    doc.Export(pdfFolder, new List<ElementId> { sheet.Id }, pdf);
+    doc.Export(dwgFolder, name, new List<ElementId> { sheet.Id }, dwg);
+}
+```
+
+**What each part does:**
+
+- `PDFExportOptions` and `DWGExportOptions` are the same options as the export dialogs; `GetPredefinedOptions` loads a DWG export setup saved in the model.
+- Exporting sheet by sheet lets you use any file name, without relying on the native rule.
+- The rest of the plugin is what makes it reliable: opening and closing models, checking before export, logging errors and carrying on with the batch.
+
+If you want the Autodesk APIs from the ground up, start with [Revit and Civil 3D add-in development](/en/blog/revit-civil-3d-add-in-development).
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Truly unlimited" time="~4 min">
+
+Whether a plugin is "unlimited" doesn't depend on a sales promise; it depends on who owns it. When the firm has the source code:
+
+- **No cap on sheets or models.** The limit is Revit's export time, not a license.
+- **No per-user licenses.** It goes on every machine in the office.
+- **No surprise changes.** If a vendor moves features to a paid plan, your submittal process isn't affected.
+- **It fits your rules.** Naming, folders and pre-export checks are your firm's, not generic ones.
+
+What you do need to plan for is maintenance: each new Revit release may require recompiling the plugin. That's why updates should be included from the start.
+
+<ComparisonTable
+  criterionLabel="Criterion"
+  leftLabel="Your own plugin"
+  rightLabel="Native export"
+  rows="Several models in one run | *Yes, in the background | No, one at a time || PDF and DWG | *In the same pass | Two separate processes || Client naming | *Any parameter, for PDF and DWG | Rules for PDF; prefix for DWG || Check before export | *Revision, title block and duplicate names | No || Submittal log | *Automatic Excel | By hand || Per-user cost | *None, you own the code | Included in Revit"
+/>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Revit plugins"
+  title="Your full submittal, in PDF and DWG, with one click"
+  body="We build custom export plugins around your firm's naming, folders and revisions. Free diagnosis, an installer for the whole office, source code you own, and updates with every Revit release."
+  primaryLabel="Request a free diagnosis"
+  primaryHref="/en/contact"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/services/revit-civil-3d-plugin-development"
+/>
+
+## Related resources
+
+- **Before exporting, the title block:** [title blocks filled automatically](/en/blog/revit-autocad-title-block-automation).
+- **Before you export:** [automated plan production in Civil 3D and Revit](/en/blog/civil-3d-revit-plan-production).
+- **Revisions and signatures:** [Revit revisions on multiple sheets, add and sign](/en/blog/revit-revisions-multiple-sheets).
+- **Other tasks worth automating:** [the 12 Revit tasks that save the most time](/en/blog/automate-revit-tasks).
+- **The complete guide:** [Revit and Civil 3D add-in development](/en/blog/revit-civil-3d-add-in-development).
+- **Budgeting:** [how much a Revit or Civil 3D add-in costs](/en/blog/revit-civil-3d-add-in-cost).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Civil engineers who code"
+  title="A team of civil engineers and software engineers"
+  body="We issue drawings and we build the tools that produce them. We work remotely with engineering and architecture firms in the US, Europe and Latin America."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contact"
+  secondaryLabel="See all services"
+  secondaryHref="/en/services"
+/>
+
+---
+
+**Technical note:** export options match Revit 2026. Third-party tool terms can change: check each vendor's page.

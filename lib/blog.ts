@@ -13,7 +13,15 @@ import { clustersOf, pillarSlugs } from "@/lib/clusters";
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
 export type PostMeta = {
+  /** File name: the post's URL slug in its own language. */
   slug: string;
+  /**
+   * Translation key, the same in every language: the Spanish slug. It ties the
+   * three versions together (hreflang, language switcher, lib/blog-data.ts,
+   * lib/clusters.ts). Set with `translationKey` in the frontmatter; defaults to
+   * the slug.
+   */
+  key: string;
   locale: Locale;
   title: string;
   /**
@@ -72,6 +80,7 @@ export function getPost(locale: Locale, slug: string): Post | null {
 
   const meta: PostMeta = {
     slug,
+    key: data.translationKey ? String(data.translationKey) : slug,
     locale,
     title: String(data.title ?? slug),
     seoTitle: data.seoTitle ? String(data.seoTitle) : undefined,
@@ -89,11 +98,25 @@ export function getPost(locale: Locale, slug: string): Post | null {
   return { meta, content };
 }
 
+/** The post with this translation key in a locale (its slug may differ). */
+export function getPostByKey(locale: Locale, key: string): Post | null {
+  const meta = getAllPosts(locale).find((p) => p.key === key);
+  return meta ? getPost(locale, meta.slug) : null;
+}
+
+// The build reads the post list many times (lookups by translation key on
+// every page); in production the files don't change, so it is read once.
+const postsCache = new Map<Locale, PostMeta[]>();
+
 export function getAllPosts(locale: Locale): PostMeta[] {
-  return getPostSlugs(locale)
+  const cached = process.env.NODE_ENV === "production" ? postsCache.get(locale) : undefined;
+  if (cached) return [...cached];
+  const posts = getPostSlugs(locale)
     .map((slug) => getPost(locale, slug)?.meta)
     .filter((m): m is PostMeta => Boolean(m) && !m!.draft)
     .sort((a, b) => +new Date(b.date) - +new Date(a.date));
+  if (process.env.NODE_ENV === "production") postsCache.set(locale, posts);
+  return [...posts];
 }
 
 export function getAllTags(locale: Locale): string[] {
@@ -109,16 +132,17 @@ export function getAllTags(locale: Locale): string[] {
  * posts", which linked every article to the same fresh posts and never to the
  * pillars we want to rank.
  */
-export function getRelatedPosts(locale: Locale, slug: string, limit = 4): PostMeta[] {
+export function getRelatedPosts(locale: Locale, key: string, limit = 4): PostMeta[] {
   const all = getAllPosts(locale);
-  const bySlug = new Map(all.map((p) => [p.slug, p]));
-  const self = bySlug.get(slug);
+  // Clusters list translation keys, so posts are matched by key.
+  const byKey = new Map(all.map((p) => [p.key, p]));
+  const self = byKey.get(key);
   const picked: string[] = [];
   const add = (s: string) => {
-    if (s !== slug && bySlug.has(s) && !picked.includes(s)) picked.push(s);
+    if (s !== key && byKey.has(s) && !picked.includes(s)) picked.push(s);
   };
 
-  const mine = clustersOf(slug);
+  const mine = clustersOf(key);
   mine.forEach((c) => add(c.pillar));
   mine.forEach((c) => c.satellites.forEach(add));
 
@@ -128,11 +152,11 @@ export function getRelatedPosts(locale: Locale, slug: string, limit = 4): PostMe
       .map((p) => ({ p, score: p.tags.filter((t) => tags.has(t.toLowerCase())).length }))
       .filter((x) => x.score > 0)
       .sort((a, b) => b.score - a.score)
-      .forEach((x) => add(x.p.slug));
+      .forEach((x) => add(x.p.key));
   }
 
   pillarSlugs.forEach(add);
-  all.forEach((p) => add(p.slug));
+  all.forEach((p) => add(p.key));
 
-  return picked.slice(0, limit).map((s) => bySlug.get(s)!);
+  return picked.slice(0, limit).map((s) => byKey.get(s)!);
 }

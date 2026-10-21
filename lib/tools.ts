@@ -1,9 +1,10 @@
-import type { Locale } from "@/lib/i18n";
+import { locales, type Locale } from "@/lib/i18n";
+import { TOOL_PATHS } from "@/lib/routes";
 
 // -----------------------------------------------------------------------------
 // Released tools in /herramientas. Single source for the hub, the sitemap, the
-// language switcher and /llms.txt. (Proposals still marked "Pronto" live in
-// lib/tools-catalog.ts.) Client-safe: plain data, no fs.
+// language switcher and /llms.txt. The hub's own copy lives in
+// lib/tools-catalog.ts. Client-safe: plain data, no fs.
 // -----------------------------------------------------------------------------
 
 export const TOOL_SLUGS = [
@@ -18,18 +19,13 @@ export const TOOL_SLUGS = [
 export type ToolSlug = (typeof TOOL_SLUGS)[number];
 
 /**
- * Locales where each tool is published. The steel calculator uses Peruvian bar
- * sizes and 9 m stock bars, so it ships in `es` only — pt/en would need their
- * own tables (Brazil: CA-50 in mm, 12 m bars; US: bar sizes #3-#11).
+ * Locales where each tool is published: the locales that have a URL for it in
+ * TOOL_PATHS (lib/routes.ts). The steel calculator uses Peruvian bar sizes and
+ * 9 m stock bars, so it ships in `es` only — pt/en would need their own tables
+ * (Brazil: CA-50 in mm, 12 m bars; US: bar sizes #3-#11).
  */
-export const toolLocales: Record<ToolSlug, readonly Locale[]> = {
-  "coordenadas-utm-en-google-maps": ["es", "pt", "en"],
-  "conversor-de-coordenadas": ["es", "pt", "en"],
-  "calculadora-area-terreno": ["es", "pt", "en"],
-  "generador-curvas-de-nivel": ["es", "pt", "en"],
-  "calculadora-acero-corrugado": ["es"],
-  "calculadora-manning": ["es", "pt", "en"],
-};
+export const toolLocales = {} as Record<ToolSlug, readonly Locale[]>;
+for (const slug of TOOL_SLUGS) toolLocales[slug] = locales.filter((l) => TOOL_PATHS[slug][l]);
 
 /**
  * Last real change of each tool page (calculator or its copy), ISO date. The

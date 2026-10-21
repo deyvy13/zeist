@@ -1,0 +1,207 @@
+---
+translationKey: "lista-de-materiales-revit-autocad-civil-3d"
+title: "Lista de materiais no Revit, no AutoCAD e no Civil 3D: como tirar do modelo e como automatizar para compras"
+seoTitle: "Lista de materiais no Revit e AutoCAD: automatize"
+ctaTitle: "Sua equipe monta a lista de materiais à mão a cada pedido? Nós a geramos a partir do modelo, no seu formato."
+description: "Como gerar a lista de materiais no Revit, no AutoCAD e no Civil 3D, por que ela quase nunca serve como está para compras e como automatizá-la."
+date: "2026-10-16T22:00:00.000Z"
+author: "Zeist"
+tags:
+  - Revit
+  - AutoCAD
+  - Civil 3D
+  - Lista de materiais
+  - Plugins para Revit
+  - Automação BIM
+---
+
+<BlogHero
+  eyebrow="Revit · AutoCAD · Civil 3D · Materiais"
+  title="Dá para tirar a lista de materiais do modelo automaticamente? Sim. E no formato que o seu setor de compras usa."
+  highlight="O que cada programa traz para contar e medir, por que essa lista quase nunca serve como está para comprar e como se automatiza o resto. No fim, como fazemos isso na Zeist."
+/>
+
+<Callout type="success" title="Resposta rápida">
+Sim. O Revit tira listas com as suas **tabelas de quantidades** e o **levantamento de material**; o AutoCAD, com a **extração de dados** e o comando COUNT; e o Civil 3D, com tabelas de tubulações e estruturas ou com itens de pagamento. O que nenhum faz sozinho é juntar vários modelos, usar o código do seu almoxarifado, somar a perda, arredondar para medidas comerciais e mostrar o que mudou desde a última lista. Isso se automatiza com o Dynamo ou com um plugin. Na Zeist desenvolvemos esse plugin sob medida, com o seu formato de compras.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Lista de materiais** — O que é preciso comprar ou fabricar: cada material ou peça com sua medida, quantidade e unidade. Em inglês, BOM (bill of materials).
+- **Tabela de quantidades** — A tabela do Revit que lista e conta elementos do modelo.
+- **Levantamento de material** — A tabela do Revit que soma áreas e volumes por material.
+- **Atributo** — Um dado guardado dentro de um bloco do AutoCAD, como o código ou o diâmetro.
+- **Item de pagamento** — O código que o Civil 3D atribui a cada peça para medir quantidades. Em inglês, pay item.
+- **Perda** — A porcentagem que se acrescenta por cortes, transpasses e quebras.
+- **Plugin** — Um programa que se instala dentro do Revit, do AutoCAD ou do Civil 3D e acrescenta seus próprios botões na barra superior.
+
+Escrito para gerentes de projeto, engenheiros de obra, suprimentos e coordenadores BIM.
+</Callout>
+
+## A lista que sempre é montada à mão
+
+Antes de cada pedido, alguém abre o modelo, conta, mede, copia para o Excel, agrupa, soma a perda e passa para o formato de compras. Quando o projeto muda, começa tudo de novo, e ninguém sabe direito o que mudou em relação ao pedido anterior.
+
+Revit, AutoCAD e Civil 3D já sabem contar e medir. O que falta é transformar isso na lista que a sua empresa usa. Este guia mostra o que cada programa traz e como se automatiza o resto.
+
+<AnimatedFlow
+  title="Do modelo ao pedido"
+  nodes="Modelos|Quantidades|Seu formato|Pedido"
+  subs="Revit, AutoCAD, Civil 3D|Contar, medir, agrupar|Códigos, unidades, perda|O que mudou desde a última lista"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Lista de materiais e quantitativos não são a mesma coisa" time="~4 min">
+
+As duas saem do mesmo modelo, mas respondem perguntas diferentes:
+
+| | Lista de materiais | Planilha de quantitativos |
+|---|---|---|
+| Para que serve | Comprar ou fabricar | Orçar e medir a obra |
+| Como se agrupa | Por material, medida e código do fornecedor | Por serviço da planilha orçamentária |
+| Unidades | As de compra: barras, chapas, sacos, unidades | As do serviço: m, m², m³, kg |
+| Perda | Soma-se | Normalmente não |
+
+Por isso uma planilha de quantitativos quase nunca serve como está para comprar, nem o contrário. A planilha explicamos em [planilha de quantitativos automática](/pt/blog/planilha-de-quantitativos-revit-civil-3d).
+
+<Callout type="info" title="No Civil 3D, «lista de materiais» é outra coisa">
+Nas seções transversais, a lista de materiais é a de corte e aterro calculada com Compute Materials (calcular materiais), na guia Analisar. Ela fica guardada no grupo de linhas de amostra e alimenta as tabelas de volume e o diagrama de massas. Explicamos em [seções transversais no Civil 3D](/pt/blog/secoes-transversais-civil-3d).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. No Revit: tabelas de quantidades e levantamento de material" time="~6 min">
+
+As duas ficam na guia **Vista**, no painel Criar:
+
+- **Tabela de quantidades** (Schedule/Quantities). Lista os elementos de uma categoria com os campos que você escolher: tipo, medidas, comprimento, contagem. Se você desmarcar a opção que lista cada instância separadamente, ela agrupa os iguais e conta.
+- **Levantamento de material** (Material Takeoff). Soma a área e o volume de cada material das camadas: o concreto das paredes, o revestimento dos pisos, o isolamento.
+
+As tabelas aceitam **valores calculados**: com uma fórmula dá para somar a perda ou passar de metros para barras. É preciso fazer isso em cada tabela e em cada projeto.
+
+**Para levar ao Excel**, a exportação de relatórios do Revit gera um arquivo de texto delimitado que o Excel abre. Ela não exporta uma pasta de trabalho do Excel com formatação: isso fazem o Dynamo ou um plugin. Explicamos em [exportar tabelas do Revit para o Excel](/pt/blog/exportar-tabela-revit-excel).
+
+**O limite:** cada tabela olha um só modelo. Se arquitetura, estrutura e instalações estão em modelos separados, são três listas que alguém junta à mão.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. No AutoCAD: extração de dados e COUNT" time="~6 min">
+
+No AutoCAD a lista sai dos **blocos**: o nome e os atributos.
+
+**Extração de dados** (`DATAEXTRACTION`). Um assistente que lê um ou vários desenhos, escolhe os blocos e suas propriedades ou atributos, e deixa o resultado numa tabela dentro do desenho ou num arquivo externo, como Excel ou CSV. A extração fica salva como modelo para repetir, e a tabela avisa quando os dados mudaram.
+
+**COUNT**, desde o AutoCAD 2022. Conta os blocos do desenho, avisa dos duplicados ou explodidos e insere uma tabela com a contagem. Desde o AutoCAD 2023 conta também dentro de uma área. A tabela não se atualiza sozinha: é preciso salvar ou regenerar.
+
+<Callout type="warn" title="Se você usa o AutoCAD LT">
+O AutoCAD LT não traz a extração de dados. O mais próximo é o ATTEXT, que exporta os atributos dos blocos com um modelo, mas não conta nem agrupa.
+</Callout>
+
+**A lista é tão boa quanto os blocos.** Se o bloco de uma válvula não tem atributos de código, diâmetro e pressão, não há de onde tirá-los. E se alguém explodiu um bloco, ele some da contagem.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. No Civil 3D: tubulações, estruturas e itens de pagamento" time="~5 min">
+
+Em redes de água, esgoto e drenagem, as peças já são objetos com medidas:
+
+- **Tabelas de tubulações e de estruturas.** Listam cada tubo com diâmetro, material e comprimento, e cada poço de visita ou caixa com seus dados.
+- **Itens de pagamento (QTO).** Na guia Analisar, o gerenciador de QTO atribui códigos a tubos e estruturas. Se você os atribuir na lista de peças, cada peça nova já sai com seu código. Depois se gera um relatório de quantidades por item.
+
+Vale configurar como o comprimento é medido, por exemplo em 3D e entre as faces internas das estruturas, e conferir o relatório contra os objetos: nem sempre ele sai como se espera.
+
+**O que falta:** as conexões, como joelhos, tês e reduções, nem sempre estão modeladas, e a lista não sabe em que comprimento comercial cada tubo é comprado. Explicamos em [redes de tubulação no Civil 3D](/pt/blog/redes-tubulacao-civil-3d).
+
+</TopicCard>
+
+<TopicCard step="5" title="5. O que nenhuma lista nativa faz sozinha" time="~5 min">
+
+O que vimos conta e mede. O que um pedido real pede é outra coisa:
+
+- **Várias fontes.** Modelos do Revit por disciplina, desenhos do AutoCAD e redes do Civil 3D numa só lista.
+- **O seu código.** O código do almoxarifado ou do fornecedor não está no modelo, e cada empresa usa o seu.
+- **Medidas comerciais.** Barras de aço de 12 m, tubos de PVC em barras de 6 m, chapas inteiras: a compra se arredonda para o que o fornecedor vende.
+- **Perda por material.** Não é a mesma para o aço, a cerâmica ou o cabo.
+- **Unidades de compra.** Metros em barras, metros cúbicos em sacos, quilos em barras.
+- **O que mudou.** Comparar com a lista anterior para pedir só a diferença.
+
+<Callout type="info" title="Sinais de que vale a pena automatizar">
+Você monta a lista copiando tabelas para o Excel a cada pedido. Junta vários modelos à mão. Os pedidos complementares são calculados de cabeça. Ou suprimentos descobriu uma falta na obra que o modelo tinha.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Duas formas de automatizar: Dynamo ou plugin" time="~5 min">
+
+**Com o Dynamo, no Revit e no Civil 3D.** Um script lê os elementos e seus parâmetros, agrupa, aplica fórmulas e escreve um Excel. É rápido de montar e serve para validar as regras. O AutoCAD, sem o Civil 3D, não traz o Dynamo.
+
+**Com um plugin.** Um botão na barra superior que lê todos os modelos, atribui a cada elemento o seu código, aplica as regras de medidas, perda e unidades, escreve a lista no seu formato e a compara com a anterior. Funciona no Revit, no AutoCAD e no Civil 3D, porque os três têm API.
+
+<ComparisonTable
+  criterionLabel="Critério"
+  leftLabel="Plugin"
+  rightLabel="Script de Dynamo"
+  rows="Tempo até funcionar | Semanas | *Dias || Revit, AutoCAD e Civil 3D | *Os três | Revit e Civil 3D || Vários modelos numa passada | *Sim | Possível, mais difícil de manter || Comparação com o pedido anterior | *Sim | Exige lógica adicional || Ideal para | *Cada pedido | Validar as regras"
+/>
+
+A comparação completa está em [Dynamo ou C# para Civil 3D e Revit](/pt/blog/dynamo-vs-csharp-civil3d-revit).
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Como fazemos isso na Zeist" time="~5 min">
+
+Desenvolvemos plugins sob medida para Revit, AutoCAD e Civil 3D. Para a lista de materiais, um plugin típico:
+
+- **Lê todas as fontes** do projeto: modelos do Revit, desenhos do AutoCAD e redes do Civil 3D.
+- **Atribui o seu código** a cada elemento com uma tabela de equivalências que a sua equipe mantém.
+- **Aplica as suas regras:** medidas comerciais, perda por material e unidades de compra.
+- **Escreve a lista no seu formato de Excel**, por disciplina, frente ou pedido.
+- **Compara com a lista anterior** e marca o que entrou, o que saiu e o que mudou.
+- **Avisa do que não conseguiu classificar**, como um elemento sem código ou um bloco explodido.
+
+**Como trabalhamos:**
+
+1. **Diagnóstico (1 semana, gratuito):** vemos como vocês montam a lista hoje e escrevemos as regras.
+2. **Protótipo (1 a 2 semanas):** validamos a lógica num dos seus projetos.
+3. **Desenvolvimento (2 a 4 semanas):** o plugin, com testes nos seus próprios modelos.
+4. **Instalação:** instalador para todo o escritório, botão na barra superior, manual e documentação.
+5. **Suporte:** atualização a cada nova versão do Revit, do AutoCAD ou do Civil 3D.
+
+O código-fonte fica com a sua empresa: o plugin é seu.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Revit, AutoCAD e Civil 3D"
+  title="Sua lista de materiais, a partir do modelo e no seu formato, a cada pedido"
+  body="Desenvolvemos o plugin com os seus códigos, as suas medidas comerciais e o seu formato de compras, com a comparação contra o pedido anterior. Diagnóstico gratuito, instalador para todo o escritório, código-fonte que fica com você e atualização a cada versão."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicos/plugins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Para o orçamento:** [planilha de quantitativos automática, do modelo ao Excel](/pt/blog/planilha-de-quantitativos-revit-civil-3d).
+- **Revit e Excel:** [exportar tabelas do Revit para o Excel e reimportá-las](/pt/blog/exportar-tabela-revit-excel).
+- **As redes:** [redes de tubulação e conexões no Civil 3D](/pt/blog/redes-tubulacao-civil-3d).
+- **O aço:** [plugin de aço para o Revit](/pt/blog/plugin-armadura-revit).
+- **Para orçar o desenvolvimento:** [quanto custa um add-in para Revit ou Civil 3D](/pt/blog/quanto-custa-add-in-revit-civil-3d).
+- **O mapa dos plugins:** [desenvolvimento de add-ins para Revit e Civil 3D](/pt/blog/desenvolvimento-add-ins-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Peru"
+  title="Uma equipe de engenheiros civis e engenheiros de sistemas"
+  body="Conhecemos o caminho do modelo até a obra e programamos as ferramentas que o encurtam. Trabalhamos com escritórios e construtoras do Brasil e de toda a América Latina."
+  primaryLabel="Vamos falar do seu caso"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver todos os serviços"
+  secondaryHref="/pt/servicos"
+/>
+
+---
+
+**Nota técnica:** as opções correspondem ao Revit 2024, ao AutoCAD 2024 e ao Civil 3D 2024 em diante; o COUNT existe desde o AutoCAD 2022. Os nomes da interface podem variar conforme o idioma de instalação; entre parênteses vai o nome em inglês.

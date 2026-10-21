@@ -1,8 +1,9 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import type { Dictionary, Locale } from "@/lib/i18n";
-import { absoluteUrl, localizedPath, site, siteUrl, whatsappUrl } from "@/lib/site";
-import { getPost, type PostMeta } from "@/lib/blog";
+import { localizedPath, localizedUrl, site, siteUrl, whatsappUrl } from "@/lib/site";
+import { normalizeHref } from "@/lib/routes";
+import { getPostByKey, type PostMeta } from "@/lib/blog";
 import { toolsFor, type ToolSlug } from "@/lib/tools";
 import type { ToolBlock, ToolContent } from "@/lib/tools-content/types";
 import { IconArrow, IconWhatsApp } from "@/components/icons";
@@ -29,7 +30,7 @@ export function RichText({ text }: { text: string }) {
     if (label && href) {
       parts.push(
         href.startsWith("/") ? (
-          <Link key={match.index} href={href} className={LINK_CLASS}>
+          <Link key={match.index} href={normalizeHref(href)} className={LINK_CLASS}>
             {label}
           </Link>
         ) : (
@@ -183,12 +184,12 @@ export function ToolLayout({
   children: ReactNode;
 }) {
   const labels = dict.serviceDetail;
-  const pageUrl = absoluteUrl(`${lang}/herramientas/${slug}`);
+  const pageUrl = localizedUrl(lang, `herramientas/${slug}`);
   // Every tool links to the others in its locale: tools are the main traffic
   // magnets, and before this block each one got only 1-6 contextual links.
   const otherTools = toolsFor(lang).filter((t) => t.slug !== slug);
   const guides = content.guides
-    .map((s) => getPost(lang, s))
+    .map((s) => getPostByKey(lang, s))
     .filter((p): p is NonNullable<typeof p> => Boolean(p) && !p!.meta.draft)
     .map((p): PostMeta => p.meta);
 
@@ -210,8 +211,8 @@ export function ToolLayout({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: site.name, item: absoluteUrl(lang) },
-      { "@type": "ListItem", position: 2, name: dict.nav.tools, item: absoluteUrl(`${lang}/herramientas`) },
+      { "@type": "ListItem", position: 1, name: site.name, item: localizedUrl(lang) },
+      { "@type": "ListItem", position: 2, name: dict.nav.tools, item: localizedUrl(lang, "herramientas") },
       { "@type": "ListItem", position: 3, name: content.name, item: pageUrl },
     ],
   };
@@ -402,7 +403,7 @@ export function ToolLayout({
               {guides.map((guide) => (
                 <Link
                   key={guide.slug}
-                  href={localizedPath(lang, `blog/${guide.slug}`)}
+                  href={localizedPath(lang, `blog/${guide.key}`)}
                   className="group grid gap-2 border-b border-[color:var(--color-hairline)] py-6 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-8"
                 >
                   <div>

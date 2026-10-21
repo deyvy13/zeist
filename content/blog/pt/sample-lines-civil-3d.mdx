@@ -1,0 +1,234 @@
+---
+translationKey: "lineas-de-muestreo-civil-3d-automaticas"
+title: "Sample lines no Civil 3D: como criar linhas de amostra automaticamente, em qualquer estaca, sem refazê-las a cada mudança"
+seoTitle: "Sample lines no Civil 3D: criar e automatizar"
+ctaTitle: "Sua equipe cria e refaz sample lines à mão a cada mudança de traçado? Nós automatizamos no Civil 3D."
+description: "Como criar sample lines no Civil 3D por faixa de estacas, a partir do corredor ou de uma tabela, editá-las, excluí-las e automatizá-las com um plugin."
+date: "2026-10-16T21:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Sample lines
+  - Seções transversais
+  - Corredores
+  - Plugins para Civil 3D
+  - Automação BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Seções · Automação"
+  title="Dá para gerar sample lines automáticas no Civil 3D? Sim. E também mantê-las em dia sem refazer tudo."
+  highlight="O que o Civil 3D já faz sozinho, o que ele não faz e como se automatiza o resto com o Dynamo ou com um plugin: linhas nas estacas do seu projeto, em todos os alinhamentos de uma vez e ajustadas depois de cada mudança. No fim, como fazemos isso na Zeist."
+/>
+
+<Callout type="success" title="Resposta rápida">
+Sim. O Civil 3D já cria sample lines (linhas de amostra) em lote: **por faixa de estacas**, com intervalos diferentes em tangente, curva e espiral, ou **em cada estaca do corredor**. O que ele não faz sozinho é criá-las a partir de uma tabela de estacas, em vários alinhamentos de uma vez, nem acrescentar ou remover linhas quando o projeto muda. Isso se automatiza com o Dynamo, desde o Civil 3D 2025.1, ou com um plugin em C#. Na Zeist desenvolvemos esse plugin sob medida, com as regras do seu escritório.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Sample line (linha de amostra)** — A linha que cruza o eixo e marca onde o Civil 3D corta o terreno e o corredor para desenhar uma seção transversal. Também chamada de linha de amostragem.
+- **Grupo de linhas de amostra** — O conjunto de linhas de um alinhamento. Guarda o que é cortado em cada seção e com quais estilos.
+- **Estaca** — A posição medida ao longo do eixo. No Civil 3D em inglês, station.
+- **Corredor** — O modelo 3D da via, que sai do eixo, do perfil e da seção típica.
+- **Largura da amostra** — Quanto a linha se estende para cada lado do eixo. Precisa cobrir a via inteira com os taludes.
+- **Plugin** — Um programa que se instala dentro do Civil 3D e acrescenta seus próprios botões na barra superior.
+
+Escrito para projetistas rodoviários, topógrafos e coordenadores BIM. O único bloco de código é opcional.
+</Callout>
+
+## Dá para fazer, mas quase sempre se faz à mão
+
+Num projeto rodoviário, cada alinhamento pode ter centenas de linhas de amostra: uma por estaca, mais as das curvas, dos bueiros e das mudanças de seção. Em muitos escritórios elas são criadas uma a uma, ou apagadas e criadas de novo a cada mudança de traçado.
+
+O Civil 3D traz mais automação do que se costuma usar, e o que falta pode ser programado. Este guia separa as duas coisas: primeiro o nativo, depois o que se automatiza com o Dynamo ou com um plugin e, no fim, como fazemos isso na Zeist.
+
+<AnimatedFlow
+  title="Sample lines automáticas, do começo ao fim"
+  nodes="Regras do escritório|Linhas de amostra|Seções|Pranchas e volumes"
+  subs="Intervalos, tabela de estacas, larguras|Em todos os alinhamentos|Terreno, corredor e superfícies|Ajustadas depois de cada mudança"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Para que servem as sample lines" time="~4 min">
+
+Uma linha de amostra diz **onde** a via é cortada e **com qual largura**. Em cada linha, o Civil 3D corta as fontes que você escolher —o terreno natural, o corredor, as superfícies do corredor e também as redes de tubulação— e com isso monta a seção transversal.
+
+Delas depende tudo o que vem depois:
+
+- **As vistas de seção**, uma por linha.
+- **Os volumes de corte e aterro**, calculados entre seções.
+- **O diagrama de massas e as pranchas de seções.**
+
+Por isso as linhas vivem num **grupo de linhas de amostra**, que pertence a um alinhamento. O grupo guarda as fontes, os estilos e os rótulos de todas as suas linhas.
+
+<Callout type="warn" title="Antes de apagar uma linha">
+As seções e as vistas de seção dependem da sua linha de amostra. Se você apagar uma linha no desenho, as vistas de seção ligadas a ela também são apagadas.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Como criar sample lines: os cinco métodos" time="~6 min">
+
+O comando fica na guia **Início** › Gráficos do perfil longitudinal e de seção › **Linhas de amostra**. Na linha de comando é `_CREATESAMPLELINES`, em qualquer idioma.
+
+Você escolhe o alinhamento. Se for o primeiro grupo, abre-se **Criar/Editar grupo de linhas de amostra**, onde se escolhem as fontes e os estilos. Depois aparece a barra **Ferramentas de linha de amostra**, com cinco formas de criá-las:
+
+| Método | O que faz | Quando usar |
+|---|---|---|
+| **Por faixa de estacas** | Muitas linhas de uma vez, a cada certa distância | A base de qualquer projeto rodoviário |
+| **A partir de estacas do corredor** | Uma linha em cada estaca do corredor | Quando cada seção deve bater com o modelo |
+| **Em uma estaca** (At a station) | Uma linha na estaca que você digitar ou marcar | Bueiros, mudanças de seção, pontos de controle |
+| **Selecionar pontos na tela** | Uma linha desenhada ponto a ponto | Seções que não são perpendiculares ao eixo |
+| **A partir de polilinhas** (Select existing polylines) | Converte polilinhas desenhadas em linhas de amostra | Quando as linhas já estão traçadas na planta |
+
+**A largura para cada lado** é definida ao criá-las: um valor fixo, ou «presa» a outro alinhamento, como o limite da faixa de domínio, para que a largura varie ao longo da via. Se ficar curta, a seção sai cortada e o volume, incompleto.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Sim, o Civil 3D já as cria em lote" time="~6 min">
+
+Quando alguém pergunta se as sample lines podem ser geradas automaticamente, a primeira resposta é que o Civil 3D já faz isso, e mais do que se costuma usar.
+
+**Por faixa de estacas** abre uma caixa com o que um projeto pede:
+
+- **A faixa:** do início ao fim do alinhamento, ou entre duas estacas.
+- **Intervalos diferentes em tangente, curva e espiral.** No Brasil, o estaqueamento costuma ser de 20 em 20 m, e é comum gerar uma seção por estaca e acrescentar seções intermediárias nas curvas, conforme o que o termo de referência pedir.
+- **A partir de onde se conta:** da estaca zero ou do início da faixa. Contando a partir de zero, as linhas caem em estacas redondas, a cada 20 m exatos, mesmo que a faixa comece aos 13 m.
+- **Linhas adicionais:** no início e no fim da faixa, nos pontos de geometria horizontal —início e fim de curvas e espirais— e nas estacas críticas da superelevação.
+- **A largura para cada lado:** fixa, ou até um alinhamento de deslocamento.
+
+**A partir de estacas do corredor** cria uma linha em cada estaca do corredor. É a opção mais fiel ao modelo, porque cada seção mostra exatamente o que o corredor calculou. Só fica disponível se o alinhamento já tiver um corredor.
+
+**E as linhas acompanham o eixo.** Cada linha tem a opção **Bloqueio para a estaca**, nas suas propriedades, guia Dados de linha de amostra:
+
+- **Marcada:** se o alinhamento mudar, a linha desliza para a nova posição da sua estaca.
+- **Desmarcada:** a linha fica onde está e o Civil 3D recalcula a sua estaca.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Editar, acrescentar e excluir sample lines" time="~6 min">
+
+**Editar uma linha.** Ao selecioná-la aparecem os grips: um a move ao longo do eixo, outros alongam cada lado e outros mudam o seu ângulo.
+
+**Mudar a largura de todas de uma vez.** Na barra Ferramentas de linha de amostra, **Editar larguras de amostra** alonga ou apara todas as linhas do grupo para a mesma largura.
+
+**Acrescentar linhas a um grupo que já existe.** Execute de novo Linhas de amostra, escolha o mesmo alinhamento e, na barra de ferramentas, o grupo existente. As vistas de seção novas não entram sozinhas no grupo de vistas: mova-as com o comando para movê-las a um grupo de vistas de seção (Move to Section View Group), porque o comando de atualizar não as reordena. As pranchas também não se regeneram sozinhas.
+
+**Excluir linhas.** Selecione-as no desenho e apague. As vistas de seção delas são apagadas junto.
+
+**Nomes e números.** O Civil 3D atribui o número de cada linha em ordem de estaca. O nome sai de um modelo com um contador, como SL-1 ou SL-2. Para mostrar a estaca na planta usa-se o rótulo da linha. O Civil 3D não traz um comando para renomear de uma vez todas as linhas de um grupo.
+
+<Callout type="tip" title="Se as linhas não aparecem ou as seções saem vazias">
+Se você não vê as linhas, confira se a camada está ligada e se o estilo as exibe. Se o que falta é o terreno ou o corredor dentro da seção, ele não está entre as fontes do grupo: acrescente-o nas propriedades do grupo (Sample More Sources). Os outros erros das seções estão em [seções transversais no Civil 3D](/pt/blog/secoes-transversais-civil-3d).
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. O que o Civil 3D não faz sozinho" time="~5 min">
+
+O que vimos funciona bem num alinhamento com intervalos regulares. Os problemas aparecem nos projetos reais:
+
+- **Estacas de uma tabela.** As do projeto, dos bueiros, das mudanças de seção ou as que a fiscalização pede. O Civil 3D não lê uma lista: elas são criadas uma a uma, em uma estaca de cada vez.
+- **Muitos alinhamentos.** Um loteamento com 30 ruas são 30 grupos e 30 vezes a mesma caixa, com o risco de esquecer uma fonte ou uma largura.
+- **Mudanças de projeto.** As linhas acompanham o eixo, mas não se acrescentam nem se removem sozinhas. Se o eixo cresce, o trecho novo fica sem linhas. Se aparece uma curva nova, os seus pontos de geometria não têm linha. Se muda a frequência do corredor, as linhas continuam nas estacas de antes.
+- **Refazer custa caro.** O habitual é apagar e criar de novo. Mas ao apagar as linhas apagam-se as vistas de seção delas, e as pranchas são montadas outra vez.
+- **A largura.** É fixa ou vai até um alinhamento de deslocamento. Se um aterro alto se abre além disso, a seção sai cortada, e às vezes ninguém nota até conferir o volume.
+- **Os nomes.** Se o projeto identifica cada seção pela sua estaca, renomear as linhas é trabalho manual.
+
+<Callout type="info" title="Sinais de que vale a pena automatizar">
+Você cria linhas uma a uma a partir de uma tabela. Seus projetos têm muitos alinhamentos. Você refaz seções e pranchas depois de cada revisão. Ou um erro de largura ou de fonte apareceu no volume e não no desenho.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Duas formas de automatizar: Dynamo ou plugin" time="~6 min">
+
+**Com o Dynamo, sem escrever código.** O Dynamo é a programação visual do Civil 3D: conectam-se blocos em vez de escrever código. Desde o Civil 3D 2025.1 ele traz nós nativos para criar grupos de linhas de amostra e linhas de amostra, e um para criar vistas de seção. Em versões anteriores, o pacote gratuito Camber também tem nós de linhas de amostra. Um script típico lê as estacas de um Excel e cria uma linha em cada uma: explicamos em [10 scripts de Dynamo para Civil 3D](/pt/blog/dynamo-civil-3d-scripts).
+
+**Com um plugin em C#.** A API do Civil 3D tem o necessário: `SampleLineGroup.Create` cria o grupo num alinhamento e `SampleLine.Create` cria cada linha numa estaca, ou com os pontos que você definir.
+
+```csharp
+// Um grupo por alinhamento e uma linha em cada estaca da tabela
+ObjectId grupo = SampleLineGroup.Create("Secoes do projeto", alinhamentoId);
+
+foreach (double estaca in estacas)            // lidas do Excel do projeto
+{
+    string nome = estaca.ToString("0+000");   // ou o formato do seu escritório
+    SampleLine.Create(nome, grupo, estaca);
+}
+```
+
+São duas chamadas. O que dá trabalho, e o que torna o plugin útil, é o que está em volta: ler e validar a tabela, calcular a largura de cada linha, atribuir fontes e estilos, decidir quais linhas acrescentar ou remover depois de uma mudança e registrar o que foi feito.
+
+<ComparisonTable
+  criterionLabel="Critério"
+  leftLabel="Plugin em C#"
+  rightLabel="Script de Dynamo"
+  rows="Tempo até funcionar | Semanas | *Dias || Como a equipe usa | *Um botão na barra superior | Pelo Dynamo Player || Todos os alinhamentos numa passada | *Sim | Possível, mais difícil de manter || Acrescentar e remover linhas depois de uma mudança | *Sim, com regras | Exige lógica adicional || Ideal para | *Produção diária | Validar a ideia"
+/>
+
+A comparação completa está em [Dynamo ou C# para Civil 3D e Revit](/pt/blog/dynamo-vs-csharp-civil3d-revit). E se a sua equipe quer aprender a API, comece por [Civil 3D API em C#, primeiros passos](/pt/blog/civil-3d-api-csharp-primeiros-passos).
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Como fazemos isso na Zeist" time="~5 min">
+
+Desenvolvemos plugins sob medida para o Civil 3D. Para as sample lines, um plugin típico:
+
+- **Lê as suas regras:** intervalos em tangente, curva e espiral, mais uma tabela de estacas em Excel com os bueiros, as mudanças de seção e os pontos que a fiscalização pede.
+- **Trabalha em todos os alinhamentos do desenho** numa só passada, com um grupo por alinhamento.
+- **Calcula a largura** de cada linha para que cubra o corredor com os taludes, mais uma margem.
+- **Dá a cada linha o nome da sua estaca** e atribui as fontes, os estilos e os rótulos do seu template.
+- **Depois de uma mudança, compara** as linhas que existem com as que deveriam existir: acrescenta as que faltam, remove as que sobram e deixa intactas as demais, com as suas vistas de seção.
+- **Registra o que fez** num relatório, para conferir antes de montar as pranchas.
+
+Se você também precisa das vistas ou das pranchas, elas entram no mesmo plugin. Explicamos em [produção automática de pranchas no Civil 3D e no Revit](/pt/blog/producao-pranchas-civil-3d-revit).
+
+**Como trabalhamos:**
+
+1. **Diagnóstico (1 semana, gratuito):** vemos a tarefa num dos seus projetos e escrevemos as regras.
+2. **Protótipo (1 a 2 semanas):** validamos a lógica no seu projeto.
+3. **Desenvolvimento (2 a 4 semanas):** o plugin em C#, com testes nos seus próprios modelos.
+4. **Instalação:** instalador para todo o escritório, botão na barra superior do Civil 3D, manual e documentação.
+5. **Suporte:** atualização a cada nova versão do Civil 3D.
+
+O código-fonte fica com a sua empresa: o plugin é seu.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Civil 3D"
+  title="Suas sample lines, em todas as estacas e em todos os eixos, com um botão"
+  body="Desenvolvemos o plugin com as regras do seu escritório: intervalos, tabela de estacas, larguras, nomes, fontes e o que deve acontecer depois de cada mudança. Diagnóstico gratuito, instalador para todo o escritório, código-fonte que fica com você e atualização a cada versão do Civil 3D."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicos/plugins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **O próximo passo:** [section views automáticas no Civil 3D](/pt/blog/section-views-civil-3d).
+- **O fluxo completo das seções:** [seções transversais no Civil 3D](/pt/blog/secoes-transversais-civil-3d).
+- **O modelo que é cortado:** [corredor no Civil 3D: montagens, alvos e erros](/pt/blog/corredor-civil-3d-montagens-alvos).
+- **Sem programar:** [10 scripts de Dynamo para Civil 3D](/pt/blog/dynamo-civil-3d-scripts).
+- **O mapa completo:** [automatizar o Civil 3D, o guia completo](/pt/blog/automatizar-civil-3d-guia-completo).
+- **Para orçar:** [quanto custa um add-in para Revit ou Civil 3D](/pt/blog/quanto-custa-add-in-revit-civil-3d).
+- **O mapa dos plugins:** [desenvolvimento de add-ins para Revit e Civil 3D](/pt/blog/desenvolvimento-add-ins-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Peru"
+  title="Uma equipe de engenheiros civis e engenheiros de sistemas"
+  body="Já montamos seções para projetos rodoviários e programamos as ferramentas que as geram. Trabalhamos com escritórios do Brasil e de toda a América Latina."
+  primaryLabel="Vamos falar do seu caso"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver todos os serviços"
+  secondaryHref="/pt/servicos"
+/>
+
+---
+
+**Nota técnica:** os nomes da interface são os do Civil 3D em português; entre parênteses vai o nome em inglês quando necessário. As opções correspondem ao Civil 3D 2024 em diante, e os nós nativos do Dynamo para linhas de amostra, ao Civil 3D 2025.1 em diante.

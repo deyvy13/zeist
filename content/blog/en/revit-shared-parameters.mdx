@@ -1,0 +1,204 @@
+---
+translationKey: "parametros-compartidos-revit"
+title: "Revit shared parameters: what they are, how to create them, the .txt file, title blocks and the errors that keep coming back"
+seoTitle: "Revit Shared Parameters: Guide and Best Practices"
+ctaTitle: "Does every project in your firm have different parameters? We standardize them and load them in bulk."
+description: "What Revit shared parameters are, how they differ from family and project parameters, how to create them and use them in schedules, tags and title blocks."
+date: "2026-10-09T19:00:00.000Z"
+author: "Zeist"
+tags:
+  - Revit
+  - Shared parameters
+  - Families
+  - BIM standards
+  - Revit plugins
+  - BIM automation
+---
+
+<BlogHero
+  eyebrow="Revit · Parameters"
+  title="Almost everything you automate in Revit runs through a shared parameter. So does almost every mess."
+  highlight="What they are, how they differ from family and project parameters, how to create and load them, how to use them in schedules, tags and title blocks, and why one duplicate parameter can break an entire project."
+/>
+
+<Callout type="success" title="Quick answer">
+A Revit shared parameter is a parameter defined in an external text file, with a unique identifier called a GUID, that can be used across many families and projects. It's the only kind that can go in both schedules and tags: family parameters appear in neither, and project parameters can be scheduled but not tagged. You create them under Manage › Shared Parameters. The golden rule: one file for the whole firm, in a read-only folder, and never recreate a parameter that already exists.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain words">
+- **Parameter** — A piece of data on an element: code, material, manufacturer, who drew a sheet.
+- **Family** — Each kind of Revit object: a door, a beam, a title block.
+- **Schedule** — The Revit table that lists elements with their parameters.
+- **Tag** — The annotation that shows a parameter next to the element on the sheet.
+- **GUID** — The unique code Revit uses to recognize a shared parameter, even if another one has the same name.
+- **Instance or type** — Whether the value changes per element or is the same for every element of a type.
+
+Written for BIM coordinators and modelers who build families, schedules and templates in Revit.
+</Callout>
+
+## Why it matters so much
+
+A quantity schedule that counts the same thing twice, a tag showing a question mark, a title block that won't read the engineer's license number: behind many of these problems is a badly defined parameter. And when a firm wants to automate, plugins read and write exactly those parameters. Getting them in order is step one.
+
+<AnimatedFlow
+  title="From one file to every project"
+  nodes=".txt file|Families|Projects|Schedules, tags, title blocks"
+  subs="One GUID per parameter|The same parameter in each|Bound to its categories|All read the same data"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. The three kinds of parameters" time="~5 min">
+
+| Kind | Where it's defined | Schedules | Tags |
+|---|---|---|---|
+| Family | Inside the family | No | No |
+| Project | In the project, by category | Yes | No |
+| Shared | In an external .txt file, with a GUID | Yes | Yes |
+
+**The real difference is the GUID.** Revit recognizes a shared parameter by its GUID, not its name. That's why the same parameter can live in a hundred families and ten projects and Revit knows it's the same data. A family parameter, by contrast, exists only inside that family.
+
+**When to use each:**
+
+- **Family:** to drive internal geometry, such as a width or angle nobody will schedule.
+- **Project:** for data that's only scheduled or filtered in that one project.
+- **Shared:** for anything that gets tagged, scheduled across projects, shown in a title block or read by a plugin.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. The shared parameter file" time="~6 min">
+
+Shared parameters live in a **text file** that stores each one's name, GUID, data type and group. The file's own header warns against editing it by hand.
+
+**Shared parameter file location:** any folder. Each user picks the file under Manage › Shared Parameters, and Revit remembers that path on their machine.
+
+**What few people know:** once a shared parameter is in a project or a family, its definition is stored there. The file is only needed to **add** new parameters. If the file is lost, projects keep working, and a parameter can be recovered by exporting it from a family that has it, with the same GUID. What you must never do is create it again with the same name.
+
+**Rules for an organized firm:**
+
+- **One master file**, in a network folder that's read-only for everyone except its owner.
+- **Groups by purpose**, such as Sheets, Structural or Quantities.
+- **Names with a firm prefix**, so they're never confused with manufacturer or client parameters.
+- **Never delete and recreate** a parameter: the new one would have a different GUID.
+
+<Callout type="info" title="The cloud alternative">
+Since Revit 2023, Autodesk's Parameters Service stores definitions in the Autodesk Construction Cloud account library instead of a text file. It requires that account and an administrator to set up the collections.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Creating and loading a shared parameter" time="~6 min">
+
+**Create it in the file:**
+
+1. Manage › Shared Parameters.
+2. Browse to the file or create a new one.
+3. Create a group, or pick an existing one.
+4. Create the parameter: name, data type, such as text, number, length or yes/no, and a tooltip explaining what it's for.
+
+**Add it to the project:**
+
+1. Manage › Project Parameters › Add.
+2. Choose **Shared parameter** and select it from the file.
+3. Decide whether it's **instance** or **type**, which Properties group it appears under, and which **categories** it applies to.
+
+**Add it to a family:** in the Family Editor, Family Types › New Parameter › Shared parameter. If the family and project use the same shared parameter, Revit treats them as one when the family loads.
+
+<Callout type="warn" title="The data type can't change">
+A shared parameter created as text can't become a number later. If you got it wrong, you create another one with a different name and migrate the values. That's why the file should be well defined before it's used on real projects.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. In schedules, tags and title blocks" time="~5 min">
+
+- **Schedules.** A shared parameter shows up in the field list of schedules for its categories, and can be edited from the schedule. If you need to fill it from Excel, we cover it in [exporting Revit schedules to Excel and back](/en/blog/export-revit-schedule-to-excel).
+- **Tags.** In the tag family, the label is built from the same shared parameter. The tag then reads the value from any element that has it.
+- **Title blocks.** To show firm-specific data in the title block, such as the engineer's license number or the discipline, create a shared parameter, add it to the project on the Sheets category and use it in the title block label. We cover it in [Revit revisions and signatures on multiple sheets](/en/blog/revit-revisions-multiple-sheets).
+
+</TopicCard>
+
+<TopicCard step="5" title="5. The most-searched errors" time="~6 min">
+
+- **Shared parameter not showing in the schedule.** It's a family parameter, not a shared one; or it isn't bound to that schedule's category.
+- **The tag shows nothing.** The element doesn't have the parameter: its family doesn't include it, or the project parameter isn't bound to its category.
+- **The tag shows a question mark.** The parameter exists but is empty on that element.
+- **Two parameters with the same name.** Someone created another one with the same name in a different file: it has a different GUID and Revit treats them as different data. The schedule reads one, the tag reads the other, and the values don't match.
+- **I can't find the parameter when loading it.** Revit is pointing to a different shared parameter file; check the path under Manage › Shared Parameters.
+- **Instance and type mixed up.** If the value should change per element but was created as a type parameter, changing it changes every element of that type.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Best practices for the whole firm" time="~4 min">
+
+- **One owner** for the master file, and a log of every new parameter: what it's for, who asked for it, which categories it goes on.
+- **Templates with the parameters preloaded**, so every project starts the same way.
+- **Families reviewed** before they enter the library: they should use the master file's parameters, not copies.
+- **Regular audits** of projects to find duplicate or orphaned parameters. It's part of what a [BIM audit](/en/blog/bim-audit-checklist) checks.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. What's worth automating with a plugin" time="~6 min">
+
+- **Loading the firm's parameters in bulk** into many projects and families at once, with their categories and groups.
+- **Finding duplicates**: the same name with a different GUID, across every model in a project.
+- **Filling values from Excel** and writing them back, without touching each element.
+- **Checking families** before they enter the library.
+
+The core, with the Revit API, is short:
+
+```csharp
+// Add a text shared parameter to the Sheets category
+DefinitionFile file = app.OpenSharedParameterFile();
+DefinitionGroup group = file.Groups.get_Item("Sheets") ?? file.Groups.Create("Sheets");
+Definition def = group.Definitions.get_Item("FIRM_LicenseNumber")
+    ?? group.Definitions.Create(new ExternalDefinitionCreationOptions("FIRM_LicenseNumber", SpecTypeId.String.Text));
+
+CategorySet categories = app.Create.NewCategorySet();
+categories.Insert(doc.Settings.Categories.get_Item(BuiltInCategory.OST_Sheets));
+
+using (var t = new Transaction(doc, "Shared parameter"))
+{
+    t.Start();
+    doc.ParameterBindings.Insert(def, app.Create.NewInstanceBinding(categories), GroupTypeId.IdentityData);
+    t.Commit();
+}
+```
+
+If you want the Autodesk APIs from the ground up, start with [Revit and Civil 3D add-in development](/en/blog/revit-civil-3d-add-in-development).
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Revit plugins"
+  title="Clean parameters across every project"
+  body="We build Revit plugins that load your firm's parameters in bulk, find duplicates and fill values from Excel. Free diagnosis, an installer, source code you own, and updates with every Revit release."
+  primaryLabel="Request a free diagnosis"
+  primaryHref="/en/contact"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/services/revit-civil-3d-plugin-development"
+/>
+
+## Related resources
+
+- **The full title block:** [Revit and AutoCAD title blocks filled automatically](/en/blog/revit-autocad-title-block-automation).
+- **Filling parameters from Excel:** [exporting Revit schedules to Excel and back](/en/blog/export-revit-schedule-to-excel).
+- **Title blocks:** [Revit revisions and signatures on multiple sheets](/en/blog/revit-revisions-multiple-sheets).
+- **Other tasks worth automating:** [the 12 Revit tasks that save the most time](/en/blog/automate-revit-tasks).
+- **Standardizing the firm:** [standardizing BIM processes in your company](/en/blog/standardize-bim-processes).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Civil engineers who code"
+  title="A team of civil engineers and software engineers"
+  body="We work in Revit every day and build the tools that keep it organized. We work remotely with engineering and architecture firms in the US, Europe and Latin America."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contact"
+  secondaryLabel="See all services"
+  secondaryHref="/en/services"
+/>
+
+---
+
+**Technical note:** features and API match Revit 2026. Check your release's help if any of them change.

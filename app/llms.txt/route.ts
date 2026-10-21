@@ -1,6 +1,6 @@
 import { getAllPosts } from "@/lib/blog";
 import { locales, type Locale } from "@/lib/i18n";
-import { absoluteUrl, site } from "@/lib/site";
+import { localizedUrl, site } from "@/lib/site";
 import { SERVICE_SLUGS, getServicePage } from "@/lib/services";
 import { TOOL_SLUGS, toolCards, toolLocales } from "@/lib/tools";
 
@@ -26,7 +26,7 @@ const sectionTitle: Record<Locale, string> = {
 function servicesBlock(locale: Locale): string {
   return SERVICE_SLUGS.map((slug) => {
     const page = getServicePage(slug, locale);
-    return `- [${page.seoTitle}](${absoluteUrl(`${locale}/servicios/${slug}`)}): ${page.answer}`;
+    return `- [${page.seoTitle}](${localizedUrl(locale, `servicios/${slug}`)}): ${page.answer}`;
   }).join("\n");
 }
 
@@ -36,7 +36,7 @@ function toolsBlock(): string {
     toolLocales[slug].map((locale) => {
       const card = toolCards[slug][locale];
       return card
-        ? `- [${card.title}](${absoluteUrl(`${locale}/herramientas/${slug}`)}) (${locale}): ${card.body}`
+        ? `- [${card.title}](${localizedUrl(locale, `herramientas/${slug}`)}) (${locale}): ${card.body}`
         : "";
     }),
   )
@@ -47,7 +47,7 @@ function toolsBlock(): string {
 function guidesBlock(locale: Locale): string {
   return getAllPosts(locale)
     .map(
-      (p) => `- [${p.title}](${absoluteUrl(`${locale}/blog/${p.slug}`)}): ${p.description}`,
+      (p) => `- [${p.title}](${localizedUrl(locale, `blog/${p.key}`)}): ${p.description}`,
     )
     .join("\n");
 }
@@ -64,8 +64,8 @@ Key facts:
 - Differentiator: the team combines civil engineering domain knowledge with software engineering, so tools follow real design workflows and local codes.
 - Clients own the source code of the tools built for them.
 - Local presence: based in Trujillo (La Libertad, Peru), with on-site visits in La Libertad and remote work across Peru and Latin America. Spanish guides cover plugin development for Revit and Civil 3D in Trujillo and how to choose a BIM automation provider in Peru.
-- Contact: WhatsApp +${site.whatsapp.number}${site.showEmail ? ` · Email ${site.email}` : ""} — ${absoluteUrl("es/contacto")}
-- About and author of the guides: ${absoluteUrl("en/nosotros")} (es: ${absoluteUrl("es/nosotros")}) · LinkedIn: ${site.linkedin}
+- Contact: WhatsApp +${site.whatsapp.number}${site.showEmail ? ` · Email ${site.email}` : ""} — ${localizedUrl("es", "contacto")}
+- About and author of the guides: ${localizedUrl("en", "nosotros")} (es: ${localizedUrl("es", "nosotros")}) · LinkedIn: ${site.linkedin}
 
 ## Services (English)
 

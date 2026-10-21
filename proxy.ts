@@ -1,10 +1,16 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { defaultLocale, locales, type Locale } from "@/lib/i18n";
+import { resolveRoute } from "@/lib/routes";
 
 // -----------------------------------------------------------------------------
 // Locale routing (Next.js 16 "proxy", formerly "middleware").
-// Redirects non-prefixed paths to a locale-prefixed URL, picking the best
-// locale from the Accept-Language header. Both locales are always prefixed.
+//  - A path without a locale is redirected to a locale-prefixed URL, picking
+//    the best locale from the Accept-Language header.
+//  - Each page has its URL in its own language (lib/routes.ts): the public URL
+//    is rewritten to its app folder (/en/tools/utm-converter is served by
+//    app/[lang]/herramientas/conversor-de-coordenadas), and every old URL gets a
+//    permanent redirect to the new one (/en/herramientas/… → /en/tools/…).
+// The old-domain redirects (zeist.vercel.app → zeist.dev) live in Vercel.
 // -----------------------------------------------------------------------------
 
 function pickLocale(request: NextRequest): Locale {
@@ -33,7 +39,17 @@ export function proxy(request: NextRequest) {
   const hasLocale = locales.some(
     (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`),
   );
-  if (hasLocale) return;
+  if (hasLocale) {
+    const route = resolveRoute(pathname);
+    if (!route) return;
+    const url = request.nextUrl.clone();
+    if ("redirect" in route) {
+      url.pathname = route.redirect;
+      return NextResponse.redirect(url, 308);
+    }
+    url.pathname = route.rewrite;
+    return NextResponse.rewrite(url);
+  }
 
   const locale = pickLocale(request);
   const url = request.nextUrl.clone();

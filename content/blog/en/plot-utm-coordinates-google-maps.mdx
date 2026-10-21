@@ -1,0 +1,207 @@
+---
+translationKey: "ubicar-plano-coordenadas-utm-google-maps"
+title: "How to find the exact location of a site plan from its UTM coordinates and open it in Google Maps"
+seoTitle: "Plot UTM Coordinates on Google Maps from a Site Plan"
+ctaTitle: "Getting plans on legacy datums or not georeferenced? We automate it in AutoCAD and Civil 3D."
+description: "How to find where a site plan is: read its coordinate table, UTM zone and datum, apply the datum shift and open it in Google Maps. A real case."
+date: "2026-10-16T17:00:00.000Z"
+author: "Zeist"
+tags:
+  - UTM coordinates
+  - Google Maps
+  - Datums
+  - Surveying
+  - Site plans
+---
+
+<BlogHero
+  eyebrow="Coordinates · Site plans · Google Maps"
+  title="A prospect sent us a site plan and one question: where exactly is this?"
+  highlight="The answer was on the plan, spread across three different coordinate systems. Here's how to read a plan to find its exact location, with a real case and a free tool that does it in seconds."
+/>
+
+<Callout type="success" title="Quick answer">
+To find where a site plan is, use its coordinate table: the easting and northing of each corner, with the UTM zone and datum from the title block. Google Maps doesn't accept UTM coordinates, so they must be converted to latitude and longitude on WGS 84. If the plan uses a legacy datum, such as PSAD56 on older Peruvian plans, you also need a datum shift: skip it and the point lands about 450 m off. The free [UTM coordinates on Google Maps](/en/tools/utm-coordinates-google-maps) tool does all of it and opens the location for directions.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain words">
+- **UTM coordinates** — Position in meters: an easting (X) and a northing (Y). Most engineering plans use them.
+- **UTM zone** — The 6°-wide band of longitude those coordinates belong to. The contiguous US spans zones 10 to 19.
+- **Datum** — The model of the Earth the coordinates refer to. GPS and Google Maps use **WGS 84**; NAD83 is within a few meters of it; older plans may use NAD27 in the US or PSAD56 in Peru.
+- **Coordinate table** — The table on the plan with each corner's sides, distances, angles and coordinates.
+- **Location map** — The inset showing where the site sits in town, with a coordinate grid on its edges.
+- **Drawing coordinates** — What AutoCAD shows when you tap a point. On a layout they're millimeters of paper; in model space they only match the ground if the plan was drawn in real coordinates.
+
+Written for engineers, architects, surveyors and anyone who gets a plan and needs to reach the site.
+</Callout>
+
+## The question that looked easy
+
+A prospect recently sent us a screenshot: a location plan for a project in Nuevo Chimbote, Peru, open on a phone. They wanted to know one thing: **where exactly is this?**
+
+It sounds like a one-minute question. But the same plan carried three different sets of coordinates, and only one of them led to the right place. The case is Peruvian; the problem is universal. Plans on old datums, pasted into Google Maps as if they were WGS 84, land somewhere else.
+
+<AnimatedFlow
+  title="From the plan to Google Maps"
+  nodes="Coordinate table|Zone and datum|WGS 84|Google Maps"
+  subs="Easting and northing per corner|17 S · PSAD56 in the example|Latitude and longitude|View, satellite, directions"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Three sets of coordinates on one plan, and only one works" time="~5 min">
+
+This is what the plan showed, as it arrived:
+
+| Where it appears | What it says | Can it locate the site? |
+|---|---|---|
+| Corner of the phone viewer | 266.2624, 106.4341 | No: sheet or drawing coordinates |
+| Location map grid | Easting 763,200 to 764,000; northing 8,992,400 | Only by eye, and here it had an error |
+| Coordinate table | Easting 773,650.1996; northing 8,992,962.5553… | Yes: this is the source to trust |
+| Title block | Zone 17; datum PSAD 56 | Yes: without it, the table can't be read |
+
+**Viewer coordinates** belong to the point you tap in the drawing. On a layout, which is what the screenshot showed, they're millimeters of paper; in model space they're only UTM if the plan was drawn in real coordinates. Here, 266 and 106 match no place on the ground.
+
+**The location map grid** helps you find your bearings in town, not measure. And in this case, as step 4 shows, it had a wrong digit.
+
+**The coordinate table**, with the zone and datum from the title block, is the only thing that locates the site precisely.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. The three things you need: coordinates, zone and datum" time="~5 min">
+
+UTM coordinates alone aren't enough. You need three things:
+
+1. **Easting and northing**, in meters. In the southern hemisphere the northing has seven digits and the easting six.
+2. **Zone and hemisphere.** The same easting repeats in every zone: pick the wrong zone and the point jumps hundreds of kilometers. The zone follows from the longitude: zone = 1 + floor((longitude + 180) / 6).
+3. **Datum.** Pick the wrong one and the point moves tens or hundreds of meters.
+
+In our case the title block said it all: **zone 17, southern hemisphere, datum PSAD 56**. In the US, NAD83 UTM coordinates plot correctly as WGS 84 within a few meters; NAD27 and State Plane coordinates need converting first.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Legacy datum vs WGS 84: why the point lands 447 meters off" time="~6 min">
+
+Google Maps, phone GPS and Google Earth all work on **WGS 84**. Many older Peruvian plans are on **PSAD56**, the datum of the country's earlier mapping, still in circulation even though Peru adopted WGS 84 in 2006.
+
+The same point has different coordinates on each datum. On our plan:
+
+| Reading | Center of the lot | Where it lands |
+|---|---|---|
+| PSAD56 converted to WGS 84 (correct) | −9.1071019, −78.5130932 | Bellamar, Nuevo Chimbote |
+| Coordinates pasted as if they were WGS 84 | −9.1037527, −78.5108236 | El Pescador, another neighborhood |
+
+The gap is **447 m to the northeast**: another block or another neighborhood. In UTM terms, going from PSAD56 to WGS 84 here subtracts about 252 m from the easting and 369 m from the northing.
+
+<Callout type="warn" title="The most common mistake">
+Pasting a plan's PSAD56 coordinates into a converter or a GPS set to WGS 84 without changing the datum. The result looks plausible, because it lands in the same town, so nobody suspects it.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Check the plan before you trust it" time="~6 min">
+
+A coordinate table can be checked against itself: the distances and angles it states must match the ones its coordinates give. On this plan we found three things.
+
+**The lot's table is consistent.** All four sides and four angles match the coordinates, to the millimeter and to the second:
+
+| Side | Distance on the table | Computed from the coordinates |
+|---|---|---|
+| 1 – 2 | 234.8918 m | 234.8918 m |
+| 2 – 3 | 400.1637 m | 400.1637 m |
+| 3 – 4 | 235.1478 m | 235.1478 m |
+| 4 – 1 | 400.4244 m | 400.4245 m |
+
+The lot encloses 94,076.58 m², about 9.41 ha.
+
+**The location map grid has a wrong digit.** Its labels read 763,200, 763,600 and 764,000 for the easting, while the table says 773,xxx. That's 10 km: read as is, the grid points to downtown Chimbote. Which one is right? The table, because it lands among the neighborhoods the plan itself labels. The grid had a 6 where a 7 belonged.
+
+**The second table doesn't close.** The plan has a second area, corners A to D, stating sides of 16 and 30 m, a rectangle. Its coordinates, though, draw sides of 16.07, 47.00, 33.07 and 30.42 m. One of the two is wrong, and before using that area you have to confirm it with whoever made the plan.
+
+<Callout type="tip" title="A one-minute check">
+Compute a side from its two corners: the square root of the easting difference squared plus the northing difference squared. If it matches the table's distance, the coordinates are consistent. The tool checks every side and angle at once.
+</Callout>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Free tool"
+  title="Paste your plan's table and see where it is"
+  body="It applies the datum shift, checks the table, shows the site on a map and opens the location in Google Maps for directions. The preloaded example is this very plan."
+  primaryLabel="Open UTM coordinates on Google Maps"
+  primaryHref="/en/tools/utm-coordinates-google-maps"
+  secondaryLabel="See the batch converter"
+  secondaryHref="/en/tools/utm-converter"
+/>
+
+<TopicCard step="5" title="5. Step by step with the tool" time="~4 min">
+
+1. Open [UTM coordinates on Google Maps](/en/tools/utm-coordinates-google-maps).
+2. **Paste the coordinate table** into the tool's table as it comes from the PDF, Excel or AutoCAD, with corners, sides, distances and angles: one Ctrl+V in any cell does it. The tool finds the easting and northing in each row, fills the columns and separates the tables. You can also type the points row by row; for a single point, use «One point».
+3. Pick the plan's **zone**, **hemisphere** and **datum**; in the example, zone 17, south and PSAD56. If the plan doesn't state the datum, choose «I don't know» and compare where each reading lands.
+4. Read the result: **Your plan is here**, with the latitude and longitude of the lot's center, the outline on the map and a dashed outline showing where you'd land without the datum shift.
+5. Check the **coordinate table check**: what matches in green, what doesn't in amber.
+
+<Figure src="/blog/ubicar-plano-coordenadas-utm-google-maps/plano-en-el-mapa-en.webp" alt="Map from the UTM coordinates on Google Maps tool: the example lot in Bellamar, Nuevo Chimbote, and a dashed outline where it lands without converting PSAD56 to WGS 84" caption="The example lot converted to WGS 84, in green, and dashed, where it lands without the datum shift: 447 m to the northeast." width="1458" height="1096" />
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Getting there: Google Maps, satellite and Google Earth" time="~4 min">
+
+Google Maps accepts coordinates in decimal degrees, degrees-minutes-seconds or decimal minutes. So the tool gives you four outputs:
+
+- **Open in Google Maps**: the point, ready to save or share.
+- **Directions**: a route from wherever you are.
+- **Satellite view**: the aerial photo, to recognize the site before you go.
+- **KML**: the lot outline for Google Earth.
+
+**How accurate is it?** On WGS 84 or NAD83, as accurate as the plan's coordinates. On PSAD56, the datum shift is good to about ±16 m: enough to reach the site, not to stake boundaries. For that, tie the work to control points surveyed with GNSS.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. If you have the DWG: georeference it in AutoCAD or Civil 3D" time="~5 min">
+
+If you also have the DWG and want the drawing to sit on a map:
+
+1. **Check what coordinates it was drawn in.** In model space, not on a layout, tap a corner: if you don't see its easting and northing from the table, the plan is in local coordinates.
+2. **Move it to real coordinates** with the ALIGN command: pick two corners in the drawing and give them their table coordinates. The plan moves, rotates and scales into place.
+3. **Assign the drawing's coordinate system.** In Civil 3D, under Drawing Settings › Units and Zone, choose the plan's system.
+4. **If you'll combine it with a new WGS 84 survey**, convert before mixing, never after.
+
+If your firm gets plans like this every week, it's repetitive work worth automating. We cover it in [Civil 3D automation, the complete guide](/en/blog/civil-3d-automation-guide).
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · AutoCAD and Civil 3D automation"
+  title="Plans georeferenced in bulk, with your firm's rules"
+  body="We build plugins that convert coordinates between datums, georeference plans drawn in local coordinates and check coordinate tables before they reach design. We're civil engineers and software engineers."
+  primaryLabel="Request a free diagnosis"
+  primaryHref="/en/contact"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/services/revit-civil-3d-plugin-development"
+/>
+
+## Related resources
+
+- **The tool for this case:** [UTM coordinates on Google Maps](/en/tools/utm-coordinates-google-maps).
+- **For hundreds of points:** [UTM to lat long converter](/en/tools/utm-converter), with Excel, Civil 3D and Google Earth exports.
+- **Bringing the points into Civil 3D:** [Civil 3D import points from CSV or Excel](/en/blog/civil-3d-import-points-csv).
+- **The terrain:** [Civil 3D contours from Google Earth or a survey](/en/blog/civil-3d-contours-google-earth).
+- **Lot area and legal description:** [area from coordinates calculator](/en/tools/area-from-coordinates-calculator).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Civil engineers who code"
+  title="A team of civil engineers and software engineers"
+  body="We work with plans, coordinates and Civil 3D every day, and we build the tools that process them. We work remotely with engineering firms in the US, Europe and Latin America."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contact"
+  secondaryLabel="See all services"
+  secondaryHref="/en/services"
+/>
+
+---
+
+**Technical note:** the conversions in this article were verified with PROJ using the EPSG transformation PSAD56 to WGS 84 (8). The entity and project behind the plan are not named.

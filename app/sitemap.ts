@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl } from "@/lib/site";
+import { localizedUrl } from "@/lib/site";
 import { locales, hreflangByLocale, type Locale } from "@/lib/i18n";
 import { getAllPosts } from "@/lib/blog";
 import { pillarSlugs } from "@/lib/clusters";
@@ -39,12 +39,14 @@ function priorityFor(path: string): number {
   return 0.8;
 }
 
+// Each locale has its own public URL for the same page (lib/routes.ts).
 function localePath(locale: Locale, path: string) {
-  return absoluteUrl(path ? `${locale}/${path}` : locale);
+  return localizedUrl(locale, path);
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // path -> locales where that path actually exists.
+  // Internal path ("blog/<translationKey>", "herramientas/<id>") -> locales
+  // where that page actually exists.
   // Static routes are always translated; blog posts are not (locale-specific
   // content such as Peru regulation ships only in `es`), so listing a /pt/ URL
   // for them would publish a 404 and a broken hreflang pair.
@@ -66,7 +68,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     let newest = 0;
     // getAllPosts filters out drafts — archived posts must not reach the sitemap.
     for (const post of getAllPosts(l)) {
-      const path = `blog/${post.slug}`;
+      const path = `blog/${post.key}`;
       const date = new Date(post.updated ?? post.date);
       pathLocales.set(path, [...(pathLocales.get(path) ?? []), l]);
       lastMod.set(`${l}:${path}`, date);

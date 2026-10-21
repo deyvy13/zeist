@@ -344,7 +344,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "No lote de exemplo, em São Paulo e a 760 m de altitude, o fator combinado é 0,99982297: a área no plano UTM é 1.624,00 m² e no terreno, 1.624,58 m². A calculadora mostra as duas; o memorial declara a do plano UTM, como pede a redação usual. Para converter pontos ou ver o fator de cada um, use o [conversor de coordenadas](/pt/herramientas/conversor-de-coordenadas).",
+            text: "No lote de exemplo, em São Paulo e a 760 m de altitude, o fator combinado é 0,99982297: a área no plano UTM é 1.624,00 m² e no terreno, 1.624,58 m². A calculadora mostra as duas; o memorial declara a do plano UTM, como pede a redação usual. Para converter pontos ou ver o fator de cada um, use o [conversor de coordenadas](/pt/ferramentas/conversor-de-coordenadas).",
           },
         ],
       },
@@ -358,7 +358,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "E o caminho inverso: o **DXF** que a ferramenta gera traz o perímetro, os nomes dos vértices, a distância de cada lado e o quadro de coordenadas já desenhado, em camadas separadas e nas coordenadas reais. Abre no AutoCAD, no Civil 3D ou em qualquer programa CAD. Para automatizar esse fluxo no seu escritório, veja o guia para [automatizar o Civil 3D](/pt/blog/automatizar-civil-3d-guia-completa).",
+            text: "E o caminho inverso: o **DXF** que a ferramenta gera traz o perímetro, os nomes dos vértices, a distância de cada lado e o quadro de coordenadas já desenhado, em camadas separadas e nas coordenadas reais. Abre no AutoCAD, no Civil 3D ou em qualquer programa CAD. Para automatizar esse fluxo no seu escritório, veja o guia para [automatizar o Civil 3D](/pt/blog/automatizar-civil-3d-guia-completo).",
           },
         ],
       },
@@ -533,7 +533,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "For the example lot near New York City, 10 m above the ellipsoid, the combined factor is 0.99968511: the grid area is 1,624.00 m² and the ground area 1,625.02 m², about 11 square feet more. The calculator shows both. To convert points or check each point's factor, use the [UTM to lat long converter](/en/herramientas/conversor-de-coordenadas).",
+            text: "For the example lot near New York City, 10 m above the ellipsoid, the combined factor is 0.99968511: the grid area is 1,624.00 m² and the ground area 1,625.02 m², about 11 square feet more. The calculator shows both. To convert points or check each point's factor, use the [UTM to lat long converter](/en/tools/utm-converter).",
           },
         ],
       },
@@ -547,7 +547,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "The other way around, the **DXF** the tool creates contains the boundary, point names, the distance on each side and the table of courses already drawn, on separate layers and at real coordinates. It opens in AutoCAD, Civil 3D or any CAD program. To automate this in your office, see how to [automate Civil 3D](/en/blog/automatizar-civil-3d-guia-completa).",
+            text: "The other way around, the **DXF** the tool creates contains the boundary, point names, the distance on each side and the table of courses already drawn, on separate layers and at real coordinates. It opens in AutoCAD, Civil 3D or any CAD program. To automate this in your office, see how to [automate Civil 3D](/en/blog/civil-3d-automation-guide).",
           },
         ],
       },

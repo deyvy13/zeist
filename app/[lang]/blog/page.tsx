@@ -48,7 +48,7 @@ export default async function BlogIndexPage({
             "blog",
             dict.blog.seoTitle,
             dict.blog.metaDescription,
-            posts.map((p) => ({ name: p.title, path: `blog/${p.slug}`, type: "BlogPosting", description: p.description })),
+            posts.map((p) => ({ name: p.title, path: `blog/${p.key}`, type: "BlogPosting", description: p.description })),
             "Blog",
           ),
           breadcrumbJsonLd(lang, [[dict.nav.blog, "blog"]]),
@@ -66,8 +66,8 @@ export default async function BlogIndexPage({
         <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <Link
-              key={post.slug}
-              href={localizedPath(lang, `blog/${post.slug}`)}
+              key={post.key}
+              href={localizedPath(lang, `blog/${post.key}`)}
               className="surface surface-hover flex flex-col rounded-3xl p-6"
             >
               <div className="flex flex-wrap gap-2">

@@ -1,0 +1,222 @@
+---
+translationKey: "corredores-civil-3d-ensamblajes-objetivos"
+title: "Corredor no Civil 3D: montagens, alvos, superfície e interseções, sem brigar com o modelo"
+seoTitle: "Corredor no Civil 3D: montagens, alvos e superfície"
+ctaTitle: "Você monta os mesmos corredores em todo projeto? Automatizamos a montagem com as suas seções-tipo."
+description: "Como funciona um corredor no Civil 3D: alinhamento, perfil e montagem, frequência, alvos, superfície, interseções e os erros mais comuns."
+date: "2026-10-09T02:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Corredores
+  - Montagens
+  - Projeto rodoviário
+  - Automação BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Corredores"
+  title="O corredor é o coração de um projeto rodoviário no Civil 3D. E também onde mais tempo se perde."
+  highlight="Que peças o formam, como se monta uma montagem, o que são a frequência e os alvos, como tirar uma superfície limpa, como resolver interseções e como corrigir os erros mais buscados."
+/>
+
+<Callout type="success" title="Resposta rápida">
+Um corredor no Civil 3D é o modelo 3D de uma via, um canal ou uma plataforma. É montado com três peças: um alinhamento, um perfil e uma montagem (assembly), que é a seção-tipo feita de submontagens. O Civil 3D aplica a montagem ao longo do eixo a cada certa distância, chamada frequência, e a adapta com alvos (targets): superfícies, alinhamentos e perfis que definem larguras, cotas e taludes. Do corredor saem a superfície da obra, as seções transversais e os volumes de corte e aterro.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Alinhamento** — O eixo da via em planta: retas, curvas e espirais, com suas estacas.
+- **Perfil ou greide** — O eixo em elevação: a que cota a via passa em cada estaca.
+- **Montagem** — A seção-tipo: faixas, acostamentos, meios-fios, sarjetas e taludes, montados como peças.
+- **Submontagem** — Cada peça da montagem: uma faixa, um meio-fio, um talude.
+- **Frequência** — A cada quantos metros o Civil 3D aplica a seção-tipo ao longo do eixo.
+- **Alvo** — Algo do desenho que a seção «persegue»: um terreno até onde levar o talude, uma borda que marca a largura, um perfil que fixa uma cota.
+- **Daylight** — O ponto onde o talude de corte ou de aterro encontra o terreno natural.
+
+Foi escrito para engenheiros civis que já projetam no Civil 3D e querem entender o corredor a fundo.
+</Callout>
+
+## Por que o corredor é onde se perde tempo
+
+Num projeto rodoviário, quase tudo o que se entrega sai do corredor: a superfície da obra, as seções transversais, os volumes e boa parte das pranchas. Quando o corredor está bem montado, uma mudança de greide se propaga sozinha. Quando está mal montado, cada mudança obriga a revisar à mão buracos, taludes que não chegam ao terreno e seções que não batem.
+
+Este guia explica como ele é montado de verdade e como resolver os erros mais buscados.
+
+<AnimatedFlow
+  title="De três peças a um modelo 3D"
+  nodes="Alinhamento|Perfil|Montagem|Corredor"
+  subs="O eixo em planta|O greide|A seção-tipo|Superfície, seções e volumes"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. As três peças de um corredor" time="~5 min">
+
+Um corredor precisa, no mínimo, de:
+
+- **Um alinhamento**, que marca por onde passa o eixo.
+- **Um perfil de projeto** sobre esse alinhamento, que marca a que cota ele passa. Como montá-lo, em [perfil longitudinal no Civil 3D](/pt/blog/perfil-longitudinal-civil-3d).
+- **Uma montagem**, que diz como é a seção de cada lado do eixo.
+
+O alinhamento e o perfil formam a **linha base** do corredor. Um mesmo corredor pode ter várias linhas base: uma por rua, por ramo ou por borda de uma interseção.
+
+Sobre cada linha base definem-se **regiões**: trechos entre duas estacas que usam uma montagem. Se a seção muda, por exemplo de corte em encosta para um trecho urbano com meio-fio, cria-se outra região com outra montagem.
+
+<Callout type="tip" title="Antes de criar o corredor">
+Confira se o perfil de projeto cobre todo o trecho. Onde o perfil não chega, o corredor também não: a região fica curta e é fácil não perceber até ver as seções.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Montagens e submontagens: a seção-tipo" time="~6 min">
+
+A montagem é feita em planta, num ponto qualquer do desenho, encaixando submontagens de cada lado de um eixo. O Civil 3D traz uma paleta de ferramentas com dezenas de submontagens prontas. As mais usadas:
+
+| Submontagem | O que modela |
+|---|---|
+| BasicLane | Uma faixa com largura, inclinação e espessura |
+| LaneSuperelevationAOR | Uma faixa que segue a superelevação do alinhamento |
+| BasicShoulder | Um acostamento |
+| BasicCurbAndGutter | Um meio-fio com sarjeta |
+| BasicSideSlopeCutDitch | Talude de corte com valeta, ou de aterro, até o terreno |
+| LinkSlopeToSurface | Um trecho com inclinação fixa que procura a superfície |
+| ConditionalCutOrFill | Escolhe um ramo ou outro conforme haja corte ou aterro |
+
+**Corte e aterro, cada um com seu talude: a montagem condicional.** Com ConditionalCutOrFill, a montagem pode ter um ramo para corte, com valeta e seu talude, e outro para aterro, com um talude mais suave. O Civil 3D usa o que corresponde em cada estaca conforme a posição do terreno.
+
+**Se a seção-tipo não existe na paleta**, ela é criada no **Subassembly Composer**, o programa que vem com o Civil 3D para desenhar submontagens próprias com um diagrama, sem escrever código. Exporta-se um arquivo .pkt e importa-se no Civil 3D. É o caminho para valetas especiais, muros ou um [banco de dutos no Civil 3D](/pt/blog/banco-de-dutos-civil-3d).
+
+<Callout type="info" title="Os códigos são tudo">
+Cada submontagem tem códigos em seus pontos, links e formas: por exemplo, Top para a superfície acabada e Datum para o subleito. São esses códigos que a superfície do corredor, os rótulos das seções e os materiais dos volumes usam. Um escritório que respeita os mesmos códigos em todas as montagens consegue automatizar quase tudo o que vem depois.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Regiões, frequência e alvos" time="~7 min">
+
+**A frequência.** O Civil 3D não modela o corredor de forma contínua: aplica a seção-tipo em estações, a cada certa distância em retas, curvas e espirais, e também nos pontos onde muda a geometria do alinhamento e do perfil. Entre uma estação e a seguinte, liga os pontos com linhas. Por isso:
+
+- Com frequência baixa nas curvas, as bordas ficam quebradas e os volumes saem aproximados.
+- Com frequência muito alta em todo o trecho, o corredor demora mais para ser reconstruído e o desenho fica mais pesado.
+
+Uma prática comum é usar mais estações nas curvas do que nas retas, e sempre incluir os pontos de mudança de geometria.
+
+**Os alvos.** Uma submontagem pode perseguir algo do desenho em vez de usar um valor fixo. Os alvos são atribuídos no mapeamento de alvos (Target Mapping), nas propriedades do corredor, e há três tipos:
+
+| Tipo de alvo | O que controla | Exemplos |
+|---|---|---|
+| Superfície | Até onde o talude desce ou sobe | O terreno natural, para o daylight |
+| Largura ou afastamento | Até onde vai uma faixa ou um acostamento | Um alinhamento de borda, uma polilinha, uma feature line |
+| Inclinação ou elevação | A que cota chega um ponto | Um perfil de borda, uma feature line, uma polilinha 3D |
+
+Um exemplo: um alargamento antes de uma ponte é modelado com um alinhamento de borda deslocado. A faixa segue essa borda e a largura muda sozinha, sem criar outra região.
+
+<Callout type="warn" title="Um alvo vazio não avisa">
+Se um alvo fica como «Nenhum», a submontagem usa seu valor padrão ou deixa de desenhar essa parte, sem uma mensagem clara. É a causa mais comum de taludes que não aparecem.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. A superfície do corredor e seu contorno" time="~6 min">
+
+A superfície do corredor é a obra acabada. É criada nas propriedades do corredor, na aba de superfícies:
+
+- Adicionam-se **códigos de link**: Top para a superfície acabada ou Datum para o subleito, conforme o uso.
+- Se necessário, adicionam-se **feature lines** como linhas de quebra, para que a triangulação respeite bordas e sarjetas.
+- Define-se o **contorno**, para que a triangulação não preencha os espaços entre ramos nem cruze por fora dos taludes.
+
+**O contorno automático** é adicionado na aba de contornos, usando a linha de daylight. Só funciona se o daylight existir dos dois lados do corredor em todo o trecho. Se um lado não tem talude, por exemplo junto a um muro, é preciso desenhar o contorno como polilinha e adicioná-lo.
+
+**Com a superfície do corredor** comparam-se volumes contra o terreno, desenham-se as [curvas de nível do projeto](/pt/blog/curvas-de-nivel-civil-3d-google-earth) e leva-se a obra a outros programas, como ao [passar a topografia do Civil 3D para o Revit](/pt/blog/civil-3d-para-revit-topografia).
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Interseções: o caso mais difícil" time="~5 min">
+
+Numa interseção mudam ao mesmo tempo o abaulamento, as bordas, os meios-fios e as curvas de concordância. O Civil 3D traz o assistente **Create Intersection**, que a partir de dois alinhamentos com seus perfis cria:
+
+- O objeto interseção.
+- Os alinhamentos de afastamento das bordas e os das curvas de esquina, com seus perfis.
+- As montagens e as regiões do corredor na área da interseção.
+
+O que o assistente não resolve é o critério: qual via manda no abaulamento, como a esquina é drenada, que raio usar. Isso continua sendo projeto. E cada mudança de raio ou de greide obriga a revisar a interseção.
+
+<Callout type="info" title="Quando são dezenas">
+Num loteamento com dezenas de ruas e interseções, montá-las uma a uma consome dias. É um dos processos que mais vale automatizar.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Os erros mais buscados" time="~7 min">
+
+- **O corredor está desatualizado.** Você mudou o perfil ou um alvo e o corredor não mudou. No Prospector ele aparece marcado como desatualizado: é preciso reconstruí-lo, ou ativar a reconstrução automática, que em desenhos grandes deixa cada mudança lenta.
+- **O talude não chega ao terreno.** O alvo de superfície não foi atribuído, o terreno não cobre essa área ou o talude tem uma largura máxima que não alcança.
+- **Buracos ou picos na superfície.** Regiões que não se tocam, poucas estações nas curvas ou falta de contorno: a triangulação liga pontos que não deveria.
+- **A superfície do corredor não aparece.** Foi criada sem códigos de link e está vazia, o contorno a recorta inteira ou o estilo dela não mostra nada.
+- **A largura não muda no alargamento.** O alvo de largura foi atribuído a outra submontagem, ou o alinhamento de borda não cobre toda a região.
+- **A seção muda de repente entre regiões.** Passar de uma montagem para outra sem transição deixa degraus. A transição é modelada com alvos de largura e de cota.
+- **As seções não mostram o corredor.** O corredor não está entre as fontes das linhas de amostragem. Explicamos em [seções transversais no Civil 3D](/pt/blog/secoes-transversais-civil-3d).
+- **O corredor está muito lento.** Regiões demais, muitas estações em todo o trecho ou um terreno muito denso como alvo. Dividir o projeto em vários corredores por trecho ajuda.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Volumes, e o que vale automatizar" time="~5 min">
+
+Do corredor saem os volumes de duas formas:
+
+- **Por seções:** linhas de amostragem, materiais e tabela de volume, pelo método das áreas médias. Passo a passo em [seções transversais no Civil 3D](/pt/blog/secoes-transversais-civil-3d).
+- **Por superfícies:** comparando a superfície do corredor com o terreno numa superfície de volume.
+
+**O que mais consome horas num escritório**, e pode ser automatizado:
+
+- Criar os corredores de um loteamento com muitas ruas, com a mesma seção-tipo e suas regiões.
+- Atribuir os alvos em lote, sem abrir o quadro rua por rua.
+- Exportar os pontos do corredor por código e estaca para o Excel, para locação ou quantitativos.
+- Revisar, antes de gerar as pranchas, se cada corredor está reconstruído, com contorno e sem regiões vazias.
+
+Desde o Civil 3D 2025.1, o Dynamo traz nós para trabalhar com corredores; vemos isso em [10 scripts de Dynamo para Civil 3D](/pt/blog/dynamo-civil-3d-scripts). Para ferramentas que o escritório inteiro usa, a [API do Civil 3D em C#](/pt/blog/civil-3d-api-csharp-primeiros-passos) dá controle completo.
+
+<ComparisonTable
+  criterionLabel="Tarefa"
+  leftLabel="Com um plugin"
+  rightLabel="À mão"
+  rows="Criar 30 ruas com sua seção-tipo | *Uma execução com as regras do escritório | Dias de trabalho repetitivo || Atribuir alvos | *Em lote, com regras | Rua por rua || Revisão antes das pranchas | *Relatório com o que falta | No olho || Mudança de seção-tipo | *Executar de novo | Refazer regiões"
+/>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automação do Civil 3D"
+  title="Seus corredores, montados com as suas regras"
+  body="Desenvolvemos plugins em C# que criam corredores, atribuem alvos e revisam o modelo com as seções-tipo e os códigos do seu escritório. Somos engenheiros civis e engenheiros de sistemas: entendemos o projeto rodoviário porque o fazemos."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicos/plugins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **O próximo passo:** [seções transversais no Civil 3D](/pt/blog/secoes-transversais-civil-3d).
+- **As sample lines:** [criar e automatizar sample lines no Civil 3D](/pt/blog/sample-lines-civil-3d).
+- **O passo anterior:** [perfil longitudinal no Civil 3D, greide e bandas](/pt/blog/perfil-longitudinal-civil-3d).
+- **O guia completo:** [automatizar o Civil 3D](/pt/blog/automatizar-civil-3d-guia-completo).
+- **Sem código:** [10 scripts de Dynamo para Civil 3D](/pt/blog/dynamo-civil-3d-scripts).
+- **Com código:** [Civil 3D API em C#, primeiros passos](/pt/blog/civil-3d-api-csharp-primeiros-passos).
+- **Submontagens próprias:** [banco de dutos no Civil 3D](/pt/blog/banco-de-dutos-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Peru"
+  title="Uma equipe de engenheiros civis e engenheiros de sistemas"
+  body="Projetamos com o Civil 3D e o programamos. Trabalhamos com escritórios do Brasil e de toda a América Latina."
+  primaryLabel="Vamos falar do seu projeto"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver todos os serviços"
+  secondaryHref="/pt/servicos"
+/>
+
+---
+
+**Nota técnica:** os nomes de comandos e submontagens correspondem ao Civil 3D 2026. Consulte a ajuda da sua versão se algum mudar.

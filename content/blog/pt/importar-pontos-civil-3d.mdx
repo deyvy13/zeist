@@ -1,0 +1,199 @@
+---
+translationKey: "importar-puntos-civil-3d-excel"
+title: "Importar pontos no Civil 3D a partir do Excel, CSV ou TXT: formatos, latitude e longitude, duplicados e os erros mais comuns"
+seoTitle: "Importar pontos no Civil 3D: Excel, CSV e TXT"
+ctaTitle: "Sua equipe importa e organiza pontos à mão a cada levantamento? Automatizamos isso com seus códigos."
+description: "Como importar pontos no Civil 3D a partir do Excel: preparar o CSV, o formato PNEZD, latitude e longitude, duplicados e por que não aparecem."
+date: "2026-10-09T17:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Pontos COGO
+  - Topografia
+  - Excel
+  - Automação BIM
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Pontos · Topografia"
+  title="Importar pontos parece a coisa mais fácil do Civil 3D. Até o arquivo não entrar ou os pontos aparecerem em outro lugar."
+  highlight="Como preparar o arquivo no Excel, que formato escolher, como trazer pontos em latitude e longitude, o que fazer com números repetidos e por que às vezes os pontos não aparecem. Com a causa real de cada erro."
+/>
+
+<Callout type="success" title="Resposta rápida">
+Para importar pontos no Civil 3D usa-se Inserir › Pontos de arquivo. O Civil 3D não lê arquivos do Excel: é preciso salvá-los como CSV ou TXT, sem linha de cabeçalho e com o número do ponto como número inteiro. Escolhe-se o formato que corresponde à ordem das colunas, quase sempre PNEZD (número, norte, este, cota e descrição), separado por vírgulas para CSV ou por espaços para TXT. A pré-visualização mostra se as colunas estão sendo lidas bem. Se os pontos vêm em latitude e longitude, o desenho precisa antes de um sistema de coordenadas.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Ponto COGO** — O ponto próprio do Civil 3D: guarda número, coordenadas, cota e descrição, e é desenhado com seu estilo e seu rótulo.
+- **PNEZD** — A ordem de colunas mais usada: Ponto, Norte, Este, cota (Z) e Descrição.
+- **CSV** — Um arquivo de texto com os valores separados por vírgulas. O Excel salva nesse formato, mas não é um arquivo do Excel.
+- **Formato de arquivo de pontos** — O modelo que diz ao Civil 3D o que há em cada coluna e como estão separadas.
+- **Grupo de pontos** — Uma coleção de pontos com um critério comum, por exemplo todos os de terreno natural.
+- **Chave de descrição** — Uma regra que atribui estilo, rótulo e layer conforme o código do ponto, como BV para bordo de via.
+- **Sistema de coordenadas** — A projeção do desenho, por exemplo SIRGAS 2000 UTM zona 23 Sul.
+
+Foi escrito para topógrafos e engenheiros que recebem levantamentos e os levam para o Civil 3D.
+</Callout>
+
+## Por que algo tão simples falha
+
+O levantamento chega em Excel, num TXT da estação total ou num CSV do GNSS. Cada um com sua ordem de colunas, seu separador e, às vezes, com a vírgula decimal do Windows em português. O Civil 3D é rigoroso: se o arquivo não bate exatamente com o formato escolhido, não importa nada ou importa pontos no lugar errado.
+
+Este guia segue a ordem em que vale fazer: preparar o arquivo, importar, escolher o formato e resolver os problemas.
+
+<AnimatedFlow
+  title="Do levantamento à superfície"
+  nodes="Excel ou TXT|CSV limpo|Pontos de arquivo|Grupos e superfície"
+  subs="O que vem do campo|Sem cabeçalho, com ponto decimal|Formato PNEZD e pré-visualização|Chaves de descrição e terreno"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Preparar o arquivo no Excel" time="~6 min">
+
+O Civil 3D não lê arquivos .xlsx. Antes de importar:
+
+1. **Ordene as colunas** como o formato que vai usar. Para PNEZD: número, norte, este, cota e descrição.
+2. **Apague a linha de cabeçalho.** Uma linha com títulos como «Norte» ou «Este» faz o arquivo não corresponder a nenhum formato.
+3. **O número do ponto deve ser um número inteiro.** Se seus pontos se chamam RN-1 ou E-12, esse nome vai na descrição ou num formato próprio com coluna de nome.
+4. **Tire as vírgulas da descrição.** «BV, lado esquerdo» parte a linha em duas colunas e bagunça tudo o que vem depois.
+5. **Salve como CSV (separado por vírgulas)** e abra no Bloco de Notas para ver o que o Excel salvou de verdade.
+
+<Callout type="warn" title="A armadilha da vírgula decimal">
+Com o Windows em português, o Excel costuma salvar o CSV com ponto e vírgula como separador e vírgula decimal: «1;7394512,452;333207,118». O Civil 3D espera ponto decimal. Para evitar isso, no Excel vá em Opções › Avançado, desmarque Usar separadores do sistema e coloque o ponto como separador decimal antes de salvar. Se o arquivo continuar saindo com ponto e vírgula, crie um formato de pontos que use esse separador.
+</Callout>
+
+O [conversor de coordenadas gratuito](/pt/ferramentas/conversor-de-coordenadas) evita esses três problemas de uma vez: baixa um PNEZD com ponto decimal, sem vírgulas na descrição e com os pontos numerados, e se um ponto se chama RN-1, move o nome para a descrição.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Importar, passo a passo" time="~5 min">
+
+1. Aba **Inserir** › **Pontos de arquivo** (Points from File).
+2. Adicione o arquivo com o botão de adicionar.
+3. Escolha o **formato de arquivo de pontos** que corresponde às suas colunas.
+4. Olhe a **pré-visualização**: em UTM no Brasil, os nortes têm sete dígitos inteiros e as cotas, valores razoáveis. Se os números aparecem deslocados de coluna, o formato não é o correto.
+5. Se quiser, marque **Adicionar pontos ao grupo de pontos** e crie um grupo com o nome do levantamento.
+6. Revise as **opções avançadas** antes de aceitar: o ajuste de elevação e a transformação de coordenadas mudam cotas ou coordenadas, e vale ativá-las só se você sabe que precisa.
+
+Depois de importar, use Zoom › Extensão para ver onde ficaram todos os pontos.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Que formato escolher" time="~5 min">
+
+| Se o seu arquivo tem | Formato |
+|---|---|
+| Número, norte, este, cota, descrição, separados por vírgulas | PNEZD (comma delimited) |
+| O mesmo, separados por espaços (típico de um TXT) | PNEZD (space delimited) |
+| Número, **este**, norte, cota, descrição | PENZD |
+| Só norte, este e cota | NEZ |
+| Uma ordem diferente ou um separador próprio | Um formato novo em Gerenciar formatos |
+
+**Este primeiro ou norte primeiro** é a confusão mais comum: muitos coletores e planilhas entregam o este antes do norte. Se você escolher PNEZD para um arquivo PENZD, os pontos ficam trocados e a milhares de quilômetros.
+
+**Para criar um formato próprio**, no quadro de importação entre em Gerenciar formatos, copie um parecido e mude a ordem das colunas ou o separador. Ele fica salvo no desenho, e no template se você o criar lá.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Pontos em latitude e longitude" time="~5 min">
+
+Os pontos do Google Earth, de um GPS de mão ou de muitos receptores GNSS vêm em graus. Há dois caminhos:
+
+**Convertê-los antes.** Cole os pontos no [conversor de coordenadas](/pt/ferramentas/conversor-de-coordenadas), confira no mapa e baixe o PNEZD em UTM. É o mais seguro, porque você vê onde caem antes de importá-los.
+
+**Importá-los em graus.** Primeiro atribua o sistema de coordenadas do desenho em Configurações do desenho › Unidades e zona, por exemplo SIRGAS 2000 UTM zona 23 Sul para São Paulo. Depois crie um formato com colunas de latitude e longitude. Sem sistema de coordenadas, o Civil 3D não sabe como projetar os graus.
+
+<Callout type="warn" title="Confira o datum">
+Um levantamento antigo em SAD69 e uma prancha nova em SIRGAS 2000 não coincidem: misturar os dois desloca os pontos. O conversor faz essa transformação com os parâmetros do IBGE.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Números de ponto repetidos" time="~4 min">
+
+Se você importa um ponto com um número que já existe no desenho, o Civil 3D abre o quadro de número de ponto duplicado. As opções:
+
+- **Usar o próximo número de ponto:** dá o próximo número livre.
+- **Adicionar um deslocamento:** soma um valor fixo, por exemplo 10000, ao número do ponto novo.
+- **Sequenciar a partir de:** renumera os pontos novos a partir do número indicado.
+- **Sobrescrever:** substitui o ponto existente pelo novo.
+- **Mesclar:** atualiza o ponto existente com os dados do novo, sem apagar o que o novo não traz.
+
+Com **Aplicar a todos** a mesma resposta vale para o resto do arquivo.
+
+<Callout type="tip" title="Uma regra que evita o problema">
+Atribua uma faixa de números a cada levantamento ou a cada equipe: 1 a 9999 para o primeiro, 10000 a 19999 para o segundo. Assim nunca se sobrepõem e o número já diz de onde vem o ponto.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Os erros mais buscados" time="~6 min">
+
+- **«Nenhum formato correspondente encontrado».** O arquivo tem cabeçalho, é um .xlsx, usa ponto e vírgula ou tem mais colunas que o formato.
+- **Os pontos não aparecem.** Faça Zoom › Extensão. Se aparecem muito longe, o norte e o este estão invertidos. Se não aparecem em lugar nenhum, o estilo ou o rótulo do grupo estão como «Nenhum» ou a layer está desligada.
+- **Todas as cotas saem zero.** O formato escolhido não tem coluna de cota ou a cota está em outra posição.
+- **Os pontos caem deslocados.** O datum do arquivo não é o da prancha, ou foram importados graus sem sistema de coordenadas.
+- **A descrição sai cortada.** Havia uma vírgula dentro do texto.
+- **Os números saem trocados.** Há números de ponto repetidos e o Civil 3D usou o próximo livre sem você perceber.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. Depois de importar, e o que vale automatizar" time="~5 min">
+
+Importar é metade do trabalho. O que torna o levantamento útil:
+
+- **Chaves de descrição.** Atribuem estilo, rótulo e layer conforme o código: tudo o que começa com BV vai para a layer de bordos de via com seu símbolo. São configuradas uma vez no template.
+- **Grupos de pontos** por código, para decidir o que entra na superfície do terreno e o que não.
+- **A superfície**, com linhas de quebra e contorno. Contamos isso em [curvas de nível no Civil 3D](/pt/blog/curvas-de-nivel-civil-3d-google-earth).
+
+**O que mais consome tempo num escritório**, e pode ser automatizado:
+
+- Importar direto do Excel de campo, sem passar por CSV, com a ordem de colunas de cada equipe.
+- Conferir antes de importar: números repetidos, cotas zero, pontos fora da zona do projeto ou códigos que não existem nas chaves.
+- Criar os grupos por código e a superfície com as regras do escritório.
+- Exportar pontos do desenho para o Excel, como faz uma das [rotinas LISP para AutoCAD e Civil 3D](/pt/blog/rotinas-lisp-autocad-civil-3d).
+
+<ComparisonTable
+  criterionLabel="Tarefa"
+  leftLabel="Com um plugin"
+  rightLabel="À mão"
+  rows="Excel de campo para o Civil 3D | *Direto, sem CSV | Salvar CSV e conferir separadores || Conferência prévia | *Duplicados, cotas zero e fora de zona | Depois, ao ver o erro || Grupos e superfície | *Com as regras do escritório | Um por um || Cada equipe com seu formato | *Detectado sozinho | Escolher o formato toda vez"
+/>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Automação do Civil 3D"
+  title="Do levantamento à superfície, num passo"
+  body="Desenvolvemos plugins para o Civil 3D que importam o Excel de campo, conferem os pontos, montam os grupos por código e criam a superfície com as regras do seu escritório. Somos engenheiros civis e engenheiros de sistemas."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicos/plugins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Converta antes de importar:** [conversor de coordenadas UTM e geográficas](/pt/ferramentas/conversor-de-coordenadas).
+- **Não sabe onde fica a planta?** [Como localizar uma planta com coordenadas UTM no Google Maps](/pt/blog/localizar-terreno-coordenadas-utm).
+- **O próximo passo:** [curvas de nível no Civil 3D, do levantamento à superfície](/pt/blog/curvas-de-nivel-civil-3d-google-earth).
+- **O guia completo:** [automatizar o Civil 3D](/pt/blog/automatizar-civil-3d-guia-completo).
+- **Sem código:** [10 scripts de Dynamo para Civil 3D](/pt/blog/dynamo-civil-3d-scripts).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Peru"
+  title="Uma equipe de engenheiros civis e engenheiros de sistemas"
+  body="Trabalhamos com levantamentos e com o Civil 3D todos os dias, e programamos as ferramentas que os processam. Atendemos escritórios do Brasil e de toda a América Latina."
+  primaryLabel="Vamos falar do seu caso"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver todos os serviços"
+  secondaryHref="/pt/servicos"
+/>
+
+---
+
+**Nota técnica:** os nomes de comandos correspondem ao Civil 3D 2026. Consulte a ajuda da sua versão se algum mudar.

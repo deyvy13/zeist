@@ -1,0 +1,200 @@
+---
+translationKey: "tabla-de-metrados-automatica-revit-civil-3d"
+title: "Automated quantity takeoff: from Revit and Civil 3D to your Excel bill of quantities, with the backup"
+seoTitle: "Revit and Civil 3D Quantity Takeoff, Automated"
+ctaTitle: "Does your team rebuild the quantity takeoff by hand for every design version? We generate it from the model."
+description: "How to turn Revit and Civil 3D quantities into an Excel bill of quantities with calculation backup, by line item and in your format, and automate it."
+date: "2026-10-16T23:00:00.000Z"
+author: "Zeist"
+tags:
+  - Quantity takeoff
+  - Revit
+  - Civil 3D
+  - Excel
+  - Estimating
+  - BIM automation
+---
+
+<BlogHero
+  eyebrow="Quantities · Revit · Civil 3D · Excel"
+  title="Can the quantity takeoff be generated automatically? Yes. With the backup, by line item and in your client's format."
+  highlight="What a takeoff deliverable includes, where the quantities come from, why they don't add up and how to automate the step that's still done by hand: from the model to the spreadsheet. At the end, how we do it at Zeist."
+/>
+
+<Callout type="success" title="Quick answer">
+Yes. Revit and Civil 3D already compute quantities: Revit with schedules and material takeoffs, Civil 3D with section volumes and pay items. What they don't do on their own is turn them into the **bill of quantities**: map each element to its line item, write the backup with every measurement, combine several models and use your client's format. A plugin that writes the spreadsheet in Excel from the model automates that. At Zeist we build it to order.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain words">
+- **Quantity takeoff** — Measuring the work in a design: lengths, areas, volumes, weights and counts.
+- **Line item** — Each row of the estimate, with its code, description and unit. Also called a pay item or bid item.
+- **Bill of quantities (BOQ)** — The table listing every line item with its quantity.
+- **Backup** — The detail behind each quantity: which elements were measured, and how.
+- **Schedule** — The Revit table that lists and measures model elements.
+- **Plugin** — A program installed inside Revit or Civil 3D that adds its own buttons to the top toolbar.
+
+Written for estimators, project engineers, reviewers and BIM coordinators.
+</Callout>
+
+## The step that's always done by hand
+
+The model already knows how much concrete is in every beam and how many cubic yards of cut each stretch of road has. Yet the bill of quantities is still built by hand: export schedules, copy them to Excel, rearrange them by line item and write the backup row by row. And for every design version, it all happens again.
+
+This guide separates what Revit and Civil 3D already compute from what's missing to get the deliverable, and shows how to automate that stretch.
+
+<AnimatedFlow
+  title="From the model to the bill of quantities"
+  nodes="Models|Quantities|Line items|Spreadsheet"
+  subs="Revit, Civil 3D, AutoCAD|Areas, volumes, lengths|Code, unit and rule|Backup, summary and format"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. What a quantity takeoff deliverable includes" time="~5 min">
+
+A takeoff deliverable has three parts:
+
+1. **The line items**, in estimate order: code, description and unit.
+2. **The backup** for each item: the elements measured, how many times they repeat and their dimensions, with a subtotal per row.
+3. **The summary**, with the total for each item, which goes into the estimate or the summary of quantities on the plans.
+
+Items follow a structure: CSI MasterFormat codes on building projects, the agency's pay item list on transportation and site work. Many clients also require their own spreadsheet format.
+
+So the deliverable isn't an exported schedule: it's a document with an order, a measurement rule and a format. A shopping list is something else; we cover it in [bill of materials from Revit and AutoCAD](/en/blog/revit-autocad-bill-of-materials).
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Where the quantities come from" time="~5 min">
+
+| Source | What it measures well |
+|---|---|
+| **Revit** | Concrete, wall and floor areas, finishes, doors and windows, modeled rebar |
+| **Civil 3D** | Cut and fill from sections or between surfaces, pipe lengths, quantities by pay item |
+| **AutoCAD** | Polyline areas and lengths, and block counts |
+| **By hand** | What isn't modeled: mobilization, layout, testing, lump-sum items |
+
+Each source delivers quantities its own way. None delivers the bill of quantities. We cover Civil 3D volumes in [Civil 3D cross sections](/en/blog/civil-3d-cross-sections).
+
+</TopicCard>
+
+<TopicCard step="3" title="3. From the model to the spreadsheet: the manual stretch" time="~5 min">
+
+What gets done by hand today, for every version:
+
+- **Exporting** Revit schedules, which come out as delimited text, and Civil 3D volumes.
+- **Mapping each element to its line item.** If the model doesn't carry the item code on each element, it's done from memory.
+- **Writing the backup:** one row per element, with count, length, width and height.
+- **Applying the measurement rules**, such as deducting openings or converting units.
+- **Formatting it for the client**, with their columns, headers and totals.
+- **Combining disciplines** into one summary.
+
+It's the most time-consuming part and the one that introduces the most errors, because every copy is a chance to get something wrong.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Why the numbers don't add up" time="~5 min">
+
+When the spreadsheet and the model disagree, it's almost always one of these:
+
+- **Elements with no line item**, or the wrong one, left out of the total.
+- **Volumes counted twice**, for example where beams, columns and slabs meet. In Revit, the join order decides which element gets each volume.
+- **Different units and rounding** between the model, Excel and the estimate.
+- **Measurement rules that differ** from the client's.
+- **Design changes that never reached the spreadsheet**, because one tab was updated and another wasn't.
+
+<Callout type="warn" title="The change order nobody can back up">
+On site, a quantity overrun is justified by comparing what was built with the design quantities. If the design takeoff was assembled by hand and can't be traced back to the model, that comparison turns into an argument.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. What can be automated" time="~5 min">
+
+The model already does the math. What gets automated is the stretch to the spreadsheet:
+
+- **Mapping line items by rule**, through a lookup table: category, type or material in the model, and its line item.
+- **Writing the backup** for each item from the model elements, with their dimensions.
+- **Applying the measurement rules** your firm or client uses.
+- **Combining Revit, Civil 3D and manual items** in one Excel workbook, in the client's format.
+- **Comparing versions** to show which items went up or down, and because of which elements.
+- **Checking before submitting:** elements without an item, zero quantities or duplicated items.
+
+<Callout type="info" title="Signs it's worth automating">
+Every design version means rebuilding the spreadsheet. The backup is written by hand. Disciplines arrive in different formats. Or a review comment forces you to redo the whole estimate.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Dynamo or a plugin" time="~5 min">
+
+**With Dynamo**, in Revit or Civil 3D, a script reads the elements, groups them by a line item parameter and writes an Excel file. It's quick to build and good for testing the lookup table.
+
+**With a plugin**, the full deliverable comes out with one button: every discipline, the backup, the summary, the client's format and the comparison with the previous version.
+
+<ComparisonTable
+  criterionLabel="Criterion"
+  leftLabel="Plugin"
+  rightLabel="Dynamo script"
+  rows="Time to a working tool | Weeks | *Days || Spreadsheet with backup and summary | *Complete, in your format | Basic || Revit and Civil 3D in one workbook | *Yes | One script per program || Comparison between versions | *Yes | Needs extra logic || Best for | *Every design version | Testing the rules"
+/>
+
+The full comparison is in [Dynamo or C# for Civil 3D and Revit](/en/blog/dynamo-vs-csharp-civil3d-revit).
+
+</TopicCard>
+
+<TopicCard step="7" title="7. How we do it at Zeist" time="~5 min">
+
+We build custom plugins for Revit and Civil 3D. For the quantity takeoff, a typical plugin:
+
+- **Reads the models** of every discipline and the Civil 3D volumes.
+- **Maps each element to its line item** through your firm's lookup table.
+- **Writes the spreadsheet in your Excel format**, with the backup for each item and the summary.
+- **Adds the manual items** from a tab your team maintains.
+- **Compares it with the previous version** and flags what changed and why.
+- **Reports what it couldn't measure** or classify, before it reaches the estimate.
+
+**How we work:**
+
+1. **Diagnosis (1 week, free):** we look at your current spreadsheet and write down the rules for each item.
+2. **Prototype (1 to 2 weeks):** we validate the logic on one of your projects.
+3. **Development (2 to 4 weeks):** the plugin, tested on your own models.
+4. **Installation:** an installer for the whole firm, a button on the top toolbar, a manual and documentation.
+5. **Support:** updates with every new release of Revit and Civil 3D.
+
+The source code belongs to your company: the plugin is yours.
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Revit and Civil 3D plugins"
+  title="Your bill of quantities, from the model, with the backup and in your format"
+  body="We build the plugin around your line items, your measurement rules and your client's format, with a comparison against the previous version. Free diagnosis, an installer for the whole office, source code you own, and updates with every release."
+  primaryLabel="Request a free diagnosis"
+  primaryHref="/en/contact"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/services/revit-civil-3d-plugin-development"
+/>
+
+## Related resources
+
+- **For purchasing:** [bill of materials from Revit, AutoCAD and Civil 3D](/en/blog/revit-autocad-bill-of-materials).
+- **Revit and Excel:** [exporting Revit schedules to Excel and back](/en/blog/export-revit-schedule-to-excel).
+- **Volumes:** [Civil 3D cross sections](/en/blog/civil-3d-cross-sections).
+- **Excel at the office:** [stop losing hours in Excel](/en/blog/quantity-takeoff-excel).
+- **For budgeting the work:** [how much a Revit or Civil 3D add-in costs](/en/blog/revit-civil-3d-add-in-cost).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Civil engineers who code"
+  title="A team of civil engineers and software engineers"
+  body="We've prepared quantities and estimates for real projects, and we build the tools that generate them. We work remotely with engineering firms and contractors in the US, Europe and Latin America."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contact"
+  secondaryLabel="See all services"
+  secondaryHref="/en/services"
+/>
+
+---
+
+**Technical note:** the options apply to Revit 2024 and Civil 3D 2024 and later. Always check the format and measurement rules your client requires.

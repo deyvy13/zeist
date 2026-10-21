@@ -1,0 +1,193 @@
+---
+translationKey: "plugin-revit-exportar-pdf-dwg-masivo"
+title: "Plugin para Revit que exporta PDF e DWG em lote: todas as pranchas, de todos os modelos, sem limites"
+seoTitle: "Exportar PDF e DWG no Revit em lote, sem limites"
+ctaTitle: "Sua equipe perde horas plotando cada entrega? Fazemos um plugin que exporta tudo de uma vez."
+description: "Como exportar muitas pranchas do Revit para PDF e DWG de uma vez: o que o Revit traz, que plugins existem e como é um próprio, sem limites."
+date: "2026-10-09T04:00:00.000Z"
+author: "Zeist"
+tags:
+  - Revit
+  - Plugins para Revit
+  - PDF
+  - DWG
+  - Produção de pranchas
+  - Automação BIM
+---
+
+<BlogHero
+  eyebrow="Revit · PDF · DWG"
+  title="Plotar 300 pranchas não deveria levar a tarde inteira. Nem se repetir em cada modelo."
+  highlight="O que o Revit faz de forma nativa, onde ele fica curto quando a entrega tem vários modelos e centenas de pranchas, que plugins existem e como é um plugin próprio que exporta PDF e DWG numa única passada, sem limites."
+/>
+
+<Callout type="success" title="Resposta rápida">
+O Revit exporta PDF de forma nativa desde a versão 2022 e DWG desde sempre, mas faz isso modelo por modelo e em dois processos separados. Um plugin de exportação em lote abre cada modelo de uma lista, escolhe as pranchas por regras, como disciplina ou revisão, e exporta PDF e DWG numa única passada, com a nomenclatura do escritório, em pastas organizadas e com um registro do que foi exportado. Se o plugin é da empresa, com o código-fonte, não tem limite de pranchas, de modelos nem de usuários.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Prancha** — Cada folha do conjunto de desenhos: o que se imprime ou se entrega em PDF.
+- **Plotar** — Imprimir ou exportar as pranchas para PDF ou DWG para entregá-las.
+- **Conjunto de pranchas** — Uma seleção salva de pranchas para não escolhê-las uma a uma toda vez.
+- **Configuração de exportação** — As opções salvas para exportar: layers, espessuras de linha, coordenadas, tamanho de papel.
+- **Regra de nomenclatura** — A fórmula que monta o nome de cada arquivo, por exemplo código do projeto, número da prancha e revisão.
+- **Modelo central** — O arquivo do Revit compartilhado em que a equipe inteira trabalha.
+- **Plugin** — Um programa que se instala dentro do Revit e adiciona seus próprios botões na barra superior.
+
+Foi escrito para coordenadores BIM, gerentes de projeto e modeladores que entregam pranchas no Revit.
+</Callout>
+
+## O gargalo que ninguém orça
+
+A entrega de um projeto médio pode ter centenas de pranchas espalhadas em vários modelos: arquitetura, estrutura, instalações. E não se exporta uma vez só: cada revisão, cada comentário do cliente e cada licitação pede o conjunto completo de novo, em PDF para revisar e em DWG para quem trabalha no AutoCAD.
+
+Exportar não tem critério técnico. É abrir cada modelo, escolher as pranchas, conferir os nomes, esperar, repetir em DWG e organizar pastas. Exatamente o tipo de tarefa que vale automatizar.
+
+<AnimatedFlow
+  title="Uma entrega completa numa única passada"
+  nodes="Lista de modelos|Pranchas por regras|PDF + DWG|Registro da entrega"
+  subs="Todos os RVT do projeto|Disciplina, revisão ou conjunto|Com sua nomenclatura e pastas|O que foi exportado e o que falhou"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. O que o Revit já traz" time="~6 min">
+
+**PDF nativo, desde o Revit 2022.** Em Arquivo › Exportar › PDF escolhem-se as vistas ou pranchas, ou um conjunto salvo, e decide-se se saem num único PDF ou em arquivos separados com a opção de combinar. Para arquivos separados há **regras de nomenclatura** com parâmetros, por exemplo número e nome da prancha, com o separador que você quiser. As opções são salvas como configuração de exportação.
+
+**PDF em segundo plano, desde o Revit 2025.** A opção **Exportar em segundo plano** permite continuar trabalhando enquanto o PDF é gerado. Vem desativada por padrão e o andamento aparece na barra de status.
+
+**DWG nativo.** Em Arquivo › Exportar › Formatos CAD › DWG escolhe-se uma configuração de exportação, com layers, espessuras de linha e se são usadas coordenadas compartilhadas ou a origem interna, e o conjunto de pranchas. O nome de cada arquivo é montado com um prefixo mais um nome automático. Uma opção permite exportar as vistas da prancha como referências externas, ou deixar tudo num único arquivo.
+
+**Antes de 2022**, a única via para PDF era imprimir com uma impressora PDF instalada no Windows.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Onde ele fica curto" time="~5 min">
+
+Para uma prancha ou um modelo, o nativo basta. Para uma entrega real, aparecem os limites:
+
+- **Um modelo de cada vez.** É preciso abrir cada modelo, exportar e fechá-lo. Com cinco modelos, são cinco rodadas.
+- **PDF e DWG são dois processos.** Escolhe-se tudo duas vezes: pranchas, configuração e pasta.
+- **O nome DWG é rígido.** Prefixo mais nome automático. Se o cliente pede sua própria codificação, por exemplo projeto, disciplina, número e revisão, é preciso renomear à mão.
+- **Não confere antes de exportar.** Se uma prancha não está com a revisão em dia, sai assim mesmo.
+- **Pastas e lista de entrega, à mão.** Separar por disciplina ou por revisão e montar a lista de pranchas entregues continua sendo trabalho manual.
+- **Ocupa o computador.** Exceto o PDF em segundo plano, o Revit fica bloqueado enquanto exporta.
+
+O mesmo acontece com a tarefa anterior: montar as pranchas. Contamos isso em [produção automática de pranchas no Civil 3D e Revit](/pt/blog/producao-pranchas-civil-3d-revit).
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Que ferramentas existem" time="~5 min">
+
+| Ferramenta | O que faz | Atenção |
+|---|---|---|
+| Exportação nativa do Revit | PDF com regras de nomenclatura e DWG com configurações | Um modelo de cada vez, dois processos separados |
+| ProSheets, da DiRoots | Exporta vistas e pranchas para PDF, DWG, DGN, DWF, NWC, IFC e imagens | Desde outubro de 2024 é freemium: funções como a exportação agendada exigem assinatura anual por usuário |
+| Revit Batch Processor | Executa scripts de Python ou Dynamo sobre muitos modelos | Gratuito e de código aberto, mas é preciso escrever o script |
+| Plugin próprio | Exporta com as regras exatas do escritório | É desenvolvido uma vez; depois é da empresa |
+
+As ferramentas comerciais resolvem bem o caso geral. O problema aparece quando o processo do escritório depende de uma licença por usuário, de funções que passam a ser pagas ou de um formato de nomes que a ferramenta não contempla.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Como funciona um plugin de exportação em lote" time="~7 min">
+
+Um plugin pensado para entregas completas faz numa única execução o que hoje leva uma tarde:
+
+1. **Lista de modelos.** Escolhem-se os arquivos RVT do projeto. O plugin abre cada um em segundo plano, desvinculado do modelo central para não tocá-lo, e o fecha sem salvar ao terminar.
+2. **Pranchas por regras.** Todas de uma disciplina, as que têm uma revisão específica, as de um conjunto salvo ou as que batem com um filtro de número.
+3. **Conferência prévia.** Avisa se uma prancha não está com a revisão em dia, se falta um parâmetro do carimbo ou se dois arquivos sairiam com o mesmo nome. Como deixar a revisão e o carimbo em dia em todas as pranchas, em [revisões e assinaturas no Revit para várias pranchas](/pt/blog/revisoes-revit-pranchas).
+4. **PDF e DWG na mesma passada**, cada um com sua configuração de exportação.
+5. **Nomenclatura do escritório ou do cliente**, montada com qualquer parâmetro: código do projeto, disciplina, número, revisão e data.
+6. **Pastas organizadas** por disciplina, formato ou revisão.
+7. **Registro da entrega:** um Excel com cada prancha exportada, sua revisão, seu arquivo e o que falhou, sem interromper o resto do lote.
+
+Como trabalha sozinho, pode ficar rodando no fim do dia e a entrega estará pronta na manhã seguinte.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. O núcleo, em código" time="~5 min">
+
+A API do Revit tem um método de exportação para cada formato. Este trecho exporta cada prancha para PDF e para DWG com um nome montado pelo escritório:
+
+```csharp
+// Exporta cada prancha para PDF e DWG com o nome definido pelo escritório
+var pdf = new PDFExportOptions { Combine = true };
+var dwg = DWGExportOptions.GetPredefinedOptions(doc, "Escritorio-DWG");
+
+foreach (ViewSheet prancha in pranchas)
+{
+    string rev = prancha.get_Parameter(BuiltInParameter.SHEET_CURRENT_REVISION).AsString();
+    string nome = $"{codigoProjeto}-{prancha.SheetNumber}-R{rev}";
+
+    pdf.FileName = nome;
+    doc.Export(pastaPdf, new List<ElementId> { prancha.Id }, pdf);
+    doc.Export(pastaDwg, nome, new List<ElementId> { prancha.Id }, dwg);
+}
+```
+
+**O que faz cada parte:**
+
+- `PDFExportOptions` e `DWGExportOptions` são as mesmas opções do quadro de exportação; `GetPredefinedOptions` carrega uma configuração DWG salva no modelo.
+- Exportar prancha por prancha permite usar qualquer nome, sem depender da regra nativa.
+- O resto do plugin é o que o torna confiável: abrir e fechar modelos, conferir antes de exportar, registrar erros e seguir com o lote.
+
+Se você quer entender as APIs da Autodesk desde o início, veja [desenvolvimento de add-ins para Revit e Civil 3D](/pt/blog/desenvolvimento-add-ins-revit-civil-3d).
+
+</TopicCard>
+
+<TopicCard step="6" title="6. Sem limites, de verdade" time="~4 min">
+
+Um plugin ser «ilimitado» não depende de uma promessa comercial, e sim de quem é o dono. Quando a empresa tem o código-fonte:
+
+- **Não há teto de pranchas nem de modelos.** O limite é o tempo de exportação do Revit, não uma licença.
+- **Não há licenças por usuário.** Ele é instalado em todos os computadores do escritório.
+- **Não muda sem aviso.** Se um fornecedor passa funções para um plano pago, seu processo de entrega não é afetado.
+- **Se adapta às suas regras.** A nomenclatura, as pastas e a conferência prévia são as do seu escritório, não as genéricas.
+
+O que é preciso prever é a manutenção: cada nova versão do Revit pode exigir recompilar o plugin. Por isso vale que a atualização esteja incluída desde o início.
+
+<ComparisonTable
+  criterionLabel="Critério"
+  leftLabel="Plugin próprio"
+  rightLabel="Exportação nativa"
+  rows="Vários modelos numa execução | *Sim, em segundo plano | Não, um de cada vez || PDF e DWG | *Na mesma passada | Dois processos separados || Nomenclatura do cliente | *Qualquer parâmetro, em PDF e DWG | Regras em PDF; prefixo em DWG || Conferência antes de exportar | *Revisão, carimbo e nomes duplicados | Não || Registro da entrega | *Excel automático | À mão || Custo por usuário | *Nenhum, o código é seu | Incluído no Revit"
+/>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Plugins para Revit"
+  title="Sua entrega completa, em PDF e DWG, com um clique"
+  body="Desenvolvemos plugins de exportação sob medida com a nomenclatura, as pastas e as revisões do seu escritório. Diagnóstico gratuito, instalador para o escritório inteiro, código-fonte que fica com você e atualização a cada versão do Revit."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicos/plugins-revit-civil-3d"
+/>
+
+## Recursos relacionados
+
+- **Antes de exportar, o carimbo:** [carimbo de prancha automático](/pt/blog/carimbo-prancha-revit-autocad).
+- **Antes de exportar:** [produção automática de pranchas no Civil 3D e Revit](/pt/blog/producao-pranchas-civil-3d-revit).
+- **A revisão e as assinaturas:** [revisões no Revit, adicionar e assinar pranchas](/pt/blog/revisoes-revit-pranchas).
+- **Outras tarefas que se automatizam:** [as 12 tarefas do Revit que mais economizam tempo](/pt/blog/automatizar-tarefas-revit).
+- **O guia completo:** [desenvolvimento de add-ins para Revit e Civil 3D](/pt/blog/desenvolvimento-add-ins-revit-civil-3d).
+- **Para orçar:** [quanto custa um add-in para Revit ou Civil 3D](/pt/blog/quanto-custa-add-in-revit-civil-3d).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Trujillo, Peru"
+  title="Uma equipe de engenheiros civis e engenheiros de sistemas"
+  body="Entregamos pranchas e programamos as ferramentas que as produzem. Trabalhamos com escritórios do Brasil e de toda a América Latina."
+  primaryLabel="Vamos falar do seu caso"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver todos os serviços"
+  secondaryHref="/pt/servicos"
+/>
+
+---
+
+**Nota técnica:** as opções de exportação correspondem ao Revit 2026. As condições das ferramentas de terceiros podem mudar: consulte a página de cada fornecedor.

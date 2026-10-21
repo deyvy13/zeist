@@ -120,9 +120,12 @@ components/                   # site-header, site-footer, logo, locale-switcher,
                               # json-ld (<script> por objeto), post-author (caja de autor del post)
 lib/
   i18n.ts                     # locales, Locale, getDictionary, Dictionary (tipo)
-  site.ts                     # marca, siteUrl, absoluteUrl, localizedPath
+  site.ts                     # marca, siteUrl, absoluteUrl, localizedPath/localizedUrl (→ URL pública)
+  routes.ts                   # URLs públicas por idioma: secciones, slugs de herramientas y servicios,
+                              # publicPath/internalPath/resolveRoute (ver «URLs por idioma», sección 6)
+  post-locales.generated.ts   # translationKey → slug de cada post por idioma (lo genera scripts/gen-post-locales.mjs)
   seo.ts                      # buildMetadata() (hreflang, canonical, OG) + JSON-LD helpers
-  blog.ts                     # lectura de MDX + frontmatter
+  blog.ts                     # lectura de MDX + frontmatter (getPost por slug, getPostByKey por translationKey)
   services.ts                 # SERVICE_SLUGS (fuente única) + tipo ServicePage + getServicePage()
   services-content/<locale>.ts # copy largo de las 4 páginas de servicio, por idioma
   analytics.ts                # GA4 (env), trackEvent(), referencia de página en WhatsApp
@@ -132,7 +135,7 @@ lib/
   tools-content/              # copy de cada herramienta (ToolContent + labels de la calculadora)
 dictionaries/es.json, pt.json, en.json # strings de UI por idioma (misma forma)
 content/blog/<locale>/<slug>.mdx  # artículos del blog
-proxy.ts                      # redirección de locale por Accept-Language
+proxy.ts                      # locale por Accept-Language + URLs por idioma (rewrite a la carpeta, 308 desde la URL vieja)
 ```
 
 ## 6. SEO — cómo está montado (mantener siempre)
@@ -175,6 +178,29 @@ proxy.ts                      # redirección de locale por Accept-Language
   el lote va con relleno opaco: el mapa de OSM rotula ahí el nombre de la
   entidad, que no se nombra. Capturas de Revit/Civil 3D: solo si las pasa el
   usuario.
+- **URLs por idioma (20-oct-2026, decisión del usuario: «todo el contenido en
+  inglés con slug en inglés, en portugués con slug en portugués, en español con
+  slug en español», secciones incluidas).** Secciones: `es` servicios · blog ·
+  herramientas · contacto · nosotros · privacidad; `pt` servicos · blog ·
+  ferramentas · contato · sobre · privacidade; `en` services · blog · tools ·
+  contact · about · privacy. Cada herramienta y servicio tiene su slug por
+  idioma en `TOOL_PATHS` y `SERVICE_PATHS` (`lib/routes.ts`; p. ej.
+  `/en/tools/utm-converter`, `/pt/servicos/auditoria-bim`); cada post, su
+  archivo con el slug de su idioma y `translationKey: "<slug en español>"` en
+  el frontmatter (`/en/blog/slow-revit-model`). Las carpetas de `app/` siguen en
+  español: `proxy.ts` reescribe la URL pública a la carpeta y redirige (308) la
+  URL vieja a la nueva (102 URLs migradas, con la query). El código pasa
+  **rutas internas** (`"herramientas/<id>"`, `"servicios/<id>"`,
+  `"blog/<translationKey>"`) a `localizedPath`/`localizedUrl`/`buildMetadata`,
+  que devuelven la pública del idioma. `internalPath()` acepta cualquier forma
+  de URL y `publicPath()` da la misma salida desde la interna o la pública: así
+  el selector de idioma (que lee `usePathname`, interno en el servidor tras el
+  rewrite y público en el navegador) no rompe la hidratación. Los enlaces en el
+  contenido van **en su forma pública** (`/pt/ferramentas/…`, `/en/blog/<slug
+  en inglés>`); `normalizeHref` (MDX, `RichText`, privacidad) corrige uno viejo
+  por si acaso. `lib/blog-data.ts`, `lib/clusters.ts` y las `guide`/`guides` de
+  servicios y herramientas usan el `translationKey`. Las redirecciones del
+  dominio viejo (zeist.vercel.app → zeist.dev) siguen en Vercel, no en el código.
 - **Sitemap** (`app/sitemap.ts`): todas las rutas × ambos locales, con `alternates.languages`.
   **`lastmod` real (20-oct-2026):** los posts usan `updated` o `date`; las
   páginas fijas, `PAGE_UPDATED` (en el propio `sitemap.ts`); los servicios,
@@ -285,7 +311,8 @@ acero", "calculadora manning tuberías/canales".
   selector de idioma y `/llms.txt`); plantilla común `components/tools/tool-layout.tsx`
   (calculadora → respuesta citable → contenido → CTA → FAQ `<details>` →
   guías; schema WebApplication + BreadcrumbList + FAQPage); contenido en
-  `lib/tools-content/`. Herramienta nueva = slug + `toolLocales` + tarjeta en
+  `lib/tools-content/`. Herramienta nueva = slug en `TOOL_SLUGS` + sus URLs por
+  idioma en `TOOL_PATHS` (`lib/routes.ts`; de ahí sale `toolLocales`) + tarjeta en
   `lib/tools.ts` (con `cta`: el texto del enlace, con la búsqueda; p. ej.
   «Generar curvas de nivel gratis», nunca «Abrir»), carpeta en
   `app/[lang]/herramientas/<slug>/` y su contenido.
@@ -343,7 +370,7 @@ acero", "calculadora manning tuberías/canales".
   `ga-disable-<ID>` antes de `config`, así ese navegador no envía nada.
 - **Jerarquía de encabezados:** UN solo `<h1>` por página (título principal),
   `<h2>` para secciones, `<h3>` para tarjetas/subsecciones. **No romper esto.**
-- **Dominio: `https://zeist.dev`** (migrado el 11-oct-2026). Toda URL absoluta sale de `siteUrl` en `lib/site.ts`: valor de `NEXT_PUBLIC_SITE_URL` o, si falta, el fallback `https://zeist.dev` (también en `.env.local`). Las redirecciones 308 del subdominio antiguo de Vercel al dominio nuevo viven en Vercel, no en el código: no añadir redirects en `proxy.ts` ni en `next.config`. El archivo de verificación de Search Console (`public/google…html`) no se borra.
+- **Dominio: `https://zeist.dev`** (migrado el 11-oct-2026). Toda URL absoluta sale de `siteUrl` en `lib/site.ts`: valor de `NEXT_PUBLIC_SITE_URL` o, si falta, el fallback `https://zeist.dev` (también en `.env.local`). Las redirecciones 308 del subdominio antiguo de Vercel al dominio nuevo viven en Vercel, no en el código: no añadir redirects de dominio en `proxy.ts` ni en `next.config` (las de URLs por idioma sí viven en `proxy.ts`, ver arriba). El archivo de verificación de Search Console (`public/google…html`) no se borra.
 
 ## 7. Sistema de diseño (editorial + claymorfismo como acento)
 
@@ -398,10 +425,14 @@ por página, p.ej. el visual del hero), NO el estilo de cada caja.
   contenido cambió de verdad (Google ignora fechas que siempre se mueven).
 - `lib/blog.ts`: `getAllPosts(locale)`, `getPost(locale, slug)`, `getPostSlugs`,
   `getAllTags`. Calcula tiempo de lectura. Ordena por fecha desc. Ignora `draft`.
-- Para publicar: crear el `.mdx` en `es/`, `pt/` y `en/` (mismo slug para que
-  hreflang enlace las tres versiones). `generateStaticParams` los recoge
-  automáticamente. Excepción: el cluster C5 (Perú) es ES-only a propósito —
-  ver sección 3.
+- Para publicar: crear el `.mdx` en `es/`, `pt/` y `en/`, **cada uno con el
+  slug de su idioma** (palabra clave primero, sin tildes) y, en `pt` y `en`,
+  `translationKey: "<slug en español>"` en el frontmatter: es lo que enlaza las
+  tres versiones (hreflang, selector de idioma, roadmap/FAQs, clusters). Si el
+  slug en español ya es válido en el otro idioma, se repite. `generateStaticParams`
+  los recoge y `npm run build` regenera el mapa (`prebuild`). Los enlaces del
+  post van en la URL pública del idioma. Excepción: el cluster C5 (Perú) es
+  ES-only a propósito — ver sección 3.
 - **`lib/blog-data.ts`** guarda el roadmap y las FAQs de cada post, por slug y
   locale (tipo `Partial<Record<Locale, PostData>>`: no todos los slugs tienen
   las tres claves). Es necesario porque `next-mdx-remote/rsc` **no pasa bien
@@ -475,7 +506,7 @@ a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
 
 > **Search Console al 19-oct-2026** (estrategia de la sesión de Chrome). Perú es el país que mejor convierte; Brasil suma 601 impresiones con pocos clics y EE. UU., 579 impresiones y 6 clics. El mejor activo es `es/herramientas/generador-curvas-de-nivel` (30 clics, CTR 12.5 %): **no tocar su título**. Ronda 1 aplicada el 19-oct-2026 (`updated` en esa fecha): nuevos `seoTitle`, `description` y respuesta rápida en 6 páginas con impresiones y 0 clics (en `inteligencia-artificial-autocad-civil-3d`, en `revit-lento-modelo-pesado-auditoria`, es `curvas-de-nivel-civil-3d-google-earth`, en `guia-vibe-coding-para-empezar`, en `auditoria-bim-checklist-empresa`, es `coordenadas-utm-trujillo-la-libertad`); títulos de herramientas por búsquedas perdidas («convertir coordenadas UTM a geográficas y viceversa», «convert UTM to lat long», «gerador de curvas de nível grátis», «free contour map generator»); «BIM audit»: la página de servicio toma la intención comercial (`BIM Audit Services…`) y el checklist la informativa, sin canibalizarse; Brasil: «exportar tabela do Revit para o Excel» y «automatizar tarefas repetitivas no Revit»; y `produccion-planos-automatica-civil-3d-revit` sumó el módulo 7, que responde las preguntas largas tipo asistente de IA sobre láminas de Civil 3D (tipos de lámina nativos, qué plugin elegir, plantillas, capacitación, prueba gratuita). Hecho a no contradecir: las láminas de Civil 3D no quedan vinculadas a los marcos de vista; si los marcos cambian, se crean de nuevo. **Medir a los 14 días como mínimo** (desde el 2-nov-2026) antes de tocar de nuevo esos títulos.
 
-> **Plan de contenido SEO + GEO (20-oct-2026).** El usuario entregó `prompt-plan-contenido-seo-geo-zeist-2026-10-20.md` (13 clusters de búsquedas de Search Console, plantilla de pieza, GEO y calendario por olas). Reglas que trae y que mandan para contenido nuevo: una intención = una URL (si existe, se mejora); cero invención (dato que falte = `[DATO REAL DEL AUTOR: …]`); ≤ 9 URLs nuevas por día y ≤ ~10 solicitudes de indexación diarias en GSC, contando las mejoras; respuesta directa de 40-60 palabras en contenido nuevo; H2 en forma de pregunta real; fuentes enlazadas con fecha de verificación. Medición GEO: `docs/geo-tracking.csv` (13 prompts × 5 asistentes, una fila por prueba mensual). Antes de producir la Ola 1 hace falta la aprobación del usuario al calendario y sus decisiones sobre autor, slugs localizados y canibalizaciones.
+> **Plan de contenido SEO + GEO (20-oct-2026).** El usuario entregó `prompt-plan-contenido-seo-geo-zeist-2026-10-20.md` (13 clusters de búsquedas de Search Console, plantilla de pieza, GEO y calendario por olas). Reglas que trae y que mandan para contenido nuevo: una intención = una URL (si existe, se mejora); cero invención (dato que falte = `[DATO REAL DEL AUTOR: …]`); ≤ 9 URLs nuevas por día y ≤ ~10 solicitudes de indexación diarias en GSC, contando las mejoras; respuesta directa de 40-60 palabras en contenido nuevo; H2 en forma de pregunta real; fuentes enlazadas con fecha de verificación. Medición GEO: `docs/geo-tracking.csv` (13 prompts × 5 asistentes, una fila por prueba mensual). **Decisiones del usuario (20-oct-2026):** firma solo Zeist (no autor persona); todo el contenido con URL en su idioma, secciones incluidas (migración hecha el mismo día, ver «URLs por idioma»); calendario aprobado con 6 consolidaciones en lugar de páginas nuevas — curvas online gratis → post de curvas; servicios de auditoría → `/servicios/auditoria-procesos-bim`; vibe coding para AutoCAD → reenfocar `guia-vibe-coding-para-empezar`; calculadora de rumbos y distancias → modo nuevo de la calculadora de área; retrabajos en inglés → mejorar el existente con fuentes; láminas de Civil 3D → pilar nuevo y `produccion-planos-automatica-civil-3d-revit` vuelve a ser general —; los títulos cambiados el 19-oct no se tocan hasta medir el 2-nov. Calendario y auditoría en el artifact «Plan SEO + GEO Zeist» (claude.ai/artifact/7M8P3xNE11UJUHvHXWFu4R). Pendiente de saneamiento: cifras sin fuente en `reprocesos-obra-costo-oculto` (3 idiomas) y «~95 %» en 13 archivos.
 
 > **Conversión y respuestas de IA (sep-2026).** (1) Todo post muestra un CTA de servicio **bajo el título** (`components/post-early-cta.tsx`, copy en `blog.earlyCta` de los diccionarios); el frontmatter opcional `ctaTitle` lo adapta al dolor del post. (2) `seoTitle` (≤52 caracteres) para el `<title>`; `title` largo queda como `<h1>`. (3) Los posts nuevos abren con un `<Callout type="success" title="Respuesta rápida">`: 60-100 palabras que responden la búsqueda principal de forma citable — es lo que extraen Google y los asistentes de IA. (4) `/llms.txt` (`app/llms.txt/route.ts`) se genera del mismo contenido y `robots.ts` permite explícitamente a GPTBot, ClaudeBot, PerplexityBot, Google-Extended.
 
@@ -556,7 +587,10 @@ npm run test:tools  # tests de las calculadoras (Node ≥ 23.6)
 
 ## 11. Convenciones
 
-- Rutas SIEMPRE con prefijo de locale. Usa `localizedPath(lang, "ruta")` de `lib/site.ts`.
+- Rutas SIEMPRE con prefijo de locale. Usa `localizedPath(lang, "<ruta interna>")`
+  de `lib/site.ts` (ruta interna = sección y slug en español, o
+  `blog/<translationKey>`); nunca armes `/${lang}/…` a mano: en `pt` y `en` la
+  URL pública es otra (ver «URLs por idioma», sección 6).
 - Nuevas páginas: `export async function generateMetadata` con `buildMetadata`.
   Un solo `<h1>`. Añade la ruta a `app/sitemap.ts` (`STATIC_PATHS`).
 - Strings de UI → diccionarios (`es.json`, `pt.json`, `en.json`, **misma

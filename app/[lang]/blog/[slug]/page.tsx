@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, locales, type Locale } from "@/lib/i18n";
-import { localizedPath, absoluteUrl, site } from "@/lib/site";
+import { localizedPath, localizedUrl, absoluteUrl, site } from "@/lib/site";
 import { authorJsonLd, buildMetadata } from "@/lib/seo";
-import { getPost, getPostSlugs, getRelatedPosts } from "@/lib/blog";
+import { getPost, getPostByKey, getPostSlugs, getRelatedPosts } from "@/lib/blog";
 import { MdxContent } from "@/components/mdx-content";
 import { ReadingProgress } from "@/components/visual/reading-progress";
 import { ShareLinkedIn } from "@/components/visual/share-linkedin";
@@ -39,15 +39,14 @@ export async function generateMetadata({
 
   // Not every post is translated: locale-specific content (Peru regulation,
   // local market) only exists in `es`. Emit hreflang only for locales that
-  // actually publish this slug, so we never point at a 404.
-  const availableLocales = locales.filter((l) => {
-    const p = getPost(l, slug);
-    return Boolean(p) && !p!.meta.draft;
-  });
+  // actually publish this post (matched by translation key, since each
+  // language has its own slug), so we never point at a 404.
+  const key = post.meta.key;
+  const availableLocales = locales.filter((l) => Boolean(getPostByKey(l, key)));
 
   return buildMetadata({
     locale,
-    path: `blog/${slug}`,
+    path: `blog/${key}`,
     title: post.meta.seoTitle ?? post.meta.title,
     description: post.meta.description,
     keywords: post.meta.tags,
@@ -79,10 +78,10 @@ export default async function BlogPostPage({
     day: "numeric",
   });
 
-  const related = getRelatedPosts(lang, slug, 4);
+  const related = getRelatedPosts(lang, meta.key, 4);
 
   const wordCount = post.content.trim().split(/\s+/).length;
-  const canonical = absoluteUrl(`${lang}/blog/${slug}`);
+  const canonical = localizedUrl(lang, `blog/${meta.key}`);
   // There is no per-post OG route; the site-wide image is the fallback.
   const ogImage = meta.cover ?? absoluteUrl("opengraph-image");
   // Screenshots and diagrams placed with <Figure> are listed too, with their alt
@@ -108,7 +107,7 @@ export default async function BlogPostPage({
     publisher: {
       "@type": "Organization",
       name: site.name,
-      url: absoluteUrl(lang),
+      url: localizedUrl(lang),
       logo: { "@type": "ImageObject", url: absoluteUrl("icon-512.png") },
       sameAs: [site.linkedin],
     },
@@ -130,13 +129,13 @@ export default async function BlogPostPage({
         "@type": "ListItem",
         position: 1,
         name: "Zeist",
-        item: absoluteUrl(lang),
+        item: localizedUrl(lang),
       },
       {
         "@type": "ListItem",
         position: 2,
         name: dict.nav.blog,
-        item: absoluteUrl(`${lang}/blog`),
+        item: localizedUrl(lang, "blog"),
       },
       {
         "@type": "ListItem",
@@ -214,7 +213,7 @@ export default async function BlogPostPage({
       </div>
 
       <div className="mx-auto max-w-3xl xl:max-w-[1160px]">
-        <MdxContent source={post.content} slug={slug} locale={lang} />
+        <MdxContent source={post.content} slug={meta.key} locale={lang} />
       </div>
 
       <div className="mx-auto max-w-3xl">
@@ -226,8 +225,8 @@ export default async function BlogPostPage({
             <div className="mt-6 grid gap-6 sm:grid-cols-2">
               {related.map((p) => (
                 <Link
-                  key={p.slug}
-                  href={localizedPath(lang, `blog/${p.slug}`)}
+                  key={p.key}
+                  href={localizedPath(lang, `blog/${p.key}`)}
                   className="surface surface-hover rounded-3xl p-6"
                 >
                   <h3 className="text-lg">{p.title}</h3>

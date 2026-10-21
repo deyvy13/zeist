@@ -342,7 +342,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "Confira sempre a versão vigente da norma e as exigências da concessionária. Se você projeta a rede no Civil 3D, veja como [modelar redes de tubulação com suas conexões](/pt/blog/redes-tuberias-civil-3d-accesorios).",
+            text: "Confira sempre a versão vigente da norma e as exigências da concessionária. Se você projeta a rede no Civil 3D, veja como [modelar redes de tubulação com suas conexões](/pt/blog/redes-tubulacao-civil-3d).",
           },
         ],
       },
@@ -502,7 +502,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "Standards in Latin America and Brazil often check self-cleansing with a minimum boundary shear of **1.0 Pa** and limit the flow depth to **75 % of the diameter**. Always check the current version of your local standard and utility requirements. If you lay out the network in Civil 3D, see how to [model pipe networks with their fittings](/en/blog/redes-tuberias-civil-3d-accesorios).",
+            text: "Standards in Latin America and Brazil often check self-cleansing with a minimum boundary shear of **1.0 Pa** and limit the flow depth to **75 % of the diameter**. Always check the current version of your local standard and utility requirements. If you lay out the network in Civil 3D, see how to [model pipe networks with their fittings](/en/blog/civil-3d-pipe-network-fittings).",
           },
         ],
       },

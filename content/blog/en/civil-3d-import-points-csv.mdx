@@ -1,0 +1,199 @@
+---
+translationKey: "importar-puntos-civil-3d-excel"
+title: "Civil 3D import points from CSV, Excel or TXT: formats, latitude and longitude, duplicates and the most common errors"
+seoTitle: "Civil 3D Import Points from CSV or Excel: Full Guide"
+ctaTitle: "Is your team importing and sorting survey points by hand every time? We automate it with your codes."
+description: "How to import points into Civil 3D from Excel: preparing the CSV, picking the PNEZD format, lat/long points, duplicates and why points don't show up."
+date: "2026-10-09T17:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - COGO points
+  - Survey
+  - Excel
+  - BIM automation
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Points · Survey"
+  title="Importing points looks like the easiest thing in Civil 3D. Until the file won't load or the points land somewhere else."
+  highlight="How to prepare the file in Excel, which format to pick, how to bring in latitude and longitude points, what to do with duplicate numbers, and why points sometimes don't show up. With the real cause behind each error."
+/>
+
+<Callout type="success" title="Quick answer">
+To import points into Civil 3D, use Insert › Points from File. Civil 3D doesn't read Excel files: save them as CSV or TXT, with no header row and with the point number as a whole number. Pick the format that matches the column order, usually PNEZD (point number, northing, easting, elevation and description), comma delimited for CSV or space delimited for TXT. The preview shows whether the columns are read correctly. If the points are in latitude and longitude, assign a coordinate system to the drawing first.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain words">
+- **COGO point** — Civil 3D's own point: it stores a number, coordinates, elevation and description, and draws with its style and label.
+- **PNEZD** — The most common column order: Point, Northing, Easting, elevation (Z) and Description.
+- **CSV** — A text file with values separated by commas. Excel can save it, but it isn't an Excel file.
+- **Point file format** — The template that tells Civil 3D what each column holds and how columns are separated.
+- **Point group** — A collection of points sharing a rule, for example every existing-ground shot.
+- **Description key** — A rule that assigns style, label and layer from the point's code, such as EP for edge of pavement.
+- **Coordinate system** — The drawing's projection, for example a State Plane zone or UTM.
+
+Written for surveyors and engineers who receive field data and bring it into Civil 3D.
+</Callout>
+
+## Why something so simple goes wrong
+
+Field data arrives as an Excel sheet, a TXT from the total station or a CSV from the GNSS rover. Each has its own column order and delimiter, and sometimes a regional decimal comma. Civil 3D is strict: if the file doesn't match the chosen format exactly, it imports nothing, or it imports points in the wrong place.
+
+This guide follows the order that works: prepare the file, import, pick the format, then fix the problems.
+
+<AnimatedFlow
+  title="From field data to a surface"
+  nodes="Excel or TXT|Clean CSV|Points from File|Groups and surface"
+  subs="What the field crew sends|No header, decimal point|PNEZD format and preview|Description keys and ground"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Prepare the file in Excel" time="~6 min">
+
+Civil 3D doesn't read .xlsx files. Before importing:
+
+1. **Order the columns** to match the format you'll use. For PNEZD: number, northing, easting, elevation and description.
+2. **Delete the header row.** A row with titles like "Northing" or "Easting" makes the file match no format.
+3. **The point number must be a whole number.** If your points are named BM-1 or CP-12, put that name in the description or use a custom format with a name column.
+4. **Remove commas from descriptions.** "EP, left side" splits the row into two columns and shifts everything after it.
+5. **Save as CSV (comma delimited)** and open it in Notepad to see what Excel actually saved.
+
+<Callout type="warn" title="The decimal comma trap">
+On Windows set to many European or Latin American regions, Excel saves CSV files with a semicolon delimiter and a decimal comma: "1;9102837,452;717207,118". Civil 3D expects a decimal point. To avoid it, go to Excel Options › Advanced, clear Use system separators and set the decimal separator to a period before saving. If the file still comes out with semicolons, create a point file format that uses that delimiter.
+</Callout>
+
+The free [coordinate converter](/en/tools/utm-converter) avoids all three problems: it downloads a PNEZD file with decimal points, no commas in descriptions and numbered points, and if a point is named BM-1 it moves the name into the description.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Importing, step by step" time="~5 min">
+
+1. **Insert** tab › **Points from File**.
+2. Add the file with the add button.
+3. Pick the **point file format** that matches your columns.
+4. Check the **preview**: compare a point against a known control point, and make sure elevations look reasonable. If numbers appear shifted by a column, the format is wrong.
+5. Optionally check **Add Points to Point Group** and create a group named after the survey.
+6. Review the **advanced options** before you click OK: elevation adjustment and coordinate transformation change elevations or coordinates, so only turn them on when you know you need them.
+
+After importing, use Zoom › Extents to see where every point landed.
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Which format to pick" time="~5 min">
+
+| If your file has | Format |
+|---|---|
+| Number, northing, easting, elevation, description, comma separated | PNEZD (comma delimited) |
+| The same, space separated (typical of a TXT) | PNEZD (space delimited) |
+| Number, **easting**, northing, elevation, description | PENZD |
+| Northing, easting and elevation only | NEZ |
+| A different order or delimiter | A new format under Manage Formats |
+
+**Easting first or northing first** is the most common mix-up: many data collectors and spreadsheets put the easting before the northing. Pick PNEZD for a PENZD file and your points end up swapped and miles away.
+
+**To build your own format**, open Manage Formats in the import dialog, copy a similar format and change the column order or delimiter. It's saved in the drawing, and in the template if you create it there.
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Points in latitude and longitude" time="~5 min">
+
+Points from Google Earth, a handheld GPS or many GNSS receivers come in degrees. There are two routes:
+
+**Convert them first.** Paste the points into the [coordinate converter](/en/tools/utm-converter), check them on the map and download the PNEZD file in UTM. It's the safest route, because you see where they fall before importing.
+
+**Import them in degrees.** First assign the drawing's coordinate system under Drawing Settings › Units and Zone, such as your State Plane zone. Then create a format with latitude and longitude columns. Without a coordinate system, Civil 3D doesn't know how to project the degrees.
+
+<Callout type="warn" title="Check the datum">
+Old survey data on NAD27 and a new plan set on NAD83 can differ by tens of meters. Mixing them shifts the points. Confirm the datum and units, including US survey feet versus international feet, before importing.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Duplicate point numbers" time="~4 min">
+
+If you import a point whose number already exists in the drawing, Civil 3D opens the Duplicate Point Number dialog. The options:
+
+- **Use Next Point Number:** gives it the next free number.
+- **Add An Offset:** adds a fixed value, such as 10000, to the new point's number.
+- **Sequence From:** renumbers the new points starting at the number you enter.
+- **Overwrite:** replaces the existing point with the new one.
+- **Merge:** updates the existing point with the new data, keeping whatever the new point doesn't provide.
+
+**Apply to all** uses the same answer for the rest of the file.
+
+<Callout type="tip" title="A rule that avoids the problem">
+Give each survey or crew its own number range: 1 to 9999 for the first, 10000 to 19999 for the second. They never collide, and the number tells you where the point came from.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="6" title="6. The most-searched errors" time="~6 min">
+
+- **"No point file format match found".** The file has a header, is an .xlsx, uses semicolons, or has more columns than the format.
+- **Imported points not showing.** Zoom › Extents. If they show up far away, northing and easting are swapped. If they don't show up at all, the group's point or label style is set to None, or the layer is off.
+- **Every elevation comes in as zero.** The chosen format has no elevation column, or elevation is in another position.
+- **Points land offset.** The file's datum doesn't match the plan's, or degrees were imported without a coordinate system.
+- **Descriptions get cut off.** There was a comma inside the text.
+- **Point numbers come in changed.** There were duplicate numbers and Civil 3D used the next free one without you noticing.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. After importing, and what's worth automating" time="~5 min">
+
+Importing is half the job. What makes the survey useful:
+
+- **Description keys.** They assign style, label and layer from the code: everything starting with EP goes to the edge-of-pavement layer with its symbol. Set them up once in the template.
+- **Point groups** by code, to decide what goes into the existing-ground surface and what doesn't.
+- **The surface**, with breaklines and a boundary. We cover it in [Civil 3D contours](/en/blog/civil-3d-contours-google-earth).
+
+**What eats the most time in a firm**, and can be automated:
+
+- Importing straight from the field Excel file, with no CSV step, using each crew's column order.
+- Checking before import: duplicate numbers, zero elevations, points outside the project area, or codes missing from the description keys.
+- Building point groups by code and the surface with the firm's rules.
+- Validating every import with a short report, so errors are caught before they reach the design.
+
+<ComparisonTable
+  criterionLabel="Task"
+  leftLabel="With a plugin"
+  rightLabel="By hand"
+  rows="Field Excel into Civil 3D | *Directly, no CSV | Save CSV and check delimiters || Pre-import check | *Duplicates, zero elevations, out of area | Later, when the error shows || Groups and surface | *With the firm's rules | One by one || Each crew's own format | *Detected automatically | Pick the format every time"
+/>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Civil 3D automation"
+  title="From field data to surface, in one step"
+  body="We build Civil 3D plugins that import the field Excel file, check the points, build point groups by code and create the surface with your firm's rules. We're civil engineers and software engineers."
+  primaryLabel="Request a free diagnosis"
+  primaryHref="/en/contact"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/services/revit-civil-3d-plugin-development"
+/>
+
+## Related resources
+
+- **Convert before importing:** [UTM and geographic coordinate converter](/en/tools/utm-converter).
+- **Not sure where the plan is?** [How to plot a site plan's UTM coordinates on Google Maps](/en/blog/plot-utm-coordinates-google-maps).
+- **The next step:** [Civil 3D contours, from survey to surface](/en/blog/civil-3d-contours-google-earth).
+- **The complete guide:** [Civil 3D automation](/en/blog/civil-3d-automation-guide).
+- **No code:** [10 Dynamo scripts for Civil 3D](/en/blog/dynamo-civil-3d-scripts).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Civil engineers who code"
+  title="A team of civil engineers and software engineers"
+  body="We work with survey data and Civil 3D every day, and we build the tools that process it. We work remotely with engineering firms in the US, Europe and Latin America."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contact"
+  secondaryLabel="See all services"
+  secondaryHref="/en/services"
+/>
+
+---
+
+**Technical note:** command names match Civil 3D 2026. Check your release's help if any of them change.

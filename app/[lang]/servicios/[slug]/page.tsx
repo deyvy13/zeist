@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, locales } from "@/lib/i18n";
-import { absoluteUrl, localizedPath, site, siteUrl, whatsappUrl } from "@/lib/site";
+import { localizedPath, localizedUrl, site, siteUrl, whatsappUrl } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
-import { getPost, type PostMeta } from "@/lib/blog";
+import { getPostByKey, type PostMeta } from "@/lib/blog";
 import { SERVICE_SLUGS, getServicePage, isServiceSlug } from "@/lib/services";
 import { serviceIcons, IconArrow, IconWhatsApp } from "@/components/icons";
 import { ComparisonTable } from "@/components/visual/comparison-table";
@@ -49,13 +49,13 @@ export default async function ServiceDetailPage({ params }: Props) {
   const card = dict.services.items.find((s) => s.slug === slug);
   const name = card?.title ?? page.serviceType;
   const Icon = serviceIcons[slug];
-  const pageUrl = absoluteUrl(`${lang}/servicios/${slug}`);
+  const pageUrl = localizedUrl(lang, `servicios/${slug}`);
   const waHref = whatsappUrl(page.prefill);
 
   // Guide links resolve against the posts published in this locale (the Peru
   // cluster is Spanish-only) and carry the post's real title.
   const publishedPost = (postSlug: string): PostMeta | null => {
-    const post = getPost(lang, postSlug);
+    const post = getPostByKey(lang, postSlug);
     return post && !post.meta.draft ? post.meta : null;
   };
   const guides = page.guides
@@ -110,12 +110,12 @@ export default async function ServiceDetailPage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: site.name, item: absoluteUrl(lang) },
+      { "@type": "ListItem", position: 1, name: site.name, item: localizedUrl(lang) },
       {
         "@type": "ListItem",
         position: 2,
         name: dict.nav.services,
-        item: absoluteUrl(`${lang}/servicios`),
+        item: localizedUrl(lang, "servicios"),
       },
       { "@type": "ListItem", position: 3, name, item: pageUrl },
     ],
@@ -280,7 +280,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   <p className="mt-2 text-[color:var(--color-muted)]">{build.body}</p>
                   {guide && (
                     <Link
-                      href={localizedPath(lang, `blog/${guide.slug}`)}
+                      href={localizedPath(lang, `blog/${guide.key}`)}
                       className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--color-mint-700)] transition-all hover:gap-3"
                     >
                       {labels.readGuide}
@@ -377,8 +377,8 @@ export default async function ServiceDetailPage({ params }: Props) {
             <div className="mt-10 border-t border-[color:var(--color-hairline)]">
               {guides.map((guide) => (
                 <Link
-                  key={guide.slug}
-                  href={localizedPath(lang, `blog/${guide.slug}`)}
+                  key={guide.key}
+                  href={localizedPath(lang, `blog/${guide.key}`)}
                   className="group grid gap-2 border-b border-[color:var(--color-hairline)] py-6 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-8"
                 >
                   <div>

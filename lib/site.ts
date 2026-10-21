@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n";
+import { publicPath } from "@/lib/routes";
 
 // -----------------------------------------------------------------------------
 // Single source of truth for brand + SEO defaults.
@@ -42,9 +43,19 @@ export const site = {
   },
 } as const;
 
+/**
+ * Public URL path of a page in a locale. Pass the internal path, with the
+ * Spanish section and id ("herramientas/conversor-de-coordenadas",
+ * "blog/<translationKey>"): it comes out in the locale's own words
+ * ("/en/tools/utm-converter"). See lib/routes.ts.
+ */
 export function localizedPath(locale: Locale, path = ""): string {
-  const clean = path.replace(/^\/+/, "");
-  return clean ? `/${locale}/${clean}` : `/${locale}`;
+  return publicPath(locale, path);
+}
+
+/** Absolute public URL of a page in a locale (canonical, JSON-LD, sitemap). */
+export function localizedUrl(locale: Locale, path = ""): string {
+  return absoluteUrl(publicPath(locale, path));
 }
 
 export function absoluteUrl(path = ""): string {

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
-import { localizedPath, mailtoUrl, site, whatsappUrl, absoluteUrl } from "@/lib/site";
+import { localizedPath, localizedUrl, mailtoUrl, site, whatsappUrl } from "@/lib/site";
 import { breadcrumbJsonLd, buildMetadata, organizationJsonLd } from "@/lib/seo";
 import { getAllPosts } from "@/lib/blog";
 import { toolsFor } from "@/lib/tools";
@@ -151,7 +151,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
     "@type": "AboutPage",
     name: c.seoTitle,
     description: c.metaDescription,
-    url: absoluteUrl(`${lang}/nosotros`),
+    url: localizedUrl(lang, "nosotros"),
     inLanguage: lang,
     mainEntity: organizationJsonLd(lang),
   };

@@ -22,6 +22,7 @@ import { ComparisonTable } from "@/components/visual/comparison-table";
 import { AuroraText } from "@/components/visual/aurora-text";
 import type { Locale } from "@/lib/i18n";
 import Image from "next/image";
+import { normalizeHref } from "@/lib/routes";
 
 /**
  * A screenshot or diagram inside a post: optimized by next/image, with its alt
@@ -80,8 +81,10 @@ const components: MDXComponents = {
   p: (props) => (
     <p className="mt-5 leading-relaxed text-[color:var(--color-foreground)]/90" {...props} />
   ),
-  a: ({ href = "", ...props }) => {
-    const external = /^https?:\/\//.test(href);
+  a: ({ href: raw = "", ...props }) => {
+    const external = /^https?:\/\//.test(raw);
+    // Site links come out with their public URL in the post's language.
+    const href = normalizeHref(raw);
     return external ? (
       <a
         href={href}

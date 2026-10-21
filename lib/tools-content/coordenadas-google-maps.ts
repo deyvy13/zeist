@@ -266,7 +266,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "Por que não basta colar o E e o N no Google Maps? Porque a busca só entende graus: decimais (−9.1071019, −78.5130932), com minutos e segundos ou com minutos decimais. As coordenadas UTM precisam ser convertidas antes e, se a planta não está em WGS 84 ou SIRGAS 2000, também mudadas de datum. Explicamos com um caso real em [como localizar uma planta com coordenadas UTM no Google Maps](/pt/blog/ubicar-plano-coordenadas-utm-google-maps).",
+            text: "Por que não basta colar o E e o N no Google Maps? Porque a busca só entende graus: decimais (−9.1071019, −78.5130932), com minutos e segundos ou com minutos decimais. As coordenadas UTM precisam ser convertidas antes e, se a planta não está em WGS 84 ou SIRGAS 2000, também mudadas de datum. Explicamos com um caso real em [como localizar uma planta com coordenadas UTM no Google Maps](/pt/blog/localizar-terreno-coordenadas-utm).",
           },
         ],
       },
@@ -375,7 +375,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "Precisa converter centenas de pontos ou levá-los ao Civil 3D? Use o [conversor de coordenadas](/pt/herramientas/conversor-de-coordenadas), que exporta para Excel, Civil 3D e Google Earth.",
+            text: "Precisa converter centenas de pontos ou levá-los ao Civil 3D? Use o [conversor de coordenadas](/pt/ferramentas/conversor-de-coordenadas), que exporta para Excel, Civil 3D e Google Earth.",
           },
         ],
       },
@@ -466,7 +466,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "Why not just type the easting and northing into Google Maps? Because its search box only reads degrees: decimal (−9.1071019, −78.5130932), degrees-minutes-seconds or decimal minutes. UTM coordinates must be converted first and, if the plan isn't on WGS 84, shifted to it. We walk through a real case in [how to plot a site plan's UTM coordinates on Google Maps](/en/blog/ubicar-plano-coordenadas-utm-google-maps).",
+            text: "Why not just type the easting and northing into Google Maps? Because its search box only reads degrees: decimal (−9.1071019, −78.5130932), degrees-minutes-seconds or decimal minutes. UTM coordinates must be converted first and, if the plan isn't on WGS 84, shifted to it. We walk through a real case in [how to plot a site plan's UTM coordinates on Google Maps](/en/blog/plot-utm-coordinates-google-maps).",
           },
         ],
       },
@@ -567,7 +567,7 @@ const content: Record<Locale, ToolContent> = {
           },
           {
             type: "p",
-            text: "Need to convert hundreds of points or bring them into Civil 3D? Use the [UTM to lat long converter](/en/herramientas/conversor-de-coordenadas), which exports to Excel, Civil 3D and Google Earth.",
+            text: "Need to convert hundreds of points or bring them into Civil 3D? Use the [UTM to lat long converter](/en/tools/utm-converter), which exports to Excel, Civil 3D and Google Earth.",
           },
         ],
       },

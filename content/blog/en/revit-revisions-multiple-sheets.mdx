@@ -1,0 +1,217 @@
+---
+translationKey: "revisiones-firmas-revit-varios-planos"
+title: "Revit revisions and signatures on many sheets at once: a new revision, title block data and signatures in bulk"
+seoTitle: "Revit Revisions on Multiple Sheets: Add and Sign"
+ctaTitle: "Does every new revision mean opening sheet after sheet? We automate it into a single button."
+description: "How to add a revision to many Revit sheets at once, fill title block data in bulk, put signatures on every sheet and sign the PDF."
+date: "2026-10-09T05:00:00.000Z"
+author: "Zeist"
+tags:
+  - Revit
+  - Revisions
+  - Title blocks
+  - Plan production
+  - Revit plugins
+  - BIM automation
+---
+
+<BlogHero
+  eyebrow="Revit · Revisions · Signatures"
+  title="A new revision shouldn't mean opening 120 sheets one by one."
+  highlight="How to add a revision to many sheets at once, fill title block data in bulk, put each professional's signature on every sheet and digitally sign the PDFs. With what Revit includes, what AutoCAD includes, and what's worth automating."
+/>
+
+<Callout type="success" title="Quick answer">
+In Revit, a revision is created once in the project's Sheet Issues/Revisions dialog, with its date and description, and since Revit 2023.1 it can be added to many sheets at once: select them in the Project Browser and check it under Revisions on Sheet. Title block fields such as Drawn By or Approved By are filled in bulk by selecting several sheets or through a sheet list schedule. A signature goes in as an image inside a nested family that you turn on per sheet. A plugin does all of it in one step.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain words">
+- **Sheet** — Each page of the drawing set, with its title block.
+- **Title block** — The frame with the sheet's data: project, number, who drew, checked and approved it, and the revision schedule.
+- **Revision** — Each issued version of the drawing set, with its number, date and description.
+- **Revision cloud** — The cloud that marks on a sheet what changed in a revision.
+- **Project Browser** — The Revit panel that lists views and sheets.
+- **Nested family** — A Revit family placed inside another, such as a signature image inside the title block.
+- **Digital signature** — A certificate-based signature that gives a PDF legal validity. It's not the same as a scanned image of a signature.
+
+Written for BIM coordinators, project managers and modelers who issue drawings from Revit.
+</Callout>
+
+## The work that comes back with every submittal
+
+Every round of client or agency comments ends in a new revision: mark it on the sheets that changed, update the date, set who checked and who approved, turn on the signatures and export again. On a 120-sheet set, doing that by hand takes hours and leaves errors: a sheet still on the previous revision, another without a signature, a mismatched date.
+
+The good news is that much of this work can already be done in bulk inside Revit, and the rest can be automated.
+
+<AnimatedFlow
+  title="A revision, from start to finish"
+  nodes="New revision|Sheets that change|Title block and signatures|Signed PDF"
+  subs="Date and description, once|Picked by list or by rule|Checked, approved, signatures on|Exported and digitally signed"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. How revisions work in Revit" time="~5 min">
+
+A Revit revision doesn't live on each sheet; it lives in the project:
+
+- **It's created once** in the Sheet Issues/Revisions dialog, on the View tab, with its date, description, and who it's issued to and by.
+- **Numbering** is controlled by a numbering sequence: numeric, alphanumeric or in your firm's format.
+- **It shows on a sheet** in one of two ways: there's a **revision cloud** for that revision on the sheet, or it was checked by hand under **Revisions on Sheet** in the sheet's properties.
+- **The title block's revision schedule** lists every revision that participates on that sheet.
+
+<Callout type="tip" title="What few people take advantage of">
+The date and description live in the revision, not on each sheet. Change the date in Sheet Issues/Revisions and it changes in every title block that shows it. No need to touch sheets one by one.
+</Callout>
+
+When a revision is marked **Issued**, its clouds are locked: they can't be moved or deleted until you clear that flag.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Adding a revision to many sheets at once" time="~5 min">
+
+**Since Revit 2023.1** you can do it in one step:
+
+1. Create the revision in Sheet Issues/Revisions.
+2. In the Project Browser, select every sheet that changes, with Ctrl or Shift.
+3. In Properties, under **Revisions on Sheet**, click Edit and check the new revision.
+
+The revision is added to every selected sheet and shows in their revision schedules.
+
+**In earlier releases** you had to do it sheet by sheet, or copy a revision cloud onto every sheet, which many teams still do out of habit.
+
+<Callout type="warn" title="Revisions on Sheet greyed out?">
+If a revision under Revisions on Sheet is checked and greyed out, that sheet has a cloud for that revision, either on the sheet or in a view placed on it. Revit won't let you clear it while the cloud exists. To remove it, delete the cloud or switch it to another revision.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. Filling title block data in bulk" time="~6 min">
+
+Revit has built-in sheet parameters for the title block: **Drawn By**, **Designed By**, **Checked By**, **Approved By** and Sheet Issue Date. There are three ways to fill them without going sheet by sheet:
+
+- **Multiple selection.** Select several sheets in the Project Browser and type the value in Properties: it's applied to all of them.
+- **Sheet list schedule.** A sheet list with those columns lets you edit row by row, like a spreadsheet, without opening any sheet.
+- **Excel.** Export the schedule, fill it in Excel and bring it back into Revit. Revit doesn't do the round trip on its own; we explain it in [exporting Revit schedules to Excel and back](/en/blog/export-revit-schedule-to-excel).
+
+**Firm-specific data**, such as the engineer's license number, the discipline or the client's code, goes in as shared sheet parameters and is filled the same way. How to create them without duplicates is in [Revit shared parameters](/en/blog/revit-shared-parameters).
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Signatures in the title block, turned on per sheet" time="~6 min">
+
+Revit can't switch an image on or off directly with a parameter. The method that works:
+
+1. **One generic annotation family per signature**, holding each professional's scanned signature, cropped and in a lightweight format.
+2. **Those families nested in the title block**, in the box for each role: designer, checker, engineer of record.
+3. **One Yes/No instance parameter per signature** in the title block, controlling the visibility of each nested family.
+
+That way each signature is turned on or off per sheet from Properties, and with multiple selection you turn it on for every approved sheet at once. If the responsible engineer changes, you replace the image in the family and every sheet updates.
+
+<Callout type="warn" title="Control who can turn it on">
+A scanned signature inside the model can be switched on by anyone who edits the file. Make turning on signatures the last step, done by a designated person, and log which revision each sheet was signed on.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="5" title="5. A signature image is not a digital signature" time="~4 min">
+
+The scanned image makes the printed sheet or PDF show the signature. But it doesn't prove who signed it or that the document wasn't changed afterwards.
+
+**A digital signature** is applied to the exported PDF with a digital certificate, using tools such as Adobe Acrobat or Bluebeam Revu. In the US, the rules for digitally sealing engineering drawings are set by each state's licensing board, so check what your jurisdiction and the receiving agency require.
+
+**Order matters:** export the final PDF first and sign it last. If the PDF changes after signing, the signature is no longer valid. Exporting the whole set in one step helps; we cover it in [Revit batch print, PDF and DWG without limits](/en/blog/revit-batch-export-pdf-dwg).
+
+</TopicCard>
+
+<TopicCard step="6" title="6. In AutoCAD and Civil 3D" time="~5 min">
+
+In AutoCAD and Civil 3D the title block is usually a block with attributes on each layout. To fill it in bulk:
+
+- **GATTE**, from Express Tools, changes an attribute value in every insertion of a block in the drawing, across all layouts at once.
+- **ATTOUT and ATTIN**, also from Express Tools, export attributes to a text file you edit in Excel and import back.
+- **Sheet Set Manager** stores shared data, such as the checker or the date, that title blocks across many drawings read through fields.
+
+**The signature** goes in as a block holding the image, on a layer you turn on when the sheet is approved.
+
+**To digitally sign many DWG files** at once, AutoCAD includes the Attach Digital Signatures utility, opened from the Windows Start menu: add the files, pick the certificate and sign them all in one operation.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. What's worth automating with a plugin" time="~6 min">
+
+Native tools cover pieces. A plugin ties the whole process into one "New revision" button:
+
+- **Creates the revision** with its date, description and issuer.
+- **Assigns it to the sheets that changed**, picked from an Excel list, by discipline or by the clouds they carry.
+- **Fills the title block**: checked by, approved by and issue date, following the firm's rules.
+- **Turns on signatures** only on approved sheets, and logs who did it and when.
+- **Checks before issuing**: sheets missing the new revision, title blocks with empty fields, or clouds on unissued revisions.
+- **Generates the revision log** in Excel and exports the set to PDF and DWG.
+
+The core, with the Revit API, is short:
+
+```csharp
+// Create a revision, add it to the chosen sheets and fill the title block
+using (var t = new Transaction(doc, "New revision"))
+{
+    t.Start();
+    Revision rev = Revision.Create(doc);
+    rev.RevisionDate = "10/09/2026";
+    rev.Description = "Response to review comments";
+    rev.IssuedBy = "Designer";
+
+    foreach (ViewSheet sheet in sheets)
+    {
+        var revisions = sheet.GetAdditionalRevisionIds();
+        revisions.Add(rev.Id);
+        sheet.SetAdditionalRevisionIds(revisions);
+        sheet.get_Parameter(BuiltInParameter.SHEET_CHECKED_BY).Set("Checker");
+        sheet.get_Parameter(BuiltInParameter.SHEET_APPROVED_BY).Set("Engineer of record");
+    }
+    t.Commit();
+}
+```
+
+<ComparisonTable
+  criterionLabel="Task"
+  leftLabel="With a plugin"
+  rightLabel="Native Revit"
+  rows="Add the revision to many sheets | *By list or by rule | Multiple selection since 2023.1 || Fill checked and approved by | *Following the firm's rules | Multiple selection or schedule || Turn on signatures | *Approved sheets only, with a log | Sheet by sheet or multiple selection || Check before issuing | *Report of what's missing | By eye || Revision log | *Automatic Excel | By hand"
+/>
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Revit plugins"
+  title="Every new revision, issued in minutes"
+  body="We build Revit plugins that create the revision, assign it to the sheets that changed, fill the title block, turn on signatures and export the full set. Free diagnosis, an installer, source code you own, and updates with every Revit release."
+  primaryLabel="Request a free diagnosis"
+  primaryHref="/en/contact"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/services/revit-civil-3d-plugin-development"
+/>
+
+## Related resources
+
+- **The whole title block:** [Revit and AutoCAD title blocks filled automatically](/en/blog/revit-autocad-title-block-automation).
+- **The next step:** [Revit batch print, PDF and DWG without limits](/en/blog/revit-batch-export-pdf-dwg).
+- **Title block data in Excel:** [exporting Revit schedules to Excel and back](/en/blog/export-revit-schedule-to-excel).
+- **Building the sheets:** [automated plan production in Civil 3D and Revit](/en/blog/civil-3d-revit-plan-production).
+- **Other tasks worth automating:** [the 12 Revit tasks that save the most time](/en/blog/automate-revit-tasks).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Civil engineers who code"
+  title="A team of civil engineers and software engineers"
+  body="We issue drawings and we build the tools that produce them. We work remotely with engineering and architecture firms in the US, Europe and Latin America."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contact"
+  secondaryLabel="See all services"
+  secondaryHref="/en/services"
+/>
+
+---
+
+**Technical note:** features match Revit 2026 and AutoCAD 2026. Signature requirements vary by agency and jurisdiction: check them before issuing.

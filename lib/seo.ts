@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { absoluteUrl, site, siteUrl } from "@/lib/site";
+import { publicPath } from "@/lib/routes";
 import {
   defaultLocale,
   hreflangByLocale,
@@ -12,7 +13,8 @@ import {
 //  - canonical points to the current locale URL
 //  - alternates.languages emits reciprocal hreflang for every locale + x-default
 //  - Open Graph + Twitter cards filled from the same inputs
-// Pass `path` WITHOUT the locale prefix (e.g. "servicios/paginas-web").
+// Pass the internal `path`, WITHOUT the locale prefix ("servicios/<id>",
+// "blog/<translationKey>"): each locale gets its own public URL (lib/routes.ts).
 // -----------------------------------------------------------------------------
 
 type BuildMetadataArgs = {
@@ -37,8 +39,7 @@ type BuildMetadataArgs = {
 };
 
 function localePath(locale: Locale, path = ""): string {
-  const clean = path.replace(/^\/+/, "").replace(/\/$/, "");
-  return clean ? `/${locale}/${clean}` : `/${locale}`;
+  return publicPath(locale, path);
 }
 
 export function buildMetadata({

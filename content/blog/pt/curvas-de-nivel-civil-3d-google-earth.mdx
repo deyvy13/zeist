@@ -1,4 +1,5 @@
 ---
+translationKey: "curvas-de-nivel-civil-3d-google-earth"
 title: "Curvas de nível no Civil 3D: do Google Earth e dos modelos de satélite ao seu levantamento, passo a passo"
 seoTitle: "Curvas de nível no Civil 3D e Google Earth: guia"
 ctaTitle: "Sua equipe monta superfícies e curvas à mão em cada projeto? Automatizamos no Civil 3D."
@@ -21,7 +22,7 @@ tags:
 />
 
 <Callout type="success" title="Resposta rápida">
-O Civil 3D gera as curvas de nível a partir de uma **superfície**. Para criá-la sem levantamento, o Google Earth não serve diretamente: não exporta o terreno e o Civil 3D já não o importa. Usa-se um **modelo de elevação aberto**, como o SRTM, com malha de cerca de 30 m. Ele é adicionado à superfície como arquivo DEM ou importado como malha de pontos, por exemplo do nosso [gerador de curvas de nível](/pt/herramientas/generador-curvas-de-nivel). Com levantamento, a superfície é criada a partir dos pontos e das linhas de quebra. Nos dois casos, a equidistância e os rótulos são definidos no estilo da superfície.
+O Civil 3D gera as curvas de nível a partir de uma **superfície**. Para criá-la sem levantamento, o Google Earth não serve diretamente: não exporta o terreno e o Civil 3D já não o importa. Usa-se um **modelo de elevação aberto**, como o SRTM, com malha de cerca de 30 m. Ele é adicionado à superfície como arquivo DEM ou importado como malha de pontos, por exemplo do nosso [gerador de curvas de nível](/pt/ferramentas/gerador-curvas-de-nivel). Com levantamento, a superfície é criada a partir dos pontos e das linhas de quebra. Nos dois casos, a equidistância e os rótulos são definidos no estilo da superfície.
 </Callout>
 
 <Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
@@ -66,7 +67,7 @@ O Civil 3D já teve um comando para importar a superfície do Google Earth, mas 
 - **Fontes nacionais:** no Brasil, o Topodata do INPE oferece o SRTM refinado para estudos regionais.
 
 <Callout type="success" title="O caminho mais curto">
-Se você só precisa de curvas para um estudo preliminar, use o nosso [gerador de curvas de nível](/pt/herramientas/generador-curvas-de-nivel): escolha a área no mapa e baixe as curvas em DXF ou uma malha de pontos PNEZD para o Civil 3D, em coordenadas UTM e com a cota. Sem instalar nada.
+Se você só precisa de curvas para um estudo preliminar, use o nosso [gerador de curvas de nível](/pt/ferramentas/gerador-curvas-de-nivel): escolha a área no mapa e baixe as curvas em DXF ou uma malha de pontos PNEZD para o Civil 3D, em coordenadas UTM e com a cota. Sem instalar nada.
 </Callout>
 
 <Figure src="/blog/curvas-de-nivel-civil-3d-google-earth/generador-curvas-de-nivel-pt.webp" alt="Gerador de curvas de nível da Zeist: curvas a cada 50 m em torno do Corcovado, no Rio de Janeiro, com cotas de 6 a 648 m" caption="O gerador com o exemplo: curvas a cada 50 m em torno do Corcovado, no Rio de Janeiro, prontas para baixar em DXF ou como pontos para o Civil 3D." width="1986" height="1578" />
@@ -95,7 +96,7 @@ Alguns modelos marcam as células sem dado com um valor como −32768. Se aparec
 
 Uma malha regular de pontos é a forma mais simples de levar um modelo de elevação para o Civil 3D, e é o que o nosso gerador entrega.
 
-1. **Importe os pontos:** guia Inserir, Pontos de arquivo, formato PNEZD delimitado por vírgulas. Se o arquivo não entrar, veja [importar pontos no Civil 3D a partir do Excel, CSV ou TXT](/pt/blog/importar-puntos-civil-3d-excel).
+1. **Importe os pontos:** guia Inserir, Pontos de arquivo, formato PNEZD delimitado por vírgulas. Se o arquivo não entrar, veja [importar pontos no Civil 3D a partir do Excel, CSV ou TXT](/pt/blog/importar-pontos-civil-3d).
 2. **Crie um grupo de pontos** com eles. Se o arquivo traz a descrição TN (terreno natural), você pode filtrar por ela.
 3. **Adicione o grupo à superfície:** na definição da superfície, Grupos de pontos, Adicionar.
 4. **Defina o estilo** com as curvas de que precisa (veja o passo 5).
@@ -103,7 +104,7 @@ Uma malha regular de pontos é a forma mais simples de levar um modelo de eleva�
 **Vantagem em relação ao DXF de curvas:** com os pontos, o Civil 3D reconstrói o terreno e você controla a equidistância, o estilo e os rótulos. O DXF de curvas serve se você só precisa do desenho ou vai usá-lo no AutoCAD.
 
 <Callout type="info" title="As coordenadas estão em latitude e longitude?">
-Se você tem pontos do Google Earth ou de um GPS em graus, converta-os antes para UTM com o [conversor de coordenadas](/pt/herramientas/conversor-de-coordenadas): ele processa centenas de pontos de uma vez e os deixa no formato PNEZD.
+Se você tem pontos do Google Earth ou de um GPS em graus, converta-os antes para UTM com o [conversor de coordenadas](/pt/ferramentas/conversor-de-coordenadas): ele processa centenas de pontos de uma vez e os deixa no formato PNEZD.
 </Callout>
 
 </TopicCard>
@@ -171,7 +172,7 @@ Se o seu escritório monta superfícies toda semana, o procedimento é sempre o 
 - **Com Dynamo**, para validar a rotina rápido. Veja [10 scripts de Dynamo para Civil 3D](/pt/blog/dynamo-civil-3d-scripts) que resolvem tarefas desse tipo.
 - **Com um plugin**, quando todo o escritório usa: um botão na barra superior do Civil 3D que faz o processo completo com as suas regras.
 
-O guia para [automatizar o Civil 3D](/pt/blog/automatizar-civil-3d-guia-completa) mostra o mapa completo do que se pode automatizar, dos pontos às pranchas.
+O guia para [automatizar o Civil 3D](/pt/blog/automatizar-civil-3d-guia-completo) mostra o mapa completo do que se pode automatizar, dos pontos às pranchas.
 
 </TopicCard>
 
@@ -180,21 +181,21 @@ O guia para [automatizar o Civil 3D](/pt/blog/automatizar-civil-3d-guia-completa
   title="Quantas horas sua equipe passa montando superfícies?"
   body="Desenvolvemos plugins para o Civil 3D que importam seus levantamentos com seus códigos, constroem a superfície com linhas de quebra e estilos da empresa e deixam curvas, perfis e volumes prontos. Somos engenheiros civis e engenheiros de sistemas."
   primaryLabel="Pedir diagnóstico"
-  primaryHref="/pt/contacto"
+  primaryHref="/pt/contato"
   secondaryLabel="Ver add-ins sob medida"
-  secondaryHref="/pt/servicios/add-ins-revit-civil-3d"
+  secondaryHref="/pt/servicos/plugins-revit-civil-3d"
 />
 
 ## Recursos relacionados
 
-- **Ferramenta gratuita:** [gerador de curvas de nível em DXF para o Civil 3D](/pt/herramientas/generador-curvas-de-nivel).
-- **Ferramenta gratuita:** [conversor de coordenadas UTM e geográficas](/pt/herramientas/conversor-de-coordenadas).
-- **Onde fica a planta:** [como localizar uma planta com coordenadas UTM no Google Maps](/pt/blog/ubicar-plano-coordenadas-utm-google-maps).
-- **O guia do cluster:** [automatizar o Civil 3D, o guia completo](/pt/blog/automatizar-civil-3d-guia-completa).
+- **Ferramenta gratuita:** [gerador de curvas de nível em DXF para o Civil 3D](/pt/ferramentas/gerador-curvas-de-nivel).
+- **Ferramenta gratuita:** [conversor de coordenadas UTM e geográficas](/pt/ferramentas/conversor-de-coordenadas).
+- **Onde fica a planta:** [como localizar uma planta com coordenadas UTM no Google Maps](/pt/blog/localizar-terreno-coordenadas-utm).
+- **O guia do cluster:** [automatizar o Civil 3D, o guia completo](/pt/blog/automatizar-civil-3d-guia-completo).
 - **Para automatizar sem programar:** [Dynamo para Civil 3D, 10 scripts](/pt/blog/dynamo-civil-3d-scripts).
-- **Redes sobre a superfície:** [redes de tubulação no Civil 3D com suas conexões](/pt/blog/redes-tuberias-civil-3d-accesorios).
-- **Do 2D ao 3D:** [plugin para Civil 3D: desenho 3D automatizado](/pt/blog/plugin-civil-3d-dibujo-3d-automatizado).
-- **Se o terreno vai para o Revit:** [do Civil 3D para o Revit, topografia e coordenadas](/pt/blog/civil-3d-a-revit-topografia-coordenadas).
+- **Redes sobre a superfície:** [redes de tubulação no Civil 3D com suas conexões](/pt/blog/redes-tubulacao-civil-3d).
+- **Do 2D ao 3D:** [plugin para Civil 3D: desenho 3D automatizado](/pt/blog/plugin-civil-3d-desenho-3d).
+- **Se o terreno vai para o Revit:** [do Civil 3D para o Revit, topografia e coordenadas](/pt/blog/civil-3d-para-revit-topografia).
 
 <PostFaqs />
 
@@ -203,11 +204,11 @@ O guia para [automatizar o Civil 3D](/pt/blog/automatizar-civil-3d-guia-completa
   title="Uma equipe de engenheiros civis e engenheiros de sistemas"
   body="Já fizemos topografia e projeto de infraestrutura, e sabemos construir a ferramenta que automatiza o trabalho com superfícies. Trabalhamos com escritórios do Brasil e de toda a América Latina."
   primaryLabel="Vamos falar do seu caso"
-  primaryHref="/pt/contacto"
+  primaryHref="/pt/contato"
   secondaryLabel="Ver todos os serviços"
-  secondaryHref="/pt/servicios"
+  secondaryHref="/pt/servicos"
 />
 
 ---
 
-**Foi útil?** Compartilhe com quem monta as superfícies no seu escritório. E teste o [gerador de curvas de nível](/pt/herramientas/generador-curvas-de-nivel) com a área do seu próximo projeto.
+**Foi útil?** Compartilhe com quem monta as superfícies no seu escritório. E teste o [gerador de curvas de nível](/pt/ferramentas/gerador-curvas-de-nivel) com a área do seu próximo projeto.

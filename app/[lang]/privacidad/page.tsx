@@ -5,6 +5,7 @@ import { Fragment, type ReactNode } from "react";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { site } from "@/lib/site";
 import { buildMetadata } from "@/lib/seo";
+import { normalizeHref } from "@/lib/routes";
 import { AnalyticsOptOut, type AnalyticsOptOutLabels } from "@/components/analytics-optout";
 
 // Privacy policy. Describes what the site actually does — keep it in sync with
@@ -216,7 +217,7 @@ const copy: Record<Locale, Copy> = {
         id: "responsavel",
         h: "1. Quem é o responsável",
         paras: [
-          `O controlador dos dados é a **Zeist**, uma equipe de automação BIM com sede em Trujillo, La Libertad, Peru. Para qualquer dúvida sobre seus dados, escreva pelo WhatsApp para ${wa}, para o e-mail [${mail}](mailto:${mail}) ou pela [página de contato](/pt/contacto).`,
+          `O controlador dos dados é a **Zeist**, uma equipe de automação BIM com sede em Trujillo, La Libertad, Peru. Para qualquer dúvida sobre seus dados, escreva pelo WhatsApp para ${wa}, para o e-mail [${mail}](mailto:${mail}) ou pela [página de contato](/pt/contato).`,
         ],
       },
       {
@@ -354,7 +355,7 @@ const copy: Record<Locale, Copy> = {
         id: "controller",
         h: "1. Who is responsible",
         paras: [
-          `The data controller is **Zeist**, a BIM automation team based in Trujillo, La Libertad, Peru. For any question about your data, message us on WhatsApp at ${wa}, email [${mail}](mailto:${mail}) or use the [contact page](/en/contacto).`,
+          `The data controller is **Zeist**, a BIM automation team based in Trujillo, La Libertad, Peru. For any question about your data, message us on WhatsApp at ${wa}, email [${mail}](mailto:${mail}) or use the [contact page](/en/contact).`,
         ],
       },
       {
@@ -463,7 +464,7 @@ function inline(text: string): ReactNode {
       parts.push(<strong key={i++}>{m[1]}</strong>);
     } else if (m[3].startsWith("/")) {
       parts.push(
-        <Link key={i++} href={m[3]} className="font-medium text-[color:var(--color-mint-700)] underline underline-offset-2">
+        <Link key={i++} href={normalizeHref(m[3])} className="font-medium text-[color:var(--color-mint-700)] underline underline-offset-2">
           {m[2]}
         </Link>,
       );

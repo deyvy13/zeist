@@ -1,0 +1,181 @@
+---
+translationKey: "civil-3d-a-revit-topografia-coordenadas"
+title: "Civil 3D to Revit: how to bring surfaces, coordinates, alignments and pipe networks across without anything moving"
+seoTitle: "Civil 3D to Revit: Surfaces, Coordinates and Pipes"
+ctaTitle: "Does your team move data from Civil 3D to Revit by hand on every project? We automate it."
+description: "How to go from Civil 3D to Revit: link or import the surface as a toposolid, share coordinates, and bring alignments, corridors and pipe networks across."
+date: "2026-10-08T13:00:00.000Z"
+author: "Zeist"
+tags:
+  - Civil 3D
+  - Revit
+  - Interoperability
+  - Topography
+  - Shared coordinates
+  - BIM automation
+---
+
+<BlogHero
+  eyebrow="Civil 3D · Revit · Interoperability"
+  title="Civil 3D works in real-world coordinates. Revit works near its origin. That's where every problem starts."
+  highlight="How to share coordinates between the two programs, how to bring a Civil 3D surface into Revit as a toposolid, what to do with alignments, corridors and pipe networks, and which part of the handoff is worth automating."
+/>
+
+<Callout type="success" title="Quick answer">
+To go from Civil 3D to Revit, share coordinates first, with Autodesk's Shared Reference Point extension or by acquiring coordinates from a linked DWG. Then link the terrain with Revit's **Link Topography** tool, which reads a surface published to Autodesk Construction Cloud; since Revit 2024 it comes in as a toposolid. Without the cloud, export the surface to a file and create the toposolid from it. Corridors and pipe networks are exported as solids, without their Civil 3D intelligence. Never move the Revit model to state plane or UTM coordinates.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain words">
+- **Surface** — The terrain model in Civil 3D.
+- **Toposolid** — Revit's terrain object since the 2024 release. Earlier releases used the toposurface.
+- **Survey Point** — The Revit point that ties the model to real-world coordinates.
+- **Project Base Point** — The Revit point used for measurements inside the building.
+- **Shared coordinates** — The agreement between two files on where each one sits in the real world.
+- **Autodesk Construction Cloud (ACC)** — Autodesk's cloud platform where models are published and shared.
+- **Solid** — A 3D shape with no intelligence: it has geometry, but no longer knows it was a pipe or a road.
+
+No programming terms. Written for architects, designers and BIM coordinators.
+</Callout>
+
+## The school is designed well. The site is 30 kilometers away
+
+It happens on projects that combine buildings and infrastructure: schools, hospitals, treatment plants, developments with community buildings. The civil engineer designs the grading, roads and utilities in Civil 3D; the architect designs the building in Revit. When they come together, the building floats above the ground, shows up rotated, or lands miles away.
+
+It's almost never a design error. **The two programs locate things differently**, and nobody agreed on how to translate one into the other.
+
+<AnimatedFlow
+  title="The right order to go from Civil 3D to Revit"
+  nodes="Shared coordinates|Terrain as a toposolid|Alignments and profiles as reference|Corridors and pipes as solids"
+  subs="Always first|Linked or imported|To place the building|For coordination"
+/>
+
+<Roadmap />
+
+<TopicCard step="1" title="1. Why Civil 3D and Revit don't understand each other on their own" time="~4 min">
+
+**Civil 3D works in real-world coordinates.** A project in the US is usually drawn in state plane coordinates, often millions of feet from the drawing origin. For Civil 3D, that's normal.
+
+**Revit works near its internal origin.** It was built for buildings, and its precision degrades when geometry sits far from that origin. That's why Revit warns when elements are tens of miles from the origin.
+
+**The consequence:** if you move the Revit model to state plane or UTM coordinates, graphic and precision errors appear. The right approach is to keep the building near the origin and tell Revit, through shared coordinates, where it sits in the world.
+
+</TopicCard>
+
+<TopicCard step="2" title="2. Shared coordinates first" time="~6 min">
+
+Revit has two key points: the **Project Base Point**, used for measurements inside the building, and the **Survey Point**, which ties it to real-world coordinates. There are two common ways to align them with Civil 3D:
+
+**A. Autodesk's Shared Reference Point extension.**
+
+1. In Civil 3D, from the extension manager in the Toolspace, export an origin point and a second point that sets the direction, both at the same elevation. This creates an XML file.
+2. In Revit, from the Add-Ins tab, import shared coordinates from that XML, picking the same points in the same order.
+3. Make the new system the project's current location.
+
+**B. Acquire coordinates from a linked DWG.** Link a Civil 3D DWG at its real location into Revit and use its coordinates as the project reference. It's faster, but it depends on the DWG being properly georeferenced.
+
+<Callout type="warn" title="The golden rule">
+Coordinates are agreed once, at the start, and documented: which point, which elevation and which orientation. Changing them midway throws off every link.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="3" title="3. The terrain: link it or import it as a toposolid" time="~6 min">
+
+**Option 1: Link Topography (with Autodesk Construction Cloud).** Since Revit 2019, Link Topography reads a Civil 3D surface published to Autodesk's cloud. Since Revit 2024, the terrain comes in as a **toposolid**. The advantage: when the civil engineer publishes a new version of the surface, Revit can update it.
+
+**Option 2: Export and import.** Without the cloud, export the Civil 3D surface to a file and create the toposolid in Revit from that import, or from points in a CSV.
+
+<ComparisonTable
+  criterionLabel="Criterion"
+  leftLabel="Link Topography (cloud)"
+  rightLabel="Export and import a file"
+  rows="Requires Autodesk Construction Cloud | Yes | *No || When the surface changes | *Publish and update | Export and import again || Setup | Configure the cloud project | *Immediate || Best for | *Long projects with changes | One-off deliveries"
+/>
+
+<Callout type="info" title="Trim it before you send it">
+A surface covering the whole survey can be too heavy for Revit. Create a Civil 3D surface trimmed to the building area and its surroundings, with only the triangles you need, and send that one.
+</Callout>
+
+</TopicCard>
+
+<TopicCard step="4" title="4. Alignments, profiles and building pads" time="~4 min">
+
+Civil 3D alignments and profiles don't turn into Revit objects on their own. The usual routes:
+
+- **As reference:** link a DWG with centerlines, edges of pavement and profile grades into Revit to place driveways and floor levels.
+- **With Dynamo:** community tools such as CivilConnection exchange information between Civil 3D, Dynamo and Revit.
+- **With a custom plugin:** when the handoff repeats on every project with the same rules.
+
+**Elevation is what matters.** The building pad, finished floor elevation and access grades have to match in both models. Agreeing which elevation Revit's level 0 represents prevents half of the clashes.
+
+</TopicCard>
+
+<TopicCard step="5" title="5. Corridors, pipe networks and structures: as solids" time="~4 min">
+
+To coordinate the building with roads and utilities, Civil 3D can **export its objects as solids**: corridors, pipe networks and surfaces become 3D geometry that Revit, or Navisworks, can link.
+
+**The limit:** a solid doesn't know it was a pipe. In Revit you can't query its diameter or slope the way you can with a Revit pipe. It's for viewing and clash detection, not for continuing the design.
+
+If the project needs site utilities to reach Revit as real pipes —for example, to connect with the building's plumbing—, a script or plugin can read the Civil 3D network and rebuild it with Revit families.
+
+</TopicCard>
+
+<TopicCard step="6" title="6. The most common errors, and their cause" time="~5 min">
+
+- **The terrain shows up miles away.** Shared coordinates weren't set up, or the model was moved instead of using the Survey Point.
+- **The building comes in rotated.** North wasn't agreed: Civil 3D works with grid north and Revit distinguishes project north from true north.
+- **Levels don't match.** Revit's level 0 isn't referenced to the same elevation as Civil 3D.
+- **Revit slows down or the toposolid fails.** The surface is too large or has too many triangles for the area you need.
+- **Different units.** One file in millimeters or inches and another in meters or feet: everything comes in at the wrong scale.
+- **The terrain doesn't update.** The civil engineer changed the surface but didn't publish the new version.
+
+</TopicCard>
+
+<TopicCard step="7" title="7. What's worth automating" time="~4 min">
+
+If your firm does this handoff on every project, these tasks repeat the same way every time:
+
+- **Preparing the surface** for Revit: trimming it to the project area and simplifying it with a fixed rule.
+- **Checking coordinates, north and elevations** in both models before each submittal, with a report.
+- **Bringing alignments, profiles and levels** from Civil 3D into Revit references.
+- **Rebuilding site utilities** as Revit pipes to connect with the building systems.
+
+They're tested in Dynamo and, once used daily, turned into a plugin. We explain it in [Revit and Civil 3D add-in development](/en/blog/revit-civil-3d-add-in-development).
+
+</TopicCard>
+
+<CTABlock
+  eyebrow="Zeist · Civil 3D and Revit"
+  title="Make the terrain and the building always land in the same place"
+  body="We build plugins that prepare the surface, check coordinates, north and elevations, and bring alignments and pipe networks from Civil 3D into Revit with your firm's rules. We're civil engineers and software engineers: we work in both programs."
+  primaryLabel="Request a diagnosis"
+  primaryHref="/en/contact"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/services/revit-civil-3d-plugin-development"
+/>
+
+## Related resources
+
+- **UTM coordinates and datums:** [coordinate converter](/en/tools/utm-converter).
+- **Getting the surface right:** [Civil 3D contours from Google Earth or a survey](/en/blog/civil-3d-contours-google-earth).
+- **Pipe networks in 3D:** [Civil 3D pipe networks with fittings](/en/blog/civil-3d-pipe-network-fittings).
+- **What changed between versions:** [comparing Revit and Civil 3D models](/en/blog/compare-revit-civil-3d-models).
+- **The Civil 3D map:** [automating Civil 3D, the complete guide](/en/blog/civil-3d-automation-guide).
+- **The add-in map:** [Revit and Civil 3D add-in development](/en/blog/revit-civil-3d-add-in-development).
+- **Terrain for early design:** [contour map generator with DXF export](/en/tools/contour-map-generator).
+
+<PostFaqs />
+
+<CTABlock
+  eyebrow="Zeist · Civil engineers who code"
+  title="A team of civil engineers and software engineers"
+  body="We build C# plugins for Civil 3D and Revit, Dynamo scripts and training for BIM teams. We work remotely with engineering firms in the US, Europe and Latin America."
+  primaryLabel="Let's talk about your case"
+  primaryHref="/en/contact"
+  secondaryLabel="See all services"
+  secondaryHref="/en/services"
+/>
+
+---
+
+**Technical note:** tool names and releases follow Autodesk's documentation as of October 2026.
