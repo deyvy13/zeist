@@ -33,28 +33,39 @@ function pickLocale(request: NextRequest): Locale {
   return defaultLocale;
 }
 
+/** Final URL of a path: the old-URL redirect resolved, or the path itself. */
+function finalPath(path: string): string {
+  const route = resolveRoute(path);
+  return route && "redirect" in route ? route.redirect : path;
+}
+
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  // next.config.ts turns off Next's own trailing-slash redirect, so the slash
+  // is dropped here: every redirect below goes straight to the final URL.
+  const path = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
+  const url = request.nextUrl.clone();
+  // A plain URL for redirects: NextURL keeps the request's trailing slash when
+  // its pathname is set, which would loop back to the same address.
+  const to = (target: string) => new URL(`${target}${request.nextUrl.search}`, request.url);
 
   const hasLocale = locales.some(
-    (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`),
+    (l) => path === `/${l}` || path.startsWith(`/${l}/`),
   );
   if (hasLocale) {
-    const route = resolveRoute(pathname);
-    if (!route) return;
-    const url = request.nextUrl.clone();
-    if ("redirect" in route) {
-      url.pathname = route.redirect;
-      return NextResponse.redirect(url, 308);
+    const route = resolveRoute(path);
+    const target = route && "redirect" in route ? route.redirect : path;
+    // Old URL, or the right one with a trailing slash: one 308 to the final URL.
+    if (target !== pathname) return NextResponse.redirect(to(target), 308);
+    if (route && "rewrite" in route) {
+      url.pathname = route.rewrite;
+      return NextResponse.rewrite(url);
     }
-    url.pathname = route.rewrite;
-    return NextResponse.rewrite(url);
+    return;
   }
 
   const locale = pickLocale(request);
-  const url = request.nextUrl.clone();
-  url.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
-  return NextResponse.redirect(url);
+  return NextResponse.redirect(to(finalPath(`/${locale}${path === "/" ? "" : path}`)));
 }
 
 export const config = {

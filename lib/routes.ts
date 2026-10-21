@@ -38,7 +38,7 @@ export const SECTION_PATHS: Record<Locale, Record<Section, string>> = {
 export const TOOL_PATHS: Record<ToolSlug, Partial<Record<Locale, string>>> = {
   "coordenadas-utm-en-google-maps": { es: "coordenadas-utm-en-google-maps", pt: "coordenadas-utm-no-google-maps", en: "utm-coordinates-google-maps" },
   "conversor-de-coordenadas": { es: "conversor-de-coordenadas", pt: "conversor-de-coordenadas", en: "utm-converter" },
-  "calculadora-area-terreno": { es: "calculadora-area-terreno", pt: "calculadora-area-terreno", en: "area-from-coordinates-calculator" },
+  "calculadora-area-terreno": { es: "calculadora-area-terreno", pt: "calculadora-de-area-de-terreno", en: "area-from-coordinates-calculator" },
   "generador-curvas-de-nivel": { es: "generador-curvas-de-nivel", pt: "gerador-curvas-de-nivel", en: "contour-map-generator" },
   "calculadora-acero-corrugado": { es: "calculadora-acero-corrugado" },
   "calculadora-manning": { es: "calculadora-manning", pt: "calculadora-manning", en: "manning-calculator" },

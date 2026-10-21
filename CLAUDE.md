@@ -201,6 +201,24 @@ proxy.ts                      # locale por Accept-Language + URLs por idioma (re
   por si acaso. `lib/blog-data.ts`, `lib/clusters.ts` y las `guide`/`guides` de
   servicios y herramientas usan el `translationKey`. Las redirecciones del
   dominio viejo (zeist.vercel.app → zeist.dev) siguen en Vercel, no en el código.
+- ⚠️ **Slugs congelados desde el 21-oct-2026 (pedido del usuario): no cambiar
+  ninguna URL existente sin su aprobación explícita.** Ese día se cerró la
+  localización: pt `checklist-auditoria-bim`, `ia-autocad-civil-3d`,
+  `revit-lento-modelo-pesado`, `scripts-dynamo-civil-3d`,
+  `dynamo-vs-csharp-civil-3d-revit` y la herramienta
+  `/pt/ferramentas/calculadora-de-area-de-terreno`; en
+  `dynamo-for-civil-3d-scripts` y `dynamo-vs-csharp-civil-3d-revit`; es
+  `dynamo-vs-csharp-civil-3d-revit` (el único post cuyo slug en español ya no
+  es su `translationKey`). pt `sample-lines-civil-3d` y `section-views-civil-3d`
+  quedan en inglés a propósito: así se busca en Brasil (decisión del usuario).
+  **El `translationKey` es el identificador permanente del post** (su slug
+  original en español): no cambia nunca, y por eso cualquier URL vieja —con la
+  sección o el slug en español, o la del 20-oct— llega a la final en un solo
+  308. `proxy.ts` también quita la barra final en ese mismo 308
+  (`skipTrailingSlashRedirect` en `next.config.ts`), así que no hay cadenas.
+  Si algún día se aprueba cambiar un slug que no sea el `translationKey` ni el
+  id interno, hay que guardar el slug viejo como alias en `lib/routes.ts` o su
+  URL dará 404.
 - **Sitemap** (`app/sitemap.ts`): todas las rutas × ambos locales, con `alternates.languages`.
   **`lastmod` real (20-oct-2026):** los posts usan `updated` o `date`; las
   páginas fijas, `PAGE_UPDATED` (en el propio `sitemap.ts`); los servicios,
@@ -428,8 +446,9 @@ por página, p.ej. el visual del hero), NO el estilo de cada caja.
 - Para publicar: crear el `.mdx` en `es/`, `pt/` y `en/`, **cada uno con el
   slug de su idioma** (palabra clave primero, sin tildes) y, en `pt` y `en`,
   `translationKey: "<slug en español>"` en el frontmatter: es lo que enlaza las
-  tres versiones (hreflang, selector de idioma, roadmap/FAQs, clusters). Si el
-  slug en español ya es válido en el otro idioma, se repite. `generateStaticParams`
+  tres versiones (hreflang, selector de idioma, roadmap/FAQs, clusters) y no
+  cambia nunca. Si el slug en español ya es válido en el otro idioma, se
+  repite. Una vez publicado, el slug queda congelado (ver sección 6). `generateStaticParams`
   los recoge y `npm run build` regenera el mapa (`prebuild`). Los enlaces del
   post van en la URL pública del idioma. Excepción: el cluster C5 (Perú) es
   ES-only a propósito — ver sección 3.
@@ -591,6 +610,8 @@ npm run test:tools  # tests de las calculadoras (Node ≥ 23.6)
   de `lib/site.ts` (ruta interna = sección y slug en español, o
   `blog/<translationKey>`); nunca armes `/${lang}/…` a mano: en `pt` y `en` la
   URL pública es otra (ver «URLs por idioma», sección 6).
+- **No cambiar URLs existentes** (slugs, secciones, ids) sin aprobación
+  explícita del usuario: están congeladas desde el 21-oct-2026.
 - Nuevas páginas: `export async function generateMetadata` con `buildMetadata`.
   Un solo `<h1>`. Añade la ruta a `app/sitemap.ts` (`STATIC_PATHS`).
 - Strings de UI → diccionarios (`es.json`, `pt.json`, `en.json`, **misma

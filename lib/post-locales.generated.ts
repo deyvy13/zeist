@@ -12,7 +12,7 @@ export const postRoutes: Readonly<Record<string, Partial<Record<Locale, string>>
   },
   "auditoria-bim-checklist-empresa": {
     "es": "auditoria-bim-checklist-empresa",
-    "pt": "auditoria-bim-checklist-empresa",
+    "pt": "checklist-auditoria-bim",
     "en": "bim-audit-checklist"
   },
   "automatizacion-bim-trujillo-la-libertad": {
@@ -98,8 +98,8 @@ export const postRoutes: Readonly<Record<string, Partial<Record<Locale, string>>
   },
   "dynamo-civil-3d-scripts": {
     "es": "dynamo-civil-3d-scripts",
-    "pt": "dynamo-civil-3d-scripts",
-    "en": "dynamo-civil-3d-scripts"
+    "pt": "scripts-dynamo-civil-3d",
+    "en": "dynamo-for-civil-3d-scripts"
   },
   "dynamo-csharp-con-ia-claude": {
     "es": "dynamo-csharp-con-ia-claude",
@@ -107,9 +107,9 @@ export const postRoutes: Readonly<Record<string, Partial<Record<Locale, string>>
     "en": "dynamo-csharp-ai-claude"
   },
   "dynamo-vs-csharp-civil3d-revit": {
-    "es": "dynamo-vs-csharp-civil3d-revit",
-    "pt": "dynamo-vs-csharp-civil3d-revit",
-    "en": "dynamo-vs-csharp-civil3d-revit"
+    "es": "dynamo-vs-csharp-civil-3d-revit",
+    "pt": "dynamo-vs-csharp-civil-3d-revit",
+    "en": "dynamo-vs-csharp-civil-3d-revit"
   },
   "empresas-automatizacion-bim-trujillo-peru": {
     "es": "empresas-automatizacion-bim-trujillo-peru"
@@ -142,7 +142,7 @@ export const postRoutes: Readonly<Record<string, Partial<Record<Locale, string>>
   },
   "inteligencia-artificial-autocad-civil-3d": {
     "es": "inteligencia-artificial-autocad-civil-3d",
-    "pt": "inteligencia-artificial-autocad-civil-3d",
+    "pt": "ia-autocad-civil-3d",
     "en": "autocad-ai-civil-3d"
   },
   "lineas-de-muestreo-civil-3d-automaticas": {
@@ -229,7 +229,7 @@ export const postRoutes: Readonly<Record<string, Partial<Record<Locale, string>>
   },
   "revit-lento-modelo-pesado-auditoria": {
     "es": "revit-lento-modelo-pesado-auditoria",
-    "pt": "revit-lento-modelo-pesado-auditoria",
+    "pt": "revit-lento-modelo-pesado",
     "en": "slow-revit-model"
   },
   "rutinas-lisp-autocad-civil-3d": {
