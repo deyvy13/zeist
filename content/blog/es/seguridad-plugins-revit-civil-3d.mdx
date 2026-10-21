@@ -1,0 +1,103 @@
+---
+title: "Seguridad de plugins para Revit y Civil 3D: cómo proteger tus add-ins en C#"
+seoTitle: "Seguridad de plugins para Revit y Civil 3D: guía"
+ctaTitle: "¿Tus plugins corren sobre .NET 8? Deja de recibir parches el 10 de noviembre. Los preparamos para las versiones 2027."
+description: "Cómo proteger los plugins en C# de Revit y Civil 3D: librerías, .NET 8 sin parches desde el 10-nov-2026, firma digital y carpetas de confianza."
+date: "2026-10-21T17:30:00.000Z"
+author: "Zeist"
+tags:
+  - Seguridad
+  - Revit
+  - Civil 3D
+  - Plugins
+  - Add-ins
+  - C#
+---
+
+<BlogHero
+  eyebrow="Seguridad · Revit · Civil 3D · C#"
+  title="Un plugin corre con tus permisos dentro de Revit y Civil 3D. Así se protege"
+  highlight="Los seis riesgos reales de un add-in en C#, la fecha que viene (.NET 8 deja de recibir parches el 10 de noviembre de 2026), qué significa el aviso «Unsigned Add-In» y cómo lo cuidamos en Zeist."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Un plugin de Revit o Civil 3D se protege en cinco frentes: librerías sin vulnerabilidades conocidas, una versión de .NET con soporte, firma digital, instalación en carpetas de confianza y ninguna contraseña dentro del código. Ojo con la fecha: .NET 8, sobre el que corren las versiones 2025 y 2026, deja de recibir parches el 10 de noviembre de 2026.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Plugin o add-in** — Un programa que se instala dentro de Revit o Civil 3D y agrega botones en la barra superior.
+- **.NET** — La plataforma de Microsoft sobre la que corren los plugins escritos en C#.
+- **Librería** — Código de terceros que el plugin reutiliza, por ejemplo para leer un Excel. En .NET se instalan como paquetes NuGet.
+- **Firma digital** — Un certificado que identifica al autor del plugin y muestra que nadie lo modificó.
+- **Carpeta de confianza** — Una carpeta desde la que AutoCAD y Civil 3D cargan programas sin preguntar.
+</Callout>
+
+## ¿Un plugin de Revit o Civil 3D puede tener vulnerabilidades?
+
+Sí. Un plugin corre dentro del programa con los mismos permisos que tu usuario: abre, modifica y guarda modelos y archivos. Si tiene una falla, la falla tiene ese mismo alcance. El riesgo se concentra en seis puntos:
+
+| Riesgo | Qué pasa | Cómo se cuida |
+|---|---|---|
+| Librerías con fallas conocidas | Una librería desactualizada arrastra su falla al plugin | Revisarlas con NuGet Audit antes de cada versión |
+| .NET sin soporte | Microsoft deja de publicar parches | Compilar para la versión de .NET de cada programa |
+| Plugin o instalador sin firma | Nadie puede comprobar quién lo hizo ni si lo alteraron | Firmar las DLL y el instalador |
+| Carpetas abiertas | AutoCAD y Civil 3D cargan código desde cualquier lugar | SECURELOAD en 1 o 2 y carpetas de confianza |
+| Contraseñas en el código | Cualquiera con la DLL puede leerlas | Guardarlas fuera del plugin |
+| Datos de afuera sin validar | Un Excel o CSV mal armado modifica el modelo | Validarlos antes de tocar el modelo |
+
+## ¿Qué cambia el 10 de noviembre de 2026?
+
+Ese día termina el soporte de **.NET 8 y .NET 9**: Microsoft deja de publicar parches de seguridad. **Revit, AutoCAD y Civil 3D 2025 y 2026** cargan los plugins sobre .NET 8. Las versiones **2027** usan **.NET 10**, con soporte hasta noviembre de 2028.
+
+Los plugins siguen funcionando, pero la plataforma de abajo queda sin parches. Lo recomendable: mantener Windows y .NET al día hasta esa fecha, planificar el paso a las versiones 2027 y compilar y probar los plugins para .NET 10.
+
+## ¿Qué significa «Security – Unsigned Add-In» en Revit?
+
+Revit muestra ese aviso al abrirse cuando un plugin no está firmado con un certificado de una autoridad de confianza. Ofrece tres opciones: cargarlo siempre, cargarlo solo esta vez o no cargarlo.
+
+No elijas «cargar siempre» si no sabes quién hizo el plugin. Un plugin firmado identifica a su autor y muestra que nadie lo modificó después de publicarlo.
+
+## ¿Y en AutoCAD y Civil 3D?
+
+AutoCAD y Civil 3D deciden qué programas cargan con la variable **SECURELOAD**. Con **1**, el valor por defecto, avisan si el archivo viene de una carpeta que no es de confianza. Con **2**, solo cargan desde las carpetas de TRUSTEDPATHS. Con **0** cargan todo sin preguntar, y Autodesk no lo recomienda. Déjala en 1 o 2 e instala los plugins solo en carpetas de confianza.
+
+El riesgo no es teórico. En 2012, ESET identificó ACAD/Medre.A, un malware en AutoLISP que envió decenas de miles de planos, sobre todo del Perú, a correos en China. Lo contamos en [rutinas LISP para AutoCAD y Civil 3D](/es/blog/rutinas-lisp-autocad-civil-3d).
+
+## ¿Cómo lo cuidamos en Zeist?
+
+Cada plugin que desarrollamos sale con:
+
+- **Librerías revisadas** con NuGet Audit antes de cada entrega.
+- **La versión de .NET de cada programa:** lo compilamos y probamos para cada versión nueva de Revit y Civil 3D, incluido el paso a .NET 10 de las versiones 2027.
+- **Firma digital** en las DLL y el instalador, para que Revit no muestre el aviso de plugin sin firma.
+- **Sin contraseñas en el código**, y conexiones solo por HTTPS cuando el plugin habla con un servidor.
+- **Datos validados** antes de tocar el modelo.
+- **El código fuente es tuyo**, con documentación: si aparece una falla en una librería, se corrige sin depender de un producto cerrado.
+
+<CTABlock
+  eyebrow="Zeist · Plugins seguros y mantenidos"
+  title="Revisamos tus plugins antes del 10 de noviembre"
+  body="Vemos sobre qué versión de .NET corren, qué librerías usan y si están firmados, y te decimos qué actualizar. El diagnóstico es gratuito y dura una semana."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Fuentes
+
+- [Microsoft: fin del soporte de .NET 8 y .NET 9](https://devblogs.microsoft.com/dotnet/dotnet-8-9-end-of-support/) el 10 de noviembre de 2026.
+- [Microsoft Learn: auditoría de paquetes NuGet](https://learn.microsoft.com/nuget/concepts/auditing-packages).
+- [Autodesk: firma digital de add-ins de Revit](https://help.autodesk.com/cloudhelp/2018/CHT/Revit-API/files/GUID-6D11F443-AC95-4B5B-A896-DD745BA0A46D.htm).
+- [Autodesk: variable SECURELOAD](https://help.autodesk.com/cloudhelp/2027/ENU/AutoCAD-LT/files/GUID-541566C6-2738-49DD-87C3-C1490E924A02.htm).
+
+Datos verificados el 21 de octubre de 2026.
+
+## Recursos relacionados
+
+- **La noticia de octubre:** [vulnerabilidad de PHP, ¿afecta a Revit y Civil 3D?](/es/blog/vulnerabilidad-php-plugins-revit-civil-3d).
+- **Cómo se construye un plugin:** [desarrollo de add-ins para Revit y Civil 3D, la guía completa](/es/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).
+- **El primer plugin en C#:** [Civil 3D API en C#, primeros pasos](/es/blog/civil-3d-api-csharp-primeros-pasos).
+- **Para presupuestarlo:** [cuánto cuesta un add-in para Revit o Civil 3D](/es/blog/cuanto-cuesta-un-add-in-revit-civil-3d).
+
+<PostFaqs />

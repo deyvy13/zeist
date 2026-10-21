@@ -1,0 +1,90 @@
+---
+translationKey: "vulnerabilidad-php-plugins-revit-civil-3d"
+title: "Vulnerabilidade no PHP (PHP2Shell): afeta os plugins do Civil 3D e do Revit?"
+seoTitle: "Vulnerabilidade no PHP: afeta o Revit e o Civil 3D?"
+ctaTitle: "Seus plugins baixam licenças ou atualizações de um servidor? Verificamos de onde e o quanto estão expostos."
+description: "O PHP corrigiu em 21/10/2026 duas falhas críticas (PHP2Shell). Por que não atingem seus plugins do Revit e do Civil 3D, onde atingem e o que fazer hoje."
+date: "2026-10-21T17:00:00.000Z"
+author: "Zeist"
+tags:
+  - Segurança
+  - PHP
+  - Revit
+  - Civil 3D
+  - Plugins
+  - Add-ins
+---
+
+<BlogHero
+  eyebrow="Segurança · Revit · Civil 3D"
+  title="PHP2Shell: a falha crítica do PHP não atinge seus plugins do Civil 3D e do Revit, mas pode atingir o seu escritório"
+  highlight="O que foi corrigido em 21 de outubro de 2026, onde um escritório de engenharia usa PHP, o único caso em que um plugin fica exposto e o que fazer hoje."
+/>
+
+<Callout type="success" title="Resposta rápida">
+Não. Os plugins em C# para Civil 3D e Revit rodam sobre .NET dentro do programa, no Windows, e não usam PHP. As falhas CVE-2026-109618 e CVE-2026-109619 atingem servidores web com PHP: o site ou a intranet da empresa, portais de projetos e servidores de licenças ou de atualizações. Esses, sim, precisam ser atualizados hoje.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **PHP** — A linguagem em que funcionam muitos sites, como os feitos com WordPress.
+- **CVE** — O código com que se registra uma falha de segurança conhecida.
+- **Servidor** — O computador que entrega um site ou um serviço pela internet.
+- **Plugin ou add-in** — Um programa que se instala dentro do Revit ou do Civil 3D e adiciona botões na barra superior.
+- **.NET** — A plataforma da Microsoft sobre a qual rodam os plugins escritos em C#.
+</Callout>
+
+## O que aconteceu com o PHP em 21 de outubro de 2026?
+
+O PHP publicou as versões **8.5.12, 8.4.27, 8.3.36 e 8.2.35**, que corrigem duas falhas críticas: **CVE-2026-109618** e **CVE-2026-109619**, com nota CVSS v4.0 de **9.2**. Elas permitem executar código no servidor sem login. São conhecidas como **PHP2Shell**.
+
+Atingem toda instalação de PHP que atende páginas web: PHP-FPM, Apache com mod_php, php-cgi, FrankenPHP e LiteSpeed. O aviso oficial é claro: não há mitigação completa, a única opção segura é atualizar. O PHP 8.1 e as versões anteriores não recebem mais correções do projeto, e a agência de cibersegurança dos EUA (CISA) recomenda tirar esses sistemas do ar até atualizá-los.
+
+## Afeta os plugins do Civil 3D e do Revit?
+
+**Não.** Um plugin em C# é um arquivo .dll que o Revit ou o Civil 3D carregam ao abrir. Ele roda dentro do programa, no seu computador, sobre .NET. Não há PHP no caminho. O mesmo vale para os scripts do Dynamo e as rotinas LISP.
+
+Em um plugin, a segurança depende de outras coisas: as bibliotecas, a versão do .NET em que ele roda e de onde ele é instalado. Explicamos em [segurança de plugins para Revit e Civil 3D](/pt/blog/seguranca-plugins-revit-civil-3d).
+
+## Onde pode afetar um escritório de engenharia?
+
+Em tudo o que funciona como site com PHP:
+
+- **O site da empresa**, principalmente se foi feito com WordPress.
+- **A intranet** ou o portal onde se compartilham pranchas e documentos.
+- **Um sistema interno** em servidor próprio que ninguém atualiza.
+- **O servidor do fornecedor de um plugin comercial**, se dele vêm licenças ou atualizações.
+
+O último caso é o único que chega a um plugin. Se esse servidor for comprometido, ele pode entregar um instalador alterado. Por isso vale saber de onde seus plugins se atualizam e se os instaladores são assinados.
+
+## O que fazer hoje?
+
+1. **Liste** os sites e servidores com PHP: site, intranet, portais e sistemas internos.
+2. **Atualize o PHP** para 8.5.12, 8.4.27, 8.3.36 ou 8.2.35, ou peça à sua hospedagem que confirme a atualização.
+3. **Se você usa PHP 8.1 ou anterior**, fale com o fornecedor ou tire o sistema da internet até atualizar.
+4. **Pergunte ao fornecedor de cada plugin comercial** onde rodam as licenças e as atualizações, e se já corrigiu.
+5. **Revise seus plugins sob medida:** bibliotecas, versão do .NET e assinatura digital.
+
+<CTABlock
+  eyebrow="Zeist · Plugins mantidos"
+  title="Quem cuida dos seus plugins?"
+  body="Desenvolvemos plugins em C# para Revit e Civil 3D e cuidamos deles: atualizamos a cada versão do programa e do .NET, revisamos as bibliotecas e o código-fonte fica com a sua empresa."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver plugins sob medida"
+  secondaryHref="/pt/servicos/plugins-revit-civil-3d"
+/>
+
+## Fontes
+
+- [Aviso de segurança do PHP](https://www.php.net/): versões corrigidas, instalações afetadas e mitigações (21 de outubro de 2026).
+- [Alerta da CISA sobre as falhas do PHP](https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching) (21 de outubro de 2026).
+
+Dados verificados em 21 de outubro de 2026.
+
+## Recursos relacionados
+
+- **Como se protege um plugin:** [segurança de plugins para Revit e Civil 3D](/pt/blog/seguranca-plugins-revit-civil-3d).
+- **Como se constrói um:** [desenvolvimento de add-ins para Revit e Civil 3D](/pt/blog/desenvolvimento-add-ins-revit-civil-3d).
+- **Para orçar:** [quanto custa um add-in para Revit ou Civil 3D](/pt/blog/quanto-custa-add-in-revit-civil-3d).
+
+<PostFaqs />

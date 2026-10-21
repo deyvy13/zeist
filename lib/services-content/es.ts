@@ -157,6 +157,7 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       rows: "Aplica tu estándar y tu nomenclatura | *Exactamente | Solo si coincide || Formato de tus entregables | *El de tu empresa y tu cliente | El del fabricante || Reglas de tu oficina | *Escritas en la herramienta | Hay que adaptarse || Propiedad del código | *Tuya | Del proveedor || Cambios cuando cambia tu proceso | *Se ajusta | Depende del proveedor || Tiempo hasta usarla | Semanas | *Inmediato",
     },
     guides: [
+      "seguridad-plugins-revit-civil-3d",
       "desarrollo-add-ins-revit-civil-3d-guia-completa",
       "cuanto-cuesta-un-add-in-revit-civil-3d",
       "dynamo-vs-csharp-civil3d-revit",

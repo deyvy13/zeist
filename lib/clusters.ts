@@ -38,6 +38,8 @@ export const clusters: Cluster[] = [
       "lista-de-materiales-revit-autocad-civil-3d",
       "tabla-de-metrados-automatica-revit-civil-3d",
       "membrete-planos-automatico-revit-autocad",
+      "seguridad-plugins-revit-civil-3d",
+      "vulnerabilidad-php-plugins-revit-civil-3d",
     ],
   },
   {

@@ -241,6 +241,11 @@ export const postRoutes: Readonly<Record<string, Partial<Record<Locale, string>>
     "pt": "secoes-transversais-civil-3d",
     "en": "civil-3d-cross-sections"
   },
+  "seguridad-plugins-revit-civil-3d": {
+    "es": "seguridad-plugins-revit-civil-3d",
+    "pt": "seguranca-plugins-revit-civil-3d",
+    "en": "revit-civil-3d-plugin-security"
+  },
   "tabla-de-metrados-automatica-revit-civil-3d": {
     "es": "tabla-de-metrados-automatica-revit-civil-3d",
     "pt": "planilha-de-quantitativos-revit-civil-3d",
@@ -258,5 +263,10 @@ export const postRoutes: Readonly<Record<string, Partial<Record<Locale, string>>
     "es": "vistas-de-seccion-civil-3d-automaticas",
     "pt": "section-views-civil-3d",
     "en": "civil-3d-section-views"
+  },
+  "vulnerabilidad-php-plugins-revit-civil-3d": {
+    "es": "vulnerabilidad-php-plugins-revit-civil-3d",
+    "pt": "vulnerabilidade-php-plugins-revit-civil-3d",
+    "en": "php-vulnerability-revit-civil-3d-plugins"
   }
 };

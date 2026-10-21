@@ -21,6 +21,173 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- Seguridad (21-oct-2026): la vulnerabilidad de PHP y cómo proteger los plugins ----
+  "vulnerabilidad-php-plugins-revit-civil-3d": {
+    es: {
+      faqs: {
+        title: "Preguntas frecuentes sobre la vulnerabilidad de PHP y tus plugins",
+        items: [
+          {
+            q: "¿La vulnerabilidad de PHP afecta a Revit o Civil 3D?",
+            a: "No. Revit y Civil 3D son programas de escritorio para Windows y sus plugins en C# corren sobre .NET, no sobre PHP. Las fallas CVE-2026-109618 y CVE-2026-109619 afectan a servidores web que ejecutan PHP, como la web o la intranet de la empresa, portales de documentos o servidores de licencias.",
+          },
+          {
+            q: "¿Qué versiones de PHP corrigen CVE-2026-109618 y CVE-2026-109619?",
+            a: "PHP 8.5.12, 8.4.27, 8.3.36 y 8.2.35, publicadas el 21 de octubre de 2026. PHP 8.1 y anteriores ya no reciben parches del proyecto: hay que consultar al proveedor o desconectar el sistema hasta actualizarlo, como recomienda CISA.",
+          },
+          {
+            q: "¿Mi plugin de Revit o Civil 3D puede verse afectado de alguna forma?",
+            a: "Solo de forma indirecta: si el plugin descarga licencias, datos o actualizaciones de un servidor con PHP y ese servidor queda comprometido, podría entregar un instalador alterado. Pregunta al proveedor dónde corre ese servidor y si ya actualizó, y prefiere plugins con instalador firmado.",
+          },
+          {
+            q: "¿Qué es PHP2Shell?",
+            a: "Es el nombre con que se conoce a las dos fallas críticas de PHP corregidas el 21 de octubre de 2026, CVE-2026-109618 y CVE-2026-109619, con un puntaje CVSS v4.0 de 9.2. Permiten ejecutar código en un servidor web sin iniciar sesión.",
+          },
+          {
+            q: "¿Quién revisa la seguridad de los plugins de Revit y Civil 3D?",
+            a: "En Zeist desarrollamos y mantenemos plugins en C# para Revit y Civil 3D: revisamos sus librerías, la versión de .NET sobre la que corren, la firma digital y de dónde se actualizan. El diagnóstico es gratuito y dura una semana.",
+          },
+        ],
+      },
+    },
+    pt: {
+      faqs: {
+        title: "Perguntas frequentes sobre a vulnerabilidade no PHP e seus plugins",
+        items: [
+          {
+            q: "A vulnerabilidade no PHP afeta o Revit ou o Civil 3D?",
+            a: "Não. O Revit e o Civil 3D são programas de desktop para Windows, e os plugins em C# rodam sobre .NET, não sobre PHP. As falhas CVE-2026-109618 e CVE-2026-109619 atingem servidores web que executam PHP, como o site ou a intranet da empresa, portais de documentos ou servidores de licenças.",
+          },
+          {
+            q: "Quais versões do PHP corrigem a CVE-2026-109618 e a CVE-2026-109619?",
+            a: "PHP 8.5.12, 8.4.27, 8.3.36 e 8.2.35, publicadas em 21 de outubro de 2026. O PHP 8.1 e as versões anteriores não recebem mais correções do projeto: é preciso falar com o fornecedor ou tirar o sistema do ar até atualizar, como recomenda a CISA.",
+          },
+          {
+            q: "Meu plugin do Revit ou do Civil 3D pode ser afetado de alguma forma?",
+            a: "Só de forma indireta: se o plugin baixa licenças, dados ou atualizações de um servidor com PHP e esse servidor for comprometido, ele pode entregar um instalador alterado. Pergunte ao fornecedor onde roda esse servidor e se já atualizou, e prefira plugins com instalador assinado.",
+          },
+          {
+            q: "O que é o PHP2Shell?",
+            a: "É o nome dado às duas falhas críticas do PHP corrigidas em 21 de outubro de 2026, CVE-2026-109618 e CVE-2026-109619, com nota CVSS v4.0 de 9.2. Elas permitem executar código em um servidor web sem login.",
+          },
+          {
+            q: "Quem revisa a segurança dos plugins do Revit e do Civil 3D?",
+            a: "Na Zeist desenvolvemos e mantemos plugins em C# para Revit e Civil 3D: revisamos as bibliotecas, a versão do .NET em que rodam, a assinatura digital e de onde se atualizam. O diagnóstico é gratuito e dura uma semana.",
+          },
+        ],
+      },
+    },
+    en: {
+      faqs: {
+        title: "Frequently asked questions about PHP2Shell and your plugins",
+        items: [
+          {
+            q: "Does the PHP vulnerability affect Revit or Civil 3D?",
+            a: "No. Revit and Civil 3D are Windows desktop programs, and their C# plugins run on .NET, not PHP. CVE-2026-109618 and CVE-2026-109619 affect web servers running PHP, such as your firm's website or intranet, document portals or license servers.",
+          },
+          {
+            q: "Which PHP versions fix CVE-2026-109618 and CVE-2026-109619?",
+            a: "PHP 8.5.12, 8.4.27, 8.3.36 and 8.2.35, released on October 21, 2026. PHP 8.1 and older no longer get fixes from the PHP project: contact your vendor or take the system offline until it's updated, as CISA recommends.",
+          },
+          {
+            q: "Can my Revit or Civil 3D plugin be affected in any way?",
+            a: "Only indirectly: if the plugin downloads licenses, data or updates from a PHP server and that server is compromised, it could hand out a tampered installer. Ask the vendor where that server runs and whether it's patched, and prefer plugins with a signed installer.",
+          },
+          {
+            q: "What is PHP2Shell?",
+            a: "It's the name given to the two critical PHP flaws patched on October 21, 2026, CVE-2026-109618 and CVE-2026-109619, scored 9.2 in CVSS v4.0. They allow code to run on a web server without logging in.",
+          },
+          {
+            q: "Who reviews the security of Revit and Civil 3D plugins?",
+            a: "At Zeist we build and maintain C# plugins for Revit and Civil 3D: we check their libraries, the .NET version they run on, their digital signature and where they update from. The diagnosis is free and takes one week.",
+          },
+        ],
+      },
+    },
+  },
+  "seguridad-plugins-revit-civil-3d": {
+    es: {
+      faqs: {
+        title: "Preguntas frecuentes sobre seguridad de plugins",
+        items: [
+          {
+            q: "¿Los plugins de Revit dejan de funcionar cuando termina el soporte de .NET 8?",
+            a: "No. Siguen funcionando, pero desde el 10 de noviembre de 2026 Microsoft deja de publicar parches de seguridad para .NET 8, la plataforma sobre la que corren los plugins en Revit, AutoCAD y Civil 3D 2025 y 2026. Las versiones 2027 usan .NET 10, con soporte hasta noviembre de 2028.",
+          },
+          {
+            q: "¿Por qué Revit dice «Security – Unsigned Add-In»?",
+            a: "Porque el plugin no está firmado con un certificado de una autoridad de confianza. Revit permite cargarlo siempre, solo esta vez o no cargarlo. Si no sabes quién hizo el plugin, no elijas cargarlo siempre: un plugin firmado identifica a su autor y muestra que nadie lo modificó.",
+          },
+          {
+            q: "¿Qué valor de SECURELOAD conviene en AutoCAD y Civil 3D?",
+            a: "1 o 2. Con 1, el valor por defecto, el programa avisa antes de cargar un archivo de una carpeta que no es de confianza; con 2 solo carga desde las carpetas de TRUSTEDPATHS. Con 0 carga todo sin preguntar, y Autodesk no lo recomienda.",
+          },
+          {
+            q: "¿Cómo sé si un plugin usa librerías con vulnerabilidades?",
+            a: "Con NuGet Audit, que revisa los paquetes del proyecto al compilar y avisa con las advertencias NU1901 a NU1904 si alguno tiene una vulnerabilidad conocida. En proyectos para .NET 10 revisa también las dependencias indirectas. El comando dotnet list package --vulnerable también los muestra.",
+          },
+          {
+            q: "¿Quién puede revisar y mantener la seguridad de mis plugins?",
+            a: "En Zeist desarrollamos plugins en C# para Revit y Civil 3D y los mantenemos: revisamos sus librerías, los compilamos para cada versión del programa y de .NET, los firmamos y el código fuente queda en tu empresa. El diagnóstico es gratuito y dura una semana.",
+          },
+        ],
+      },
+    },
+    pt: {
+      faqs: {
+        title: "Perguntas frequentes sobre segurança de plugins",
+        items: [
+          {
+            q: "Os plugins do Revit param de funcionar quando acaba o suporte do .NET 8?",
+            a: "Não. Eles continuam funcionando, mas a partir de 10 de novembro de 2026 a Microsoft deixa de publicar correções de segurança para o .NET 8, a plataforma em que rodam os plugins no Revit, AutoCAD e Civil 3D 2025 e 2026. As versões 2027 usam o .NET 10, com suporte até novembro de 2028.",
+          },
+          {
+            q: "Por que o Revit mostra «Security – Unsigned Add-In»?",
+            a: "Porque o plugin não está assinado com um certificado de uma autoridade confiável. O Revit permite carregar sempre, só desta vez ou não carregar. Se você não sabe quem fez o plugin, não escolha carregar sempre: um plugin assinado identifica o autor e mostra que ninguém o alterou.",
+          },
+          {
+            q: "Qual valor de SECURELOAD convém no AutoCAD e no Civil 3D?",
+            a: "1 ou 2. Com 1, o valor padrão, o programa avisa antes de carregar um arquivo de uma pasta que não é confiável; com 2 só carrega das pastas de TRUSTEDPATHS. Com 0 carrega tudo sem perguntar, e a Autodesk não recomenda.",
+          },
+          {
+            q: "Como saber se um plugin usa bibliotecas com vulnerabilidades?",
+            a: "Com o NuGet Audit, que revisa os pacotes do projeto ao compilar e avisa com os alertas NU1901 a NU1904 se algum tiver uma vulnerabilidade conhecida. Em projetos para .NET 10 ele revisa também as dependências indiretas. O comando dotnet list package --vulnerable também mostra esses pacotes.",
+          },
+          {
+            q: "Quem pode revisar e manter a segurança dos meus plugins?",
+            a: "Na Zeist desenvolvemos plugins em C# para Revit e Civil 3D e cuidamos deles: revisamos as bibliotecas, compilamos para cada versão do programa e do .NET, assinamos e o código-fonte fica com a sua empresa. O diagnóstico é gratuito e dura uma semana.",
+          },
+        ],
+      },
+    },
+    en: {
+      faqs: {
+        title: "Frequently asked questions about plugin security",
+        items: [
+          {
+            q: "Do Revit plugins stop working when .NET 8 support ends?",
+            a: "No. They keep working, but from November 10, 2026 Microsoft stops shipping security patches for .NET 8, the platform plugins run on in Revit, AutoCAD and Civil 3D 2025 and 2026. The 2027 releases use .NET 10, supported through November 2028.",
+          },
+          {
+            q: "Why does Revit show \"Security – Unsigned Add-In\"?",
+            a: "Because the plugin isn't signed with a certificate from a trusted authority. Revit lets you always load it, load it just once or not load it. If you don't know who made the plugin, don't choose always load: a signed plugin identifies its author and shows nobody changed it.",
+          },
+          {
+            q: "What SECURELOAD value should AutoCAD and Civil 3D use?",
+            a: "1 or 2. At 1, the default, the program warns before loading a file from a folder that isn't trusted; at 2 it only loads from the folders in TRUSTEDPATHS. At 0 it loads anything without asking, which Autodesk doesn't recommend.",
+          },
+          {
+            q: "How do I know if a plugin uses vulnerable libraries?",
+            a: "With NuGet Audit, which checks the project's packages at build time and raises warnings NU1901 to NU1904 when one has a known vulnerability. In projects targeting .NET 10 it also checks indirect dependencies. The dotnet list package --vulnerable command lists them too.",
+          },
+          {
+            q: "Who can review and maintain my plugins' security?",
+            a: "At Zeist we build C# plugins for Revit and Civil 3D and maintain them: we check their libraries, build them for every release of the program and of .NET, sign them, and your firm owns the source code. The diagnosis is free and takes one week.",
+          },
+        ],
+      },
+    },
+  },
   // ---- Servicios (oct-2026): lista de materiales, vistas de sección, tabla de metrados, membretes ----
   "lista-de-materiales-revit-autocad-civil-3d": {
     es: {
