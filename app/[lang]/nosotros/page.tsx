@@ -39,7 +39,7 @@ const copy: Record<Locale, Copy> = {
   es: {
     seoTitle: "Quiénes somos: ingenieros civiles y de sistemas",
     metaDescription:
-      "Zeist es un equipo de ingenieros civiles e ingenieros de sistemas en Trujillo, Perú, que desarrolla plugins y automatización BIM para Civil 3D y Revit.",
+      "Zeist es un equipo de ingenieros civiles y de sistemas que desarrolla plugins y automatización BIM para Civil 3D y Revit, para toda Latinoamérica.",
     breadcrumb: "Sobre Zeist",
     eyebrow: "Sobre Zeist",
     h1: "Somos ingenieros civiles e ingenieros de sistemas que automatizan Civil 3D y Revit",
@@ -48,7 +48,7 @@ const copy: Record<Locale, Copy> = {
     whoTitle: "Quiénes somos",
     who: [
       "Un equipo mixto: ingenieros civiles que conocen el flujo de un expediente, y ingenieros de sistemas que saben convertir ese flujo en software. Por eso hablamos de progresivas, secciones, metrados y láminas, no solo de código.",
-      "Trabajamos desde Trujillo, en La Libertad, Perú, con oficinas de ingeniería y construcción de todo el Perú y Latinoamérica, y de forma remota con equipos de Brasil, Estados Unidos y Europa.",
+      "Trabajamos de forma remota con oficinas de ingeniería y construcción de toda Latinoamérica, y también con equipos de países de habla inglesa y portuguesa.",
     ],
     whatTitle: "Qué hacemos",
     howTitle: "Cómo trabajamos",
@@ -70,7 +70,7 @@ const copy: Record<Locale, Copy> = {
   pt: {
     seoTitle: "Quem somos: engenheiros civis e de sistemas",
     metaDescription:
-      "A Zeist é uma equipe de engenheiros civis e engenheiros de sistemas em Trujillo, no Peru, que desenvolve plugins e automação BIM para Civil 3D e Revit.",
+      "A Zeist é uma equipe de engenheiros civis e de sistemas que desenvolve plugins e automação BIM para Civil 3D e Revit, para toda a América Latina.",
     breadcrumb: "Sobre a Zeist",
     eyebrow: "Sobre a Zeist",
     h1: "Somos engenheiros civis e engenheiros de sistemas que automatizam o Civil 3D e o Revit",
@@ -79,7 +79,7 @@ const copy: Record<Locale, Copy> = {
     whoTitle: "Quem somos",
     who: [
       "Uma equipe mista: engenheiros civis que conhecem o fluxo de um projeto, e engenheiros de sistemas que sabem transformar esse fluxo em software. Por isso falamos de estacas, seções, quantitativos e pranchas, não só de código.",
-      "Trabalhamos a partir de Trujillo, no Peru, com escritórios de engenharia e construção de toda a América Latina, e de forma remota com equipes do Brasil, dos Estados Unidos e da Europa.",
+      "Trabalhamos de forma remota com escritórios de engenharia e construção de toda a América Latina e também com equipes de países de língua portuguesa e inglesa.",
     ],
     whatTitle: "O que fazemos",
     howTitle: "Como trabalhamos",
@@ -101,7 +101,7 @@ const copy: Record<Locale, Copy> = {
   en: {
     seoTitle: "About Us: Civil Engineers and Software Engineers",
     metaDescription:
-      "Zeist is a team of civil engineers and software engineers based in Trujillo, Peru, building plugins and BIM automation for Civil 3D and Revit.",
+      "Zeist is a team of civil and software engineers building plugins and BIM automation for Civil 3D and Revit, for firms across Latin America and beyond.",
     breadcrumb: "About Zeist",
     eyebrow: "About Zeist",
     h1: "We're civil engineers and software engineers who automate Civil 3D and Revit",
@@ -110,7 +110,7 @@ const copy: Record<Locale, Copy> = {
     whoTitle: "Who we are",
     who: [
       "A mixed team: civil engineers who know how a plan set gets produced, and software engineers who know how to turn that workflow into software. That's why we talk about stations, sections, quantities and sheets, not just code.",
-      "We work from Trujillo, Peru, with engineering and construction firms across Latin America, and remotely with teams in Brazil, the United States and Europe.",
+      "We work remotely with engineering and construction firms across Latin America, and with teams in English- and Portuguese-speaking countries.",
     ],
     whatTitle: "What we do",
     howTitle: "How we work",

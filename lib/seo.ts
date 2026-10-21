@@ -147,23 +147,15 @@ export function organizationJsonLd(locale: Locale) {
         telephone: `+${site.whatsapp.number}`,
         ...(site.showEmail ? { email: site.email } : {}),
         availableLanguage: ["es", "pt", "en"],
-        areaServed: ["PE", "LATAM", "US", "ES"],
+        areaServed: areaServedJsonLd(locale).map((p) => p.name),
       },
     ],
     description: site.description[locale],
     sameAs: [site.linkedin],
     slogan: site.slogan[locale],
-    // Local signal: the team is based in Trujillo (La Libertad, Peru) and works
-    // remotely across LATAM and, since the English site launched, globally.
-    // No postal address is declared because there is no public office —
+    // Zeist works remotely; there is no office, so no address is declared and
     // `areaServed` is the honest way to signal geography.
-    areaServed: [
-      { "@type": "Country", name: "Perú" },
-      { "@type": "AdministrativeArea", name: "La Libertad" },
-      { "@type": "City", name: "Trujillo" },
-      { "@type": "Place", name: "Latinoamérica" },
-      { "@type": "Place", name: "Global" },
-    ],
+    areaServed: areaServedJsonLd(locale),
     knowsLanguage: ["es", "pt", "en"],
     knowsAbout: [
       "Automatización BIM",
@@ -174,6 +166,20 @@ export function organizationJsonLd(locale: Locale) {
       "Plan BIM Perú",
     ],
   };
+}
+
+/**
+ * Where Zeist works, always remotely: all of Latin America plus English- and
+ * Portuguese-speaking countries. Zeist is not based in Peru or in Trujillo
+ * (user, 21-oct-2026): never declare a city, region or office here.
+ */
+export function areaServedJsonLd(locale: Locale) {
+  const names: Record<Locale, string[]> = {
+    es: ["Latinoamérica", "Países de habla inglesa", "Países de habla portuguesa"],
+    pt: ["América Latina", "Países de língua inglesa", "Países de língua portuguesa"],
+    en: ["Latin America", "English-speaking countries", "Portuguese-speaking countries"],
+  };
+  return names[locale].map((name) => ({ "@type": "Place", name }));
 }
 
 /**

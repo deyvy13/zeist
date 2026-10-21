@@ -37,7 +37,7 @@ const copy: Record<Locale, Copy> = {
     title: "Política de privacidad",
     description:
       "Qué datos trata Zeist, para qué y cómo ejercer tus derechos: analítica sin publicidad, herramientas que funcionan en tu navegador, WhatsApp y correo.",
-    updated: "Última actualización: 16 de octubre de 2026",
+    updated: "Última actualización: 21 de octubre de 2026",
     summaryTitle: "En corto",
     summary: [
       "No vendemos ni cedemos tus datos, y no mostramos publicidad.",
@@ -78,7 +78,7 @@ const copy: Record<Locale, Copy> = {
         id: "responsable",
         h: "1. Quién es responsable",
         paras: [
-          `El responsable del tratamiento es **Zeist**, un equipo de automatización BIM con base en Trujillo, La Libertad, Perú. Para cualquier consulta sobre tus datos, escríbenos por WhatsApp al ${wa}, al correo [${mail}](mailto:${mail}) o desde la [página de contacto](/es/contacto).`,
+          `El responsable del tratamiento es **Zeist**, un equipo de automatización BIM que trabaja de forma remota con empresas de toda Latinoamérica y de países de habla inglesa y portuguesa. Para cualquier consulta sobre tus datos, escríbenos por WhatsApp al ${wa}, al correo [${mail}](mailto:${mail}) o desde la [página de contacto](/es/contacto).`,
         ],
       },
       {
@@ -132,16 +132,16 @@ const copy: Record<Locale, Copy> = {
         h: "6. Con quién compartimos datos",
         paras: [
           "No vendemos ni cedemos tus datos. Solo intervienen los proveedores que hacen funcionar el sitio: Google (analítica, correo y Google Maps, si abres sus enlaces), Meta (WhatsApp), Vercel (alojamiento), la Fundación OpenStreetMap (mapas) y Amazon Web Services (datos de elevación).",
-          "Sus servidores pueden estar fuera del Perú, por lo que usar el sitio implica una transferencia internacional de datos a esos proveedores, que aplican sus propias medidas de seguridad.",
+          "Sus servidores pueden estar fuera de tu país, por lo que usar el sitio implica una transferencia internacional de datos a esos proveedores, que aplican sus propias medidas de seguridad.",
         ],
       },
       {
         id: "derechos",
         h: "7. Tus derechos",
         paras: [
-          "De acuerdo con la Ley N.° 29733, Ley de Protección de Datos Personales, y su Reglamento (Decreto Supremo N.° 016-2024-JUS), puedes pedir el acceso, la rectificación, la cancelación o la portabilidad de tus datos, u oponerte a su tratamiento.",
+          "Según la ley de protección de datos de tu país, puedes pedir el acceso, la rectificación, la cancelación o la portabilidad de tus datos, u oponerte a su tratamiento. En el Perú, por ejemplo, rigen la Ley N.° 29733, Ley de Protección de Datos Personales, y su Reglamento (Decreto Supremo N.° 016-2024-JUS).",
           `Para ejercerlos, escríbenos por WhatsApp al ${wa} o al correo [${mail}](mailto:${mail}) indicando qué derecho quieres ejercer. Te responderemos dentro de los plazos que fija la ley. Si consideras que no atendimos tu pedido, puedes acudir a la Autoridad Nacional de Protección de Datos Personales del Ministerio de Justicia y Derechos Humanos.`,
-          "Si escribes desde el Brasil, también tienes los derechos de la LGPD (Ley n.º 13.709/2018); desde el Espacio Económico Europeo o el Reino Unido, los del Reglamento General de Protección de Datos.",
+          "Si escribes desde el Brasil, tienes los derechos de la LGPD (Ley n.º 13.709/2018); desde el Espacio Económico Europeo o el Reino Unido, los del Reglamento General de Protección de Datos.",
         ],
       },
       {
@@ -176,7 +176,7 @@ const copy: Record<Locale, Copy> = {
     title: "Política de privacidade",
     description:
       "Que dados a Zeist trata neste site, para quê e como exercer seus direitos: análise sem publicidade, ferramentas que funcionam no navegador, WhatsApp e e-mail.",
-    updated: "Última atualização: 16 de outubro de 2026",
+    updated: "Última atualização: 21 de outubro de 2026",
     summaryTitle: "Em resumo",
     summary: [
       "Não vendemos nem cedemos seus dados, e não exibimos publicidade.",
@@ -217,7 +217,7 @@ const copy: Record<Locale, Copy> = {
         id: "responsavel",
         h: "1. Quem é o responsável",
         paras: [
-          `O controlador dos dados é a **Zeist**, uma equipe de automação BIM com sede em Trujillo, La Libertad, Peru. Para qualquer dúvida sobre seus dados, escreva pelo WhatsApp para ${wa}, para o e-mail [${mail}](mailto:${mail}) ou pela [página de contato](/pt/contato).`,
+          `O controlador dos dados é a **Zeist**, uma equipe de automação BIM que trabalha de forma remota com empresas de toda a América Latina e de países de língua portuguesa e inglesa. Para qualquer dúvida sobre seus dados, escreva pelo WhatsApp para ${wa}, para o e-mail [${mail}](mailto:${mail}) ou pela [página de contato](/pt/contato).`,
         ],
       },
       {
@@ -271,14 +271,14 @@ const copy: Record<Locale, Copy> = {
         h: "6. Com quem compartilhamos dados",
         paras: [
           "Não vendemos nem cedemos seus dados. Só participam os fornecedores que fazem o site funcionar: Google (análise, e-mail e Google Maps, se você abrir os links), Meta (WhatsApp), Vercel (hospedagem), a Fundação OpenStreetMap (mapas) e a Amazon Web Services (dados de elevação).",
-          "Os servidores deles podem estar fora do Peru e do Brasil, então usar o site implica uma transferência internacional de dados para esses fornecedores, que aplicam suas próprias medidas de segurança.",
+          "Os servidores deles podem estar fora do seu país, então usar o site implica uma transferência internacional de dados para esses fornecedores, que aplicam suas próprias medidas de segurança.",
         ],
       },
       {
         id: "direitos",
         h: "7. Seus direitos",
         paras: [
-          "Se você está no Brasil, a Lei Geral de Proteção de Dados (Lei n.º 13.709/2018) garante, entre outros, os direitos de confirmação e acesso, correção, anonimização, bloqueio ou eliminação, portabilidade e revogação do consentimento. Como a Zeist está no Peru, também se aplica a Lei n.º 29733 de Proteção de Dados Pessoais e seu Regulamento (Decreto Supremo n.º 016-2024-JUS).",
+          "Se você está no Brasil, a Lei Geral de Proteção de Dados (Lei n.º 13.709/2018) garante, entre outros, os direitos de confirmação e acesso, correção, anonimização, bloqueio ou eliminação, portabilidade e revogação do consentimento. Em outros países, valem os direitos da lei de proteção de dados local, como a Lei n.º 29733 no Peru ou o RGPD na Europa.",
           `Para exercer seus direitos, escreva pelo WhatsApp para ${wa} ou para o e-mail [${mail}](mailto:${mail}) indicando qual direito deseja exercer. Responderemos dentro dos prazos legais. Você também pode recorrer à autoridade de proteção de dados do seu país; no Brasil, a Autoridade Nacional de Proteção de Dados (ANPD).`,
         ],
       },
@@ -314,7 +314,7 @@ const copy: Record<Locale, Copy> = {
     title: "Privacy policy",
     description:
       "What data Zeist handles on this site, why, and how to exercise your rights: analytics with no ads, tools that run in your browser, WhatsApp and email.",
-    updated: "Last updated: October 16, 2026",
+    updated: "Last updated: October 21, 2026",
     summaryTitle: "In short",
     summary: [
       "We don't sell or share your data, and we don't show ads.",
@@ -355,7 +355,7 @@ const copy: Record<Locale, Copy> = {
         id: "controller",
         h: "1. Who is responsible",
         paras: [
-          `The data controller is **Zeist**, a BIM automation team based in Trujillo, La Libertad, Peru. For any question about your data, message us on WhatsApp at ${wa}, email [${mail}](mailto:${mail}) or use the [contact page](/en/contact).`,
+          `The data controller is **Zeist**, a BIM automation team working remotely with firms across Latin America and in English- and Portuguese-speaking countries. For any question about your data, message us on WhatsApp at ${wa}, email [${mail}](mailto:${mail}) or use the [contact page](/en/contact).`,
         ],
       },
       {
@@ -409,14 +409,14 @@ const copy: Record<Locale, Copy> = {
         h: "6. Who we share data with",
         paras: [
           "We don't sell or share your data. Only the providers that run the site are involved: Google (analytics, email and Google Maps, if you open its links), Meta (WhatsApp), Vercel (hosting), the OpenStreetMap Foundation (maps) and Amazon Web Services (elevation data).",
-          "Their servers may be outside Peru and outside your country, so using the site involves an international transfer of data to those providers, which apply their own security measures.",
+          "Their servers may be outside your country, so using the site involves an international transfer of data to those providers, which apply their own security measures.",
         ],
       },
       {
         id: "rights",
         h: "7. Your rights",
         paras: [
-          "Zeist is based in Peru, where Law No. 29733 on Personal Data Protection and its Regulation (Supreme Decree No. 016-2024-JUS) give you the right to access, rectify, cancel or port your data, and to object to its processing. If you're in the European Economic Area or the United Kingdom, you also have your rights under the GDPR.",
+          "Depending on where you are, data protection law gives you the right to access, rectify, delete or port your data, and to object to its processing: for example, the GDPR in the European Economic Area and the United Kingdom, the LGPD in Brazil or Law No. 29733 in Peru.",
           `To exercise them, message us on WhatsApp at ${wa} or email [${mail}](mailto:${mail}) stating which right you want to exercise. We'll reply within the legal deadlines. You can also contact the data protection authority in your country.`,
         ],
       },

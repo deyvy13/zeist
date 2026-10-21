@@ -30,10 +30,10 @@ export type ServiceSlug = (typeof SERVICE_SLUGS)[number];
  * lastmod: bump it with the copy in lib/services-content, never on a redeploy.
  */
 export const SERVICE_UPDATED: Record<ServiceSlug, string> = {
-  "add-ins-revit-civil-3d": "2026-10-16",
+  "add-ins-revit-civil-3d": "2026-10-21",
   "automatizacion-dynamo": "2026-10-16",
-  "auditoria-procesos-bim": "2026-10-19",
-  "cursos-mentorias-bim": "2026-10-08",
+  "auditoria-procesos-bim": "2026-10-21",
+  "cursos-mentorias-bim": "2026-10-21",
 };
 
 export type ServicePage = {

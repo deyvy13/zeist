@@ -20,8 +20,8 @@ const PAGE_UPDATED: Record<(typeof PAGES)[number], string> = {
   blog: "2026-10-19",
   herramientas: "2026-10-19",
   contacto: "2026-10-19",
-  privacidad: "2026-10-16",
-  nosotros: "2026-10-19",
+  privacidad: "2026-10-21",
+  nosotros: "2026-10-21",
 };
 
 const STATIC_PATHS = [...PAGES, ...SERVICE_SLUGS.map((s) => `servicios/${s}`)];

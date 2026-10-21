@@ -55,7 +55,7 @@ function guidesBlock(locale: Locale): string {
 export function GET() {
   const body = `# ${site.name}
 
-> ${site.name} is a BIM automation company: a team of civil engineers and software engineers that builds custom C# add-ins (plugins) for Autodesk Civil 3D and Revit, Dynamo scripts, and training for engineering teams. Based in Trujillo, Peru; works with engineering and construction firms across Latin America, Brazil and English-speaking markets.
+> ${site.name} is a BIM automation company: a team of civil engineers and software engineers that builds custom C# add-ins (plugins) for Autodesk Civil 3D and Revit, Dynamo scripts, and training for engineering teams. Works remotely with engineering and construction firms across Latin America and in English- and Portuguese-speaking countries.
 
 ${site.description.es}
 
@@ -63,7 +63,7 @@ Key facts:
 - Specialty: automating repetitive engineering work in Civil 3D and Revit — 3D modeling of pipe networks and duct banks, quantity takeoffs, rebar modeling and checking, model version comparison, standards and quality control.
 - Differentiator: the team combines civil engineering domain knowledge with software engineering, so tools follow real design workflows and local codes.
 - Clients own the source code of the tools built for them.
-- Local presence: based in Trujillo (La Libertad, Peru), with on-site visits in La Libertad and remote work across Peru and Latin America. Spanish guides cover plugin development for Revit and Civil 3D in Trujillo and how to choose a BIM automation provider in Peru.
+- Service area: remote work across Latin America and with firms in English- and Portuguese-speaking countries. Spanish guides also cover local topics for Peru (Plan BIM Perú, Trujillo and La Libertad), written for readers there.
 - Contact: WhatsApp +${site.whatsapp.number}${site.showEmail ? ` · Email ${site.email}` : ""} — ${localizedUrl("es", "contacto")}
 - About and author of the guides: ${localizedUrl("en", "nosotros")} (es: ${localizedUrl("es", "nosotros")}) · LinkedIn: ${site.linkedin}
 

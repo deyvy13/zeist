@@ -26,7 +26,7 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       { label: "Plazo típico", value: "4 a 8 semanas" },
       { label: "Tecnología", value: "C# / .NET · API de Autodesk" },
       { label: "Propiedad", value: "El código es tuyo" },
-      { label: "Modalidad", value: "Remota · Perú y Latinoamérica" },
+      { label: "Modalidad", value: "Remota · toda Latinoamérica" },
     ],
     prefill:
       "Hola Zeist. Me interesa desarrollar un plugin para Revit / Civil 3D. Esta es la tarea que queremos automatizar:",
@@ -199,8 +199,8 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
         a: "Dynamo es ideal para validar una automatización rápido. Un plugin es mejor para el uso diario: lo usa cualquiera del equipo, maneja errores, es rápido con modelos grandes y se instala en toda la oficina. Muchas veces empezamos en Dynamo y terminamos en plugin.",
       },
       {
-        q: "¿Trabajan con empresas fuera de Trujillo?",
-        a: "Sí. Estamos en Trujillo, Perú, y trabajamos de forma remota con empresas de todo el Perú y Latinoamérica. El diagnóstico, las revisiones y la instalación se hacen a distancia.",
+        q: "¿Trabajan con empresas de otros países?",
+        a: "Sí. Trabajamos de forma remota con empresas de toda Latinoamérica y de países de habla inglesa y portuguesa. El diagnóstico, las revisiones y la instalación se hacen a distancia.",
       },
     ],
     ctaTitle: "¿Qué tarea te gustaría convertir en un botón?",
@@ -398,7 +398,7 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       { label: "Duración", value: "4 semanas" },
       { label: "Alcance", value: "Modelos y procesos" },
       { label: "Resultado", value: "Plan priorizado con ahorro estimado" },
-      { label: "Modalidad", value: "Remota · presencial en Trujillo" },
+      { label: "Modalidad", value: "Remota" },
     ],
     prefill:
       "Hola Zeist. Me interesa una auditoría BIM para nuestra empresa. Somos una empresa de:",
@@ -537,7 +537,7 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       },
       {
         q: "¿Es presencial o remota?",
-        a: "Remota para empresas de todo el Perú y Latinoamérica. En Trujillo y La Libertad también podemos hacer visitas presenciales.",
+        a: "Remota, para empresas de toda Latinoamérica y de países de habla inglesa y portuguesa.",
       },
     ],
     ctaTitle: "Sabe en cuatro semanas dónde se van las horas de tu equipo",
@@ -684,7 +684,7 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       },
       {
         q: "¿Los cursos son en línea?",
-        a: "Sí, en vivo y en línea, para equipos de todo el Perú y Latinoamérica.",
+        a: "Sí, en vivo y en línea, para equipos de toda Latinoamérica.",
       },
       {
         q: "¿El curso es de Revit o de Civil 3D?",

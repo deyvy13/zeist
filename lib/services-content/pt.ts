@@ -198,7 +198,7 @@ export const servicesPt: Record<ServiceSlug, ServicePage> = {
       },
       {
         q: "Vocês trabalham com empresas no Brasil?",
-        a: "Sim. A equipe está em Trujillo, no Peru, e trabalha de forma remota com empresas do Brasil e da América Latina. O diagnóstico, as revisões e a instalação são feitos a distância.",
+        a: "Sim. Trabalhamos de forma remota com empresas do Brasil, de toda a América Latina e de outros países de língua portuguesa e inglesa. O diagnóstico, as revisões e a instalação são feitos a distância.",
       },
     ],
     ctaTitle: "Que tarefa você gostaria de transformar em um botão?",

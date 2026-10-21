@@ -196,8 +196,8 @@ export const servicesEn: Record<ServiceSlug, ServicePage> = {
         a: "Dynamo is ideal for validating an automation quickly. A plugin is better for daily use: anyone on the team can run it, it handles errors, it's fast on large models and it installs across the whole office. We often start in Dynamo and finish with a plugin.",
       },
       {
-        q: "Do you work with companies outside Peru?",
-        a: "Yes. Our team is based in Trujillo, Peru, and works remotely with firms in the US, Europe and Latin America. Peru is on UTC-5 all year, so our working day overlaps with US business hours. Diagnosis, reviews and installation are all done remotely.",
+        q: "Do you work with firms in the US and other countries?",
+        a: "Yes. We work remotely with firms across Latin America and in English- and Portuguese-speaking countries, the US included. Diagnosis, reviews and installation are all done remotely.",
       },
     ],
     ctaTitle: "Which task would you turn into a button?",

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, locales } from "@/lib/i18n";
 import { localizedPath, localizedUrl, site, siteUrl, whatsappUrl } from "@/lib/site";
-import { buildMetadata } from "@/lib/seo";
+import { buildMetadata, areaServedJsonLd } from "@/lib/seo";
 import { getPostByKey, type PostMeta } from "@/lib/blog";
 import { SERVICE_SLUGS, getServicePage, isServiceSlug } from "@/lib/services";
 import { serviceIcons, IconArrow, IconWhatsApp } from "@/components/icons";
@@ -79,12 +79,7 @@ export default async function ServiceDetailPage({ params }: Props) {
     serviceType: page.serviceType,
     url: pageUrl,
     provider,
-    areaServed: [
-      { "@type": "Place", name: "Latinoamérica" },
-      { "@type": "Place", name: "España" },
-      { "@type": "Place", name: "Brasil" },
-      { "@type": "Place", name: "Global" },
-    ],
+    areaServed: areaServedJsonLd(lang),
     availableLanguage: ["es", "pt", "en"],
     hasOfferCatalog: {
       "@type": "OfferCatalog",

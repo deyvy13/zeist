@@ -2604,7 +2604,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           { n: 4, title: "Qué debes recibir", desc: "Código fuente, instalador, documentación y pruebas", tag: "Entregables" },
           { n: 5, title: "Versiones de Revit", desc: ".NET 8 en 2025, .NET 10 en 2027 y el mantenimiento", tag: "Técnico" },
           { n: 6, title: "Si se paga", desc: "Horas, frecuencia y costo de la tarea", tag: "Retorno" },
-          { n: 7, title: "Un equipo en Trujillo", desc: "Visitas, contexto regional y dominio de ingeniería", tag: "Local" },
+          { n: 7, title: "Un equipo especializado", desc: "Trabajo remoto, contexto peruano y dominio de ingeniería", tag: "Equipo" },
         ],
       },
       faqs: {
@@ -2612,7 +2612,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
         items: [
           {
             q: "¿Quién desarrolla plugins para Revit en Trujillo?",
-            a: "Zeist, un equipo de ingenieros civiles e ingenieros de sistemas con base en Trujillo, desarrolla plugins a medida para Revit en C# sobre la API oficial de Autodesk. Trabaja con oficinas de La Libertad, del resto del Perú y de Latinoamérica, y en Trujillo puede visitar la oficina para ver la tarea en el proceso real.",
+            a: "Zeist, un equipo de ingenieros civiles e ingenieros de sistemas, desarrolla plugins a medida para Revit en C# sobre la API oficial de Autodesk. Trabaja de forma remota con oficinas de toda Latinoamérica, también de Trujillo y La Libertad: el diagnóstico, las revisiones y la instalación se hacen a distancia.",
           },
           {
             q: "¿Qué es un plugin para Revit?",
@@ -2662,7 +2662,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
         items: [
           {
             q: "¿Quién desarrolla plugins para Civil 3D en Trujillo?",
-            a: "Zeist, un equipo de ingenieros civiles e ingenieros de sistemas con base en Trujillo, desarrolla plugins a medida para Civil 3D en C# sobre la API de Autodesk. Se especializa en infraestructura: vías, saneamiento, drenaje, habilitaciones urbanas y producción de expedientes técnicos, para oficinas de La Libertad, del resto del Perú y de Latinoamérica.",
+            a: "Zeist, un equipo de ingenieros civiles e ingenieros de sistemas, desarrolla plugins a medida para Civil 3D en C# sobre la API de Autodesk, de forma remota para oficinas de toda Latinoamérica, también de Trujillo y La Libertad. Se especializa en infraestructura: vías, saneamiento, drenaje, habilitaciones urbanas y producción de expedientes técnicos.",
           },
           {
             q: "¿Cuáles son los mejores plugins para Civil 3D?",
@@ -2685,8 +2685,8 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
             a: "Dynamo es ideal para probar una automatización en días y para tareas de un proyecto. Un plugin en C# conviene cuando toda la oficina usa la herramienta cada semana, cuando trabaja con miles de objetos o cuando necesita una interfaz con validaciones y un instalador. Muchas veces se empieza en Dynamo y se termina en un plugin.",
           },
           {
-            q: "¿Trabajan con oficinas fuera de Trujillo?",
-            a: "Sí. Zeist trabaja de forma remota con oficinas de todo el Perú y Latinoamérica: el diagnóstico, las revisiones y la instalación se hacen a distancia. Para oficinas de Trujillo y La Libertad también es posible una visita.",
+            q: "¿Trabajan de forma remota?",
+            a: "Sí. Zeist trabaja de forma remota con oficinas de toda Latinoamérica, también de Trujillo y La Libertad: el diagnóstico, las revisiones y la instalación se hacen a distancia.",
           },
         ],
       },
@@ -2713,7 +2713,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
         items: [
           {
             q: "¿Qué empresas hacen automatización BIM en Trujillo?",
-            a: "Zeist es un equipo con base en Trujillo dedicado a la automatización de Revit y Civil 3D: desarrolla plugins en C#, scripts de Dynamo, auditorías de procesos BIM y formación para equipos. Para comparar proveedores, conviene preguntar si entienden la tarea de ingeniería, si programan sobre la API de Autodesk y si entregan el código fuente.",
+            a: "Zeist es un equipo dedicado a la automatización de Revit y Civil 3D que atiende de forma remota a oficinas de Trujillo y de toda Latinoamérica: desarrolla plugins en C#, scripts de Dynamo, auditorías de procesos BIM y formación para equipos. Para comparar proveedores, conviene preguntar si entienden la tarea de ingeniería, si programan sobre la API de Autodesk y si entregan el código fuente.",
           },
           {
             q: "¿Qué es la automatización BIM?",
@@ -2729,7 +2729,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           },
           {
             q: "¿Qué es una auditoría de procesos BIM?",
-            a: "Es un diagnóstico que revisa la calidad de los modelos y mide cómo trabaja el equipo: dónde se pierden horas, qué se rehace y qué estándares faltan. En Zeist dura cuatro semanas, puede hacerse de forma remota o presencial en Trujillo, y termina en un plan priorizado de qué corregir, qué estandarizar y qué automatizar primero.",
+            a: "Es un diagnóstico que revisa la calidad de los modelos y mide cómo trabaja el equipo: dónde se pierden horas, qué se rehace y qué estándares faltan. En Zeist dura cuatro semanas, se hace de forma remota y termina en un plan priorizado de qué corregir, qué estandarizar y qué automatizar primero.",
           },
           {
             q: "¿Cómo se mide si una automatización vale la pena?",
@@ -2980,7 +2980,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           },
           {
             q: "¿Ofrecen capacitación BIM para empresas en Trujillo?",
-            a: "Sí. Zeist dicta cursos y mentorías en vivo y en línea de Revit, Civil 3D, Dynamo y programación en C# para equipos de ingeniería, sobre los proyectos reales de la empresa. Estamos en Trujillo y trabajamos con equipos de La Libertad y de todo el Perú.",
+            a: "Sí. Zeist dicta cursos y mentorías en vivo y en línea de Revit, Civil 3D, Dynamo y programación en C# para equipos de ingeniería, sobre los proyectos reales de la empresa. Trabajamos de forma remota con equipos de toda Latinoamérica, también de Trujillo y La Libertad.",
           },
         ],
       },
@@ -4924,7 +4924,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
         items: [
           {
             q: "¿Hay empresas de automatización BIM en Trujillo?",
-            a: "Muy pocas. El grueso de la oferta de desarrollo BIM en el Perú está concentrada en Lima, y la que existe suele enfocarse en Revit para edificación. Para infraestructura con Civil 3D —que es la mayor parte de la obra pública en La Libertad— la oferta local es prácticamente inexistente. Nosotros trabajamos desde Trujillo y de forma remota para el resto del país."
+            a: "Muy pocas. El grueso de la oferta de desarrollo BIM en el Perú está concentrada en Lima, y la que existe suele enfocarse en Revit para edificación. Para infraestructura con Civil 3D —que es la mayor parte de la obra pública en La Libertad— la oferta local es prácticamente inexistente. Zeist atiende de forma remota a oficinas de Trujillo y La Libertad, con foco en Civil 3D e infraestructura."
           },
           {
             q: "¿Qué se está construyendo en La Libertad este año?",
@@ -4940,7 +4940,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           },
           {
             q: "¿Trabajan sólo con empresas de Trujillo?",
-            a: "No. Estamos en Trujillo, lo que ayuda para reuniones presenciales y para entender el contexto de las entidades de la región, pero trabajamos de forma remota con oficinas de todo el Perú y de Latinoamérica. El desarrollo de add-ins y la formación funcionan igual de bien a distancia."
+            a: "No. Trabajamos de forma remota con oficinas de toda Latinoamérica y de países de habla inglesa y portuguesa. El desarrollo de add-ins, las auditorías y la formación funcionan igual de bien a distancia."
           },
           {
             q: "¿Por dónde empieza una oficina que nunca automatizó nada?",
