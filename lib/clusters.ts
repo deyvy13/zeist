@@ -42,6 +42,7 @@ export const clusters: Cluster[] = [
       "vulnerabilidad-php-plugins-revit-civil-3d",
       "auditoria-automatica-modelos-revit",
       "dynamo-para-revit-primeros-scripts",
+      "mejores-plugins-revit",
     ],
   },
   {
@@ -70,6 +71,7 @@ export const clusters: Cluster[] = [
     pillar: "dynamo-csharp-con-ia-claude",
     satellites: [
       "guia-vibe-coding-para-empezar",
+      "herramientas-vibe-coding",
       "crear-plugin-civil-3d-con-claude-code-sin-programar",
       "inteligencia-artificial-autocad-civil-3d",
     ],

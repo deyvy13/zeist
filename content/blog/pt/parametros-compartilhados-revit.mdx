@@ -5,6 +5,7 @@ seoTitle: "Parâmetros compartilhados no Revit: guia e erros"
 ctaTitle: "Cada projeto do seu escritório tem parâmetros diferentes? Nós os padronizamos e carregamos em lote."
 description: "O que são os parâmetros compartilhados do Revit, como se diferenciam dos de família e de projeto, como criá-los e usá-los em tabelas, tags e no carimbo."
 date: "2026-10-09T19:00:00.000Z"
+updated: "2026-10-23T18:30:00.000Z"
 author: "Zeist"
 tags:
   - Revit
@@ -45,6 +46,22 @@ Uma tabela de quantitativos que soma a mesma coisa duas vezes, uma tag que mostr
   nodes="Arquivo .txt|Famílias|Projetos|Tabelas, tags e carimbo"
   subs="Um GUID por parâmetro|O mesmo parâmetro em cada uma|Vinculado às suas categorias|Leem o mesmo dado"
 />
+
+## Parâmetros de projeto ou compartilhados: qual usar?
+
+| | Parâmetro de projeto | Parâmetro compartilhado |
+|---|---|---|
+| Onde é definido | Só naquele projeto, atribuído a categorias | Em um arquivo .txt externo, com um GUID |
+| Tabelas | Sim | Sim |
+| Tags e carimbo | Não | Sim |
+| Reutilizável em famílias e outros projetos | Não | Sim, pelo GUID |
+| Convém para | Dados que só são tabelados ou filtrados naquele projeto | Dados que vão em tags, aparecem nas pranchas, passam entre projetos ou são lidos por um plugin |
+
+**Como se cria um parâmetro de projeto:** em Gerenciar › Parâmetros de projeto, adicione um novo, dê nome e tipo de dado, escolha se é de instância ou de tipo e marque as categorias. No mesmo quadro se escolhe se ele será de projeto ou compartilhado.
+
+**Dá para converter um parâmetro de projeto em compartilhado?** Não diretamente: o Revit não tem um botão para isso. Cria-se o parâmetro compartilhado, copiam-se os valores (com uma tabela, com o Dynamo ou com um plugin), confere-se o resultado e apaga-se o de projeto.
+
+**Na Revit API**, os dois viram um vínculo em `Document.ParameterBindings`: um `InstanceBinding` ou um `TypeBinding` que liga a definição às suas categorias. A definição de um compartilhado vem do arquivo de parâmetros compartilhados (`Application.OpenSharedParameterFile()`), com o seu GUID. Por isso um plugin lê um parâmetro compartilhado pelo GUID, sem depender do nome, e um de projeto só pelo nome, que pode mudar. Explicamos como se monta um plugin em [desenvolvimento de add-ins para Revit e Civil 3D](/pt/blog/desenvolvimento-add-ins-revit-civil-3d).
 
 <Roadmap />
 
@@ -179,8 +196,15 @@ Se você quer entender as APIs da Autodesk desde o início, veja [desenvolviment
   secondaryHref="/pt/servicos/plugins-revit-civil-3d"
 />
 
+## Fontes
+
+- [Fórum da Autodesk: converter um parâmetro de projeto em compartilhado](https://forums.autodesk.com/t5/revit-architecture-forum/convert-project-parameter-to-shared-parameter/m-p/7967519/highlight/true): a Autodesk não conhece uma opção direta.
+
+Dados verificados em 23 de outubro de 2026.
+
 ## Recursos relacionados
 
+- **Que plugins usar hoje:** [melhores plugins do Revit para produtividade e gestão de dados](/pt/blog/plugins-revit-produtividade).
 - **O carimbo completo:** [carimbo de prancha automático no Revit e no AutoCAD](/pt/blog/carimbo-prancha-revit-autocad).
 - **Preencher parâmetros pelo Excel:** [exportar tabelas do Revit para o Excel e importar de volta](/pt/blog/exportar-tabela-revit-excel).
 - **O carimbo:** [revisões e assinaturas no Revit para várias pranchas](/pt/blog/revisoes-revit-pranchas).

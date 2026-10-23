@@ -1,10 +1,11 @@
 ---
 translationKey: "parametros-compartidos-revit"
 title: "Revit shared parameters: what they are, how to create them, the .txt file, title blocks and the errors that keep coming back"
-seoTitle: "Revit Shared Parameters: Guide and Best Practices"
+seoTitle: "Revit Shared and Project Parameters: Full Guide"
 ctaTitle: "Does every project in your firm have different parameters? We standardize them and load them in bulk."
 description: "What Revit shared parameters are, how they differ from family and project parameters, how to create them and use them in schedules, tags and title blocks."
 date: "2026-10-09T19:00:00.000Z"
+updated: "2026-10-23T18:30:00.000Z"
 author: "Zeist"
 tags:
   - Revit
@@ -45,6 +46,22 @@ A quantity schedule that counts the same thing twice, a tag showing a question m
   nodes=".txt file|Families|Projects|Schedules, tags, title blocks"
   subs="One GUID per parameter|The same parameter in each|Bound to its categories|All read the same data"
 />
+
+## Project parameters vs shared parameters: which one should you use?
+
+| | Project parameter | Shared parameter |
+|---|---|---|
+| Where it's defined | Only in that project, bound to categories | In an external .txt file, with a GUID |
+| Schedules | Yes | Yes |
+| Tags and title blocks | No | Yes |
+| Reusable in families and other projects | No | Yes, by its GUID |
+| Best for | Data that's only scheduled or filtered in that project | Data that gets tagged, shows on sheets, moves between projects or is read by a plugin |
+
+**How to create a project parameter:** under Manage › Project Parameters, add a new one, give it a name and data type, choose instance or type, and tick the categories. The same dialog lets you choose whether it's a project or a shared parameter.
+
+**Can you convert a project parameter into a shared one?** Not directly: Revit has no button for it. You create the shared parameter, copy the values across (with a schedule, Dynamo or a plugin), check them and delete the project parameter.
+
+**In the Revit API**, both end up as a binding in `Document.ParameterBindings`: an `InstanceBinding` or a `TypeBinding` that ties the definition to its categories. A shared parameter's definition comes from the shared parameter file (`Application.OpenSharedParameterFile()`), with its GUID. That's why a plugin reads a shared parameter by GUID, regardless of its name, and a project parameter only by name, which can change. We cover how a plugin is built in [Revit and Civil 3D add-in development](/en/blog/revit-civil-3d-add-in-development).
 
 <Roadmap />
 
@@ -179,8 +196,15 @@ If you want the Autodesk APIs from the ground up, start with [Revit and Civil 3D
   secondaryHref="/en/services/revit-civil-3d-plugin-development"
 />
 
+## Sources
+
+- [Autodesk forum: convert a project parameter to a shared parameter](https://forums.autodesk.com/t5/revit-architecture-forum/convert-project-parameter-to-shared-parameter/m-p/7967519/highlight/true): Autodesk knows of no direct option.
+
+Data verified on October 23, 2026.
+
 ## Related resources
 
+- **Which plugins to use today:** [best Revit plugins for productivity and data](/en/blog/best-revit-plugins).
 - **The full title block:** [Revit and AutoCAD title blocks filled automatically](/en/blog/revit-autocad-title-block-automation).
 - **Filling parameters from Excel:** [exporting Revit schedules to Excel and back](/en/blog/export-revit-schedule-to-excel).
 - **Title blocks:** [Revit revisions and signatures on multiple sheets](/en/blog/revit-revisions-multiple-sheets).

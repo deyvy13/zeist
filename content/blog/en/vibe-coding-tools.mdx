@@ -1,0 +1,102 @@
+---
+translationKey: "herramientas-vibe-coding"
+title: "Best Vibe Coding Tools for Engineers: Which One to Use for AutoCAD, Revit and Civil 3D"
+seoTitle: "Best Vibe Coding Tools for Engineers"
+ctaTitle: "Want to build your own tools with AI without losing weeks? We coach your team live, on your own drawings."
+description: "Chats, in-editor assistants and coding agents: which vibe coding tool fits LISP, Dynamo, Excel or a C# plugin for Revit and Civil 3D."
+date: "2026-10-23T17:30:00.000Z"
+author: "Zeist"
+tags:
+  - Vibe coding
+  - Artificial intelligence
+  - AutoCAD
+  - Revit
+  - Civil 3D
+  - Programming
+---
+
+<BlogHero
+  eyebrow="AI · Vibe coding · Tools"
+  title="Which vibe coding tool to use, depending on what you want to build"
+  highlight="Chats, assistants inside the editor and agents that work across your project: what each type does, which one fits a LISP routine, a Dynamo script or a C# plugin, and what to watch out for with any of them."
+/>
+
+<Callout type="success" title="Quick answer">
+It depends on what you're building. For a LISP routine or a short script, a chat like ChatGPT, Claude or Gemini is enough. For a C# plugin for Revit or Civil 3D, use a tool that works across the whole project: GitHub Copilot in Visual Studio, Cursor, Claude Code or Codex. None of them replaces testing on your own drawings.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain English">
+- **Vibe coding** — Programming by describing what you want in plain language while the AI writes the code.
+- **Chat** — The conversation window of ChatGPT, Claude or Gemini, in the browser.
+- **Code editor** — The program where code gets written and organized, such as Visual Studio or VS Code.
+- **Coding agent** — An AI that reads your whole project, edits files, builds and fixes errors on its own.
+- **Plugin** — A program installed inside Revit or Civil 3D that adds buttons to the top toolbar.
+</Callout>
+
+## What types of vibe coding tools are there?
+
+| Type | Examples | How it works | What it's good for |
+|---|---|---|---|
+| Chat | ChatGPT, Claude, Gemini | You ask for code and copy it yourself | Short routines, formulas, macros |
+| In-editor assistant | GitHub Copilot (VS Code and Visual Studio), Cursor | Suggests and edits inside the file you have open | Mid-size projects, learning as you go |
+| Coding agent | Claude Code, Codex, Copilot's or Cursor's agent mode | Reads the whole project, edits several files, builds and fixes | Full plugins and multi-part tools |
+
+What changes from one type to the next isn't how smart the AI is, but **how much of the project it sees and how much it can do on its own**.
+
+## Which one fits each engineering task?
+
+| What you want to build | Best-fitting tool | Why |
+|---|---|---|
+| LISP routine for AutoCAD or Civil 3D | A chat plus VS Code with the AutoLISP extension | It's one short file; the editor lets you debug it |
+| Excel macro or Python script | A chat or Cursor | Fits in one or two files |
+| Python node inside Dynamo | A chat | You paste the code into the node and test it in the graph |
+| C# plugin for Revit or Civil 3D | Visual Studio with GitHub Copilot, or Claude Code or Codex on the project folder | Several files, API references and a build step |
+| Web tool (calculator, dashboard) | Cursor, Claude Code or Codex | Many pieces the agent assembles and tests |
+
+With a plugin, the AI writes and builds it, but **testing is on you**: load it into Revit or Civil 3D, run it on a real model and check the result.
+
+## Which ones have a free version?
+
+- **The chats** from ChatGPT, Claude and Gemini have free plans with usage limits.
+- **GitHub Copilot** has a free plan with limited features that works in VS Code and Visual Studio.
+- **Cursor** has a free plan, Hobby.
+- **Codex** is included with ChatGPT plans, with limited usage on the basic ones.
+- **Claude Code** needs a paid Anthropic plan or an API key.
+
+Prices and limits change almost every month: check each vendor's site before you decide.
+
+## What should you watch out for with any of them?
+
+1. **Tell it your version.** AI tends to write for older API versions. Revit, AutoCAD and Civil 3D 2025 and 2026 use .NET 8; the 2027 releases use .NET 10.
+2. **Don't upload confidential client information** without checking your plan's data policy.
+3. **Use version control** (git): an agent can change many files at once, and git lets you roll back.
+4. **Test on copies** of drawings and models, never on the production file.
+5. **Learn to read what it generates.** That's what separates people who finish a tool from people who get stuck. We cover it in the [vibe coding guide for engineers](/en/blog/vibe-coding-guide-engineers).
+
+<CTABlock
+  eyebrow="Zeist · BIM training and mentoring"
+  title="Build your own tools with AI, with a coach"
+  body="Live online training and mentoring for engineering teams: Revit API, Civil 3D API and Dynamo, with AI and on your own cases. If you'd rather we build it, we develop the plugin too."
+  primaryLabel="Talk about your team"
+  primaryHref="/en/contact"
+  secondaryLabel="See training and mentoring"
+  secondaryHref="/en/services/revit-api-dynamo-training"
+/>
+
+## Sources
+
+- [GitHub: Copilot plans](https://docs.github.com/en/copilot/get-started/plans) and [Copilot Free in Visual Studio](https://learn.microsoft.com/visualstudio/ide/copilot-free-plan).
+- [Cursor: pricing](https://cursor.com/pricing).
+- [OpenAI: Codex](https://openai.com/codex/).
+- [Anthropic: Claude Code](https://docs.claude.com/en/docs/claude-code/overview).
+
+Data verified on October 23, 2026.
+
+## Related resources
+
+- **The method, step by step:** [vibe coding guide for engineers](/en/blog/vibe-coding-guide-engineers).
+- **A real case:** [build a Civil 3D plugin with Claude Code without coding](/en/blog/claude-code-civil-3d-plugin).
+- **What AI already does in your software:** [AI for AutoCAD and Civil 3D](/en/blog/autocad-ai-civil-3d).
+- **Dynamo and C# with AI:** [Dynamo and C# with AI](/en/blog/dynamo-csharp-ai-claude).
+
+<PostFaqs />

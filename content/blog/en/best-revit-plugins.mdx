@@ -1,0 +1,106 @@
+---
+translationKey: "mejores-plugins-revit"
+title: "Best Revit Plugins for Productivity and Data Management: What Each One Does, and When a Custom One Pays Off"
+seoTitle: "Best Revit Plugins for Productivity and Data"
+ctaTitle: "No off-the-shelf plugin follows your standard? We build yours, source code included."
+description: "Revit plugins for productivity and data management compared: pyRevit, DiRootsOne, Ideate BIMLink and Model Checker. What's free and what's paid."
+date: "2026-10-23T17:00:00.000Z"
+author: "Zeist"
+tags:
+  - Revit plugins
+  - Productivity
+  - Data management
+  - Revit
+  - Excel
+  - Add-ins
+---
+
+<BlogHero
+  eyebrow="Revit · Plugins · Comparison"
+  title="The Revit plugins that save the most hours, and when none of them fits"
+  highlight="A straight comparison of the most-used productivity and data management add-ins: what they do, what's free, what's paid, and the point where a custom plugin is worth it."
+/>
+
+<Callout type="success" title="Quick answer">
+For productivity and data management in Revit, the most-used plugins are pyRevit (free and open source), DiRootsOne (a free tier with ParaManager and other tools; SheetLink only on the paid plan), Ideate BIMLink (Excel round trip, paid) and Autodesk Model Checker, free for licensed Revit users.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain English">
+- **Plugin or add-in** — A program installed inside Revit that adds buttons to the top toolbar.
+- **Data management** — Creating, filling, checking and exporting the model's parameters and schedules.
+- **Freemium** — A free version with some features and a paid plan with the rest.
+- **Open source** — The program's code is public: anyone can read and adapt it.
+</Callout>
+
+## Which Revit plugins are worth it for productivity and data?
+
+| Plugin | What it's for | Cost | Worth noting |
+|---|---|---|---|
+| pyRevit | Dozens of productivity tools and a platform to build your own in Python | Free, open source (GPL-3.0) | Takes extensions, such as pyRevitMEP |
+| DiRootsOne | A suite with ParaManager, FamilyReviser, OneFilter, SheetGen, ViewManager and more | Freemium: SheetLink, TableGen and OneParameter are Premium only | Compatible up to Revit 2027 |
+| ProSheets (DiRoots) | Batch export of sheets to PDF and DWG | Freemium since October 2024 | Scheduled export is paid |
+| Ideate BIMLink | Pull model data into Excel and push it back to Revit | Paid, annual license | Hundreds of ready-made link definitions |
+| Model Checker (Autodesk) | Check the model against rules and get an Excel report | Free for licensed Revit users | Its API is unsupported from version 10.0 (Revit 2026) |
+
+## Which plugin should you pick for data management and Excel?
+
+It depends on how often the workflow repeats and who will use it:
+
+- **Creating and organizing parameters:** ParaManager, in the free tier of DiRootsOne, creates, edits and exports parameters to Excel and to the shared parameter file.
+- **Editing data in Excel and pushing it back:** SheetLink (DiRootsOne Premium) or Ideate BIMLink. Both match each row to its element.
+- **A one-off or a test:** Dynamo, which ships with Revit and reads and writes .xlsx without Excel installed. We walk through the nodes in [Dynamo for Revit: your first 5 scripts](/en/blog/dynamo-for-revit-scripts).
+- **Checking the standard before every deliverable:** Model Checker, with your firm's rule set.
+
+## Which ones are free?
+
+pyRevit, the free tier of DiRootsOne, the base version of ProSheets, and Model Checker for licensed Revit users. For developers, RevitLookup, also free and open source, shows every element's parameters and internal properties.
+
+Free doesn't mean zero cost: someone has to install them, update them with every Revit release and train the team.
+
+## When is an off-the-shelf plugin not enough?
+
+When your workflow has rules no product knows about:
+
+- **The standard is yours:** your firm's naming, codes, required parameters and deliverable formats.
+- **You need validation before writing:** allowed values, units, type versus instance conflicts.
+- **Several steps in one button:** fill, check, export and log who changed what.
+- **It talks to other systems:** cost estimating, ERP or the client's spreadsheet.
+
+In those cases, a custom plugin often costs less than bending the team around a generic tool. We break down the costs in [how much a Revit or Civil 3D add-in costs](/en/blog/revit-civil-3d-add-in-cost).
+
+## How do you install plugins safely?
+
+1. **Download only from the vendor or the Autodesk App Store.**
+2. **Prefer signed plugins:** Revit warns you when an add-in has no digital signature.
+3. **Check the version:** Revit 2025 and 2026 load plugins on .NET 8, and 2027 on .NET 10. An older plugin may not load.
+4. **Test on a copy of the model** before using it in production.
+
+More detail in [Revit and Civil 3D plugin security](/en/blog/revit-civil-3d-plugin-security).
+
+<CTABlock
+  eyebrow="Zeist · Custom plugins"
+  title="A plugin that follows your standard, not someone else's"
+  body="We build C# plugins for Revit and Civil 3D around your rules, tested on your models, with an installer, a manual and the source code, which is yours. The diagnosis is free and takes one week."
+  primaryLabel="Request a free diagnosis"
+  primaryHref="/en/contact"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/services/revit-civil-3d-plugin-development"
+/>
+
+## Sources
+
+- [pyRevit on GitHub](https://github.com/pyrevitlabs/pyRevit): GPL-3.0 license and extensions.
+- [DiRootsOne](https://diroots.com/revit-plugins/dirootsone/): free and Premium tools, and Revit compatibility.
+- [Ideate BIMLink](https://ideatesoftware.com/ideate-bimlink-purchase): features and licensing.
+- [Autodesk: Model Checker for Revit](https://interoperability.autodesk.com/modelchecker.php).
+
+Data verified on October 23, 2026. Prices and plans change: check each vendor's site.
+
+## Related resources
+
+- **Excel both ways:** [export Revit schedules to Excel and import them back](/en/blog/export-revit-schedule-to-excel).
+- **What to automate first:** [automate Revit tasks with Dynamo and plugins](/en/blog/automate-revit-tasks).
+- **How a plugin gets built:** [Revit and Civil 3D add-in development](/en/blog/revit-civil-3d-add-in-development).
+- **Parameters in order:** [Revit shared parameters](/en/blog/revit-shared-parameters).
+
+<PostFaqs />

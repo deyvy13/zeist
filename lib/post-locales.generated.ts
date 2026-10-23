@@ -155,6 +155,11 @@ export const postRoutes: Readonly<Record<string, Partial<Record<Locale, string>>
   "habilitacion-urbana-trujillo-civil-3d": {
     "es": "habilitacion-urbana-trujillo-civil-3d"
   },
+  "herramientas-vibe-coding": {
+    "es": "herramientas-vibe-coding",
+    "pt": "ferramentas-vibe-coding",
+    "en": "vibe-coding-tools"
+  },
   "importar-puntos-civil-3d-excel": {
     "es": "importar-puntos-civil-3d-excel",
     "pt": "importar-pontos-civil-3d",
@@ -174,6 +179,11 @@ export const postRoutes: Readonly<Record<string, Partial<Record<Locale, string>>
     "es": "lista-de-materiales-revit-autocad-civil-3d",
     "pt": "lista-de-materiais-revit-autocad",
     "en": "revit-autocad-bill-of-materials"
+  },
+  "mejores-plugins-revit": {
+    "es": "mejores-plugins-revit",
+    "pt": "plugins-revit-produtividade",
+    "en": "best-revit-plugins"
   },
   "membrete-planos-automatico-revit-autocad": {
     "es": "membrete-planos-automatico-revit-autocad",

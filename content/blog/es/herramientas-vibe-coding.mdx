@@ -1,0 +1,102 @@
+---
+title: "Herramientas de vibe coding para ingenieros: cuál usar para AutoCAD, Revit y Civil 3D"
+seoTitle: "Herramientas de vibe coding para ingenieros"
+ctaTitle: "¿Quieres programar tus herramientas con IA sin perder semanas? Te acompañamos en vivo, con tus propios planos."
+description: "Chats, asistentes en el editor y agentes de código: qué herramienta de vibe coding conviene para LISP, Dynamo, Excel o un plugin en C# de Revit y Civil 3D."
+date: "2026-10-23T17:30:00.000Z"
+author: "Zeist"
+tags:
+  - Vibe coding
+  - Inteligencia artificial
+  - AutoCAD
+  - Revit
+  - Civil 3D
+  - Programación
+---
+
+<BlogHero
+  eyebrow="IA · Vibe coding · Herramientas"
+  title="Qué herramienta de vibe coding usar según lo que quieres construir"
+  highlight="Chats, asistentes dentro del editor y agentes que trabajan sobre tu proyecto: qué hace cada tipo, cuál conviene para una rutina LISP, un script de Dynamo o un plugin en C#, y qué cuidar con cualquiera de ellas."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Depende de lo que vas a construir. Para una rutina LISP o un script corto basta un chat como ChatGPT, Claude o Gemini. Para un plugin en C# de Revit o Civil 3D conviene una herramienta que trabaje sobre el proyecto completo: GitHub Copilot en Visual Studio, Cursor, Claude Code o Codex. Ninguna reemplaza probar con tus planos.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Vibe coding** — Programar describiendo en lenguaje normal lo que quieres, mientras la IA escribe el código.
+- **Chat** — La ventana de conversación de ChatGPT, Claude o Gemini, en el navegador.
+- **Editor de código** — El programa donde se escribe y se ordena el código, como Visual Studio o VS Code.
+- **Agente de código** — Una IA que lee todo tu proyecto, edita archivos, compila y corrige errores por su cuenta.
+- **Plugin** — Un programa que se instala dentro de Revit o Civil 3D y agrega botones en la barra superior.
+</Callout>
+
+## ¿Qué tipos de herramientas de vibe coding hay?
+
+| Tipo | Ejemplos | Cómo trabaja | Para qué sirve |
+|---|---|---|---|
+| Chat | ChatGPT, Claude, Gemini | Le pides código y lo copias tú | Rutinas cortas, fórmulas, macros |
+| Asistente en el editor | GitHub Copilot (VS Code y Visual Studio), Cursor | Sugiere y edita dentro del archivo que tienes abierto | Proyectos medianos, aprender mientras programas |
+| Agente de código | Claude Code, Codex, el modo agente de Copilot o de Cursor | Lee el proyecto completo, edita varios archivos, compila y corrige | Plugins completos y herramientas con varias partes |
+
+Lo que cambia entre un tipo y otro no es qué tan inteligente es la IA, sino **cuánto del proyecto ve y cuánto puede hacer sola**.
+
+## ¿Cuál conviene para cada tarea de ingeniería?
+
+| Lo que quieres construir | Herramienta que mejor encaja | Por qué |
+|---|---|---|
+| Rutina LISP para AutoCAD o Civil 3D | Un chat y VS Code con la extensión de AutoLISP | Es un archivo corto; el editor sirve para depurarlo |
+| Macro de Excel o script de Python | Un chat o Cursor | Cabe en uno o dos archivos |
+| Nodo de Python dentro de Dynamo | Un chat | Pegas el código en el nodo y lo pruebas en el grafo |
+| Plugin en C# para Revit o Civil 3D | Visual Studio con GitHub Copilot, o Claude Code o Codex sobre la carpeta del proyecto | Son varios archivos, referencias a la API y compilación |
+| Herramienta web (calculadora, tablero) | Cursor, Claude Code o Codex | Muchas piezas que el agente arma y prueba |
+
+En el plugin, la IA escribe y compila, pero **la prueba es tuya**: cargarlo en Revit o Civil 3D, correrlo sobre un modelo real y revisar el resultado.
+
+## ¿Cuáles tienen versión gratuita?
+
+- **Los chats** de ChatGPT, Claude y Gemini tienen planes gratuitos con límites de uso.
+- **GitHub Copilot** tiene un plan gratuito con funciones limitadas, que funciona en VS Code y en Visual Studio.
+- **Cursor** tiene un plan gratuito, Hobby.
+- **Codex** viene incluido en los planes de ChatGPT, con un uso limitado en los más básicos.
+- **Claude Code** necesita un plan de pago de Anthropic o una clave de API.
+
+Los precios y los límites cambian casi cada mes: revísalos en la web de cada una antes de decidir.
+
+## ¿Qué cuidar con cualquiera de ellas?
+
+1. **Dile tu versión.** La IA suele escribir para versiones antiguas de la API. Revit, AutoCAD y Civil 3D 2025 y 2026 usan .NET 8, y las 2027, .NET 10.
+2. **No subas información confidencial** de clientes sin revisar la política de datos de tu plan.
+3. **Trabaja con control de versiones** (git): un agente puede cambiar muchos archivos de una vez, y así puedes volver atrás.
+4. **Prueba en copias** de los planos o modelos, nunca en el archivo de producción.
+5. **Aprende a leer lo que genera.** Es lo que separa a quien termina una herramienta de quien se queda atascado. Lo explicamos en la [guía de vibe coding para ingenieros](/es/blog/guia-vibe-coding-para-empezar).
+
+<CTABlock
+  eyebrow="Zeist · Cursos y mentorías BIM"
+  title="Programa tus herramientas con IA, acompañado"
+  body="Cursos y mentorías en vivo y en línea para equipos de ingeniería: Revit API, Civil 3D API y Dynamo, con IA y sobre tus propios casos. Si prefieres que lo hagamos nosotros, también desarrollamos el plugin."
+  primaryLabel="Hablemos de tu equipo"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver cursos y mentorías"
+  secondaryHref="/es/servicios/cursos-mentorias-bim"
+/>
+
+## Fuentes
+
+- [GitHub: planes de Copilot](https://docs.github.com/en/copilot/get-started/plans) y [Copilot Free en Visual Studio](https://learn.microsoft.com/visualstudio/ide/copilot-free-plan).
+- [Cursor: planes](https://cursor.com/pricing).
+- [OpenAI: Codex](https://openai.com/codex/).
+- [Anthropic: Claude Code](https://docs.claude.com/en/docs/claude-code/overview).
+
+Datos verificados el 23 de octubre de 2026.
+
+## Recursos relacionados
+
+- **El método, paso a paso:** [vibe coding para ingenieros: guía para empezar](/es/blog/guia-vibe-coding-para-empezar).
+- **Un caso real:** [crear un plugin para Civil 3D con Claude Code sin programar](/es/blog/crear-plugin-civil-3d-con-claude-code-sin-programar).
+- **Qué hace hoy la IA en tus programas:** [IA para AutoCAD y Civil 3D](/es/blog/inteligencia-artificial-autocad-civil-3d).
+- **Dynamo y C# con IA:** [Dynamo y C# con IA](/es/blog/dynamo-csharp-con-ia-claude).
+- **Rutinas para AutoCAD:** [rutinas LISP para AutoCAD y Civil 3D](/es/blog/rutinas-lisp-autocad-civil-3d).
+
+<PostFaqs />

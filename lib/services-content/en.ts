@@ -157,6 +157,7 @@ export const servicesEn: Record<ServiceSlug, ServicePage> = {
       rows: "Follows your standards and naming | *Exactly | Only if they match || Deliverable format | *Your firm's and your client's | The vendor's || Your office's rules | *Built into the tool | You adapt to it || Code ownership | *Yours | The vendor's || Changes when your process changes | *It adapts | Up to the vendor || Time to first use | Weeks | *Immediate",
     },
     guides: [
+      "mejores-plugins-revit",
       "seguridad-plugins-revit-civil-3d",
       "desarrollo-add-ins-revit-civil-3d-guia-completa",
       "cuanto-cuesta-un-add-in-revit-civil-3d",
@@ -667,6 +668,7 @@ export const servicesEn: Record<ServiceSlug, ServicePage> = {
       rows: "Practice cases | *Your firm's projects | Generic examples || Civil 3D and infrastructure | *Included | Rarely || Outcome | *A tool in use | Solved exercises || Questions | *Live, with the people who build | Forum or email || Pace | *Adapted to the team | Fixed",
     },
     guides: [
+      "herramientas-vibe-coding",
       "programacion-para-ingenieros-civiles",
       "civil-3d-api-csharp-primeros-pasos",
       "aprende-a-programar-desde-cero",

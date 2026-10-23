@@ -21,6 +21,173 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- Lote 2 del 23-oct-2026: plugins de Revit y herramientas de vibe coding ----
+  "mejores-plugins-revit": {
+    es: {
+      faqs: {
+        title: "Preguntas frecuentes sobre plugins de Revit",
+        items: [
+          {
+            q: "¿Cuáles son los mejores plugins gratuitos para Revit?",
+            a: "Para productividad y datos, pyRevit, que es gratuito y de código abierto; la versión gratuita de DiRootsOne, con ParaManager, OneFilter, FamilyReviser y otras herramientas; la versión base de ProSheets para exportar láminas; y Model Checker de Autodesk, gratuito para quien tiene licencia de Revit. Quien desarrolla suele sumar RevitLookup.",
+          },
+          {
+            q: "¿Qué plugin de Revit sirve para exportar e importar datos con Excel?",
+            a: "SheetLink, del plan Premium de DiRootsOne, e Ideate BIMLink, de pago, exportan los datos a Excel y los devuelven al modelo emparejando cada fila con su elemento. Para un flujo puntual también sirve Dynamo, que lee y escribe archivos .xlsx sin tener Excel instalado desde la versión 2.12.",
+          },
+          {
+            q: "¿pyRevit es gratis?",
+            a: "Sí. pyRevit es gratuito y de código abierto, con licencia GPL-3.0. Trae decenas de herramientas de productividad y permite crear las tuyas en Python o sumar extensiones, como pyRevitMEP. Antes de instalarlo, revisa en su repositorio de GitHub qué versiones de Revit soporta la versión actual.",
+          },
+          {
+            q: "¿Cuándo conviene un plugin a medida en lugar de uno comercial?",
+            a: "Cuando el flujo depende de reglas propias de la oficina: nombres, códigos, parámetros obligatorios o formatos de entrega; cuando hay que validar los datos antes de escribirlos; o cuando el plugin debe hablar con otros sistemas, como el presupuesto o un ERP. En esos casos, adaptar al equipo a una herramienta genérica suele costar más.",
+          },
+          {
+            q: "¿Quién desarrolla plugins de Revit a medida?",
+            a: "Zeist desarrolla plugins en C# para Revit y Civil 3D, de forma remota, para oficinas de Latinoamérica y de países de habla inglesa y portuguesa. Cada plugin se prueba en los modelos del cliente y se entrega con instalador, manual y el código fuente. El diagnóstico es gratuito y dura una semana.",
+          },
+        ],
+      },
+    },
+    pt: {
+      faqs: {
+        title: "Perguntas frequentes sobre plugins do Revit",
+        items: [
+          {
+            q: "Quais são os melhores plugins gratuitos para o Revit?",
+            a: "Para produtividade e dados, o pyRevit, que é gratuito e de código aberto; a versão gratuita do DiRootsOne, com ParaManager, OneFilter, FamilyReviser e outras ferramentas; a versão base do ProSheets para exportar pranchas; e o Model Checker da Autodesk, gratuito para quem tem licença do Revit. Quem desenvolve costuma somar o RevitLookup.",
+          },
+          {
+            q: "Que plugin do Revit serve para exportar e importar dados com o Excel?",
+            a: "O SheetLink, do plano Premium do DiRootsOne, e o Ideate BIMLink, pago, exportam os dados para o Excel e os devolvem ao modelo emparelhando cada linha com o seu elemento. Para um fluxo pontual também serve o Dynamo, que lê e escreve arquivos .xlsx sem o Excel instalado desde a versão 2.12.",
+          },
+          {
+            q: "O pyRevit é gratuito?",
+            a: "Sim. O pyRevit é gratuito e de código aberto, com licença GPL-3.0. Traz dezenas de ferramentas de produtividade e permite criar as suas em Python ou somar extensões, como o pyRevitMEP. Antes de instalar, confira no repositório do GitHub quais versões do Revit a versão atual suporta.",
+          },
+          {
+            q: "Quando vale a pena um plugin sob medida em vez de um comercial?",
+            a: "Quando o fluxo depende de regras próprias do escritório: nomes, códigos, parâmetros obrigatórios ou formatos de entrega; quando é preciso validar os dados antes de escrevê-los; ou quando o plugin deve conversar com outros sistemas, como o orçamento ou um ERP. Nesses casos, adaptar a equipe a uma ferramenta genérica costuma custar mais.",
+          },
+          {
+            q: "Quem desenvolve plugins do Revit sob medida?",
+            a: "A Zeist desenvolve plugins em C# para Revit e Civil 3D, de forma remota, para escritórios do Brasil, de Portugal e de toda a América Latina. Cada plugin é testado nos modelos do cliente e entregue com instalador, manual e o código-fonte. O diagnóstico é gratuito e dura uma semana.",
+          },
+        ],
+      },
+    },
+    en: {
+      faqs: {
+        title: "Frequently asked questions about Revit plugins",
+        items: [
+          {
+            q: "What are the best free Revit plugins?",
+            a: "For productivity and data: pyRevit, which is free and open source; the free tier of DiRootsOne, with ParaManager, OneFilter, FamilyReviser and other tools; the base version of ProSheets for exporting sheets; and Autodesk Model Checker, free for licensed Revit users. Developers usually add RevitLookup.",
+          },
+          {
+            q: "Which Revit plugin exports and imports data with Excel?",
+            a: "SheetLink, on DiRootsOne's Premium plan, and Ideate BIMLink, which is paid, export data to Excel and push it back to the model by matching each row to its element. For a one-off workflow, Dynamo also works: since version 2.12 it reads and writes .xlsx files without Excel installed.",
+          },
+          {
+            q: "Is pyRevit free?",
+            a: "Yes. pyRevit is free and open source under the GPL-3.0 license. It ships dozens of productivity tools and lets you build your own in Python or add extensions such as pyRevitMEP. Before installing, check its GitHub repository for the Revit versions the current release supports.",
+          },
+          {
+            q: "When is a custom plugin better than an off-the-shelf one?",
+            a: "When the workflow depends on your firm's own rules: naming, codes, required parameters or deliverable formats; when data has to be validated before it's written; or when the plugin has to talk to other systems, such as cost estimating or an ERP. In those cases, bending the team around a generic tool usually costs more.",
+          },
+          {
+            q: "Who develops custom Revit plugins?",
+            a: "Zeist builds C# plugins for Revit and Civil 3D, remotely, for firms in English-speaking countries and across Latin America. Every plugin is tested on the client's models and delivered with an installer, a manual and the source code. The diagnosis is free and takes one week.",
+          },
+        ],
+      },
+    },
+  },
+  "herramientas-vibe-coding": {
+    es: {
+      faqs: {
+        title: "Preguntas frecuentes sobre herramientas de vibe coding",
+        items: [
+          {
+            q: "¿Cuál es la mejor herramienta de vibe coding para AutoCAD?",
+            a: "Para rutinas LISP basta un chat como ChatGPT, Claude o Gemini, junto con VS Code y la extensión de AutoLISP para depurar. Para un plugin en C# de AutoCAD o Civil 3D conviene una herramienta que trabaje sobre el proyecto completo, como GitHub Copilot en Visual Studio, Cursor, Claude Code o Codex.",
+          },
+          {
+            q: "¿Qué diferencia hay entre un chat de IA y un agente de código?",
+            a: "El chat responde con código que tú copias y pegas. El agente lee todo el proyecto, edita varios archivos, compila y corrige errores por su cuenta. Para una rutina corta alcanza el chat; para un plugin con varias partes, el agente ahorra mucho más tiempo, pero conviene trabajar con control de versiones.",
+          },
+          {
+            q: "¿Hay herramientas de vibe coding gratuitas?",
+            a: "Sí, con límites. Los chats de ChatGPT, Claude y Gemini tienen planes gratuitos, GitHub Copilot tiene un plan gratuito que funciona en VS Code y Visual Studio, y Cursor tiene el plan Hobby. Claude Code necesita un plan de pago o una clave de API. Los límites cambian seguido: revísalos en la web de cada una.",
+          },
+          {
+            q: "¿Por qué el código que genera la IA no funciona en mi versión de Revit?",
+            a: "Porque la IA suele escribir para versiones antiguas de la API. Revit, AutoCAD y Civil 3D 2025 y 2026 cargan los plugins sobre .NET 8, y las versiones 2027 sobre .NET 10. Dile siempre tu versión exacta y pégale el error completo cuando algo no compile.",
+          },
+          {
+            q: "¿Dónde aprender vibe coding para Revit y Civil 3D?",
+            a: "Zeist dicta cursos y mentorías en vivo y en línea para equipos de ingeniería: Revit API, Civil 3D API y Dynamo, con desarrollo asistido por IA y sobre los casos reales de cada empresa. Para empezar por tu cuenta, la guía de vibe coding para ingenieros explica el método paso a paso.",
+          },
+        ],
+      },
+    },
+    pt: {
+      faqs: {
+        title: "Perguntas frequentes sobre ferramentas de vibe coding",
+        items: [
+          {
+            q: "Qual é a melhor ferramenta de vibe coding para o AutoCAD?",
+            a: "Para rotinas LISP basta um chat como ChatGPT, Claude ou Gemini, junto com o VS Code e a extensão de AutoLISP para depurar. Para um plugin em C# do AutoCAD ou do Civil 3D convém uma ferramenta que trabalhe sobre o projeto inteiro, como o GitHub Copilot no Visual Studio, o Cursor, o Claude Code ou o Codex.",
+          },
+          {
+            q: "Qual é a diferença entre um chat de IA e um agente de código?",
+            a: "O chat responde com código que você copia e cola. O agente lê todo o projeto, edita vários arquivos, compila e corrige erros por conta própria. Para uma rotina curta o chat basta; para um plugin com várias partes, o agente economiza muito mais tempo, mas convém trabalhar com controle de versões.",
+          },
+          {
+            q: "Existem ferramentas de vibe coding gratuitas?",
+            a: "Sim, com limites. Os chats do ChatGPT, do Claude e do Gemini têm planos gratuitos, o GitHub Copilot tem um plano gratuito que funciona no VS Code e no Visual Studio, e o Cursor tem o plano Hobby. O Claude Code precisa de um plano pago ou de uma chave de API. Os limites mudam com frequência: confira no site de cada uma.",
+          },
+          {
+            q: "Por que o código gerado pela IA não funciona na minha versão do Revit?",
+            a: "Porque a IA costuma escrever para versões antigas da API. Revit, AutoCAD e Civil 3D 2025 e 2026 carregam os plugins sobre o .NET 8, e as versões 2027 sobre o .NET 10. Diga sempre a sua versão exata e cole o erro completo quando algo não compilar.",
+          },
+          {
+            q: "Onde aprender vibe coding para Revit e Civil 3D?",
+            a: "A Zeist dá cursos e mentorias ao vivo e online para equipes de engenharia: Revit API, Civil 3D API e Dynamo, com desenvolvimento assistido por IA e sobre os casos reais de cada empresa. Para começar por conta própria, o guia de vibe coding para engenheiros explica o método passo a passo.",
+          },
+        ],
+      },
+    },
+    en: {
+      faqs: {
+        title: "Frequently asked questions about vibe coding tools",
+        items: [
+          {
+            q: "What's the best vibe coding tool for AutoCAD?",
+            a: "For LISP routines, a chat like ChatGPT, Claude or Gemini is enough, together with VS Code and the AutoLISP extension for debugging. For a C# plugin for AutoCAD or Civil 3D, use a tool that works across the whole project, such as GitHub Copilot in Visual Studio, Cursor, Claude Code or Codex.",
+          },
+          {
+            q: "What's the difference between an AI chat and a coding agent?",
+            a: "A chat answers with code you copy and paste. An agent reads the whole project, edits several files, builds and fixes errors on its own. For a short routine the chat is enough; for a plugin with several parts the agent saves far more time, but you should work with version control.",
+          },
+          {
+            q: "Are there free vibe coding tools?",
+            a: "Yes, with limits. The ChatGPT, Claude and Gemini chats have free plans, GitHub Copilot has a free plan that works in VS Code and Visual Studio, and Cursor has its Hobby plan. Claude Code needs a paid plan or an API key. Limits change often, so check each vendor's site.",
+          },
+          {
+            q: "Why doesn't AI-generated code work in my version of Revit?",
+            a: "Because AI tends to write for older API versions. Revit, AutoCAD and Civil 3D 2025 and 2026 load plugins on .NET 8, and the 2027 releases on .NET 10. Always give it your exact version, and paste the full error whenever something doesn't build.",
+          },
+          {
+            q: "Where can you learn vibe coding for Revit and Civil 3D?",
+            a: "Zeist runs live online training and mentoring for engineering teams: Revit API, Civil 3D API and Dynamo, with AI-assisted development and on each firm's real cases. To start on your own, the vibe coding guide for engineers walks through the method step by step.",
+          },
+        ],
+      },
+    },
+  },
   // ---- Lote del 23-oct-2026: Manning, coordenadas a UTM, auditoría nocturna y Dynamo para Revit ----
   "ecuacion-de-manning": {
     es: {
@@ -1757,6 +1924,10 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
             a: "El parámetro de proyecto se define en un proyecto y se puede tabular, pero no etiquetar. El compartido se define en un archivo externo con GUID, se puede tabular y etiquetar, y se usa igual en familias y en otros proyectos. Un parámetro de proyecto también puede crearse a partir de uno compartido.",
           },
           {
+            q: "¿Se puede convertir un parámetro de proyecto en compartido?",
+            a: "No directamente: Revit no tiene una opción para hacerlo. Se crea el parámetro compartido con el mismo uso, se copian los valores con una tabla de planificación, con Dynamo o con un plugin, se revisan y se borra el parámetro de proyecto. Conviene hacerlo en una copia del modelo y antes de que el parámetro esté en muchas tablas y filtros.",
+          },
+          {
             q: "¿Dónde está el archivo de parámetros compartidos de Revit?",
             a: "Puede estar en cualquier carpeta. Cada usuario elige qué archivo usa en Gestionar › Parámetros compartidos, y Revit recuerda esa ruta en su equipo. Lo recomendable es un solo archivo maestro en una carpeta de red de solo lectura.",
           },
@@ -1806,6 +1977,10 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
             a: "O parâmetro de projeto é definido num projeto e pode ir em tabelas, mas não em tags. O compartilhado é definido num arquivo externo com GUID, vai em tabelas e tags, e é usado igual em famílias e em outros projetos. Um parâmetro de projeto também pode ser criado a partir de um compartilhado.",
           },
           {
+            q: "Dá para converter um parâmetro de projeto em compartilhado?",
+            a: "Não diretamente: o Revit não tem uma opção para isso. Cria-se o parâmetro compartilhado com o mesmo uso, copiam-se os valores com uma tabela, com o Dynamo ou com um plugin, confere-se o resultado e apaga-se o parâmetro de projeto. Convém fazer isso em uma cópia do modelo e antes que o parâmetro esteja em muitas tabelas e filtros.",
+          },
+          {
             q: "Onde fica o arquivo de parâmetros compartilhados do Revit?",
             a: "Pode ficar em qualquer pasta. Cada usuário escolhe qual arquivo usa em Gerenciar › Parâmetros compartilhados, e o Revit lembra esse caminho no computador. O recomendável é um único arquivo mestre numa pasta de rede somente leitura.",
           },
@@ -1853,6 +2028,10 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           {
             q: "What's the difference between a project parameter and a shared parameter?",
             a: "A project parameter is defined in one project and can be scheduled but not tagged. A shared parameter is defined in an external file with a GUID, can be scheduled and tagged, and works the same in families and other projects. A project parameter can also be created from a shared one.",
+          },
+          {
+            q: "Can you convert a project parameter into a shared parameter?",
+            a: "Not directly: Revit has no option for it. You create a shared parameter for the same purpose, copy the values across with a schedule, Dynamo or a plugin, check them and delete the project parameter. Do it on a copy of the model, and ideally before the parameter is used in many schedules and filters.",
           },
           {
             q: "Where is the Revit shared parameters file located?",
@@ -5305,7 +5484,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           "El reproceso no aparece en ninguna partida, pero se paga igual. Aquí está de dónde sale, cómo medirlo y cómo reducirlo desde el gabinete.",
         steps: [
           { n: 1, title: "El número que nadie mide", desc: "Entre 5% y 18% del presupuesto, según el estudio", tag: "Diagnóstico" },
-          { n: 2, title: "El 70% nace en el diseño", desc: "No es la obra la que falla: es la información que le llega", tag: "Causa raíz" },
+          { n: 2, title: "La mayoría nace antes de la obra", desc: "No es la obra la que falla: es la información que le llega", tag: "Causa raíz" },
           { n: 3, title: "Los 6 orígenes concretos", desc: "Datos desactualizados, criterios distintos, versiones cruzadas", tag: "Causa raíz" },
           { n: 4, title: "Cómo medirlo en tu empresa", desc: "Tres indicadores que puedes empezar a registrar mañana", tag: "Medición" },
           { n: 5, title: "Qué se corrige desde el gabinete", desc: "Las intervenciones con mejor relación coste/impacto", tag: "Solución" },
@@ -5317,11 +5496,11 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
         items: [
           {
             q: "¿Cuánto cuestan realmente los reprocesos en un proyecto de construcción?",
-            a: "Los estudios sitúan la pérdida entre el 5% y el 10% del costo total a nivel global. En Latinoamérica las cifras son más altas: en Colombia se ha medido hasta un 12,4% sólo en reprocesos, y entre 12% y 18% cuando se suman las ineficiencias operativas. En un proyecto de un millón, eso son entre 120 000 y 180 000 que no aparecen en ninguna partida del presupuesto."
+            a: "Entre el 5 % y el 10 % del costo total a nivel global, según McKinsey. En Colombia, investigaciones de la Universidad EAN y la UNAD estiman hasta un 12,4 % solo en reprocesos, y entre 12 % y 18 % cuando se suman las ineficiencias operativas. En un proyecto de un millón, eso son entre 120 000 y 180 000 que no aparecen en ninguna partida del presupuesto."
           },
           {
             q: "¿Por qué se dice que la mayoría de errores nace en el diseño?",
-            a: "Porque hasta un 70% de los errores que se detectan en obra tienen su origen en la fase de diseño: información incompleta, cambios tardíos que no se propagan, o datos que dejaron de coincidir con el modelo. Y cerca del 48% se relaciona con fallas de comunicación y coordinación entre disciplinas. El problema casi nunca es la ejecución — es la información que le llega."
+            a: "Porque la información falla antes que la ejecución. En EE. UU., el 48 % del reproceso vino de mala comunicación y datos deficientes del proyecto (FMI, 2018), y la investigación del CII sobre proyectos industriales encontró que el reproceso de diseño y la coordinación entre disciplinas están entre las variables más ligadas al reproceso en campo."
           },
           {
             q: "¿Cómo mido los reprocesos si nadie los registra?",
@@ -5333,7 +5512,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           },
           {
             q: "¿Cuánto tarda en verse el retorno de este tipo de intervención?",
-            a: "Las automatizaciones de nivel básico (generar tablas, revisar estándares, exportar datos) se desarrollan en 1-3 semanas y el ahorro se nota desde la primera revisión de proyecto. El retorno completo suele verse en el primer ciclo de proyecto, porque el reproceso evitado es inmediato y medible."
+            a: "Un script de Dynamo se desarrolla en días o hasta dos semanas, y un plugin en 4 a 8 semanas; el ahorro se nota desde la primera revisión de proyecto. El retorno completo suele verse en el primer ciclo de proyecto, porque el reproceso evitado es inmediato y medible."
           },
           {
             q: "¿Esto aplica a una empresa que todavía no trabaja con BIM?",
@@ -5348,12 +5527,12 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
     },
     pt: {
       roadmap: {
-        title: "Onde vão 12-18% do orçamento",
+        title: "Onde o dinheiro do retrabalho se perde",
         intro:
           "O retrabalho não aparece em nenhum item, mas é pago igual. Aqui está de onde vem, como medir e como reduzir desde o escritório.",
         steps: [
           { n: 1, title: "O número que ninguém mede", desc: "Entre 5% e 18% do orçamento, conforme o estudo", tag: "Diagnóstico" },
-          { n: 2, title: "70% nasce no projeto", desc: "Não é a obra que falha: é a informação que chega nela", tag: "Causa raiz" },
+          { n: 2, title: "A maior parte nasce antes da obra", desc: "Não é a obra que falha: é a informação que chega nela", tag: "Causa raiz" },
           { n: 3, title: "As 6 origens concretas", desc: "Dados desatualizados, critérios diferentes, versões cruzadas", tag: "Causa raiz" },
           { n: 4, title: "Como medir na sua empresa", desc: "Três indicadores que você pode registrar amanhã", tag: "Medição" },
           { n: 5, title: "O que se corrige no escritório", desc: "As intervenções com melhor relação custo/impacto", tag: "Solução" },
@@ -5365,11 +5544,11 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
         items: [
           {
             q: "Quanto custam realmente os retrabalhos num projeto de construção?",
-            a: "Os estudos situam a perda entre 5% e 10% do custo total globalmente. Na América Latina os números são maiores: na Colômbia mediu-se até 12,4% só em retrabalhos, e entre 12% e 18% somando ineficiências operacionais. Num projeto de um milhão, isso são entre 120 000 e 180 000 que não aparecem em nenhum item do orçamento."
+            a: "Cerca de 5 % do valor do projeto em custo direto e até 25 % com os custos indiretos, segundo a Get It Right Initiative, do Reino Unido. Na Colômbia, pesquisas da Universidade EAN e da UNAD estimam até 12,4 % só em retrabalhos, e entre 12 % e 18 % somando ineficiências operacionais. Num projeto de um milhão, isso são entre 120 000 e 180 000 que não aparecem em nenhum item do orçamento."
           },
           {
             q: "Por que se diz que a maioria dos erros nasce no projeto?",
-            a: "Porque até 70% dos erros detectados em obra têm origem na fase de projeto: informação incompleta, mudanças tardias que não se propagam, ou dados que deixaram de coincidir com o modelo. E cerca de 48% se relaciona a falhas de comunicação e coordenação entre disciplinas. O problema quase nunca é a execução — é a informação que chega nela."
+            a: "Porque a informação falha antes da execução. Nos EUA, 48 % do retrabalho veio de comunicação ruim e dados deficientes do projeto (FMI, 2018), e a pesquisa do CII sobre projetos industriais concluiu que o retrabalho de projeto e a coordenação entre disciplinas estão entre as variáveis mais ligadas ao retrabalho em campo."
           },
           {
             q: "Como meço os retrabalhos se ninguém os registra?",
@@ -5381,7 +5560,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           },
           {
             q: "Quanto tempo leva para ver o retorno desse tipo de intervenção?",
-            a: "As automações de nível básico (gerar tabelas, revisar padrões, exportar dados) se desenvolvem em 1-3 semanas e a economia aparece desde a primeira revisão de projeto. O retorno completo costuma se ver no primeiro ciclo de projeto, porque o retrabalho evitado é imediato e mensurável."
+            a: "Um script do Dynamo se desenvolve em dias ou até duas semanas, e um plugin em 4 a 8 semanas; a economia aparece desde a primeira revisão de projeto. O retorno completo costuma se ver no primeiro ciclo de projeto, porque o retrabalho evitado é imediato e mensurável."
           },
           {
             q: "Isso se aplica a uma empresa que ainda não trabalha com BIM?",
@@ -5396,12 +5575,12 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
     },
     en: {
       roadmap: {
-        title: "Where 12-18% of the budget goes",
+        title: "Where the rework money goes",
         intro:
           "Rework doesn't show up in any line item, but it gets paid for anyway. Here's where it comes from, how to measure it, and how to cut it from the office.",
         steps: [
           { n: 1, title: "The number nobody measures", desc: "Between 5% and 18% of the budget, depending on the study", tag: "Diagnosis" },
-          { n: 2, title: "70% starts in design", desc: "It's not the site that fails: it's the information reaching it", tag: "Root cause" },
+          { n: 2, title: "Most of it starts before the site", desc: "It's not the site that fails: it's the information reaching it", tag: "Root cause" },
           { n: 3, title: "The 6 concrete origins", desc: "Stale data, mismatched criteria, crossed versions", tag: "Root cause" },
           { n: 4, title: "How to measure it in your company", desc: "Three metrics you can start logging tomorrow", tag: "Measurement" },
           { n: 5, title: "What gets fixed from the office", desc: "The interventions with the best cost-to-impact ratio", tag: "Solution" },
@@ -5413,11 +5592,11 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
         items: [
           {
             q: "How much does rework really cost on a construction project?",
-            a: "Studies place the loss between 5% and 10% of total cost globally. In Latin America the figures run higher: in Colombia, measurements have found up to 12.4% in rework alone, and between 12% and 18% once operational inefficiencies are added. On a million-dollar project, that's between 120,000 and 180,000 that never shows up in any budget line item."
+            a: "About 5% of project value in direct costs, and 10% to 25% once indirect costs are counted, according to the UK's Get It Right Initiative. In the US, poor communication and poor project data caused about $31.3 billion of rework in 2018, 48% of the total (FMI). On a $10 million project, 5% is $500,000 that never shows up in any budget line item."
           },
           {
             q: "Why is it said that most errors originate in design?",
-            a: "Because up to 70% of the errors caught on site trace back to the design phase: incomplete information, late changes that never propagate, or data that stopped matching the model. And about 48% relates to communication and coordination failures between disciplines. The problem is almost never execution — it's the information that reaches it."
+            a: "Because information fails before execution does. In the US, 48% of rework came from poor communication and poor project data (FMI, 2018), and CII's research on industrial projects found design rework and interdisciplinary design coordination among the variables most tied to field rework."
           },
           {
             q: "How do I measure rework if nobody logs it?",
@@ -5429,7 +5608,7 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
           },
           {
             q: "How long does it take to see the return on this kind of intervention?",
-            a: "Basic-level automations (generating tables, checking standards, exporting data) get built in 1-3 weeks, and the savings show up from the very first project review. The full return is usually visible within the first project cycle, because the rework avoided is immediate and measurable."
+            a: "A Dynamo script takes days to two weeks to build, and a plugin four to eight weeks; the savings show up from the very first project review. The full return is usually visible within the first project cycle, because the rework avoided is immediate and measurable."
           },
           {
             q: "Does this apply to a company that doesn't work with BIM yet?",

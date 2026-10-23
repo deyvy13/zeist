@@ -1,10 +1,10 @@
 ---
 translationKey: "reprocesos-obra-costo-oculto"
-title: "Rework on site: the 12-18% of the budget nobody measures (and how to cut it from the office)"
-seoTitle: "Construction Rework: The Hidden Cost in Your Budget"
-description: "Rework on site costs 12-18% of the budget and almost nobody measures it. Why it starts in design, and what you can fix from the office."
+title: "The cost of rework in construction: what the studies measure, and how to reduce it with BIM"
+seoTitle: "Cost of Rework in Construction and How BIM Cuts It"
+description: "What rework costs in construction according to GIRI, FMI and CII, why most of it starts before the site, and how BIM and automation reduce it."
 date: "2026-08-06T09:00:00.000Z"
-updated: "2026-10-08T12:00:00.000Z"
+updated: "2026-10-23T18:00:00.000Z"
 author: "Zeist"
 tags:
   - Rework
@@ -13,23 +13,24 @@ tags:
   - Project management
   - Civil engineering
   - Quality control
+  - BIM
 ---
 
 <BlogHero
   eyebrow="Hidden costs · Project management"
   title="Rework doesn't show up in any budget line item. But it gets paid for anyway."
-  highlight="Studies place the loss between 5% and 18% of project value. What stands out is where it comes from: up to 70% of the errors that blow up on site were already wrong back at the office."
+  highlight="Studies put the direct cost of avoidable errors around 5% of project value, and up to 25% once indirect costs are counted. Nearly half of US rework traces back to poor data and miscommunication: problems that start at the office, not on site."
 />
 
 <Callout type="success" title="Quick answer">
-Rework costs 5% to 10% of a project's cost worldwide, and in Latin America figures of 12% to 18% have been measured once operational inefficiencies are added. Up to 70% of the errors found on site start in design: incomplete information, changes that don't propagate, and data that no longer matches the model. It's reduced from the office, by removing the manual steps where errors creep in: quantities that come from the model, regenerated sheets and automatic standards checks.
+Rework costs about 5% of project value in direct costs, and 10% to 25% once indirect costs are counted, according to the UK's Get It Right Initiative. In the US, poor communication and poor project data caused 48% of all rework, about $31.3 billion in 2018 (FMI). BIM reduces it by keeping quantities, drawings and checks tied to one model.
 </Callout>
 
 <Callout type="info" title="Who this guide is for">
 Project managers, technical office leads, and directors at engineering and construction firms. Written in business language, not programming language: we're talking about where the money leaks and what you can do about it.
 </Callout>
 
-## The line item that isn't in the budget
+## What does rework cost in construction?
 
 Every construction budget has its line items: materials, labor, equipment, overhead, profit margin. None of them has a line that says **"redo what went wrong."**
 
@@ -37,17 +38,19 @@ And yet it gets paid. Every single month.
 
 The available data is consistent, and uncomfortable:
 
-- Globally, between **5% and 10%** of a project's total cost is lost to rework.
-- In Colombia, measurements have found up to **12.4%** in rework alone, and **between 12% and 18%** when operational inefficiencies are added in.
-- Up to **70%** of those errors originate in the **design** phase, not execution.
-- Roughly **48%** relates to communication and coordination failures between disciplines.
+| Source | Scope | What it found |
+|---|---|---|
+| Get It Right Initiative (GIRI) | UK construction | Avoidable errors cost about 5% of project value directly, more than the sector's average profit, and up to 25% with indirect costs |
+| FMI and PlanGrid, *Construction Disconnected* (2018) | US construction | $31.3 billion of rework in 2018 from poor communication and poor project data: 48% of all rework |
+| Love (2002), *Journal of Construction Engineering and Management* | 161 Australian projects | Rework accounted for 52% of cost growth |
+| Universidad EAN and UNAD (2026) | Colombia | Up to 12.4% of project value in rework, 12% to 18% with operational inefficiencies |
 
-On a million-dollar project, that's between 120,000 and 180,000 evaporating without anyone logging it as a loss.
+On a $10 million project, 5% is $500,000 that nobody logs as a loss.
 
 <AnimatedFlow
   title="Where the overrun actually starts"
   nodes="Design|Inconsistent information|Site|Rework"
-  subs="70% of errors|Nobody catches it|Discovered late|Paid in full"
+  subs="Where most of it starts|Nobody catches it|Discovered late|Paid in full"
   warnCount="4"
 />
 
@@ -81,11 +84,11 @@ What isn't measured isn't managed. And as long as rework has no number attached,
 
 </TopicCard>
 
-<TopicCard step="2" title="2. 70% starts in design, not on site" time="~6 min">
+<TopicCard step="2" title="2. Most rework starts before the site" time="~6 min">
 
 This is the data point that changes the conversation.
 
-When something goes wrong on site, the instinctive reaction is to look at execution: the contractor, supervision, logistics. But the studies point elsewhere: **most errors were already baked into the information that reached the site**.
+When something goes wrong on site, the instinctive reaction is to look at execution: the contractor, supervision, logistics. But the studies point elsewhere: **most errors were already baked into the information that reached the site**. In the FMI study, 48% of rework came from poor communication and poor project data; in CII's research, design rework and interdisciplinary design coordination are among the variables most tied to field rework.
 
 ### What this looks like in practice
 
@@ -99,9 +102,9 @@ None of that gets fixed on site. It gets fixed **earlier**, at the office, where
 
 ### The 1-10-100 rule
 
-A classic quality rule that applies perfectly here: fixing an error **in design costs 1**. Fixing it **in planning costs 10**. Fixing it **on site costs 100**.
+A quality rule of thumb, not a measurement, that fits here: fixing an error **in design costs 1**. Fixing it **in planning costs 10**. Fixing it **on site costs 100**.
 
-It's not a metaphor: it's the difference between changing a number in a model and demolishing something already built.
+The logic is the difference between changing a number in a model and demolishing something already built.
 
 <Callout type="tip">
 If your company wants to cut cost overruns and can only intervene at one point in the chain, the office is where every dollar invested pays off the most.
@@ -167,7 +170,7 @@ Monthly loss                  x  12                   =  Annual loss
 Annual loss / Revenue                                 =  % of the business
 ```
 
-That last percentage is the one that unlocks budgets. If it comes out between 5% and 15%, you're in the industry's normal range — which is exactly the problem.
+That last percentage is the one that unlocks budgets. If it comes out around 5% or higher, you're in the range the studies report — which is exactly the problem.
 
 <Callout type="success">
 One month of simple logging gives you more leverage than a year of intuition. And unlike a consulting engagement, it costs nothing.
@@ -185,7 +188,7 @@ Have quantity tables, reports, and summaries **generate directly from the model*
 
 **What it eliminates:** origin #1 and #3 from the previous module. If the table regenerates from the model, it can't fall out of date.
 
-**Typical cost:** a tool like this is built in 1-3 weeks.
+**Typical timeline:** a Dynamo script takes days to two weeks; a plugin, four to eight weeks.
 
 ### Level 2 — Automatic verification before delivery (weeks, high impact)
 
@@ -248,10 +251,33 @@ The most common mistake in this plan: skipping the first 30 days of measurement 
 
 </TopicCard>
 
+## How does BIM reduce construction rework?
+
+BIM goes after exactly the causes the studies point to: information that splits off from its source, and disciplines that don't talk to each other.
+
+- **One model as the source:** quantities and schedules come from the model, so they can't fall out of date.
+- **Clashes caught before the site:** coordinating disciplines in the model costs less than fixing the clash in the field.
+- **Drawings that regenerate** when the model changes.
+- **Automated checks** of the standard and required data before every deliverable. You can schedule them every night: see [overnight Revit model checking](/en/blog/overnight-revit-model-checking).
+
+BIM alone doesn't remove rework: if quantities still get retyped into a spreadsheet or checks still depend on someone's eye, the manual steps are still there. That's where automation comes in.
+
+## How do industrial projects reduce rework?
+
+The Construction Industry Institute (CII), which studies industrial projects in the US, built the **Field Rework Index** (RS153-1, 2001): 14 questions rated 1 to 5 that tell you, before construction starts, whether a project is at risk of field rework and cost growth. Its central finding is that the variables most tied to field rework are decided before the site:
+
+- Owner alignment.
+- Design rework.
+- Constructability commitment.
+- Interdisciplinary design coordination.
+- The degree of project execution planning.
+
+The lesson applies to any project: rework is prevented in design and planning, not at the work face.
+
 <CTABlock
   eyebrow="Want your company's number?"
   title="Process audit: where the hours go and what can be recovered"
-  body="We review your actual workflow, identify where rework is generated, and hand you a prioritized plan with a savings estimate. The first 20-minute conversation is free, no commitment."
+  body="We review your actual workflow, identify where rework is generated, and hand you a prioritized plan with a savings estimate. The diagnosis is free and takes one week."
   primaryLabel="Request an audit"
   primaryHref="/en/contact"
   secondaryLabel="See BIM process audit"
@@ -266,6 +292,16 @@ The most common mistake in this plan: skipping the first 30 days of measurement 
   rightLabel="Fix on site"
   rows="Relative cost | *1x | 100x || Time to fix | *Minutes or hours | Days or weeks || Impact on schedule | *Null or minimal | Chain-reaction delay || Impact on client relationship | *None | High || People involved | *1-2 | The whole crew || Preventable with tools | *High | Low || Logged as a loss | Almost never | Sometimes"
 />
+
+## Sources
+
+- [Autodesk: Construction Disconnected](https://www.autodesk.com/blogs/construction/construction-disconnected-fmi-report/), the FMI and PlanGrid study (2018).
+- [ICE: the Get It Right Initiative](https://www.ice.org.uk/news-and-insight/the-civil-engineer/may-2020/pressing-pause-to-avoid-error), the cost of avoidable errors in the UK.
+- [CII: Field Rework Index](https://construction-institute.org/the-field-rework-index-early-warning-for-field-rework-and-cost-growth) (RS153-1).
+- [Love (2002), Journal of Construction Engineering and Management](https://ascelibrary.com/doi/10.1061/%28ASCE%290733-9364%282002%29128%3A1%2818%29): rework costs in 161 Australian projects.
+- [Valora Analitik](https://www.valoraanalitik.com/reprocesos-ineficiencias-obra-colombia-afectan-presupuesto/) (April 13, 2026): the Universidad EAN and UNAD research on Colombia.
+
+Data verified on October 23, 2026.
 
 ## Related resources
 
