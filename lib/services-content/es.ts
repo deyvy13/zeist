@@ -334,6 +334,7 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       rows: "Tiempo hasta funcionar | *Días | Semanas || Cambiar las reglas | *En minutos | Requiere desarrollo || Cómo lo ejecuta el equipo | Desde Dynamo Player | Con un botón en la barra superior || Velocidad con modelos grandes | Media | *Alta || Manejo de errores y registro | Básico | *Completo || Ideal para | Validar y tareas que cambian | Producción diaria",
     },
     guides: [
+      "dynamo-para-revit-primeros-scripts",
       "dynamo-vs-csharp-civil3d-revit",
       "automatizar-tareas-revit-dynamo-plugins",
       "dynamo-csharp-con-ia-claude",
@@ -507,6 +508,7 @@ export const servicesEs: Record<ServiceSlug, ServicePage> = {
       rows: "Qué automatizar primero | *Lo que más horas devuelve, medido | Lo que parece urgente || Observaciones repetidas | *Se ataca la causa | Se corrige cada síntoma || Inversión en herramientas | *Donde hay retorno | Donde alguien la pidió || Avance | *Medido contra una línea base | Sin referencia || Requisitos del cliente | *Brechas identificadas antes | Se descubren en la revisión",
     },
     guides: [
+      "auditoria-automatica-modelos-revit",
       "auditoria-bim-checklist-empresa",
       "estandarizar-procesos-bim-empresa",
       "plan-bim-peru-obligatorio-guia-empresas",

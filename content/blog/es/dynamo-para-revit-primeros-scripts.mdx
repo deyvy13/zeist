@@ -1,0 +1,142 @@
+---
+title: "Dynamo para Revit: tus primeros 5 scripts útiles, nodo por nodo"
+seoTitle: "Dynamo para Revit: tus primeros 5 scripts útiles"
+ctaTitle: "¿Quieres los scripts listos y probados en tus modelos? Los armamos para que tu equipo los corra desde el Reproductor."
+description: "Dynamo para Revit desde cero: dónde se abre y cinco scripts útiles, nodo por nodo: llenar parámetros, Excel de ida y vuelta, datos vacíos y nombres."
+date: "2026-10-23T15:30:00.000Z"
+author: "Zeist"
+tags:
+  - Dynamo
+  - Revit
+  - Programación visual
+  - Automatización
+  - Parámetros de Revit
+  - Excel
+---
+
+<BlogHero
+  eyebrow="Dynamo · Revit · Primeros pasos"
+  title="Cinco scripts de Dynamo para Revit que se usan desde la primera semana"
+  highlight="Dónde se abre Dynamo, cómo se lee un grafo y cinco rutinas cortas, con los nodos exactos: llenar un parámetro en toda una categoría, exportar a Excel, devolver los cambios, encontrar datos vacíos y ordenar nombres."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Dynamo es la programación visual que viene con Revit: en lugar de escribir código, unes nodos. Los cinco primeros scripts que más rinden son llenar un parámetro en toda una categoría, exportar datos a Excel, devolver los cambios al modelo, encontrar parámetros vacíos y estandarizar nombres. Cada uno usa pocos nodos.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Dynamo** — Una herramienta que viene con Revit para automatizar tareas uniendo bloques, sin escribir código.
+- **Nodo** — Cada bloque. Hace una sola cosa: elegir elementos, leer un dato, escribirlo.
+- **Grafo o script** — El conjunto de nodos unidos. Se guarda como archivo .dyn.
+- **Reproductor de Dynamo** — Una ventana de Revit que ejecuta scripts sin abrirlos, con un clic.
+- **Parámetro de ejemplar y de tipo** — El de ejemplar es propio de cada elemento; el de tipo es común a todos los elementos de ese tipo.
+- **Code Block** — Un nodo donde se escribe un valor o una operación corta a mano.
+</Callout>
+
+## ¿Qué es Dynamo para Revit y dónde se abre?
+
+Dynamo viene instalado con Revit. Se abre en la ficha **Gestionar › Programación visual › Dynamo**. En el mismo grupo está el **Reproductor de Dynamo**.
+
+Un grafo se lee de izquierda a derecha: los nodos de la izquierda eligen elementos, los del medio leen o transforman datos y los de la derecha escriben en el modelo.
+
+Antes de empezar, dos hábitos:
+
+- **Pon la ejecución en Manual** (abajo a la izquierda) cuando el grafo escribe en el modelo. En Automático, cada cambio que hagas en el grafo vuelve a escribir.
+- **Prueba en una copia del modelo.** Lo que escribe Dynamo suele deshacerse con Ctrl+Z en Revit, pero es mejor no depender de eso.
+
+## Script 1: ¿cómo lleno un parámetro en todos los elementos de una categoría?
+
+Por ejemplo, escribir «Revisado» en el parámetro Comentarios de todas las puertas.
+
+1. **Categories**: elige la categoría Puertas.
+2. **All Elements of Category**: trae todas las puertas del modelo.
+3. **String** o **Code Block**: el nombre del parámetro, «Comentarios», y el valor, «Revisado».
+4. **Element.SetParameterByName**: escribe el valor en cada puerta.
+
+Tres cosas que hacen fallar a este nodo:
+
+- **El nombre del parámetro** debe ser exacto, con mayúsculas y tildes, y en el idioma de tu Revit: en Revit en español es «Comentarios»; en inglés, «Comments».
+- **Ejemplar o tipo.** Si el parámetro es de tipo, hay que escribirlo en el tipo, no en cada elemento. El nodo **Family Types** elige un tipo.
+- **El tipo de dato.** Un parámetro de número no acepta texto. Los números se escriben en las unidades del proyecto.
+
+## Script 2: ¿cómo exporto elementos y parámetros a Excel?
+
+Desde Dynamo 2.12 hay nodos que leen y escriben archivos .xlsx **sin tener Excel instalado**.
+
+1. **Categories** y **All Elements of Category**: los elementos que quieres listar.
+2. **Element.Id**: el identificador de cada elemento. Va siempre en la primera columna, para poder devolver los cambios.
+3. **Element.GetParameterValueByName**: un nodo por cada parámetro, por ejemplo Marca y Comentarios.
+4. **List.Create** junta las columnas y **List.Transpose** las convierte en filas.
+5. **File Path** y **Data.OpenXMLExportExcel**: el archivo, el nombre de la hoja y los datos.
+
+## Script 3: ¿cómo devuelvo los cambios de Excel a Revit?
+
+Es el ida y vuelta que Revit no trae.
+
+1. **File Path** y **Data.OpenXMLImportExcel**: lee la hoja editada.
+2. **List.Transpose**: separa la columna de identificadores de la de valores nuevos.
+3. **All Elements of Category** y **Element.Id**: vuelve a leer los elementos del modelo.
+4. **List.IndexOf** y **List.GetItemAtIndex**: busca, para cada fila del Excel, el elemento con ese identificador.
+5. **Element.SetParameterByName**: escribe los valores nuevos.
+
+La regla de oro: **emparejar por el identificador, nunca por el orden de las filas**. Si alguien ordenó la hoja, el valor terminaría en otro elemento. Lo explicamos a fondo en [exportar tablas de Revit a Excel y reimportarlas](/es/blog/exportar-tablas-revit-excel-editar-parametros).
+
+## Script 4: ¿cómo encuentro elementos con un parámetro vacío?
+
+El control de calidad antes de una entrega: qué puertas no tienen Marca.
+
+1. **All Elements of Category** y **Element.GetParameterValueByName**: el valor de Marca de cada puerta.
+2. Compara cada valor con un texto vacío y con nulo (**Object.IsNull**): sale una lista de verdadero y falso.
+3. **List.FilterByBoolMask**: se queda con las puertas sin dato.
+4. **List.Count**: cuántas son.
+5. **Color.ByARGB** y **Element.OverrideColorInView**: las pinta de rojo en la vista activa.
+
+## Script 5: ¿cómo estandarizo nombres en lote?
+
+Por ejemplo, poner en mayúsculas los nombres de todas las habitaciones.
+
+1. **Categories** (Habitaciones) y **All Elements of Category**.
+2. **Element.GetParameterValueByName**: el parámetro Nombre.
+3. **String.ToUpper**: lo convierte a mayúsculas. Para agregar un prefijo, un **Code Block** con la operación `"B1-" + x`.
+4. **Element.SetParameterByName**: escribe el nombre nuevo.
+
+## ¿Cómo hago que mi equipo los use sin abrir Dynamo?
+
+Con el **Reproductor de Dynamo**:
+
+1. Guarda los scripts .dyn en una carpeta compartida.
+2. En cada grafo, haz clic derecho sobre los nodos que el usuario debe poder cambiar (la categoría, el valor, el archivo) y marca **Es entrada**.
+3. Abre **Gestionar › Programación visual › Reproductor de Dynamo** y elige esa carpeta.
+
+El equipo ve una lista de scripts, cambia las entradas y pulsa ejecutar. Nadie toca el grafo.
+
+## ¿Cuándo conviene pasar de Dynamo a un plugin?
+
+Cuando el script se usa todos los días, lo corren muchas personas, trabaja con miles de elementos o necesita validaciones serias antes de escribir. Ahí un plugin en C# es más rápido, más robusto y no depende de quien armó el grafo. Lo comparamos en [Dynamo o C#: cuál conviene en cada caso](/es/blog/dynamo-vs-csharp-civil-3d-revit).
+
+<CTABlock
+  eyebrow="Zeist · Scripts de Dynamo"
+  title="Scripts de Dynamo listos para tu equipo, probados en tus modelos"
+  body="Armamos los scripts con tus reglas, documentados y listos para el Reproductor de Dynamo. Se entregan en días o hasta dos semanas, y el diagnóstico inicial es gratuito."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver automatización con Dynamo"
+  secondaryHref="/es/servicios/automatizacion-dynamo"
+/>
+
+## Fuentes
+
+- [Dynamo Primer: seleccionar elementos de Revit](https://primer2.dynamobim.org/7_dynamo_for_revit/2-selecting), [editar parámetros](https://primer2.dynamobim.org/7_dynamo_for_revit/3-editing) y [documentar y colorear](https://primer2.dynamobim.org/7_dynamo_for_revit/6-documenting).
+- [Dynamo 2.12](https://dynamobim.org/dynamo-core-2-12-release-part-1-2/): los nodos de Excel con OpenXML, sin Excel instalado.
+- [Autodesk: Reproductor de Dynamo](https://help.autodesk.com/cloudhelp/2025/ESP/RevitDynamo/files/RevitDynamo_Dynamo_Player_html.html).
+
+Datos verificados el 23 de octubre de 2026.
+
+## Recursos relacionados
+
+- **El ida y vuelta completo:** [exportar tablas de Revit a Excel y reimportarlas](/es/blog/exportar-tablas-revit-excel-editar-parametros).
+- **Qué automatizar primero:** [automatizar tareas en Revit con Dynamo y plugins](/es/blog/automatizar-tareas-revit-dynamo-plugins).
+- **Lo mismo en Civil 3D:** [scripts de Dynamo para Civil 3D](/es/blog/dynamo-civil-3d-scripts).
+- **Cuándo pasar a C#:** [Dynamo o C#, cuál conviene en cada caso](/es/blog/dynamo-vs-csharp-civil-3d-revit).
+
+<PostFaqs />

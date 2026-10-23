@@ -31,8 +31,8 @@ export type ServiceSlug = (typeof SERVICE_SLUGS)[number];
  */
 export const SERVICE_UPDATED: Record<ServiceSlug, string> = {
   "add-ins-revit-civil-3d": "2026-10-21",
-  "automatizacion-dynamo": "2026-10-16",
-  "auditoria-procesos-bim": "2026-10-21",
+  "automatizacion-dynamo": "2026-10-23",
+  "auditoria-procesos-bim": "2026-10-23",
   "cursos-mentorias-bim": "2026-10-21",
 };
 

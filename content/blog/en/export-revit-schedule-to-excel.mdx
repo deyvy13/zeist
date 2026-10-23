@@ -1,10 +1,11 @@
 ---
 translationKey: "exportar-tablas-revit-excel-editar-parametros"
 title: "Export Revit Schedules to Excel (and Import Them Back): How to Bulk-Edit Parameters Without Errors"
-seoTitle: "Export Revit Schedules to Excel and Import Back"
+seoTitle: "Revit Excel Integration: Export and Import Schedules"
 ctaTitle: "Is your team filling Revit parameters one by one? We connect Revit and Excel both ways, without errors."
-description: "How to export Revit schedules to Excel, bulk-edit parameters and import them back with validation, without breaking the model or losing track of changes."
+description: "Revit Excel integration: export a schedule to Excel step by step, compare native, Dynamo and add-in options, and import edits back without errors."
 date: "2026-10-01T10:00:00.000Z"
+updated: "2026-10-23T16:00:00.000Z"
 author: "Zeist"
 tags:
   - Revit to Excel
@@ -22,7 +23,7 @@ tags:
 />
 
 <Callout type="success" title="Quick answer">
-Revit can **export a schedule** to a delimited text file that Excel opens, but it has **no native way to import changes back** into the model. To bulk-edit parameters in Excel and push them back to Revit, teams use **Dynamo** — which has nodes to read and write spreadsheets — or a **Revit–Excel sync plugin**. The technical key is to include each element's **unique ID** in the sheet, lock the columns that can't be edited, and validate data before writing it, so no value ever lands on the wrong element.
+Revit can **export a schedule** to a delimited text file that Excel opens, but it has **no native way to import changes back** into the model. To bulk-edit parameters in Excel and push them back to Revit, teams use **Dynamo** — which, since version 2.12, reads and writes .xlsx files without Excel installed — or a **Revit–Excel sync plugin**. The technical key is to include each element's **unique ID** in the sheet, lock the columns that can't be edited, and validate data before writing it, so no value ever lands on the wrong element.
 </Callout>
 
 <Callout type="info" title="Glossary: the terms you'll read, in plain language">
@@ -55,6 +56,29 @@ In Excel you filter, fill down, sort and review at a glance. In Revit, every val
   subs="Revit allows this part|Fast and comfortable|Back into the model, by hand|Wrong row, nobody notices"
   warnCount="4"
 />
+
+## How do you export a Revit schedule to Excel, step by step?
+
+1. Open the schedule view you want to export.
+2. Go to **File › Export › Reports › Schedule**.
+3. Choose the file name and folder.
+4. Pick what goes in: column headers, group headers, footers and blank lines.
+5. Choose the **field delimiter** (tab, space, comma or semicolon) and the **text qualifier** (single quote, double quote or none). Tab avoids clashes with commas inside numbers and text.
+6. Open the text file in Excel and save it as .xlsx.
+
+It works the same in Revit LT. What doesn't exist is the way back: Revit can't read that file to update the model.
+
+## What are your Revit Excel integration options?
+
+| | Native Revit | Dynamo | Plugin |
+|---|---|---|---|
+| Export to Excel | Yes, as delimited text | Yes, as .xlsx | Yes, as formatted .xlsx |
+| Push changes back to the model | No | Yes | Yes |
+| Validation before writing | Not applicable | Whatever the graph includes | Complete, with a preview |
+| Who can use it | Anyone | Whoever can open the graph, or the team through Dynamo Player | Anyone: it's a button |
+| Change log | No | You have to build it | Automatic |
+
+For a read-only export, the native route is enough. For the round trip, it's Dynamo or a plugin: the rest of this guide covers when each one fits and how to do it without damaging the model.
 
 <Roadmap />
 
@@ -97,7 +121,7 @@ The worst case isn't a failed import: it's one that succeeds **with the value on
 
 <TopicCard step="3" title="3. Dynamo or a plugin: two valid routes" time="~6 min">
 
-**Dynamo** has nodes to read and write Excel sheets. With a well-built graph you can export, edit and import. It's a good option for a one-off or for proving the logic.
+**Dynamo** reads and writes .xlsx files with the **Data.OpenXMLExportExcel** and **Data.OpenXMLImportExcel** nodes, which since Dynamo 2.12 don't need Excel installed. With a well-built graph you export, edit and import, matching each row by element ID. It's a good option for a one-off or for proving the logic. The nodes, step by step, are in [Dynamo for Revit: your first 5 scripts](/en/blog/dynamo-for-revit-scripts).
 
 Its limits show up in daily use: it depends on whoever can open the graph, error handling is basic, and it slows down with thousands of elements. Validating every value before writing it takes a complex graph.
 
@@ -187,8 +211,17 @@ Model data stops depending on one modeler's patience. Loading the information th
   secondaryHref="/en/services/revit-civil-3d-plugin-development"
 />
 
+## Sources
+
+- [Autodesk: export a schedule](https://help.autodesk.com/cloudhelp/2023/ENU/Revit-DocumentPresent/files/GUID-B2CCAC4F-1D38-4D5D-B4D1-95619D1B7EBE.htm): delimited text, field delimiters and text qualifier.
+- [Dynamo 2.12](https://dynamobim.org/dynamo-core-2-12-release-part-1-2/): the OpenXML Excel nodes, no Excel install needed.
+- [Dynamo Primer: editing Revit parameters](https://primer2.dynamobim.org/7_dynamo_for_revit/3-editing).
+
+Data verified on October 23, 2026.
+
 ## Related resources
 
+- **The Dynamo nodes, step by step:** [Dynamo for Revit: your first 5 useful scripts](/en/blog/dynamo-for-revit-scripts).
 - **The bill of materials:** [bill of materials from Revit, AutoCAD and Civil 3D](/en/blog/revit-autocad-bill-of-materials).
 - **The quantity takeoff:** [automated quantity takeoff](/en/blog/revit-civil-3d-quantity-takeoff).
 - **How a plugin gets built:** [Revit and Civil 3D add-in development, the complete guide](/en/blog/revit-civil-3d-add-in-development).

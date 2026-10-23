@@ -21,6 +21,351 @@ type PostData = {
 // Partial: not every post is translated to every locale (Peru posts are
 // es-only by design; en/pt entries land incrementally as posts get translated).
 const data: Record<string, Partial<Record<Locale, PostData>>> = {
+  // ---- Lote del 23-oct-2026: Manning, coordenadas a UTM, auditoría nocturna y Dynamo para Revit ----
+  "ecuacion-de-manning": {
+    es: {
+      faqs: {
+        title: "Preguntas frecuentes sobre la ecuación de Manning",
+        items: [
+          {
+            q: "¿Qué es la ecuación de Manning?",
+            a: "Es la fórmula que da la velocidad media del agua en flujo uniforme con superficie libre: V = (1/n) · R^(2/3) · S^(1/2), donde n es la rugosidad del material, R el radio hidráulico y S la pendiente en m/m. El caudal es Q = V · A. Se usa para canales, alcantarillado y drenaje pluvial.",
+          },
+          {
+            q: "¿Qué coeficiente de Manning tiene el concreto?",
+            a: "Para tubería de concreto, el valor de diseño habitual es n = 0.013, con un rango de 0.011 a 0.015. Para un canal revestido de concreto, n = 0.015, con un rango de 0.013 a 0.016. Si la norma de tu país o el reglamento del proyecto fija otro valor, se usa ese.",
+          },
+          {
+            q: "¿Qué valor de n se usa para PVC?",
+            a: "El valor de diseño habitual es n = 0.010, con un rango de 0.009 a 0.011 según los fabricantes. Es más bajo que el del concreto porque la pared es más lisa: a igual diámetro y pendiente, un tubo de PVC lleva más agua. Algunas normas fijan un n de diseño mayor para cubrir el envejecimiento.",
+          },
+          {
+            q: "¿La ecuación de Manning sirve para tuberías a presión?",
+            a: "No. Manning vale para flujo con superficie libre: canales y tuberías que no van llenas, como el alcantarillado o el drenaje pluvial. Las tuberías a presión, como las de agua potable, se calculan con Hazen-Williams o Darcy-Weisbach. Si un colector se llena y entra en carga, Manning deja de valer.",
+          },
+          {
+            q: "¿Por qué la pendiente va en m/m y no en porcentaje?",
+            a: "Porque la ecuación usa la pendiente como proporción: 0.2 % se escribe 0.002. Si se ingresa 0.2, el caudal sale 10 veces mayor, porque la raíz cuadrada de 100 es 10. Es el error más común en las hojas de cálculo de canales y colectores.",
+          },
+          {
+            q: "¿A qué altura lleva una tubería su caudal máximo?",
+            a: "Con el agua al 94 % del diámetro, no con el tubo lleno. A esa altura el caudal es un 7.6 % mayor que a tubo lleno, porque al llenarse del todo el perímetro mojado crece más rápido que el área y el agua se frena. La calculadora de Manning de Zeist lo muestra.",
+          },
+        ],
+      },
+    },
+    pt: {
+      faqs: {
+        title: "Perguntas frequentes sobre a equação de Manning",
+        items: [
+          {
+            q: "O que é a equação de Manning?",
+            a: "É a fórmula que dá a velocidade média da água em escoamento uniforme com superfície livre: V = (1/n) · R^(2/3) · S^(1/2), onde n é a rugosidade do material, R o raio hidráulico e S a declividade em m/m. A vazão é Q = V · A. É usada em canais, esgoto e drenagem pluvial.",
+          },
+          {
+            q: "Qual é o coeficiente de Manning do concreto?",
+            a: "Para tubo de concreto, o valor de projeto usual é n = 0,013, com faixa de 0,011 a 0,015. Para canal revestido de concreto, n = 0,015, com faixa de 0,013 a 0,016. Se a norma do seu projeto fixa outro valor, vale esse.",
+          },
+          {
+            q: "Que valor de n se usa para PVC?",
+            a: "O valor de projeto usual é n = 0,010, com faixa de 0,009 a 0,011 segundo os fabricantes. É menor que o do concreto porque a parede é mais lisa: com o mesmo diâmetro e declividade, um tubo de PVC conduz mais água. Algumas normas fixam um n de projeto maior para cobrir o envelhecimento.",
+          },
+          {
+            q: "A equação de Manning serve para tubulações sob pressão?",
+            a: "Não. Manning vale para escoamento com superfície livre: canais e tubulações que não estão cheias, como esgoto e drenagem pluvial. As tubulações sob pressão, como as de água potável, se calculam com Hazen-Williams ou Darcy-Weisbach. Se um coletor enche e entra em carga, Manning deixa de valer.",
+          },
+          {
+            q: "Por que a declividade vai em m/m e não em porcentagem?",
+            a: "Porque a equação usa a declividade como proporção: 0,2 % se escreve 0,002. Se você digitar 0,2, a vazão sai 10 vezes maior, porque a raiz quadrada de 100 é 10. É o erro mais comum nas planilhas de canais e coletores.",
+          },
+          {
+            q: "Com que lâmina um tubo conduz a vazão máxima?",
+            a: "Com a água a 94 % do diâmetro, não a seção plena. Nessa altura a vazão é 7,6 % maior que a seção plena, porque, quando o tubo enche de vez, o perímetro molhado cresce mais rápido que a área e a água freia. A calculadora de Manning da Zeist mostra isso.",
+          },
+        ],
+      },
+    },
+    en: {
+      faqs: {
+        title: "Frequently asked questions about Manning's equation",
+        items: [
+          {
+            q: "What is Manning's equation?",
+            a: "It's the formula for the mean velocity of uniform free-surface flow: V = (1/n) · R^(2/3) · S^(1/2) in SI units, where n is the roughness of the material, R the hydraulic radius and S the slope. In US units the factor is 1.49 instead of 1. Discharge is Q = V · A. It's used for channels, sewers and storm drains.",
+          },
+          {
+            q: "What is Manning's n for concrete?",
+            a: "For concrete pipe, the usual design value is n = 0.013, within a range of 0.011 to 0.015. For a concrete-lined channel, n = 0.015, within 0.013 to 0.016. If your agency or design manual sets a different value, use that one.",
+          },
+          {
+            q: "What n value is used for PVC pipe?",
+            a: "The usual design value is n = 0.010, within 0.009 to 0.011 according to manufacturers. It's lower than concrete because the wall is smoother: at the same diameter and slope, a PVC pipe carries more water. Some design standards require a higher design n to account for aging.",
+          },
+          {
+            q: "Does Manning's equation work for pressurized pipes?",
+            a: "No. Manning applies to free-surface flow: channels and pipes that aren't running full, like sanitary sewers and storm drains. Pressurized pipes, like water mains, use Hazen-Williams or Darcy-Weisbach. If a sewer fills up and surcharges, it's no longer free-surface flow and Manning no longer applies.",
+          },
+          {
+            q: "Why does the slope go in as a ratio, not a percentage?",
+            a: "Because the equation uses slope as a ratio: a 0.2 % slope is entered as 0.002. Type 0.2 and the discharge comes out 10 times too high, because the square root of 100 is 10. It's the most common mistake in channel and sewer spreadsheets.",
+          },
+          {
+            q: "At what depth does a pipe carry its maximum flow?",
+            a: "At 94 % of the diameter, not when it's full. At that depth the discharge is 7.6 % higher than full flow, because as the pipe fills completely the wetted perimeter grows faster than the area and the water slows down. Zeist's Manning calculator shows it.",
+          },
+        ],
+      },
+    },
+  },
+  "convertir-coordenadas-geograficas-a-utm": {
+    es: {
+      faqs: {
+        title: "Preguntas frecuentes sobre convertir coordenadas a UTM",
+        items: [
+          {
+            q: "¿Cómo sé en qué zona UTM estoy?",
+            a: "Con la longitud en grados decimales: zona = ENTERO((longitud + 180) / 6) + 1. Por ejemplo, con −77.04 sale la zona 18. El hemisferio sale del signo de la latitud: negativa es Sur y positiva es Norte. Hay excepciones en Noruega y en Svalbard.",
+          },
+          {
+            q: "¿Se pueden convertir coordenadas geográficas a UTM en Excel?",
+            a: "Excel no trae una función para UTM. Con fórmulas se calculan la zona, el hemisferio, el meridiano central y el paso de grados, minutos y segundos a decimales. Para la conversión completa, lo más seguro es pegar la lista en un conversor por lotes y descargar el resultado en Excel.",
+          },
+          {
+            q: "¿Por qué mis coordenadas UTM caen en otro lugar?",
+            a: "Las causas más comunes son latitud y longitud invertidas, el signo negativo olvidado, la zona o el hemisferio equivocados y un datum distinto. En el norte del Perú, confundir PSAD56 con WGS84 desplaza los puntos unos 450 metros. También pasa al leer grados y minutos como decimales.",
+          },
+          {
+            q: "¿Civil 3D convierte latitud y longitud a UTM?",
+            a: "Sí, si el dibujo tiene asignado un sistema de coordenadas en Configuración del dibujo › Unidades y zona. Con eso, Civil 3D importa puntos con columnas de latitud y longitud y los proyecta al sistema del dibujo. Sin sistema de coordenadas, no puede convertirlos.",
+          },
+          {
+            q: "¿Qué diferencia hay entre WGS84 y PSAD56?",
+            a: "Son dos datums, es decir, dos referencias distintas para medir coordenadas. WGS84 es el actual y el que usan el GPS y Google Maps; PSAD56 es uno antiguo de Sudamérica que todavía aparece en planos viejos. Un mismo punto tiene coordenadas distintas en cada uno: en el norte del Perú, la diferencia es de unos 450 metros.",
+          },
+        ],
+      },
+    },
+    pt: {
+      faqs: {
+        title: "Perguntas frequentes sobre converter coordenadas para UTM",
+        items: [
+          {
+            q: "Como sei em que fuso UTM estou?",
+            a: "Com a longitude em graus decimais: fuso = INT((longitude + 180) / 6) + 1. Por exemplo, com −46,63, a longitude de São Paulo, sai o fuso 23. O hemisfério sai do sinal da latitude: negativa é Sul e positiva é Norte. Há exceções na Noruega e em Svalbard.",
+          },
+          {
+            q: "Dá para converter coordenadas geográficas em UTM no Excel?",
+            a: "O Excel não tem uma função para UTM. Com fórmulas se calculam o fuso, o hemisfério, o meridiano central e a passagem de graus, minutos e segundos para decimais. Para a conversão completa, o mais seguro é colar a lista em um conversor em lote e baixar o resultado em Excel.",
+          },
+          {
+            q: "Por que minhas coordenadas UTM caem em outro lugar?",
+            a: "As causas mais comuns são latitude e longitude invertidas, o sinal negativo esquecido, o fuso ou o hemisfério errados e um datum diferente. No Brasil, entre SAD69 e SIRGAS 2000 há dezenas de metros. Também acontece ao ler graus e minutos como decimais.",
+          },
+          {
+            q: "O Civil 3D converte latitude e longitude em UTM?",
+            a: "Sim, se o desenho tiver um sistema de coordenadas atribuído em Configurações do desenho › Unidades e zona. Com isso, o Civil 3D importa pontos com colunas de latitude e longitude e os projeta no sistema do desenho. Sem sistema de coordenadas, ele não consegue convertê-los.",
+          },
+          {
+            q: "Qual é o sistema de coordenadas oficial no Brasil?",
+            a: "O SIRGAS 2000, único sistema oficial desde fevereiro de 2015, segundo a resolução R.PR 1/2005 do IBGE. Plantas antigas podem estar em SAD69 ou Córrego Alegre; o ProGriD, do IBGE, converte essas coordenadas para o SIRGAS 2000. Para GPS e Google Maps, SIRGAS 2000 e WGS84 coincidem na prática.",
+          },
+        ],
+      },
+    },
+    en: {
+      faqs: {
+        title: "Frequently asked questions about converting lat long to UTM",
+        items: [
+          {
+            q: "How do I find my UTM zone?",
+            a: "With longitude in decimal degrees: zone = INT((longitude + 180) / 6) + 1. For example, Denver at −104.99 is in zone 13. The hemisphere comes from the sign of the latitude: negative is South, positive is North. There are exceptions around Norway and Svalbard.",
+          },
+          {
+            q: "Can you convert lat long to UTM in Excel?",
+            a: "Excel has no UTM function. With formulas you can get the zone, the hemisphere, the central meridian and the degrees-minutes-seconds to decimal conversion. For the full conversion, the safest route is to paste the list into a batch converter and download the result as an Excel file.",
+          },
+          {
+            q: "Why do my UTM coordinates land in the wrong place?",
+            a: "The usual causes are swapped latitude and longitude, a missing minus sign, the wrong zone or hemisphere, and a different datum. Between NAD27 and NAD83 the shift is tens of meters. Reading degrees and minutes as decimals causes it too.",
+          },
+          {
+            q: "Does Civil 3D convert lat long to UTM?",
+            a: "Yes, if the drawing has a coordinate system assigned in Drawing Settings › Units and Zone. Civil 3D then imports points with latitude and longitude columns and projects them to the drawing's grid. Without a coordinate system, it can't convert them.",
+          },
+          {
+            q: "Should I use UTM or State Plane in the US?",
+            a: "Use whatever the project specifies. Many US plan sets use State Plane coordinates in US survey feet, because each zone is tuned to a state or part of one. UTM is common for federal, multi-state and international work. Civil 3D supports both; just never mix them in one drawing.",
+          },
+        ],
+      },
+    },
+  },
+  "auditoria-automatica-modelos-revit": {
+    es: {
+      faqs: {
+        title: "Preguntas frecuentes sobre la auditoría automática de modelos Revit",
+        items: [
+          {
+            q: "¿Se puede revisar un modelo de Revit sin abrirlo?",
+            a: "Sin Revit no, pero sin una persona sí: un proceso programado abre el modelo de noche con Revit de escritorio o con Design Automation en la nube, mide los indicadores y lo cierra. El equipo solo lee el reporte por la mañana, sin abrir nada.",
+          },
+          {
+            q: "¿Qué es Revit Batch Processor?",
+            a: "Es una herramienta gratuita y de código abierto (GPL-3.0) que abre muchos modelos de Revit, uno tras otro, y ejecuta en cada uno un script de Python o de Dynamo. Se puede programar con el Programador de tareas de Windows. Sus límites: solo reconoce los diálogos de Revit en inglés y su autor original ya no puede darle soporte.",
+          },
+          {
+            q: "¿Model Checker de Autodesk es gratis?",
+            a: "Sí, para quien tiene licencia de Revit: viene en las Interoperability Tools de Autodesk. Revisa el modelo con conjuntos de reglas que se arman con su Configurador y exporta el reporte a Excel. Desde la versión 10.0, que llegó con Revit 2026, su API ya no tiene soporte.",
+          },
+          {
+            q: "¿Qué indicadores conviene medir cada noche?",
+            a: "Los que anticipan problemas: número y tipo de advertencias, tamaño del archivo, CAD importados en lugar de vinculados, familias in situ, vistas sin lámina, parámetros obligatorios vacíos y nombres fuera del estándar. Lo útil no es el valor de un día, sino el cambio frente a la noche anterior.",
+          },
+          {
+            q: "¿Quién automatiza la auditoría de modelos Revit?",
+            a: "Zeist lo hace como servicio, de forma remota: primero una auditoría de procesos BIM de 4 semanas para definir indicadores y límites y, después, si la quieres, la revisión nocturna como un plugin a medida, con instalador, manual y el código fuente. El diagnóstico es gratuito y dura una semana.",
+          },
+        ],
+      },
+    },
+    pt: {
+      faqs: {
+        title: "Perguntas frequentes sobre a auditoria automática de modelos Revit",
+        items: [
+          {
+            q: "Dá para verificar um modelo do Revit sem abri-lo?",
+            a: "Sem o Revit, não; sem uma pessoa, sim: um processo agendado abre o modelo à noite com o Revit de desktop ou com o Design Automation na nuvem, mede os indicadores e o fecha. A equipe só lê o relatório pela manhã, sem abrir nada.",
+          },
+          {
+            q: "O que é o Revit Batch Processor?",
+            a: "É uma ferramenta gratuita e de código aberto (GPL-3.0) que abre muitos modelos do Revit, um depois do outro, e executa em cada um um script de Python ou do Dynamo. Pode ser agendada com o Agendador de Tarefas do Windows. Limitações: só reconhece as caixas de diálogo do Revit em inglês e o autor original não pode mais dar suporte.",
+          },
+          {
+            q: "O Model Checker da Autodesk é gratuito?",
+            a: "Sim, para quem tem licença do Revit: vem nas Interoperability Tools da Autodesk. Ele verifica o modelo com conjuntos de regras montados no Configurator e exporta o relatório para o Excel. Desde a versão 10.0, lançada com o Revit 2026, sua API não tem mais suporte.",
+          },
+          {
+            q: "Que indicadores convém medir toda noite?",
+            a: "Os que antecipam problemas: número e tipo de advertências, tamanho do arquivo, CAD importado em vez de vinculado, famílias no local, vistas fora de pranchas, parâmetros obrigatórios vazios e nomes fora do padrão. O útil não é o valor de um dia, e sim a variação em relação à noite anterior.",
+          },
+          {
+            q: "Quem automatiza a auditoria de modelos Revit?",
+            a: "A Zeist faz isso como serviço, de forma remota: primeiro uma auditoria de processos BIM de 4 semanas para definir indicadores e limites e, depois, se você quiser, a verificação noturna como um plugin sob medida, com instalador, manual e o código-fonte. O diagnóstico é gratuito e dura uma semana.",
+          },
+        ],
+      },
+    },
+    en: {
+      faqs: {
+        title: "Frequently asked questions about overnight Revit model checking",
+        items: [
+          {
+            q: "Can you check a Revit model without opening it?",
+            a: "Not without Revit, but without a person, yes: a scheduled process opens the model overnight with desktop Revit or with Design Automation in the cloud, measures the indicators and closes it. The team only reads the report in the morning, without opening anything.",
+          },
+          {
+            q: "What is Revit Batch Processor?",
+            a: "It's a free, open-source tool (GPL-3.0) that opens many Revit models one after another and runs a Python or Dynamo script on each. It can be scheduled with Windows Task Scheduler. Its limits: it only handles Revit dialogs in English, and its original author can no longer support it.",
+          },
+          {
+            q: "Is Autodesk Model Checker free?",
+            a: "Yes, for licensed Revit users: it comes with Autodesk's Interoperability Tools for Revit. It checks the model against rule sets built in its Configurator and exports the report to Excel. Since version 10.0, released with Revit 2026, its API is no longer supported.",
+          },
+          {
+            q: "Which indicators should you check every night?",
+            a: "The ones that warn you early: warning count and type, file size, CAD imported instead of linked, in-place families, views not on sheets, empty required parameters and off-standard names. What matters isn't one night's value but the change since the night before.",
+          },
+          {
+            q: "Who automates Revit model auditing?",
+            a: "Zeist does it as a remote service: first a four-week BIM audit to agree on indicators and thresholds, then, if you want it, the overnight check built as a custom plugin with an installer, a manual and the source code. The diagnosis is free and takes one week.",
+          },
+        ],
+      },
+    },
+  },
+  "dynamo-para-revit-primeros-scripts": {
+    es: {
+      faqs: {
+        title: "Preguntas frecuentes sobre Dynamo para Revit",
+        items: [
+          {
+            q: "¿Dynamo viene con Revit?",
+            a: "Sí. Dynamo se instala con Revit y se abre en la ficha Gestionar › Programación visual › Dynamo. En el mismo grupo está el Reproductor de Dynamo, que ejecuta scripts sin abrir el grafo. No hace falta descargar nada para empezar con los nodos de Revit.",
+          },
+          {
+            q: "¿Por qué Element.SetParameterByName no escribe el valor?",
+            a: "Casi siempre por una de tres razones: el nombre del parámetro no es exacto o está en un idioma distinto al de tu Revit, el parámetro es de tipo y se intentó escribir en cada elemento, o el valor no es del tipo de dato correcto, por ejemplo texto en un parámetro de número.",
+          },
+          {
+            q: "¿Cómo exporto datos de Revit a Excel con Dynamo?",
+            a: "Con los nodos Data.OpenXMLExportExcel y Data.OpenXMLImportExcel, que desde Dynamo 2.12 leen y escriben .xlsx sin tener Excel instalado. Pon siempre el Id del elemento en la primera columna: es lo que permite devolver los cambios al elemento correcto aunque alguien haya ordenado la hoja.",
+          },
+          {
+            q: "¿Qué es el Reproductor de Dynamo?",
+            a: "Es una ventana de Revit que ejecuta scripts de Dynamo con un clic, sin abrir el grafo. Lee los archivos .dyn de una carpeta y muestra como campos editables los nodos marcados como entrada. Es la forma de que todo el equipo use los scripts sin saber Dynamo.",
+          },
+          {
+            q: "¿Cuándo conviene pasar de Dynamo a un plugin en C#?",
+            a: "Cuando el script se usa todos los días, lo corren muchas personas, trabaja con miles de elementos o necesita validaciones serias antes de escribir en el modelo. Un plugin es más rápido y robusto, y no depende de quien armó el grafo. Lo habitual es validar la idea en Dynamo y después llevarla a plugin.",
+          },
+        ],
+      },
+    },
+    pt: {
+      faqs: {
+        title: "Perguntas frequentes sobre o Dynamo para Revit",
+        items: [
+          {
+            q: "O Dynamo vem com o Revit?",
+            a: "Sim. O Dynamo é instalado com o Revit e abre na guia Gerenciar › Programação visual › Dynamo. No mesmo painel está o Dynamo Player, que executa scripts sem abrir o grafo. Não é preciso baixar nada para começar com os nós do Revit.",
+          },
+          {
+            q: "Por que o Element.SetParameterByName não escreve o valor?",
+            a: "Quase sempre por um destes três motivos: o nome do parâmetro não é exato ou está em um idioma diferente do seu Revit, o parâmetro é de tipo e se tentou escrevê-lo em cada elemento, ou o valor não é do tipo de dado correto, por exemplo texto em um parâmetro numérico.",
+          },
+          {
+            q: "Como exporto dados do Revit para o Excel com o Dynamo?",
+            a: "Com os nós Data.OpenXMLExportExcel e Data.OpenXMLImportExcel, que desde o Dynamo 2.12 leem e escrevem .xlsx sem o Excel instalado. Coloque sempre o Id do elemento na primeira coluna: é o que permite devolver as alterações ao elemento certo mesmo que alguém tenha ordenado a planilha.",
+          },
+          {
+            q: "O que é o Dynamo Player?",
+            a: "É uma janela do Revit que executa scripts do Dynamo com um clique, sem abrir o grafo. Ele lê os arquivos .dyn de uma pasta e mostra como campos editáveis os nós marcados como entrada. É a forma de toda a equipe usar os scripts sem saber Dynamo.",
+          },
+          {
+            q: "Quando convém passar do Dynamo para um plugin em C#?",
+            a: "Quando o script é usado todos os dias, roda nas mãos de muitas pessoas, trabalha com milhares de elementos ou precisa de validações sérias antes de escrever no modelo. Um plugin é mais rápido e robusto e não depende de quem montou o grafo. O comum é validar a ideia no Dynamo e depois levá-la para plugin.",
+          },
+        ],
+      },
+    },
+    en: {
+      faqs: {
+        title: "Frequently asked questions about Dynamo for Revit",
+        items: [
+          {
+            q: "Does Dynamo come with Revit?",
+            a: "Yes. Dynamo is installed with Revit and opens from Manage › Visual Programming › Dynamo. Dynamo Player sits on the same panel and runs scripts without opening the graph. You don't need to download anything extra to start working with the Revit nodes.",
+          },
+          {
+            q: "Why doesn't Element.SetParameterByName write the value?",
+            a: "Almost always for one of three reasons: the parameter name isn't exact or is in a different language from your Revit, it's a type parameter and you tried to write it on each element, or the value has the wrong data type, such as text going into a number parameter.",
+          },
+          {
+            q: "How do you export Revit data to Excel with Dynamo?",
+            a: "With the Data.OpenXMLExportExcel and Data.OpenXMLImportExcel nodes, which since Dynamo 2.12 read and write .xlsx files without Excel installed. Always put the element ID in the first column: that's what lets the changes go back to the right element even if someone sorted the sheet.",
+          },
+          {
+            q: "What is Dynamo Player?",
+            a: "It's a Revit window that runs Dynamo scripts in one click, without opening the graph. It reads the .dyn files in a folder and shows the nodes marked as inputs as editable fields. It's how the whole team can use the scripts without knowing Dynamo.",
+          },
+          {
+            q: "When should you move from Dynamo to a C# plugin?",
+            a: "When the script runs every day, many people use it, it handles thousands of elements, or it needs serious validation before writing to the model. A plugin is faster and sturdier, and it doesn't depend on whoever built the graph. The usual path is to prove the idea in Dynamo, then turn it into a plugin.",
+          },
+        ],
+      },
+    },
+  },
   // ---- Seguridad (21-oct-2026): la vulnerabilidad de PHP y cómo proteger los plugins ----
   "vulnerabilidad-php-plugins-revit-civil-3d": {
     es: {
@@ -3732,11 +4077,11 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
         items: [
           {
             q: "¿Cómo exportar una tabla de Revit a Excel?",
-            a: "Revit exporta cualquier tabla de planificación a un archivo de texto delimitado desde el menú de exportación de informes. Ese archivo se abre directamente en Excel. Para exportar varias tablas a un solo libro con formato, o para poder volver a importar los cambios, se usa Dynamo o un plugin.",
+            a: "Abre la tabla de planificación y ve a Archivo › Exportar › Informes › Tabla de planificación. Revit la guarda como texto delimitado, con tabulaciones, comas o punto y coma, y Excel la abre directamente. Para exportar a .xlsx con formato, juntar varias tablas en un libro o poder devolver los cambios, se usa Dynamo o un plugin.",
           },
           {
             q: "¿Se pueden importar datos de Excel a Revit?",
-            a: "No de forma nativa: Revit exporta tablas pero no trae una opción para importar los cambios de vuelta y actualizar parámetros. Se puede hacer con Dynamo, que tiene nodos para leer hojas de cálculo, o con un plugin de sincronización que empareja cada fila con su elemento y valida los datos antes de escribirlos.",
+            a: "No de forma nativa: Revit exporta tablas pero no trae una opción para importar los cambios de vuelta y actualizar parámetros. Se puede hacer con Dynamo, cuyos nodos OpenXML leen archivos .xlsx sin tener Excel instalado, o con un plugin de sincronización que empareja cada fila con su elemento y valida los datos antes de escribirlos.",
           },
           {
             q: "¿Por qué al importar desde Excel los valores quedan en el elemento equivocado?",
@@ -3776,11 +4121,11 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
         items: [
           {
             q: "Como exportar uma tabela do Revit para o Excel?",
-            a: "O Revit exporta qualquer tabela para um arquivo de texto delimitado pelo menu de exportação de relatórios. Esse arquivo abre direto no Excel. Para exportar várias tabelas num só arquivo formatado, ou para poder importar as alterações de volta, usa-se o Dynamo ou um plugin.",
+            a: "Abra a tabela e vá em Arquivo › Exportar › Relatórios › Tabela. O Revit a salva como texto delimitado, com tabulações, vírgulas ou ponto e vírgula, e o Excel abre direto. Para exportar em .xlsx formatado, juntar várias tabelas num só arquivo ou poder devolver as alterações, usa-se o Dynamo ou um plugin.",
           },
           {
             q: "Dá para importar dados do Excel para o Revit?",
-            a: "Não de forma nativa: o Revit exporta tabelas, mas não tem uma opção para importar as alterações de volta e atualizar parâmetros. Dá para fazer com o Dynamo, que tem nós para ler planilhas, ou com um plugin de sincronização que emparelha cada linha com seu elemento e valida os dados antes de escrevê-los.",
+            a: "Não de forma nativa: o Revit exporta tabelas, mas não tem uma opção para importar as alterações de volta e atualizar parâmetros. Dá para fazer com o Dynamo, cujos nós OpenXML leem arquivos .xlsx sem o Excel instalado, ou com um plugin de sincronização que emparelha cada linha com seu elemento e valida os dados antes de escrevê-los.",
           },
           {
             q: "Por que ao importar do Excel os valores ficam no elemento errado?",
@@ -3820,11 +4165,11 @@ const data: Record<string, Partial<Record<Locale, PostData>>> = {
         items: [
           {
             q: "How do you export a Revit schedule to Excel?",
-            a: "Revit exports any schedule to a delimited text file from the reports export menu, and Excel opens it directly. To export several schedules into one formatted workbook, or to import changes back, you use Dynamo or a plugin.",
+            a: "Open the schedule and go to File › Export › Reports › Schedule. Revit saves it as delimited text, with tabs, commas or semicolons, and Excel opens it directly. To export a formatted .xlsx, combine several schedules in one workbook or push changes back, you use Dynamo or a plugin.",
           },
           {
             q: "Can you import Excel data into Revit?",
-            a: "Not natively: Revit exports schedules but has no option to import changes back and update parameters. You can do it with Dynamo, which has nodes to read spreadsheets, or with a sync plugin that matches each row to its element and validates data before writing it.",
+            a: "Not natively: Revit exports schedules but has no option to import changes back and update parameters. You can do it with Dynamo, whose OpenXML nodes read .xlsx files without Excel installed, or with a sync plugin that matches each row to its element and validates data before writing it.",
           },
           {
             q: "Why do imported Excel values end up on the wrong element?",

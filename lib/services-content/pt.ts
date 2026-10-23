@@ -332,6 +332,7 @@ export const servicesPt: Record<ServiceSlug, ServicePage> = {
       rows: "Tempo até funcionar | *Dias | Semanas || Mudar as regras | *Em minutos | Exige desenvolvimento || Como a equipe executa | Pelo Dynamo Player | Com um botão na barra superior || Velocidade com modelos grandes | Média | *Alta || Tratamento de erros e registro | Básico | *Completo || Ideal para | Validar e tarefas que mudam | Produção diária",
     },
     guides: [
+      "dynamo-para-revit-primeros-scripts",
       "dynamo-vs-csharp-civil3d-revit",
       "automatizar-tareas-revit-dynamo-plugins",
       "dynamo-csharp-con-ia-claude",
@@ -505,6 +506,7 @@ export const servicesPt: Record<ServiceSlug, ServicePage> = {
       rows: "O que automatizar primeiro | *O que mais devolve horas, medido | O que parece urgente || Apontamentos repetidos | *Ataca-se a causa | Corrige-se cada sintoma || Investimento em ferramentas | *Onde há retorno | Onde alguém pediu || Avanço | *Medido contra uma linha de base | Sem referência || Requisitos do cliente | *Lacunas identificadas antes | Descobertas na revisão",
     },
     guides: [
+      "auditoria-automatica-modelos-revit",
       "auditoria-bim-checklist-empresa",
       "estandarizar-procesos-bim-empresa",
       "reprocesos-obra-costo-oculto",

@@ -214,6 +214,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "ecuacion-de-manning",
       "drenaje-pluvial-trujillo-civil-3d",
       "redes-tuberias-civil-3d-accesorios",
       "plugin-civil-3d-dibujo-3d-automatizado",
@@ -383,6 +384,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "ecuacion-de-manning",
       "redes-tuberias-civil-3d-accesorios",
       "plugin-civil-3d-dibujo-3d-automatizado",
       "automatizar-civil-3d-guia-completa",
@@ -543,6 +545,7 @@ const content: Record<Locale, ToolContent> = {
       },
     ],
     guides: [
+      "ecuacion-de-manning",
       "redes-tuberias-civil-3d-accesorios",
       "plugin-civil-3d-dibujo-3d-automatizado",
       "automatizar-civil-3d-guia-completa",

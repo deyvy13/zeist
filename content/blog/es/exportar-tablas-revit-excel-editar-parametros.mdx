@@ -4,6 +4,7 @@ seoTitle: "Exportar tablas de Revit a Excel y reimportarlas"
 ctaTitle: "¿Tu equipo llena parámetros de Revit uno por uno? Lo conectamos con Excel en ambos sentidos, sin errores."
 description: "Cómo exportar tablas de Revit a Excel, editar parámetros en masa y reimportarlos con validación, sin romper el modelo ni perder el control de los cambios."
 date: "2026-10-01T10:00:00.000Z"
+updated: "2026-10-23T16:00:00.000Z"
 author: "Zeist"
 tags:
   - Revit a Excel
@@ -21,7 +22,7 @@ tags:
 />
 
 <Callout type="success" title="Respuesta rápida">
-Revit permite **exportar una tabla de planificación** a un archivo de texto delimitado que Excel abre, pero **no trae una forma nativa de importar los cambios de vuelta** al modelo. Para editar parámetros en masa con Excel y devolverlos a Revit se usan **Dynamo** —que tiene nodos para leer y escribir hojas de cálculo— o un **plugin de sincronización Revit–Excel**. La clave técnica es incluir en la hoja el **identificador único de cada elemento**, bloquear las columnas que no se pueden editar y validar los datos antes de escribirlos, para que ningún valor termine en el elemento equivocado.
+Revit permite **exportar una tabla de planificación** a un archivo de texto delimitado que Excel abre, pero **no trae una forma nativa de importar los cambios de vuelta** al modelo. Para editar parámetros en masa con Excel y devolverlos a Revit se usan **Dynamo** —que desde la versión 2.12 lee y escribe .xlsx sin Excel instalado— o un **plugin de sincronización Revit–Excel**. La clave técnica es incluir en la hoja el **identificador único de cada elemento**, bloquear las columnas que no se pueden editar y validar los datos antes de escribirlos, para que ningún valor termine en el elemento equivocado.
 </Callout>
 
 <Callout type="info" title="Glosario: los términos que vas a leer, en simple">
@@ -54,6 +55,29 @@ En Excel se filtra, se copia hacia abajo, se ordena y se revisa de un vistazo. E
   subs="Esto sí lo permite Revit|Rápido y cómodo|De vuelta al modelo, a mano|Fila equivocada, nadie lo nota"
   warnCount="4"
 />
+
+## ¿Cómo se exporta una tabla de Revit a Excel, paso a paso?
+
+1. Abre la vista de la tabla de planificación que quieres exportar.
+2. Ve a **Archivo › Exportar › Informes › Tabla de planificación**.
+3. Elige el nombre y la carpeta del archivo.
+4. Define qué entra: encabezados de columna y de grupo, pies y líneas en blanco.
+5. Elige el **delimitador de campos** (tabulación, espacio, coma o punto y coma) y el **calificador de texto** (comillas simples, dobles o ninguno). La tabulación evita choques con las comas de los números y los textos.
+6. Abre el archivo de texto en Excel y guárdalo como .xlsx.
+
+Funciona igual en Revit LT. Lo que no existe es el camino de vuelta: Revit no lee ese archivo para actualizar el modelo.
+
+## ¿Qué opciones hay para conectar Revit con Excel?
+
+| | Revit nativo | Dynamo | Plugin |
+|---|---|---|---|
+| Exportar a Excel | Sí, como texto delimitado | Sí, en .xlsx | Sí, en .xlsx con formato |
+| Devolver los cambios al modelo | No | Sí | Sí |
+| Validar antes de escribir | No aplica | La que arme el grafo | Completa, con resumen previo |
+| Quién lo usa | Cualquiera | Quien sabe abrir el grafo, o el equipo con el Reproductor de Dynamo | Cualquiera: es un botón |
+| Registro de cambios | No | Hay que construirlo | Automático |
+
+Para una exportación de consulta, el camino nativo alcanza. Para el ida y vuelta, Dynamo o un plugin: el resto de esta guía explica cuándo conviene cada uno y cómo hacerlo sin dañar el modelo.
 
 <Roadmap />
 
@@ -96,7 +120,7 @@ El peor caso no es que la importación falle: es que funcione **con el valor en 
 
 <TopicCard step="3" title="3. Dynamo o plugin: dos caminos válidos" time="~6 min">
 
-**Dynamo** tiene nodos para leer y escribir hojas de Excel. Con un grafo bien armado se puede exportar, editar e importar. Es una buena opción para un caso puntual o para probar la lógica.
+**Dynamo** lee y escribe archivos .xlsx con los nodos **Data.OpenXMLExportExcel** y **Data.OpenXMLImportExcel**, que desde Dynamo 2.12 no necesitan Excel instalado. Con un grafo bien armado se exporta, se edita y se importa, emparejando cada fila por el Id del elemento. Es una buena opción para un caso puntual o para probar la lógica. Los nodos, paso a paso, están en [Dynamo para Revit: tus primeros 5 scripts](/es/blog/dynamo-para-revit-primeros-scripts).
 
 Sus límites aparecen en el uso diario: depende de quien sabe abrir el grafo, el manejo de errores es básico, y con miles de elementos se vuelve lento. Validar cada valor antes de escribirlo exige un grafo complejo.
 
@@ -186,8 +210,17 @@ Los datos del modelo dejan de depender de la paciencia de un modelador. Cargar l
   secondaryHref="/es/servicios/add-ins-revit-civil-3d"
 />
 
+## Fuentes
+
+- [Autodesk: exportar una tabla de planificación](https://help.autodesk.com/cloudhelp/2023/ENU/Revit-DocumentPresent/files/GUID-B2CCAC4F-1D38-4D5D-B4D1-95619D1B7EBE.htm): texto delimitado, delimitadores y calificador de texto.
+- [Dynamo 2.12](https://dynamobim.org/dynamo-core-2-12-release-part-1-2/): los nodos de Excel con OpenXML, sin Excel instalado.
+- [Dynamo Primer: editar parámetros de Revit](https://primer2.dynamobim.org/7_dynamo_for_revit/3-editing).
+
+Datos verificados el 23 de octubre de 2026.
+
 ## Recursos relacionados
 
+- **Los nodos de Dynamo, paso a paso:** [Dynamo para Revit: tus primeros 5 scripts útiles](/es/blog/dynamo-para-revit-primeros-scripts).
 - **La lista de materiales:** [lista de materiales en Revit, AutoCAD y Civil 3D](/es/blog/lista-de-materiales-revit-autocad-civil-3d).
 - **La planilla de metrados:** [tabla de metrados automática](/es/blog/tabla-de-metrados-automatica-revit-civil-3d).
 - **Cómo se construye un plugin:** [desarrollo de add-ins para Revit y Civil 3D, la guía completa](/es/blog/desarrollo-add-ins-revit-civil-3d-guia-completa).

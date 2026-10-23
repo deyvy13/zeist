@@ -1,0 +1,148 @@
+---
+translationKey: "convertir-coordenadas-geograficas-a-utm"
+title: "How to Convert Lat Long to UTM and UTM to Lat Long: Online, in Excel and in Civil 3D"
+seoTitle: "Convert Lat Long to UTM in Excel and Civil 3D"
+ctaTitle: "Does your office convert points every week? We turn it into one button inside Civil 3D."
+description: "How to convert latitude and longitude to UTM and back: zone and hemisphere, Excel formulas, a batch converter, and how Civil 3D does it."
+date: "2026-10-23T14:30:00.000Z"
+author: "Zeist"
+tags:
+  - UTM coordinates
+  - Latitude and longitude
+  - Excel
+  - Civil 3D
+  - Surveying
+  - Datum
+---
+
+<BlogHero
+  eyebrow="Coordinates · UTM · Excel · Civil 3D"
+  title="From lat long to UTM and back, without the point landing somewhere else"
+  highlight="What a UTM zone is and how to find yours, the Excel formulas that actually help, how to convert a whole list in a minute, and how Civil 3D does it. Plus the six mistakes that send points into the ocean."
+/>
+
+<Callout type="success" title="Quick answer">
+To convert latitude and longitude to UTM you need the zone (6° bands of longitude), the hemisphere and the datum; the projection formulas do the rest. In practice: an online converter for one point or a list pasted from Excel, and in Civil 3D, assigning the drawing's coordinate system before you import.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain English">
+- **Geographic coordinates** — Latitude and longitude, in degrees. They locate a point anywhere on Earth.
+- **UTM** — A flat, metric grid that splits the Earth into bands. Written as Easting and Northing.
+- **UTM zone** — Each 6° band of longitude. There are 60.
+- **Hemisphere** — North or South. In UTM it changes how Northing is counted.
+- **Datum** — The reference the coordinates are based on: WGS 84, NAD83, NAD27. The same point has different coordinates in each.
+- **Central meridian** — The middle line of each zone, where UTM distorts the least.
+</Callout>
+
+## What's the difference between lat long and UTM?
+
+Geographic coordinates measure **angles** on the Earth: latitude from 90° S to 90° N, longitude from 180° W to 180° E. They work anywhere, but a degree isn't the same length everywhere, so you can't measure distances or areas with them on a plan.
+
+UTM projects the Earth onto a flat grid in **meters**. To keep distortion small, it splits the world into 60 zones, each with its own grid. The rules never change:
+
+| Rule | Value |
+|---|---|
+| Zone width | 6° of longitude (60 zones) |
+| Easting at the central meridian | 500,000 m |
+| Northing at the equator, northern hemisphere | 0 m |
+| Northing at the equator, southern hemisphere | 10,000,000 m |
+| Scale factor at the central meridian | 0.9996 |
+| Valid between | 80° S and 84° N |
+
+That's why a UTM coordinate **without a zone and hemisphere means nothing**: the same Easting and Northing exists 120 times around the world.
+
+## How do I find my UTM zone?
+
+With longitude in decimal degrees (negative west of Greenwich):
+
+```
+zone = INT((longitude + 180) / 6) + 1
+central meridian = 6 × zone − 183
+```
+
+The hemisphere comes from the sign of the latitude: negative is South, positive is North.
+
+| City | Longitude | Zone |
+|---|---|---|
+| Los Angeles | −118.24 | 11 N |
+| Denver | −104.99 | 13 N |
+| Chicago | −87.63 | 16 N |
+| New York | −74.01 | 18 N |
+| London | −0.13 | 30 N |
+| Sydney | 151.21 | 56 S |
+
+There are exceptions around Norway and Svalbard, where some zones were widened. And if a project sits on the line between two zones, you work in the one the plans declare, even if part of the site falls in the next.
+
+In the US, many plan sets use **State Plane** coordinates in US survey feet instead of UTM. Civil 3D handles both; just never mix them in one drawing.
+
+## How do I convert one point or a list online?
+
+Zeist's [UTM converter](/en/tools/utm-converter) works both ways and changes datum too:
+
+1. Pick the direction: lat long to UTM, or UTM to lat long.
+2. Paste a single point or a whole list copied from Excel. It detects tabs, semicolons, commas or spaces.
+3. Check the points on the map before you use them.
+4. Download the result as Excel, as KML for Google Earth, or as PNEZD to import into Civil 3D.
+
+It also shows each point's scale factor and convergence. The math is validated against PROJ, the reference library for geodesy, to within 1 mm.
+
+## Can you convert lat long to UTM in Excel?
+
+Excel has no UTM function. A full conversion is a long chain of formulas that breaks with one misplaced parenthesis. Here's what is worth doing in Excel:
+
+```
+Zone:              =INT((B2+180)/6)+1
+Hemisphere:        =IF(A2<0,"S","N")
+Central meridian:  =6*C2-183
+DMS to decimal:    =D2+E2/60+F2/3600
+```
+
+In the last one, degrees, minutes and seconds sit in separate columns, and the result goes negative for South or West.
+
+For the conversion itself, the safest route is to copy the columns, paste them into the converter in batch mode, and download the Excel file with the results. If you use a spreadsheet with the full formulas, test it first on a point whose coordinates you already know.
+
+## How does Civil 3D do it?
+
+Civil 3D converts on its own once the drawing knows its coordinate system:
+
+1. **Assign the drawing's coordinate system** in Drawing Settings › Units and Zone, for example NAD83 UTM zone 13 North.
+2. **Import the points** with a point file format that has latitude and longitude columns. Civil 3D projects them to the drawing's grid. Without step 1, it can't.
+3. **For the reverse**, with the system assigned, a point label style or an export format can show each point's latitude and longitude.
+
+We cover it in detail, including the import errors, in [importing points into Civil 3D from CSV](/en/blog/civil-3d-import-points-csv).
+
+## Why does my point land in the wrong place?
+
+1. **Latitude and longitude swapped.** The point jumps to another continent.
+2. **A missing minus sign.** West of Greenwich longitude is negative; south of the equator, so is latitude.
+3. **Wrong zone or hemisphere.** The error is hundreds of kilometers.
+4. **A different datum.** NAD83 and WGS 84 differ by a meter or two, which is fine for a map but not for a survey. Between NAD27 and NAD83 the shift is tens of meters.
+5. **Degrees and minutes read as decimals.** 12° 30′ is 12.5°, not 12.30°.
+6. **Comma and period decimals mixed.** Data from a European or Latin American source may use a decimal comma, and Excel turns the number into text.
+
+If a plan from Latin America doesn't say which datum it uses, the [UTM coordinates on Google Maps](/en/tools/utm-coordinates-google-maps) tool compares WGS 84, PSAD56 and SAD69 on the map and shows which one lands where it should.
+
+<CTABlock
+  eyebrow="Zeist · BIM automation"
+  title="Coordinates converted inside Civil 3D, with one button"
+  body="If your team converts point lists every week, we build a plugin that reads the Excel file, converts, checks the datum and creates the points in the drawing. The diagnosis is free and takes one week."
+  primaryLabel="Request a free diagnosis"
+  primaryHref="/en/contact"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/services/revit-civil-3d-plugin-development"
+/>
+
+## Sources
+
+- [USGS: The Universal Transverse Mercator (UTM) Grid](https://pubs.usgs.gov/fs/2001/0077/report.pdf), Fact Sheet 077-01: zones, false easting and scale factor.
+- Zeist's converter values were checked against [PROJ](https://proj.org/), to within 1 mm.
+
+Data verified on October 23, 2026.
+
+## Related resources
+
+- **Convert now:** [UTM converter](/en/tools/utm-converter), for one point or in batch.
+- **The real case:** [plot UTM coordinates on Google Maps](/en/blog/plot-utm-coordinates-google-maps).
+- **Bring the points into the drawing:** [import points into Civil 3D from CSV](/en/blog/civil-3d-import-points-csv).
+
+<PostFaqs />

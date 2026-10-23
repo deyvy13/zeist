@@ -34,11 +34,11 @@ for (const slug of TOOL_SLUGS) toolLocales[slug] = locales.filter((l) => TOOL_PA
  */
 export const toolUpdated: Record<ToolSlug, string> = {
   "coordenadas-utm-en-google-maps": "2026-10-16",
-  "conversor-de-coordenadas": "2026-10-19",
+  "conversor-de-coordenadas": "2026-10-23",
   "calculadora-area-terreno": "2026-10-16",
   "generador-curvas-de-nivel": "2026-10-19",
   "calculadora-acero-corrugado": "2026-10-01",
-  "calculadora-manning": "2026-10-02",
+  "calculadora-manning": "2026-10-23",
 };
 
 /** `cta` is the link text on cards: what the tool does, in the words people search for. */

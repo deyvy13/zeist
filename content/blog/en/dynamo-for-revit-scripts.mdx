@@ -1,0 +1,143 @@
+---
+translationKey: "dynamo-para-revit-primeros-scripts"
+title: "Dynamo for Revit: Your First 5 Useful Scripts, Node by Node"
+seoTitle: "Dynamo for Revit: Your First 5 Useful Scripts"
+ctaTitle: "Want the scripts ready and tested on your models? We build them so your team runs them from Dynamo Player."
+description: "Dynamo for Revit from scratch: where to open it and five useful scripts, node by node: fill parameters, Excel round trip, empty data and naming."
+date: "2026-10-23T15:30:00.000Z"
+author: "Zeist"
+tags:
+  - Dynamo
+  - Revit
+  - Visual programming
+  - Automation
+  - Revit parameters
+  - Excel
+---
+
+<BlogHero
+  eyebrow="Dynamo · Revit · Getting started"
+  title="Five Dynamo scripts for Revit you'll use in your first week"
+  highlight="Where Dynamo opens, how to read a graph, and five short routines with the exact nodes: fill a parameter across a whole category, export to Excel, push changes back, find empty data, and clean up names."
+/>
+
+<Callout type="success" title="Quick answer">
+Dynamo is the visual programming tool that ships with Revit: instead of writing code, you connect nodes. The five first scripts that pay off most are filling a parameter across a whole category, exporting data to Excel, pushing the changes back into the model, finding empty parameters and standardizing names. Each takes only a handful of nodes.
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain English">
+- **Dynamo** — A tool that comes with Revit for automating tasks by connecting blocks, without writing code.
+- **Node** — Each block. It does one thing: pick elements, read a value, write it.
+- **Graph or script** — The set of connected nodes. It's saved as a .dyn file.
+- **Dynamo Player** — A Revit window that runs scripts without opening them, in one click.
+- **Instance and type parameters** — An instance parameter belongs to each element; a type parameter is shared by every element of that type.
+- **Code Block** — A node where you type a value or a short operation by hand.
+</Callout>
+
+## What is Dynamo for Revit and where do you open it?
+
+Dynamo is installed with Revit. You open it from **Manage › Visual Programming › Dynamo**. **Dynamo Player** sits on the same panel.
+
+A graph reads left to right: nodes on the left pick elements, nodes in the middle read or transform data, and nodes on the right write to the model.
+
+Two habits before you start:
+
+- **Set the run mode to Manual** (bottom left) whenever the graph writes to the model. In Automatic, every change you make to the graph writes again.
+- **Test on a copy of the model.** What Dynamo writes can usually be undone with Ctrl+Z in Revit, but don't rely on it.
+
+## Script 1: how do you fill a parameter on every element in a category?
+
+For example, writing "Checked" into the Comments parameter of every door.
+
+1. **Categories**: pick the Doors category.
+2. **All Elements of Category**: gets every door in the model.
+3. **String** or **Code Block**: the parameter name, "Comments", and the value, "Checked".
+4. **Element.SetParameterByName**: writes the value on each door.
+
+Three things that make this node fail:
+
+- **The parameter name** must match exactly, including capitals, and in your Revit's language: "Comments" in English Revit, "Comentarios" in Spanish.
+- **Instance or type.** If it's a type parameter, you write it on the type, not on each element. The **Family Types** node picks a type.
+- **The data type.** A number parameter won't take text. Numbers are written in the project's units.
+
+## Script 2: how do you export elements and parameters to Excel?
+
+Since Dynamo 2.12 there are nodes that read and write .xlsx files **without Excel installed**.
+
+1. **Categories** and **All Elements of Category**: the elements you want to list.
+2. **Element.Id**: each element's ID. It always goes in the first column, so the changes can come back.
+3. **Element.GetParameterValueByName**: one node per parameter, for example Mark and Comments.
+4. **List.Create** joins the columns and **List.Transpose** turns them into rows.
+5. **File Path** and **Data.OpenXMLExportExcel**: the file, the sheet name and the data.
+
+## Script 3: how do you push changes from Excel back into Revit?
+
+It's the round trip Revit doesn't offer.
+
+1. **File Path** and **Data.OpenXMLImportExcel**: reads the edited sheet.
+2. **List.Transpose**: separates the ID column from the new values.
+3. **All Elements of Category** and **Element.Id**: reads the model's elements again.
+4. **List.IndexOf** and **List.GetItemAtIndex**: finds, for each Excel row, the element with that ID.
+5. **Element.SetParameterByName**: writes the new values.
+
+The golden rule: **match by ID, never by row order**. If someone sorted the sheet, the value would land on a different element. We go deeper in [exporting Revit schedules to Excel and importing them back](/en/blog/export-revit-schedule-to-excel).
+
+## Script 4: how do you find elements with an empty parameter?
+
+The quality check before a deliverable: which doors have no Mark.
+
+1. **All Elements of Category** and **Element.GetParameterValueByName**: the Mark value of every door.
+2. Compare each value with an empty string and with null (**Object.IsNull**): you get a list of true and false.
+3. **List.FilterByBoolMask**: keeps the doors with no value.
+4. **List.Count**: how many there are.
+5. **Color.ByARGB** and **Element.OverrideColorInView**: paints them red in the active view.
+
+## Script 5: how do you standardize names in bulk?
+
+For example, making every room name uppercase.
+
+1. **Categories** (Rooms) and **All Elements of Category**.
+2. **Element.GetParameterValueByName**: the Name parameter.
+3. **String.ToUpper**: converts it to uppercase. To add a prefix, use a **Code Block** with `"B1-" + x`.
+4. **Element.SetParameterByName**: writes the new name.
+
+## How do you get the team using them without opening Dynamo?
+
+With **Dynamo Player**:
+
+1. Save the .dyn scripts in a shared folder.
+2. In each graph, right-click the nodes users should be able to change (the category, the value, the file) and check **Is Input**.
+3. Open **Manage › Visual Programming › Dynamo Player** and point it to that folder.
+
+The team sees a list of scripts, changes the inputs and clicks run. Nobody touches the graph.
+
+## When should you move from Dynamo to a plugin?
+
+When the script runs every day, many people use it, it handles thousands of elements, or it needs serious validation before writing. At that point a C# plugin is faster, sturdier and doesn't depend on whoever built the graph. We compare them in [Dynamo vs C#: which one fits each case](/en/blog/dynamo-vs-csharp-civil-3d-revit).
+
+<CTABlock
+  eyebrow="Zeist · Dynamo scripts"
+  title="Dynamo scripts ready for your team, tested on your models"
+  body="We build the scripts around your rules, documented and ready for Dynamo Player. Delivery takes days to two weeks, and the initial diagnosis is free."
+  primaryLabel="Request a free diagnosis"
+  primaryHref="/en/contact"
+  secondaryLabel="See Dynamo script services"
+  secondaryHref="/en/services/dynamo-scripts"
+/>
+
+## Sources
+
+- [Dynamo Primer: selecting Revit elements](https://primer2.dynamobim.org/7_dynamo_for_revit/2-selecting), [editing parameters](https://primer2.dynamobim.org/7_dynamo_for_revit/3-editing) and [documenting and color overrides](https://primer2.dynamobim.org/7_dynamo_for_revit/6-documenting).
+- [Dynamo 2.12](https://dynamobim.org/dynamo-core-2-12-release-part-1-2/): the OpenXML Excel nodes, no Excel install needed.
+- [Autodesk: Dynamo Player](https://help.autodesk.com/cloudhelp/2021/ENU/RevitDynamo/files/RevitDynamo_Dynamo_Player_html.html).
+
+Data verified on October 23, 2026.
+
+## Related resources
+
+- **The full round trip:** [export Revit schedules to Excel and import them back](/en/blog/export-revit-schedule-to-excel).
+- **What to automate first:** [automate Revit tasks with Dynamo and plugins](/en/blog/automate-revit-tasks).
+- **The same in Civil 3D:** [Dynamo for Civil 3D scripts](/en/blog/dynamo-for-civil-3d-scripts).
+- **When to move to C#:** [Dynamo vs C#, which one fits each case](/en/blog/dynamo-vs-csharp-civil-3d-revit).
+
+<PostFaqs />

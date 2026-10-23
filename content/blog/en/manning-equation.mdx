@@ -1,0 +1,143 @@
+---
+translationKey: "ecuacion-de-manning"
+title: "Manning's Equation Explained: A Worked Example and an n Value Table (Concrete, PVC, Earth)"
+seoTitle: "Manning's Equation: Worked Example and n Table"
+ctaTitle: "Do you size every reach in Excel and then draw it? We bring the hydraulic calculation into Civil 3D with a plugin."
+description: "Manning's equation explained term by term, with a concrete channel solved by hand, a table of n values and the mistakes that show up most often."
+date: "2026-10-23T14:00:00.000Z"
+author: "Zeist"
+tags:
+  - Manning
+  - Hydraulics
+  - Open channels
+  - Sewers
+  - Drainage
+  - Civil 3D
+---
+
+<BlogHero
+  eyebrow="Hydraulics · Channels and pipes"
+  title="Manning's equation, term by term, with an example solved by hand"
+  highlight="What each letter means, a concrete channel solved step by step in SI and US units, the n value table for concrete, PVC and earth, and the six mistakes that show up most in design calculations."
+/>
+
+<Callout type="success" title="Quick answer">
+Manning's equation gives the velocity of water in a channel or in a pipe that isn't under pressure: V = (1/n) · R^(2/3) · S^(1/2) in SI units, or V = (1.49/n) · R^(2/3) · S^(1/2) in US units. Discharge is Q = V · A. A concrete channel 1 m wide, 0.50 m deep, on a 0.2 % slope carries 0.59 m³/s (20.9 cfs).
+</Callout>
+
+<Callout type="info" title="Glossary: the terms you'll read, in plain English">
+- **n (roughness coefficient)** — How rough the material is. The higher it is, the more it slows the water down.
+- **Flow area (A)** — The part of the cross-section the water fills.
+- **Wetted perimeter (P)** — The edge of the section the water touches: bottom and walls, not the free surface.
+- **Hydraulic radius (R)** — Flow area divided by wetted perimeter.
+- **Slope (S)** — How much the bottom drops per unit of length, in ft/ft or m/m.
+- **Flow depth** — How deep the water is.
+- **Uniform flow** — The depth doesn't change along the reach. It's the condition Manning's equation assumes.
+</Callout>
+
+## What does Manning's equation say?
+
+```
+SI:  V = (1/n) · R^(2/3) · S^(1/2)      V in m/s, R in m
+US:  V = (1.49/n) · R^(2/3) · S^(1/2)   V in ft/s, R in ft
+Q = V · A
+```
+
+- **V** is the mean velocity.
+- **n** is the roughness coefficient of the material. It's the same number in both unit systems.
+- **R** is the hydraulic radius: R = A / P.
+- **S** is the bottom slope as a ratio. A 0.2 % slope is 0.002.
+- **Q** is the discharge, and **A** the flow area.
+
+The 1.49 (more precisely 1.486) only converts units. Manning applies to **uniform free-surface flow**: channels, gutters, sanitary sewers and storm drains. It doesn't apply to pressurized pipes, which use Hazen-Williams or Darcy-Weisbach.
+
+## How do you solve an example step by step?
+
+A rectangular concrete channel, **1.00 m (3.28 ft) wide**, flowing **0.50 m (1.64 ft) deep**, on a **0.2 % slope** (S = 0.002), with **n = 0.015**. How much water does it carry?
+
+| Step | SI | Result |
+|---|---|---|
+| 1. Flow area | A = 1.00 × 0.50 | 0.50 m² |
+| 2. Wetted perimeter | P = 1.00 + 2 × 0.50 | 2.00 m |
+| 3. Hydraulic radius | R = 0.50 / 2.00 | 0.25 m |
+| 4. Powers | R^(2/3) = 0.397 and S^(1/2) = 0.0447 | — |
+| 5. Velocity | V = (1 / 0.015) × 0.397 × 0.0447 | 1.18 m/s |
+| 6. Discharge | Q = 1.18 × 0.50 | 0.59 m³/s |
+
+The same channel in US units: A = 5.38 ft², P = 6.56 ft, R = 0.82 ft, V = (1.49 / 0.015) × 0.82^(2/3) × 0.0447 = 3.89 ft/s, and **Q = 20.9 cfs**. That's the same 0.59 m³/s.
+
+One more check: the **Froude number**, F = V / √(g · y) in a rectangular channel. Here F = 1.18 / √(9.81 × 0.50) = 0.53. It's below 1, so the flow is **subcritical**: calm and stable.
+
+## What n value should you use for concrete, PVC or earth?
+
+These are the same values the [Manning calculator](/en/tools/manning-calculator) uses:
+
+| Material | Design n | Typical range |
+|---|---|---|
+| PVC | 0.010 | 0.009 – 0.011 |
+| Concrete pipe | 0.013 | 0.011 – 0.015 |
+| Cast iron | 0.013 | 0.010 – 0.014 |
+| Corrugated metal | 0.024 | 0.021 – 0.030 |
+| Concrete-lined channel | 0.015 | 0.013 – 0.016 |
+| Masonry | 0.025 | 0.017 – 0.030 |
+| Clean earth | 0.022 | 0.018 – 0.025 |
+| Earth with grass | 0.027 | 0.022 – 0.033 |
+| Rock | 0.035 | 0.025 – 0.040 |
+| Natural stream | 0.030 | 0.025 – 0.033 |
+
+The material matters a lot. The same channel dug in **clean earth** (n = 0.022) carries **0.40 m³/s**, 32 % less. With **grass** (n = 0.027), 0.33 m³/s.
+
+Use the design value, not the brand-new-pipe value: over the years you get sediment, joints and wear. If your agency or your state's design manual sets an n, use that one.
+
+## How does it work for a pipe that isn't flowing full?
+
+With the pipe **full**, the geometry is simple: A = π · D² / 4, P = π · D, so **R = D / 4**. A **300 mm (about 12 in)** concrete pipe (n = 0.013) on a **0.5 %** slope:
+
+- R = 0.30 / 4 = 0.075 m
+- V = (1 / 0.013) × 0.075^(2/3) × 0.005^(1/2) = **0.97 m/s** (3.2 ft/s)
+- Q = 0.97 × 0.0707 = **68 L/s** (2.4 cfs)
+
+With the pipe **partly full**, area and perimeter depend on the angle the water surface makes, and the math gets longer. One result surprises people: maximum discharge does **not** happen with the pipe full. It happens at **94 % of the diameter**, and it's 7.6 % higher. As the pipe fills completely, the wetted perimeter grows faster than the area and the water slows down.
+
+## How do you find the depth if you know the discharge?
+
+That's the reverse problem, and the most common one in design: you know how much water arrives and need to know how deep it will run. That depth is the **normal depth**.
+
+Manning's equation can't be solved directly for depth, because area and perimeter both depend on it. You solve it by trial: guess a depth, compute the discharge, adjust until it matches. In the example channel, for **0.40 m³/s** the normal depth is **0.375 m**, at 1.07 m/s.
+
+The calculator does this in **Normal depth** mode, for circular pipes and rectangular, trapezoidal and triangular channels.
+
+## What are the most common mistakes?
+
+1. **Slope as a percentage.** Typing 0.2 instead of 0.002 multiplies the discharge by 10: the example channel would carry 5.92 m³/s.
+2. **Using the diameter as the hydraulic radius.** For a full pipe, R is D/4. With R = D, the 300 mm pipe would carry 172 L/s instead of 68.
+3. **Mixing units.** In feet the factor is 1.49. Leave it out and the discharge comes out 33 % low.
+4. **Picking the catalog n for new pipe.** Design is for the service life, not day one.
+5. **Applying it to a pressurized pipe.** Manning is for free-surface flow.
+6. **Assuming a full pipe is maximum capacity.** The peak is at 94 % of the diameter. If more water arrives than that, the pipe surcharges and Manning no longer applies.
+
+<CTABlock
+  eyebrow="Zeist · Pipe networks in Civil 3D"
+  title="From the Excel calculation to the network drawn in Civil 3D"
+  body="If your team sizes each reach in a spreadsheet and then draws it by hand, we build a plugin that reads the calculation and lays out the network in Civil 3D. The diagnosis is free and takes one week."
+  primaryLabel="Request a free diagnosis"
+  primaryHref="/en/contact"
+  secondaryLabel="See custom add-ins"
+  secondaryHref="/en/services/revit-civil-3d-plugin-development"
+/>
+
+## Sources
+
+- Ven Te Chow, *Open-Channel Hydraulics*, McGraw-Hill, 1959: the n value table. For PVC, common manufacturer values.
+- [USGS: Roughness Characteristics of Natural Channels](https://pubs.usgs.gov/publication/wsp1849) (Barnes, Water-Supply Paper 1849, 1967): n values for 50 natural channels, with photographs.
+- The example results were checked with Zeist's [Manning calculator](/en/tools/manning-calculator).
+
+Data verified on October 23, 2026.
+
+## Related resources
+
+- **Skip the hand calculation:** [Manning calculator](/en/tools/manning-calculator), for circular pipes and channels, in SI or US units.
+- **From calculation to model:** [Civil 3D pipe networks: fittings, water and sewer](/en/blog/civil-3d-pipe-network-fittings).
+- **3D without redrawing:** [a Civil 3D plugin that models in 3D](/en/blog/civil-3d-plugin-3d-modeling).
+
+<PostFaqs />

@@ -1,0 +1,142 @@
+---
+title: "Ecuación de Manning explicada: ejemplo resuelto y tabla de coeficientes n (concreto, PVC, tierra)"
+seoTitle: "Ecuación de Manning: ejemplo resuelto y tabla de n"
+ctaTitle: "¿Calculas cada tramo en Excel y luego lo dibujas? Llevamos el cálculo hidráulico a Civil 3D con un plugin."
+description: "La ecuación de Manning explicada término por término, con un canal de concreto resuelto a mano, la tabla de coeficientes n y los errores más comunes."
+date: "2026-10-23T14:00:00.000Z"
+author: "Zeist"
+tags:
+  - Manning
+  - Hidráulica
+  - Canales
+  - Alcantarillado
+  - Drenaje
+  - Civil 3D
+---
+
+<BlogHero
+  eyebrow="Hidráulica · Canales y tuberías"
+  title="La ecuación de Manning, término por término, con un ejemplo resuelto a mano"
+  highlight="Qué significa cada letra, un canal de concreto resuelto paso a paso, la tabla de coeficientes n para concreto, PVC y tierra, y los seis errores que más se repiten en las memorias de cálculo."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+La ecuación de Manning da la velocidad del agua en un canal o en una tubería que no trabaja a presión: V = (1/n) · R^(2/3) · S^(1/2), y el caudal es Q = V · A. Por ejemplo, un canal de concreto de 1 m de ancho con 0.50 m de agua y 0.2 % de pendiente lleva 0.59 m³/s.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Coeficiente n** — Qué tan áspero es el material. Cuanto más alto, más frena al agua.
+- **Área mojada (A)** — La parte de la sección que ocupa el agua, en m².
+- **Perímetro mojado (P)** — El borde de la sección que toca el agua: fondo y paredes, sin contar la superficie libre.
+- **Radio hidráulico (R)** — El área mojada dividida entre el perímetro mojado.
+- **Pendiente (S)** — Cuánto baja el fondo por cada metro de recorrido, en m/m.
+- **Tirante** — La profundidad del agua.
+- **Flujo uniforme** — El tirante no cambia a lo largo del tramo. Es la condición en la que vale Manning.
+</Callout>
+
+## ¿Qué dice la ecuación de Manning?
+
+```
+V = (1/n) · R^(2/3) · S^(1/2)
+Q = V · A
+```
+
+- **V** es la velocidad media del agua, en m/s.
+- **n** es el coeficiente de rugosidad del material.
+- **R** es el radio hidráulico, en metros: R = A / P.
+- **S** es la pendiente del fondo, en m/m. Un 0.2 % se escribe 0.002.
+- **Q** es el caudal, en m³/s, y **A** el área mojada, en m².
+
+Con pies en lugar de metros, el 1 se cambia por **1.49**: V = (1.49/n) · R^(2/3) · S^(1/2). El valor de n es el mismo en los dos sistemas.
+
+Manning vale para **flujo uniforme con superficie libre**: canales, cunetas, alcantarillado y drenaje pluvial. No vale para tuberías a presión, que se calculan con Hazen-Williams o Darcy-Weisbach.
+
+## ¿Cómo se resuelve un ejemplo paso a paso?
+
+Un canal rectangular de concreto con **1.00 m de ancho**, **0.50 m de tirante**, **pendiente de 0.2 %** (S = 0.002) y **n = 0.015**. ¿Cuánta agua lleva?
+
+| Paso | Cálculo | Resultado |
+|---|---|---|
+| 1. Área mojada | A = 1.00 × 0.50 | 0.50 m² |
+| 2. Perímetro mojado | P = 1.00 + 2 × 0.50 | 2.00 m |
+| 3. Radio hidráulico | R = 0.50 / 2.00 | 0.25 m |
+| 4. Potencias | R^(2/3) = 0.397 y S^(1/2) = 0.0447 | — |
+| 5. Velocidad | V = (1 / 0.015) × 0.397 × 0.0447 | 1.18 m/s |
+| 6. Caudal | Q = 1.18 × 0.50 | 0.59 m³/s (592 L/s) |
+
+Falta una revisión: el **número de Froude**, F = V / √(g · y) en un canal rectangular. Aquí F = 1.18 / √(9.81 × 0.50) = 0.53. Es menor que 1, así que el flujo es **subcrítico**: tranquilo y estable.
+
+## ¿Qué coeficiente n uso para concreto, PVC o tierra?
+
+Son los mismos valores que usa la [calculadora de Manning](/es/herramientas/calculadora-manning):
+
+| Material | n de diseño | Rango habitual |
+|---|---|---|
+| PVC | 0.010 | 0.009 – 0.011 |
+| Tubería de concreto | 0.013 | 0.011 – 0.015 |
+| Hierro fundido | 0.013 | 0.010 – 0.014 |
+| Metal corrugado | 0.024 | 0.021 – 0.030 |
+| Canal revestido de concreto | 0.015 | 0.013 – 0.016 |
+| Mampostería | 0.025 | 0.017 – 0.030 |
+| Tierra limpia | 0.022 | 0.018 – 0.025 |
+| Tierra con pasto | 0.027 | 0.022 – 0.033 |
+| Roca | 0.035 | 0.025 – 0.040 |
+| Cauce natural | 0.030 | 0.025 – 0.033 |
+
+El material pesa mucho. El mismo canal del ejemplo, excavado en **tierra limpia** (n = 0.022), lleva **0.40 m³/s**: un 32 % menos. Con **pasto** (n = 0.027), 0.33 m³/s.
+
+Usa el valor de diseño y no el del tubo nuevo: con los años aparecen sedimentos, juntas y desgaste. Si la norma de tu país o el reglamento del proyecto fija un n, manda ese.
+
+## ¿Cómo se aplica a una tubería que no va llena?
+
+Con el tubo **lleno**, la geometría es simple: A = π · D² / 4, P = π · D y, por eso, **R = D / 4**. Una tubería de concreto de **300 mm** (n = 0.013) con **0.5 %** de pendiente:
+
+- R = 0.30 / 4 = 0.075 m
+- V = (1 / 0.013) × 0.075^(2/3) × 0.005^(1/2) = **0.97 m/s**
+- Q = 0.97 × 0.0707 = **68 L/s**
+
+Con el tubo **parcialmente lleno**, el área y el perímetro dependen del ángulo que forma la superficie del agua, y el cálculo se alarga. Un dato que sorprende: el caudal máximo **no** se da con el tubo lleno, sino con el agua al **94 % del diámetro**, y es un 7.6 % mayor. Al llenarse del todo, el perímetro mojado crece más rápido que el área y el agua se frena.
+
+## ¿Cómo se calcula el tirante si conozco el caudal?
+
+Es el problema inverso, y el más común en diseño: ya sabes cuánta agua llega y necesitas saber a qué altura va a correr. Ese tirante se llama **tirante normal**.
+
+Manning no se puede despejar para el tirante, porque el área y el perímetro dependen de él. Se resuelve por tanteo: se prueba un tirante, se calcula el caudal y se ajusta hasta que coincida. En el canal del ejemplo, para **0.40 m³/s** el tirante normal es **0.375 m**, con 1.07 m/s.
+
+La calculadora lo hace en el modo **Tirante normal**, para tubo circular y canales rectangulares, trapezoidales y triangulares.
+
+## ¿Cuáles son los errores más comunes?
+
+1. **Pendiente en porcentaje.** Escribir 0.2 en lugar de 0.002 multiplica el caudal por 10: el canal del ejemplo daría 5.92 m³/s.
+2. **Usar el diámetro como radio hidráulico.** Con el tubo lleno, R es D/4. Con R = D, la tubería de 300 mm daría 172 L/s en lugar de 68.
+3. **Mezclar unidades.** Con pies, el factor es 1.49. Sin él, el caudal sale un 33 % menor.
+4. **Elegir el n del catálogo del tubo nuevo.** El diseño se hace para la vida útil, no para el primer día.
+5. **Aplicarla a una tubería a presión.** Manning es para superficie libre.
+6. **Creer que el tubo lleno es la capacidad máxima.** El máximo se da con el agua al 94 % del diámetro. Si llega más caudal que ese, la tubería entra en carga y Manning deja de valer.
+
+<CTABlock
+  eyebrow="Zeist · Redes y drenaje en Civil 3D"
+  title="Del cálculo en Excel a la red dibujada en Civil 3D"
+  body="Si tu equipo calcula cada tramo en una hoja y después lo dibuja a mano, desarrollamos un plugin que lee el cálculo y arma la red en Civil 3D. El diagnóstico es gratuito y dura una semana."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Fuentes
+
+- Ven Te Chow, *Open-Channel Hydraulics*, McGraw-Hill, 1959: la tabla de coeficientes n. Para PVC, valores habituales de fabricantes.
+- [USGS: Roughness Characteristics of Natural Channels](https://pubs.usgs.gov/publication/wsp1849) (Barnes, Water-Supply Paper 1849, 1967): coeficientes n de 50 cauces naturales, con fotografías.
+- Los resultados del ejemplo se comprobaron con la [calculadora de Manning](/es/herramientas/calculadora-manning) de Zeist.
+
+Datos verificados el 23 de octubre de 2026.
+
+## Recursos relacionados
+
+- **Calcúlalo sin hacerlo a mano:** [calculadora de Manning](/es/herramientas/calculadora-manning), para tubo circular y canales, en SI o en unidades de EE. UU.
+- **Del cálculo al modelo:** [redes de tuberías en Civil 3D: accesorios, agua y desagüe](/es/blog/redes-tuberias-civil-3d-accesorios).
+- **Dibujo 3D sin rehacer nada:** [plugin para Civil 3D que dibuja en 3D](/es/blog/plugin-civil-3d-dibujo-3d-automatizado).
+- **Un caso de drenaje urbano:** [drenaje pluvial en Trujillo con Civil 3D](/es/blog/drenaje-pluvial-trujillo-civil-3d).
+
+<PostFaqs />

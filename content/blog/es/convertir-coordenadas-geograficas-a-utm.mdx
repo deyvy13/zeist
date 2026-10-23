@@ -1,0 +1,146 @@
+---
+title: "Cómo convertir coordenadas geográficas a UTM y UTM a latitud y longitud: en línea, en Excel y en Civil 3D"
+seoTitle: "Coordenadas geográficas a UTM: Excel y Civil 3D"
+ctaTitle: "¿Tu oficina convierte puntos todas las semanas? Lo llevamos a un botón dentro de Civil 3D."
+description: "Cómo pasar de latitud y longitud a UTM y al revés: la zona y el hemisferio, fórmulas para Excel, el conversor por lotes y cómo lo hace Civil 3D."
+date: "2026-10-23T14:30:00.000Z"
+author: "Zeist"
+tags:
+  - Coordenadas UTM
+  - Coordenadas geográficas
+  - Excel
+  - Civil 3D
+  - Topografía
+  - Datum
+---
+
+<BlogHero
+  eyebrow="Coordenadas · UTM · Excel · Civil 3D"
+  title="De latitud y longitud a UTM, y de vuelta, sin que el punto termine en otro lado"
+  highlight="Qué es una zona UTM y cómo saber la tuya, las fórmulas que sí sirven en Excel, cómo convertir una lista entera en un minuto y cómo lo hace Civil 3D. Con los seis errores que mandan los puntos al mar."
+/>
+
+<Callout type="success" title="Respuesta rápida">
+Para convertir latitud y longitud a UTM necesitas la zona (franjas de 6° de longitud), el hemisferio y el datum; las fórmulas de la proyección hacen el resto. En la práctica: un conversor en línea para un punto o una lista pegada desde Excel, y en Civil 3D, asignar el sistema de coordenadas del dibujo antes de importar.
+</Callout>
+
+<Callout type="info" title="Glosario: los términos que vas a leer, en simple">
+- **Coordenadas geográficas** — Latitud y longitud, en grados. Ubican un punto sobre la Tierra entera.
+- **UTM** — Un sistema en metros, plano, que divide la Tierra en franjas. Se escribe como Este y Norte.
+- **Zona UTM** — Cada franja de 6° de longitud. Hay 60.
+- **Hemisferio** — Norte o Sur. En UTM cambia cómo se cuenta el Norte.
+- **Datum** — La referencia de la que parten las coordenadas: WGS84, SIRGAS 2000, PSAD56. Un mismo punto tiene coordenadas distintas en cada datum.
+- **Meridiano central** — La línea del medio de cada zona, donde UTM tiene menos deformación.
+</Callout>
+
+## ¿Qué diferencia hay entre coordenadas geográficas y UTM?
+
+Las geográficas miden **ángulos** sobre la Tierra: la latitud, de 90° Sur a 90° Norte, y la longitud, de 180° Oeste a 180° Este. Sirven en cualquier lugar, pero un grado no mide lo mismo en todas partes, así que no sirven para medir distancias ni áreas en un plano.
+
+UTM proyecta la Tierra sobre un plano, en **metros**. Para que la deformación sea pequeña, la divide en 60 zonas y cada una tiene su propio plano. Las reglas son siempre las mismas:
+
+| Regla | Valor |
+|---|---|
+| Ancho de cada zona | 6° de longitud (60 zonas) |
+| Este del meridiano central | 500 000 m |
+| Norte en el ecuador, hemisferio norte | 0 m |
+| Norte en el ecuador, hemisferio sur | 10 000 000 m |
+| Factor de escala en el meridiano central | 0.9996 |
+| Dónde vale | de 80° Sur a 84° Norte |
+
+Por eso una coordenada UTM **sin zona y sin hemisferio no dice nada**: el mismo Este y Norte existe 120 veces en el mundo.
+
+## ¿Cómo sé en qué zona UTM estoy?
+
+Con la longitud en grados decimales (negativa al oeste de Greenwich):
+
+```
+zona = ENTERO((longitud + 180) / 6) + 1
+meridiano central = 6 × zona − 183
+```
+
+El hemisferio sale del signo de la latitud: negativa, Sur; positiva, Norte.
+
+| Ciudad | Longitud | Zona |
+|---|---|---|
+| Ciudad de México | −99.13 | 14 N |
+| Bogotá | −74.08 | 18 N |
+| Lima | −77.04 | 18 S |
+| Santiago de Chile | −70.65 | 19 S |
+| Buenos Aires | −58.38 | 21 S |
+| Madrid | −3.70 | 30 N |
+
+Hay excepciones en Noruega y en Svalbard, donde algunas zonas se ensancharon. Y si el proyecto queda en el borde entre dos zonas, se trabaja en la que declara el plano o el expediente, aunque una parte caiga en la vecina.
+
+## ¿Cómo convierto un punto o una lista en línea?
+
+El [conversor de coordenadas](/es/herramientas/conversor-de-coordenadas) de Zeist hace las dos direcciones y el cambio de datum:
+
+1. Elige la dirección: geográficas a UTM o UTM a geográficas.
+2. Pega un punto o una lista entera copiada desde Excel. Reconoce tabulaciones, punto y coma, comas o espacios, y la coma decimal.
+3. Revisa los puntos en el mapa antes de usarlos.
+4. Descarga el resultado en Excel, en KML para Google Earth o en PNEZD para importarlo a Civil 3D.
+
+También muestra el factor de escala y la convergencia de cada punto. La matemática está validada contra PROJ, la librería de referencia en geodesia, con diferencias de 1 mm.
+
+## ¿Se puede convertir en Excel?
+
+Excel no trae una función para UTM. La conversión completa son fórmulas largas, en serie, que se rompen con un solo paréntesis mal puesto. Lo que sí conviene hacer en Excel:
+
+```
+Zona:              =ENTERO((B2+180)/6)+1
+Hemisferio:        =SI(A2<0;"S";"N")
+Meridiano central: =6*C2-183
+GMS a decimales:   =D2+E2/60+F2/3600
+```
+
+En la última, los grados, minutos y segundos van en columnas separadas, y el resultado se pone en negativo si es Sur u Oeste. Según la configuración regional, el separador de argumentos es punto y coma o coma.
+
+Para la conversión en sí, lo más seguro es copiar las columnas, pegarlas en el conversor en modo por lotes y descargar el Excel con el resultado. Si usas una planilla con las fórmulas completas, compruébala antes con un punto cuyas coordenadas conozcas.
+
+## ¿Cómo lo hace Civil 3D?
+
+Civil 3D convierte por su cuenta si el dibujo sabe en qué sistema está:
+
+1. **Asigna el sistema de coordenadas del dibujo** en Configuración del dibujo › Unidades y zona, por ejemplo WGS 84 UTM zona 18 Sur.
+2. **Importa los puntos** con un formato de archivo que tenga columnas de latitud y longitud. Civil 3D los proyecta a UTM. Sin el paso 1 no puede hacerlo.
+3. **Para el camino inverso**, con el sistema asignado, una etiqueta de punto o un formato de exportación puede mostrar la latitud y la longitud de cada punto.
+
+Lo explicamos con detalle, con los errores de importación, en [importar puntos a Civil 3D desde Excel](/es/blog/importar-puntos-civil-3d-excel).
+
+## ¿Por qué mi punto cae en otro lugar?
+
+1. **Latitud y longitud invertidas.** El punto salta a otro continente.
+2. **Falta el signo negativo.** Al oeste de Greenwich la longitud es negativa, y al sur del ecuador, la latitud.
+3. **Zona o hemisferio equivocados.** El error es de cientos de kilómetros.
+4. **Otro datum.** En el norte del Perú, pasar de PSAD56 a WGS84 mueve los puntos unos 450 m. En Brasil, entre SAD69 y SIRGAS 2000 hay decenas de metros.
+5. **Grados y minutos leídos como decimales.** 12° 30′ es 12.5°, no 12.30°.
+6. **Coma y punto decimal mezclados.** Excel convierte el número en texto o lo multiplica por mil.
+
+Si el plano no dice en qué datum está, la herramienta de [coordenadas UTM en Google Maps](/es/herramientas/coordenadas-utm-en-google-maps) compara WGS84, PSAD56 y SAD69 sobre el mapa y muestra cuál cae donde debe.
+
+<CTABlock
+  eyebrow="Zeist · Automatización BIM"
+  title="Coordenadas convertidas dentro de Civil 3D, con un botón"
+  body="Si tu equipo convierte listas de puntos cada semana, desarrollamos un plugin que lee el Excel, convierte, revisa el datum y crea los puntos en el dibujo. El diagnóstico es gratuito y dura una semana."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/es/contacto"
+  secondaryLabel="Ver add-ins a medida"
+  secondaryHref="/es/servicios/add-ins-revit-civil-3d"
+/>
+
+## Fuentes
+
+- [USGS: The Universal Transverse Mercator (UTM) Grid](https://pubs.usgs.gov/fs/2001/0077/report.pdf), hoja informativa 077-01: zonas, Este falso y factor de escala.
+- Los valores del conversor de Zeist se comprobaron contra [PROJ](https://proj.org/), con diferencias de 1 mm.
+
+Datos verificados el 23 de octubre de 2026.
+
+## Recursos relacionados
+
+- **Convierte ahora:** [conversor de coordenadas UTM y geográficas](/es/herramientas/conversor-de-coordenadas), de un punto o por lotes.
+- **El caso real:** [ubicar un plano con coordenadas UTM en Google Maps](/es/blog/ubicar-plano-coordenadas-utm-google-maps).
+- **Llevar los puntos al dibujo:** [importar puntos a Civil 3D desde Excel](/es/blog/importar-puntos-civil-3d-excel).
+- **Un ejemplo con datos locales:** [coordenadas UTM en Trujillo y La Libertad](/es/blog/coordenadas-utm-trujillo-la-libertad).
+
+<PostFaqs />

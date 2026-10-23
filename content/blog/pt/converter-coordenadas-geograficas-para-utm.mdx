@@ -1,0 +1,147 @@
+---
+translationKey: "convertir-coordenadas-geograficas-a-utm"
+title: "Como converter coordenadas geográficas para UTM e UTM para latitude e longitude: online, no Excel e no Civil 3D"
+seoTitle: "Coordenadas geográficas para UTM: Excel e Civil 3D"
+ctaTitle: "Seu escritório converte pontos toda semana? Levamos isso para um botão dentro do Civil 3D."
+description: "Como passar de latitude e longitude para UTM e vice-versa: fuso e hemisfério, fórmulas para Excel, o conversor em lote e como o Civil 3D faz."
+date: "2026-10-23T14:30:00.000Z"
+author: "Zeist"
+tags:
+  - Coordenadas UTM
+  - Coordenadas geográficas
+  - Excel
+  - Civil 3D
+  - Topografia
+  - Datum
+---
+
+<BlogHero
+  eyebrow="Coordenadas · UTM · Excel · Civil 3D"
+  title="De latitude e longitude para UTM, e de volta, sem o ponto ir parar em outro lugar"
+  highlight="O que é um fuso UTM e como saber o seu, as fórmulas que funcionam no Excel, como converter uma lista inteira em um minuto e como o Civil 3D faz. Com os seis erros que mandam os pontos para o mar."
+/>
+
+<Callout type="success" title="Resposta rápida">
+Para converter latitude e longitude em UTM você precisa do fuso (faixas de 6° de longitude), do hemisfério e do datum; as fórmulas da projeção fazem o resto. Na prática: um conversor online para um ponto ou uma lista colada do Excel e, no Civil 3D, atribuir o sistema de coordenadas do desenho antes de importar.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Coordenadas geográficas** — Latitude e longitude, em graus. Localizam um ponto na Terra inteira.
+- **UTM** — Um sistema em metros, plano, que divide a Terra em faixas. Escreve-se como Este e Norte.
+- **Fuso UTM** — Cada faixa de 6° de longitude. São 60.
+- **Hemisfério** — Norte ou Sul. Em UTM, muda a forma de contar o Norte.
+- **Datum** — A referência das coordenadas: SIRGAS 2000, WGS84, SAD69. Um mesmo ponto tem coordenadas diferentes em cada datum.
+- **Meridiano central** — A linha do meio de cada fuso, onde a UTM tem menos deformação.
+</Callout>
+
+## Qual é a diferença entre coordenadas geográficas e UTM?
+
+As geográficas medem **ângulos** sobre a Terra: a latitude, de 90° Sul a 90° Norte, e a longitude, de 180° Oeste a 180° Leste. Servem em qualquer lugar, mas um grau não mede o mesmo em toda parte, então não servem para medir distâncias nem áreas em planta.
+
+A UTM projeta a Terra sobre um plano, em **metros**. Para que a deformação seja pequena, divide-a em 60 fusos, e cada um tem seu próprio plano. As regras são sempre as mesmas:
+
+| Regra | Valor |
+|---|---|
+| Largura de cada fuso | 6° de longitude (60 fusos) |
+| Este do meridiano central | 500 000 m |
+| Norte no equador, hemisfério norte | 0 m |
+| Norte no equador, hemisfério sul | 10 000 000 m |
+| Fator de escala no meridiano central | 0,9996 |
+| Onde vale | de 80° Sul a 84° Norte |
+
+Por isso uma coordenada UTM **sem fuso e sem hemisfério não diz nada**: o mesmo Este e Norte existe 120 vezes no mundo.
+
+## Como sei em que fuso UTM estou?
+
+Com a longitude em graus decimais (negativa a oeste de Greenwich):
+
+```
+fuso = INT((longitude + 180) / 6) + 1
+meridiano central = 6 × fuso − 183
+```
+
+O hemisfério sai do sinal da latitude: negativa, Sul; positiva, Norte.
+
+| Cidade | Longitude | Fuso |
+|---|---|---|
+| Manaus | −60,02 | 20 S |
+| Porto Alegre | −51,23 | 22 S |
+| Brasília | −47,88 | 23 S |
+| São Paulo | −46,63 | 23 S |
+| Rio de Janeiro | −43,17 | 23 S |
+| Lisboa | −9,14 | 29 N |
+
+Há exceções na Noruega e em Svalbard, onde alguns fusos foram alargados. E se a obra fica na divisa entre dois fusos, trabalha-se no que o projeto declara, mesmo que uma parte caia no vizinho.
+
+## Como converto um ponto ou uma lista online?
+
+O [conversor de coordenadas](/pt/ferramentas/conversor-de-coordenadas) da Zeist faz os dois sentidos e a mudança de datum:
+
+1. Escolha o sentido: geográficas para UTM ou UTM para geográficas.
+2. Cole um ponto ou uma lista inteira copiada do Excel. Ele reconhece tabulação, ponto e vírgula, vírgula ou espaços, e a vírgula decimal.
+3. Confira os pontos no mapa antes de usá-los.
+4. Baixe o resultado em Excel, em KML para o Google Earth ou em PNEZD para importar no Civil 3D.
+
+Ele também mostra o fator de escala e a convergência de cada ponto. A matemática foi validada contra o PROJ, a biblioteca de referência em geodésia, com diferenças de 1 mm.
+
+## Dá para converter no Excel?
+
+O Excel não tem uma função para UTM. A conversão completa são fórmulas longas, em série, que quebram com um só parêntese fora do lugar. O que vale a pena fazer no Excel:
+
+```
+Fuso:              =INT((B2+180)/6)+1
+Hemisfério:        =SE(A2<0;"S";"N")
+Meridiano central: =6*C2-183
+GMS para decimais: =D2+E2/60+F2/3600
+```
+
+Na última, graus, minutos e segundos ficam em colunas separadas, e o resultado vai negativo se for Sul ou Oeste. Conforme a configuração regional, o separador de argumentos é ponto e vírgula ou vírgula.
+
+Para a conversão em si, o mais seguro é copiar as colunas, colá-las no conversor em modo lote e baixar o Excel com o resultado. Se usar uma planilha com as fórmulas completas, teste-a antes com um ponto de coordenadas conhecidas.
+
+## Como o Civil 3D faz?
+
+O Civil 3D converte sozinho se o desenho souber em que sistema está:
+
+1. **Atribua o sistema de coordenadas do desenho** em Configurações do desenho › Unidades e zona, por exemplo SIRGAS 2000 UTM fuso 23 Sul.
+2. **Importe os pontos** com um formato de arquivo que tenha colunas de latitude e longitude. O Civil 3D os projeta em UTM. Sem o passo 1 ele não consegue.
+3. **Para o caminho inverso**, com o sistema atribuído, um rótulo de ponto ou um formato de exportação pode mostrar a latitude e a longitude de cada ponto.
+
+Explicamos em detalhe, com os erros de importação, em [importar pontos no Civil 3D a partir do Excel](/pt/blog/importar-pontos-civil-3d).
+
+## Por que meu ponto cai em outro lugar?
+
+1. **Latitude e longitude invertidas.** O ponto pula para outro continente.
+2. **Falta o sinal negativo.** A oeste de Greenwich a longitude é negativa e, ao sul do equador, a latitude.
+3. **Fuso ou hemisfério errados.** O erro é de centenas de quilômetros.
+4. **Outro datum.** No Brasil, o SIRGAS 2000 é o único sistema oficial desde fevereiro de 2015, e entre SAD69 e SIRGAS 2000 há dezenas de metros. O ProGriD, do IBGE, faz essa conversão.
+5. **Graus e minutos lidos como decimais.** 12° 30′ é 12,5°, não 12,30°.
+6. **Vírgula e ponto decimal misturados.** O Excel transforma o número em texto ou o multiplica por mil.
+
+Se o projeto não diz em que datum está, a ferramenta de [coordenadas UTM no Google Maps](/pt/ferramentas/coordenadas-utm-no-google-maps) compara WGS84, PSAD56 e SAD69 sobre o mapa e mostra qual cai onde deve.
+
+<CTABlock
+  eyebrow="Zeist · Automação BIM"
+  title="Coordenadas convertidas dentro do Civil 3D, com um botão"
+  body="Se a sua equipe converte listas de pontos toda semana, desenvolvemos um plugin que lê o Excel, converte, confere o datum e cria os pontos no desenho. O diagnóstico é gratuito e dura uma semana."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicos/plugins-revit-civil-3d"
+/>
+
+## Fontes
+
+- [USGS: The Universal Transverse Mercator (UTM) Grid](https://pubs.usgs.gov/fs/2001/0077/report.pdf), ficha informativa 077-01: fusos, Este falso e fator de escala.
+- IBGE, R.PR 1/2005: o SIRGAS 2000 como sistema oficial no Brasil, com transição encerrada em fevereiro de 2015.
+- Os valores do conversor da Zeist foram conferidos contra o [PROJ](https://proj.org/), com diferenças de 1 mm.
+
+Dados verificados em 23 de outubro de 2026.
+
+## Recursos relacionados
+
+- **Converta agora:** [conversor de coordenadas UTM e geográficas](/pt/ferramentas/conversor-de-coordenadas), de um ponto ou em lote.
+- **O caso real:** [localizar um terreno pelas coordenadas UTM](/pt/blog/localizar-terreno-coordenadas-utm).
+- **Levar os pontos ao desenho:** [importar pontos no Civil 3D a partir do Excel](/pt/blog/importar-pontos-civil-3d).
+
+<PostFaqs />

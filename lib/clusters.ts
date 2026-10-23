@@ -40,6 +40,8 @@ export const clusters: Cluster[] = [
       "membrete-planos-automatico-revit-autocad",
       "seguridad-plugins-revit-civil-3d",
       "vulnerabilidad-php-plugins-revit-civil-3d",
+      "auditoria-automatica-modelos-revit",
+      "dynamo-para-revit-primeros-scripts",
     ],
   },
   {
@@ -97,7 +99,12 @@ export const clusters: Cluster[] = [
   {
     id: "C6",
     pillar: "plugin-civil-3d-dibujo-3d-automatizado",
-    satellites: ["redes-tuberias-civil-3d-accesorios", "banco-de-ductos-civil-3d", "drenaje-pluvial-trujillo-civil-3d"],
+    satellites: [
+      "redes-tuberias-civil-3d-accesorios",
+      "banco-de-ductos-civil-3d",
+      "drenaje-pluvial-trujillo-civil-3d",
+      "ecuacion-de-manning",
+    ],
   },
   {
     // SEO local: búsquedas con "Trujillo" / "La Libertad". Solo es, como C5.
@@ -119,6 +126,7 @@ export const clusters: Cluster[] = [
     id: "C8",
     pillar: "ubicar-plano-coordenadas-utm-google-maps",
     satellites: [
+      "convertir-coordenadas-geograficas-a-utm",
       "coordenadas-utm-trujillo-la-libertad",
       "importar-puntos-civil-3d-excel",
       "curvas-de-nivel-civil-3d-google-earth",

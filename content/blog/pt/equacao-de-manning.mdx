@@ -1,0 +1,142 @@
+---
+translationKey: "ecuacion-de-manning"
+title: "Equação de Manning explicada: exemplo resolvido e tabela de coeficientes n (concreto, PVC, terra)"
+seoTitle: "Equação de Manning: exemplo resolvido e tabela de n"
+ctaTitle: "Você calcula cada trecho no Excel e depois desenha? Levamos o cálculo hidráulico para o Civil 3D com um plugin."
+description: "A equação de Manning explicada termo a termo, com um canal de concreto resolvido à mão, a tabela de coeficientes n e os erros mais comuns."
+date: "2026-10-23T14:00:00.000Z"
+author: "Zeist"
+tags:
+  - Manning
+  - Hidráulica
+  - Canais
+  - Esgoto
+  - Drenagem
+  - Civil 3D
+---
+
+<BlogHero
+  eyebrow="Hidráulica · Canais e tubulações"
+  title="A equação de Manning, termo a termo, com um exemplo resolvido à mão"
+  highlight="O que significa cada letra, um canal de concreto resolvido passo a passo, a tabela de coeficientes n para concreto, PVC e terra, e os seis erros que mais se repetem nas memórias de cálculo."
+/>
+
+<Callout type="success" title="Resposta rápida">
+A equação de Manning dá a velocidade da água em um canal ou em uma tubulação que não trabalha sob pressão: V = (1/n) · R^(2/3) · S^(1/2), e a vazão é Q = V · A. Por exemplo, um canal de concreto de 1 m de largura, com 0,50 m de lâmina e declividade de 0,2 %, conduz 0,59 m³/s.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Coeficiente n** — O quanto o material é áspero. Quanto maior, mais ele freia a água.
+- **Área molhada (A)** — A parte da seção ocupada pela água, em m².
+- **Perímetro molhado (P)** — A borda da seção que toca a água: fundo e paredes, sem contar a superfície livre.
+- **Raio hidráulico (R)** — A área molhada dividida pelo perímetro molhado.
+- **Declividade (S)** — Quanto o fundo desce a cada metro de percurso, em m/m.
+- **Lâmina d'água** — A profundidade da água.
+- **Escoamento uniforme** — A lâmina não muda ao longo do trecho. É a condição em que Manning vale.
+</Callout>
+
+## O que diz a equação de Manning?
+
+```
+V = (1/n) · R^(2/3) · S^(1/2)
+Q = V · A
+```
+
+- **V** é a velocidade média da água, em m/s.
+- **n** é o coeficiente de rugosidade do material.
+- **R** é o raio hidráulico, em metros: R = A / P.
+- **S** é a declividade do fundo, em m/m. Um 0,2 % se escreve 0,002.
+- **Q** é a vazão, em m³/s, e **A** a área molhada, em m².
+
+Com pés em vez de metros, o 1 vira **1,49**: V = (1,49/n) · R^(2/3) · S^(1/2). O valor de n é o mesmo nos dois sistemas.
+
+Manning vale para **escoamento uniforme com superfície livre**: canais, sarjetas, esgoto e drenagem pluvial. Não vale para tubulações sob pressão, que se calculam com Hazen-Williams ou Darcy-Weisbach.
+
+## Como se resolve um exemplo passo a passo?
+
+Um canal retangular de concreto com **1,00 m de largura**, **0,50 m de lâmina**, **declividade de 0,2 %** (S = 0,002) e **n = 0,015**. Quanta água ele conduz?
+
+| Passo | Cálculo | Resultado |
+|---|---|---|
+| 1. Área molhada | A = 1,00 × 0,50 | 0,50 m² |
+| 2. Perímetro molhado | P = 1,00 + 2 × 0,50 | 2,00 m |
+| 3. Raio hidráulico | R = 0,50 / 2,00 | 0,25 m |
+| 4. Potências | R^(2/3) = 0,397 e S^(1/2) = 0,0447 | — |
+| 5. Velocidade | V = (1 / 0,015) × 0,397 × 0,0447 | 1,18 m/s |
+| 6. Vazão | Q = 1,18 × 0,50 | 0,59 m³/s (592 L/s) |
+
+Falta uma verificação: o **número de Froude**, F = V / √(g · y) em um canal retangular. Aqui F = 1,18 / √(9,81 × 0,50) = 0,53. É menor que 1, então o escoamento é **subcrítico**: tranquilo e estável.
+
+## Que coeficiente n usar para concreto, PVC ou terra?
+
+São os mesmos valores da [calculadora de Manning](/pt/ferramentas/calculadora-manning):
+
+| Material | n de projeto | Faixa usual |
+|---|---|---|
+| PVC | 0,010 | 0,009 – 0,011 |
+| Tubo de concreto | 0,013 | 0,011 – 0,015 |
+| Ferro fundido | 0,013 | 0,010 – 0,014 |
+| Metal corrugado | 0,024 | 0,021 – 0,030 |
+| Canal revestido de concreto | 0,015 | 0,013 – 0,016 |
+| Alvenaria | 0,025 | 0,017 – 0,030 |
+| Terra limpa | 0,022 | 0,018 – 0,025 |
+| Terra com grama | 0,027 | 0,022 – 0,033 |
+| Rocha | 0,035 | 0,025 – 0,040 |
+| Curso d'água natural | 0,030 | 0,025 – 0,033 |
+
+O material pesa muito. O mesmo canal do exemplo, escavado em **terra limpa** (n = 0,022), conduz **0,40 m³/s**: 32 % a menos. Com **grama** (n = 0,027), 0,33 m³/s.
+
+Use o valor de projeto, não o do tubo novo: com os anos aparecem sedimentos, juntas e desgaste. Se a norma do seu projeto fixa um n, vale esse.
+
+## Como se aplica a uma tubulação que não está cheia?
+
+Com o tubo **cheio**, a geometria é simples: A = π · D² / 4, P = π · D e, por isso, **R = D / 4**. Um tubo de concreto de **300 mm** (n = 0,013) com declividade de **0,5 %**:
+
+- R = 0,30 / 4 = 0,075 m
+- V = (1 / 0,013) × 0,075^(2/3) × 0,005^(1/2) = **0,97 m/s**
+- Q = 0,97 × 0,0707 = **68 L/s**
+
+Com o tubo **parcialmente cheio**, a área e o perímetro dependem do ângulo formado pela superfície da água, e o cálculo fica mais longo. Um dado que surpreende: a vazão máxima **não** ocorre a seção plena, e sim com a lâmina a **94 % do diâmetro**, e é 7,6 % maior. Quando o tubo enche de vez, o perímetro molhado cresce mais rápido que a área e a água freia.
+
+## Como se calcula a lâmina se eu conheço a vazão?
+
+É o problema inverso, e o mais comum em projeto: você já sabe quanta água chega e precisa saber em que altura ela vai escoar. Essa altura se chama **lâmina normal**.
+
+Manning não pode ser isolada para a lâmina, porque a área e o perímetro dependem dela. Resolve-se por tentativa: testa-se uma lâmina, calcula-se a vazão e ajusta-se até coincidir. No canal do exemplo, para **0,40 m³/s** a lâmina normal é **0,375 m**, com 1,07 m/s.
+
+A calculadora faz isso no modo **Lâmina normal**, para tubo circular e canais retangulares, trapezoidais e triangulares.
+
+## Quais são os erros mais comuns?
+
+1. **Declividade em porcentagem.** Escrever 0,2 em vez de 0,002 multiplica a vazão por 10: o canal do exemplo daria 5,92 m³/s.
+2. **Usar o diâmetro como raio hidráulico.** Com o tubo cheio, R é D/4. Com R = D, o tubo de 300 mm daria 172 L/s em vez de 68.
+3. **Misturar unidades.** Com pés, o fator é 1,49. Sem ele, a vazão sai 33 % menor.
+4. **Escolher o n do catálogo do tubo novo.** O projeto é feito para a vida útil, não para o primeiro dia.
+5. **Aplicá-la a uma tubulação sob pressão.** Manning é para superfície livre.
+6. **Achar que a seção plena é a capacidade máxima.** O máximo ocorre com a lâmina a 94 % do diâmetro. Se chegar mais vazão que isso, a tubulação entra em carga e Manning deixa de valer.
+
+<CTABlock
+  eyebrow="Zeist · Redes e drenagem no Civil 3D"
+  title="Do cálculo no Excel à rede desenhada no Civil 3D"
+  body="Se a sua equipe calcula cada trecho em uma planilha e depois desenha à mão, desenvolvemos um plugin que lê o cálculo e monta a rede no Civil 3D. O diagnóstico é gratuito e dura uma semana."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver add-ins sob medida"
+  secondaryHref="/pt/servicos/plugins-revit-civil-3d"
+/>
+
+## Fontes
+
+- Ven Te Chow, *Open-Channel Hydraulics*, McGraw-Hill, 1959: a tabela de coeficientes n. Para PVC, valores usuais de fabricantes.
+- [USGS: Roughness Characteristics of Natural Channels](https://pubs.usgs.gov/publication/wsp1849) (Barnes, Water-Supply Paper 1849, 1967): coeficientes n de 50 cursos d'água naturais, com fotografias.
+- Os resultados do exemplo foram conferidos com a [calculadora de Manning](/pt/ferramentas/calculadora-manning) da Zeist.
+
+Dados verificados em 23 de outubro de 2026.
+
+## Recursos relacionados
+
+- **Calcule sem fazer à mão:** [calculadora de Manning](/pt/ferramentas/calculadora-manning), para tubo circular e canais, em SI ou em unidades dos EUA.
+- **Do cálculo ao modelo:** [redes de tubulação no Civil 3D: conexões, água e esgoto](/pt/blog/redes-tubulacao-civil-3d).
+- **Desenho 3D sem refazer nada:** [plugin para Civil 3D que desenha em 3D](/pt/blog/plugin-civil-3d-desenho-3d).
+
+<PostFaqs />

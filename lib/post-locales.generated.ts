@@ -10,6 +10,11 @@ export const postRoutes: Readonly<Record<string, Partial<Record<Locale, string>>
     "pt": "aprender-a-programar-do-zero",
     "en": "learn-to-code-from-scratch"
   },
+  "auditoria-automatica-modelos-revit": {
+    "es": "auditoria-automatica-modelos-revit",
+    "pt": "auditoria-automatica-modelos-revit",
+    "en": "overnight-revit-model-checking"
+  },
   "auditoria-bim-checklist-empresa": {
     "es": "auditoria-bim-checklist-empresa",
     "pt": "checklist-auditoria-bim",
@@ -50,6 +55,11 @@ export const postRoutes: Readonly<Record<string, Partial<Record<Locale, string>>
     "es": "comparar-modelos-revit-civil-3d-detectar-cambios",
     "pt": "comparar-modelos-revit-civil-3d",
     "en": "compare-revit-civil-3d-models"
+  },
+  "convertir-coordenadas-geograficas-a-utm": {
+    "es": "convertir-coordenadas-geograficas-a-utm",
+    "pt": "converter-coordenadas-geograficas-para-utm",
+    "en": "convert-lat-long-to-utm"
   },
   "coordenadas-utm-trujillo-la-libertad": {
     "es": "coordenadas-utm-trujillo-la-libertad"
@@ -106,10 +116,20 @@ export const postRoutes: Readonly<Record<string, Partial<Record<Locale, string>>
     "pt": "dynamo-csharp-com-ia-claude",
     "en": "dynamo-csharp-ai-claude"
   },
+  "dynamo-para-revit-primeros-scripts": {
+    "es": "dynamo-para-revit-primeros-scripts",
+    "pt": "dynamo-para-revit-primeiros-scripts",
+    "en": "dynamo-for-revit-scripts"
+  },
   "dynamo-vs-csharp-civil3d-revit": {
     "es": "dynamo-vs-csharp-civil-3d-revit",
     "pt": "dynamo-vs-csharp-civil-3d-revit",
     "en": "dynamo-vs-csharp-civil-3d-revit"
+  },
+  "ecuacion-de-manning": {
+    "es": "ecuacion-de-manning",
+    "pt": "equacao-de-manning",
+    "en": "manning-equation"
   },
   "empresas-automatizacion-bim-trujillo-peru": {
     "es": "empresas-automatizacion-bim-trujillo-peru"

@@ -188,6 +188,7 @@ const content: Record<Locale, ToolContent> = {
     ],
     guides: [
       "ubicar-plano-coordenadas-utm-google-maps",
+      "convertir-coordenadas-geograficas-a-utm",
       "importar-puntos-civil-3d-excel",
       "coordenadas-utm-trujillo-la-libertad",
       "automatizar-civil-3d-guia-completa",
@@ -378,6 +379,7 @@ const content: Record<Locale, ToolContent> = {
     ],
     guides: [
       "ubicar-plano-coordenadas-utm-google-maps",
+      "convertir-coordenadas-geograficas-a-utm",
       "importar-puntos-civil-3d-excel",
       "automatizar-civil-3d-guia-completa",
       "plugin-civil-3d-dibujo-3d-automatizado",
@@ -553,6 +555,7 @@ const content: Record<Locale, ToolContent> = {
     ],
     guides: [
       "ubicar-plano-coordenadas-utm-google-maps",
+      "convertir-coordenadas-geograficas-a-utm",
       "importar-puntos-civil-3d-excel",
       "automatizar-civil-3d-guia-completa",
       "plugin-civil-3d-dibujo-3d-automatizado",

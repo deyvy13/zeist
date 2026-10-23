@@ -1,0 +1,119 @@
+---
+translationKey: "auditoria-automatica-modelos-revit"
+title: "Auditoria automática de modelos Revit: verificar todos os modelos toda noite, sem ninguém abri-los"
+seoTitle: "Auditoria automática de modelos Revit toda noite"
+ctaTitle: "Você descobre que um modelo está ruim quando ele já pesa o dobro? Medimos toda noite e avisamos."
+description: "Como verificar modelos do Revit à noite sem intervenção: que indicadores medir, Revit Batch Processor, Model Checker, Design Automation ou um plugin."
+date: "2026-10-23T15:00:00.000Z"
+author: "Zeist"
+tags:
+  - Auditoria BIM
+  - Revit
+  - Controle de qualidade
+  - Automação
+  - Modelos BIM
+  - Plugin
+---
+
+<BlogHero
+  eyebrow="Revit · Auditoria · Automação"
+  title="Toda noite, um programa abre seus modelos do Revit, verifica e deixa o relatório pronto"
+  highlight="O que dá para medir sem ninguém abrir o Revit, as quatro formas de programar isso para a madrugada, o que a equipe recebe de manhã e o que é preciso para funcionar."
+/>
+
+<Callout type="success" title="Resposta rápida">
+Um processo agendado abre cada modelo do Revit de madrugada, sem ninguém na frente do computador, mede advertências, tamanho, CAD importado e parâmetros vazios, e deixa um relatório pela manhã. Monta-se com o Revit Batch Processor e o Agendador de Tarefas do Windows, com o Model Checker, com o Design Automation na nuvem ou com um plugin sob medida.
+</Callout>
+
+<Callout type="info" title="Glossário: os termos que você vai ler, em linguagem simples">
+- **Auditoria de modelo** — Verificar um modelo contra uma lista de regras: o quanto pesa, quantos erros tem, se cumpre o padrão.
+- **Advertências** — Os avisos que o Revit acumula em cada modelo: paredes sobrepostas, elementos duplicados, ambientes não fechados.
+- **Processo em lote** — Um programa que faz a mesma tarefa em muitos arquivos, um depois do outro.
+- **Agendador de Tarefas** — A ferramenta do Windows que executa um programa em um horário fixo.
+- **Conjunto de regras** — A lista de verificações aplicada a cada modelo. No Model Checker se chama checkset.
+</Callout>
+
+## Qual é a diferença para um checklist de auditoria?
+
+O [checklist de auditoria BIM](/pt/blog/checklist-auditoria-bim) verifica **uma vez** como a empresa trabalha: processos, padrões, horas. O guia de [Revit lento e modelos pesados](/pt/blog/revit-lento-modelo-pesado) explica **por que** um modelo se degrada.
+
+A auditoria automática faz outra coisa: **mede o mesmo toda noite** em todos os modelos e guarda o histórico. Assim você vê quando o problema começou e em que modelo, antes que a equipe sinta.
+
+## O que dá para verificar sem ninguém abrir o Revit?
+
+Tudo o que se pode contar a partir do modelo:
+
+| Indicador | O que mede | Por que importa |
+|---|---|---|
+| Advertências | Quantas há e de que tipo | Muitas advertências deixam o modelo instável |
+| Tamanho do arquivo | Quanto cresce por semana | Um salto brusco denuncia um problema recente |
+| CAD importado | O que foi importado em vez de vinculado | É a causa mais frequente de modelos pesados |
+| Famílias no local | Quantas há | Pesam mais e travam o modelo |
+| Vistas fora de pranchas | Vistas que não estão em nenhuma prancha | Ocupam espaço e confundem |
+| Parâmetros obrigatórios | Elementos com dados vazios | A entrega sai incompleta |
+| Nomes | Vistas, pranchas e famílias fora do padrão | O modelo fica difícil de usar |
+
+As advertências são a mesma lista que o Revit mostra na sua janela de advertências. Um programa a lê inteira, com o tipo e os elementos de cada uma.
+
+## Com que ferramentas se programa para a noite?
+
+| Caminho | Como roda | A favor | Contra |
+|---|---|---|---|
+| Revit Batch Processor | Revit de desktop, por linha de comando, disparado pelo Agendador de Tarefas | Gratuito e de código aberto (GPL-3.0); roda scripts de Python ou do Dynamo; Revit 2015 a 2027 | Só reconhece as caixas de diálogo do Revit em inglês; o autor original não pode mais dar suporte |
+| Model Checker | Conjuntos de regras montados com o Configurator; relatório em Excel | Gratuito para quem tem licença do Revit; a Autodesk documenta uma execução automática com um arquivo XML | Só verifica o que as regras dele permitem; desde a versão 10.0 (Revit 2026) sua API não tem mais suporte |
+| Design Automation para Revit | Revit sem interface, na nuvem da Autodesk, com um plugin em C# | Não ocupa um computador do escritório; abre modelos na nuvem desde o Revit 2022 | Exige desenvolvimento e uma conta da Autodesk Platform Services |
+| Plugin sob medida | Sua lista de regras, seu relatório, seus alertas | Mede exatamente o seu padrão e guarda o histórico | Precisa ser desenvolvido |
+
+Os quatro podem ser combinados: um plugin sob medida rodando à noite com o Revit Batch Processor é uma opção comum.
+
+## O que a equipe recebe de manhã?
+
+Um relatório que se lê sem abrir o Revit:
+
+- **Uma linha por modelo** com cada indicador e a variação em relação à noite anterior.
+- **Alertas** quando algo passa do limite que você definiu: por exemplo, 20 % mais advertências em uma semana ou um CAD importado novo.
+- **A lista de elementos** com o identificador, para ir direto ao problema.
+- **O histórico**, em Excel ou em um painel, para ver a tendência de cada projeto.
+
+## O que é preciso para funcionar?
+
+1. **Um computador com o Revit e a licença**, disponível à noite.
+2. **Acesso aos modelos**, na rede do escritório ou na nuvem.
+3. **Regras com limites claros**: o que se mede e a partir de que valor há alerta.
+4. **Cuidar dos modelos centrais**: em modelos compartilhados, o processo trabalha sobre uma cópia desvinculada ou um local novo, nunca sobre o central.
+5. **Testar com cópias** antes de deixar rodar sozinho.
+
+## Como fazemos na Zeist?
+
+Em dois passos:
+
+1. **A [auditoria de processos BIM](/pt/servicos/auditoria-bim)**, remota e de 4 semanas: verificamos seus modelos, definimos com você que indicadores importam e com que limites, e deixamos a linha de base.
+2. **A verificação noturna**, se você quiser: desenvolvemos como um plugin sob medida, testado nos seus modelos, com instalador, manual e o código-fonte, que é seu.
+
+<CTABlock
+  eyebrow="Zeist · Auditoria BIM"
+  title="Seus modelos verificados toda noite, com o relatório pronto pela manhã"
+  body="Vemos que modelos você tem, o que convém medir e com que ferramenta, e dizemos quanto leva para deixar funcionando. O diagnóstico é gratuito e dura uma semana."
+  primaryLabel="Pedir diagnóstico gratuito"
+  primaryHref="/pt/contato"
+  secondaryLabel="Ver auditoria BIM"
+  secondaryHref="/pt/servicos/auditoria-bim"
+/>
+
+## Fontes
+
+- [Revit Batch Processor no GitHub](https://github.com/bvn-architecture/RevitBatchProcessor): versões do Revit, licença, execução agendada, diálogos em inglês e situação do suporte.
+- [Autodesk: Model Checker para Revit](https://interoperability.autodesk.com/modelchecker.php) e sua [execução automática](https://autodesk.com/support/technical/article/caas/tsarticles/ts/7FAQNevXuVNQQwED6ReSGN.html).
+- [Autodesk Platform Services: Design Automation](https://aps.autodesk.com/design-automation-apis) e [modelos na nuvem do Revit](https://aps.autodesk.com/blog/design-automation-api-supports-revit-cloud-model).
+- [Revit API: Document.GetWarnings](https://rvtdocs.com/2020/Autodesk.Revit.DB.Document.GetWarnings), a lista de advertências do modelo.
+
+Dados verificados em 23 de outubro de 2026.
+
+## Recursos relacionados
+
+- **A revisão de processos:** [checklist de auditoria BIM para empresas](/pt/blog/checklist-auditoria-bim).
+- **As causas do modelo lento:** [Revit lento e modelos pesados](/pt/blog/revit-lento-modelo-pesado).
+- **O que mais dá para automatizar:** [automatizar tarefas no Revit com Dynamo e plugins](/pt/blog/automatizar-tarefas-revit).
+- **Como se constrói um plugin:** [desenvolvimento de add-ins para Revit e Civil 3D](/pt/blog/desenvolvimento-add-ins-revit-civil-3d).
+
+<PostFaqs />
