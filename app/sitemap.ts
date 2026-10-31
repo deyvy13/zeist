@@ -15,7 +15,7 @@ const PAGES = ["", "servicios", "blog", "herramientas", "contacto", "privacidad"
  * also move with the newest post, since they list it.
  */
 const PAGE_UPDATED: Record<(typeof PAGES)[number], string> = {
-  "": "2026-10-19",
+  "": "2026-10-31",
   servicios: "2026-10-19",
   blog: "2026-10-19",
   herramientas: "2026-10-19",

@@ -2,10 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { localeNames, locales, type Dictionary, type Locale } from "@/lib/i18n";
 import { localizedPath, mailtoUrl, site, whatsappUrl } from "@/lib/site";
+import { featuredLinks } from "@/lib/featured";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 
 export function SiteFooter({ lang, dict }: { lang: Locale; dict: Dictionary }) {
   const year = new Date().getFullYear();
+  const popular = featuredLinks(lang);
 
   const columns = [
     {
@@ -143,6 +145,27 @@ export function SiteFooter({ lang, dict }: { lang: Locale; dict: Dictionary }) {
             </div>
           ))}
         </div>
+
+        {/* The best-ranked pages, linked from every page (lib/featured.ts). */}
+        {popular.length > 0 && (
+          <nav aria-label={dict.footer.popular} className="mt-12">
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-white/40">
+              {dict.footer.popular}
+            </h3>
+            <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
+              {popular.map((link) => (
+                <li key={link.path}>
+                  <Link
+                    href={localizedPath(lang, link.path)}
+                    className="text-sm text-white/70 transition hover:text-white"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
 
         <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center">
           <div className="flex flex-col gap-2">

@@ -6,6 +6,7 @@ import { localizedPath, whatsappUrl } from "@/lib/site";
 import { buildMetadata, websiteJsonLd } from "@/lib/seo";
 import { getAllPosts } from "@/lib/blog";
 import { toolsFor } from "@/lib/tools";
+import { featuredLinks } from "@/lib/featured";
 import { serviceIcons, IconArrow } from "@/components/icons";
 import { AuroraText } from "@/components/visual/aurora-text";
 import { HeroParallax } from "@/components/visual/hero-parallax";
@@ -324,6 +325,24 @@ export default async function HomePage({
               {dict.blog.empty}
             </div>
           )}
+
+          {/* The best-ranked guides and tools (lib/featured.ts). */}
+          <div className="hairline mt-12 pt-8">
+            <span className="eyebrow-plain">{dict.footer.popular}</span>
+            <ul className="mt-5 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+              {featuredLinks(lang).map((link) => (
+                <li key={link.path}>
+                  <Link
+                    href={localizedPath(lang, link.path)}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--color-mint-700)] underline-offset-4 hover:underline"
+                  >
+                    <IconArrow className="h-3.5 w-3.5 shrink-0" />
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 

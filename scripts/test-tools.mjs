@@ -713,3 +713,72 @@ test("plan grid: angles, names and pastes as people type them", () => {
   const filled = fillColumn([emptyRow("1")], 0, "e", "773650.1996\n773822.0104\n773548.4967");
   assert.deepEqual(filled.map((r) => [r.name, r.e]), [["1", "773650.1996"], ["2", "773822.0104"], ["3", "773548.4967"]]);
 });
+
+// --- Excel → Civil 3D points, rework cost, Revit model health (31-oct-2026) ---
+import { buildPointFile, parsePointTable } from "../lib/tools/points.ts";
+import { officeRework, siteRework } from "../lib/tools/rework.ts";
+import { assessHealth, parseWarningsReport } from "../lib/tools/revit-health.ts";
+
+test("points: header, column order, decimal commas and PNEZD output", () => {
+  const t = parsePointTable("Punto\tEste\tNorte\tCota\tDescripción\n1\t717207,12\t9102837,45\t38,20\tBM\n2\t717250.5\t9102900.1\t39.1\tPOSTE, LUZ\n");
+  assert.deepEqual(t.header, ["Punto", "Este", "Norte", "Cota", "Descripción"]);
+  assert.deepEqual(t.columns, ["P", "E", "N", "Z", "D"]);
+  const out = buildPointFile(t, t.columns, { format: "PNEZD" });
+  // No header row, N before E, three decimals, no comma left in a description.
+  assert.equal(out.text, "1,9102837.450,717207.120,38.200,BM\r\n2,9102900.100,717250.500,39.100,POSTE LUZ\r\n");
+  assert.equal(buildPointFile(t, t.columns, { format: "PENZD" }).text.split("\r\n")[0], "1,717207.120,9102837.450,38.200,BM");
+});
+
+test("points: no header, names, duplicates and missing elevations", () => {
+  // Without a header, the 7-digit column is the Northing (southern hemisphere UTM).
+  const bare = parsePointTable("1\t9102837.45\t717207.12\t38.2\tBM\n2\t9102900.1\t717250.5\t39.1\tCASA\n");
+  assert.deepEqual(bare.columns, ["P", "N", "E", "Z", "D"]);
+  assert.equal(bare.ambiguousEN, false);
+  // Same number of digits: read as Este, Norte and flagged for review.
+  const same = parsePointTable("1,512345.10,612345.20,100.5,X\n2,512350.10,612350.20,101.5,Y\n");
+  assert.deepEqual(same.columns, ["P", "E", "N", "Z", "D"]);
+  assert.equal(same.ambiguousEN, true);
+  // Names with letters: everything is numbered and the name moves to the description.
+  const named = parsePointTable("BM-1;717207,12;9102837,45;38,2;Inicio\nA;717250,5;9102900,1;39,1;Lote\n");
+  const n = buildPointFile(named, named.columns, { format: "PNEZD", start: 100 });
+  assert.equal(n.renumbered, true);
+  assert.deepEqual(n.points.map((p) => [p.p, p.d]), [["100", "BM-1 Inicio"], ["101", "A Lote"]]);
+  // Repeated numbers are renumbered; a row without coordinates is reported, not written.
+  const dup = parsePointTable("1\t717207\t9102837\t38\n1\t717250\t9102900\t39\n3\tabc\t9102900\t39\n");
+  const d = buildPointFile(dup, dup.columns, { format: "PNEZD" });
+  assert.deepEqual(d.duplicates, ["1"]);
+  assert.deepEqual(d.skipped, [{ line: 3, reason: "coordinates" }]);
+  assert.deepEqual(d.points.map((p) => p.p), ["1", "2"]);
+  const noZ = parsePointTable("P N E D\n1 9102837.45 717207.12 Árbol grande\n2 9102900.1 717250.5 Poste\n");
+  const z = buildPointFile(noZ, noZ.columns, { format: "PNEZD" });
+  assert.equal(z.missingZ, 2);
+  assert.equal(z.text.split("\r\n")[0], "1,9102837.450,717207.120,0.000,Árbol grande");
+});
+
+test("rework cost: office hours and site rates", () => {
+  const o = officeRework(40, 25, 600000);
+  assert.deepEqual(o, { monthly: 1000, annual: 12000, shareOfRevenue: 0.02, daysPerMonth: 5 });
+  assert.equal(officeRework(40, 25, null).shareOfRevenue, null);
+  assert.equal(officeRework(-1, 25), null);
+  assert.deepEqual(siteRework(1_000_000).map((r) => [r.id, Math.round(r.cost)]), [["giri-direct", 50000], ["colombia", 124000], ["giri-total", 250000]]);
+  assert.equal(siteRework(0), null);
+});
+
+test("revit health: warnings report and indicator levels", () => {
+  const html = `<html><body><h1>Error Report</h1><table>
+    <tr><th>Error message</th><th>Elements</th></tr>
+    <tr><td>Highlighted walls overlap. One of them may be ignored when Revit finds room boundaries.</td><td>Walls : Basic Wall : Generic - 200mm : id 101<br>Walls : Basic Wall : Generic - 200mm : id 102</td></tr>
+    <tr><td>Highlighted walls overlap. One of them may be ignored when Revit finds room boundaries.</td><td>Walls : Basic Wall : Generic - 200mm : id 101<br>Walls : Basic Wall : Generic - 300mm : id 103</td></tr>
+    <tr><td>There are identical instances in the same place. This will result in double counting in schedules.</td><td>Doors : Single-Flush : 0915 x 2134mm : id 201<br>Doors : Single-Flush : 0915 x 2134mm : id 202</td></tr>
+  </table></body></html>`;
+  const r = parseWarningsReport(html);
+  assert.equal(r.total, 3);
+  assert.equal(r.elements, 5);
+  assert.deepEqual(r.groups.map((g) => [g.count, g.elements]), [[2, 4], [1, 2]]);
+  assert.match(r.groups[0].message, /^Highlighted walls overlap/);
+  const h = assessHealth({ warnings: 150, fileSize: 350, importedCad: 4, inPlace: null });
+  assert.deepEqual(h.items.map((i) => [i.id, i.level]), [["warnings", "good"], ["fileSize", "fair"], ["importedCad", "poor"]]);
+  assert.equal(h.score, 50);
+  assert.equal(h.band, "fair");
+  assert.deepEqual(assessHealth({}), { score: null, band: null, items: [] });
+});

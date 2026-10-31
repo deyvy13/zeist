@@ -332,6 +332,29 @@ acero", "calculadora manning tuberías/canales".
   precargado es el plano real del caso (Nuevo Chimbote, zona 17 S, PSAD56):
   **no nombrar la entidad ni el proyecto**. Su guía es el post
   `ubicar-plano-coordenadas-utm-google-maps`.
+- **Tres herramientas del 31-oct-2026** (es/pt/en, pedidas por el analista SEO; todo corre en el navegador, sin subir nada):
+  **Excel a puntos de Civil 3D** (`excel-a-puntos-civil-3d`; pt `excel-para-pontos-civil-3d`, en
+  `excel-to-civil-3d-points`; búsqueda «importar puntos de excel a civil 3d»): pega una tabla en
+  cualquier orden y descarga PNEZD o PENZD (coma, 3 decimales, `\r\n`). `lib/tools/points.ts` detecta
+  el separador (reusa `detectDelimiter` del conversor), el encabezado (es/pt/en o sin números) y las
+  columnas: por encabezado o, sin él, las dos columnas mayores son E/N (7 cifras = Norte en UTM sur;
+  con las mismas cifras lee Este y luego Norte y avisa), P = enteros a la izquierda de las coordenadas
+  o nombres en la primera columna, Z = siguiente numérica, D = texto. Si un P tiene letras, falta o se
+  repite, numera todo desde el número elegido y pasa el nombre a la descripción; cota vacía = 0;
+  quita comas de las descripciones. **Calculadora del costo de los reprocesos**
+  (`calculadora-costo-reprocesos`; pt `calculadora-custo-retrabalho`, en `rework-cost-calculator`):
+  horas rehechas × costo cargado (mensual, anual, % de facturación, jornadas de 8 h) y escenarios sobre
+  el valor de la obra con `REWORK_RATES` de `lib/tools/rework.ts` (GIRI ≈ 5 % directo, EAN/UNAD 12,4 %,
+  GIRI 25 % con indirectos; mismas fuentes que el post de reprocesos). Los valores por defecto (US$ 20,
+  R$ 80, US$ 75 por hora) son ejemplos y la página lo dice. **Diagnóstico de modelo Revit**
+  (`diagnostico-modelo-revit`; pt igual, en `revit-model-health-check`): lee el HTML que Revit exporta
+  en Gestionar › Advertencias › Exportar (`parseWarningsReport`: filas de tabla, mensaje en la primera
+  celda, «id 123» en las demás; agrupa por mensaje sin números; decodifica UTF-16 con BOM, UTF-8 o
+  Windows-1252) y puntúa advertencias, tamaño, CAD importados y familias in situ con
+  `HEALTH_THRESHOLDS` (200/1000, 200/500 MB, 0/2, 5/20 → 100/50/0 puntos, promedio de lo ingresado).
+  ⚠️ Esos umbrales son **referencias de Zeist, no de Autodesk** (la página lo dice): que los revisen los
+  ingenieros. Hecho verificado: Gestionar vínculos solo lista los CAD **vinculados**; un CAD visible que
+  no está ahí está importado (Autodesk). Las tres llevan su CTA a la auditoría o a los add-ins.
 - **DXF y Word sin dependencias:** `lib/tools/dxf.ts` escribe DXF R12 (AC1009,
   `$DWGCODEPAGE ANSI_1252`, estilo Arial; el grado como `%%d`, m² como `m2`)
   y lee LWPOLYLINE/POLYLINE; `lib/tools/docx.ts` arma .docx mínimos. Ambos y el
@@ -357,8 +380,9 @@ acero", "calculadora manning tuberías/canales".
   tablas peruanas), `pt` coma. Los inputs aceptan punto o coma.
 - **Tests:** `npm run test:tools` (Node ≥ 23.6, importa los `.ts` directamente;
   `scripts/register-ts-resolve.mjs` resuelve los imports relativos sin
-  extensión). 41 tests: acero, Manning, números, xlsx, coordenadas, terreno,
-  DXF, curvas, ubicación de planos y su tabla editable.
+  extensión). 45 tests: acero, Manning, números, xlsx, coordenadas, terreno,
+  DXF, curvas, ubicación de planos y su tabla editable, Excel a puntos,
+  costo de reprocesos y diagnóstico de Revit.
   Las referencias de coordenadas salen de PROJ (pyproj) y están incrustadas
   en el test; para regenerarlas hace falta un venv con pyproj.
   Los valores esperados se calcularon aparte en Python; los números del texto
@@ -547,6 +571,8 @@ a sus satélites. Al crear un post, **asígnalo a un cluster y enlázalo**.
 
 > **Lote 2 del 23-oct-2026 (pedido del analista; 2 posts nuevos y 3 mejoras).** Tres propuestas ya tenían URL y se resolvieron mejorando la existente: (a) **retrabajo** — en `cost-of-rework-construction` y pt `retrabalho-na-obra` ya existían: se reescribieron hacia «cost of rework in construction», «industrial construction rework reduction» y «construction rework reduction bim» (nuevo `seoTitle` en en y pt, título en pt, secciones «¿Cómo reduce el BIM los reprocesos?» y «¿Cómo reducen los reprocesos los proyectos industriales?» en los tres idiomas). Se quitó el «70 % nace en el diseño» (la prensa colombiana no le da fuente) y se citó todo: McKinsey 5-10 % y EAN/UNAD 12,4 % y 12-18 % (Valora Analitik, 13-abr-2026); FMI y PlanGrid, *Construction Disconnected* (2018): US$31.3 mil millones de reproceso en 2018 por mala comunicación (17) y datos deficientes (14.3), el 48 % del total; GIRI (Reino Unido): errores evitables ≈ 5 % del valor en costo directo, más que el margen medio (~3 %), y hasta 25 % con indirectos; Love (2002, JCEM 128(1), 161 proyectos australianos): el reproceso explicó el 52 % del sobrecosto; CII, Field Rework Index (RS153-1, 2001): 14 preguntas de 1 a 5; variables más ligadas al reproceso en campo = alineamiento del dueño, reproceso de diseño, constructibilidad, coordinación entre disciplinas y planificación de la ejecución. La regla 1-10-100 se presenta como regla práctica, no como medición. También se corrigieron dos promesas que no eran del servicio («20 minutos gratis» → diagnóstico gratuito de 1 semana; «1-3 semanas» → Dynamo días a 2 semanas, plugin 4-8). (b) **Parámetros de proyecto vs compartidos** — sección nueva en `parametros-compartidos-revit` (3 idiomas) con tabla, cómo se crea uno de proyecto, que no se convierte en compartido de forma directa (foro de Autodesk: se crea el compartido, se copian valores y se borra el de proyecto) y la API (`Document.ParameterBindings`, `InstanceBinding`/`TypeBinding`, `Application.OpenSharedParameterFile()`, lectura por GUID); `seoTitle` en en = «Revit Shared and Project Parameters: Full Guide». La consulta «revit api» (pos 46) no tiene página en en ni pt: `revit-api-espanol-primeros-pasos` es solo `es`. (c) **Autodesk e IA** — no se creó otra URL: `inteligencia-artificial-autocad-civil-3d` ya cubre AutoCAD, Civil 3D y Revit y es la página con más impresiones. En es y pt se sumaron «¿Qué es Autodesk AI y qué hace hoy en cada programa?» (tabla por programa; Revit 2027 = Autodesk Assistant en vista previa técnica con servidor MCP integrado y prefijo AI en Deshacer; ACC = Construction IQ y AutoSpecs; AU 2025 = asistentes sobre Forma, primero en Revit, y neural CAD sin fecha para infraestructura) y «¿Puede la IA diseñar en CAD?». La versión en no se tocó: su título está en la medición del 19-oct. Posts nuevos: `mejores-plugins-revit` (pt `plugins-revit-produtividade`, en `best-revit-plugins`; C1): pyRevit = GPL-3.0, gratis, extensiones (no afirmar versiones de Revit soportadas); DiRootsOne = gratis con ParaManager, FamilyReviser, OneFilter, PointKit, ReOrdering, SheetGen y ViewManager; SheetLink, TableGen, OneParameter y QuickViews solo en Premium; compatible hasta Revit 2027; Ideate BIMLink = de pago, licencia anual, cientos de definiciones de vínculo; OF Hidráulico y OF Elétrico (OrçaFascio) solo en pt y «según el fabricante»; sin precios. `herramientas-vibe-coding` (pt `ferramentas-vibe-coding`, en `vibe-coding-tools`; C3): tres tipos (chat, asistente en el editor, agente); gratis con límites = chats, GitHub Copilot Free (VS Code y Visual Studio), Cursor Hobby, Codex incluido en los planes de ChatGPT; Claude Code exige plan de pago o clave de API; sin precios (cambian cada mes). Su CTA lleva a cursos (que incluyen «Desarrollo asistido por IA»).
 
+> **Caída de impresiones (23-oct-2026) y respuesta del 31-oct-2026.** Desde el 23-oct las impresiones cayeron de ~440/día a ~2/día y Search Console dejó varias páginas `es` que rankeaban (sin cambio de slug) en «Rastreada: actualmente sin indexar». Auditoría técnica del 31-oct contra producción con user-agent de Googlebot: las 213 URLs del sitemap responden 200, sin `noindex` ni X-Robots-Tag, con canonical, og:url, hreflang (con `x-default`) y JSON-LD apuntando a sí mismas; 0 enlaces internos a URLs que redirigen; 191 URLs históricas llegan a la final en un solo 308 (viven en `proxy.ts`, sin fecha de caducidad); http → https y zeist.vercel.app → zeist.dev son 308 directos. Pendiente fuera del código: `www.zeist.dev` redirige con **307 (temporal)**; se configura en Vercel › Domains (el usuario no quiere que toquemos dominios). Los 53 lastmod del 23-oct eran cambios reales (18 posts nuevos, 11 mejorados, 4 servicios y 2 herramientas cuyas guías cambiaron, home y /blog): Google cuenta los cambios de enlaces como significativos. Se corrigió el `url` del Organization en el JSON-LD de /contacto (`https://zeist.dev` sin barra → `${siteUrl}/`, como en el layout). Enlaces a las 5 páginas que más rankeaban (`lib/featured.ts`: generador de curvas, coordenadas UTM en Google Maps, IA para AutoCAD y Civil 3D, membretes en lote y coordenadas UTM en Trujillo, esta solo `es`): bloque «Lo más consultado / Mais acessados / Most read» en el pie de todas las páginas y en la home (`footer.popular` en los diccionarios; etiquetas = `cta` de la herramienta y `seoTitle` del post), más 36 enlaces contextuales en posts relacionados (sin subir `updated`). Del pedido de contenido del analista: 7 de los 9 blogs ya existían (23-oct); «curvas de nivel online gratis» es la herramienta (consolidación del 20-oct); **no existe una Guía Nacional BIM 2026**: la vigente es la de la RD 0003-2023-EF/63.01 y los lineamientos nuevos son la RD 0019-2025-EF/63.01, así que no se publicó un post «2026». Las landings de servicio pedidas quedaron pendientes: (a) auditoría de modelos BIM → mejorar `auditoria-procesos-bim` (no URL nueva) cuando el usuario dé el rango de precio y un informe real anonimizado, y después del 2-nov (el título en `en` está en medición); (b) «automatización Revit/BIM» canibalizaría la home, los add-ins y Dynamo; (c) «catálogo de plugins de Civil 3D»: Zeist no tiene plugins propios publicados. Regla del analista: nada de cambios de URL ni despliegues masivos hasta mediados de noviembre; contenido nuevo en tandas ≤ 9 URLs/día.
+
 > **Conversión y respuestas de IA (sep-2026).** (1) Todo post muestra un CTA de servicio **bajo el título** (`components/post-early-cta.tsx`, copy en `blog.earlyCta` de los diccionarios); el frontmatter opcional `ctaTitle` lo adapta al dolor del post. (2) `seoTitle` (≤52 caracteres) para el `<title>`; `title` largo queda como `<h1>`. (3) Los posts nuevos abren con un `<Callout type="success" title="Respuesta rápida">`: 60-100 palabras que responden la búsqueda principal de forma citable — es lo que extraen Google y los asistentes de IA. (4) `/llms.txt` (`app/llms.txt/route.ts`) se genera del mismo contenido y `robots.ts` permite explícitamente a GPTBot, ClaudeBot, PerplexityBot, Google-Extended.
 
 **Fuente única de clusters: `lib/clusters.ts`.** Al crear un post, añádelo ahí: de ese mapa salen la prioridad 0.9 de los pillars en el sitemap y los "relacionados" del final de cada artículo (`getRelatedPosts`: pillar del cluster → satélites → etiquetas comunes → otros pillars). Antes los relacionados eran "los 2 posts más nuevos", lo que dejaba a los pillars sin enlaces.
@@ -595,6 +621,7 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   19. ~~Noticia PHP2Shell + seguridad de plugins para Revit y Civil 3D~~ (HECHO, 21-oct-2026, C1, es/pt/en)
   20. ~~Lote del analista: ecuación de Manning, geográficas a UTM, auditoría nocturna de Revit, Dynamo para Revit y mejora de Revit–Excel~~ (HECHO, 23-oct-2026, es/pt/en)
   21. ~~Lote 2 del analista: plugins de Revit, herramientas de vibe coding, retrabajo con fuentes, parámetros de proyecto vs compartidos y panorama de Autodesk AI~~ (HECHO, 23-oct-2026)
+  22. ~~Caída de impresiones del 23-oct: auditoría técnica, enlaces a las páginas que más rankeaban, tres herramientas nuevas y Revit lento reforzado~~ (HECHO, 31-oct-2026; ver nota «Caída de impresiones»)
 - **Conversión (HECHA, oct-2026):** medición GA4 + clics de WhatsApp, y las 4
   páginas de servicio convertidas en landings de venta (ver sección 6).
   Política de privacidad: HECHA (oct-2026). Dominio propio `zeist.dev`: HECHO (11-oct-2026).
@@ -602,7 +629,8 @@ IA + BIM · keywords de dinero ("cuánto cuesta un add-in").
   (oct-2026): conversor de coordenadas, calculadora de área de terreno
   (memoria descriptiva), generador de curvas de nivel, calculadora de acero
   corrugado, calculadora de Manning y coordenadas UTM en Google Maps
-  (ubicar planos). El hub ya no muestra las propuestas «Pronto» (19-oct-2026):
+  (ubicar planos); el 31-oct-2026, Excel a puntos de Civil 3D, costo de los
+  reprocesos y diagnóstico de modelo Revit. El hub ya no muestra las propuestas «Pronto» (19-oct-2026):
   una herramienta nueva aparece cuando tiene página.
 - **Contacto — WhatsApp (principal) y correo `contacto.zeist@gmail.com`** (publicado
   el 10-oct-2026). Ambos viven en `site` (`lib/site.ts`); enlaces siempre vía

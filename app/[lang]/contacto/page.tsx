@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale, type Locale } from "@/lib/i18n";
 import Link from "next/link";
-import { absoluteUrl, localizedPath, localizedUrl, mailtoUrl, site, whatsappUrl } from "@/lib/site";
+import { localizedPath, localizedUrl, mailtoUrl, site, siteUrl, whatsappUrl } from "@/lib/site";
 import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 import { JsonLd } from "@/components/json-ld";
 import { ContactForm } from "@/components/contact-form";
@@ -114,7 +114,8 @@ export default async function ContactPage({
             mainEntity: {
               "@type": "Organization",
               name: site.name,
-              url: absoluteUrl(""),
+              // The same root URL as the Organization in the layout (lib/seo.ts).
+              url: `${siteUrl}/`,
               sameAs: [site.linkedin],
               contactPoint: {
                 "@type": "ContactPoint",

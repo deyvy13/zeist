@@ -42,6 +42,9 @@ export const TOOL_PATHS: Record<ToolSlug, Partial<Record<Locale, string>>> = {
   "generador-curvas-de-nivel": { es: "generador-curvas-de-nivel", pt: "gerador-curvas-de-nivel", en: "contour-map-generator" },
   "calculadora-acero-corrugado": { es: "calculadora-acero-corrugado" },
   "calculadora-manning": { es: "calculadora-manning", pt: "calculadora-manning", en: "manning-calculator" },
+  "excel-a-puntos-civil-3d": { es: "excel-a-puntos-civil-3d", pt: "excel-para-pontos-civil-3d", en: "excel-to-civil-3d-points" },
+  "diagnostico-modelo-revit": { es: "diagnostico-modelo-revit", pt: "diagnostico-modelo-revit", en: "revit-model-health-check" },
+  "calculadora-costo-reprocesos": { es: "calculadora-costo-reprocesos", pt: "calculadora-custo-retrabalho", en: "rework-cost-calculator" },
 };
 
 /** Public slug of each service per locale. */

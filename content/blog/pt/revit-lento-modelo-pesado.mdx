@@ -5,6 +5,7 @@ seoTitle: "Revit lento: por que o modelo pesa e como auditá-lo"
 ctaTitle: "Seu modelo de Revit leva minutos para abrir e sincronizar? Nós o auditamos e o mantemos saudável automaticamente."
 description: "Por que seu modelo do Revit fica pesado e lento: avisos, CAD importado, famílias e vistas demais, e como auditá-lo antes de cada entrega."
 date: "2026-10-01T09:00:00.000Z"
+updated: "2026-10-31T15:00:00.000Z"
 author: "Zeist"
 tags:
   - Revit lento
@@ -95,8 +96,8 @@ Comprar hardware novo para um modelo mal construído é pagar duas vezes. Um com
 Sem ferramentas externas, dá para ter um diagnóstico em uma hora:
 
 1. **Abra com a opção Auditar.** Ao abrir o arquivo, marque *Auditar*. O Revit verifica e repara inconsistências internas. Faça numa cópia.
-2. **Conte as advertências.** Na guia Gerenciar, revise as advertências e anote quantas são e de que tipo. O tipo mais repetido é seu primeiro alvo.
-3. **Procure CAD importado.** No gerenciamento de vínculos, liste tudo o que está importado. Cada um é candidato a ser vinculado ou apagado.
+2. **Conte as advertências.** Em Gerenciar › Advertências, clique em Exportar: o Revit salva a lista completa num arquivo HTML. Anote quantas são e de que tipo. O tipo mais repetido é seu primeiro alvo.
+3. **Procure CAD importado.** Gerenciar vínculos lista só os CAD vinculados: se você vê um CAD no modelo e ele não aparece ali, está importado. Cada um é candidato a ser vinculado ou apagado.
 4. **Conte as famílias no local.** Filtre por elas e anote quantas são e onde estão.
 5. **Meça o tamanho do arquivo.** Anote hoje. Sem uma linha de base, você não saberá se melhorou.
 6. **Revise os grupos.** Quantos tipos de grupo e quantas instâncias.
@@ -187,6 +188,20 @@ Um plugin de auditoria transforma a saúde do modelo num **indicador que se mede
 
 </TopicCard>
 
+## Que advertências do Revit convém corrigir primeiro?
+
+As que mais se repetem: quase sempre dois ou três tipos concentram a maioria. Estas são algumas das mais comuns, com o texto que o Revit mostra em inglês:
+
+| Advertência | O que significa | Como se corrige |
+|---|---|---|
+| Highlighted walls overlap | Duas paredes ocupam o mesmo lugar | Apague uma ou ajuste-a; para separar ambientes, use linhas de separação |
+| There are identical instances in the same place | Um elemento está duplicado sobre outro | Apague o duplicado: ele ainda conta em dobro nas tabelas |
+| Room is not in a properly enclosed region | O ambiente não está fechado | Feche com paredes ou linhas de separação, ou apague-o |
+| Elements have duplicate "Mark" values | Dois elementos têm a mesma Marca | Renumere as Marcas daquela categoria |
+| Line is slightly off axis and may cause inaccuracies | Uma linha está quase, mas não totalmente, alinhada | Alinhe-a ou redesenhe com o ângulo exato |
+
+Para não contar à mão, exporte o relatório e carregue no [diagnóstico de modelo Revit](/pt/ferramentas/diagnostico-modelo-revit): ele agrupa as advertências por tipo, junta o tamanho do arquivo, os CAD importados e as famílias no local, e dá uma pontuação de 0 a 100 com o que corrigir primeiro.
+
 <CTABlock
   eyebrow="Zeist · Plugins para Revit"
   title="Seus modelos de Revit, sempre rápidos e sob controle"
@@ -199,6 +214,7 @@ Um plugin de auditoria transforma a saúde do modelo num **indicador que se mede
 
 ## Recursos relacionados
 
+- **Meça seu modelo em dois minutos:** [diagnóstico de modelo Revit](/pt/ferramentas/diagnostico-modelo-revit).
 - **A verificação que roda sozinha:** [auditoria automática de modelos Revit toda noite](/pt/blog/auditoria-automatica-modelos-revit).
 - **Como se constrói um plugin:** [desenvolvimento de add-ins para Revit e Civil 3D, o guia completo](/pt/blog/desenvolvimento-add-ins-revit-civil-3d).
 - **Para que toda a equipe modele igual:** [padronizar processos BIM na sua empresa](/pt/blog/padronizar-processos-bim).

@@ -14,6 +14,9 @@ export const TOOL_SLUGS = [
   "generador-curvas-de-nivel",
   "calculadora-acero-corrugado",
   "calculadora-manning",
+  "excel-a-puntos-civil-3d",
+  "diagnostico-modelo-revit",
+  "calculadora-costo-reprocesos",
 ] as const;
 
 export type ToolSlug = (typeof TOOL_SLUGS)[number];
@@ -39,6 +42,9 @@ export const toolUpdated: Record<ToolSlug, string> = {
   "generador-curvas-de-nivel": "2026-10-19",
   "calculadora-acero-corrugado": "2026-10-01",
   "calculadora-manning": "2026-10-23",
+  "excel-a-puntos-civil-3d": "2026-10-31",
+  "diagnostico-modelo-revit": "2026-10-31",
+  "calculadora-costo-reprocesos": "2026-10-31",
 };
 
 /** `cta` is the link text on cards: what the tool does, in the words people search for. */
@@ -151,6 +157,66 @@ export const toolCards: Record<ToolSlug, Partial<Record<Locale, ToolCard>>> = {
       body: "Flow, velocity and normal depth in partially full pipes and open channels, with Froude number and boundary shear.",
       tags: ["Sewers", "Storm drainage", "Open channels"],
       cta: "Calculate flow with Manning's equation",
+    },
+  },
+  "excel-a-puntos-civil-3d": {
+    es: {
+      title: "Excel a puntos de Civil 3D",
+      body: "Pega tu tabla de Excel en cualquier orden y descarga el archivo PNEZD que Civil 3D importa a la primera: sin encabezado, con números enteros y la coma decimal corregida.",
+      tags: ["Civil 3D", "PNEZD", "Excel"],
+      cta: "Importar puntos de Excel a Civil 3D",
+    },
+    pt: {
+      title: "Excel para pontos do Civil 3D",
+      body: "Cole sua tabela do Excel em qualquer ordem e baixe o arquivo PNEZD que o Civil 3D importa de primeira: sem cabeçalho, com números inteiros e a vírgula decimal corrigida.",
+      tags: ["Civil 3D", "PNEZD", "Excel"],
+      cta: "Importar pontos do Excel para o Civil 3D",
+    },
+    en: {
+      title: "Excel to Civil 3D points",
+      body: "Paste your Excel table in any column order and download the PNEZD file Civil 3D imports on the first try: no header row, whole point numbers, decimal commas fixed.",
+      tags: ["Civil 3D", "PNEZD", "Excel"],
+      cta: "Import points from Excel to Civil 3D",
+    },
+  },
+  "diagnostico-modelo-revit": {
+    es: {
+      title: "Diagnóstico de modelo Revit",
+      body: "Carga el reporte de advertencias de Revit y anota el peso, los CAD importados y las familias in situ: puntuación de 0 a 100 y qué corregir primero.",
+      tags: ["Revit", "Advertencias", "Auditoría"],
+      cta: "Diagnosticar mi modelo de Revit",
+    },
+    pt: {
+      title: "Diagnóstico de modelo Revit",
+      body: "Carregue o relatório de advertências do Revit e anote o peso, os CAD importados e as famílias no local: pontuação de 0 a 100 e o que corrigir primeiro.",
+      tags: ["Revit", "Advertências", "Auditoria"],
+      cta: "Diagnosticar meu modelo do Revit",
+    },
+    en: {
+      title: "Revit model health check",
+      body: "Load the Revit warnings report and enter file size, imported CAD and in-place families: a 0-100 score and what to fix first.",
+      tags: ["Revit", "Warnings", "Audit"],
+      cta: "Check my Revit model's health",
+    },
+  },
+  "calculadora-costo-reprocesos": {
+    es: {
+      title: "Calculadora del costo de los reprocesos",
+      body: "Las horas que tu equipo dedica a rehacer entregables, en dinero al año, y lo que los estudios publicados atribuyen al reproceso sobre el valor de una obra.",
+      tags: ["Reprocesos", "Costos", "Gestión"],
+      cta: "Calcular el costo de los reprocesos",
+    },
+    pt: {
+      title: "Calculadora do custo do retrabalho",
+      body: "As horas que a sua equipe gasta refazendo entregas, em dinheiro por ano, e o que os estudos publicados atribuem ao retrabalho sobre o valor de uma obra.",
+      tags: ["Retrabalho", "Custos", "Gestão"],
+      cta: "Calcular o custo do retrabalho",
+    },
+    en: {
+      title: "Construction rework cost calculator",
+      body: "The hours your team spends redoing deliverables, in money per year, and what published studies attribute to rework as a share of project value.",
+      tags: ["Rework", "Costs", "Project management"],
+      cta: "Calculate the cost of rework",
     },
   },
 };
